@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Download Report - Rajan Path Lab</title>
+<style>
+body { font-family: Arial; background: #f4f9ff; padding: 20px; }
+h1 { color: #0b6aa2; }
+input, button { padding: 10px; margin: 5px 0; width: 250px; }
+button { background: #ff3b3b; color: white; border: none; border-radius: 5px; cursor: pointer; }
+a { text-decoration:none; color:#0b6aa2; }
+</style>
+<script>
+function downloadByReportID() {
+    var reportId = document.getElementById("reportId").value.trim();
+    if(reportId == "") {
+        alert("Please enter your Report ID");
+        return;
+    }
+    var phone = "918709946177";
+    var message = "Patient wants to download report. Report ID: " + reportId;
+    var url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+    window.open(url, "_blank");
+}
+
+function downloadByMobile() {
+    var mobile = document.getElementById("mobile").value.trim();
+    if(mobile == "") {
+        alert("Please enter your Mobile Number");
+        return;
+    }
+    var phone = "918709946177";
+    var message = "Patient wants to download report. Mobile Number: " + mobile;
+    var url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+    window.open(url, "_blank");
+}
+</script>
+</head>
+<body>
+
+<h1>Download Your Report</h1>
+
+<h3>Option 1: Using Report ID</h3>
+<input type="text" id="reportId" placeholder="Enter Report ID"><br>
+<button onclick="downloadByReportID()">Download Report by ID</button>
+
+<h3>Option 2: Using Mobile Number</h3>
+<input type="text" id="mobile" placeholder="Enter Mobile Number"><br>
+<button onclick="downloadByMobile()">Download Report by Mobile</button>
+
+<p><a href="index.html">Back to Home</a></p>
+
+</body>
+</html>
