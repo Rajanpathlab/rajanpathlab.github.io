@@ -251,5 +251,75 @@ Chat on WhatsApp
 <link rel="stylesheet" href="css/style.css">
   </head>
 
+  <!DOCTYPE html>
+<html>
+<head>
+<title>Download Report - Rajan Path Lab</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.report-box{
+max-width:400px;
+margin:100px auto;
+text-align:center;
+background:#fff;
+padding:30px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input{
+padding:10px;
+width:80%;
+margin:10px;
+}
+
+button{
+padding:10px 20px;
+background:#0077b6;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="report-box">
+
+<h2>Download Your Report</h2>
+
+<p>Enter your Report ID</p>
+
+<input type="text" id="reportId" placeholder="Report ID">
+
+<br>
+
+<button onclick="downloadReport()">Download</button>
+
+</div>
+
+<script>
+
+function downloadReport(){
+
+var id=document.getElementById("reportId").value;
+
+if(id=="RPL-032026-001"){
+window.open("https://drive.google.com/");
+}
+
+else{
+alert("Report not found");
+}
+
+}
+
+</script>
+
+</body>
+</html>
+
 </body>
 </html>
