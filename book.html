@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Book Test</title>
+
+<script>
+
+function sendWhatsApp(){
+
+var name=document.getElementById("name").value;
+var mobile=document.getElementById("mobile").value;
+var test=document.getElementById("test").value;
+var address=document.getElementById("address").value;
+var date=document.getElementById("date").value;
+
+var message="New Test Booking %0A%0A"+
+"Name: "+name+"%0A"+
+"Mobile: "+mobile+"%0A"+
+"Test: "+test+"%0A"+
+"Address: "+address+"%0A"+
+"Date: "+date;
+
+var phone="918709946177";
+
+var url="https://wa.me/"+phone+"?text="+message;
+
+window.open(url,"_blank");
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<h2>Book Your Test</h2>
+
+Name<br>
+<input type="text" id="name"><br><br>
+
+Mobile<br>
+<input type="text" id="mobile"><br><br>
+
+Test Name<br>
+<input type="text" id="test"><br><br>
+
+Address<br>
+<input type="text" id="address"><br><br>
+
+Date<br>
+<input type="date" id="date"><br><br>
+
+<button onclick="sendWhatsApp()">Submit Booking</button>
+
+</body>
+</html>
