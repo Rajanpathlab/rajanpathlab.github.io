@@ -50,21 +50,20 @@
             color: white; text-align: center; padding: 100px 20px;
         }
 
-        /* Hero Buttons as per Image 2 & 3 */
         .btn-container { margin-top: 30px; }
         .btn-book { background: #e63946; padding: 12px 25px; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px; }
         .btn-report { background: #e63946; padding: 12px 25px; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
 
-        /* Address Strip - Image 5 Requirements */
         .strip {
             background: #ffffff;
             border-bottom: 2px solid var(--accent-teal);
-            padding: 30px 20px; /* Increased padding */
+            padding: 30px 20px;
             text-align: center;
-            font-size: 1.4rem; /* Bigger size */
+            font-size: 1.4rem;
             font-weight: 600;
             color: var(--primary-blue);
         }
+        /* Dialer icon fixed to fa-phone (straight) */
         .strip i { color: var(--accent-teal); margin-right: 8px; font-size: 1.6rem; }
 
         section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
@@ -88,13 +87,26 @@
         .card h3 { margin: 15px 0 5px 0; font-size: 1.2rem; }
         .card p { margin: 5px 0; font-size: 0.95rem; color: #64748b; }
 
-        /* Partner Icons */
         .partner-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
         .partner-item { background: white; padding: 25px; border-radius: 20px; width: 180px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-bottom: 4px solid #ddd; }
         .partner-item i { font-size: 40px; margin-bottom: 10px; }
         .partner-item p { font-weight: 800; margin: 0; font-size: 15px; }
 
+        /* Map styling */
+        .map-container {
+            margin-top: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         footer { background: var(--primary-blue); color: #cbd5e1; padding: 60px 20px; text-align: center; }
+        .footer-links a { color:white; text-decoration:none; margin:0 15px; font-size: 1.1rem; transition: 0.3s; }
+        .footer-links a:hover { color: var(--accent-teal); }
+        
         .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; }
     </style>
 </head>
@@ -122,7 +134,7 @@
 
 <div class="strip">
     <i class="fas fa-map-marker-alt"></i> Manahar Bhushra Pandwa Patan Road | 
-    <i class="fas fa-phone-alt"></i> 8709946177 / 9931002450
+    <i class="fas fa-phone"></i> 8709946177 / 9931002450
 </div>
 
 <section style="background: #f1f5f9;">
@@ -200,10 +212,25 @@
 
 <footer>
     <h2 style="color: white;">RAJAN PATH LAB (RPL)</h2>
-    <div style="margin: 20px 0;">
-        <a href="tel:+918709946177" style="color:white; text-decoration:none; margin:0 15px;"><i class="fas fa-phone-alt"></i> 8709946177</a>
-        <a href="#" style="color:white; text-decoration:none; margin:0 15px;"><i class="fab fa-instagram"></i> Instagram</a>
+    
+    <div class="map-container">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.324869857211!2d84.1843236!3d24.1678505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398c250020141f01%3A0x51da16dca9a86735!2sRAJAN%20PATH%20LAB%20(%20RPL)!5e0!3m2!1sen!2sin!4v1712000000000!5m2!1sen!2sin" 
+            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
+
+    <div class="footer-links" style="margin: 30px 0;">
+        <a href="https://www.google.com/maps?kgmid=/g/11tn9qwbxl&hl=en-IN" target="_blank">
+            <i class="fas fa-map-marked-alt"></i> Google Maps
+        </a>
+        <a href="https://www.instagram.com/lab_technician_3.0?igsh=MWNsOGo1M2pzbDk0cg==" target="_blank">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <a href="tel:+918709946177">
+            <i class="fas fa-phone"></i> 8709946177
+        </a>
+    </div>
+    
     <p>🌐 rajanpathlab.github.io</p>
     <p style="font-size: 12px; opacity: 0.6;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
 </footer>
