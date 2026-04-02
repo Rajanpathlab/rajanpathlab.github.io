@@ -1,325 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rajan Path Lab</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajan Path Lab | Reliable Diagnostics</title>
+    
+    <style>
+        /* BASIC SETTINGS */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f4f9ff;
+            color: #333;
+            line-height: 1.6;
+        }
 
-<style>
+        /* HEADER & LOGO */
+        header {
+            background: #0b6aa2;
+            color: white;
+            padding: 20px 5%;
+            display: flex;
+            flex-direction: column; /* Mobile friendly */
+            align-items: center;
+            text-align: center;
+        }
 
-body{
-font-family: Arial;
-margin:0;
-background:#f4f9ff;
-}
+        header h1 {
+            margin: 0;
+            font-size: 32px; /* Logo bada kiya gaya hai */
+            letter-spacing: 2px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-/* HEADER */
+        nav {
+            margin-top: 15px;
+        }
 
-header{
-background:#0b6aa2;
-color:white;
-padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+        }
 
-header h1{
-margin:0;
-}
+        nav a:hover {
+            color: #ffda44;
+        }
 
-nav a{
-color:white;
-margin:10px;
-text-decoration:none;
-font-weight:bold;
-}
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(rgba(11, 106, 162, 0.8), rgba(0, 168, 232, 0.8)), url('https://via.placeholder.com/1500x500') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
 
-.hero{
-background:linear-gradient(#0b6aa2,#00a8e8);
-color:white;
-text-align:center;
-padding:80px 20px;
-}
+        .hero h2 {
+            font-size: 45px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
 
-.hero h2{
-font-size:40px;
-margin-bottom:10px;
-}
+        .btn {
+            background: #ff3b3b;
+            padding: 14px 30px;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            margin: 10px;
+            display: inline-block;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 59, 59, 0.4);
+        }
 
-.btn{
-background:#ff3b3b;
-padding:12px 25px;
-color:white;
-text-decoration:none;
-border-radius:5px;
-margin:10px;
-display:inline-block;
-}
-</div>
+        .btn:hover {
+            transform: translateY(-3px);
+            background: #e62e2e;
+        }
 
-</section>
+        /* SECTION ALIGNMENT */
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto; /* Center individual sections */
+            text-align: center;
+        }
 
-/* SECTION */
+        section h2 {
+            font-size: 32px;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
 
-section{
-padding:40px;
-text-align:center;
-}
+        section h2::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: #0b6aa2;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-.tests{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:20px;
-}
+        /* FLEXBOX GRID FOR CARDS */
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center all cards */
+            gap: 25px;
+        }
 
-.card{
-background:white;
-padding:20px;
-width:200px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-border-radius:10px;
-}
+        .card {
+            background: white;
+            padding: 30px;
+            width: 220px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 15px;
+            transition: 0.3s;
+            border-bottom: 4px solid #0b6aa2;
+        }
 
-/* WHY US */
+        .card:hover {
+            transform: translateY(-10px);
+        }
 
-.why{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:20px;
-}
+        /* FOOTER */
+        footer {
+            background: #003b5c;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
 
-/* FOOTER */
-
-footer{
-background:#003b5c;
-color:white;
-padding:20px;
-text-align:center;
-}
-
-</style>
-
+        /* WHATSAPP BUTTON */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
-
 <body>
 
 <header>
-
-<h1>RAJAN PATH LAB</h1>
-
-<nav>
-<a href="index.html">Home</a>
-<a href="tests.html">Tests</a>
-<a href="book.html">Book Test</a>
-<a href="report.html">Download Report</a>
-<a href="contact.html">Contact</a>
-</nav>
-
+    <h1>RAJAN PATH LAB</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="tests.html">Tests</a>
+        <a href="book.html">Book Test</a>
+        <a href="report.html">Download Report</a>
+        <a href="contact.html">Contact</a>
+    </nav>
 </header>
 
-
-<!-- HERO -->
-
 <div class="hero">
-
-<h2>Reliable Diagnostics with Advanced Technology</h2>
-
-<p>Manahar Bhushra Pandwa Patan Road Palamu</p>
-
-<p>📞 8709946177 | 9931002450</p>
-
-<a class="btn" href="#">Book Test</a>
-<a class="btn" href="#">Download Report</a>
-
+    <h2>Reliable Diagnostics with Advanced Technology</h2>
+    <p>Manahar Bhushra Pandwa Patan Road Palamu</p>
+    <p>📞 8709946177 | 9931002450</p>
+    <a class="btn" href="book.html">Book Test</a>
+    <a class="btn" href="report.html">Download Report</a>
 </div>
-
-
-<!-- POPULAR TESTS -->
 
 <section>
-
-<h2>Popular Tests</h2>
-
-<div class="tests">
-
-<div class="card">
-<h3>CBC Test</h3>
-<p>Complete Blood Count</p>
-</div>
-
-<div class="card">
-<h3>Thyroid Test</h3>
-<p>Thyroid Profile</p>
-</div>
-
-<div class="card">
-<h3>Blood Sugar</h3>
-<p>Diabetes Test</p>
-</div>
-
-<div class="card">
-<h3>Liver Test</h3>
-<p>LFT Profile</p>
-</div>
-
-</div>
-
+    <h2>Popular Tests</h2>
+    <div class="grid-container">
+        <div class="card">
+            <h3>CBC Test</h3>
+            <p>Complete Blood Count</p>
+        </div>
+        <div class="card">
+            <h3>Thyroid Test</h3>
+            <p>Thyroid Profile</p>
+        </div>
+        <div class="card">
+            <h3>Blood Sugar</h3>
+            <p>Diabetes Test</p>
+        </div>
+        <div class="card">
+            <h3>Liver Test</h3>
+            <p>LFT Profile</p>
+        </div>
+    </div>
 </section>
 
-
-<!-- HOME COLLECTION -->
+<section style="background-color: #ebf5ff;">
+    <h2>Home Sample Collection</h2>
+    <p>Book blood sample collection from home easily. Our experts will visit your home.</p>
+    <a class="btn" href="book.html">Request Home Collection</a>
+</section>
 
 <section>
-
-<h2>Home Sample Collection</h2>
-
-<p>Book blood sample collection from home easily.</p>
-
-<a class="btn" href="book.html">Book Test</a>
-
+    <h2>Why Choose Us</h2>
+    <div class="grid-container">
+        <div class="card"><strong>Accurate Reports</strong></div>
+        <div class="card"><strong>Advanced Machines</strong></div>
+        <div class="card) "><strong>Experienced Staff</strong></div>
+        <div class="card"><strong>Fast Report Delivery</strong></div>
+    </div>
 </section>
 
-
-<!-- WHY CHOOSE US -->
-
-<section>
-
-<h2>Why Choose Us</h2>
-
-<div class="why">
-
-<div class="card">Accurate Reports</div>
-
-<div class="card">Advanced Machines</div>
-
-<div class="card">Experienced Staff</div>
-
-<div class="card">Fast Report Delivery</div>
-
-</div>
-
+<section style="background-color: #fff;">
+    <h2>Working Hours</h2>
+    <p><strong>Monday – Sunday</strong></p>
+    <p style="font-size: 20px; color: #0b6aa2;">8:30 AM – 7:30 PM</p>
 </section>
-
-
-<!-- WORKING HOURS -->
-
-<section>
-
-<h2>Working Hours</h2>
-
-<p>Monday – Sunday</p>
-
-<p>8:30 AM – 7:30 PM</p>
-
-</section>
-
-
-<!-- FOOTER -->
 
 <footer>
-
-<p>Rajan Path Lab</p>
-
-<p>📧 rajanpathlab@gmail.com</p>
-
-<p>Reg No: 12359</p>
-
+    <h3>RAJAN PATH LAB</h3>
+    <p>📧 rajanpathlab@gmail.com</p>
+    <p>Reg No: 12359 | Location: Palamu, Jharkhand</p>
+    <p style="margin-top:20px; font-size: 12px; opacity: 0.7;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
 </footer>
 
-<!-- WhatsApp Floating Button -->
-
-<a href="https://wa.me/918709946177" 
-style="position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-color:white;
-padding:15px 20px;
-border-radius:50px;
-text-decoration:none;
-font-size:18px;
-box-shadow:0 0 10px rgba(0,0,0,0.3);">
-
-Chat on WhatsApp
-
+<a href="https://wa.me/918709946177" class="whatsapp-float">
+    Chat on WhatsApp
 </a>
-  <head>
-<title>Rajan Path Lab</title>
-<link rel="stylesheet" href="css/style.css">
-  </head>
-
-  <!DOCTYPE html>
-<html>
-<head>
-<title>Download Report - Rajan Path Lab</title>
-<link rel="stylesheet" href="css/style.css">
-<style>
-.report-box{
-max-width:400px;
-margin:100px auto;
-text-align:center;
-background:#fff;
-padding:30px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-
-input{
-padding:10px;
-width:80%;
-margin:10px;
-}
-
-button{
-padding:10px 20px;
-background:#0077b6;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-}
-</style>
-</head>
-
-<body>
-
-<div class="report-box">
-
-<h2>Download Your Report</h2>
-
-<p>Enter your Report ID</p>
-
-<input type="text" id="reportId" placeholder="Report ID">
-
-<br>
-
-<button onclick="downloadReport()">Download</button>
-
-</div>
-
-<script>
-
-function downloadReport(){
-
-var id=document.getElementById("reportId").value;
-
-if(id=="RPL-032026-001"){
-window.open("https://drive.google.com/");
-}
-
-else{
-alert("Report not found");
-}
-
-}
-
-</script>
-
-</body>
-</html>
 
 </body>
 </html>
