@@ -88,23 +88,40 @@
         .card i { font-size: 40px; color: var(--accent-teal); margin-bottom: 15px; display: block; }
         .card h3 { margin: 10px 0; color: var(--primary-blue); }
 
-        /* PARTNER LOGOS SECTION */
+        /* --- UPDATED PARTNER LOGOS SECTION WITH COLOUR LOGOS --- */
         .partners {
             background: #fff;
-            padding: 40px 20px;
-            margin-top: 40px;
-            border-radius: 20px;
+            padding: 50px 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 50px;
         }
         .partner-grid {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px;
+            gap: 60px; /* More space between large logos */
             flex-wrap: wrap;
-            opacity: 0.8;
         }
-        .partner-item { text-align: center; font-weight: bold; color: #444; }
-        .partner-item i { font-size: 30px; display: block; color: var(--primary-blue); }
+        .partner-item {
+            text-align: center;
+            transition: 0.3s;
+        }
+        .partner-item img {
+            max-width: 180px; /* Controlled logo size */
+            height: auto;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .partner-item p {
+            font-size: 14px;
+            font-weight: 700;
+            color: #444;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .partner-item:hover { transform: scale(1.05); }
 
         footer { background: var(--primary-blue); color: #cbd5e1; padding: 50px 20px; text-align: center; }
         
@@ -157,6 +174,24 @@
     📍 Manahar Bhushra Pandwa Patan Road | 📞 8709946177 / 9931002450
 </div>
 
+<section style="background: #f1f5f9; border-radius: 50px 50px 0 0;">
+    <h2>Our Diagnostic Partners</h2>
+    <p style="margin-top: -30px; margin-bottom: 50px; color: #667; font-size: 1.1rem;">Working with India's most trusted and iconic lab brands</p>
+    <div class="partners">
+        <div class="partner-grid">
+            <div class="partner-item">
+                <img src="https://logos-download.com/wp-content/uploads/2021/01/Thyrocare_Technologies_Logo.png" alt="Thyrocare Logo">
+            </div>
+            <div class="partner-item">
+                <img src="https://logos-download.com/wp-content/uploads/2021/01/Dr_Lal_PathLabs_Logo.png" alt="Dr. Lal PathLabs Logo">
+            </div>
+            <div class="partner-item">
+                <img src="https://pathkindlabs.com/wp-content/uploads/2020/09/pathkind-logo.png" alt="Pathkind Labs Logo">
+            </div>
+        </div>
+    </div>
+</section>
+
 <section>
     <h2>Our Specialized Tests</h2>
     <div class="grid-container">
@@ -199,25 +234,6 @@
             <i class="fas fa-syringe"></i>
             <h3>Diabetes Care</h3>
             <p>HbA1c & Blood Sugar monitoring.</p>
-        </div>
-    </div>
-</section>
-
-<section style="background: #f1f5f9; border-radius: 50px 50px 0 0;">
-    <h2>Our Diagnostic Partners</h2>
-    <p style="margin-top: -30px; margin-bottom: 40px; color: #667;">Working with India's most trusted lab brands</p>
-    <div class="partner-grid">
-        <div class="partner-item">
-            <i class="fas fa-building"></i>
-            <p>Thyrocare</p>
-        </div>
-        <div class="partner-item">
-            <i class="fas fa-hospital-symbol"></i>
-            <p>Dr. Lal PathLabs</p>
-        </div>
-        <div class="partner-item">
-            <i class="fas fa-flask"></i>
-            <p>Pathkind Labs</p>
         </div>
     </div>
 </section>
