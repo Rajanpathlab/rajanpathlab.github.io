@@ -1,276 +1,272 @@
+const express = require("express");
+const multer = require("multer");
+const app = express();
+
+app.use(express.json());
+const upload = multer({ dest: "uploads/" });
+
+let reports = {};
+
+// 🌐 MAIN WEBSITE (PREMIUM + SYSTEM MERGED)
+app.get("/", (req, res) => {
+res.send(`
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajan Path Lab | Premium Diagnostics</title>
-    
-    <style>
-        /* PROFESSIONAL COLOR PALETTE */
-        :root {
-            --primary-blue: #0a2e5c; /* Deep Trust Blue */
-            --accent-teal: #00a8a8;  /* Modern Medical Teal */
-            --soft-white: #f8fafc;   /* Clean background */
-            --urgent-red: #e63946;   /* For Buttons */
-            --text-dark: #1e293b;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajan Path Lab | Premium Diagnostics</title>
 
-        body {
-            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: var(--soft-white);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+<style>
+:root {
+--primary-blue:#0a2e5c;
+--accent-teal:#00a8a8;
+--soft-white:#f8fafc;
+--urgent-red:#e63946;
+}
 
-        /* HEADER - Premium Dark Style */
-        header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+body{
+margin:0;
+font-family:Segoe UI;
+background:var(--soft-white);
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-            letter-spacing: 2px;
-            font-weight: 800;
-            color: #ffffff;
-        }
+/* HEADER */
+header{
+background:var(--primary-blue);
+color:white;
+padding:15px 5%;
+display:flex;
+justify-content:space-between;
+}
 
-        header h1 span {
-            color: var(--accent-teal); /* Highlighted part of logo */
-        }
+header span{color:var(--accent-teal);}
 
-        nav a {
-            color: #e2e8f0;
-            margin-left: 25px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: 0.3s;
-        }
+nav a{
+color:white;
+margin-left:20px;
+text-decoration:none;
+}
 
-        nav a:hover {
-            color: var(--accent-teal);
-        }
+/* HERO */
+.hero{
+background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+url('https://images.unsplash.com/photo-1579152276502-53b8a3e14a72');
+color:white;
+text-align:center;
+padding:100px 20px;
+}
 
-        /* HERO SECTION - High End Gradient */
-        .hero {
-            background: linear-gradient(135deg, rgba(10, 46, 92, 0.9) 0%, rgba(0, 168, 168, 0.8) 100%), 
-                        url('https://images.unsplash.com/photo-1579152276502-53b8a3e14a72?auto=format&fit=crop&q=80&w=1500');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 120px 20px;
-        }
+.btn{
+background:var(--urgent-red);
+padding:12px 25px;
+color:white;
+border:none;
+border-radius:8px;
+margin:10px;
+cursor:pointer;
+}
 
-        .hero h2 {
-            font-size: 48px;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
+/* SECTION */
+section{
+padding:50px;
+text-align:center;
+}
 
-        /* BUTTONS */
-        .btn {
-            background: var(--urgent-red);
-            padding: 16px 40px;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px; /* Slightly rounded for professional look */
-            margin: 10px;
-            display: inline-block;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
-            cursor: pointer;
-        }
+input,select{
+padding:10px;
+margin:10px;
+border-radius:8px;
+border:1px solid #ddd;
+}
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.4);
-            filter: brightness(1.1);
-        }
+/* CARD */
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+margin:10px;
+display:inline-block;
+width:220px;
+}
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid white;
-        }
-
-        .btn-outline:hover {
-            background: white;
-            color: var(--primary-blue);
-        }
-
-        /* SECTION STYLING */
-        section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        section h2 {
-            font-size: 36px;
-            margin-bottom: 50px;
-            color: var(--primary-blue);
-            font-weight: 700;
-        }
-
-        /* CARDS - Modern & Clean */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 40px 20px;
-            border-radius: 20px;
-            transition: 0.4s;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            border-color: var(--accent-teal);
-        }
-
-        .card h3 {
-            color: var(--primary-blue);
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            color: #64748b;
-            font-size: 15px;
-        }
-
-        /* CONTACT STRIP */
-        .strip {
-            background: #ffffff;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            padding: 20px;
-        }
-
-        /* FOOTER */
-        footer {
-            background: var(--primary-blue);
-            color: #cbd5e1;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        /* WHATSAPP FLOAT */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #25D366;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-    </style>
+/* FLOAT */
+.float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+padding:10px 20px;
+border-radius:30px;
+color:white;
+text-decoration:none;
+}
+</style>
 </head>
+
 <body>
 
 <header>
-    <h1>RAJAN <span>PATH LAB</span></h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="tests.html">Tests</a>
-        <a href="book.html">Book Now</a>
-        <a href="report.html">Reports</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+<h1>RAJAN <span>PATH LAB</span></h1>
+<nav>
+<a href="#">Home</a>
+<a href="#book">Book</a>
+<a href="#report">Report</a>
+<a href="#admin">Admin</a>
+</nav>
 </header>
 
 <div class="hero">
-    <h2>Advanced Diagnostics, <br>Care You Can Trust</h2>
-    <p style="font-size: 1.3rem; opacity: 0.9;">ISO Certified Excellence | Palamu, Jharkhand</p>
-    <div style="margin-top: 30px;">
-        <a class="btn" href="book.html">Book Home Collection</a>
-        <a class="btn btn-outline" href="report.html">Download Report</a>
-    </div>
+<h2>Advanced Diagnostics, Care You Can Trust</h2>
+<p>Fast Reports • Accurate Results</p>
+
+<button class="btn" onclick="scrollToSection('book')">Book Test</button>
+<button class="btn" onclick="scrollToSection('report')">Download Report</button>
 </div>
 
-<div class="strip">
-    <p>📍 <strong>Location:</strong> Manahar Bhushra Pandwa Patan Road | 📞 <strong>Call:</strong> 8709946177</p>
-</div>
-
+<!-- SERVICES -->
 <section>
-    <h2>Our Specialized Tests</h2>
-    <div class="grid-container">
-        <div class="card">
-            <div style="font-size: 40px; color: var(--accent-teal);">🧪</div>
-            <h3>CBC Test</h3>
-            <p>Complete blood profile for infection and anemia screening.</p>
-        </div>
-        <div class="card">
-            <div style="font-size: 40px; color: var(--accent-teal);">🦋</div>
-            <h3>Thyroid Profile</h3>
-            <p>T3, T4 & TSH analysis for hormonal health.</p>
-        </div>
-        <div class="card">
-            <div style="font-size: 40px; color: var(--accent-teal);">🩸</div>
-            <h3>Diabetes Care</h3>
-            <p>HbA1c and Blood Sugar tests for glucose monitoring.</p>
-        </div>
-        <div class="card">
-            <div style="font-size: 40px; color: var(--accent-teal);">🩺</div>
-            <h3>Full Body Checkup</h3>
-            <p>Comprehensive health screening for all age groups.</p>
-        </div>
-    </div>
+<h2>Our Tests</h2>
+<div class="card">CBC</div>
+<div class="card">Thyroid</div>
+<div class="card">Diabetes</div>
+<div class="card">Full Body</div>
 </section>
 
-<section style="background-color: #f1f5f9; border-radius: 50px 50px 0 0;">
-    <h2>Why Patients Trust Us</h2>
-    <div class="grid-container">
-        <div class="card"><strong>100% Accurate</strong><p>NABL Standard Equipment</p></div>
-        <div class="card"><strong>Fast Delivery</strong><p>Reports within 24 Hours</p></div>
-        <div class="card"><strong>Home Pickup</strong><p>Professional Phlebotomists</p></div>
-        <div class="card"><strong>Affordable</strong><p>Best price in Palamu</p></div>
-    </div>
+<!-- BOOK -->
+<section id="book">
+<h2>Book Test</h2>
+
+<input id="name" placeholder="Name"><br>
+<input id="phone" placeholder="Phone"><br>
+
+<button class="btn" onclick="book()">Book via WhatsApp</button>
 </section>
 
-<footer>
-    <h2 style="color: white;">RAJAN PATH LAB</h2>
-    <p>Palamu, Jharkhand | Reg No: 12359</p>
-    <p>📧 support@rajanpathlab.com</p>
-    <hr style="width: 50px; border: 1px solid var(--accent-teal); margin: 20px auto;">
-    <p style="font-size: 13px; opacity: 0.7;">© 2026 Rajan Path Lab. Modern Diagnostics for a Healthier You.</p>
-</footer>
+<!-- REPORT -->
+<section id="report">
+<h2>Download Report</h2>
 
-<a href="https://wa.me/918709946177" class="whatsapp-float">
-    Chat with Expert 💬
+<input id="rid" placeholder="Report ID"><br>
+
+<button class="btn" onclick="getReport()">Download</button>
+</section>
+
+<!-- AI -->
+<section>
+<h2>AI Assistant</h2>
+
+<input id="msg" placeholder="Ask health question">
+<button class="btn" onclick="send()">Ask</button>
+
+<p id="reply"></p>
+</section>
+
+<!-- ADMIN -->
+<section id="admin">
+<h2>Admin Panel</h2>
+
+<input id="pid" placeholder="Patient ID">
+<input type="file" id="file"><br>
+
+<button class="btn" onclick="upload()">Upload Report</button>
+</section>
+
+<!-- LOCATION -->
+<section>
+<h2>Visit Us</h2>
+
+<a href="https://share.google/GdvrI6weGqIsTRoYw" target="_blank" class="btn">
+📍 Get Directions
 </a>
+
+<br><br>
+
+<iframe 
+src="https://www.google.com/maps?q=RAJAN+PATH+LAB&output=embed"
+width="90%" height="250">
+</iframe>
+</section>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/918709946177" class="float">Chat 💬</a>
+
+<script>
+function scrollToSection(id){
+document.getElementById(id).scrollIntoView();
+}
+
+// BOOK
+function book(){
+let msg = "Booking:%0AName:"+name.value+"%0APhone:"+phone.value;
+window.open("https://wa.me/918709946177?text="+msg);
+}
+
+// REPORT
+function getReport(){
+fetch("/report?id="+rid.value)
+.then(res=>res.text())
+.then(link=>{
+if(link.startsWith("http")){
+window.open(link);
+}else{
+alert("Report not found");
+}
+});
+}
+
+// AI
+function send(){
+fetch("/chat",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({message:msg.value})
+})
+.then(res=>res.json())
+.then(d=>reply.innerText=d.reply);
+}
+
+// UPLOAD
+function upload(){
+let f = file.files[0];
+let form = new FormData();
+form.append("file",f);
+form.append("id",pid.value);
+
+fetch("/upload",{method:"POST",body:form})
+.then(()=>alert("Uploaded"));
+}
+</script>
 
 </body>
 </html>
+
+`);
+});
+
+// REPORT
+app.get("/report",(req,res)=>{
+res.send(reports[req.query.id] || "Not found");
+});
+
+// UPLOAD
+app.post("/upload",upload.single("file"),(req,res)=>{
+reports[req.body.id] = "http://localhost:3000/uploads/"+req.file.filename;
+res.send("Uploaded");
+});
+
+// AI
+app.post("/chat",(req,res)=>{
+let msg = req.body.message.toLowerCase();
+
+let reply = "Doctor consult karein";
+
+if(msg.includes("fever")) reply="CBC test recommended";
+if(msg.includes("weak")) reply="Weakness → CBC test";
+if(msg.includes("thyroid")) reply="Thyroid test required";
+
+res.json({reply});
+});
+
+app.listen(3000,()=>console.log("🔥 Running http://localhost:3000"));
