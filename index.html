@@ -15,151 +15,84 @@
             --urgent-red: #e63946;   
             --text-dark: #1e293b;
             --whatsapp-green: #25D366;
-            --thyro-orange: #ff6600;
-            --lal-blue: #ed1c24;
-            --path-purple: #662d91;
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
             margin: 0; padding: 0;
             background: var(--soft-white);
             color: var(--text-dark);
-            line-height: 1.6;
         }
 
         header {
             background: var(--primary-blue);
             color: white;
-            padding: 20px 5%;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             position: sticky; top: 0; z-index: 1000;
         }
 
-        header h1 { margin: 0; font-size: 26px; letter-spacing: 1px; font-weight: 800; }
+        header h1 { margin: 0; font-size: 24px; font-weight: 800; }
         header h1 span { color: var(--accent-teal); }
 
-        nav a { color: #e2e8f0; margin-left: 20px; text-decoration: none; font-weight: 500; font-size: 14px; }
+        nav a { color: #e2e8f0; margin-left: 15px; text-decoration: none; font-size: 14px; }
 
         .hero {
             background: linear-gradient(135deg, rgba(10, 46, 92, 0.9) 0%, rgba(0, 168, 168, 0.8) 100%), 
                         url('https://images.unsplash.com/photo-1579152276502-53b8a3e14a72?auto=format&fit=crop&q=80&w=1500');
             background-size: cover; background-position: center;
-            color: white; text-align: center; padding: 100px 20px;
-        }
-
-        .btn {
-            background: var(--urgent-red);
-            padding: 15px 35px;
-            color: white; text-decoration: none;
-            border-radius: 8px; margin: 10px;
-            display: inline-block; font-weight: bold;
-            transition: 0.3s; text-transform: uppercase;
+            color: white; text-align: center; padding: 80px 20px;
         }
 
         .strip {
-            background: #ffffff;
-            border-bottom: 2px solid var(--accent-teal);
-            padding: 25px 20px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-blue);
+            background: #fff; padding: 20px; text-align: center;
+            font-size: 1.1rem; font-weight: 600; border-bottom: 2px solid var(--accent-teal);
         }
 
-        section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
-        h2 { color: var(--primary-blue); margin-bottom: 40px; font-size: 32px; font-weight: 800; }
+        section { padding: 50px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
 
+        /* SPECIALIZED TEST CARDS */
         .card {
-            background: white;
-            padding: 35px 25px;
-            border-radius: 15px;
-            border: 1px solid #e2e8f0;
-            transition: 0.4s;
+            background: white; padding: 30px; border-radius: 15px;
+            border: 1px solid #e2e8f0; transition: 0.3s;
         }
-
-        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: var(--accent-teal); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         
-        /* Specialized Tests Styling */
-        .specialized-icon {
-            font-size: 45px;
-            margin-bottom: 15px;
-            display: block;
+        .test-icon { font-size: 50px; margin-bottom: 15px; }
+
+        /* BOOKING FORM (As per your Image) */
+        .booking-container {
+            background: #fff; max-width: 500px; margin: 0 auto;
+            padding: 30px; border-radius: 10px; text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .booking-container h2 { margin-top: 0; font-size: 28px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .form-group input { 
+            width: 100%; padding: 10px; border: 1px solid #ccc; 
+            border-radius: 4px; box-sizing: border-box; background: #fdfdfd;
+        }
+        .btn-wa {
+            background: #4cd964; color: white; width: 100%; border: none;
+            padding: 15px; border-radius: 5px; font-weight: bold; font-size: 16px;
+            cursor: pointer; margin-top: 10px;
         }
 
-        /* Partner Styling (Logo removed as requested in previous turns) */
-        .partner-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .partner-item {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            width: 180px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-bottom: 4px solid #ddd;
-        }
-        .partner-item i { font-size: 40px; margin-bottom: 10px; }
-        .partner-item p { font-weight: 800; margin: 0; font-size: 15px; }
-
-        /* Booking Form Styling */
-        #booking-form {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: left;
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-        }
-        #booking-form label { display: block; margin-bottom: 8px; font-weight: 600; color: #1e293b; }
-        #booking-form input { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #cbd5e1; box-sizing: border-box; }
-        .submit-wa {
-            background-color: var(--whatsapp-green);
-            color: white;
-            width: 100%;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .submit-wa:hover { filter: brightness(1.1); transform: scale(1.02); }
-
-        footer { background: var(--primary-blue); color: #cbd5e1; padding: 60px 20px; text-align: center; }
-        
-        .social-item {
-            color: white; text-decoration: none;
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px; border-radius: 50px;
-            margin: 5px; display: inline-block; transition: 0.3s;
-        }
-        .social-item:hover { background: var(--accent-teal); }
+        footer { background: var(--primary-blue); color: white; padding: 40px 20px; text-align: center; }
 
         .whatsapp-float {
-            position: fixed; bottom: 30px; right: 30px;
-            background: var(--whatsapp-green); color: white;
-            padding: 15px 25px; border-radius: 50px;
-            text-decoration: none; font-weight: bold; z-index: 1000;
+            position: fixed; bottom: 20px; right: 20px;
+            background: #25D366; color: white; padding: 15px 20px;
+            border-radius: 50px; text-decoration: none; font-weight: bold;
         }
     </style>
 </head>
@@ -168,143 +101,146 @@
 <header>
     <h1>RAJAN <span>PATH LAB</span></h1>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="tests.html">Tests</a>
-        <a href="#book-section">Book Now</a>
-        <a href="report.html">Reports</a>
+        <a href="#">Home</a>
+        <a href="#booking">Book Now</a>
+        <a href="#">Reports</a>
     </nav>
 </header>
 
 <div class="hero">
-    <h2>Reliable Diagnostics with <br>Advanced Technology</h2>
-    <p style="font-size: 1.4rem;">Home Sample Collection Charges: ₹50 Only</p>
-    <div style="margin-top: 30px;">
-        <a class="btn" href="#book-section">Book Home Collection</a>
-        <a class="btn" style="background:transparent; border:2px solid white;" href="report.html">Reports</a>
-    </div>
+    <h2 style="font-size: 36px;">Reliable Diagnostics with <br>Advanced Technology</h2>
+    <p>Home Sample Collection Charges: ₹50 Only</p>
 </div>
 
 <div class="strip">
     📍 Manahar Bhushra Pandwa Patan Road | 📞 8709946177 / 9931002450
 </div>
 
-<section style="background: #eef2f6;">
+<section style="background: #f8fafc;">
     <h2>Our Collection Centers</h2>
     <div class="grid-container">
-        <div class="card" style="border-top: 5px solid var(--accent-teal);">
-            <i class="fas fa-clinic-medical" style="font-size: 45px; color: var(--accent-teal);"></i>
+        <div class="card" style="border-left: 5px solid #e63946;">
+            <i class="fas fa-hospital-user" style="color: #e63946; font-size: 40px;"></i>
             <h3>J R MEDICAL</h3>
-            <p><strong>Chilbil Chowk, Manhar</strong></p>
-            <p style="color: #e63946; font-weight: bold; margin-top: 10px;">Visit for Morning Fasting Samples</p>
+            <p>Chilbil Chowk, Manhar</p>
+            <p style="color: #e63946; font-weight: bold;">Fasting Samples (Khali Pet)</p>
         </div>
-        <div class="card">
-            <i class="fas fa-truck-pickup" style="font-size: 45px; color: var(--accent-teal);"></i>
+        <div class="card" style="border-left: 5px solid var(--accent-teal);">
+            <i class="fas fa-home" style="color: var(--accent-teal); font-size: 40px;"></i>
             <h3>Home Collection</h3>
-            <p>Professional sample pickup at your doorstep.</p>
-            <p style="font-weight: bold; margin-top: 10px;">Available All Over Palamu</p>
+            <p>Professional Pickup Service</p>
+            <p><b>Charge: ₹50</b></p>
         </div>
     </div>
 </section>
 
 <section>
-    <h2>Our Diagnostic Partners</h2>
-    <div class="partner-grid">
-        <div class="partner-item" style="border-color: var(--thyro-orange);">
-            <i class="fas fa-microscope" style="color: var(--thyro-orange);"></i>
-            <p>Thyrocare</p>
+    <h2>Specialized Test Menu</h2>
+    <div class="grid-container">
+        <div class="card">
+            <i class="fas fa-microscope test-icon" style="color: #2a9d8f;"></i>
+            <h3>CBC Test</h3>
+            <p>Complete Blood Profile</p>
         </div>
-        <div class="partner-item" style="border-color: var(--lal-blue);">
-            <i class="fas fa-vials" style="color: var(--lal-blue);"></i>
-            <p>Dr. Lal PathLabs</p>
+        <div class="card">
+            <i class="fas fa-vial test-icon" style="color: #e76f51;"></i>
+            <h3>Liver Function</h3>
+            <p>Comprehensive LFT</p>
         </div>
-        <div class="partner-item" style="border-color: var(--path-purple);">
-            <i class="fas fa-flask" style="color: var(--path-purple);"></i>
-            <p>Pathkind Labs</p>
+        <div class="card">
+            <i class="fas fa-dna test-icon" style="color: #6a0dad;"></i>
+            <h3>Aarogyam C Pro</h3>
+            <p>69 Health Parameters</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-sun test-icon" style="color: #ffb703;"></i>
+            <h3>Vitamin D</h3>
+            <p>25-Hydroxy Bone Health</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-bolt test-icon" style="color: #023e8a;"></i>
+            <h3>Vitamin B12</h3>
+            <p>Nerve & Energy Profile</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-bug test-icon" style="color: #d00000;"></i>
+            <h3>Dengue Test</h3>
+            <p>NS1, IgG & IgM</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-heartbeat test-icon" style="color: #ff4d6d;"></i>
+            <h3>Thyroid Profile</h3>
+            <p>T3, T4, TSH</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-hand-holding-droplet test-icon" style="color: #fb8500;"></i>
+            <h3>Diabetes Care</h3>
+            <p>HbA1c & Sugar</p>
         </div>
     </div>
 </section>
 
-<section id="book-section" style="background-color: #f1f5f9;">
-    <h2>Book Your Test</h2>
-    <p style="margin-top: -30px; margin-bottom: 40px; color: #64748b;">Fill in the details to submit booking via WhatsApp</p>
-    <form id="booking-form">
-        <label for="name">Name</label>
-        <input type="text" id="name" placeholder="Patient's Full Name" required>
-
-        <label for="age">Age</label>
-        <input type="number" id="age" placeholder="Patient's Age" required>
-
-        <label for="doctor">Ref. By (Doctor/Person)</label>
-        <input type="text" id="doctor" placeholder="Dr. XYZ or Self">
-
-        <label for="mobile">Mobile Number</label>
-        <input type="tel" id="mobile" placeholder="Contact Number" required>
-
-        <label for="test">Test Name</label>
-        <input type="text" id="test" placeholder="E.g., CBC, Thyroid" required>
-
-        <label for="address">Address</label>
-        <input type="text" id="address" placeholder="Full Address for Collection" required>
-
-        <label for="date">Date</label>
-        <input type="date" id="date" required>
-
-        <button type="button" class="submit-wa" onclick="sendToWhatsApp()">
-            <i class="fab fa-whatsapp"></i>
-            Submit Booking via WhatsApp
-        </button>
-    </form>
-</section>
-
-<section style="background: #ffffff; border-radius: 60px 60px 0 0;">
-    <h2>Specialized Test Menu</h2>
-    <div class="grid-container">
-        <div class="card"><i class="fas fa-file-waveform specialized-icon" style="color: var(--thyro-orange);"></i><h3>CBC Test</h3><p>Complete blood profile analysis.</p></div>
-        <div class="card"><i class="fas fa-capsules specialized-icon" style="color: var(--lal-blue);"></i><h3>Liver Function</h3><p>Comprehensive LFT screening.</p></div>
-        <div class="card"><i class="fas fa-dna specialized-icon" style="color: var(--path-purple);"></i><h3>Aarogyam C Pro</h3><p>Total 69 Parameters covered.</p></div>
-        <div class="card"><i class="fas fa-vial-circle-check specialized-icon" style="color: #4CAF50;"></i><h3>Vitamin D & B12</h3><p>Bone & Nerve health check.</p></div>
-        <div class="card"><i class="fas fa-baby specialized-icon" style="color: #FF1493;"></i><h3>Prolactin</h3><p>Hormonal health screening.</p></div>
-        <div class="card"><i class="fas fa-bug specialized-icon" style="color: var(--urgent-red);"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM screening.</p></div>
-        <div class="card"><i class="fas fa-heartbeat specialized-icon" style="color: #FFC107;"></i><h3>Thyroid Profile</h3><p>Full T3, T4, TSH analysis.</p></div>
-        <div class="card"><i class="fas fa-syringe specialized-icon" style="color: #03A9F4;"></i><h3>Diabetes Care</h3><p>HbA1c & Fasting Sugar.</p></div>
+<section id="booking" style="background: #f1f5f9;">
+    <div class="booking-container">
+        <h2>Book Your Test</h2>
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="p_name">
+        </div>
+        <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="p_age">
+        </div>
+        <div class="form-group">
+            <label>Ref. By (Doctor/Person)</label>
+            <input type="text" id="p_doc">
+        </div>
+        <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="tel" id="p_mob">
+        </div>
+        <div class="form-group">
+            <label>Test Name</label>
+            <input type="text" id="p_test">
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <input type="text" id="p_addr">
+        </div>
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="p_date">
+        </div>
+        <button class="btn-wa" onclick="bookNow()">Submit Booking via WhatsApp</button>
     </div>
 </section>
 
 <footer>
-    <h2 style="color: white;">RAJAN PATH LAB (RPL)</h2>
-    <div class="social-links" style="margin: 20px 0;">
-        <a href="https://share.google/zEHIbrN2qxjBfk8IA" class="social-item"><i class="fas fa-map-marker-alt"></i> Google Maps</a>
-        <a href="https://www.instagram.com/lab_technician_3.0" class="social-item"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="tel:+918709946177" class="social-item"><i class="fas fa-phone-alt"></i> 8709946177</a>
-    </div>
+    <h3>RAJAN PATH LAB (RPL)</h3>
+    <p>Palamu, Jharkhand | Reports in 12 Hours</p>
     <p>🌐 rajanpathlab.github.io</p>
-    <p style="font-size: 12px; opacity: 0.6;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
+    <p style="font-size: 12px; opacity: 0.6; margin-top: 20px;">© 2026 All Rights Reserved.</p>
 </footer>
 
-<a href="https://wa.me/918709946177" class="whatsapp-float">Chat with Expert 💬</a>
+<a href="https://wa.me/918709946177" class="whatsapp-float">Chat Now 💬</a>
 
 <script>
-    function sendToWhatsApp() {
-        // Form details collect karein
-        const name = document.getElementById('name').value;
-        const age = document.getElementById('age').value;
-        const doctor = document.getElementById('doctor').value || 'Self';
-        const mobile = document.getElementById('mobile').value;
-        const test = document.getElementById('test').value;
-        const address = document.getElementById('address').value;
-        const date = document.getElementById('date').value;
+    function bookNow() {
+        const name = document.getElementById('p_name').value;
+        const age = document.getElementById('p_age').value;
+        const mob = document.getElementById('p_mob').value;
+        const test = document.getElementById('p_test').value;
+        const addr = document.getElementById('p_addr').value;
+        const date = document.getElementById('p_date').value;
+        const doc = document.getElementById('p_doc').value || 'Self';
 
-        // Validation (Make sure all required fields are filled)
-        if (!name || !age || !mobile || !test || !address || !date) {
-            alert("Please fill in all required details.");
+        if(!name || !mob || !test) {
+            alert("Please fill Name, Mobile and Test Name");
             return;
         }
 
-        // WhatsApp message format karein
-        const message = `*Rajan Path Lab - Test Booking*%0A---------------------------%0A*Name:* ${name}%0A*Age:* ${age}%0A*Ref By:* ${doctor}%0A*Contact:* ${mobile}%0A*Test:* ${test}%0A*Address:* ${address}%0A*Preferred Date:* ${date}%0A---------------------------`;
-
-        // WhatsApp Web/App link open karein
-        window.open(`https://wa.me/918709946177?text=${message}`);
+        const msg = `*New Booking - Rajan Path Lab*%0A%0A*Name:* ${name}%0A*Age:* ${age}%0A*Doctor:* ${doc}%0A*Mobile:* ${mob}%0A*Test:* ${test}%0A*Address:* ${addr}%0A*Date:* ${date}`;
+        window.open(`https://wa.me/918709946177?text=${msg}`);
     }
 </script>
 
