@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajan Path Lab | Premium Diagnostics & Logistics</title>
+    <title>Rajan Path Lab | Premium Diagnostics</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -14,6 +14,9 @@
             --soft-white: #f8fafc;   
             --urgent-red: #e63946;   
             --text-dark: #1e293b;
+            --thyro-orange: #ff6600;
+            --lal-blue: #ed1c24;
+            --path-purple: #662d91;
         }
 
         body {
@@ -38,14 +41,13 @@
         header h1 { margin: 0; font-size: 26px; letter-spacing: 1px; font-weight: 800; }
         header h1 span { color: var(--accent-teal); }
 
-        nav a { color: #e2e8f0; margin-left: 20px; text-decoration: none; font-weight: 500; font-size: 14px; transition: 0.3s; }
-        nav a:hover { color: var(--accent-teal); }
+        nav a { color: #e2e8f0; margin-left: 20px; text-decoration: none; font-weight: 500; font-size: 14px; }
 
         .hero {
             background: linear-gradient(135deg, rgba(10, 46, 92, 0.9) 0%, rgba(0, 168, 168, 0.8) 100%), 
                         url('https://images.unsplash.com/photo-1579152276502-53b8a3e14a72?auto=format&fit=crop&q=80&w=1500');
             background-size: cover; background-position: center;
-            color: white; text-align: center; padding: 110px 20px;
+            color: white; text-align: center; padding: 100px 20px;
         }
 
         .btn {
@@ -67,7 +69,7 @@
             color: var(--primary-blue);
         }
 
-        section { padding: 70px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
         h2 { color: var(--primary-blue); margin-bottom: 40px; font-size: 32px; font-weight: 800; }
 
         .grid-container {
@@ -82,61 +84,43 @@
             border-radius: 15px;
             border: 1px solid #e2e8f0;
             transition: 0.4s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: var(--accent-teal); }
-        .card i { font-size: 45px; color: var(--accent-teal); margin-bottom: 20px; }
-        .card h3 { margin: 10px 0; color: var(--primary-blue); font-size: 22px; }
-
-        /* BRAND LOGOS */
-        .partner-box {
-            background: #fff;
-            padding: 40px;
-            border-radius: 30px;
-            margin-top: 20px;
-        }
+        
+        /* PARTNER ICONS STYLE */
         .partner-grid {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 50px;
+            gap: 40px;
             flex-wrap: wrap;
         }
-        .partner-grid img {
-            max-width: 160px;
-            height: auto;
-            filter: grayscale(0);
-            transition: 0.3s;
+        .partner-item {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            width: 180px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-bottom: 4px solid #ddd;
         }
-        .partner-grid img:hover { transform: scale(1.1); }
+        .partner-item i { font-size: 40px; margin-bottom: 10px; }
+        .partner-item p { font-weight: 800; margin: 0; font-size: 15px; }
 
         footer { background: var(--primary-blue); color: #cbd5e1; padding: 60px 20px; text-align: center; }
         
-        .social-links {
-            margin: 25px 0;
-            display: flex;
-            justify-content: center;
-            gap: 15px; flex-wrap: wrap;
-        }
-
         .social-item {
             color: white; text-decoration: none;
             background: rgba(255,255,255,0.1);
-            padding: 12px 22px; border-radius: 50px;
-            font-size: 14px; transition: 0.3s;
-            display: flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border-radius: 50px;
+            margin: 5px; display: inline-block; transition: 0.3s;
         }
-        .social-item:hover { background: var(--accent-teal); transform: translateY(-3px); }
+        .social-item:hover { background: var(--accent-teal); }
 
         .whatsapp-float {
             position: fixed; bottom: 30px; right: 30px;
             background: #25D366; color: white;
             padding: 15px 25px; border-radius: 50px;
-            text-decoration: none; font-weight: bold;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 1000;
+            text-decoration: none; font-weight: bold; z-index: 1000;
         }
     </style>
 </head>
@@ -154,10 +138,10 @@
 
 <div class="hero">
     <h2>Reliable Diagnostics with <br>Advanced Technology</h2>
-    <p style="font-size: 1.4rem; font-weight: 500;">Home Sample Collection Charges: ₹50 Only</p>
+    <p style="font-size: 1.4rem;">Home Sample Collection Charges: ₹50 Only</p>
     <div style="margin-top: 30px;">
         <a class="btn" href="https://wa.me/918709946177">Book Home Collection</a>
-        <a class="btn" style="background:transparent; border:2px solid white;" href="report.html">Download Reports</a>
+        <a class="btn" style="background:transparent; border:2px solid white;" href="report.html">Reports</a>
     </div>
 </div>
 
@@ -169,13 +153,13 @@
     <h2>Our Collection Centers</h2>
     <div class="grid-container">
         <div class="card" style="border-top: 5px solid var(--accent-teal);">
-            <i class="fas fa-clinic-medical"></i>
+            <i class="fas fa-clinic-medical" style="font-size: 45px; color: var(--accent-teal);"></i>
             <h3>J R MEDICAL</h3>
             <p><strong>Chilbil Chowk, Manhar</strong></p>
             <p style="color: #e63946; font-weight: bold; margin-top: 10px;">Visit for Morning Fasting Samples</p>
         </div>
         <div class="card">
-            <i class="fas fa-truck-pickup"></i>
+            <i class="fas fa-truck-pickup" style="font-size: 45px; color: var(--accent-teal);"></i>
             <h3>Home Collection</h3>
             <p>Professional sample pickup at your doorstep.</p>
             <p style="font-weight: bold; margin-top: 10px;">Available All Over Palamu</p>
@@ -185,12 +169,18 @@
 
 <section>
     <h2>Our Diagnostic Partners</h2>
-    <p style="margin-top: -30px; margin-bottom: 40px; color: #64748b;">Powered by India's Largest Lab Networks</p>
-    <div class="partner-box">
-        <div class="partner-grid">
-            <img src="https://logos-download.com/wp-content/uploads/2021/01/Thyrocare_Technologies_Logo.png" alt="Thyrocare">
-            <img src="https://logos-download.com/wp-content/uploads/2021/01/Dr_Lal_PathLabs_Logo.png" alt="Dr Lal PathLabs">
-            <img src="https://pathkindlabs.com/wp-content/uploads/2020/09/pathkind-logo.png" alt="Pathkind Labs">
+    <div class="partner-grid">
+        <div class="partner-item" style="border-color: var(--thyro-orange);">
+            <i class="fas fa-microscope" style="color: var(--thyro-orange);"></i>
+            <p>Thyrocare</p>
+        </div>
+        <div class="partner-item" style="border-color: var(--lal-blue);">
+            <i class="fas fa-vials" style="color: var(--lal-blue);"></i>
+            <p>Dr. Lal PathLabs</p>
+        </div>
+        <div class="partner-item" style="border-color: var(--path-purple);">
+            <i class="fas fa-flask" style="color: var(--path-purple);"></i>
+            <p>Pathkind Labs</p>
         </div>
     </div>
 </section>
@@ -198,45 +188,29 @@
 <section style="background: #ffffff; border-radius: 60px 60px 0 0;">
     <h2>Specialized Test Menu</h2>
     <div class="grid-container">
-        <div class="card"><i class="fas fa-microscope"></i><h3>CBC Test</h3><p>Complete blood profile analysis.</p></div>
-        <div class="card"><i class="fas fa-vial"></i><h3>Liver Function</h3><p>Comprehensive LFT screening.</p></div>
-        <div class="card"><i class="fas fa-dna"></i><h3>Aarogyam C Pro</h3><p>Total 69 Parameters covered.</p></div>
-        <div class="card"><i class="fas fa-capsules"></i><h3>Vitamin D & B12</h3><p>Bone & Nerve health check.</p></div>
-        <div class="card"><i class="fas fa-baby"></i><h3>Prolactin</h3><p>Hormonal health screening.</p></div>
-        <div class="card"><i class="fas fa-virus"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM screening.</p></div>
-        <div class="card"><i class="fas fa-heartbeat"></i><h3>Thyroid Profile</h3><p>Full T3, T4, TSH analysis.</p></div>
-        <div class="card"><i class="fas fa-syringe"></i><h3>Diabetes Care</h3><p>HbA1c & Fasting Sugar.</p></div>
-    </div>
-</section>
-
-<section style="background: #f1f5f9;">
-    <h2>Why Choose RPL?</h2>
-    <div class="grid-container">
-        <div class="card"><strong>100% Accurate</strong><p>NABL Standard Equipment</p></div>
-        <div class="card"><strong>Fast Delivery</strong><p>Reports within 12 Hours</p></div>
-        <div class="card"><strong>Expert Staff</strong><p>Professional Phlebotomists</p></div>
-        <div class="card"><strong>Affordable</strong><p>Best price in Palamu</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete blood profile analysis.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Liver Function</h3><p>Comprehensive LFT screening.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Aarogyam C Pro</h3><p>Total 69 Parameters covered.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Vitamin D & B12</h3><p>Bone & Nerve health check.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Prolactin</h3><p>Hormonal health screening.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM screening.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Thyroid Profile</h3><p>Full T3, T4, TSH analysis.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Diabetes Care</h3><p>HbA1c & Fasting Sugar.</p></div>
     </div>
 </section>
 
 <footer>
-    <h2 style="color: white; margin-bottom: 10px;">RAJAN PATH LAB (RPL)</h2>
-    <p>Palamu, Jharkhand | Reliable Diagnostics</p>
-    
-    <div class="social-links">
-        <a href="https://share.google/zEHIbrN2qxjBfk8IA" target="_blank" class="social-item"><i class="fas fa-map-marker-alt"></i> Google Maps</a>
-        <a href="https://www.instagram.com/lab_technician_3.0?igsh=MWNsOGo1M2pzbDk0cg==" target="_blank" class="social-item"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="tel:+918709946177" class="social-item"><i class="fas fa-phone-alt"></i> Call Us</a>
+    <h2 style="color: white;">RAJAN PATH LAB (RPL)</h2>
+    <div class="social-links" style="margin: 20px 0;">
+        <a href="https://share.google/zEHIbrN2qxjBfk8IA" class="social-item"><i class="fas fa-map-marker-alt"></i> Google Maps</a>
+        <a href="https://www.instagram.com/lab_technician_3.0" class="social-item"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="tel:+918709946177" class="social-item"><i class="fas fa-phone-alt"></i> 8709946177</a>
     </div>
-
-    <p style="margin-top: 25px; font-weight: bold; color: var(--accent-teal);">🌐 rajanpathlab.github.io</p>
-    <hr style="width: 60px; border: 1px solid var(--accent-teal); margin: 20px auto;">
+    <p>🌐 rajanpathlab.github.io</p>
     <p style="font-size: 12px; opacity: 0.6;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
 </footer>
 
-<a href="https://wa.me/918709946177" class="whatsapp-float">
-    Chat with Expert 💬
-</a>
+<a href="https://wa.me/918709946177" class="whatsapp-float">Chat with Expert 💬</a>
 
 </body>
 </html>
