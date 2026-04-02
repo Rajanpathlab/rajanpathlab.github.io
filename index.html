@@ -10,6 +10,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            padding: 0;
             background: #f4f9ff;
             color: #333;
             line-height: 1.6;
@@ -19,25 +20,26 @@
         header {
             background: #0b6aa2;
             color: white;
-            padding: 20px 5%;
+            padding: 30px 5%;
             display: flex;
-            flex-direction: column; /* Mobile friendly */
+            flex-direction: column;
             align-items: center;
             text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         header h1 {
             margin: 0;
-            font-size: 32px; /* Logo bada kiya gaya hai */
-            letter-spacing: 2px;
-            font-weight: 800;
+            font-size: 42px; /* Bada aur Bold Logo */
+            letter-spacing: 4px;
+            font-weight: 900;
             text-transform: uppercase;
             color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
         }
 
         nav {
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         nav a {
@@ -45,31 +47,33 @@
             margin: 0 15px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 16px;
             transition: 0.3s;
+            border-bottom: 2px solid transparent;
         }
 
         nav a:hover {
             color: #ffda44;
+            border-bottom: 2px solid #ffda44;
         }
 
         /* HERO SECTION */
         .hero {
-            background: linear-gradient(rgba(11, 106, 162, 0.8), rgba(0, 168, 232, 0.8)), url('https://via.placeholder.com/1500x500') no-repeat center center/cover;
+            background: linear-gradient(rgba(11, 106, 162, 0.85), rgba(0, 168, 232, 0.85)), url('https://images.unsplash.com/photo-1581093458791-9f3c3250bb8b?auto=format&fit=crop&q=80&w=1500') no-repeat center center/cover;
             color: white;
             text-align: center;
             padding: 100px 20px;
         }
 
         .hero h2 {
-            font-size: 45px;
-            margin-bottom: 10px;
+            font-size: 40px;
+            margin-bottom: 15px;
             font-weight: 700;
         }
 
         .btn {
             background: #ff3b3b;
-            padding: 14px 30px;
+            padding: 15px 35px;
             color: white;
             text-decoration: none;
             border-radius: 50px;
@@ -78,6 +82,8 @@
             font-weight: bold;
             transition: 0.3s;
             box-shadow: 0 4px 15px rgba(255, 59, 59, 0.4);
+            border: none;
+            cursor: pointer;
         }
 
         .btn:hover {
@@ -89,13 +95,14 @@
         section {
             padding: 60px 20px;
             max-width: 1200px;
-            margin: 0 auto; /* Center individual sections */
+            margin: 0 auto;
             text-align: center;
         }
 
         section h2 {
             font-size: 32px;
             margin-bottom: 40px;
+            color: #0b6aa2;
             position: relative;
             display: inline-block;
             padding-bottom: 10px;
@@ -103,20 +110,21 @@
 
         section h2::after {
             content: '';
-            width: 60px;
+            width: 70px;
             height: 4px;
-            background: #0b6aa2;
+            background: #ff3b3b;
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
+            border-radius: 10px;
         }
 
-        /* FLEXBOX GRID FOR CARDS */
+        /* GRID FOR CARDS */
         .grid-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* Center all cards */
+            justify-content: center; /* Center cards */
             gap: 25px;
         }
 
@@ -124,29 +132,40 @@
             background: white;
             padding: 30px;
             width: 220px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
             border-radius: 15px;
             transition: 0.3s;
             border-bottom: 4px solid #0b6aa2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            color: #0b6aa2;
+            font-size: 20px;
         }
 
         /* FOOTER */
         footer {
             background: #003b5c;
             color: white;
-            padding: 40px 20px;
+            padding: 50px 20px;
             text-align: center;
         }
 
         /* WHATSAPP BUTTON */
         .whatsapp-float {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             background: #25D366;
             color: white;
             padding: 15px 25px;
@@ -154,10 +173,8 @@
             text-decoration: none;
             font-size: 18px;
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             z-index: 1000;
-            display: flex;
-            align-items: center;
         }
     </style>
 </head>
@@ -176,10 +193,12 @@
 
 <div class="hero">
     <h2>Reliable Diagnostics with Advanced Technology</h2>
-    <p>Manahar Bhushra Pandwa Patan Road Palamu</p>
+    <p style="font-size: 1.2rem;">Manahar Bhushra Pandwa Patan Road Palamu</p>
     <p>📞 8709946177 | 9931002450</p>
-    <a class="btn" href="book.html">Book Test</a>
-    <a class="btn" href="report.html">Download Report</a>
+    <div style="margin-top: 25px;">
+        <a class="btn" href="book.html">Book Test Now</a>
+        <a class="btn" style="background:white; color:#0b6aa2;" href="report.html">Download Report</a>
+    </div>
 </div>
 
 <section>
@@ -206,7 +225,7 @@
 
 <section style="background-color: #ebf5ff;">
     <h2>Home Sample Collection</h2>
-    <p>Book blood sample collection from home easily. Our experts will visit your home.</p>
+    <p style="max-width: 700px; margin: 0 auto 20px;">Ab test ke liye lab aane ki zaroorat nahi. Hum aapke ghar aakar sample collect karenge.</p>
     <a class="btn" href="book.html">Request Home Collection</a>
 </section>
 
@@ -215,7 +234,7 @@
     <div class="grid-container">
         <div class="card"><strong>Accurate Reports</strong></div>
         <div class="card"><strong>Advanced Machines</strong></div>
-        <div class="card) "><strong>Experienced Staff</strong></div>
+        <div class="card"><strong>Experienced Staff</strong></div>
         <div class="card"><strong>Fast Report Delivery</strong></div>
     </div>
 </section>
@@ -223,18 +242,19 @@
 <section style="background-color: #fff;">
     <h2>Working Hours</h2>
     <p><strong>Monday – Sunday</strong></p>
-    <p style="font-size: 20px; color: #0b6aa2;">8:30 AM – 7:30 PM</p>
+    <p style="font-size: 24px; color: #0b6aa2; font-weight: bold;">8:30 AM – 7:30 PM</p>
 </section>
 
 <footer>
-    <h3>RAJAN PATH LAB</h3>
+    <h2 style="color: white; margin-bottom: 15px;">RAJAN PATH LAB</h2>
+    <p>📍 Palamu, Jharkhand</p>
     <p>📧 rajanpathlab@gmail.com</p>
-    <p>Reg No: 12359 | Location: Palamu, Jharkhand</p>
-    <p style="margin-top:20px; font-size: 12px; opacity: 0.7;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
+    <p>Reg No: 12359</p>
+    <p style="margin-top: 20px; font-size: 12px; opacity: 0.6;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
 </footer>
 
 <a href="https://wa.me/918709946177" class="whatsapp-float">
-    Chat on WhatsApp
+    Chat on WhatsApp 💬
 </a>
 
 </body>
