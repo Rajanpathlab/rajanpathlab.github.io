@@ -4,33 +4,38 @@
 <title>Book Test</title>
 
 <script>
-
 function sendWhatsApp(){
+    // Form se values nikalne ke liye
+    var name = document.getElementById("name").value; 
+    var age = document.getElementById("age").value;
+    var refBy = document.getElementById("refBy").value;
+    var mobile = document.getElementById("mobile").value;
+    var test = document.getElementById("test").value;
+    var address = document.getElementById("address").value;
+    var date = document.getElementById("date").value;
 
-var name=document.getElementById("name").value;
-var age=document.getElementById("age").value; 
-var ref.by=document.getElementById("ref.by").value;  
-var mobile=document.getElementById("mobile").value;
-var test=document.getElementById("test").value;
-var address=document.getElementById("address").value;
-var date=document.getElementById("date").value;
+    // WhatsApp message format karne ke liye
+    var message = "New Test Booking %0A%0A" +
+    "Name: " + name + "%0A" +
+    "Age: " + age + "%0A" +
+    "Ref. By: " + refBy + "%0A" +
+    "Mobile: " + mobile + "%0A" +
+    "Test: " + test + "%0A" +
+    "Address: " + address + "%0A" +
+    "Date: " + date;
 
-var message="New Test Booking %0A%0A"+
-"Name: "+name+"%0A"+
-"Mobile: "+mobile+"%0A"+
-"Test: "+test+"%0A"+
-"Address: "+address+"%0A"+
-"Date: "+date;
+    var phone = "918709946177";
+    var url = "https://wa.me/" + phone + "?text=" + message;
 
-var phone="918709946177";
-
-var url="https://wa.me/"+phone+"?text="+message;
-
-window.open(url,"_blank");
-
+    window.open(url, "_blank");
 }
-
 </script>
+
+<style>
+    body { font-family: sans-serif; padding: 20px; }
+    input { margin-bottom: 15px; width: 250px; padding: 5px; }
+    button { padding: 10px 20px; background-color: #25D366; color: white; border: none; cursor: pointer; border-radius: 5px; }
+</style>
 
 </head>
 
@@ -38,22 +43,28 @@ window.open(url,"_blank");
 
 <h2>Book Your Test</h2>
 
-Name<br>
-<input type="text" id="name"><br><br>
+<label>Name</label><br>
+<input type="text" id="name"><br>
 
-Mobile<br>
-<input type="text" id="mobile"><br><br>
+<label>Age</label><br>
+<input type="number" id="age"><br>
 
-Test Name<br>
-<input type="text" id="test"><br><br>
+<label>Ref. By (Doctor/Person)</label><br>
+<input type="text" id="refBy"><br>
 
-Address<br>
-<input type="text" id="address"><br><br>
+<label>Mobile Number</label><br>
+<input type="text" id="mobile"><br>
 
-Date<br>
+<label>Test Name</label><br>
+<input type="text" id="test"><br>
+
+<label>Address</label><br>
+<input type="text" id="address"><br>
+
+<label>Date</label><br>
 <input type="date" id="date"><br><br>
 
-<button onclick="sendWhatsApp()">Submit Booking</button>
+<button onclick="sendWhatsApp()">Submit Booking via WhatsApp</button>
 
 </body>
 </html>
