@@ -8,14 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* PROFESSIONAL COLOR PALETTE */
         :root {
             --primary-blue: #0a2e5c; 
             --accent-teal: #00a8a8;  
             --soft-white: #f8fafc;   
             --urgent-red: #e63946;   
             --text-dark: #1e293b;
-            /* New Premium Gradient */
             --premium-gradient: linear-gradient(135deg, #0a2e5c 0%, #00738c 50%, #00a8a8 100%);
         }
 
@@ -28,7 +26,6 @@
             line-height: 1.6;
         }
 
-        /* HEADER */
         header {
             background: var(--primary-blue);
             color: white;
@@ -47,12 +44,9 @@
             font-size: 28px;
             letter-spacing: 2px;
             font-weight: 800;
-            color: #ffffff;
         }
 
-        header h1 span {
-            color: var(--accent-teal);
-        }
+        header h1 span { color: var(--accent-teal); }
 
         nav a {
             color: #e2e8f0;
@@ -60,14 +54,8 @@
             text-decoration: none;
             font-weight: 500;
             font-size: 15px;
-            transition: 0.3s;
         }
 
-        nav a:hover {
-            color: var(--accent-teal);
-        }
-
-        /* HERO SECTION - Updated Premium Gradient */
         .hero {
             background: linear-gradient(135deg, rgba(10, 46, 92, 0.85) 0%, rgba(0, 168, 168, 0.75) 100%), 
                         url('https://images.unsplash.com/photo-1579152276502-53b8a3e14a72?auto=format&fit=crop&q=80&w=1500');
@@ -82,10 +70,8 @@
             font-size: 48px;
             margin-bottom: 10px;
             font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* BUTTONS */
         .btn {
             background: var(--urgent-red);
             padding: 16px 40px;
@@ -95,17 +81,8 @@
             margin: 10px;
             display: inline-block;
             font-weight: bold;
-            transition: all 0.3s ease;
+            transition: 0.3s;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.4);
-            filter: brightness(1.1);
         }
 
         .btn-outline {
@@ -113,12 +90,17 @@
             border: 2px solid white;
         }
 
-        .btn-outline:hover {
-            background: white;
+        /* LOCATION STRIP - Larger Size */
+        .strip {
+            background: #ffffff;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 25px 20px;
+            text-align: center;
+            font-size: 1.2rem; /* Increased size */
             color: var(--primary-blue);
         }
 
-        /* SECTION STYLING */
         section {
             padding: 80px 20px;
             max-width: 1200px;
@@ -126,14 +108,6 @@
             text-align: center;
         }
 
-        section h2 {
-            font-size: 36px;
-            margin-bottom: 50px;
-            color: var(--primary-blue);
-            font-weight: 700;
-        }
-
-        /* CARDS */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -146,9 +120,6 @@
             border-radius: 20px;
             transition: 0.4s;
             border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         .card:hover {
@@ -157,16 +128,6 @@
             border-color: var(--accent-teal);
         }
 
-        /* STRIP */
-        .strip {
-            background: #ffffff;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* FOOTER & SOCIAL ICONS */
         footer {
             background: var(--primary-blue);
             color: #cbd5e1;
@@ -178,29 +139,27 @@
             margin: 25px 0;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .social-item {
             color: white;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
             background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 50px;
             transition: 0.3s;
         }
 
         .social-item:hover {
             background: var(--accent-teal);
-            transform: scale(1.05);
         }
 
-        /* WHATSAPP FLOAT */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -213,9 +172,6 @@
             font-weight: bold;
             box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
             z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
     </style>
 </head>
@@ -233,8 +189,8 @@
 </header>
 
 <div class="hero">
-    <h2>Advanced Diagnostics, <br>Care You Can Trust</h2>
-    <p style="font-size: 1.3rem; opacity: 0.9;">ISO Certified Excellence | Palamu, Jharkhand</p>
+    <h2>Reliable Diagnostics with <br>Advanced Technology</h2>
+    <p style="font-size: 1.3rem; opacity: 0.9;">Home Sample Collection Charges: ₹50 Only</p>
     <div style="margin-top: 30px;">
         <a class="btn" href="book.html">Book Home Collection</a>
         <a class="btn btn-outline" href="report.html">Download Report</a>
@@ -242,16 +198,21 @@
 </div>
 
 <div class="strip">
-    <p>📍 <strong>Location:</strong> Manahar Bhushra Pandwa Patan Road | 📞 <strong>Call:</strong> 8709946177</p>
+    <p>📍 <strong>Location:</strong> Manahar Bhushra Pandwa Patan Road | 📞 <strong>Call:</strong> 8709946177 / 9931002450</p>
 </div>
 
 <section>
     <h2>Our Specialized Tests</h2>
     <div class="grid-container">
         <div class="card">
-            <div style="font-size: 40px; color: var(--accent-teal);">🧪</div>
-            <h3>CBC Test</h3>
-            <p>Complete blood profile for infection and anemia screening.</p>
+            <div style="font-size: 40px; color: var(--accent-teal);">🦟</div>
+            <h3>Dengue Test</h3>
+            <p>NS1, IgG & IgM rapid screening for early detection.</p>
+        </div>
+        <div class="card">
+            <div style="font-size: 40px; color: var(--accent-teal);">💎</div>
+            <h3>Aarogyam C Pro</h3>
+            <p><strong>Total 69 Parameters</strong> covered for full body analysis.</p>
         </div>
         <div class="card">
             <div style="font-size: 40px; color: var(--accent-teal);">🦋</div>
@@ -263,11 +224,6 @@
             <h3>Diabetes Care</h3>
             <p>HbA1c and Blood Sugar tests for glucose monitoring.</p>
         </div>
-        <div class="card">
-            <div style="font-size: 40px; color: var(--accent-teal);">🩺</div>
-            <h3>Full Body Checkup</h3>
-            <p>Comprehensive health screening for all age groups.</p>
-        </div>
     </div>
 </section>
 
@@ -275,29 +231,31 @@
     <h2>Why Patients Trust Us</h2>
     <div class="grid-container">
         <div class="card"><strong>100% Accurate</strong><p>NABL Standard Equipment</p></div>
-        <div class="card"><strong>Fast Delivery</strong><p>Reports within 24 Hours</p></div>
+        <div class="card"><strong>Fast Delivery</strong><p>Reports within 12 Hours</p></div>
         <div class="card"><strong>Home Pickup</strong><p>Professional Phlebotomists</p></div>
         <div class="card"><strong>Affordable</strong><p>Best price in Palamu</p></div>
     </div>
 </section>
 
 <footer>
-    <h2 style="color: white; margin-bottom: 5px;">RAJAN PATH LAB</h2>
-    <p>Palamu, Jharkhand | Reg No: 12359</p>
+    <h2 style="color: white; margin-bottom: 5px;">RAJAN PATH LAB (RPL)</h2>
     
     <div class="social-links">
-        <a href="tel:+918709946177" class="social-item">
-            <i class="fas fa-phone-alt"></i> Call Now
+        <a href="https://share.google/zEHIbrN2qxjBfk8IA" target="_blank" class="social-item">
+            <i class="fas fa-map-marker-alt"></i> Google Maps
         </a>
-        <a href="https://instagram.com/labtechnician3.0" target="_blank" class="social-item">
-            <i class="fab fa-instagram"></i> labtechnician3.0
+        <a href="https://www.instagram.com/lab_technician_3.0?igsh=MWNsOGo1M2pzbDk0cg==" target="_blank" class="social-item">
+            <i class="fab fa-instagram"></i> lab_technician_3.0
+        </a>
+        <a href="tel:+918709946177" class="social-item">
+            <i class="fas fa-phone-alt"></i> 8709946177
         </a>
         <a href="https://wa.me/918709946177" class="social-item">
-            <i class="fab fa-whatsapp"></i> WhatsApp
+            <i class="fab fa-whatsapp"></i> WhatsApp Chat
         </a>
     </div>
 
-    <p>📧 support@rajanpathlab.com</p>
+    <p>🌐 rajanpathlab.github.io</p>
     <hr style="width: 50px; border: 1px solid var(--accent-teal); margin: 20px auto;">
     <p style="font-size: 13px; opacity: 0.7;">© 2026 Rajan Path Lab. Modern Diagnostics for a Healthier You.</p>
 </footer>
