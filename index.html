@@ -9,199 +9,208 @@
 
     <style>
         :root {
-            --bg-gradient: linear-gradient(180deg, #0d47a1 0%, #002171 100%);
-            --accent-teal: #00e5ff;
-            --white: #ffffff;
-            --soft-gray: #f4f7f6;
+            --primary-blue: #0a2e5c; 
+            --accent-teal: #00a8a8;  
+            --soft-white: #f8fafc;   
+            --urgent-red: #e63946;   
+            --text-dark: #1e293b;
+            --thyro-orange: #ff6600;
+            --lal-blue: #ed1c24;
+            --path-purple: #662d91;
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
             margin: 0; padding: 0;
-            background-color: var(--soft-gray);
+            background: var(--soft-white);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
         header {
-            background: #0d47a1;
-            padding: 15px 5%;
+            background: var(--primary-blue);
+            color: white;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            position: sticky; top: 0; z-index: 1000;
         }
 
-        header h1 { font-size: 22px; margin: 0; letter-spacing: 1px; font-weight: bold; }
-        nav a { color: white; text-decoration: none; margin-left: 20px; font-size: 14px; font-weight: 500; }
+        header h1 { margin: 0; font-size: 26px; letter-spacing: 1px; font-weight: 800; }
+        header h1 span { color: var(--accent-teal); }
 
-        /* HERO SECTION - Text Removed here */
+        nav a { color: #e2e8f0; margin-left: 20px; text-decoration: none; font-weight: 500; font-size: 14px; }
+
         .hero {
-            background: var(--bg-gradient);
-            height: 380px; /* Thoda chota kiya taaki clean lage */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 20px;
+            background: linear-gradient(135deg, rgba(10, 46, 92, 0.9) 0%, rgba(0, 168, 168, 0.8) 100%), 
+                        url('https://images.unsplash.com/photo-1579152276502-53b8a3e14a72?auto=format&fit=crop&q=80&w=1500');
+            background-size: cover; background-position: center;
+            color: white; text-align: center; padding: 100px 20px;
         }
 
-        .hero h2 {
-            font-size: 50px;
-            max-width: 900px;
-            margin: 0;
-            line-height: 1.2;
-            font-weight: bold;
+        .btn {
+            background: var(--urgent-red);
+            padding: 15px 35px;
+            color: white; text-decoration: none;
+            border-radius: 8px; margin: 10px;
+            display: inline-block; font-weight: bold;
+            transition: 0.3s; text-transform: uppercase;
         }
 
         .strip {
-            background: white;
-            padding: 18px;
+            background: #ffffff;
+            border-bottom: 2px solid var(--accent-teal);
+            padding: 25px 20px;
             text-align: center;
-            font-weight: bold;
-            font-size: 16px;
-            border-bottom: 2px solid #e0e0e0;
-            color: #444;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-blue);
         }
 
-        section { padding: 50px 5%; text-align: center; }
-        h2.section-title { color: #0d47a1; margin-bottom: 40px; font-size: 28px; }
+        section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        h2 { color: var(--primary-blue); margin-bottom: 40px; font-size: 32px; font-weight: 800; }
 
-        .grid {
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            margin-top: 20px;
         }
 
         .card {
             background: white;
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            border-bottom: 4px solid transparent;
+            padding: 35px 25px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            transition: 0.4s;
         }
-        .card:hover { transform: translateY(-5px); }
 
-        /* COLLECTION CENTERS CARDS */
-        .center-card-1 { border-left: 5px solid #e63946; }
-        .center-card-2 { border-left: 5px solid #00a8a8; }
-
-        /* SPECIALIZED TESTS */
-        .test-card i { font-size: 45px; margin-bottom: 15px; display: block; }
-
-        /* FORM STYLE */
-        .booking-box {
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: var(--accent-teal); }
+        
+        /* PARTNER ICONS STYLE */
+        .partner-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .partner-item {
             background: white;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: left;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 25px;
+            border-radius: 20px;
+            width: 180px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-bottom: 4px solid #ddd;
         }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        .btn-wa { background: #25D366; color: white; width: 100%; padding: 15px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .partner-item i { font-size: 40px; margin-bottom: 10px; }
+        .partner-item p { font-weight: 800; margin: 0; font-size: 15px; }
 
-        footer { background: #0d47a1; color: white; padding: 40px; text-align: center; margin-top: 50px; }
-        .wa-float { position: fixed; bottom: 25px; right: 25px; background: #25D366; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        footer { background: var(--primary-blue); color: #cbd5e1; padding: 60px 20px; text-align: center; }
+        
+        .social-item {
+            color: white; text-decoration: none;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px; border-radius: 50px;
+            margin: 5px; display: inline-block; transition: 0.3s;
+        }
+        .social-item:hover { background: var(--accent-teal); }
 
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px;
+            background: #25D366; color: white;
+            padding: 15px 25px; border-radius: 50px;
+            text-decoration: none; font-weight: bold; z-index: 1000;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>RAJAN PATH LAB</h1>
+    <h1>RAJAN <span>PATH LAB</span></h1>
     <nav>
-        <a href="#">Home</a>
-        <a href="#booking">Book Now</a>
-        <a href="#">Reports</a>
+        <a href="index.html">Home</a>
+        <a href="tests.html">Tests</a>
+        <a href="book.html">Book Now</a>
+        <a href="report.html">Reports</a>
     </nav>
 </header>
 
 <div class="hero">
     <h2>Reliable Diagnostics with <br>Advanced Technology</h2>
+    <p style="font-size: 1.4rem;">Home Sample Collection Charges: ₹50 Only</p>
+    <div style="margin-top: 30px;">
+        <a class="btn" href="https://wa.me/918709946177">Book Home Collection</a>
+        <a class="btn" style="background:transparent; border:2px solid white;" href="report.html">Reports</a>
     </div>
+</div>
 
 <div class="strip">
     📍 Manahar Bhushra Pandwa Patan Road | 📞 8709946177 / 9931002450
 </div>
 
-<section style="background: #f8fafc;">
-    <h2 class="section-title">Our Collection Centers</h2>
-    <div class="grid">
-        <div class="card center-card-1">
-            <i class="fas fa-hospital-user" style="color: #e63946; font-size: 40px; margin-bottom: 15px;"></i>
+<section style="background: #eef2f6;">
+    <h2>Our Collection Centers</h2>
+    <div class="grid-container">
+        <div class="card" style="border-top: 5px solid var(--accent-teal);">
+            <i class="fas fa-clinic-medical" style="font-size: 45px; color: var(--accent-teal);"></i>
             <h3>J R MEDICAL</h3>
-            <p>Chilbil Chowk, Manhar</p>
-            <p style="color: #e63946; font-weight: bold;">Fasting Samples (Khali Pet)</p>
+            <p><strong>Chilbil Chowk, Manhar</strong></p>
+            <p style="color: #e63946; font-weight: bold; margin-top: 10px;">Visit for Morning Fasting Samples</p>
         </div>
-        <div class="card center-card-2">
-            <i class="fas fa-home" style="color: #00a8a8; font-size: 40px; margin-bottom: 15px;"></i>
+        <div class="card">
+            <i class="fas fa-truck-pickup" style="font-size: 45px; color: var(--accent-teal);"></i>
             <h3>Home Collection</h3>
-            <p>Professional Pickup Service</p>
-            <p style="font-weight: bold; color: #333;">Charge: ₹50</p>
+            <p>Professional sample pickup at your doorstep.</p>
+            <p style="font-weight: bold; margin-top: 10px;">Available All Over Palamu</p>
         </div>
     </div>
 </section>
 
-<section id="tests">
-    <h2 class="section-title">Specialized Test Menu</h2>
-    <div class="grid">
-        <div class="card test-card"><i class="fas fa-file-medical" style="color: #2196f3;"></i><h3>CBC Test</h3><p>Full Blood Report</p></div>
-        <div class="card test-card"><i class="fas fa-capsules" style="color: #f44336;"></i><h3>Liver Function</h3><p>Premium LFT Test</p></div>
-        <div class="card test-card"><i class="fas fa-dna" style="color: #9c27b0;"></i><h3>Aarogyam C Pro</h3><p>69 Parameters</p></div>
-        <div class="card test-card"><i class="fas fa-sun" style="color: #ffb300;"></i><h3>Vitamin D</h3><p>25-OH Bone Health</p></div>
-        <div class="card test-card"><i class="fas fa-bolt" style="color: #3949ab;"></i><h3>Vitamin B12</h3><p>Nerve & Energy</p></div>
-        <div class="card test-card"><i class="fas fa-bug" style="color: #b71c1c;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>
+<section>
+    <h2>Our Diagnostic Partners</h2>
+    <div class="partner-grid">
+        <div class="partner-item" style="border-color: var(--thyro-orange);">
+            <i class="fas fa-microscope" style="color: var(--thyro-orange);"></i>
+            <p>Thyrocare</p>
+        </div>
+        <div class="partner-item" style="border-color: var(--lal-blue);">
+            <i class="fas fa-vials" style="color: var(--lal-blue);"></i>
+            <p>Dr. Lal PathLabs</p>
+        </div>
+        <div class="partner-item" style="border-color: var(--path-purple);">
+            <i class="fas fa-flask" style="color: var(--path-purple);"></i>
+            <p>Pathkind Labs</p>
+        </div>
     </div>
 </section>
 
-<section id="booking" style="background: #f1f5f9;">
-    <div class="booking-box">
-        <h2 style="text-align: center; margin-bottom: 25px;">Book Your Test</h2>
-        <div class="form-group"><label>Name</label><input type="text" id="name"></div>
-        <div class="form-group"><label>Age</label><input type="number" id="age"></div>
-        <div class="form-group"><label>Ref. By (Doctor/Person)</label><input type="text" id="ref"></div>
-        <div class="form-group"><label>Mobile Number</label><input type="tel" id="mobile"></div>
-        <div class="form-group"><label>Test Name</label><input type="text" id="testname"></div>
-        <div class="form-group"><label>Address</label><input type="text" id="address"></div>
-        <div class="form-group"><label>Date</label><input type="date" id="date"></div>
-        <button class="btn-wa" onclick="sendWhatsApp()">Submit Booking via WhatsApp</button>
+<section style="background: #ffffff; border-radius: 60px 60px 0 0;">
+    <h2>Specialized Test Menu</h2>
+    <div class="grid-container">
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete blood profile analysis.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Liver Function</h3><p>Comprehensive LFT screening.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Aarogyam C Pro</h3><p>Total 69 Parameters covered.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Vitamin D & B12</h3><p>Bone & Nerve health check.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Prolactin</h3><p>Hormonal health screening.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM screening.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Thyroid Profile</h3><p>Full T3, T4, TSH analysis.</p></div>
+        <div class="card"><i class="fas fa-check-circle" style="color: var(--accent-teal);"></i><h3>Diabetes Care</h3><p>HbA1c & Fasting Sugar.</p></div>
     </div>
 </section>
 
 <footer>
-    <h2>RAJAN PATH LAB (RPL)</h2>
-    <p>Reliable Diagnostics with Fast Reports</p>
+    <h2 style="color: white;">RAJAN PATH LAB (RPL)</h2>
+    <div class="social-links" style="margin: 20px 0;">
+        <a href="https://share.google/zEHIbrN2qxjBfk8IA" class="social-item"><i class="fas fa-map-marker-alt"></i> Google Maps</a>
+        <a href="https://www.instagram.com/lab_technician_3.0" class="social-item"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="tel:+918709946177" class="social-item"><i class="fas fa-phone-alt"></i> 8709946177</a>
+    </div>
     <p>🌐 rajanpathlab.github.io</p>
-    <p style="font-size: 12px; opacity: 0.6; margin-top: 20px;">© 2026 All Rights Reserved.</p>
+    <p style="font-size: 12px; opacity: 0.6;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
 </footer>
 
-<a href="https://wa.me/918709946177" class="wa-float">Chat Now 💬</a>
-
-<script>
-    function sendWhatsApp() {
-        const name = document.getElementById('name').value;
-        const age = document.getElementById('age').value;
-        const ref = document.getElementById('ref').value || 'Self';
-        const mobile = document.getElementById('mobile').value;
-        const test = document.getElementById('testname').value;
-        const addr = document.getElementById('address').value;
-        const date = document.getElementById('date').value;
-
-        if(!name || !mobile || !test) {
-            alert("Please fill important fields!");
-            return;
-        }
-
-        const msg = `*New Booking - RPL*%0A*Name:* ${name}%0A*Age:* ${age}%0A*Doctor:* ${ref}%0A*Mobile:* ${mobile}%0A*Test:* ${test}%0A*Address:* ${addr}%0A*Date:* ${date}`;
-        window.open(`https://wa.me/918709946177?text=${msg}`);
-    }
-</script>
+<a href="https://wa.me/918709946177" class="whatsapp-float">Chat with Expert 💬</a>
 
 </body>
 </html>
