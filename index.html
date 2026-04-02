@@ -1,272 +1,184 @@
-const express = require("express");
-const multer = require("multer");
-const app = express();
-
-app.use(express.json());
-const upload = multer({ dest: "uploads/" });
-
-let reports = {};
-
-// 🌐 MAIN WEBSITE (PREMIUM + SYSTEM MERGED)
-app.get("/", (req, res) => {
-res.send(`
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rajan Path Lab | Premium Diagnostics</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPL | Rajan Path Lab - Palamu's Digital Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #0ea5e9;
+            --success: #10b981;
+            --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            --express-bg: #fffbeb;
+            --glass: rgba(255, 255, 255, 0.95);
+        }
 
-<style>
-:root {
---primary-blue:#0a2e5c;
---accent-teal:#00a8a8;
---soft-white:#f8fafc;
---urgent-red:#e63946;
-}
+        * { box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; background: #f8fafc; color: var(--primary); padding-bottom: 80px; }
 
-body{
-margin:0;
-font-family:Segoe UI;
-background:var(--soft-white);
-}
+        /* HEADER & TOP BAR */
+        .express-bar { background: var(--express-bg); padding: 12px 5%; text-align: center; border-bottom: 2px solid #f59e0b; font-size: 14px; }
+        header { background: var(--glass); backdrop-filter: blur(15px); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .brand img { width: 45px; height: 45px; border-radius: 12px; border: 2px solid var(--accent); }
+        .brand-text b { color: var(--primary); font-size: 22px; font-family: 'Space Grotesk', sans-serif; }
+        .brand-text span { color: var(--accent); font-weight: 800; }
 
-/* HEADER */
-header{
-background:var(--primary-blue);
-color:white;
-padding:15px 5%;
-display:flex;
-justify-content:space-between;
-}
+        /* HERO & STATS */
+        .hero { padding: 100px 5% 140px; text-align: center; background: radial-gradient(circle at top right, #e0f2fe, transparent 70%); }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-family: 'Space Grotesk', sans-serif; line-height: 1; margin-bottom: 25px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 0 5%; margin-top: -80px; }
+        .card { background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); text-align: center; }
 
-header span{color:var(--accent-teal);}
+        /* AI CHATBOT UI */
+        #ai-chat-wrapper { position: fixed; bottom: 100px; right: 30px; z-index: 3000; }
+        .chat-bubble { width: 60px; height: 60px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 30px; cursor: pointer; box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4); }
+        .chat-window { position: absolute; bottom: 80px; right: 0; width: 320px; background: white; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; }
+        .chat-header { background: var(--primary); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; }
+        .chat-body { height: 300px; padding: 15px; overflow-y: auto; font-size: 14px; background: #f1f5f9; }
+        .chat-footer { padding: 10px; display: flex; gap: 5px; background: white; }
+        .chat-footer input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
+        .ai-msg { background: white; padding: 10px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--accent); }
+        .disclaimer { font-size: 10px; color: #94a3b8; margin-top: 5px; }
 
-nav a{
-color:white;
-margin-left:20px;
-text-decoration:none;
-}
+        /* MODAL & BUTTONS */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 4000; }
+        .modal-content { background: white; padding: 40px; border-radius: 30px; width: 90%; max-width: 400px; text-align: center; position: relative; }
+        .btn-login { background: var(--primary); color: white; padding: 12px 25px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; }
 
-/* HERO */
-.hero{
-background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-url('https://images.unsplash.com/photo-1579152276502-53b8a3e14a72');
-color:white;
-text-align:center;
-padding:100px 20px;
-}
+        /* MOBILE FOOTER */
+        .mobile-actions { position: fixed; bottom: 0; width: 100%; display: grid; grid-template-columns: 1fr 1fr; background: white; z-index: 1500; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); }
+        .act-btn { padding: 20px; text-align: center; text-decoration: none; font-weight: 800; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; }
 
-.btn{
-background:var(--urgent-red);
-padding:12px 25px;
-color:white;
-border:none;
-border-radius:8px;
-margin:10px;
-cursor:pointer;
-}
-
-/* SECTION */
-section{
-padding:50px;
-text-align:center;
-}
-
-input,select{
-padding:10px;
-margin:10px;
-border-radius:8px;
-border:1px solid #ddd;
-}
-
-/* CARD */
-.card{
-background:white;
-padding:20px;
-border-radius:15px;
-margin:10px;
-display:inline-block;
-width:220px;
-}
-
-/* FLOAT */
-.float{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-padding:10px 20px;
-border-radius:30px;
-color:white;
-text-decoration:none;
-}
-</style>
+        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } }
+    </style>
 </head>
-
 <body>
 
-<header>
-<h1>RAJAN <span>PATH LAB</span></h1>
-<nav>
-<a href="#">Home</a>
-<a href="#book">Book</a>
-<a href="#report">Report</a>
-<a href="#admin">Admin</a>
-</nav>
-</header>
-
-<div class="hero">
-<h2>Advanced Diagnostics, Care You Can Trust</h2>
-<p>Fast Reports • Accurate Results</p>
-
-<button class="btn" onclick="scrollToSection('book')">Book Test</button>
-<button class="btn" onclick="scrollToSection('report')">Download Report</button>
+<div class="express-bar">
+    ⚡ <b>EXPRESS REPORTING:</b> Sample ke sirf <span style="color: #b45309; font-weight: 900;">8-10 ghante</span> mein Digital Report WhatsApp par!
 </div>
 
-<!-- SERVICES -->
-<section>
-<h2>Our Tests</h2>
-<div class="card">CBC</div>
-<div class="card">Thyroid</div>
-<div class="card">Diabetes</div>
-<div class="card">Full Body</div>
+<header>
+    <a href="#" class="brand">
+        <img src="https://share.google/GdvrI6weGqIsTRoYw" onerror="this.src='https://via.placeholder.com/50'" alt="RPL Logo">
+        <div class="brand-text"><b>RAJAN</b> <span>PATH LAB</span></div>
+    </a>
+    <div style="display: flex; gap: 15px; align-items: center;">
+        <a href="https://instagram.com/labtechnician3.0" target="_blank" style="text-decoration: none; color: #64748b; font-size: 14px; font-weight: 700;">@labtechnician3.0</a>
+        <button class="btn-login" onclick="toggleModal()">Patient Login</button>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Precise Reports. <br><span style="color: var(--accent);">8-Hour Commitment.</span></h1>
+    <p>ISO Certified Diagnostics with the fastest turnaround time in Jharkhand. Trust the experts, trust RPL.</p>
+    <div style="display: flex; gap: 10px; justify-content: center; font-weight: 700; color: #94a3b8; font-size: 14px;">
+        <span>✓ UPI</span> <span>✓ GPay</span> <span>✓ PhonePe</span> <span>✓ Paytm</span>
+    </div>
 </section>
 
-<!-- BOOK -->
-<section id="book">
-<h2>Book Test</h2>
+<div class="grid">
+    <div class="card">
+        <span style="font-size: 40px;">🏠</span>
+        <h3>Home Collection</h3>
+        <p style="color: #64748b; font-size: 14px;">Hygienic sample pickup from your doorstep.</p>
+    </div>
+    <div class="card">
+        <span style="font-size: 40px;">🩺</span>
+        <h3>Health Packages</h3>
+        <p style="color: #64748b; font-size: 14px;">Full body screening at the best price in Palamu.</p>
+    </div>
+    <div class="card">
+        <span style="font-size: 40px;">📩</span>
+        <h3>Fast Reports</h3>
+        <p style="color: #64748b; font-size: 14px;">Reports via WhatsApp/Email in 8-10 hours.</p>
+    </div>
+</div>
 
-<input id="name" placeholder="Name"><br>
-<input id="phone" placeholder="Phone"><br>
+<div id="ai-chat-wrapper">
+    <div class="chat-bubble" onclick="toggleChat()">👨‍⚕️</div>
+    <div class="chat-window" id="chatWin">
+        <div class="chat-header">
+            <span>RPL AI Health Assistant</span>
+            <span style="cursor:pointer" onclick="toggleChat()">&times;</span>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="ai-msg">
+                Namaste! Main Rajan Path Lab ka AI Assistant hoon. Main aapko test results samajhne aur health tips dene mein madad kar sakta hoon.
+                <div class="disclaimer">⚠️ Disclaimer: Main doctor nahi hoon. Emergency mein kripya hospital jayein.</div>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Apna sawal likhein...">
+            <button onclick="sendMessage()" style="background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 5px;">Send</button>
+        </div>
+    </div>
+</div>
 
-<button class="btn" onclick="book()">Book via WhatsApp</button>
-</section>
+<div class="modal" id="loginModal">
+    <div class="modal-content">
+        <span style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:24px;" onclick="toggleModal()">&times;</span>
+        <h2>Patient Login</h2>
+        <input type="text" placeholder="Mobile Number" style="width:100%; padding:12px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
+        <input type="password" placeholder="Password" style="width:100%; padding:12px; margin:10px 0; border:1px solid #ddd; border-radius:8px;">
+        <button class="btn-login" style="width:100%; margin-top:10px;">Login & Download Report</button>
+        <p style="font-size: 13px; margin-top: 15px;">New User? <a href="#" style="color: var(--accent);">Create Account</a></p>
+    </div>
+</div>
 
-<!-- REPORT -->
-<section id="report">
-<h2>Download Report</h2>
+<footer style="background: var(--primary); color: white; padding: 60px 5% 120px; text-align: center;">
+    <h3>RAJAN PATH LAB (RPL)</h3>
+    <p style="opacity: 0.6;">Manahar Bhushra Pandwa Patan Road, Palamu | 8709946177</p>
+    <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px;">
+        <a href="https://instagram.com/labtechnician3.0" style="color: white; text-decoration: none;">Instagram</a>
+        <a href="#" style="color: white; text-decoration: none;">Facebook</a>
+    </div>
+</footer>
 
-<input id="rid" placeholder="Report ID"><br>
-
-<button class="btn" onclick="getReport()">Download</button>
-</section>
-
-<!-- AI -->
-<section>
-<h2>AI Assistant</h2>
-
-<input id="msg" placeholder="Ask health question">
-<button class="btn" onclick="send()">Ask</button>
-
-<p id="reply"></p>
-</section>
-
-<!-- ADMIN -->
-<section id="admin">
-<h2>Admin Panel</h2>
-
-<input id="pid" placeholder="Patient ID">
-<input type="file" id="file"><br>
-
-<button class="btn" onclick="upload()">Upload Report</button>
-</section>
-
-<!-- LOCATION -->
-<section>
-<h2>Visit Us</h2>
-
-<a href="https://share.google/GdvrI6weGqIsTRoYw" target="_blank" class="btn">
-📍 Get Directions
-</a>
-
-<br><br>
-
-<iframe 
-src="https://www.google.com/maps?q=RAJAN+PATH+LAB&output=embed"
-width="90%" height="250">
-</iframe>
-</section>
-
-<!-- WHATSAPP -->
-<a href="https://wa.me/918709946177" class="float">Chat 💬</a>
+<div class="mobile-actions">
+    <a href="tel:+918709946177" class="act-btn" style="background: var(--primary);">📞 Call Now</a>
+    <a href="https://wa.me/918709946177" class="act-btn" style="background: #25D366;">💬 WhatsApp</a>
+</div>
 
 <script>
-function scrollToSection(id){
-document.getElementById(id).scrollIntoView();
-}
+    function toggleModal() {
+        const m = document.getElementById('loginModal');
+        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+    }
 
-// BOOK
-function book(){
-let msg = "Booking:%0AName:"+name.value+"%0APhone:"+phone.value;
-window.open("https://wa.me/918709946177?text="+msg);
-}
+    function toggleChat() {
+        const cw = document.getElementById('chatWin');
+        cw.style.display = (cw.style.display === 'flex') ? 'none' : 'flex';
+    }
 
-// REPORT
-function getReport(){
-fetch("/report?id="+rid.value)
-.then(res=>res.text())
-.then(link=>{
-if(link.startsWith("http")){
-window.open(link);
-}else{
-alert("Report not found");
-}
-});
-}
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const body = document.getElementById('chatBody');
+        if(input.value.trim() === "") return;
 
-// AI
-function send(){
-fetch("/chat",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({message:msg.value})
-})
-.then(res=>res.json())
-.then(d=>reply.innerText=d.reply);
-}
+        // User Message
+        const userDiv = document.createElement('div');
+        userDiv.style = "text-align:right; margin-bottom:10px; font-size:13px; color:#64748b";
+        userDiv.innerHTML = <b>You:</b> ${input.value};
+        body.appendChild(userDiv);
 
-// UPLOAD
-function upload(){
-let f = file.files[0];
-let form = new FormData();
-form.append("file",f);
-form.append("id",pid.value);
+        // AI Response Logic (Simple Mockup)
+        setTimeout(() => {
+            const aiDiv = document.createElement('div');
+            aiDiv.className = "ai-msg";
+            aiDiv.innerHTML = "Aapke sawal ke liye dhanyawad. Hamare expert <b>@labtechnician3.0</b> se sampark karein ya report ka intezar karein (8-10 hrs).";
+            body.appendChild(aiDiv);
+            body.scrollTop = body.scrollHeight;
+        }, 1000);
 
-fetch("/upload",{method:"POST",body:form})
-.then(()=>alert("Uploaded"));
-}
+        input.value = "";
+    }
 </script>
 
 </body>
 </html>
-
-`);
-});
-
-// REPORT
-app.get("/report",(req,res)=>{
-res.send(reports[req.query.id] || "Not found");
-});
-
-// UPLOAD
-app.post("/upload",upload.single("file"),(req,res)=>{
-reports[req.body.id] = "http://localhost:3000/uploads/"+req.file.filename;
-res.send("Uploaded");
-});
-
-// AI
-app.post("/chat",(req,res)=>{
-let msg = req.body.message.toLowerCase();
-
-let reply = "Doctor consult karein";
-
-if(msg.includes("fever")) reply="CBC test recommended";
-if(msg.includes("weak")) reply="Weakness → CBC test";
-if(msg.includes("thyroid")) reply="Thyroid test required";
-
-res.json({reply});
-});
-
-app.listen(3000,()=>console.log("🔥 Running http://localhost:3000"));
