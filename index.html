@@ -17,6 +17,10 @@
             --thyro-orange: #ff6600;
             --lal-blue: #ed1c24;
             --path-purple: #662d91;
+            
+            /* Gradient colors from image */
+            --grad-start: #113a69; 
+            --grad-end: #0dbba6;
         }
 
         body {
@@ -51,32 +55,59 @@
         }
         nav a:hover { color: var(--accent-teal); }
 
+        /* HERO SECTION UPDATED AS PER IMAGE */
         .hero {
-            background: linear-gradient(135deg, rgba(10, 46, 92, 0.9) 0%, rgba(0, 168, 168, 0.8) 100%), 
-                        url('https://images.unsplash.com/photo-1579152276502-53b8a3e14a72?auto=format&fit=crop&q=80&w=1500');
-            background-size: cover; background-position: center;
-            color: white; text-align: center; padding: 100px 20px;
+            background: linear-gradient(135deg, var(--grad-start) 0%, var(--grad-end) 100%);
+            color: white; 
+            text-align: center; 
+            padding: 120px 20px; /* Increased padding for more height */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Large Heading as requested */
+        .hero h2 {
+            color: white;
+            font-size: 4rem; /* Bada Size */
+            font-weight: 700;
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            line-height: 1.2;
         }
 
-        .btn-container { margin-top: 30px; }
-        .btn-book { background: #e63946; padding: 15px 30px; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin-right: 10px; display: inline-block; }
-        .btn-report { background: #00a8a8; padding: 15px 30px; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; }
+        .btn-container { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
+        .btn-book { background: #e63946; padding: 18px 35px; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 1.1rem; }
+        .btn-report { background: #e63946; padding: 18px 35px; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 1.1rem; }
 
+        /* ADDRESS STRIP UPDATED AS PER IMAGE */
         .strip {
             background: #ffffff;
-            border-bottom: 2px solid var(--accent-teal);
-            padding: 30px 20px;
+            border-bottom: 2px solid #ddd;
+            padding: 40px 20px; /* Increased padding */
             text-align: center;
-            font-size: 1.4rem;
-            font-weight: 600;
             color: var(--primary-blue);
         }
-        .strip i { color: var(--accent-teal); margin-right: 8px; font-size: 1.6rem; }
+        
+        .strip-content {
+            display: inline-block;
+            text-align: left;
+        }
+        
+        .strip-item {
+            font-size: 1.6rem; /* Bada Size */
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .strip-item:last-child { margin-bottom: 0; }
+        
+        .strip i { color: var(--accent-teal); margin-right: 15px; font-size: 1.8rem; }
 
         section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
         h2 { color: var(--primary-blue); margin-bottom: 40px; font-size: 32px; font-weight: 800; }
 
-        /* About Us Styles */
         .about-container {
             display: flex;
             align-items: center;
@@ -138,7 +169,9 @@
             header { flex-direction: column; text-align: center; }
             nav { margin-top: 15px; }
             nav a { margin: 0 10px; font-size: 14px; }
-            .hero h2 { font-size: 2rem; }
+            .hero h2 { font-size: 2.2rem; }
+            .strip-item { font-size: 1rem; }
+            .strip i { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -156,7 +189,7 @@
 </header>
 
 <div class="hero">
-    <h2 style="color: white;">Reliable Diagnostics with <br>Advanced Technology</h2>
+    <h2>Reliable Diagnostics with <br>Advanced Technology</h2>
     <div class="btn-container">
         <a class="btn-book" href="book.html">Book Test</a>
         <a class="btn-report" href="report.html">Download Report</a>
@@ -164,8 +197,14 @@
 </div>
 
 <div class="strip">
-    <i class="fas fa-map-marker-alt"></i> Manahar Bhushra Pandwa Patan Road | 
-    <i class="fas fa-phone"></i> 8709946177 / 9931002450
+    <div class="strip-content">
+        <div class="strip-item">
+            <i class="fas fa-map-marker-alt"></i> Manahar Bhushra Pandwa Patan Road
+        </div>
+        <div class="strip-item">
+            <i class="fas fa-phone"></i> 8709946177 / 9931002450
+        </div>
+    </div>
 </div>
 
 <section id="about" style="background: white;">
