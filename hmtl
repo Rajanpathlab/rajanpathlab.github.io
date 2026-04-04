@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Rajan Path Lab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0a2e5c; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 320px; text-align: center; }
+        h2 { color: #0a2e5c; margin-bottom: 25px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .btn-login { background: #e63946; color: white; border: none; width: 100%; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .error { color: red; font-size: 13px; display: none; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <i class="fas fa-user-lock" style="font-size: 40px; color: #00a8a8;"></i>
+        <h2>Admin Access</h2>
+        <div id="errorMessage" class="error">Galat Username ya Password!</div>
+        <input type="text" id="user" placeholder="Username">
+        <input type="password" id="pass" placeholder="Password">
+        <button class="btn-login" onclick="checkLogin()">Login Dashboard</button>
+    </div>
+
+    <script>
+        function checkLogin() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+
+            // Aapka User aur Password yahan check ho raha hai
+            if(u === "Rajanpathlab" && p === "Rkchandra5530@..") {
+                sessionStorage.setItem("isLoggedIn", "true");
+                window.location.href = "admin-dashboard.html";
+            } else {
+                document.getElementById('errorMessage').style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
+
