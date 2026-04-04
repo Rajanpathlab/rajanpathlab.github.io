@@ -1,0 +1,23 @@
+<input type="text" id="reportID" placeholder="Enter Report ID (e.g. 101)">
+<button onclick="downloadByID()">Download Report by ID</button>
+
+<script>
+function downloadByID() {
+    var id = document.getElementById('reportID').value;
+    
+    // Yahan aapko manually Report ID aur Google Drive ki File ID connect karni hogi
+    var reportDatabase = {
+        "101": "FILE_ID_1", // Amit Kumar
+        "102": "FILE_ID_2", // Miss Anushka
+        "103": "FILE_ID_3"  // Abhisek
+    };
+
+    if (reportDatabase[id]) {
+        var fileID = reportDatabase[id];
+        // Ye link patient ko direct download par bhej dega
+        window.open("https://drive.google.com/uc?export=download&id=" + fileID, "_blank");
+    } else {
+        alert("Report ID nahi mili. Kripya sahi ID daalein.");
+    }
+}
+</script>
