@@ -1,34 +1,6 @@
-async function downloadReport() {
-    const input = document.getElementById('reportIdInput').value.trim(); // ID wala box
-    const mobileInput = document.getElementById('mobileNumberInput').value.trim(); // Mobile wala box
-    
-    // Yahan aapka naya link hai
-    const csvUrl = 'https://docs.google.com/spreadsheets/d/1vBIygVV9v8KIqbBtGa38MDpuBg6NALQ_9kn8PCW7KZw/export?format=csv'; 
+<input type="text" id="reportIdInput" placeholder="Enter Report ID">
+<input type="text" id="mobileNumberInput" placeholder="Enter Mobile Number">
 
-    try {
-        const response = await fetch(csvUrl);
-        const data = await response.text();
-        const rows = data.split('\n');
-
-        let found = false;
-        for (let i = 0; i < rows.length; i++) {
-            const cols = rows[i].split(',');
-            const sheetID = cols[0] ? cols[0].trim() : "";
-            const sheetMobile = cols[1] ? cols[1].trim() : "";
-            const sheetLink = cols[2] ? cols[2].trim() : "";
-
-            // Check karo ki input ID se match ho raha hai ya Mobile se
-            if ((input !== "" && sheetID === input) || (mobileInput !== "" && sheetMobile === mobileInput)) {
-                window.open(sheetLink, '_blank');
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            alert("Record nahi mila! Kripya sahi ID ya Mobile Number daalein.");
-        }
-    } catch (error) {
-        alert("System error. Please try again.");
-    }
-}
+<button onclick="downloadReport()" style="padding:10px 20px; background-color:red; color:white; border:none;">
+    Download Report
+</button>
