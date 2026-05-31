@@ -1,278 +1,117 @@
-/* ===========================
-   RAJAN PATH LAB
-   PREMIUM CLASSIC BOOKING PAGE
-=========================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500;700&display=swap');
-
-:root{
-    --primary:#08274d;
-    --gold:#d4af37;
-    --green:#25D366;
-    --white:#ffffff;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-
-    font-family:'Roboto',sans-serif;
-
-    background:
-    linear-gradient(
-    rgba(8,39,77,.85),
-    rgba(8,39,77,.85)),
-    url("https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1600&q=80");
-
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
-
-    min-height:100vh;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    padding:30px;
-}
-
-/* ===========================
-   MAIN CONTAINER
-=========================== */
-
-.booking-container{
-
-    width:100%;
-    max-width:750px;
-
-    background:
-    rgba(255,255,255,.12);
-
-    backdrop-filter:blur(18px);
-
-    border:
-    1px solid rgba(255,255,255,.25);
-
-    border-radius:25px;
-
-    padding:40px;
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.30);
-}
-
-/* ===========================
-   HEADER
-=========================== */
-
-header{
-    text-align:center;
-    margin-bottom:30px;
-}
-
-.logo{
-    width:100px;
-    margin-bottom:10px;
-}
-
-header h1{
-
-    font-family:
-    'Playfair Display',serif;
-
-    color:var(--gold);
-
-    font-size:38px;
-
-    letter-spacing:2px;
-
-    margin-bottom:5px;
-}
-
-.subtitle{
-
-    color:white;
-
-    font-size:16px;
-}
-
-/* ===========================
-   BANNER
-=========================== */
-
-.banner{
-
-    text-align:center;
-
-    color:white;
-
-    background:
-    rgba(255,255,255,.10);
-
-    padding:15px;
-
-    border-radius:15px;
-
-    margin-bottom:25px;
-
-    font-size:16px;
-}
-
-/* ===========================
-   FORM
-=========================== */
-
-.form-group{
-    margin-bottom:18px;
-}
-
-.form-group label{
-
-    display:block;
-
-    color:white;
-
-    font-weight:600;
-
-    margin-bottom:8px;
-}
-
-.form-group input{
-
-    width:100%;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:12px;
-
-    background:
-    rgba(255,255,255,.95);
-
-    font-size:15px;
-
-    outline:none;
-}
-
-.form-group input:focus{
-
-    box-shadow:
-    0 0 12px var(--gold);
-}
-
-/* ===========================
-   BUTTON
-=========================== */
-
-.whatsapp-btn{
-
-    width:100%;
-
-    padding:18px;
-
-    background:
-    linear-gradient(
-    45deg,
-    #25D366,
-    #128C7E);
-
-    border:none;
-
-    border-radius:50px;
-
-    color:white;
-
-    font-size:18px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:.3s;
-}
-
-.whatsapp-btn:hover{
-
-    transform:
-    translateY(-3px);
-
-    box-shadow:
-    0 10px 25px rgba(0,0,0,.35);
-}
-
-/* ===========================
-   GALLERY
-=========================== */
-
-.gallery{
-
-    margin-top:30px;
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(180px,1fr));
-
-    gap:15px;
-}
-
-.gallery img{
-
-    width:100%;
-
-    height:150px;
-
-    object-fit:cover;
-
-    border-radius:15px;
-
-    transition:.4s;
-}
-
-.gallery img:hover{
-
-    transform:scale(1.05);
-}
-
-/* ===========================
-   FOOTER
-=========================== */
-
-footer{
-
-    text-align:center;
-
-    margin-top:30px;
-
-    color:white;
-
-    font-size:14px;
-}
-
-/* ===========================
-   MOBILE
-=========================== */
-
-@media(max-width:768px){
-
-.booking-container{
-
-    padding:25px;
-}
-
-header h1{
-
-    font-size:28px;
-}
-
-.whatsapp-btn{
-
-    font-size:16px;
-}
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Path Lab Booking</title>
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Premium Icons (Remix Icon) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="booking-container">
+        <!-- Luxury Badge / Accent Line -->
+        <div class="top-bar"></div>
+
+        <header>
+            <div class="logo-container">
+                <!-- अगर आपके पास लोगो इमेज नहीं है, तो यह आइकॉन एक क्लासिक मेडिकल सील की तरह दिखेगा -->
+                <div class="premium-seal">
+                    <i class="ri-heart-pulse-line"></i>
+                </div>
+            </div>
+            <h1>EXCELSIOR</h1>
+            <p class="subtitle">DIAGNOSTICS & PATH LAB</p>
+            <div class="divider"><span>•••</span></div>
+            <p class="form-title">Digital Test Requisition Form</p>
+        </header>
+        
+        <form class="booking-form">
+            
+            <!-- SECTION 1: PATIENT PROFILE -->
+            <div class="form-section">
+                <h2 class="section-heading">01. Patient Profile</h2>
+                
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="ri-user-3-line input-icon"></i>
+                        <input type="text" id="name" name="name" placeholder="Enter patient's full name" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">Age (In Years)</label>
+                        <div class="input-wrapper">
+                            <i class="ri-calendar-event-line input-icon"></i>
+                            <input type="number" id="age" name="age" placeholder="Age" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="mobile">Contact Number</label>
+                        <div class="input-wrapper">
+                            <i class="ri-phone-line input-icon"></i>
+                            <input type="tel" id="mobile" name="mobile" placeholder="Mobile number" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: TEST & LOGISTICS -->
+            <div class="form-section">
+                <h2 class="section-heading">02. Test & Logistics Details</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="test">Prescribed Test / Package</label>
+                        <div class="input-wrapper">
+                            <i class="ri-flask-line input-icon"></i>
+                            <input type="text" id="test" name="test" placeholder="e.g., CBC, Lipid Profile" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ref">Referred By</label>
+                        <div class="input-wrapper">
+                            <i class="ri-stethoscope-line input-icon"></i>
+                            <input type="text" id="ref" name="ref" placeholder="Doctor name or 'Self'">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Home Collection Address</label>
+                    <div class="input-wrapper">
+                        <i class="ri-map-pin-line input-icon"></i>
+                        <input type="text" id="address" name="address" placeholder="Complete address for phlebotomist visit" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Preferred Appointment Date</label>
+                    <div class="input-wrapper">
+                        <i class="ri-time-line input-icon"></i>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PREMIUM BUTTON -->
+            <button type="submit" class="whatsapp-btn">
+                <i class="ri-whatsapp-line"></i>
+                <span>Authorize & Book via WhatsApp</span>
+            </button>
+
+            <footer class="form-footer">
+                <p><i class="ri-shield-check-line"></i> 256-bit Encrypted Secure Direct Booking Port</p>
+            </footer>
+        </form>
+    </div>
+
+</body>
+</html>
