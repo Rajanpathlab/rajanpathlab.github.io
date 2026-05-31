@@ -1,70 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Book Test</title>
-
-<script>
-function sendWhatsApp(){
-    // Form se values nikalne ke liye
-    var name = document.getElementById("name").value; 
-    var age = document.getElementById("age").value;
-    var refBy = document.getElementById("refBy").value;
-    var mobile = document.getElementById("mobile").value;
-    var test = document.getElementById("test").value;
-    var address = document.getElementById("address").value;
-    var date = document.getElementById("date").value;
-
-    // WhatsApp message format karne ke liye
-    var message = "New Test Booking %0A%0A" +
-    "Name: " + name + "%0A" +
-    "Age: " + age + "%0A" +
-    "Ref. By: " + refBy + "%0A" +
-    "Mobile: " + mobile + "%0A" +
-    "Test: " + test + "%0A" +
-    "Address: " + address + "%0A" +
-    "Date: " + date;
-
-    var phone = "918709946177";
-    var url = "https://wa.me/" + phone + "?text=" + message;
-
-    window.open(url, "_blank");
-}
-</script>
-
-<style>
-    body { font-family: sans-serif; padding: 20px; }
-    input { margin-bottom: 15px; width: 250px; padding: 5px; }
-    button { padding: 10px 20px; background-color: #25D366; color: white; border: none; cursor: pointer; border-radius: 5px; }
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path Lab Booking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div class="booking-container">
+        <header>
+            <img src="logo.png" alt="Medical Logo" class="logo">
+            <h1>Book Your Test</h1>
+        </header>
+        
+        <form class="booking-form" id="whatsappForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="ref">Ref. By (Doctor/Person):</label>
+                <input type="text" id="ref" name="ref">
+            </div>
+            
+            <div class="form-group">
+                <label for="mobile">Mobile Number:</label>
+                <input type="tel" id="mobile" name="mobile" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="test">Test Name:</label>
+                <input type="text" id="test" name="test" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            
+            <button type="submit" class="whatsapp-btn">
+                Submit Booking via WhatsApp
+            </button>
+        </form>
+    </div>
 
-<h2>Book Your Test</h2>
-
-<label>Name</label><br>
-<input type="text" id="name"><br>
-
-<label>Age</label><br>
-<input type="number" id="age"><br>
-
-<label>Ref. By (Doctor/Person)</label><br>
-<input type="text" id="refBy"><br>
-
-<label>Mobile Number</label><br>
-<input type="text" id="mobile"><br>
-
-<label>Test Name</label><br>
-<input type="text" id="test"><br>
-
-<label>Address</label><br>
-<input type="text" id="address"><br>
-
-<label>Date</label><br>
-<input type="date" id="date"><br><br>
-
-<button onclick="sendWhatsApp()">Submit Booking via WhatsApp</button>
-
+    <script>
+        document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevents page reload
+            
+            // 🚨 CHANGE THIS: Put your WhatsApp number here with Country Code (No '+' sign)
+            // Example for India: "919876543210"
+            const myWhatsAppNumber = "910000000000"; 
+            
+            // Extracting values from the input fields
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const ref = document.getElementById('ref').value || 'Self';
+            const mobile = document.getElementById('mobile').value;
+            const test = document.getElementById('test').value;
+            const address = document.getElementById('address').value;
+            const date = document.getElementById('date').value;
+            
+            // Creating a beautifully formatted bold text block for WhatsApp
+            const message = `*New Test Booking Request*\n\n` +
+                            `📝 *Name:* ${name}\n` +
+                            `🎂 *Age:* ${age}\n` +
+                            `🩺 *Ref. By:* ${ref}\n` +
+                            `📞 *Mobile:* ${mobile}\n` +
+                            `🔬 *Test Name:* ${test}\n` +
+                            `📍 *Address:* ${address}\n` +
+                            `📅 *Date:* ${date}`;
+            
+            // Encoding the message text securely for URLs
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Creating the WhatsApp API endpoint
+            const whatsappUrl = `https://wa.me/${myWhatsAppNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in a new browser tab/app window
+            window.open(whatsappUrl, '_blank');
+        });
+    </script>
 </body>
 </html>
