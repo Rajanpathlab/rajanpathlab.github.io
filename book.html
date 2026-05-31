@@ -1,117 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Path Lab Booking</title>
-    <!-- Premium Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Premium Icons (Remix Icon) -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajan Path Lab - Test Booking</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#f4f8fb;
+color:#333;
+}
+
+.hero{
+background:linear-gradient(135deg,#0F4C81,#1b6ca8);
+padding:70px 20px;
+text-align:center;
+color:#fff;
+}
+
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:3rem;
+margin-bottom:10px;
+}
+
+.hero h2{
+font-size:1.2rem;
+font-weight:400;
+opacity:.95;
+margin-bottom:20px;
+}
+
+.hero p{
+max-width:750px;
+margin:auto;
+line-height:1.8;
+font-size:1rem;
+}
+
+.container{
+max-width:950px;
+margin:-50px auto 50px;
+padding:20px;
+}
+
+.card{
+background:#fff;
+border-radius:22px;
+padding:35px;
+box-shadow:0 10px 40px rgba(0,0,0,.08);
+}
+
+.section-title{
+font-size:1.3rem;
+font-weight:600;
+color:#0F4C81;
+margin-bottom:20px;
+padding-bottom:10px;
+border-bottom:2px solid #eef2f7;
+}
+
+.form-group{
+margin-bottom:18px;
+}
+
+label{
+display:block;
+font-weight:500;
+margin-bottom:8px;
+}
+
+input,textarea{
+width:100%;
+padding:14px 16px;
+border:1px solid #dbe4ef;
+border-radius:12px;
+font-size:15px;
+outline:none;
+transition:.3s;
+}
+
+input:focus,
+textarea:focus{
+border-color:#0F4C81;
+box-shadow:0 0 0 4px rgba(15,76,129,.1);
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+margin-top:15px;
+}
+
+.feature{
+background:#f8fbff;
+padding:15px;
+border-radius:12px;
+}
+
+.feature i{
+color:#14B8A6;
+margin-right:8px;
+}
+
+.whatsapp-btn{
+width:100%;
+border:none;
+padding:18px;
+border-radius:14px;
+background:#25D366;
+color:#fff;
+font-size:18px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+margin-top:20px;
+}
+
+.whatsapp-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(37,211,102,.35);
+}
+
+.whatsapp-btn i{
+margin-right:10px;
+}
+
+.footer-note{
+text-align:center;
+margin-top:25px;
+font-style:italic;
+color:#666;
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:2.2rem;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.card{
+padding:22px;
+}
+
+}
+</style>
 </head>
+
 <body>
 
-    <div class="booking-container">
-        <!-- Luxury Badge / Accent Line -->
-        <div class="top-bar"></div>
+<section class="hero">
+<h1>Rajan Path Lab</h1>
+<h2>Trusted Diagnostics • Accurate Results • Compassionate Care</h2>
+<p>
+Your health deserves precision and timely attention.
+Complete the form below to schedule your diagnostic test.
+Our team will review your request and confirm your appointment promptly.
+</p>
+</section>
 
-        <header>
-            <div class="logo-container">
-                <!-- अगर आपके पास लोगो इमेज नहीं है, तो यह आइकॉन एक क्लासिक मेडिकल सील की तरह दिखेगा -->
-                <div class="premium-seal">
-                    <i class="ri-heart-pulse-line"></i>
-                </div>
-            </div>
-            <h1>EXCELSIOR</h1>
-            <p class="subtitle">DIAGNOSTICS & PATH LAB</p>
-            <div class="divider"><span>•••</span></div>
-            <p class="form-title">Digital Test Requisition Form</p>
-        </header>
-        
-        <form class="booking-form">
-            
-            <!-- SECTION 1: PATIENT PROFILE -->
-            <div class="form-section">
-                <h2 class="section-heading">01. Patient Profile</h2>
-                
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <div class="input-wrapper">
-                        <i class="ri-user-3-line input-icon"></i>
-                        <input type="text" id="name" name="name" placeholder="Enter patient's full name" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="age">Age (In Years)</label>
-                        <div class="input-wrapper">
-                            <i class="ri-calendar-event-line input-icon"></i>
-                            <input type="number" id="age" name="age" placeholder="Age" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="mobile">Contact Number</label>
-                        <div class="input-wrapper">
-                            <i class="ri-phone-line input-icon"></i>
-                            <input type="tel" id="mobile" name="mobile" placeholder="Mobile number" required>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+<div class="card">
 
-            <!-- SECTION 2: TEST & LOGISTICS -->
-            <div class="form-section">
-                <h2 class="section-heading">02. Test & Logistics Details</h2>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="test">Prescribed Test / Package</label>
-                        <div class="input-wrapper">
-                            <i class="ri-flask-line input-icon"></i>
-                            <input type="text" id="test" name="test" placeholder="e.g., CBC, Lipid Profile" required>
-                        </div>
-                    </div>
+<div class="section-title">
+Schedule Your Diagnostic Test
+</div>
 
-                    <div class="form-group">
-                        <label for="ref">Referred By</label>
-                        <div class="input-wrapper">
-                            <i class="ri-stethoscope-line input-icon"></i>
-                            <input type="text" id="ref" name="ref" placeholder="Doctor name or 'Self'">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="address">Home Collection Address</label>
-                    <div class="input-wrapper">
-                        <i class="ri-map-pin-line input-icon"></i>
-                        <input type="text" id="address" name="address" placeholder="Complete address for phlebotomist visit" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="date">Preferred Appointment Date</label>
-                    <div class="input-wrapper">
-                        <i class="ri-time-line input-icon"></i>
-                        <input type="date" id="date" name="date" required>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- PREMIUM BUTTON -->
-            <button type="submit" class="whatsapp-btn">
-                <i class="ri-whatsapp-line"></i>
-                <span>Authorize & Book via WhatsApp</span>
-            </button>
+<form id="bookingForm">
 
-            <footer class="form-footer">
-                <p><i class="ri-shield-check-line"></i> 256-bit Encrypted Secure Direct Booking Port</p>
-            </footer>
-        </form>
-    </div>
+<div class="section-title">
+👤 Patient Information
+</div>
+
+<div class="form-group">
+<label>Patient Name</label>
+<input type="text" id="name" placeholder="Enter full name">
+</div>
+
+<div class="grid">
+
+<div class="form-group">
+<label>Age</label>
+<input type="number" id="age" placeholder="Enter age">
+</div>
+
+<div class="form-group">
+<label>Mobile Number</label>
+<input type="tel" id="mobile" placeholder="Enter mobile number">
+</div>
+
+</div>
+
+<div class="form-group">
+<label>Address</label>
+<textarea id="address" rows="3" placeholder="Complete address"></textarea>
+</div>
+
+<div class="section-title">
+🧪 Test Information
+</div>
+
+<div class="form-group">
+<label>Test Name</label>
+<input type="text" id="test" placeholder="CBC, LFT, KFT, Thyroid Profile etc.">
+</div>
+
+<div class="grid">
+
+<div class="form-group">
+<label>Referred By</label>
+<input type="text" id="refby" placeholder="Doctor / Person">
+</div>
+
+<div class="form-group">
+<label>Preferred Date</label>
+<input type="date" id="date">
+</div>
+
+</div>
+
+<div class="section-title">
+💳 Payment Information
+</div>
+
+<div class="grid">
+
+<div class="form-group">
+<label>Amount Paid (₹)</label>
+<input type="number" id="paid" placeholder="0">
+</div>
+
+<div class="form-group">
+<label>Outstanding Due (₹)</label>
+<input type="number" id="due" placeholder="0">
+</div>
+
+</div>
+
+<div class="section-title">
+Why Choose Rajan Path Lab?
+</div>
+
+<div class="features">
+
+<div class="feature">
+<i class="fas fa-check-circle"></i>
+Accurate & Reliable Testing
+</div>
+
+<div class="feature">
+<i class="fas fa-user-md"></i>
+Experienced Laboratory Professionals
+</div>
+
+<div class="feature">
+<i class="fas fa-file-medical"></i>
+Timely Report Delivery
+</div>
+
+<div class="feature">
+<i class="fas fa-shield-heart"></i>
+Hygienic Sample Collection
+</div>
+
+<div class="feature">
+<i class="fas fa-heart"></i>
+Patient-Centric Care
+</div>
+
+</div>
+
+<button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
+<i class="fab fa-whatsapp"></i>
+Submit Booking via WhatsApp
+</button>
+
+<div class="footer-note">
+"Excellence in Diagnostics. Confidence in Every Report."
+</div>
+
+</form>
+
+</div>
+</div>
+
+<script>
+
+function sendWhatsApp(){
+
+let message =
+"🧬 *RAJAN PATH LAB TEST BOOKING*%0A%0A"+
+"👤 Name: "+document.getElementById('name').value+"%0A"+
+"🎂 Age: "+document.getElementById('age').value+"%0A"+
+"📱 Mobile: "+document.getElementById('mobile').value+"%0A"+
+"📍 Address: "+document.getElementById('address').value+"%0A%0A"+
+"🧪 Test: "+document.getElementById('test').value+"%0A"+
+"👨‍⚕️ Referred By: "+document.getElementById('refby').value+"%0A"+
+"📅 Date: "+document.getElementById('date').value+"%0A%0A"+
+"💳 Paid: ₹"+document.getElementById('paid').value+"%0A"+
+"📝 Due: ₹"+document.getElementById('due').value;
+
+window.open(
+"https://wa.me/91YOURNUMBER?text="+message,
+"_blank"
+);
+
+}
+
+</script>
 
 </body>
 </html>
