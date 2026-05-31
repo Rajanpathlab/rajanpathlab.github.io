@@ -1,1 +1,176 @@
+/* --- Premium Theme Variables --- */
+:root {
+    --primary-color: #0f2042;      /* Deep Classic Navy */
+    --accent-color: #c5a059;       /* Muted Luxury Gold */
+    --text-main: #2b2d42;          /* Charcoal Black */
+    --text-muted: #6c757d;         /* Soft Gray */
+    --bg-body: #f4f6f9;            /* Ultra clean gray-blue tint */
+    --bg-card: #ffffff;
+    --whatsapp-green: #128c7e;
+    --whatsapp-hover: #0a5f54;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Roboto', sans-serif;
+}
+
+/* --- Base Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* --- Container Design --- */
+.booking-container {
+    background: var(--bg-card);
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(15, 32, 66, 0.05);
+    border: 1px solid rgba(197, 160, 89, 0.15); /* Soft Gold border hint */
+}
+
+/* --- Header Section --- */
+header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo-wrapper {
+    margin-bottom: 15px;
+}
+
+.logo {
+    max-height: 60px;
+    object-fit: contain;
+}
+
+header h1 {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* --- Form Layout --- */
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* --- Labels & Inputs --- */
+label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="date"] {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    background-color: #fafafa;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: var(--font-body);
+}
+
+input::placeholder {
+    color: #a0aec0;
+}
+
+/* Input Focus Premium Effect */
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15);
+}
+
+/* Special styling for Date picker to look clean */
+input[type="date"] {
+    cursor: pointer;
+    color: var(--text-main);
+}
+
+/* --- Premium WhatsApp Button --- */
+.whatsapp-btn {
+    margin-top: 10px;
+    background-color: var(--primary-color); /* Premium brand color */
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(15, 32, 66, 0.15);
+}
+
+.whatsapp-btn:hover {
+    background-color: var(--whatsapp-green); /* Turns into WhatsApp green on hover */
+    box-shadow: 0 6px 20px rgba(18, 140, 126, 0.3);
+    transform: translateY(-1px);
+}
+
+.whatsapp-btn:active {
+    transform: translateY(1px);
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 500px) {
+    .booking-container {
+        padding: 25px 20px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
 
