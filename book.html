@@ -4,166 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Path Lab Booking</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="booking-container">
         <header>
-            <img src="logo.png" alt="Medical Logo" class="logo">
-            <h1>Book Your Test</h1>
+            <div class="logo-wrapper">
+                <img src="logo.png" alt="Medical Logo" class="logo">
+            </div>
+            <h1>Premium Path Lab</h1>
+            <p class="subtitle">Secure & Reliable Diagnostic Booking</p>
         </header>
         
         <form class="booking-form">
             <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+            
+            <!-- Row 1: Age & Mobile -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" placeholder="Years" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" name="mobile" placeholder="E.g. +91 98765 43210" required>
+                </div>
+            </div>
+            
+            <!-- Row 2: Ref By & Test Name -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="ref">Referred By</label>
+                    <input type="text" id="ref" name="ref" placeholder="Doctor or Self">
+                </div>
+                
+                <div class="form-group">
+                    <label for="test">Test Name / Package</label>
+                    <input type="text" id="test" name="test" placeholder="E.g. Full Body, CBC" required>
+                </div>
             </div>
             
             <div class="form-group">
-                <label for="age">Age:</label>
-                <input type="number" id="age" name="age" required>
+                <label for="address">Collection Address</label>
+                <input type="text" id="address" name="address" placeholder="Complete address for home collection" required>
             </div>
             
             <div class="form-group">
-                <label for="ref">Ref. By (Doctor/Person):</label>
-                <input type="text" id="ref" name="ref">
-            </div>
-            
-            <div class="form-group">
-                <label for="mobile">Mobile Number:</label>
-                <input type="tel" id="mobile" name="mobile" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="test">Test Name:</label>
-                <input type="text" id="test" name="test" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="address">Address:</label>
-                <input type="text" id="address" name="address" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="date">Date:</label>
+                <label for="date">Preferred Date</label>
                 <input type="date" id="date" name="date" required>
             </div>
             
             <button type="submit" class="whatsapp-btn">
-                Submit Booking via WhatsApp
+                <span>Confirm Booking via WhatsApp</span>
             </button>
         </form>
     </div>
 </body>
 </html>
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #fefef9;
-    color: #001f3f;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.booking-container {
-    background-color: #fff;
-    width: 100%;
-    max-width: 450px;
-    padding: 30px;
-    margin: 20px;
-    border-radius: 8px;
-    border: 2px solid #bfa36a; /* Gold Accent */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-/* Adds the inner gold border effect */
-.booking-container::before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    border: 1px solid #d4af37;
-    border-radius: 6px;
-    pointer-events: none;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.logo {
-    width: 60px;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    color: #002244; /* Dark Navy */
-    margin: 0;
-}
-
-.booking-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-label {
-    font-weight: bold;
-    color: #001f3f;
-}
-
-input {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-}
-
-input:focus {
-    outline: none;
-    border-color: #001f3f;
-}
-
-input[type="date"] {
-    background-color: white;
-    appearance: none; /* For uniform display of date inputs */
-}
-
-.whatsapp-btn {
-    background-color: #3e6b41; /* Muted Green */
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 20px;
-}
-
-.whatsapp-btn:hover {
-    background-color: #2d4f30;
-}
-
-.whatsapp-btn:active {
-    transform: scale(0.98);
-}
