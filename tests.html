@@ -1,74 +1,226 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Tests</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajan Path Lab - Test Price List</title>
+    <style>
+        :root {
+            --primary-color: #104c64;
+            --secondary-color: #007a87;
+            --accent-color: #e63946;
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 30px 15px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header p {
+            color: #666;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .search-container {
+            margin-bottom: 25px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            border: 2px solid #dce4ec;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .search-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 8px rgba(0, 122, 135, 0.2);
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            padding: 14px 18px;
+            font-size: 15px;
+            text-transform: uppercase;
+        }
+        th:nth-child(1) { width: 12%; text-align: center; }
+        th:nth-child(2) { width: 63%; }
+        th:nth-child(3) { width: 25%; text-align: right; }
+        
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #eef2f5;
+            font-size: 15px;
+            color: #444;
+        }
+        td:nth-child(1) { text-align: center; color: #888; font-weight: 600; }
+        td:nth-child(2) { font-weight: 500; }
+        td:nth-child(3) { text-align: right; font-weight: 700; color: var(--primary-color); }
+        
+        tr:nth-child(even) {
+            background-color: #f8fafb;
+        }
+        tr:hover {
+            background-color: #f1f6f8;
+            transition: background-color 0.2s ease;
+        }
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            font-size: 16px;
+            font-style: italic;
+        }
+        @media (max-width: 600px) {
+            body { padding: 15px 5px; }
+            .container { padding: 15px; border-radius: 8px; }
+            .header h1 { font-size: 22px; }
+            .header p { font-size: 13px; }
+            td, th { padding: 12px 10px; font-size: 14px; }
+            .search-input { padding: 12px; font-size: 15px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<h1>Rajan Path Lab - Test Price List</h1>
+<div class="container">
+    <div class="header">
+        <h1>Rajan Path Lab</h1>
+        <p>Premium Diagnostics — New Test Price List (W.E.F. 01 January 2026)</p>
+    </div>
 
-<table border="1" cellpadding="10">
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search Test Name (e.g., CBC, Sugar, Liver, Widal)..." onkeyup="filterTable()">
+    </div>
 
-<tr>
-<th>S.No</th>
-<th>Test Name</th>
-<th>Price (₹)</th>
-</tr>
+    <div class="table-responsive">
+        <table id="priceTable">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Test Name</th>
+                    <th>Price (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>LIVER FUNCTION TEST</td><td>600</td></tr>
+                <tr><td>2</td><td>KIDNEY FUNCTION TEST (Fasting Blood)</td><td>600</td></tr>
+                <tr><td>3</td><td>LIPID PROFILE (Fasting Blood)</td><td>600</td></tr>
+                <tr><td>4</td><td>THYROID PROFILE</td><td>500</td></tr>
+                <tr><td>5</td><td>BETA HCG</td><td>1000</td></tr>
+                <tr><td>6</td><td>HBA1C (3 Month Sugar)</td><td>600</td></tr>
+                <tr><td>7</td><td>C-REACTIVE PROTEIN (CRP)</td><td>400</td></tr>
+                <tr><td>8</td><td>ANTISTREPTOLYSIN O TITER (ASO)</td><td>400</td></tr>
+                <tr><td>9</td><td>R A FACTOR</td><td>400</td></tr>
+                <tr><td>10</td><td>HCG PREGNANCY TEST</td><td>100</td></tr>
+                <tr><td>11</td><td>URINE ROUTINE</td><td>100</td></tr>
+                <tr><td>13</td><td>URINE CULTURE</td><td>300</td></tr>
+                <tr><td>14</td><td>SEMEN ANALYSIS</td><td>250</td></tr>
+                <tr><td>15</td><td>MANTOUX TEST</td><td>200</td></tr>
+                <tr><td>16</td><td>HBSAG</td><td>150</td></tr>
+                <tr><td>17</td><td>VDRL</td><td>100</td></tr>
+                <tr><td>18</td><td>HIV</td><td>300</td></tr>
+                <tr><td>19</td><td>HCV</td><td>200</td></tr>
+                <tr><td>20</td><td>BLOOD UREA</td><td>150</td></tr>
+                <tr><td>21</td><td>SERUM CREATININE</td><td>150</td></tr>
+                <tr><td>22</td><td>URIC ACID (Fasting Blood)</td><td>150</td></tr>
+                <tr><td>23</td><td>BLOOD SUGAR</td><td>50</td></tr>
+                <tr><td>24</td><td>COMPLETE BLOOD COUNT (CBC)</td><td>300</td></tr>
+                <tr><td>25</td><td>PLATELETS TEST</td><td>150</td></tr>
+                <tr><td>26</td><td>DENGUE TEST NS1 IGG IGM</td><td>650</td></tr>
+                <tr><td>27</td><td>TYPHIDOT IGG IGM</td><td>250</td></tr>
+                <tr><td>28</td><td>WIDAL</td><td>100</td></tr>
+                <tr><td>29</td><td>OPTIMAL</td><td>200</td></tr>
+                <tr><td>30</td><td>TC DC</td><td>120</td></tr>
+                <tr><td>31</td><td>BT CT</td><td>120</td></tr>
+                <tr><td>32</td><td>ESR</td><td>120</td></tr>
+                <tr><td>33</td><td>SMEAR OF MP</td><td>100</td></tr>
+                <tr><td>34</td><td>HB</td><td>50</td></tr>
+                <tr><td>35</td><td>BLOOD GROUP</td><td>50</td></tr>
+                <tr><td>36</td><td>TOTAL PARASITE</td><td>250</td></tr>
+                <tr><td>37</td><td>SMEAR OF MP</td><td>100</td></tr>
+                <tr><td>38</td><td>BILIRUBIN TEST</td><td>200</td></tr>
+                <tr><td>39</td><td>MP WIDAL HB</td><td>250</td></tr>
+                <tr><td>40</td><td>OPTIMAL WIDAL HB</td><td>350</td></tr>
+                <tr><td>41</td><td>CBC MP WIDAL</td><td>500</td></tr>
+                <tr><td>42</td><td>CBC WIDAL</td><td>400</td></tr>
+                <tr><td>43</td><td>HB WIDAL</td><td>150</td></tr>
+                <tr><td>44</td><td>MP WIDAL</td><td>200</td></tr>
+                <tr><td>45</td><td>OPTIMAL WIDAL</td><td>300</td></tr>
+                <tr><td>46</td><td>Sodium</td><td>200</td></tr>
+                <tr><td>47</td><td>Potassium</td><td>200</td></tr>
+            </tbody>
+        </table>
+        <div id="noResults" class="no-results">Koi test nahi mila. Kripya doobara check karein!</div>
+    </div>
+</div>
 
-<tr><td>1</td><td>CBC (Complete Blood Count)</td><td>300</td></tr>
-<tr><td>2</td><td>Haemoglobin (Hb)</td><td>50</td></tr>
-<tr><td>3</td><td>Blood Group & RH Factor</td><td>50</td></tr>
-<tr><td>4</td><td>Blood Sugar (F/PP/R)</td><td>60</td></tr>
-<tr><td>5</td><td>HbA1c (Sugar 3 Months)</td><td>600</td></tr>
-<tr><td>6</td><td>Urine Routine & Microscopy</td><td>100</td></tr>
-<tr><td>7</td><td>Urine Pregnancy Test</td><td>100</td></tr>
-<tr><td>8</td><td>Widal Test (Typhoid Card)</td><td>100</td></tr>
-<tr><td>9</td><td>Widal Test (Slide Method)</td><td>100</td></tr>
-<tr><td>10</td><td>Dengue NS1 / IgM-IgG</td><td>700</td></tr>
-<tr><td>11</td><td>Malaria Parasite</td><td>200</td></tr>
-<tr><td>12</td><td>Chikungunya</td><td>700</td></tr>
-<tr><td>13</td><td>CRP</td><td>400</td></tr>
-<tr><td>14</td><td>RA Factor</td><td>400</td></tr>
-<tr><td>15</td><td>ASO Titre</td><td>400</td></tr>
-<tr><td>16</td><td>ESR</td><td>120</td></tr>
-<tr><td>17</td><td>LFT</td><td>700</td></tr>
-<tr><td>18</td><td>SGOT / SGPT</td><td>300</td></tr>
-<tr><td>19</td><td>Bilirubin</td><td>200</td></tr>
-<tr><td>20</td><td>KFT</td><td>700</td></tr>
-<tr><td>21</td><td>Serum Creatinine</td><td>150</td></tr>
-<tr><td>22</td><td>Serum Urea</td><td>150</td></tr>
-<tr><td>23</td><td>Serum Uric Acid</td><td>150</td></tr>
-<tr><td>24</td><td>Lipid Profile</td><td>600</td></tr>
-<tr><td>25</td><td>Triglycerides</td><td>250</td></tr>
-<tr><td>26</td><td>Thyroid Profile</td><td>500</td></tr>
-<tr><td>27</td><td>TSH</td><td>350</td></tr>
-<tr><td>28</td><td>Vitamin B12</td><td>1000</td></tr>
-<tr><td>29</td><td>Vitamin D3</td><td>1200</td></tr>
-<tr><td>30</td><td>Serum Calcium</td><td>250</td></tr>
-<tr><td>31</td><td>HIV I & II</td><td>300</td></tr>
-<tr><td>32</td><td>HBsAg</td><td>200</td></tr>
-<tr><td>33</td><td>HCV</td><td>300</td></tr>
-<tr><td>34</td><td>VDRL</td><td>150</td></tr>
-<tr><td>35</td><td>Serum Electrolytes</td><td>600</td></tr>
-<tr><td>36</td><td>Serum Amylase</td><td>500</td></tr>
-<tr><td>37</td><td>Serum Lipase</td><td>600</td></tr>
-<tr><td>38</td><td>Mantoux Test</td><td>250</td></tr>
-<tr><td>39</td><td>Sputum for AFB</td><td>250</td></tr>
-<tr><td>40</td><td>Semen Analysis</td><td>250</td></tr>
-<tr><td>41</td><td>Stool Routine</td><td>200</td></tr>
-<tr><td>42</td><td>Alkaline Phosphatase</td><td>200</td></tr>
-<tr><td>43</td><td>Total Protein / Albumin</td><td>200</td></tr>
-<tr><td>44</td><td>Serum Iron Profile</td><td>1000</td></tr>
-<tr><td>45</td><td>Beta HCG</td><td>1000</td></tr>
-<tr><td>46</td><td>Prolactin</td><td>500</td></tr>
-<tr><td>47</td><td>Urine Culture & Sensitivity</td><td>350</td></tr>
+<script>
+function filterTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("priceTable");
+    tr = table.getElementsByTagName("tr");
+    var hasResults = false;
 
-</table>
-
-<br>
-
-<a href="index.html">Back to Home</a>
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+                hasResults = true;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }       
+    }
+    
+    document.getElementById("noResults").style.display = hasResults ? "none" : "block";
+}
+</script>
 
 </body>
 </html>
