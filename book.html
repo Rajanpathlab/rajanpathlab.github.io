@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab | Instant Add on Select</title>
+<title>Rajan Path Lab | Smart Dropdown Auto-Close</title>
 <!-- Google Fonts & Font Awesome -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -266,27 +266,6 @@
     margin-left: 12px;
   }
 
-  .add-test-btn {
-    background: #126e8c;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 40px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    margin-top: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .add-test-btn:hover {
-    background: #0c5775;
-    transform: translateY(-2px);
-  }
-
   .features {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -375,8 +354,8 @@
 
 <section class="hero">
   <h1>Rajan Path Lab</h1>
-  <h2><i class="fas fa-microscope"></i> Instant Test Add · Smart Doctor Fill</h2>
-  <p>⚡ Click on any test from dropdown → instantly added to cart. Click on doctor name → instantly filled. No extra clicks!</p>
+  <h2><i class="fas fa-microscope"></i> Instant Add · Auto-Close Dropdowns</h2>
+  <p>⚡ Click test → adds to cart & dropdown closes. Click doctor → fills name & dropdown closes. Move cursor away → dropdown disappears.</p>
 </section>
 
 <div class="container">
@@ -417,7 +396,7 @@
             <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="🔬 Type test name: LIVER, CBC, THYROID ..." autocomplete="off">
             <div id="testDropdownList" class="autocomplete-dropdown"></div>
           </div>
-          <small class="small-note"><i class="fas fa-mouse-pointer"></i> Just click any test from the list → it will be added to cart immediately!</small>
+          <small class="small-note"><i class="fas fa-mouse-pointer"></i> Click any test → instantly added. Dropdown auto-closes.</small>
         </div>
 
         <!-- Cart display -->
@@ -446,7 +425,7 @@
             <input type="text" id="refby" class="autocomplete-input" placeholder="Type any letter (P, D, S...) → click doctor name" autocomplete="off">
             <div id="doctorDropdownList" class="autocomplete-dropdown"></div>
           </div>
-          <small class="small-note"><i class="fas fa-bolt"></i> Just click on any doctor name → it will fill automatically.</small>
+          <small class="small-note"><i class="fas fa-bolt"></i> Click doctor name → field fills & dropdown closes.</small>
         </div>
 
         <div class="grid-2col">
@@ -538,7 +517,7 @@
 
   function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-  // ========== TEST: INSTANT ADD ON CLICK ==========
+  // ========== TEST: INSTANT ADD ON CLICK & AUTO-CLOSE ==========
   function renderTestDropdown(searchTerm) {
     const term = searchTerm.trim().toLowerCase();
     if (term === "") { testDropdown.classList.remove('show'); return; }
@@ -558,29 +537,26 @@
     testDropdown.classList.add('show');
   }
 
-  // Handle test click: add to cart immediately
   function handleTestDropdownClick(e) {
     const item = e.target.closest('.dropdown-item[data-name]');
     if (!item) return;
     const name = item.getAttribute('data-name');
     const price = parseInt(item.getAttribute('data-price'), 10);
-    // Add to cart
     cart.push({ name: name, price: price });
     updateCartUI();
-    // Clear input and close dropdown, keep focus for next test
     testSearchInput.value = "";
-    testSearchInput.focus();
     testDropdown.classList.remove('show');
+    testSearchInput.focus();
   }
 
   testDropdown.addEventListener('click', handleTestDropdownClick);
-
-  // Input event for showing dropdown
-  testSearchInput.addEventListener('input', (e) => {
-    renderTestDropdown(e.target.value);
+  testSearchInput.addEventListener('input', (e) => renderTestDropdown(e.target.value));
+  // BLUR: hide dropdown when focus leaves the input (cursor moves away)
+  testSearchInput.addEventListener('blur', () => {
+    setTimeout(() => { testDropdown.classList.remove('show'); }, 200);
   });
 
-  // ========== DOCTOR: INSTANT FILL ON CLICK ==========
+  // ========== DOCTOR: INSTANT FILL & AUTO-CLOSE ==========
   function renderDoctorDropdown(searchTerm) {
     const term = searchTerm.trim().toLowerCase();
     if (term === "") { doctorDropdown.classList.remove('show'); return; }
@@ -607,8 +583,10 @@
   }
 
   doctorDropdown.addEventListener('click', handleDoctorDropdownClick);
-  doctorInput.addEventListener('input', (e) => {
-    renderDoctorDropdown(e.target.value);
+  doctorInput.addEventListener('input', (e) => renderDoctorDropdown(e.target.value));
+  // BLUR: hide dropdown when focus leaves doctor input
+  doctorInput.addEventListener('blur', () => {
+    setTimeout(() => { doctorDropdown.classList.remove('show'); }, 200);
   });
 
   // ========== Remove from cart (Event Delegation) ==========
@@ -647,7 +625,6 @@
     cartDataJson.value = JSON.stringify(cart);
   }
 
-  // Remove button delegation
   document.getElementById('cartContainer').addEventListener('click', function(e) {
     const btn = e.target.closest('.remove-test-btn');
     if (btn && btn.hasAttribute('data-remove-index')) {
@@ -656,10 +633,14 @@
     }
   });
 
-  // Close dropdowns on outside click
+  // Close dropdowns when clicking anywhere outside (additional safety)
   document.addEventListener('click', function(e) {
-    if (!document.getElementById('testAutocompleteWrapper')?.contains(e.target)) testDropdown.classList.remove('show');
-    if (!document.getElementById('doctorAutocompleteWrapper')?.contains(e.target)) doctorDropdown.classList.remove('show');
+    if (!document.getElementById('testAutocompleteWrapper')?.contains(e.target)) {
+      testDropdown.classList.remove('show');
+    }
+    if (!document.getElementById('doctorAutocompleteWrapper')?.contains(e.target)) {
+      doctorDropdown.classList.remove('show');
+    }
   });
 
   // Set default date
