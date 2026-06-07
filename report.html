@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Premier Reports | Manual Entry Only</title>
+  <title>Premier Reports | Classic Gold Edition</title>
   <style>
     * {
       margin: 0;
@@ -208,10 +208,24 @@
       gap: 6px;
     }
 
-    .required-star {
-      color: #b91c1c;
-      font-size: 0.7rem;
-      margin-left: 4px;
+    .required-badge {
+      background: #e8eef3;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #5a6e7c;
+      margin-left: 8px;
+    }
+
+    .optional-badge {
+      background: #eef2f6;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #7e8c9e;
+      margin-left: 8px;
     }
 
     .whatsapp-premium-btn {
@@ -264,9 +278,9 @@
     }
 
     .status-error {
-      background: #feece6;
-      border-left-color: #c7362b;
-      color: #9b2c1d;
+      background: #fef5f0;
+      border-left-color: #d4873a;
+      color: #8b5a2b;
     }
 
     .status-loading {
@@ -291,8 +305,8 @@
     }
     .error-shake {
       animation: elegantShake 0.35s ease;
-      border-color: #c62828 !important;
-      background-color: #fff6f5;
+      border-color: #d4af37 !important;
+      background-color: #fffef8;
     }
 
     @media (max-width: 650px) {
@@ -320,7 +334,7 @@
     <!-- PATIENT ID - Required -->
     <div class="input-group">
       <div class="input-label">
-        <span>🆔</span> PATIENT ID <span class="required-star">* required</span>
+        <span>🆔</span> PATIENT ID <span class="required-badge">required</span>
       </div>
       <input type="text" id="patientIdInput" class="classic-input" placeholder="Enter patient ID manually" autocomplete="off">
       <div class="optional-note">🔑 Enter unique patient identifier</div>
@@ -331,16 +345,16 @@
       <!-- PATIENT NAME - Required, Manual only -->
       <div class="input-group">
         <div class="input-label">
-          <span>👤</span> PATIENT NAME <span class="required-star">* required</span>
+          <span>👤</span> PATIENT NAME <span class="required-badge">required</span>
         </div>
         <input type="text" id="patientNameInput" class="classic-input" placeholder="Enter patient full name manually" autocomplete="off">
-        <div class="optional-note">✏️ Type patient name (no auto-fill)</div>
+        <div class="optional-note">✏️ Type patient name (manual entry)</div>
       </div>
 
       <!-- DOCTOR NAME - Required, with auto-suggest -->
       <div class="input-group" id="doctorGroup">
         <div class="input-label">
-          <span>👨‍⚕️</span> DOCTOR NAME <span class="required-star">* select/type</span>
+          <span>👨‍⚕️</span> DOCTOR NAME <span class="required-badge">select / type</span>
         </div>
         <input type="text" id="doctorNameInput" class="classic-input" placeholder="Type or select from list" autocomplete="off">
         <div id="doctorDropdown" class="autocomplete-list" style="display: none;"></div>
@@ -348,10 +362,10 @@
       </div>
     </div>
 
-    <!-- PATIENT MOBILE - Optional, No auto-fill -->
+    <!-- PATIENT MOBILE - Optional -->
     <div class="input-group">
       <div class="input-label">
-        <span>📞</span> PATIENT'S MOBILE <span style="color:#7f8c8d; font-weight:normal;">(optional)</span>
+        <span>📞</span> PATIENT'S MOBILE <span class="optional-badge">optional</span>
       </div>
       <input type="tel" id="mobileNumberInput" class="classic-input" placeholder="Enter mobile number manually (optional)" autocomplete="off">
       <div class="optional-note">💡 Optional field - leave empty if not needed</div>
