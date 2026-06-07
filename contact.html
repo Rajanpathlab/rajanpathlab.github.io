@@ -1,24 +1,361 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Contact Us - Rajan Path Lab</title>
-<style>
-body { font-family: Arial; background: #f4f9ff; padding: 20px; }
-h1 { color: #0b6aa2; }
-a { color: #ff3b3b; text-decoration: none; font-weight: bold; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Rajan Path Lab | Accurate Diagnostics • Trusted Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(145deg, #eef5fc 0%, #e0edf8 100%);
+            color: #1a2c3e;
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
+        }
+
+        /* main container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* header / hero area */
+        .hero {
+            background: linear-gradient(105deg, #0b6aa2 0%, #0a5a8a 100%);
+            padding: 2.2rem 2.5rem;
+            color: white;
+            border-bottom: 5px solid #ffc107;
+        }
+
+        .hero h1 {
+            font-size: 2.3rem;
+            letter-spacing: -0.3px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .hero .tagline {
+            font-size: 1.05rem;
+            opacity: 0.92;
+            font-weight: 400;
+            border-left: 3px solid #ffc107;
+            padding-left: 1rem;
+        }
+
+        /* two column layout: about (main) + contact sidebar */
+        .grid-main {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .about-section {
+            flex: 2;
+            min-width: 260px;
+            background: #ffffff;
+            padding: 2.2rem 2rem;
+        }
+
+        .contact-card {
+            flex: 1.1;
+            min-width: 280px;
+            background: #f9fafc;
+            border-left: 1px solid #e2edf7;
+            padding: 2rem 1.8rem;
+            box-shadow: -6px 0 14px -10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* section headings */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0b6aa2;
+            border-bottom: 3px solid #ffc107;
+            display: inline-block;
+            padding-bottom: 0.35rem;
+            margin-bottom: 1.6rem;
+            letter-spacing: -0.2px;
+        }
+
+        .about-text {
+            color: #2c3e4e;
+            font-size: 1.02rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.3rem;
+            text-align: justify;
+        }
+
+        /* core values list */
+        .values-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.8rem 0 1rem;
+        }
+
+        .value-badge {
+            background: #e9f2f9;
+            border-radius: 60px;
+            padding: 0.45rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #0b6aa2;
+            border-left: 3px solid #ffc107;
+            transition: 0.1s linear;
+        }
+
+        /* contact card inner style */
+        .contact-card h2 {
+            font-size: 1.7rem;
+            color: #0b6aa2;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            border-left: 4px solid #ffc107;
+            padding-left: 0.9rem;
+        }
+
+        .contact-detail {
+            margin: 1.7rem 0;
+            background: white;
+            padding: 0.9rem 1.2rem;
+            border-radius: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e9edf2;
+        }
+
+        .contact-detail:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.12);
+            border-color: #cbdbe0;
+        }
+
+        .contact-label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #5d7e9c;
+            margin-bottom: 6px;
+        }
+
+        .contact-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .contact-value a {
+            color: #0b6aa2;
+            text-decoration: none;
+            transition: 0.2s;
+            font-weight: 700;
+        }
+
+        .contact-value a:hover {
+            color: #ff3b3b;
+            text-decoration: underline;
+        }
+
+        .address-icon {
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: #1f3b4c;
+        }
+
+        /* special callout */
+        .trust-badge {
+            background: #eef2fa;
+            border-radius: 1rem;
+            padding: 1rem 1.3rem;
+            margin-top: 2rem;
+            border-left: 4px solid #ffc107;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #005a8c;
+        }
+
+        /* back to home button */
+        .home-link-wrap {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 2px solid #0b6aa2;
+            padding: 0.65rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            color: #0b6aa2;
+            text-decoration: none;
+            transition: 0.25s;
+            font-size: 0.95rem;
+        }
+
+        .btn-home:hover {
+            background: #0b6aa2;
+            color: white;
+            border-color: #0b6aa2;
+            box-shadow: 0 5px 12px rgba(11, 106, 162, 0.3);
+        }
+
+        /* footer */
+        .footer-note {
+            background: #f1f6fb;
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.8rem;
+            color: #486477;
+            border-top: 1px solid #dde6ef;
+        }
+
+        /* responsiveness */
+        @media (max-width: 800px) {
+            body {
+                padding: 1rem;
+            }
+            .hero {
+                padding: 1.5rem;
+            }
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            .about-section, .contact-card {
+                padding: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .contact-card h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .grid-main {
+                flex-direction: column;
+            }
+            .contact-card {
+                border-left: none;
+                border-top: 2px solid #e2edf7;
+            }
+            .about-text p {
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<h1>Contact Rajan Path Lab</h1>
+<div class="container">
+    <!-- Header with branding -->
+    <div class="hero">
+        <h1>🔬 Rajan Path Lab</h1>
+        <div class="tagline">Accurate Diagnostics · Trusted Results · Better Healthcare</div>
+    </div>
 
-<p>📞 Phone: <a href="tel:8709946177">8709946177</a></p>
-<p>📧 Email: <a href="mailto:rajanpathlab@gmail.com">rajanpathlab@gmail.com</a></p>
-<p>🏠 Address: Manahar Bhushra Pandwa Patan Road, Palamu</p>
+    <div class="grid-main">
+        <!-- LEFT / MAIN: About Section (Professional & Detailed) -->
+        <div class="about-section">
+            <div>
+                <span class="section-title">About Rajan Path Lab</span>
+            </div>
+            <div class="about-text">
+                <p><strong>Rajan Path Lab</strong> is a leading diagnostic and pathology center dedicated to delivering accurate, reliable, and high-quality laboratory testing services. Established with a vision to make advanced diagnostics accessible to everyone, we are committed to supporting better healthcare through precision, innovation, and patient-centered care.</p>
+                
+                <p>Our laboratory is equipped with modern diagnostic technology and operated by experienced professionals who follow stringent quality control procedures to ensure dependable and clinically relevant results. From routine health screenings to specialized investigations, every test is performed with the highest standards of accuracy and professionalism.</p>
+                
+                <p>At Rajan Path Lab, we understand that timely diagnosis plays a vital role in effective treatment. Therefore, we focus on fast sample processing, prompt report delivery, and complete transparency throughout the testing process. Our goal is not only to provide laboratory reports but also to contribute to better health outcomes by helping doctors and patients make informed medical decisions.</p>
+                
+                <p>Over the years, we have earned the trust of patients, physicians, and healthcare professionals through our commitment to excellence, ethical practices, and exceptional service quality. We continuously strive to improve our facilities, expand our diagnostic capabilities, and maintain the highest standards of laboratory medicine.</p>
+            </div>
 
-<p>
-<a href="index.html">Back to Home</a>
-</p>
+            <!-- Core values visual element -->
+            <div class="values-list">
+                <span class="value-badge">🎯 Accuracy</span>
+                <span class="value-badge">⚙️ Reliability</span>
+                <span class="value-badge">🛡️ Integrity</span>
+                <span class="value-badge">❤️ Patient Care</span>
+                <span class="value-badge">⚡ Fast Reports</span>
+            </div>
+
+            <div class="trust-badge">
+                🏆 <strong>Rajan Path Lab — Accurate Diagnostics, Trusted Results, Better Healthcare.</strong><br>
+                With a strong foundation built on Accuracy, Reliability, Integrity, and Patient Care, we remain dedicated to serving the community with trusted diagnostic solutions.
+            </div>
+            
+            <!-- subtle back to home (if index exists) -->
+            <div class="home-link-wrap">
+                <a href="index.html" class="btn-home">← Back to Home</a>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR: Contact Information (Professional & Prominent) -->
+        <div class="contact-card">
+            <h2>📬 Contact Us</h2>
+            
+            <div class="contact-detail">
+                <div class="contact-label">📞 Phone (Call / WhatsApp)</div>
+                <div class="contact-value">
+                    <a href="tel:8709946177">+91 87099 46177</a>
+                </div>
+            </div>
+
+            <div class="contact-detail">
+                <div class="contact-label">✉️ Email (24x7 Support)</div>
+                <div class="contact-value">
+                    <a href="mailto:rajanpathlab@gmail.com">rajanpathlab@gmail.com</a>
+                </div>
+            </div>
+
+            <div class="contact-detail">
+                <div class="contact-label">🏥 Main Laboratory & Collection Center</div>
+                <div class="contact-value address-icon">
+                    Manahar Bhushra, Pandwa Patan Road, <br>
+                    Palamu, Jharkhand – 822124 (IN)
+                </div>
+            </div>
+
+            <div style="margin: 1.5rem 0 0.5rem;">
+                <div style="height: 2px; background: linear-gradient(90deg, #ffc107, #e0e9f2); width: 60px; margin-bottom: 1rem;"></div>
+                <p style="font-size: 0.85rem; color: #446d8c; line-height: 1.4;">
+                    ⏱️ <strong>Working Hours:</strong> Mon–Sat: 7:30 AM – 8:00 PM <br>
+                    Sunday: 8:00 AM – 2:00 PM (Emergency Support Available)
+                </p>
+                <p style="font-size: 0.85rem; margin-top: 12px; background: #fff7e5; padding: 8px 10px; border-radius: 16px;">
+                    🧪 <strong>Home Sample Collection</strong> available — call to schedule.
+                </p>
+            </div>
+
+            <!-- optional small map-like text (professional) -->
+            <div class="trust-badge" style="margin-top: 1.2rem; background: white; border-left-color: #0b6aa2;">
+                📍 Landmark: Near Manahar Bhushra Chowk, Pandwa Patan Road — easily accessible from main Palamu district.
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        © 2025 Rajan Path Lab — Advanced Diagnostics with Compassion | Leading Pathology Center in Palamu
+    </div>
+</div>
 
 </body>
 </html>
