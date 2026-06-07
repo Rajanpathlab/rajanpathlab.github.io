@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab - Advanced Test Booking</title>
+<title>Rajan Path Lab - Smart Test Booking</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
@@ -15,16 +15,18 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #f0f7fc;
+    background: linear-gradient(145deg, #f0f4fa 0%, #e9f0f5 100%);
     color: #1a2c3e;
+    min-height: 100vh;
 }
 
 .hero {
     background: linear-gradient(135deg, #0a3f66, #0F5B8C);
-    padding: 60px 20px;
+    padding: 55px 20px;
     text-align: center;
     color: white;
     position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
 .hero h1 {
@@ -49,29 +51,29 @@ body {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 1050px;
     margin: -45px auto 50px;
     padding: 20px;
 }
 
 .card {
     background: #ffffff;
-    border-radius: 28px;
-    padding: 30px 35px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 32px;
+    padding: 32px 38px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
     transition: all 0.2s;
 }
 
 .section-title {
-    font-size: 1.25rem;
+    font-size: 1.28rem;
     font-weight: 700;
     color: #0F5B8C;
-    margin: 25px 0 15px 0;
+    margin: 28px 0 16px 0;
     padding-bottom: 8px;
     border-bottom: 3px solid #e2edf7;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .section-title:first-of-type {
@@ -79,125 +81,188 @@ body {
 }
 
 .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 label {
-    font-weight: 500;
-    margin-bottom: 6px;
+    font-weight: 600;
+    margin-bottom: 8px;
     display: block;
     font-size: 0.9rem;
-    color: #2c4a6e;
+    color: #1e4a76;
 }
 
 input, select, textarea {
     width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid #e0eaf2;
-    border-radius: 14px;
-    font-size: 0.9rem;
+    padding: 13px 16px;
+    border: 1.5px solid #e2eaf2;
+    border-radius: 16px;
+    font-size: 0.95rem;
     font-family: 'Poppins', sans-serif;
     background: #fff;
-    transition: 0.2s;
+    transition: 0.25s;
     outline: none;
 }
 
 input:focus, select:focus, textarea:focus {
     border-color: #0F5B8C;
-    box-shadow: 0 0 0 3px rgba(15,91,140,0.1);
+    box-shadow: 0 0 0 4px rgba(15,91,140,0.1);
 }
 
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
+/* AUTOCOMPLETE STYLES */
+.autocomplete-wrapper {
+    position: relative;
+    width: 100%;
 }
 
-/* test & doctor row */
-.test-select-row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
+.autocomplete-input {
+    width: 100%;
 }
 
-.test-select-row select {
-    flex: 3;
+.autocomplete-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 1000;
+    margin-top: 6px;
+    border: 1px solid #e0eaf2;
 }
 
-.test-select-row button {
-    flex: 0.5;
-    background: #eef2fa;
-    border: none;
-    padding: 12px 14px;
-    border-radius: 14px;
-    font-weight: 500;
-    color: #0F5B8C;
+.suggestion-item {
+    padding: 12px 16px;
     cursor: pointer;
-    transition: 0.2s;
-    font-size: 0.85rem;
+    transition: 0.1s;
+    border-bottom: 1px solid #f0f2f5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.test-select-row button:hover {
-    background: #d9e4f0;
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background: #eef5fc;
+}
+
+.suggestion-name {
+    font-weight: 500;
+    color: #1e3a5f;
+}
+
+.suggestion-price {
+    font-size: 0.85rem;
+    background: #e9f0f5;
+    padding: 4px 10px;
+    border-radius: 40px;
+    font-weight: 600;
+    color: #0c6b3f;
 }
 
 .selected-tests {
-    background: #f9fdfe;
-    border-radius: 16px;
-    padding: 12px 15px;
-    margin-top: 10px;
-    border: 1px solid #e2edf7;
+    background: #fafdff;
+    border-radius: 20px;
+    padding: 14px 18px;
+    margin-top: 15px;
+    border: 1px solid #dce8f2;
 }
 
 .selected-tests h4 {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #0a4b6e;
-    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0F5B8C;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 #selectedTestsList {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
+    margin-bottom: 12px;
 }
 
 .test-badge {
-    background: #e9f2f9;
-    padding: 5px 12px;
+    background: #eef2fa;
+    padding: 6px 14px;
     border-radius: 50px;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 500;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
     color: #0a4b6e;
+    transition: 0.1s;
 }
 
 .remove-test {
-    background: none;
+    background: #ffe6e6;
     border: none;
     font-weight: bold;
-    color: #b91c1c;
+    color: #c0392b;
     cursor: pointer;
     font-size: 1rem;
-    padding: 0 4px;
-    border-radius: 20px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.1s;
 }
 
 .remove-test:hover {
-    color: #a00000;
-    transform: scale(1.1);
+    background: #e74c3c;
+    color: white;
+    transform: scale(1.05);
 }
 
 .price-summary {
     margin-top: 12px;
+    font-size: 0.95rem;
+    background: linear-gradient(95deg, #eef7fc, #e2f0ea);
+    padding: 10px 16px;
+    border-radius: 18px;
+    font-weight: 700;
+    color: #0f5b45;
+}
+
+.add-btn {
+    background: #0F5B8C;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    width: 100%;
+    transition: 0.2s;
     font-size: 0.9rem;
-    background: #ecf7f0;
-    padding: 8px 12px;
-    border-radius: 14px;
-    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-btn:hover {
+    background: #0a486e;
+    transform: translateY(-2px);
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
 .features {
@@ -209,67 +274,53 @@ input:focus, select:focus, textarea:focus {
 
 .feature {
     background: #f8fbfe;
-    padding: 12px;
-    border-radius: 16px;
+    padding: 12px 14px;
+    border-radius: 18px;
     font-size: 0.85rem;
     font-weight: 500;
 }
 
 .feature i {
     color: #14B8A6;
-    width: 24px;
+    width: 28px;
 }
 
 .whatsapp-btn {
     width: 100%;
     border: none;
     padding: 18px;
-    border-radius: 40px;
+    border-radius: 50px;
     background: #25D366;
     color: white;
     font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
     transition: 0.2s;
-    margin-top: 25px;
+    margin-top: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    box-shadow: 0 6px 14px rgba(37,211,102,0.3);
+    box-shadow: 0 8px 18px rgba(37,211,102,0.3);
 }
 
 .whatsapp-btn:hover {
     transform: translateY(-2px);
-    background: #20b859;
+    background: #1da859;
 }
 
 .footer-note {
     text-align: center;
-    margin-top: 28px;
+    margin-top: 25px;
     font-style: italic;
     color: #5e7e9e;
     font-size: 0.8rem;
 }
 
 @media (max-width: 680px) {
-    .card {
-        padding: 22px;
-    }
-    .grid-2 {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-    .test-select-row {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .test-select-row button {
-        width: 100%;
-    }
-    .hero h1 {
-        font-size: 2.2rem;
-    }
+    .card { padding: 22px; }
+    .grid-2 { grid-template-columns: 1fr; gap: 12px; }
+    .hero h1 { font-size: 2rem; }
 }
 </style>
 </head>
@@ -277,8 +328,8 @@ input:focus, select:focus, textarea:focus {
 
 <section class="hero">
     <h1>Rajan Path Lab</h1>
-    <h2>Precision Diagnostics • Compassionate Care • Since 1995</h2>
-    <p>Choose from 46+ specialized tests. Fill the booking form, and our team will reach out. All details are securely sent via WhatsApp to our lab manager.</p>
+    <h2>🔬 Type to Search Test • Smart Autocomplete • Quick Booking</h2>
+    <p>Start typing diagnostic test name (CBC, LFT, Thyroid, Lipid…). Suggestions appear instantly. Add multiple tests, auto-price calculation.</p>
 </section>
 
 <div class="container">
@@ -288,12 +339,12 @@ input:focus, select:focus, textarea:focus {
             <div class="section-title"><i class="fas fa-user-circle"></i> Patient Information</div>
             <div class="form-group">
                 <label>Full Name *</label>
-                <input type="text" id="name" placeholder="e.g., Rajesh Kumar" required>
+                <input type="text" id="name" placeholder="Enter full name" required>
             </div>
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Age (Years)</label>
-                    <input type="number" id="age" placeholder="Age">
+                    <label>Age</label>
+                    <input type="number" id="age" placeholder="Years">
                 </div>
                 <div class="form-group">
                     <label>Mobile Number *</label>
@@ -301,36 +352,36 @@ input:focus, select:focus, textarea:focus {
                 </div>
             </div>
             <div class="form-group">
-                <label>Complete Address</label>
+                <label>Full Address</label>
                 <textarea id="address" rows="2" placeholder="Street, City, Pincode"></textarea>
             </div>
 
-            <!-- Test Booking Section: Dynamic Multi-test -->
-            <div class="section-title"><i class="fas fa-flask"></i> Select Tests (Multiple Allowed)</div>
-            <div class="test-select-row">
-                <select id="testSelector">
-                    <option value="">-- Choose a diagnostic test --</option>
-                </select>
-                <button type="button" id="addTestBtn"><i class="fas fa-plus-circle"></i> Add Test</button>
+            <!-- TEST SELECTION WITH AUTOCOMPLETE -->
+            <div class="section-title"><i class="fas fa-microscope"></i> 🔍 Choose Diagnostic Test (Start Typing)</div>
+            <div class="autocomplete-wrapper">
+                <input type="text" id="testAutocomplete" class="autocomplete-input" placeholder="e.g., CBC, Thyroid, LFT, Lipid, Dengue..." autocomplete="off">
+                <div id="suggestionsList" class="autocomplete-suggestions" style="display: none;"></div>
             </div>
-            
+            <button type="button" id="quickAddBtn" class="add-btn"><i class="fas fa-plus-circle"></i> + Add Selected Test</button>
+
+            <!-- Selected tests cart -->
             <div class="selected-tests" id="selectedTestsContainer" style="display: none;">
-                <h4><i class="fas fa-list-ul"></i> Selected Tests & Prices</h4>
+                <h4><i class="fas fa-cart-plus"></i> Selected Tests & Price</h4>
                 <div id="selectedTestsList"></div>
-                <div id="totalPriceSpan" class="price-summary">💰 Total Amount: ₹0</div>
+                <div id="totalPriceSpan" class="price-summary">💰 Grand Total: ₹0</div>
             </div>
-            
-            <!-- Custom text test fallback (optional but allows manual entry) -->
+
+            <!-- Manual extra test name (optional) -->
             <div class="form-group" style="margin-top: 12px;">
-                <label>Or manually write test name (if not listed)</label>
-                <input type="text" id="customTestName" placeholder="e.g., Any other test / package">
+                <label>📝 Any other test (manual entry)</label>
+                <input type="text" id="customTestName" placeholder="e.g., Vitamin D, Allergy Panel etc.">
             </div>
 
             <!-- Referral & Date -->
             <div class="section-title"><i class="fas fa-user-md"></i> Referral & Schedule</div>
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Referred By (Doctor/Self)</label>
+                    <label>Referred By (Doctor / Self)</label>
                     <select id="refbySelect">
                         <option value="">-- Select Doctor --</option>
                     </select>
@@ -342,7 +393,7 @@ input:focus, select:focus, textarea:focus {
                 </div>
             </div>
 
-            <!-- Payment Info -->
+            <!-- Payment Information -->
             <div class="section-title"><i class="fas fa-rupee-sign"></i> Payment Details</div>
             <div class="grid-2">
                 <div class="form-group">
@@ -355,26 +406,26 @@ input:focus, select:focus, textarea:focus {
                 </div>
             </div>
 
-            <!-- Why Choose Us -->
+            <!-- Why Choose -->
             <div class="section-title"><i class="fas fa-star-of-life"></i> Why Rajan Path Lab?</div>
             <div class="features">
-                <div class="feature"><i class="fas fa-check-circle"></i> NABL Accredited Techniques</div>
+                <div class="feature"><i class="fas fa-check-circle"></i> Accurate + NABL Standards</div>
                 <div class="feature"><i class="fas fa-user-md"></i> Expert Pathologists</div>
-                <div class="feature"><i class="fas fa-chart-line"></i> Rapid & Accurate Reports</div>
-                <div class="feature"><i class="fas fa-hand-holding-heart"></i> Home Collection Available</div>
-                <div class="feature"><i class="fas fa-microscope"></i> 46+ Specialized Tests</div>
+                <div class="feature"><i class="fas fa-chart-line"></i> Same-Day Reports</div>
+                <div class="feature"><i class="fas fa-truck-medical"></i> Home Collection</div>
+                <div class="feature"><i class="fas fa-database"></i> 46+ Test Menu</div>
             </div>
 
             <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
-                <i class="fab fa-whatsapp fa-lg"></i> Confirm Booking via WhatsApp
+                <i class="fab fa-whatsapp fa-lg"></i> Confirm & Send on WhatsApp
             </button>
-            <div class="footer-note">✔️ No extra charges | Reports will be shared digitally | Our team will confirm slot</div>
+            <div class="footer-note">✅ Live search • Instant price • Lab will confirm appointment</div>
         </form>
     </div>
 </div>
 
 <script>
-// -------- Data Integration ----------
+// -------------------- COMPLETE TEST DATABASE (46 tests) --------------------
 const testsData = [
     { sno:1, name:"LIVER FUNCTION TEST", price:600 },{ sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600 },{ sno:3, name:"LIPID PROFILE (Fasting)", price:600 },
     { sno:4, name:"THYROID PROFILE", price:500 },{ sno:5, name:"BETA HCG", price:1000 },{ sno:6, name:"HBA1C (3 Month Sugar)", price:600 },
@@ -392,6 +443,7 @@ const testsData = [
     { sno:44, name:"OPTIMAL WIDAL", price:300 },{ sno:45, name:"Sodium", price:200 },{ sno:46, name:"Potassium", price:200 }
 ];
 
+// Doctor master list
 const doctorMasterList = [
     "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
     "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
@@ -399,21 +451,12 @@ const doctorMasterList = [
     "SUDAMA PRAJAPATI", "AJIJ ANSARI", "MERAJ ALAM", "VIJAY MEHTA", "RANDHIR KUMAR", "S. SHARMA",
     "MAJHAR HUSSAIN", "GUDAN PRASAD", "RAJ VISHWAKARMA"
 ];
-const sortedDoctors = [...doctorMasterList].sort((a,b) => a.localeCompare(b));
-
-// Populate test dropdown
-const testSelect = document.getElementById('testSelector');
-testsData.forEach(test => {
-    const option = document.createElement('option');
-    option.value = JSON.stringify({ name: test.name, price: test.price });
-    option.textContent = `${test.name}  (₹${test.price})`;
-    testSelect.appendChild(option);
-});
+const sortedDoctors = [...doctorMasterList].sort((a,b)=>a.localeCompare(b));
 
 // Populate doctor dropdown
 const refbySelect = document.getElementById('refbySelect');
 sortedDoctors.forEach(doc => {
-    const opt = document.createElement('option');
+    let opt = document.createElement('option');
     opt.value = doc;
     opt.textContent = doc;
     refbySelect.appendChild(opt);
@@ -421,9 +464,10 @@ sortedDoctors.forEach(doc => {
 refbySelect.innerHTML += `<option value="other">Other (Type below)</option>`;
 
 // State for selected tests
-let selectedTests = []; // each element { name, price }
+let selectedTests = []; // { name, price }
 
-function updateSelectedTestsUI() {
+// Helper: Update UI for cart
+function updateCartUI() {
     const container = document.getElementById('selectedTestsContainer');
     const listDiv = document.getElementById('selectedTestsList');
     const totalSpan = document.getElementById('totalPriceSpan');
@@ -439,157 +483,203 @@ function updateSelectedTestsUI() {
         total += test.price;
         const badge = document.createElement('div');
         badge.className = 'test-badge';
-        badge.innerHTML = `${test.name} (₹${test.price}) <button class="remove-test" data-index="${idx}">✕</button>`;
+        badge.innerHTML = `<span>🔬 ${test.name}</span> <span style="font-weight:600;">₹${test.price}</span> <button class="remove-test" data-index="${idx}">✕</button>`;
         listDiv.appendChild(badge);
     });
-    totalSpan.innerHTML = `💰 Total Billable Amount: ₹${total}`;
+    totalSpan.innerHTML = `💰 Total Test Amount: ₹${total}`;
     
-    // attach remove events
     document.querySelectorAll('.remove-test').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const index = parseInt(btn.getAttribute('data-index'));
-            if (!isNaN(index)) {
-                selectedTests.splice(index, 1);
-                updateSelectedTestsUI();
+            const idx = parseInt(btn.getAttribute('data-index'));
+            if (!isNaN(idx)) {
+                selectedTests.splice(idx, 1);
+                updateCartUI();
             }
         });
     });
 }
 
-document.getElementById('addTestBtn').addEventListener('click', () => {
-    const selectedVal = testSelect.value;
-    if (!selectedVal) {
-        alert("Please select a test from the dropdown.");
-        return;
-    }
-    const testObj = JSON.parse(selectedVal);
-    // avoid duplicate by name? optional but fine keep as per preference
-    selectedTests.push({ name: testObj.name, price: testObj.price });
-    updateSelectedTestsUI();
-    testSelect.value = ""; // reset
-});
+// Autocomplete logic
+const testAutocomplete = document.getElementById('testAutocomplete');
+const suggestionsDiv = document.getElementById('suggestionsList');
+let currentSelectedTestObj = null; // hold currently selected suggestion
 
-// sync manual custom test name if needed (we'll treat extra)
-function getFormattedTests() {
-    let testLines = [];
-    // Selected tests from list
-    selectedTests.forEach(t => {
-        testLines.push(`${t.name} (₹${t.price})`);
-    });
-    const customTestRaw = document.getElementById('customTestName').value.trim();
-    if (customTestRaw) {
-        testLines.push(`📋 Custom / Extra: ${customTestRaw}`);
-    }
-    if (testLines.length === 0) return "Not specified";
-    return testLines.join(" | ");
+function filterTests(searchTerm) {
+    if (!searchTerm.trim()) return [];
+    const lowerTerm = searchTerm.toLowerCase();
+    return testsData.filter(t => t.name.toLowerCase().includes(lowerTerm)).slice(0, 12);
 }
 
-function getTotalBillSummary() {
+function renderSuggestions(suggestions) {
+    suggestionsDiv.innerHTML = '';
+    if (suggestions.length === 0) {
+        suggestionsDiv.style.display = 'none';
+        return;
+    }
+    suggestions.forEach(test => {
+        const div = document.createElement('div');
+        div.className = 'suggestion-item';
+        div.innerHTML = `<span class="suggestion-name">${test.name}</span><span class="suggestion-price">₹${test.price}</span>`;
+        div.addEventListener('click', () => {
+            // on click, set input value and store selected test obj
+            testAutocomplete.value = test.name;
+            currentSelectedTestObj = test;
+            suggestionsDiv.style.display = 'none';
+        });
+        suggestionsDiv.appendChild(div);
+    });
+    suggestionsDiv.style.display = 'block';
+}
+
+testAutocomplete.addEventListener('input', function(e) {
+    const query = e.target.value;
+    const matches = filterTests(query);
+    if (matches.length > 0) {
+        renderSuggestions(matches);
+        currentSelectedTestObj = null;
+    } else {
+        suggestionsDiv.style.display = 'none';
+        currentSelectedTestObj = null;
+    }
+});
+
+// Hide suggestions on blur but with small delay to allow click
+testAutocomplete.addEventListener('blur', () => {
+    setTimeout(() => {
+        suggestionsDiv.style.display = 'none';
+    }, 180);
+});
+
+testAutocomplete.addEventListener('focus', () => {
+    if (testAutocomplete.value.trim() !== '') {
+        const matches = filterTests(testAutocomplete.value);
+        if (matches.length) renderSuggestions(matches);
+    }
+});
+
+// Add selected test from autocomplete OR manual entry
+document.getElementById('quickAddBtn').addEventListener('click', () => {
+    let testToAdd = null;
+    // if user selected from suggestion and input matches the test name exactly or using stored obj
+    if (currentSelectedTestObj && currentSelectedTestObj.name === testAutocomplete.value.trim()) {
+        testToAdd = currentSelectedTestObj;
+    } else {
+        // try to find by exact name match in testsData
+        const exactMatch = testsData.find(t => t.name.toLowerCase() === testAutocomplete.value.trim().toLowerCase());
+        if (exactMatch) {
+            testToAdd = exactMatch;
+        } else if (testAutocomplete.value.trim() !== "") {
+            // allow custom free text? but we should add as custom fallback with price 0? better to alert but also allow
+            if (confirm(`"${testAutocomplete.value.trim()}" not in master list. Add as custom test with price ₹0?`)) {
+                testToAdd = { name: testAutocomplete.value.trim(), price: 0 };
+            } else {
+                testAutocomplete.value = '';
+                return;
+            }
+        } else {
+            alert("Please type a test name or select from suggestions.");
+            return;
+        }
+    }
+    
+    if (testToAdd) {
+        selectedTests.push({ name: testToAdd.name, price: testToAdd.price });
+        updateCartUI();
+        testAutocomplete.value = '';
+        currentSelectedTestObj = null;
+        suggestionsDiv.style.display = 'none';
+    }
+});
+
+// manual custom test input (other)
+function getFormattedTests() {
+    let lines = [];
+    selectedTests.forEach(t => lines.push(`${t.name} (₹${t.price})`));
+    const customManual = document.getElementById('customTestName').value.trim();
+    if (customManual) lines.push(`📋 Extra Test: ${customManual}`);
+    if (lines.length === 0) return "No tests selected";
+    return lines.join(" | ");
+}
+
+function getTotalBillAmount() {
     let total = 0;
     selectedTests.forEach(t => total += t.price);
     return total;
 }
 
-// get referred by value
 function getReferredBy() {
     const selectVal = refbySelect.value;
-    const otherInput = document.getElementById('refbyOther').value.trim();
-    if (selectVal === "other") {
-        return otherInput || "Other (not specified)";
-    } else if (selectVal && selectVal !== "") {
-        return selectVal;
-    } else {
-        return otherInput || "Not mentioned";
-    }
+    const otherVal = document.getElementById('refbyOther').value.trim();
+    if (selectVal === "other") return otherVal || "Other doctor";
+    else if (selectVal && selectVal !== "") return selectVal;
+    else return otherVal || "Self / Not mentioned";
 }
 
-// Main WhatsApp send
+// send WhatsApp function
 function sendWhatsApp() {
-    // basic validations
-    const patientName = document.getElementById('name').value.trim();
+    const name = document.getElementById('name').value.trim();
     const mobile = document.getElementById('mobile').value.trim();
-    if (!patientName) {
-        alert("❌ Please enter patient name.");
-        return;
-    }
-    if (!mobile) {
-        alert("❌ Mobile number is required for confirmation.");
-        return;
-    }
+    if (!name) { alert("❌ Please enter patient name."); return; }
+    if (!mobile) { alert("❌ Mobile number is required."); return; }
     
-    const name = patientName || "—";
     const age = document.getElementById('age').value || "—";
-    const address = document.getElementById('address').value.trim() || "Not Provided";
-    const testDetails = getFormattedTests();
+    const address = document.getElementById('address').value.trim() || "Not provided";
+    const testsSummary = getFormattedTests();
     const referred = getReferredBy();
-    const preferredDate = document.getElementById('date').value || "Not specified";
-    let paidAmount = document.getElementById('paid').value;
-    let dueAmount = document.getElementById('due').value;
-    paidAmount = (paidAmount === "") ? "0" : paidAmount;
-    dueAmount = (dueAmount === "") ? "0" : dueAmount;
-    
-    const totalTestValue = getTotalBillSummary();
-    let dynamicDueCalc = "";
-    if(parseInt(paidAmount) + parseInt(dueAmount) !== totalTestValue && selectedTests.length > 0) {
-        dynamicDueCalc = `⚠️ Note: Sum of Paid+Due (₹${parseInt(paidAmount)+parseInt(dueAmount)}) doesn't match total test value ₹${totalTestValue}. Please adjust.`;
+    const prefDate = document.getElementById('date').value || "Not specified";
+    let paid = document.getElementById('paid').value || "0";
+    let due = document.getElementById('due').value || "0";
+    const totalTestVal = getTotalBillAmount();
+    let warningMsg = "";
+    if (selectedTests.length > 0 && (parseInt(paid) + parseInt(due) !== totalTestVal)) {
+        warningMsg = `⚠️ Note: Paid+Due (₹${parseInt(paid)+parseInt(due)}) ≠ Test total ₹${totalTestVal}. Please adjust.`;
     }
     
-    // Build final WhatsApp message (clean formatting)
-    let message = `🏥 *RAJAN PATH LAB* - Booking Request%0A`;
-    message += `━━━━━━━━━━━━━━━━━━%0A`;
+    let message = `🏥 *RAJAN PATH LAB* - Diagnostic Booking%0A`;
+    message += `━━━━━━━━━━━━━━━━━━━━%0A`;
     message += `👤 *Patient:* ${name}%0A`;
     message += `🎂 *Age:* ${age}%0A`;
     message += `📞 *Mobile:* ${mobile}%0A`;
     message += `📍 *Address:* ${address}%0A`;
-    message += `━━━━━━━━━━━━━━━━━━%0A`;
-    message += `🧪 *Selected Tests:*%0A${testDetails}%0A`;
-    if(selectedTests.length > 0) {
-        message += `💰 *Total Test Value:* ₹${totalTestValue}%0A`;
-    }
+    message += `━━━━━━━━━━━━━━━━━━━━%0A`;
+    message += `🧪 *Tests Selected:*%0A${testsSummary}%0A`;
+    if(selectedTests.length > 0) message += `💰 *Total Test Value:* ₹${totalTestVal}%0A`;
     message += `👨‍⚕️ *Referred By:* ${referred}%0A`;
-    message += `📅 *Preferred Date:* ${preferredDate}%0A`;
-    message += `━━━━━━━━━━━━━━━━━━%0A`;
-    message += `💵 *Amount Paid:* ₹${paidAmount}%0A`;
-    message += `📝 *Outstanding Due:* ₹${dueAmount}%0A`;
-    if (dynamicDueCalc) message += `${dynamicDueCalc}%0A`;
-    message += `━━━━━━━━━━━━━━━━━━%0A`;
-    message += `✅ *Booking via Website* | Kindly confirm time slot.`;
+    message += `📅 *Preferred Date:* ${prefDate}%0A`;
+    message += `━━━━━━━━━━━━━━━━━━━━%0A`;
+    message += `💵 *Paid:* ₹${paid}%0A`;
+    message += `📝 *Due:* ₹${due}%0A`;
+    if(warningMsg) message += `${warningMsg}%0A`;
+    message += `━━━━━━━━━━━━━━━━━━━━%0A`;
+    message += `✅ Booking via Smart Web Form. Please confirm time.`;
     
-    // Encode message for URL
-    const encodedMsg = encodeURIComponent(message).replace(/%(0A|20)/g, function(match) {
-        if (match === '%0A') return '%0A';
-        if (match === '%20') return '%20';
-        return match;
-    }).replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/₹/g, '%E2%82%B9');
-    
-    // WhatsApp number (same as original)
-    const whatsappNumber = "918709946177";
-    const url = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
-    window.open(url, '_blank');
+    const encodedMsg = encodeURIComponent(message).replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/₹/g, '%E2%82%B9');
+    const waNumber = "918709946177";
+    window.open(`https://wa.me/${waNumber}?text=${encodedMsg}`, '_blank');
 }
 
-// Set minimum date to today
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('date').min = today;
-
-// Optional: sync due/paid auto suggestion based on total test value – but keep manual
-document.getElementById('paid').addEventListener('input', function() {
-    const total = getTotalBillSummary();
-    const paidVal = parseInt(this.value) || 0;
-    const dueField = document.getElementById('due');
-    if (total >= paidVal && selectedTests.length > 0) {
-        const autoDue = total - paidVal;
-        if(autoDue >= 0) dueField.value = autoDue;
-    }
-});
-document.getElementById('due').addEventListener('input', function() {
-    const total = getTotalBillSummary();
-    const dueVal = parseInt(this.value) || 0;
+// auto sync due/paid when test amount changes
+function syncPaymentFromTotal() {
+    const totalAmt = getTotalBillAmount();
     const paidField = document.getElementById('paid');
-    if (total >= dueVal && selectedTests.length > 0) {
-        paidField.value = total - dueVal;
+    const dueField = document.getElementById('due');
+    let paidVal = parseInt(paidField.value) || 0;
+    let dueVal = parseInt(dueField.value) || 0;
+    if (totalAmt > 0 && (paidVal + dueVal) !== totalAmt && (paidVal > 0 || dueVal > 0)) {
+        // optionally auto adjust due if paid entered
+        if (paidVal > 0 && dueVal === 0 && totalAmt >= paidVal) dueField.value = totalAmt - paidVal;
+        else if (dueVal > 0 && paidVal === 0 && totalAmt >= dueVal) paidField.value = totalAmt - dueVal;
     }
-});
+}
+
+document.getElementById('paid').addEventListener('input', () => syncPaymentFromTotal());
+document.getElementById('due').addEventListener('input', () => syncPaymentFromTotal());
+
+// default date set to today
+document.getElementById('date').valueAsDate = new Date();
+
+// ensure cart updates on any test addition/removal
+window.updateCartUI = updateCartUI;
 </script>
 </body>
 </html>
