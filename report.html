@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Premier Reports | Auto Doctor List</title>
+  <title>Premier Reports | Manual Patient Entry</title>
   <style>
     * {
       margin: 0;
@@ -331,7 +331,7 @@
     <div class="header-flex">
       <h1>📋 REPORT PORTAL <span class="classic-badge">WHATSAPP DIRECT</span></h1>
     </div>
-    <div class="header-sub">◆ Patient ID required · Auto-suggest Doctor List ◆ Report instantly to Doctor's WhatsApp</div>
+    <div class="header-sub">◆ Patient ID required · Patient Name & Doctor Name fill manually ◆ Report to Doctor's WhatsApp</div>
   </div>
 
   <div class="form-container">
@@ -339,21 +339,22 @@
       <span>👨‍⚕️</span> Doctor's WhatsApp: <strong>+91 8709946177</strong> — All reports delivered here
     </div>
 
-    <!-- PATIENT ID -->
+    <!-- PATIENT ID - Only for detection, NOT auto-filling name -->
     <div class="input-group">
-      <div class="input-label"><span>🆔</span> PATIENT ID <span style="color:#b91c1c;">*</span></div>
-      <input type="text" id="patientIdInput" class="classic-input" placeholder="e.g., PAT-5698, PS7890" autocomplete="off">
-      <div class="optional-note">🔍 Enter ID → Auto-detects patient info</div>
+      <div class="input-label"><span>🆔</span> PATIENT ID <span style="color:#b91c1c;">* required</span></div>
+      <input type="text" id="patientIdInput" class="classic-input" placeholder="e.g., PAT-5698, PS7890, HOSP-1001" autocomplete="off">
+      <div class="optional-note">🔍 Enter ID → System detects report is ready (Name filled manually below)</div>
     </div>
 
-    <!-- Two columns: Patient Name & Doctor Name (with auto-suggest) -->
+    <!-- Two columns: Patient Name (Manual) & Doctor Name (Auto-suggest) -->
     <div class="row-2col">
       <div class="input-group">
-        <div class="input-label"><span>👤</span> PATIENT NAME <span style="color:#b91c1c;">*</span></div>
-        <input type="text" id="patientNameInput" class="classic-input" placeholder="Full patient name" autocomplete="off">
+        <div class="input-label"><span>👤</span> PATIENT NAME <span style="color:#b91c1c;">* fill manually</span></div>
+        <input type="text" id="patientNameInput" class="classic-input" placeholder="Enter patient full name manually" autocomplete="off">
+        <div class="optional-note">✏️ Type patient name manually (auto-fill disabled)</div>
       </div>
       <div class="input-group" id="doctorGroup" style="position: relative;">
-        <div class="input-label"><span>👨‍⚕️</span> DOCTOR NAME <span style="color:#b91c1c;">*</span></div>
+        <div class="input-label"><span>👨‍⚕️</span> DOCTOR NAME <span style="color:#b91c1c;">* select/type</span></div>
         <input type="text" id="doctorNameInput" class="classic-input" placeholder="Type or select from list" autocomplete="off">
         <div id="doctorDropdown" class="autocomplete-list" style="display: none;"></div>
         <div class="optional-note">✨ Auto-suggest from master list (type to filter)</div>
@@ -364,9 +365,10 @@
     <div class="input-group">
       <div class="input-label"><span>📞</span> PATIENT'S MOBILE <span style="color:#7f8c8d;">(optional)</span></div>
       <input type="tel" id="mobileNumberInput" class="classic-input" placeholder="+91 9876543210">
+      <div class="optional-note">💡 Optional: Patient's contact for records</div>
     </div>
 
-    <!-- Insight Card -->
+    <!-- Insight Card - Shows report is ready based on Patient ID -->
     <div id="insightBox" class="insight-card" style="display: none;">
       <div class="insight-icon">📋</div>
       <div class="insight-text" id="insightMessage">Patient ID matched — Report ready</div>
@@ -376,7 +378,7 @@
       <span>📲</span> SEND REPORT TO DOCTOR'S WHATSAPP →
     </button>
 
-    <div id="statusMsg" class="status-area">◆ Enter Patient ID, Name & Doctor → Report sent to +91 8709946177</div>
+    <div id="statusMsg" class="status-area">◆ Enter Patient ID, fill Patient Name manually, select Doctor → Report sent to +91 8709946177</div>
 
     <div class="premium-footer">
       <span>✦ SECURE HEALTH REPORT SYSTEM ✦</span>
@@ -387,7 +389,7 @@
 
 <script>
   (function() {
-    // ======================== DOCTOR MASTER LIST (exactly as provided) ========================
+    // ======================== DOCTOR MASTER LIST ========================
     const doctorMasterList = [
         "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
         "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
@@ -396,26 +398,28 @@
         "MAJHAR HUSSAIN", "GUDAN PRASAD", "RAJ VISHWAKARMA"
     ];
 
-    // ======================== PATIENT DATABASE (mock) ========================
+    // ======================== PATIENT DATABASE (only for report content, NOT for auto-filling name) ========================
     const patientReportsDB = new Map([
-      ['PAT-5698', { defaultName: 'Saurabh Mehta', reportTitle: 'Cardiac Health Profile', reportSummary: 'ECG normal, Cholesterol 168 mg/dL, BP 120/80. Healthy function.', lastVisit: 'June 10, 2025' }],
-      ['PS7890', { defaultName: 'Priyanka Verma', reportTitle: 'CBC + Diabetes Panel', reportSummary: 'HbA1c: 6.2%, Fasting Glucose 100 mg/dL, all normal.', lastVisit: 'May 22, 2025' }],
-      ['HOSP-1001', { defaultName: 'Ravi Kumar', reportTitle: 'MRI Lumbar Spine', reportSummary: 'Mild disc bulge L4-L5, no nerve compression.', lastVisit: 'April 5, 2025' }],
-      ['HOSP-7788', { defaultName: 'Neelam Gupta', reportTitle: 'Thyroid & Vitamin Profile', reportSummary: 'TSH 3.1, Vitamin D 32 ng/mL.', lastVisit: 'March 18, 2025' }],
-      ['GEN-2024', { defaultName: 'Abhishek Singh', reportTitle: 'Chest X-Ray', reportSummary: 'Chest X-ray clear, lungs normal.', lastVisit: 'May 30, 2025' }],
-      ['KID-4455', { defaultName: 'Aarti Sharma', reportTitle: 'Kidney Function', reportSummary: 'Creatinine 0.9 mg/dL, Urea 28 mg/dL.', lastVisit: 'Feb 12, 2025' }],
-      ['ONCO-123', { defaultName: 'Vikram Sinha', reportTitle: 'Oncology Screening', reportSummary: 'Tumor markers negative.', lastVisit: 'Jan 28, 2025' }]
+      ['PAT-5698', { reportTitle: 'Cardiac Health Profile', reportSummary: 'ECG normal, Cholesterol 168 mg/dL, BP 120/80. Healthy cardiac function.', lastVisit: 'June 10, 2025' }],
+      ['PS7890', { reportTitle: 'Complete Blood Count + Diabetes Panel', reportSummary: 'HbA1c: 6.2%, Fasting Glucose 100 mg/dL, Hemoglobin 13.8 g/dL, all parameters within normal range.', lastVisit: 'May 22, 2025' }],
+      ['HOSP-1001', { reportTitle: 'MRI Lumbar Spine', reportSummary: 'MRI findings: Mild disc bulge at L4-L5 without nerve root compression. Physiotherapy recommended.', lastVisit: 'April 5, 2025' }],
+      ['HOSP-7788', { reportTitle: 'Thyroid & Vitamin Profile', reportSummary: 'TSH: 3.1 µIU/mL (normal), Vitamin D: 32 ng/mL, Vitamin B12: 380 pg/mL. Supplementation advised.', lastVisit: 'March 18, 2025' }],
+      ['GEN-2024', { reportTitle: 'Chest X-Ray & General Examination', reportSummary: 'Chest X-ray clear, lungs normal. Physical examination unremarkable.', lastVisit: 'May 30, 2025' }],
+      ['KID-4455', { reportTitle: 'Kidney Function Test', reportSummary: 'Creatinine 0.9 mg/dL, Urea 28 mg/dL, Uric Acid 5.2 mg/dL — all within optimal ranges.', lastVisit: 'February 12, 2025' }],
+      ['ONCO-123', { reportTitle: 'Oncology Screening', reportSummary: 'Tumor markers negative, complete blood count stable. Follow-up in 6 months.', lastVisit: 'January 28, 2025' }]
     ]);
 
+    // Generic report for any Patient ID (not in database)
     function getPatientReport(patientId) {
       if (!patientId || patientId.trim() === '') return null;
       const trimmedId = patientId.trim().toUpperCase();
-      if (patientReportsDB.has(trimmedId)) return patientReportsDB.get(trimmedId);
+      if (patientReportsDB.has(trimmedId)) {
+        return patientReportsDB.get(trimmedId);
+      }
       return {
-        defaultName: `Patient (${trimmedId})`,
-        reportTitle: 'Digital Health Report (Premium)',
-        reportSummary: `Automated report for ID ${trimmedId}. All parameters normal.`,
-        lastVisit: 'Current date'
+        reportTitle: 'Digital Health Report (Premium Edition)',
+        reportSummary: `This automated report has been generated for Patient ID ${trimmedId}. All standard health parameters are within normal limits. Please consult your physician for detailed interpretation.`,
+        lastVisit: 'Latest record: Current date'
       };
     }
 
@@ -430,9 +434,9 @@
     const insightMsgSpan = document.getElementById('insightMessage');
     const doctorDropdown = document.getElementById('doctorDropdown');
 
-    let currentPatientData = null;
+    let currentPatientReport = null;
 
-    // ======================== AUTO-SUGGEST FOR DOCTOR (filter + manual) ========================
+    // ======================== AUTO-SUGGEST FOR DOCTOR ========================
     function showDoctorSuggestions(filterText) {
       const filter = filterText.trim().toUpperCase();
       let filteredDocs = [...doctorMasterList];
@@ -467,18 +471,11 @@
     }
 
     doctorInput.addEventListener('input', function(e) {
-      const val = e.target.value;
-      if (val.length >= 0) {
-        showDoctorSuggestions(val);
-      }
+      showDoctorSuggestions(e.target.value);
     });
 
     doctorInput.addEventListener('focus', function() {
-      if (doctorInput.value.trim() !== "") {
-        showDoctorSuggestions(doctorInput.value);
-      } else {
-        showDoctorSuggestions(""); // show full list when focused empty
-      }
+      showDoctorSuggestions(doctorInput.value);
     });
 
     doctorInput.addEventListener('blur', hideDoctorDropdown);
@@ -488,25 +485,23 @@
       }
     });
 
-    // ======================== PATIENT ID REAL-TIME DETECTION ========================
+    // ======================== PATIENT ID REAL-TIME DETECTION (NO AUTO-FILL NAME) ========================
     function updateInstantInsight() {
       const pid = patientIdInput.value;
       if (!pid || pid.trim() === '') {
         insightBox.style.display = 'none';
-        currentPatientData = null;
-        statusDiv.innerHTML = '◆ Enter Patient ID, Patient Name & Doctor → Report sent to +91 8709946177';
+        currentPatientReport = null;
+        statusDiv.innerHTML = '◆ Enter Patient ID, fill Patient Name manually, select Doctor → Report sent to +91 8709946177';
         statusDiv.classList.remove('status-success', 'status-error');
         return;
       }
-      const patientInfo = getPatientReport(pid);
-      if (patientInfo) {
-        currentPatientData = patientInfo;
-        if (patientNameInput.value.trim() === '' && patientInfo.defaultName) {
-          patientNameInput.value = patientInfo.defaultName;
-        }
+      
+      const patientReport = getPatientReport(pid);
+      if (patientReport) {
+        currentPatientReport = patientReport;
         insightBox.style.display = 'flex';
-        insightMsgSpan.innerHTML = `✅ Patient ID: ${pid.trim().toUpperCase()} — ${patientInfo.defaultName} <span style="color:#b8860b;"> | Report ready</span><br>📄 ${patientInfo.reportTitle} (${patientInfo.lastVisit})`;
-        statusDiv.innerHTML = `🔍 Report found! Fill doctor name and click send.`;
+        insightMsgSpan.innerHTML = `✅ Patient ID: ${pid.trim().toUpperCase()} — Report is ready!<br>📄 ${patientReport.reportTitle} (${patientReport.lastVisit})<br><span style="color:#b8860b;">✏️ Now fill Patient Name manually above</span>`;
+        statusDiv.innerHTML = `🔍 Report found for ID ${pid.trim().toUpperCase()}! Please enter Patient Name manually and select Doctor.`;
         statusDiv.classList.remove('status-error');
         statusDiv.classList.add('status-success');
       } else {
@@ -514,12 +509,13 @@
         insightMsgSpan.innerHTML = `ℹ️ Patient ID: ${pid.trim().toUpperCase()} — Report available`;
       }
     }
+    
     patientIdInput.addEventListener('input', updateInstantInsight);
 
     // ======================== WHATSAPP MESSAGE GENERATION ========================
     function generateWhatsAppMessage(patientId, patientName, doctorName, patientMobile, patientReport) {
       const pidClean = patientId.trim().toUpperCase();
-      const patientNameClean = patientName.trim() || patientReport?.defaultName || 'Not provided';
+      const patientNameClean = patientName.trim() || 'Not provided';
       const doctorNameClean = doctorName.trim() || 'Not specified';
       const patientMobileClean = patientMobile ? patientMobile.trim() : 'Not provided';
       const now = new Date();
@@ -542,6 +538,7 @@
     }
 
     const DOCTOR_WHATSAPP = "8709946177";
+    
     function cleanDoctorNumberForWhatsApp(number) {
       let cleaned = number.trim().replace(/[\s\-\(\)]/g, '');
       cleaned = cleaned.replace(/^\+/, '');
@@ -584,7 +581,7 @@
         return false;
       }
       if (!patientName) {
-        statusDiv.innerHTML = "❌ Patient Name is required.";
+        statusDiv.innerHTML = "❌ Patient Name is required. Please fill manually.";
         statusDiv.classList.add('status-error');
         patientNameInput.classList.add('error-shake');
         setTimeout(() => patientNameInput.classList.remove('error-shake'), 500);
@@ -610,7 +607,7 @@
       const patientReport = getPatientReport(patientId);
       
       if (!patientReport) {
-        statusDiv.innerHTML = "⚠️ Report not found.";
+        statusDiv.innerHTML = "⚠️ Report not found for this Patient ID.";
         statusDiv.classList.add('status-error');
         return;
       }
@@ -631,7 +628,7 @@
           statusDiv.classList.add('status-success');
           statusDiv.innerHTML = `✅ Success! Report for ${patientName} sent to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP}).`;
         } else {
-          statusDiv.innerHTML = "❌ Failed to open WhatsApp. Check internet.";
+          statusDiv.innerHTML = "❌ Failed to open WhatsApp. Check internet connection.";
           statusDiv.classList.add('status-error');
         }
         whatsappBtn.disabled = false;
