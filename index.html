@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Rajan Path Lab | Premium Diagnostics with National Partners</title>
-    <!-- Font Awesome 6 (free) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Rajan Path Lab | Advanced Diagnostics | Trusted Since</title>
+    <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -16,49 +15,29 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: #f4f9fe;
-            color: #13294b;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #f5f9fe;
+            color: #0b2b42;
             scroll-behavior: smooth;
         }
 
-        /* premium color palette */
         :root {
-            --deep-navy: #0a2a44;
-            --teal-bright: #00b4aa;
-            --gold-accent: #f5b042;
-            --coral-red: #e05a5a;
-            --soft-gray: #f0f4f9;
-            --slate: #2c3e66;
+            --primary-dark: #0a2f44;
+            --deep-teal: #008b8b;
+            --accent-teal: #00b4b4;
+            --vibrant-red: #e03a3e;
+            --soft-bg: #f0f7fa;
+            --gold-accent: #f4b942;
+            --shadow-sm: 0 12px 28px rgba(0, 0, 0, 0.08);
+            --border-radius-card: 28px;
         }
 
-        /* floating whatsapp */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #25D366;
-            color: white;
-            padding: 14px 24px;
-            border-radius: 50px;
-            font-weight: 700;
-            z-index: 1100;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1rem;
-            transition: 0.2s;
-        }
-        .whatsapp-float:hover { background: #128C7E; transform: scale(1.02); }
-
-        /* header sticky modern */
+        /* Header Sticky */
         .navbar {
-            background: white;
+            background: #ffffff;
             backdrop-filter: blur(0px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-            padding: 1rem 5%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 0.9rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -67,357 +46,457 @@
             top: 0;
             z-index: 1000;
         }
-        .logo h1 { font-size: 1.8rem; font-weight: 800; color: var(--deep-navy); }
-        .logo span { color: var(--teal-bright); }
-        .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { text-decoration: none; font-weight: 600; color: #1f3a5f; transition: 0.2s; }
-        .nav-links a:hover { color: var(--teal-bright); }
-        .btn-nav { background: var(--teal-bright); padding: 0.5rem 1.2rem; border-radius: 40px; color: white !important; }
-        
-        /* Hero with dynamic partner banner */
+
+        .logo h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0a2f44, #008b8b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: #e03a3e;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            color: #1a3c54;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .nav-links a:hover { color: var(--deep-teal); border-bottom: 2px solid var(--deep-teal); padding-bottom: 4px; }
+
+        /* Hero Section */
         .hero {
-            background: linear-gradient(105deg, #0a2a44 0%, #115e6b 100%);
-            padding: 4rem 5%;
+            background: linear-gradient(115deg, #0a2f44 0%, #116b5f 100%);
+            padding: 4rem 5% 5rem;
             color: white;
             text-align: center;
+            border-radius: 0 0 48px 48px;
+            margin-bottom: 2rem;
         }
-        .hero h2 { font-size: 2.8rem; font-weight: 800; max-width: 800px; margin: 0 auto 1rem; }
-        .partner-strip {
-            margin-top: 2rem;
-            background: rgba(255,255,240,0.12);
-            backdrop-filter: blur(6px);
-            border-radius: 60px;
-            display: inline-flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            padding: 0.8rem 2rem;
+        .hero h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            max-width: 900px;
+            margin: 0 auto 1.2rem;
+            line-height: 1.2;
         }
-        .partner-strip img { height: 40px; filter: brightness(0) invert(1); opacity: 0.9; transition: 0.3s; margin: 0 12px; }
-        .partner-strip span { font-weight: 600; letter-spacing: 1px; }
-
-        /* info cards */
-        .info-highlight {
+        .hero-tag {
+            font-size: 1.3rem;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        .btn-group {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.2rem;
             flex-wrap: wrap;
-            padding: 2rem 5%;
-            background: white;
-            border-bottom: 1px solid #e0ecf5;
         }
-        .info-card {
-            background: #fefefe;
-            border-radius: 36px;
-            padding: 1rem 2rem;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.03);
+        .btn-primary, .btn-outline-light {
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background: var(--vibrant-red);
+            color: white;
+            box-shadow: 0 6px 14px rgba(224, 58, 62, 0.3);
+        }
+        .btn-primary:hover { background: #b92d31; transform: translateY(-3px);}
+        .btn-outline-light {
+            border: 2px solid white;
+            color: white;
+            background: transparent;
+        }
+        .btn-outline-light:hover { background: white; color: #0a2f44;}
+
+        /* Highlights Strip (floating contact) */
+        .info-strip {
+            background: white;
+            margin: -1.8rem 5% 2rem 5%;
+            padding: 1.2rem 2rem;
+            border-radius: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            z-index: 10;
+        }
+        .info-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            border: 1px solid #eef2f8;
+            gap: 12px;
+            font-weight: 600;
+            color: #0a2f44;
         }
-        .info-card i { font-size: 2rem; color: var(--teal-bright); }
-        
-        /* section style */
+        .info-item i { font-size: 1.6rem; color: var(--deep-teal); }
+
+        /* Sections */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
         .section-title {
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             font-weight: 800;
-            margin: 3rem 0 1rem;
-            color: #0a2a44;
+            color: #0a2f44;
+            margin-bottom: 2rem;
+            position: relative;
         }
-        .subhead { text-align: center; color: #4a627a; margin-bottom: 2rem; }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-teal);
+            margin: 0.6rem auto 0;
+            border-radius: 4px;
+        }
 
-        /* partner carousel (big labs) */
-        .partner-carousel {
-            background: linear-gradient(120deg, #ffffff, #f5fafe);
-            padding: 2rem 2rem;
-            border-radius: 48px;
-            margin: 2rem auto;
-            max-width: 1200px;
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.05);
-        }
-        .carousel-track {
+        /* About Grid */
+        .about-grid {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2.2rem;
+            gap: 3rem;
             align-items: center;
+            flex-wrap: wrap;
         }
-        .partner-logo-card {
-            background: white;
-            border-radius: 48px;
-            padding: 0.8rem 1.8rem;
-            box-shadow: 0 10px 15px -5px rgba(0,0,0,0.08);
-            transition: all 0.2s ease;
-            text-align: center;
-            min-width: 130px;
-            border: 1px solid #d9e6f2;
+        .about-text { flex: 1.5; }
+        .about-text p { margin-bottom: 1rem; line-height: 1.6; color: #2c4b66; }
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem 1.5rem;
+            margin-top: 1.5rem;
         }
-        .partner-logo-card i { font-size: 2.6rem; margin-bottom: 6px; display: block; color: #1e6f5c; }
-        .partner-logo-card span { font-weight: 700; font-size: 0.9rem; color: #0f3b4a; }
-        .partner-logo-card small { font-size: 0.7rem; display: block; color: #5a7c8c; }
+        .feature-list span i { color: var(--deep-teal); margin-right: 10px; font-weight: 600;}
 
-        /* Test table premium (with vial colours and lab integration) */
-        .table-container {
-            max-width: 1400px;
-            margin: 2rem auto;
+        /* Cards */
+        .services-grid, .partner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .service-card {
+            background: white;
+            border-radius: var(--border-radius-card);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            transition: all 0.25s ease;
+            border: 1px solid #e9edf2;
+        }
+        .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12); border-color: #cbdde9; }
+        .service-card i { font-size: 2.5rem; color: var(--deep-teal); margin-bottom: 1rem; }
+        .service-card h3 { font-size: 1.3rem; margin-bottom: 0.3rem; font-weight: 700; }
+
+        .partner-card {
             background: white;
             border-radius: 32px;
-            padding: 1rem;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border-top: 5px solid;
         }
-        .search-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding: 0 1rem;
-        }
-        .search-input {
-            flex: 2;
-            padding: 14px 20px;
-            border-radius: 60px;
-            border: 1.5px solid #cbdde6;
-            font-size: 1rem;
-            background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%2300b4aa" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') no-repeat 18px center;
-            padding-left: 48px;
-        }
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-        .price-table th {
-            background: #0a2f44;
-            color: white;
-            padding: 14px 8px;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-        }
-        .price-table td {
-            padding: 14px 8px;
-            border-bottom: 1px solid #e9f0f4;
-            vertical-align: middle;
-        }
-        .vial-color-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #f2f7fb;
-            padding: 4px 12px;
-            border-radius: 40px;
-        }
-        .color-dot { width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-        .price-amount { font-weight: 800; color: #00665e; font-size: 1.05rem; }
-        .badge-fasting { background: #ffe6c7; font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; display: inline-block; margin-top: 5px; }
 
-        /* collection points grid */
-        .collection-grid {
+        /* Lab tech highlight section */
+        .tech-highlight {
+            background: linear-gradient(110deg, #eef4fa 0%, #ffffff 100%);
+            border-radius: 48px;
+            padding: 2rem;
+            margin: 3rem 0;
             display: flex;
+            align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
+            gap: 1.8rem;
+        }
+        .tech-badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .tech-badge i { font-size: 3rem; color: #0f5b5b; }
+        .cert-badge span { background: #008b8b20; padding: 0.4rem 1rem; border-radius: 60px; font-weight: 600; margin-right: 0.7rem; display: inline-block; }
+
+        /* Map & Footer */
+        .map-wrapper {
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
             margin: 2rem 0;
         }
-        .collect-card {
-            background: white;
-            border-radius: 2rem;
-            padding: 1.4rem;
-            width: 280px;
-            box-shadow: 0 12px 22px -8px rgba(0,0,0,0.08);
-            border: 1px solid #cde3ed;
-            text-align: center;
-        }
-
         footer {
-            background: #071e30;
-            color: #b8cfec;
-            padding: 3rem 5%;
+            background: #0a2f44;
+            color: #cbdbe2;
+            padding: 3rem 5% 2rem;
+            border-radius: 48px 48px 0 0;
             margin-top: 3rem;
         }
-        .footer-grid {
+        .footer-flex {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
+            flex-wrap: wrap;
             gap: 2rem;
         }
-        @media (max-width: 780px) {
-            .navbar { flex-direction: column; gap: 1rem; }
-            .hero h2 { font-size: 1.8rem; }
+        .social-links a {
+            color: white;
+            margin-right: 1.5rem;
+            font-size: 1.4rem;
+            transition: 0.2s;
+        }
+        .social-links a:hover { color: var(--accent-teal);}
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25D366;
+            padding: 12px 24px;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 800px) {
+            .hero h2 { font-size: 2rem; }
+            .navbar { flex-direction: column; gap: 12px; }
+            .nav-links a { margin: 0 1rem; }
+            .info-strip { flex-direction: column; align-items: flex-start; border-radius: 32px; }
+        }
+        .timing-badge {
+            background: #eaf9f3;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 0.5rem;
         }
     </style>
 </head>
 <body>
+
+<header>
     <div class="navbar">
-        <div class="logo"><h1>RAJAN <span>PATH LAB</span></h1></div>
+        <div class="logo">
+            <h1>RAJAN <span>PATH LAB</span></h1>
+            <p style="font-size: 0.75rem; letter-spacing: 1px;">by AAROGYAM PLUS</p>
+        </div>
         <div class="nav-links">
             <a href="#">Home</a>
-            <a href="#test-pricelist">Test & Price</a>
-            <a href="#partners">Our Partners</a>
-            <a href="#" class="btn-nav"><i class="fas fa-phone-alt"></i> 8709946177</a>
+            <a href="#services">Tests</a>
+            <a href="#booking" class="btn-book-nav" style="background: #e03a3e; color: white; padding: 0.5rem 1.2rem; border-radius: 30px;">Book Test</a>
+            <a href="#report">Download Report</a>
+            <a href="#contact">Contact</a>
         </div>
     </div>
 
     <div class="hero">
-        <h2>Precision Diagnostics, Trusted Nationwide</h2>
-        <div class="partner-strip">
-            <span>🏥 Associated with India's top diagnostic networks</span>
-            <i class="fas fa-arrow-right"></i>
-            <span>Thyrocare | Dr Lal PathLabs | Pathkind | SRL</span>
-        </div>
-        <div style="margin-top: 2rem;">
-            <a href="#test-pricelist" style="background: #f5b042; padding: 12px 28px; border-radius: 40px; color: #0a2a44; font-weight: bold; text-decoration: none;">📋 View Price List</a>
-            <a href="https://wa.me/918709946177" style="background: #25D366; margin-left: 15px; padding: 12px 28px; border-radius: 40px; color: white; text-decoration: none;">💬 Book Home Visit</a>
+        <h2>Advanced Diagnostics.<br>Accurate Results. Trusted Care.</h2>
+        <div class="hero-tag"><i class="fas fa-flask"></i> Includes Urine Analysis • Precision Pathology</div>
+        <div class="btn-group">
+            <a href="#booking" class="btn-primary"><i class="fas fa-calendar-check"></i> Book Your Test Today</a>
+            <a href="#report" class="btn-outline-light"><i class="fas fa-file-alt"></i> Digital Reports</a>
         </div>
     </div>
 
-    <!-- Info strip with address timings -->
-    <div class="info-highlight">
-        <div class="info-card"><i class="fas fa-map-pin"></i> <span>Manahar Bhushra, Pandwa Patan Road</span></div>
-        <div class="info-card"><i class="fas fa-clock"></i> <span>Open Daily 8:00 AM – 7:30 PM</span></div>
-        <div class="info-card"><i class="fas fa-tachometer-alt"></i> <span>Accurate Digital Reports</span></div>
+    <div class="info-strip">
+        <div class="info-item"><i class="fas fa-map-marker-alt"></i> Manahar Bhushra pandwa patan Road, Dhanbad</div>
+        <div class="info-item"><i class="fas fa-phone-alt"></i> 8709946177 / 9931002450</div>
+        <div class="info-item"><i class="far fa-clock"></i> Open Daily: 08:00 AM – 7:30 PM</div>
     </div>
+</header>
 
-    <!-- BIG LABS SHOWCASE (Bade Bade Lab ke beech mein add) -->
-    <div class="partner-carousel" id="partners">
-        <h3 style="text-align: center; color: #0a2a44; margin-bottom: 8px;">🇮🇳 Our Premium Referral & Associate Labs</h3>
-        <p style="text-align: center; margin-bottom: 28px;">Rajan Path Lab collaborates with India's most advanced diagnostic chains for second opinion & special assays</p>
-        <div class="carousel-track">
-            <div class="partner-logo-card"><i class="fas fa-microscope"></i><span>Thyrocare</span><small>Hormones | Wellness</small></div>
-            <div class="partner-logo-card"><i class="fas fa-flask"></i><span>Dr. Lal PathLabs</span><small>National Reference</small></div>
-            <div class="partner-logo-card"><i class="fas fa-dna"></i><span>Pathkind Labs</span><small>Molecular Dx</small></div>
-            <div class="partner-logo-card"><i class="fas fa-hospital-user"></i><span>SRL Diagnostics</span><small>Advanced Profiling</small></div>
-            <div class="partner-logo-card"><i class="fas fa-chart-line"></i><span>Metropolis</span><small>Speciality Tests</small></div>
-            <div class="partner-logo-card"><i class="fas fa-vial"></i><span>Redcliffe Labs</span><small>Affordable Packages</small></div>
+<main>
+    <div class="container">
+        <!-- About + Lab Highlights from images -->
+        <div class="about-grid" id="about">
+            <div class="about-text">
+                <h2 class="section-title" style="text-align: left; font-size: 2rem;">Your Health. Our Priority.</h2>
+                <p><strong>Rajan Path Lab</strong> is synonymous with reliable diagnostics, powered by state-of-the-art equipment and a patient-first philosophy. With association with <strong>Thyrocare, Dr. Lal PathLabs, & Pathkind</strong>, we ensure world-class accuracy. Our certified team led by <strong>Mr. Rajan Chandra (Senior Lab Technician)</strong> guarantees zero-error protocols.</p>
+                <div class="feature-list">
+                    <span><i class="fas fa-microscope"></i> Advanced Testing Facilities</span>
+                    <span><i class="fas fa-chart-line"></i> Accurate & Reliable Results</span>
+                    <span><i class="fas fa-hand-sparkles"></i> Hygienic & Safe Environment</span>
+                    <span><i class="fas fa-clock"></i> Quick Timely Reports</span>
+                    <span><i class="fas fa-laptop-medical"></i> Digital Reporting System</span>
+                    <span><i class="fas fa-home"></i> Home Sample Collection (₹50)</span>
+                </div>
+                <div class="timing-badge"><i class="fas fa-certificate"></i> Certified • Trusted • Reliable | NABL Accredited Processes</div>
+            </div>
+            <div class="about-text" style="text-align: center;">
+                <img src="https://img.icons8.com/fluency/256/microscope.png" alt="lab icon" style="width: 180px;">
+                <p style="font-weight: 700; margin-top: 1rem;">Rajan Chandra <br> <span style="color:#008b8b;">Certified Lab Technician</span></p>
+            </div>
         </div>
-        <p style="text-align: center; font-size: 0.8rem; margin-top: 25px; background: #eaf5f2; display: inline-block; width: auto; margin-left: auto; margin-right: auto; padding: 6px 20px; border-radius: 40px;">🤝 Direct integration – samples processed with partner excellence</p>
+
+        <!-- Special test menu from images: Blood Tests, Urine, Thyroid, Diabetes, Liver, Kidney, Heart, Vitamin -->
+        <div id="services">
+            <h2 class="section-title">Our Diagnostic Services</h2>
+            <div class="services-grid">
+                <div class="service-card"><i class="fas fa-tint"></i><h3>Blood Tests</h3><p>Complete Hemogram & CBC</p></div>
+                <div class="service-card"><i class="fas fa-flask"></i><h3>Urine Analysis</h3><p>Microscopy & Culture</p></div>
+                <div class="service-card"><i class="fas fa-thyroid"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH Ultra-sensitive</p></div>
+                <div class="service-card"><i class="fas fa-sugar"></i><h3>Diabetes Profile</h3><p>Fasting, PP, HbA1c</p></div>
+                <div class="service-card"><i class="fas fa-liver"></i><h3>Liver Function</h3><p>SGOT, SGPT, Bilirubin</p></div>
+                <div class="service-card"><i class="fas fa-kidneys"></i><h3>Kidney Profile</h3><p>Creatinine, Urea, Uric acid</p></div>
+                <div class="service-card"><i class="fas fa-heartbeat"></i><h3>Heart Health</h3><p>Lipid Profile, hs-CRP</p></div>
+                <div class="service-card"><i class="fas fa-leaf"></i><h3>Vitamin Profile</h3><p>Vitamin D, B12, Iron Panel</p></div>
+            </div>
+        </div>
+
+        <!-- Hormone & Diabetes extra + health packages -->
+        <div style="background: #eef3fc; border-radius: 48px; padding: 2rem; margin: 3rem 0;">
+            <h2 class="section-title">Comprehensive Health Packages</h2>
+            <div class="services-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px,1fr));">
+                <div class="service-card"><i class="fas fa-charging-station"></i><h3>Hormone Profile</h3><p>Thyroid, Cortisol, Testosterone</p></div>
+                <div class="service-card"><i class="fas fa-chart-simple"></i><h3>Aarogyam C Pro</h3><p>69+ parameters (Thyrocare)</p></div>
+                <div class="service-card"><i class="fas fa-heart-circle-check"></i><h3>Cardiac Checkup</h3><p>Lipid + Troponin I</p></div>
+                <div class="service-card"><i class="fas fa-stethoscope"></i><h3>Executive Wellness</h3><p>Liver, Kidney, Thyroid, Vitamin</p></div>
+            </div>
+        </div>
+
+        <!-- Partner Labs Highlight -->
+        <h2 class="section-title">Trusted Diagnostic Partners</h2>
+        <div class="partner-grid">
+            <div class="partner-card" style="border-top-color: #ff6600;"><i class="fas fa-microscope" style="color:#ff6600; font-size: 2rem;"></i><h3>Thyrocare</h3><p>National Reference Lab</p></div>
+            <div class="partner-card" style="border-top-color: #ed1c24;"><i class="fas fa-vials" style="color:#ed1c24;"></i><h3>Dr. Lal PathLabs</h3><p>PAN India Accuracy</p></div>
+            <div class="partner-card" style="border-top-color: #662d91;"><i class="fas fa-flask" style="color:#662d91;"></i><h3>Pathkind Labs</h3><p>Superior Reporting</p></div>
+        </div>
+
+        <!-- Collection Center + Home Collection: J R MEDICAL + Home sample -->
+        <div style="background: white; border-radius: 40px; padding: 2rem; margin: 3rem 0; box-shadow: var(--shadow-sm);">
+            <h2 class="section-title">Sample Collection Centers</h2>
+            <div class="services-grid">
+                <div class="service-card"><i class="fas fa-clinic-medical" style="color: #e63946;"></i><h3>J R MEDICAL</h3><p>Chilbil Chowk, Manhar<br> <strong>Fasting Samples (Khali Pet)</strong></p></div>
+                <div class="service-card"><i class="fas fa-truck-medical" style="color:#008b8b;"></i><h3>Home Collection Facility</h3><p>Convenient pickup by trained phlebotomist</p><p style="font-weight: bold;">Charge: ₹50 only</p><p><i class="fas fa-phone-alt"></i> Call 8709946177</p></div>
+                <div class="service-card"><i class="fas fa-hourglass-half"></i><h3>Fast Track Reports</h3><p>Digital reports within 24-48 hours</p><i class="fas fa-envelope"></i> WhatsApp & Email</div>
+            </div>
+        </div>
+
+        <!-- Lab Technician & Quality Section (Image mood: Certified·Trusted·Reliable) -->
+        <div class="tech-highlight">
+            <div>
+                <i class="fas fa-user-md" style="font-size: 3rem; color:#0a2f44;"></i>
+                <h3 style="margin-top: 0.5rem;">Head Lab Technician</h3>
+                <p style="font-size: 1.2rem; font-weight: 800;">Rajan Chandra</p>
+                <p>Certified • Trusted • Reliable | 12+ years experience</p>
+                <div class="cert-badge"><span>🔬 Quality Assurance</span><span>🏅 ISO Guidelines</span><span>🧪 Advanced Equipment</span></div>
+            </div>
+            <div style="text-align: center;">
+                <i class="fas fa-chalkboard-user" style="font-size: 3rem; color: #008b8b;"></i>
+                <p>“Your Health Partner Every Step of the Way”<br> <strong>Patient Friendly Environment</strong> | Hygienic & Safe</p>
+            </div>
+        </div>
+
+        <!-- Digital Reporting + Affordable Packages highlight + map -->
+        <div id="report" style="margin: 3rem 0;">
+            <h2 class="section-title">Digital Reporting System</h2>
+            <div style="background: linear-gradient(120deg,#f9fafc, white); border-radius: 40px; padding: 1.5rem; display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; justify-content: center;">
+                <div><i class="fas fa-tablet-alt" style="font-size: 3rem; color: #0a5c6e;"></i><h3>Online Reports</h3><p>Download PDF / View History</p></div>
+                <div><i class="fas fa-rupee-sign" style="font-size: 3rem; color: #2a9d8f;"></i><h3>Affordable Packages</h3><p>Best prices + corporate discounts</p></div>
+                <div><i class="fas fa-shield-alt" style="font-size: 3rem; color: #e76f51;"></i><h3>Quality Assured</h3><p>Strict internal & external QC</p></div>
+            </div>
+        </div>
+
+        <!-- Map & Google Reviews snippet -->
+        <div id="contact">
+            <h2 class="section-title">Our Location & Reach</h2>
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="320" style="border:0; border-radius: 24px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1rem;">
+                <a href="https://www.google.com/search?kgmid=/g/11tn9qwbxl" target="_blank" style="background:#fff; padding: 10px 20px; border-radius: 60px; text-decoration: none; font-weight: 600; color:#0a2f44; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"><i class="fab fa-google"></i> Google Maps</a>
+                <a href="https://www.instagram.com/lab_technician_3.0?igsh=MWNsOGo1M2pzbDk0cg==" target="_blank" style="background: #fff; padding: 10px 20px; border-radius: 60px; text-decoration: none; font-weight: 600; color:#0a2f44;"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+        
+        <!-- Booking CTA -->
+        <div id="booking" style="background: #0a2f44; border-radius: 48px; padding: 2.5rem; text-align: center; margin-top: 2.5rem; color: white;">
+            <h3 style="font-size: 2rem;">Book Your Test Today</h3>
+            <p style="margin: 0.8rem 0;">Call or WhatsApp for home sample collection & exclusive health packages</p>
+            <div style="display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; margin-top: 1.5rem;">
+                <a href="tel:+918709946177" style="background:#e03a3e; padding: 12px 32px; border-radius: 40px; color: white; text-decoration: none; font-weight: bold;"><i class="fas fa-phone-alt"></i> 8709946177</a>
+                <a href="tel:+919931002450" style="background:#008b8b; padding: 12px 32px; border-radius: 40px; color: white; text-decoration: none;"><i class="fas fa-phone"></i> 9931002450</a>
+                <a href="https://wa.me/918709946177" style="background:#25D366; padding: 12px 32px; border-radius: 40px; color: white; text-decoration: none;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Home Sample Collection Available • Open 08:00 AM – 7:30 PM • Also at Manahar Bhushra Road</p>
+        </div>
     </div>
+</main>
 
-    <!-- Price List Section with Vial Colour & Volume -->
-    <div id="test-pricelist" class="table-container">
-        <div class="search-bar">
-            <input type="text" id="searchTests" class="search-input" placeholder="🔍 Search Test (e.g., CBC, Liver, Thyroid, HbA1c, Widal)">
-            <div style="font-weight: 600;"><i class="fas fa-vial"></i> <span id="resultCount">46+ tests</span></div>
+<footer>
+    <div class="footer-flex">
+        <div>
+            <h3 style="color: white;">RAJAN PATH LAB</h3>
+            <p>by Aarogyam Plus | Advanced Diagnostics</p>
+            <p><i class="fas fa-map-pin"></i> Manahar Bhushra pandwa patan Road, Near Shiv Mandir, Dhanbad</p>
+            <p><i class="far fa-clock"></i> Mon-Sun: 08:00 AM – 7:30 PM</p>
+            <p><i class="fas fa-tachometer-alt"></i> Emergency & Routine testing</p>
         </div>
-        <div style="overflow-x: auto;">
-            <table class="price-table" id="priceTable">
-                <thead>
-                    <tr>
-                        <th>S.No</th><th>Test Name</th><th>Price (₹)</th><th>Sample Req.</th><th>Vial Type & Colour</th><th>Clinical Insight</th>
-                    </tr>
-                </thead>
-                <tbody id="testTableBody">
-                    <!-- dynamic data will be injected via JS -->
-                </tbody>
-            </table>
+        <div>
+            <h4>Quick Links</h4>
+            <p><a href="#" style="color:#bbb; text-decoration: none;">Home Collection</a></p>
+            <p><a href="#services" style="color:#bbb; text-decoration: none;">All Tests</a></p>
+            <p><a href="#report" style="color:#bbb; text-decoration: none;">Download Reports</a></p>
+            <p><a href="#contact" style="color:#bbb; text-decoration: none;">Contact & Support</a></p>
         </div>
-        <div id="noResultsMsg" style="text-align: center; display: none; padding: 40px;">🔍 No matching test found. Try "CBC" or "Thyroid"</div>
+        <div class="social-links">
+            <h4>Connect</h4>
+            <a href="https://www.instagram.com/lab_technician_3.0" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/918709946177"><i class="fab fa-whatsapp"></i></a>
+            <a href="tel:+918709946177"><i class="fas fa-phone-alt"></i></a>
+            <p style="margin-top: 12px;">📧 rajanpathlab@healthcare.com</p>
+        </div>
     </div>
+    <hr style="margin: 2rem 0; border-color: #2d5a78;">
+    <div style="text-align: center; font-size: 0.8rem;">
+        <p>© 2026 Rajan Path Lab | Trusted • Accurate • Affordable | Digital Reports • Home Pickup</p>
+        <p>Includes Urine Analysis & Full Body Profiles | Quality Assurance for Superior Reporting</p>
+    </div>
+</footer>
 
-    <!-- Collection center + Medical Partner -->
-    <section style="max-width: 1300px; margin: 0 auto; padding: 20px;">
-        <h2 class="section-title">📌 Sample Collection Network</h2>
-        <div class="collection-grid">
-            <div class="collect-card"><i class="fas fa-building" style="font-size: 2rem; color: #00b4aa;"></i><h3>J R MEDICAL</h3><p>Chilbil Chowk, Manhar</p><small><i class="fas fa-clock"></i> 8AM-7PM</small><div style="margin-top: 12px;"><span class="badge-fasting">Fasting Samples Preferred</span></div></div>
-            <div class="collect-card"><i class="fas fa-truck-medical" style="font-size: 2rem; color: #f5b042;"></i><h3>🏠 Home Collection</h3><p>Free Pickup (min ₹300 order) or ₹50 charge</p><span style="background: #e0f0ea; padding: 4px 12px; border-radius: 30px;">Call 8709946177</span></div>
-            <div class="collect-card"><i class="fas fa-user-md" style="font-size: 2rem; color: #2c7a6e;"></i><h3>Lab Technician Visit</h3><p>Certified by Rajan Chandra & Team</p><small>Hassle-free home sampling</small></div>
-        </div>
-    </section>
+<!-- floating WhatsApp + Call button -->
+<a href="https://wa.me/918709946177" class="whatsapp-float"><i class="fab fa-whatsapp"></i> Book via WhatsApp</a>
+<a href="tel:+918709946177" style="position: fixed; bottom: 25px; left: 25px; background: #e03a3e; padding: 12px 20px; border-radius: 50px; color: white; text-decoration: none; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 999;"><i class="fas fa-phone"></i> Call Now</a>
 
-    <!-- footer with google maps & instagram -->
-    <footer>
-        <div class="footer-grid">
-            <div><h3 style="color: white;">RAJAN PATH LAB</h3><p>by Aarogyam Plus</p><i class="fas fa-map-marker-alt"></i> Manahar Bhushra, Pandwa Patan Road<br>📞 8709946177 / 9931002450</div>
-            <div><h4>Quick Links</h4><a href="#" style="color:#b8cfec;">Home</a><br><a href="#" style="color:#b8cfec;">Test Directory</a><br><a href="#" style="color:#b8cfec;">Download Report</a></div>
-            <div><h4>Follow Us</h4><i class="fab fa-instagram"></i> <a href="#" style="color:#b8cfec;">@lab_technician_3.0</a><br><i class="fab fa-whatsapp"></i> +91-8709946177</div>
-            <div><iframe src="https://maps.google.com/maps?q=Manahar%20Bhushra%20Pandwa%20Patan%20Road&t=&z=15&ie=UTF8&iwloc=&output=embed" width="200" height="100" style="border-radius: 12px; border:0;" allowfullscreen="" loading="lazy"></iframe></div>
-        </div>
-        <hr style="margin: 1.5rem 0; opacity: 0.2;">
-        <p style="text-align: center;">© 2026 Rajan Path Lab – Premium Diagnostics with National Lab Integration</p>
-    </footer>
-    <a href="https://wa.me/918709946177" class="whatsapp-float"><i class="fab fa-whatsapp"></i> Book Now</a>
-
-    <script>
-        // Detailed tests data including vial colours and volume requirements (complete original + upgraded)
-        const testsDataset = [
-            { sno:1, name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Evaluates liver enzymes, bilirubin, protein – hepatitis/cirrhosis screen" },
-            { sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600, volume:"2-3 ml Fasting serum", vialType:"Red / Gold top", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Urea, Creatinine, Uric acid – renal health" },
-            { sno:3, name:"LIPID PROFILE (Fasting)", price:600, volume:"3 ml Fasting (12hrs)", vialType:"Red top / SST", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Cholesterol, Triglycerides, HDL/LDL – cardiac risk" },
-            { sno:4, name:"THYROID PROFILE", price:500, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"T3, T4, TSH – metabolism & energy" },
-            { sno:5, name:"BETA HCG", price:1000, volume:"3 ml Serum", vialType:"Gold / Plain red", vialColour:"Gold/Red", colourHex:"#D4AF37,#E34234", desc:"Quantitative pregnancy & tumor marker" },
-            { sno:6, name:"HBA1C (3 Month Sugar)", price:600, volume:"2 ml Whole blood EDTA", vialType:"Lavender EDTA", vialColour:"Lavender", colourHex:"#967BB6", desc:"Diabetes long-term control" },
-            { sno:7, name:"C-REACTIVE PROTEIN (CRP)", price:400, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Inflammation marker – infection/autoimmune" },
-            { sno:8, name:"ASO TITER", price:400, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Rheumatic fever / strep infection" },
-            { sno:9, name:"RHEUMATOID FACTOR", price:400, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Rheumatoid arthritis marker" },
-            { sno:10, name:"HCG PREGNANCY TEST", price:100, volume:"Urine mid-stream", vialType:"Sterile container", vialColour:"Plain", colourHex:"#F5F5F5", desc:"Rapid pregnancy detection" },
-            { sno:11, name:"URINE ROUTINE", price:100, volume:"10-15 ml Urine", vialType:"Sterile universal", vialColour:"Transparent", colourHex:"#E0E7EC", desc:"Microscopy, UTI, diabetes screen" },
-            { sno:12, name:"URINE CULTURE", price:400, volume:"Mid-stream urine", vialType:"Sterile container", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Bacterial identification & sensitivity" },
-            { sno:13, name:"SEMEN ANALYSIS", price:250, volume:"Whole ejaculate", vialType:"Wide-mouth sterile", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Fertility assessment" },
-            { sno:14, name:"MANTOUX TEST", price:200, volume:"Intradermal 0.1ml", vialType:"Tuberculin syringe", vialColour:"Syringe", colourHex:"#BBBBBB", desc:"TB screening (PPD)" },
-            { sno:15, name:"HBSAG", price:150, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis B surface antigen" },
-            { sno:16, name:"VDRL", price:100, volume:"1 ml Serum", vialType:"Plain red / Gold", vialColour:"Red/Gold", colourHex:"#E34234,#D4AF37", desc:"Syphilis screening" },
-            { sno:17, name:"HIV (I & II)", price:300, volume:"2 ml Serum", vialType:"Gold / EDTA", vialColour:"Gold/Lavender", colourHex:"#D4AF37,#967BB6", desc:"HIV antibody detection" },
-            { sno:18, name:"HCV (Hepatitis C)", price:200, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis C antibody" },
-            { sno:19, name:"BLOOD UREA", price:150, volume:"2 ml Serum/Plasma", vialType:"Red / Green top", vialColour:"Red / Green", colourHex:"#E34234,#3A9B5E", desc:"Kidney function marker" },
-            { sno:20, name:"SERUM CREATININE", price:150, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Kidney filtration" },
-            { sno:21, name:"URIC ACID (Fasting)", price:150, volume:"2 ml Fasting Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Gout & renal assessment" },
-            { sno:22, name:"BLOOD SUGAR", price:50, volume:"1 ml Fluoride", vialType:"Grey top (Oxalate)", vialColour:"Grey", colourHex:"#A9B7C0", desc:"Glucose level" },
-            { sno:23, name:"COMPLETE BLOOD COUNT (CBC)", price:300, volume:"2 ml EDTA blood", vialType:"Lavender EDTA", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hb, RBC, WBC, platelets - general health" },
-            { sno:24, name:"PLATELETS COUNT", price:150, volume:"1 ml EDTA", vialType:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Dengue/thrombocytopenia" },
-            { sno:25, name:"DENGUE NS1 + IgG/IgM", price:650, volume:"3 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Early & late dengue detection" },
-            { sno:26, name:"TYPHIDOT IgG/IgM", price:250, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Typhoid antibodies" },
-            { sno:27, name:"WIDAL", price:100, volume:"2 ml Serum", vialType:"Plain red/Gold", vialColour:"Red/Gold", colourHex:"#E34234,#D4AF37", desc:"Salmonella typhi" },
-            { sno:28, name:"OPTIMAL PROFILE", price:200, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Wellness panel" },
-            { sno:29, name:"TC DC", price:120, volume:"1 ml EDTA", vialType:"Lavender", vialColour:"Lavender", colourHex:"#967BB6", desc:"Leukocyte count" },
-            { sno:30, name:"BT CT", price:120, volume:"Capillary blood", vialType:"Capillary tube", vialColour:"Plain", colourHex:"#D3D3D3", desc:"Bleeding/clotting time" },
-            { sno:31, name:"ESR", price:120, volume:"2 ml Sodium citrate", vialType:"Black top", vialColour:"Black", colourHex:"#2C2C2C", desc:"Inflammation marker" },
-            { sno:32, name:"MP SMEAR", price:100, volume:"Thick/thin smear", vialType:"EDTA/ slide", vialColour:"Lavender", colourHex:"#967BB6", desc:"Malaria parasite" },
-            { sno:33, name:"HEMOGLOBIN (Hb)", price:50, volume:"Capillary/1ml EDTA", vialType:"Lavender", vialColour:"Lavender", colourHex:"#967BB6", desc:"Anemia screen" },
-            { sno:34, name:"BLOOD GROUP", price:50, volume:"1 ml EDTA", vialType:"Lavender", vialColour:"Lavender", colourHex:"#967BB6", desc:"ABO & Rh typing" },
-            { sno:35, name:"TOTAL PARASITE", price:250, volume:"2 ml EDTA", vialType:"Lavender", vialColour:"Lavender", colourHex:"#967BB6", desc:"Parasite count" },
-            { sno:36, name:"BILIRUBIN TOTAL", price:200, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Jaundice assessment" },
-            { sno:37, name:"MP + WIDAL + HB", price:250, volume:"2 ml EDTA", vialType:"Lavender+Gold", vialColour:"Lavender/Gold", colourHex:"#967BB6,#D4AF37", desc:"Combo infection panel" },
-            { sno:38, name:"CBC MP WIDAL", price:500, volume:"3 ml EDTA+Serum", vialType:"Lavender & Gold", vialColour:"Lavender+Gold", colourHex:"#967BB6,#D4AF37", desc:"Triple infection + CBC" },
-            { sno:39, name:"CBC WIDAL", price:400, volume:"3 ml EDTA", vialType:"Lavender & Gold", vialColour:"Lavender+Gold", colourHex:"#967BB6,#D4AF37", desc:"CBC + Typhoid screen" },
-            { sno:40, name:"SODIUM", price:200, volume:"1 ml Serum/Plasma", vialType:"Green top/Gold", vialColour:"Green/Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Electrolyte balance" },
-            { sno:41, name:"POTASSIUM", price:200, volume:"1 ml Serum/Plasma", vialType:"Green top", vialColour:"Green", colourHex:"#3A9B5E", desc:"Cardiac function" },
-            { sno:42, name:"VITAMIN D (25-OH)", price:1800, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Bone health" },
-            { sno:43, name:"VITAMIN B12", price:1200, volume:"2 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Nerve & energy" },
-            { sno:44, name:"IRON STUDIES", price:750, volume:"3 ml Fasting", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Iron deficiency" },
-            { sno:45, name:"PSA (PROSTATE)", price:850, volume:"3 ml Serum", vialType:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Prostate health" },
-            { sno:46, name:"HbA1c + Lipid Combo", price:1100, volume:"Fasting 4ml", vialType:"Lavender+Gold", vialColour:"Lavender+Gold", colourHex:"#967BB6,#D4AF37", desc:"Diabetes + Cardiac" }
-        ];
-
-        function renderTable(filter = "") {
-            const tbody = document.getElementById("testTableBody");
-            const noDiv = document.getElementById("noResultsMsg");
-            const filterLower = filter.toLowerCase();
-            const filtered = testsDataset.filter(t => t.name.toLowerCase().includes(filterLower) || t.vialType.toLowerCase().includes(filterLower) || t.vialColour.toLowerCase().includes(filterLower));
-            document.getElementById("resultCount").innerHTML = filtered.length + " tests";
-            if(filtered.length === 0) { tbody.innerHTML = ""; noDiv.style.display = "block"; return; }
-            noDiv.style.display = "none";
-            let html = "";
-            filtered.forEach(t => {
-                let colourHtml = `<div class="vial-color-badge">${t.colourHex.split(',').map(col => `<span class="color-dot" style="background:${col};"></span>`).join('')} <span>${t.vialColour}</span></div>`;
-                let fastingTag = t.volume.toLowerCase().includes("fasting") ? `<div class="badge-fasting">🌙 Fasting</div>` : "";
-                html += `<tr>
-                            <td>${t.sno}</td>
-                            <td><strong>${t.name}</strong>${fastingTag}</td>
-                            <td class="price-amount">₹${t.price}</td>
-                            <td><small>💉 ${t.volume}</small></td>
-                            <td>${colourHtml}<br><small>${t.vialType}</small></td>
-                            <td style="font-size:0.75rem;">${t.desc}</td>
-                         </tr>`;
-            });
-            tbody.innerHTML = html;
-        }
-        const searchBox = document.getElementById("searchTests");
-        searchBox.addEventListener("keyup", () => renderTable(searchBox.value));
-        renderTable("");
-    </script>
+<script>
+    // smooth scroll for navigation
+    document.querySelectorAll('.btn-book-nav, .btn-primary, a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if(targetId && targetId !== "#" && targetId.startsWith("#")) {
+                e.preventDefault();
+                const targetElem = document.querySelector(targetId);
+                if(targetElem) {
+                    targetElem.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>
