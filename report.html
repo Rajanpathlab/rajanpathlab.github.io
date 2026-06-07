@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Premier Reports | Classic Gold Edition</title>
+  <title>Premier Reports | Classic Edition</title>
   <style>
     * {
       margin: 0;
@@ -208,26 +208,6 @@
       gap: 6px;
     }
 
-    .required-badge {
-      background: #e8eef3;
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: #5a6e7c;
-      margin-left: 8px;
-    }
-
-    .optional-badge {
-      background: #eef2f6;
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: #7e8c9e;
-      margin-left: 8px;
-    }
-
     .whatsapp-premium-btn {
       width: 100%;
       background: linear-gradient(98deg, #075E54 0%, #128C7E 100%);
@@ -323,52 +303,48 @@
     <div class="header-flex">
       <h1>📋 REPORT PORTAL <span class="classic-badge">WHATSAPP DIRECT</span></h1>
     </div>
-    <div class="header-sub">◆ All fields manual entry ◆ Report sent directly to Doctor's WhatsApp</div>
+    <div class="header-sub">◆ Enter patient details ◆ Report sent directly to Doctor's WhatsApp</div>
   </div>
 
   <div class="form-container">
     <div class="doctor-note">
-      <span>👨‍⚕️</span> Doctor's WhatsApp: <strong>+91 8709946177</strong> — All reports delivered here
+      <span>👨‍⚕️</span> Doctor's WhatsApp: <strong>+91 8709946177</strong>
     </div>
 
-    <!-- PATIENT ID - Required -->
+    <!-- PATIENT ID -->
     <div class="input-group">
       <div class="input-label">
-        <span>🆔</span> PATIENT ID <span class="required-badge">required</span>
+        <span>🆔</span> PATIENT ID
       </div>
-      <input type="text" id="patientIdInput" class="classic-input" placeholder="Enter patient ID manually" autocomplete="off">
-      <div class="optional-note">🔑 Enter unique patient identifier</div>
+      <input type="text" id="patientIdInput" class="classic-input" placeholder="Enter patient ID" autocomplete="off">
     </div>
 
     <!-- Two columns: Patient Name & Doctor Name -->
     <div class="row-2col">
-      <!-- PATIENT NAME - Required, Manual only -->
+      <!-- PATIENT NAME -->
       <div class="input-group">
         <div class="input-label">
-          <span>👤</span> PATIENT NAME <span class="required-badge">required</span>
+          <span>👤</span> PATIENT NAME
         </div>
-        <input type="text" id="patientNameInput" class="classic-input" placeholder="Enter patient full name manually" autocomplete="off">
-        <div class="optional-note">✏️ Type patient name (manual entry)</div>
+        <input type="text" id="patientNameInput" class="classic-input" placeholder="Enter patient full name" autocomplete="off">
       </div>
 
-      <!-- DOCTOR NAME - Required, with auto-suggest -->
+      <!-- DOCTOR NAME with auto-suggest -->
       <div class="input-group" id="doctorGroup">
         <div class="input-label">
-          <span>👨‍⚕️</span> DOCTOR NAME <span class="required-badge">select / type</span>
+          <span>👨‍⚕️</span> DOCTOR NAME
         </div>
         <input type="text" id="doctorNameInput" class="classic-input" placeholder="Type or select from list" autocomplete="off">
         <div id="doctorDropdown" class="autocomplete-list" style="display: none;"></div>
-        <div class="optional-note">✨ Type to search from doctor list</div>
       </div>
     </div>
 
     <!-- PATIENT MOBILE - Optional -->
     <div class="input-group">
       <div class="input-label">
-        <span>📞</span> PATIENT'S MOBILE <span class="optional-badge">optional</span>
+        <span>📞</span> PATIENT MOBILE
       </div>
-      <input type="tel" id="mobileNumberInput" class="classic-input" placeholder="Enter mobile number manually (optional)" autocomplete="off">
-      <div class="optional-note">💡 Optional field - leave empty if not needed</div>
+      <input type="tel" id="mobileNumberInput" class="classic-input" placeholder="Enter mobile number (optional)" autocomplete="off">
     </div>
 
     <!-- Send Button -->
@@ -378,7 +354,7 @@
 
     <!-- Status Message -->
     <div id="statusMsg" class="status-area">
-      ◆ Fill all required fields (Patient ID, Patient Name, Doctor Name) → Report sent to +91 8709946177
+      ◆ Fill all fields → Report sent to Doctor's WhatsApp
     </div>
 
     <div class="premium-footer">
@@ -513,7 +489,7 @@
       const doctorName = doctorInput.value.trim();
       
       if (!patientId) {
-        statusDiv.innerHTML = "⚠️ Patient ID is required. Please enter manually.";
+        statusDiv.innerHTML = "⚠️ Patient ID is required.";
         statusDiv.classList.add('status-error');
         patientIdInput.classList.add('error-shake');
         setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
@@ -527,14 +503,14 @@
         return false;
       }
       if (!patientName) {
-        statusDiv.innerHTML = "❌ Patient Name is required. Please fill manually.";
+        statusDiv.innerHTML = "❌ Patient Name is required.";
         statusDiv.classList.add('status-error');
         patientNameInput.classList.add('error-shake');
         setTimeout(() => patientNameInput.classList.remove('error-shake'), 500);
         return false;
       }
       if (!doctorName) {
-        statusDiv.innerHTML = "❌ Doctor Name is required. Please select from list or type manually.";
+        statusDiv.innerHTML = "❌ Doctor Name is required.";
         statusDiv.classList.add('status-error');
         doctorInput.classList.add('error-shake');
         setTimeout(() => doctorInput.classList.remove('error-shake'), 500);
@@ -559,14 +535,14 @@
       whatsappBtn.innerHTML = `<span>⏳</span> SENDING TO DOCTOR...`;
       statusDiv.classList.remove('status-error');
       statusDiv.classList.add('status-loading');
-      statusDiv.innerHTML = `📤 Sending report for ${patientName} (ID: ${patientId.trim().toUpperCase()}) to Doctor's WhatsApp...`;
+      statusDiv.innerHTML = `📤 Sending report for ${patientName} to Doctor's WhatsApp...`;
       
       setTimeout(() => {
         const success = sendToDoctorWhatsApp(whatsappMsg);
         if (success) {
           statusDiv.classList.remove('status-loading');
           statusDiv.classList.add('status-success');
-          statusDiv.innerHTML = `✅ Success! Report for ${patientName} sent to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP}).`;
+          statusDiv.innerHTML = `✅ Success! Report for ${patientName} sent to Doctor's WhatsApp.`;
         } else {
           statusDiv.innerHTML = "❌ Failed to open WhatsApp. Check internet connection.";
           statusDiv.classList.add('status-error');
