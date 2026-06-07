@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Classic Premium | Report Access</title>
+  <title>रिपोर्ट प्रणाली | Classic Premium Health</title>
   <style>
     * {
       margin: 0;
@@ -13,16 +13,16 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(145deg, #e9eef3 0%, #dbe2ea 100%);
-      font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, -apple-system, 'BlinkMacSystemFont', 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #e0e7f0 0%, #cfd9e6 100%);
+      font-family: 'Poppins', 'Inter', 'Segoe UI', system-ui, -apple-system, 'BlinkMacSystemFont', 'Roboto', sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1.8rem;
       position: relative;
     }
 
-    /* classic premium background texture (subtle linen / grain) */
+    /* classic premium texture overlay */
     body::before {
       content: "";
       position: fixed;
@@ -30,276 +30,347 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: radial-gradient(rgba(30, 35, 45, 0.03) 1px, transparent 1px);
-      background-size: 24px 24px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.03"><path fill="none" d="M70 80 L130 80 M80 70 L80 130 M120 70 L120 130 M70 120 L130 120" stroke="%23333" stroke-width="1.2"/><circle cx="100" cy="100" r="28" stroke="%23222" stroke-width="1" fill="none"/><path d="M100 72 L100 128 M72 100 L128 100" stroke="%23222" stroke-width="0.8"/></svg>');
+      background-repeat: repeat;
+      background-size: 38px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* main card container */
-    .premium-card {
-      max-width: 560px;
+    /* main card - ultra premium classic */
+    .heritage-card {
+      max-width: 640px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(0px);
-      border-radius: 2rem;
-      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,0.7);
+      background: #ffffff;
+      border-radius: 2.5rem;
+      box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(212, 175, 55, 0.2);
       transition: all 0.3s ease;
+      position: relative;
+      z-index: 10;
       overflow: hidden;
-      position: relative;
-      z-index: 2;
-      border: 1px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(0px);
     }
 
-    /* subtle premium header with rich gold accent */
-    .card-header {
-      background: #1c2128;
-      padding: 1.8rem 2rem 1.4rem 2rem;
-      position: relative;
-      border-bottom: 3px solid #d4af37;
+    /* gold baroque border accent */
+    .heritage-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #c9a03d, #e6c168, #c9a03d);
+      z-index: 12;
     }
 
-    .card-header h1 {
-      font-size: 1.85rem;
-      font-weight: 600;
+    /* header section premium */
+    .card-header-premium {
+      background: #1a1f2b;
+      padding: 1.8rem 2rem 1.5rem 2rem;
+      position: relative;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .main-title {
+      font-size: 1.9rem;
+      font-weight: 700;
       letter-spacing: -0.3px;
-      color: #ffffff;
+      color: #f8f9fc;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .premium-tag {
+      background: rgba(212, 175, 55, 0.18);
+      padding: 5px 14px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #e6c168;
+      border: 0.5px solid rgba(212, 175, 55, 0.5);
+      letter-spacing: 1px;
+      backdrop-filter: blur(2px);
+    }
+
+    .sub-line {
+      color: #8f9bb3;
+      font-size: 0.8rem;
+      margin-top: 12px;
+      border-left: 2px solid #d4af37;
+      padding-left: 14px;
+      font-weight: 400;
+    }
+
+    /* form area */
+    .form-panel {
+      padding: 2.2rem 2rem 2rem 2rem;
+    }
+
+    /* input group premium */
+    .input-vault {
+      margin-bottom: 2rem;
+    }
+
+    .input-supreme {
       display: flex;
       align-items: center;
       gap: 12px;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-
-    .title-icon {
-      background: rgba(212, 175, 55, 0.2);
-      padding: 8px 12px;
-      border-radius: 60px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #d4af37;
-      letter-spacing: 0.5px;
-      border: 0.5px solid rgba(212, 175, 55, 0.4);
-    }
-
-    .subhead {
-      color: #a0a8b5;
-      font-size: 0.85rem;
-      margin-top: 8px;
-      font-weight: 400;
-      letter-spacing: 0.2px;
-    }
-
-    /* form / content area */
-    .card-content {
-      padding: 2rem 2rem 2.2rem 2rem;
-    }
-
-    /* classic input groups */
-    .input-group {
-      margin-bottom: 1.8rem;
-    }
-
-    .input-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #3b4252;
-      margin-bottom: 0.6rem;
+      letter-spacing: 1px;
+      color: #2c3e4f;
+      margin-bottom: 10px;
     }
 
-    .input-label span {
-      background: #e9edf2;
-      width: 28px;
-      height: 28px;
+    .input-supreme span {
+      background: #f0f3f8;
+      width: 32px;
+      height: 32px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 12px;
-      font-size: 0.9rem;
+      border-radius: 14px;
+      font-size: 1rem;
     }
 
-    .premium-input {
+    .classic-field {
       width: 100%;
-      padding: 0.9rem 1.2rem;
+      padding: 1rem 1.3rem;
       font-size: 1rem;
-      font-family: inherit;
+      font-family: 'Inter', monospace;
       background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 1.25rem;
+      border: 1.8px solid #e4e9f0;
+      border-radius: 1.5rem;
       transition: all 0.25s;
       outline: none;
-      color: #111827;
+      color: #11181c;
       font-weight: 500;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
     }
 
-    .premium-input:focus {
+    .classic-field:focus {
       border-color: #d4af37;
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+      box-shadow: 0 8px 20px -12px rgba(212, 175, 55, 0.4), inset 0 1px 0 #fff;
     }
 
-    .premium-input::placeholder {
+    .classic-field::placeholder {
       color: #b9c2d0;
       font-weight: 400;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
-    /* classic download button — rich crimson with gold undertone */
-    .btn-download {
+    /* optional mobile note */
+    .optional-note {
+      font-size: 0.7rem;
+      margin-top: 6px;
+      margin-left: 14px;
+      color: #8a99ae;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* classic download button - rich heritage */
+    .btn-grand {
       width: 100%;
-      background: linear-gradient(95deg, #b91c1c 0%, #991b1b 100%);
+      background: linear-gradient(105deg, #b42b2b 0%, #8b1e1e 100%);
       border: none;
       padding: 1rem 1.5rem;
       font-size: 1.1rem;
       font-weight: 700;
       font-family: inherit;
       color: white;
-      border-radius: 2rem;
+      border-radius: 3rem;
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      box-shadow: 0 8px 18px -6px rgba(153, 27, 27, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-      margin-top: 0.5rem;
-      letter-spacing: 0.3px;
+      box-shadow: 0 8px 18px -6px rgba(139, 30, 30, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      margin-top: 0.75rem;
     }
 
-    .btn-download:hover {
-      background: linear-gradient(95deg, #a51c1c 0%, #7f1a1a 100%);
+    .btn-grand:hover {
+      background: linear-gradient(105deg, #9c2626 0%, #741717 100%);
       transform: translateY(-2px);
-      box-shadow: 0 14px 26px -10px rgba(153, 27, 27, 0.5);
+      box-shadow: 0 14px 26px -12px rgba(110, 20, 20, 0.6);
     }
 
-    .btn-download:active {
+    .btn-grand:active {
       transform: translateY(1px);
-      box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.3);
     }
 
-    /* premium status message area */
-    .status-area {
-      margin-top: 1.5rem;
-      padding: 1rem 1rem;
-      background: #f8fafc;
-      border-radius: 1.25rem;
+    /* status premium */
+    .status-classic {
+      margin-top: 1.6rem;
+      padding: 1rem 1.2rem;
+      background: #fefcf5;
+      border-radius: 1.2rem;
       font-size: 0.85rem;
-      color: #2c3e4e;
+      color: #2c3e50;
       border-left: 3px solid #d4af37;
-      transition: all 0.2s;
-      font-weight: 450;
-      word-break: break-word;
+      transition: 0.2s;
+      font-weight: 500;
       line-height: 1.4;
+      word-break: break-word;
     }
 
     .status-success {
-      background: #eef7ee;
-      border-left-color: #2e7d32;
-      color: #1e4620;
+      background: #eaf6ea;
+      border-left-color: #2b7a3e;
+      color: #1c4d2d;
     }
 
     .status-error {
-      background: #fee9e6;
-      border-left-color: #c62828;
-      color: #8b2c1d;
+      background: #feece8;
+      border-left-color: #bc3f2e;
+      color: #9b2c1d;
+    }
+
+    .status-warning {
+      background: #fff3e0;
+      border-left-color: #e6a017;
+      color: #8a6100;
     }
 
     .status-loading {
-      background: #fff4e0;
-      border-left-color: #e6b422;
-      color: #946f00;
+      background: #f0f2f9;
+      border-left-color: #b8860b;
+      color: #7a5d2c;
     }
 
-    /* extra classic touch: fingerprint icon and decorative line */
-    .premium-badge {
+    /* patient insight box - classic */
+    .insight-area {
+      margin-top: 1.4rem;
+      padding: 0.85rem 1rem;
+      background: #f9fafc;
+      border-radius: 1.2rem;
+      font-size: 0.8rem;
       display: flex;
-      justify-content: flex-end;
-      margin-top: 1rem;
-      font-size: 0.7rem;
-      color: #93a3b8;
+      gap: 14px;
       align-items: center;
-      gap: 6px;
-      border-top: 1px solid #eef2f8;
-      padding-top: 1.2rem;
+      border: 1px solid #edeff4;
     }
 
-    /* responsive finesse */
-    @media (max-width: 520px) {
-      .card-content {
+    .insight-icon {
+      background: #1a1f2b;
+      border-radius: 40px;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d4af37;
+    }
+
+    .insight-text {
+      flex: 1;
+      font-weight: 500;
+      color: #2d3e50;
+    }
+
+    /* decorative footer */
+    .vintage-footer {
+      padding: 1rem 2rem 1.5rem 2rem;
+      font-size: 0.7rem;
+      color: #9aa9bf;
+      border-top: 1px solid #edf2f7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @media (max-width: 550px) {
+      .form-panel {
         padding: 1.6rem;
       }
-      .card-header h1 {
+      .main-title {
         font-size: 1.5rem;
       }
-      .btn-download {
-        padding: 0.85rem 1.2rem;
-        font-size: 1rem;
-      }
     }
 
-    /* micro-interactions */
-    .premium-input.error-shake {
-      animation: gentleShake 0.4s ease;
-      border-color: #c62828;
-      background-color: #fff8f5;
-    }
-
+    /* animation */
     @keyframes gentleShake {
       0% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
       100% { transform: translateX(0); }
     }
-
-    /* classic premium style for focus glow */
-    .premium-input:focus {
-      outline: none;
+    .error-shake {
+      animation: gentleShake 0.4s ease;
+      border-color: #c62828 !important;
+      background-color: #fff6f5;
     }
   </style>
 </head>
 <body>
 
-<div class="premium-card">
-  <div class="card-header">
-    <h1>
-      REPORT ACCESS
-      <span class="title-icon">PREMIUM</span>
-    </h1>
-    <div class="subhead">Secure document vault · classic integrity</div>
+<div class="heritage-card">
+  <div class="card-header-premium">
+    <div class="badge-row">
+      <div class="main-title">
+        🏥 रिपोर्ट प्रणाली
+        <span class="premium-tag">PREMIUM CLASSIC</span>
+      </div>
+    </div>
+    <div class="sub-line">
+      • पेशेंट आईडी अनिवार्य है • मोबाइल नंबर वैकल्पिक (त्वरित सहायता के लिए)
+    </div>
   </div>
-  <div class="card-content">
-    <!-- Report ID Field -->
-    <div class="input-group">
-      <div class="input-label">
-        <span>📄</span> REPORT IDENTIFIER
+
+  <div class="form-panel">
+    <!-- PATIENT ID - MANDATORY FIELD -->
+    <div class="input-vault">
+      <div class="input-supreme">
+        <span>🆔</span> पेशेंट आईडी <span style="color:#b91c1c; font-size:0.7rem;">* अनिवार्य</span>
       </div>
-      <input type="text" id="reportIdInput" class="premium-input" placeholder="e.g., RPT-2025-0012" autocomplete="off">
+      <input type="text" id="patientIdInput" class="classic-field" placeholder="उदा. PAT-10234 ,  PS899012 ,  HOSP-5678" autocomplete="off">
+      <div class="optional-note">
+        <span>🔒</span> इस ID से सीधे रिपोर्ट प्राप्त होगी
+      </div>
     </div>
 
-    <!-- Mobile Number Field -->
-    <div class="input-group">
-      <div class="input-label">
-        <span>📱</span> MOBILE NUMBER
+    <!-- MOBILE NUMBER - OPTIONAL BUT HELPFUL -->
+    <div class="input-vault">
+      <div class="input-supreme">
+        <span>📞</span> मोबाइल नंबर <span style="color:#7f8c8d; font-size:0.65rem;">(वैकल्पिक)</span>
       </div>
-      <input type="text" id="mobileNumberInput" class="premium-input" placeholder="+91 98765 43210 or 9876543210" autocomplete="off">
+      <input type="text" id="mobileNumberInput" class="classic-field" placeholder="+91 9876543210 या 9876543210" autocomplete="off">
+      <div class="optional-note">
+        <span>✨</span> रिपोर्ट डिलीवरी के लिए जानकारी सहायक (ज़रूरी नहीं)
+      </div>
     </div>
 
-    <!-- Classic Download Button - Redefined with gold trimming style -->
-    <button id="downloadBtn" class="btn-download">
-      <span>⬇️</span> DOWNLOAD REPORT
+    <!-- Patient Insight (dynamic when ID typed) -->
+    <div id="patientInsightBox" class="insight-area" style="display: none;">
+      <div class="insight-icon">📋</div>
+      <div class="insight-text" id="insightText">पेशेंट आईडी मिलान हो रहा है...</div>
+    </div>
+
+    <!-- GRAND DOWNLOAD BUTTON -->
+    <button id="downloadReportBtn" class="btn-grand">
+      <span>📄</span> रिपोर्ट प्राप्त करें &nbsp;⟶
     </button>
 
-    <!-- Dynamic status / message panel (premium feedback) -->
-    <div id="statusMessage" class="status-area">
-      ◆ Ready · Enter report ID and mobile number
+    <!-- STATUS MESSAGE -->
+    <div id="statusMessage" class="status-classic">
+      ◆ पेशेंट आईडी डालें • रिपोर्ट तुरंत उपलब्ध होगी
     </div>
-    <div class="premium-badge">
-      <span>✧ secured vault ✧</span> <span style="opacity:0.5;">|</span> <span>classic edition</span>
+
+    <div class="vintage-footer">
+      <span>✦ सुरक्षित चिकित्सा रिपोर्ट प्रणाली ✦</span>
+      <span>क्लासिक प्रीमियम संस्करण</span>
     </div>
   </div>
 </div>
@@ -307,218 +378,239 @@
 <script>
   (function() {
     // DOM elements
-    const reportInput = document.getElementById('reportIdInput');
+    const patientIdInput = document.getElementById('patientIdInput');
     const mobileInput = document.getElementById('mobileNumberInput');
-    const downloadButton = document.getElementById('downloadBtn');
+    const downloadBtn = document.getElementById('downloadReportBtn');
     const statusDiv = document.getElementById('statusMessage');
+    const insightBox = document.getElementById('patientInsightBox');
+    const insightTextSpan = document.getElementById('insightText');
 
-    // Helper to update status with style classes
-    function updateStatus(message, type = 'info') {
-      statusDiv.innerHTML = message;
-      // reset classes
-      statusDiv.classList.remove('status-success', 'status-error', 'status-loading');
-      if (type === 'success') {
-        statusDiv.classList.add('status-success');
-      } else if (type === 'error') {
-        statusDiv.classList.add('status-error');
-      } else if (type === 'loading') {
-        statusDiv.classList.add('status-loading');
-      } else {
-        // neutral classic style
-        statusDiv.style.background = "#f8fafc";
+    // ---- PREMIUM DATABASE: Mock patient registry (classic yet intelligent) ----
+    // Real-time detection: when patient ID is typed, we instantly know if report exists.
+    // This simulates backend intelligence: "पेशेंट ID डालते ही हमें पता चल जाएगा की रिपोर्ट मौजूद है"
+    const patientRegistry = new Map([
+      ['PAT-10234', { name: 'राजेश कुमार', reportAvailable: true, reportTitle: 'हृदय जांच रिपोर्ट', lastVisit: '12 मार्च 2025' }],
+      ['PS899012', { name: 'नीता शर्मा', reportAvailable: true, reportTitle: 'ब्लड रिपोर्ट (पूर्ण)', lastVisit: '05 अप्रैल 2025' }],
+      ['HOSP-5678', { name: 'अमित सिंह', reportAvailable: true, reportTitle: 'MRI & CT स्कैन', lastVisit: '22 मई 2025' }],
+      ['PAT-99999', { name: 'सुमन वर्मा', reportAvailable: true, reportTitle: 'डायबिटीज प्रोफाइल', lastVisit: '02 जून 2025' }],
+      ['RPT-1001', { name: 'विजय मेनन', reportAvailable: true, reportTitle: 'कोविड एंटीबॉडी', lastVisit: '18 जनवरी 2025' }],
+      ['CARDIO-77', { name: 'प्रीति मल्होत्रा', reportAvailable: true, reportTitle: 'इकोकार्डियोग्राम', lastVisit: '30 मार्च 2025' }],
+      ['NEURO-88', { name: 'आदित्य रॉय', reportAvailable: true, reportTitle: 'न्यूरो रिपोर्ट', lastVisit: '10 फरवरी 2025' }]
+    ]);
+
+    // Additional generic: If patient ID not in registry but non-empty, we still simulate "report found" but with generic acknowledgment.
+    // As per requirement: "PATIENT ID DALNA JARURI HAIN" and direct pata chalega ki wo patient ID ka report chahiye.
+    // We design: any valid non-empty patient ID triggers report availability (with mock generation), but for premium feel we add registered ones have better personalization.
+    
+    let currentDetectedPatient = null;   // store patient info if exists in registry
+    let currentPatientIdRaw = '';
+
+    // Helper function to detect patient based on ID (real-time)
+    function detectPatientById(pid) {
+      if (!pid || pid.trim() === '') {
+        return null;
+      }
+      const trimmedId = pid.trim().toUpperCase();
+      if (patientRegistry.has(trimmedId)) {
+        return patientRegistry.get(trimmedId);
+      }
+      // Even if not registered, we still know that patient wants report (we have generic access)
+      // But we return a generic object so that UI says "रिपोर्ट उपलब्ध"
+      return { name: 'पेशेंट (जनरल)', reportAvailable: true, reportTitle: 'मेडिकल रिपोर्ट', lastVisit: 'हाल ही में' };
+    }
+
+    // real-time update insight as user types patient ID (classic premium instant feedback)
+    function updateInsightOnPatientId() {
+      const pid = patientIdInput.value;
+      currentPatientIdRaw = pid;
+      if (!pid || pid.trim() === '') {
+        insightBox.style.display = 'none';
+        currentDetectedPatient = null;
+        // reset status to neutral but keep message
+        statusDiv.classList.remove('status-success', 'status-error', 'status-warning');
+        statusDiv.innerHTML = '◆ पेशेंट आईडी डालें • रिपोर्ट तुरंत उपलब्ध होगी';
+        statusDiv.style.background = "#fefcf5";
         statusDiv.style.borderLeftColor = "#d4af37";
-        statusDiv.classList.remove('status-success', 'status-error', 'status-loading');
+        return;
+      }
+      
+      const patientInfo = detectPatientById(pid);
+      if (patientInfo && patientInfo.reportAvailable) {
+        currentDetectedPatient = patientInfo;
+        // Premium insight message: direct pata chal gaya ki patient ID ki report available hai
+        insightBox.style.display = 'flex';
+        insightTextSpan.innerHTML = `✅ पेशेंट आईडी: ${pid.trim().toUpperCase()} — ${patientInfo.name} <span style="color:#b8860b;">| रिपोर्ट तैयार है</span> (${patientInfo.reportTitle}) <span style="font-size:0.7rem;">● ${patientInfo.lastVisit}</span>`;
+        statusDiv.innerHTML = `🔍 रिपोर्ट मिलान हुआ! पेशेंट ID (${pid.trim().toUpperCase()}) की रिपोर्ट तुरंत डाउनलोड के लिए उपलब्ध है। मोबाइल नंबर वैकल्पिक है।`;
+        statusDiv.classList.remove('status-error', 'status-warning');
+        statusDiv.classList.add('status-success');
+      } else {
+        // fallback but since we always return reportAvailable true from generic, this case rarely occurs. but safe.
+        currentDetectedPatient = { name: 'पेशेंट', reportAvailable: true, reportTitle: 'सामान्य रिपोर्ट', lastVisit: 'आज' };
+        insightBox.style.display = 'flex';
+        insightTextSpan.innerHTML = `ℹ️ पेशेंट ID: ${pid.trim().toUpperCase()} — रिपोर्ट उपलब्ध (क्लासिक प्रीमियम डेटा)`;
+        statusDiv.innerHTML = `📌 पेशेंट ID (${pid.trim().toUpperCase()}) के लिए रिपोर्ट तैयार है। डाउनलोड बटन दबाएं।`;
+        statusDiv.classList.remove('status-error');
+        statusDiv.classList.add('status-success');
       }
     }
 
-    // Remove shake effect after animation
-    function addShakeToInputs() {
-      reportInput.classList.add('error-shake');
-      mobileInput.classList.add('error-shake');
-      setTimeout(() => {
-        reportInput.classList.remove('error-shake');
-        mobileInput.classList.remove('error-shake');
-      }, 500);
+    // attach realtime listener to patientId input
+    patientIdInput.addEventListener('input', function(e) {
+      updateInsightOnPatientId();
+      // if patient id becomes empty, hide insight
+      if (!e.target.value.trim()) {
+        insightBox.style.display = 'none';
+        currentDetectedPatient = null;
+        statusDiv.innerHTML = '◆ पेशेंट आईडी डालें • रिपोर्ट तुरंत उपलब्ध होगी';
+        statusDiv.classList.remove('status-success', 'status-error');
+      }
+    });
+
+    // Helper to validate: Patient ID mandatory
+    function isPatientIdValid(pid) {
+      return pid && pid.trim().length >= 2;
     }
 
-    // Enhanced validation: report ID should be non-empty and at least 3 chars (premium rule)
-    // mobile number: basic validation: digits, optional '+' and spaces/hyphens but ensure it contains at least 8 digits.
-    function isValidReportId(reportId) {
-      if (!reportId || reportId.trim() === "") return false;
-      const trimmed = reportId.trim();
-      // classic: at least 3 characters without being only whitespace
-      return trimmed.length >= 2;
-    }
-
-    function isValidMobile(mobile) {
-      if (!mobile || mobile.trim() === "") return false;
-      const cleaned = mobile.trim().replace(/[\s\-\(\)\+]/g, '');
-      // must contain only digits and have length between 7 and 15 (international flexibility)
-      if (!/^\d+$/.test(cleaned)) return false;
-      const digitLength = cleaned.length;
-      return digitLength >= 8 && digitLength <= 15;
-    }
-
-    // Simulate fetching report (premium async simulation)
-    // This mimics a secure API call. Returns a promise that resolves with downloadable content
-    // In real scenario it would fetch from backend. Here we craft a beautiful classic PDF-like report.
-    function generatePremiumReport(reportId, mobileNumber) {
-      return new Promise((resolve, reject) => {
-        // Simulate network/validation time (classic loading effect)
+    // Generate final report content (premium classic report as per patient ID and optional mobile)
+    function generatePremiumReport(patientId, mobileNumber, patientData) {
+      return new Promise((resolve) => {
         setTimeout(() => {
-          // Additional mock server-side validation: both fields must be meaningful and mobile contains atleast digits
-          const trimmedReport = reportId.trim();
-          const cleanMobile = mobileNumber.trim().replace(/[\s\-\(\)\+]/g, '');
+          const finalPatientId = patientId.trim().toUpperCase();
+          const cleanedMobile = mobileNumber ? mobileNumber.trim() : 'Not provided';
+          const displayMobile = cleanedMobile === '' ? 'वैकल्पिक नहीं दिया गया' : cleanedMobile;
+          const now = new Date();
+          const timestamp = now.toLocaleString('hi-IN', { hour12: true });
           
-          // Premium rule: report id must not contain suspicious words? just a demo but we simulate success in realistic manner
-          // Only simulate error if report id is "error" or "fail" for demonstration but otherwise success.
-          // Classic feature: any proper input gives a beautiful generated report.
-          // However, we want to stay realistic: if report ID starts with "INVALID" we throw error to show validation.
-          if (trimmedReport.toUpperCase() === "ERROR" || trimmedReport.toUpperCase() === "FAIL") {
-            reject(new Error("❌ Invalid report identifier. Access denied by secure gateway."));
-            return;
+          let patientName = 'प्रिय पेशेंट';
+          let reportSpecific = 'सामान्य चिकित्सा रिपोर्ट';
+          let visitInfo = 'नवीनतम रिकॉर्ड';
+          
+          if (patientData && patientData.name) {
+            patientName = patientData.name;
+            reportSpecific = patientData.reportTitle || 'डिजिटल हेल्थ रिपोर्ट';
+            visitInfo = patientData.lastVisit || 'पिछली विजिट: हाल ही में';
+          } else {
+            // still premium detection
+            patientName = `पेशेंट (${finalPatientId})`;
+            reportSpecific = 'कम्प्रीहेंसिव मेडिकल रिपोर्ट';
+            visitInfo = 'प्रीमियम वेरिफाइड डेटा';
           }
           
-          // optional: provide a success payload: generate report metadata
-          const timestamp = new Date().toLocaleString('en-GB', { hour12: false });
-          const maskedMobile = cleanMobile.slice(-4);
-          const reportCode = trimmedReport.replace(/\s/g, '').substring(0, 12);
-          
-          // Build premium report content (mock text / simulated "report")
           const reportContent = `
-╔══════════════════════════════════════════════════════════════╗
-║                 ★ PREMIUM CLASSIC REPORT ★                  ║
-╠══════════════════════════════════════════════════════════════╣
-║  Report ID      : ${trimmedReport.padEnd(40)}║
-║  Mobile (masked): +XX-****-${maskedMobile.padEnd(30)}║
-║  Generation     : ${timestamp.padEnd(40)}║
-║  Security Hash  : AUTH-${Math.random().toString(36).substring(2, 10).toUpperCase()} ║
-╠══════════════════════════════════════════════════════════════╣
-║  STATUS: VERIFIED  |  CLASSIC PREMIUM ACCESS                ║
-║  ----------------------------------------------------------  ║
-║  This document confirms the authenticity of the report.     ║
-║  Transaction Summary:                                       ║
-║   • Validation level: GOLD                                  ║
-║   • Timestamp authority: secure gateway                     ║
-║   • Report code: ${reportCode}                            ║
-║                                                              ║
-║  © Classic Premium Vault • Confidential                     ║
-╚══════════════════════════════════════════════════════════════╝
+╔══════════════════════════════════════════════════════════════════╗
+║           🏥 प्रीमियम क्लासिक मेडिकल रिपोर्ट 🏥                ║
+╠══════════════════════════════════════════════════════════════════╣
+║  पेशेंट आईडी    : ${finalPatientId.padEnd(44)}║
+║  पेशेंट का नाम   : ${patientName.padEnd(44)}║
+║  मोबाइल नंबर     : ${displayMobile.padEnd(44)}║
+║  रिपोर्ट शीर्षक  : ${reportSpecific.padEnd(44)}║
+║  तिथि & समय      : ${timestamp.padEnd(44)}║
+║  विज़िट विवरण    : ${visitInfo.padEnd(44)}║
+╠══════════════════════════════════════════════════════════════════╣
+║  ✦ रिपोर्ट स्थिति: सत्यापित एवं प्रमाणित ✦                     ║
+║  डॉक्टर की डिजिटल मुहर: CLASSIC PREMIUM HEALTH                ║
+║  हस्ताक्षर: प्रीमियम केयर गेटवे                                 ║
+║  --------------------------------------------------------------  ║
+║  नोट: यह रिपोर्ट पेशेंट आईडी के आधार पर जनरेट की गई है।        ║
+║  मोबाइल नंबर केवल रिकॉर्ड में सहेजा गया (वैकल्पिक)             ║
+╚══════════════════════════════════════════════════════════════════╝
           `;
-          
-          // additional styled plain text report (simulates .txt report download)
-          const finalReport = `CLASSIC PREMIUM REPORT DOWNLOAD
-Generated for: ${trimmedReport}
-Mobile verification: +${cleanMobile.slice(0,2)}****${cleanMobile.slice(-4)}
-Timestamp: ${timestamp}
---- Secure Digital Signature ---
-${reportContent}
---- End of Report ---
-          `;
-          resolve(finalReport);
-        }, 1200); // 1.2 sec realistic loading (premium feel)
+          resolve(reportContent);
+        }, 800);
       });
     }
-
-    // Trigger report download as .txt file (classic, professional)
-    function downloadTextFile(content, fileName) {
-      // Create a blob with text/plain content, UTF-8
+    
+    // download helper
+    function downloadTextFile(content, filename) {
       const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
       link.href = url;
-      link.download = fileName;
+      link.download = filename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
     }
 
-    // Core download handler with premium flow
-    async function downloadReport() {
-      // Retrieve values and trim
-      let reportId = reportInput.value;
-      let mobileNumber = mobileInput.value;
-
-      // Run validation
-      const isReportValid = isValidReportId(reportId);
-      const isMobileValid = isValidMobile(mobileNumber);
+    // main download handler
+    async function handleDownloadReport() {
+      const patientId = patientIdInput.value;
+      const mobileNumber = mobileInput.value;
       
-      if (!isReportValid || !isMobileValid) {
-        let errorMsg = "◆ Cannot proceed · ";
-        if (!isReportValid && !isMobileValid) {
-          errorMsg += "Report ID and Mobile number are required (min. 2 chars & valid mobile with 8+ digits).";
-          addShakeToInputs();
-        } else if (!isReportValid) {
-          errorMsg += "Please enter a valid Report ID (at least 2 characters).";
-          reportInput.classList.add('error-shake');
-          setTimeout(() => reportInput.classList.remove('error-shake'), 500);
-        } else if (!isMobileValid) {
-          errorMsg += "Mobile number must contain 8 to 15 digits (allow +, spaces). Example: 9876543210";
-          mobileInput.classList.add('error-shake');
-          setTimeout(() => mobileInput.classList.remove('error-shake'), 500);
-        }
-        updateStatus(errorMsg, 'error');
+      // validation: patient ID mandatory
+      if (!patientId || patientId.trim() === "") {
+        statusDiv.innerHTML = "⚠️ त्रुटि: पेशेंट आईडी अनिवार्य है। कृपया वैध पेशेंट ID डालें।";
+        statusDiv.classList.remove('status-success', 'status-loading');
+        statusDiv.classList.add('status-error');
+        patientIdInput.classList.add('error-shake');
+        setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
         return;
       }
-
-      // Premium loading state
-      updateStatus(`⏳ Verifying credentials · generating premium report for ID: ${reportId.trim().substring(0, 12)}...`, 'loading');
       
-      // Disable button during async operation (prevent double click)
-      downloadButton.disabled = true;
-      const originalBtnText = downloadButton.innerHTML;
-      downloadButton.innerHTML = `<span>⏳</span> PROCESSING ...`;
-      downloadButton.style.opacity = "0.85";
+      if (patientId.trim().length < 2) {
+        statusDiv.innerHTML = "❌ पेशेंट आईडी कम से कम 2 अक्षर का होना चाहिए।";
+        statusDiv.classList.add('status-error');
+        patientIdInput.classList.add('error-shake');
+        setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
+        return;
+      }
+      
+      // At this point, patient ID is valid, we know report is needed and available (already detected in realtime)
+      // We get the latest patient data from registry or generic
+      const freshPatientInfo = detectPatientById(patientId);
+      
+      // disable button during process
+      downloadBtn.disabled = true;
+      const originalText = downloadBtn.innerHTML;
+      downloadBtn.innerHTML = `<span>⏳</span> रिपोर्ट तैयार हो रही है ...`;
+      downloadBtn.style.opacity = "0.8";
+      
+      statusDiv.classList.remove('status-error', 'status-success');
+      statusDiv.classList.add('status-loading');
+      statusDiv.innerHTML = `⏳ पेशेंट ID ${patientId.trim().toUpperCase()} के लिए प्रीमियम रिपोर्ट जनरेट की जा रही है... कृपया प्रतीक्षा करें।`;
       
       try {
-        // Call async report generator (simulate backend call)
-        const reportData = await generatePremiumReport(reportId.trim(), mobileNumber.trim());
-        
-        // Build filename: ReportID_Date.txt
-        const now = new Date();
-        const dateStamp = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}`;
-        const safeReportId = reportId.trim().replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 20);
-        const fileName = `Premium_Report_${safeReportId}_${dateStamp}.txt`;
-        
-        // Trigger download
+        const reportData = await generatePremiumReport(patientId, mobileNumber, freshPatientInfo);
+        const safeId = patientId.trim().replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
+        const dateStr = new Date().toISOString().slice(0,19).replace(/:/g, '-');
+        const fileName = `Report_${safeId}_${dateStr}.txt`;
         downloadTextFile(reportData, fileName);
         
-        // Success status
-        updateStatus(`✓ Download complete! "${fileName}" saved. Access granted via classic premium channel.`, 'success');
-        
-        // Optional subtle reset effect on inputs (but keep values)
+        statusDiv.innerHTML = `✅ सफलतापूर्वक डाउनलोड! पेशेंट आईडी (${patientId.trim().toUpperCase()}) की रिपोर्ट सेव हो गई। मोबाइल: ${mobileNumber ? mobileNumber.trim() : 'वैकल्पिक नहीं'}`;
+        statusDiv.classList.remove('status-loading');
+        statusDiv.classList.add('status-success');
       } catch (err) {
-        console.warn("Download error simulation:", err);
-        updateStatus(err.message || "⛔ Secure download failed. Please verify your credentials and try again.", 'error');
+        statusDiv.innerHTML = `⚠️ डाउनलोड त्रुटि: पुनः प्रयास करें। ${err.message || ''}`;
+        statusDiv.classList.add('status-error');
       } finally {
-        // Re-enable button and restore original style
-        downloadButton.disabled = false;
-        downloadButton.innerHTML = originalBtnText;
-        downloadButton.style.opacity = "1";
+        downloadBtn.disabled = false;
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.style.opacity = "1";
       }
     }
-
-    // Attach event listener to the button (replaces inline onclick with elegant JS)
-    downloadButton.addEventListener('click', downloadReport);
-
-    // Additional premium UX: Enter key support on inputs (submit)
-    function handleKeyPress(e) {
+    
+    downloadBtn.addEventListener('click', handleDownloadReport);
+    
+    // additional enter key submission on both fields (patient id mandatory)
+    const handleEnter = (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        downloadReport();
+        if (patientIdInput.value.trim() !== "") {
+          handleDownloadReport();
+        } else {
+          statusDiv.innerHTML = "⚠️ पहले पेशेंट आईडी डालें (अनिवार्य)";
+          statusDiv.classList.add('status-error');
+          patientIdInput.classList.add('error-shake');
+          setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
+        }
       }
-    }
-    reportInput.addEventListener('keypress', handleKeyPress);
-    mobileInput.addEventListener('keypress', handleKeyPress);
-
-    // Optional: initial focus on reportId for better experience
-    reportInput.focus();
-
-    // Classic stylistic: little easter egg (no external libs, fully premium)
-    // Also: add clean visual effect on status clear with reset?
-    // For perfection, we provide a small onload reminder.
-    console.log("Classic Premium Report Interface — Ready");
+    };
+    patientIdInput.addEventListener('keypress', handleEnter);
+    mobileInput.addEventListener('keypress', handleEnter);
+    
+    // initial focus
+    patientIdInput.focus();
   })();
 </script>
 </body>
