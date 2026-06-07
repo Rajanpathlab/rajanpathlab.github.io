@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab - Complete Booking with QR Code</title>
+<title>Rajan Path Lab - Complete Booking with QR</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<!-- Include QR Code library -->
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <style>
 * {
@@ -27,7 +26,6 @@ body {
     padding: 45px 20px;
     text-align: center;
     color: white;
-    position: relative;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
@@ -60,77 +58,80 @@ body {
 
 .main-grid {
     display: grid;
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: 1fr 260px;
     gap: 24px;
+    align-items: start;
 }
 
 .card {
     background: #ffffff;
     border-radius: 32px;
-    padding: 28px 32px;
+    padding: 32px 36px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
 }
 
-.payment-sidebar {
+/* Compact QR Sidebar - Small barcode,不影响表单 */
+.qr-sidebar {
     background: #ffffff;
-    border-radius: 32px;
-    padding: 24px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
-    height: fit-content;
+    border-radius: 28px;
+    padding: 18px 16px;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+    text-align: center;
     position: sticky;
     top: 20px;
-}
-
-.qr-section {
-    text-align: center;
-    margin-bottom: 20px;
 }
 
 .qr-title {
     font-weight: 700;
     color: #0F5B8C;
-    font-size: 1.1rem;
-    margin-bottom: 15px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 #qrcode {
     display: flex;
     justify-content: center;
-    margin: 15px 0;
+    margin: 8px 0;
 }
 
-.upi-details {
+#qrcode img, #qrcode canvas {
+    width: 110px !important;
+    height: 110px !important;
+    border-radius: 12px;
+}
+
+.upi-mini {
     background: #f0f9ff;
-    padding: 12px;
-    border-radius: 20px;
-    margin: 15px 0;
-    text-align: center;
+    padding: 8px;
+    border-radius: 16px;
+    margin: 10px 0;
 }
 
-.upi-details p {
-    font-size: 0.85rem;
-    color: #1e4a76;
+.upi-id-mini {
+    font-weight: 700;
+    color: #0a5c2e;
+    font-size: 0.7rem;
+    background: white;
+    padding: 5px;
+    border-radius: 10px;
+    font-family: monospace;
     word-break: break-all;
 }
 
-.upi-id {
-    font-weight: 700;
-    color: #0a5c2e;
-    background: white;
-    padding: 8px;
-    border-radius: 12px;
-    font-family: monospace;
-    font-size: 0.9rem;
+.lab-contact {
+    font-size: 0.7rem;
+    color: #4a6f8f;
+    margin-top: 8px;
 }
 
 .scan-note {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     color: #6c8db0;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .section-title {
@@ -285,21 +286,35 @@ input:focus, select:focus, textarea:focus {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    transition: 0.2s;
+}
+
+.whatsapp-btn:hover {
+    transform: translateY(-2px);
+    background: #1da859;
 }
 
 @media (max-width: 850px) {
     .main-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
-    .payment-sidebar {
+    .qr-sidebar {
         position: static;
         order: 2;
+        max-width: 280px;
+        margin: 0 auto;
     }
     .card {
         order: 1;
+        padding: 24px;
     }
     .grid-2 {
         grid-template-columns: 1fr;
+    }
+    #qrcode img, #qrcode canvas {
+        width: 100px !important;
+        height: 100px !important;
     }
 }
 </style>
@@ -309,12 +324,12 @@ input:focus, select:focus, textarea:focus {
 <section class="hero">
     <h1>🔬 RAJAN PATH LAB</h1>
     <h2>Trusted Diagnostics • Accurate Results • Digital Reports</h2>
-    <p>Complete booking form, scan QR to pay, and get confirmation on WhatsApp with report request option.</p>
+    <p>Fill the form → Add tests → Send WhatsApp confirmation with report request</p>
 </section>
 
 <div class="container">
     <div class="main-grid">
-        <!-- LEFT: Booking Form -->
+        <!-- LEFT: Main Booking Form (पहले जैसा ही - बिना किसी बदलाव के) -->
         <div class="card">
             <form id="bookingForm">
                 <div class="section-title"><i class="fas fa-user-circle"></i> Patient Information</div>
@@ -335,7 +350,7 @@ input:focus, select:focus, textarea:focus {
                 </div>
                 <button type="button" id="quickAddBtn" class="add-btn"><i class="fas fa-plus"></i> + Add Test</button>
 
-                <div class="selected-tests" id="selectedTestsContainer" style="display: block;">
+                <div class="selected-tests" id="selectedTestsContainer">
                     <h4 style="font-size:0.85rem; margin-bottom:8px;"><i class="fas fa-cart-shopping"></i> Selected Tests</h4>
                     <div id="selectedTestsList"></div>
                     <div id="totalPriceSpan" class="price-summary">💰 Total: ₹0</div>
@@ -367,7 +382,7 @@ input:focus, select:focus, textarea:focus {
 
                 <div class="section-title"><i class="fas fa-file-pdf"></i> Report Request</div>
                 <div class="form-group">
-                    <label style="display: flex; align-items: center; gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
                         <input type="checkbox" id="reportRequest" checked style="width: 18px; height: 18px;"> 
                         <span>✅ Request Digital Copy of Lab Report (sent on WhatsApp)</span>
                     </label>
@@ -379,29 +394,25 @@ input:focus, select:focus, textarea:focus {
             </form>
         </div>
 
-        <!-- RIGHT: QR Code + UPI -->
-        <div class="payment-sidebar">
-            <div class="qr-section">
-                <div class="qr-title"><i class="fas fa-qrcode"></i> Scan & Pay</div>
-                <div id="qrcode"></div>
-                <div class="upi-details">
-                    <p><i class="fas fa-credit-card"></i> UPI ID:</p>
-                    <div class="upi-id">8709946177@okbizaxis</div>
-                    <p style="margin-top:10px;"><i class="fas fa-building"></i> RAJAN PATH LAB<br>+91 87099 46177</p>
-                </div>
-                <div class="scan-note">
-                    <i class="fas fa-mobile-alt"></i> Scan via Google Pay / PhonePe / Paytm
-                </div>
+        <!-- RIGHT: छोटा QR Code साइड में - size छोटा कर दिया गया है -->
+        <div class="qr-sidebar">
+            <div class="qr-title">
+                <i class="fas fa-qrcode"></i> Scan & Pay
             </div>
-            <div style="border-top: 1px solid #e2edf7; margin-top: 20px; padding-top: 15px; text-align: center; font-size: 0.75rem; color: #4a6f8f;">
-                <i class="fas fa-shield-alt"></i> Secure Payment • Instant Confirmation
+            <div id="qrcode"></div>
+            <div class="upi-mini">
+                <div class="upi-id-mini">8709946177@okbizaxis</div>
+                <div class="lab-contact">📞 +91 87099 46177</div>
+            </div>
+            <div class="scan-note">
+                <i class="fas fa-mobile-alt"></i> GPay / PhonePe / Paytm
             </div>
         </div>
     </div>
 </div>
 
 <script>
-// ===================== TEST DATABASE =====================
+// -------------------- FULL TEST DATABASE --------------------
 const testsData = [
     { sno:1, name:"LIVER FUNCTION TEST", price:600 },{ sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600 },{ sno:3, name:"LIPID PROFILE (Fasting)", price:600 },
     { sno:4, name:"THYROID PROFILE", price:500 },{ sno:5, name:"BETA HCG", price:1000 },{ sno:6, name:"HBA1C (3 Month Sugar)", price:600 },
@@ -419,7 +430,7 @@ const testsData = [
     { sno:44, name:"OPTIMAL WIDAL", price:300 },{ sno:45, name:"Sodium", price:200 },{ sno:46, name:"Potassium", price:200 }
 ];
 
-// Doctor List
+// Doctor list
 const doctorMasterList = [
     "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
     "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
@@ -438,7 +449,7 @@ sortedDoctors.forEach(doc => {
 });
 refbySelect.innerHTML += `<option value="other">Other (Type below)</option>`;
 
-// Selected tests state
+// Default selected tests (demo as per image)
 let selectedTests = [
     { name: "Complete Blood Count (CBC)", price: 300 },
     { name: "Optimal Package", price: 200 },
@@ -446,7 +457,7 @@ let selectedTests = [
     { name: "Widal Test", price: 100 }
 ];
 
-// Function to update UI cart
+// Update cart UI
 function updateCartUI() {
     const listDiv = document.getElementById('selectedTestsList');
     const totalSpan = document.getElementById('totalPriceSpan');
@@ -529,7 +540,7 @@ document.getElementById('quickAddBtn').addEventListener('click', () => {
         currentSelectedSuggestion = null;
         suggestionsDiv.style.display = 'none';
     } else if (testInput.value.trim() !== "") {
-        alert("Test not found. Select from suggestions or type again.");
+        alert("Test not found. Please select from suggestions.");
     }
 });
 
@@ -554,7 +565,7 @@ function getTotalAmount() {
     return selectedTests.reduce((sum, t) => sum + t.price, 0);
 }
 
-// WhatsApp message as per exact format given by user
+// WhatsApp Message - Exactly as per required format
 function sendFormattedWhatsApp() {
     const name = document.getElementById('name').value.trim();
     const age = document.getElementById('age').value || "—";
@@ -569,9 +580,8 @@ function sendFormattedWhatsApp() {
     const totalVal = getTotalAmount();
     
     if (!name) { alert("Please enter patient name"); return; }
-    if (!mobile) { alert("Mobile required"); return; }
+    if (!mobile) { alert("Mobile number required"); return; }
     
-    // Format exactly like sample
     let message = `🔬 RAJAN PATH LAB\n`;
     message += `Diagnostic Booking Confirmation & Report Request\n`;
     message += `📥 Digital Report Request Received\n`;
@@ -605,26 +615,26 @@ function sendFormattedWhatsApp() {
     window.open(`https://wa.me/${waNumber}?text=${encodedMsg}`, '_blank');
 }
 
-// generate QR code for UPI
-function generateQR() {
+// Generate small QR code
+function generateSmallQR() {
     const upiString = "upi://pay?pa=8709946177@okbizaxis&pn=Rajan%20Path%20Lab&am=0&cu=INR";
     const qrDiv = document.getElementById('qrcode');
     qrDiv.innerHTML = "";
     new QRCode(qrDiv, {
         text: upiString,
-        width: 180,
-        height: 180,
+        width: 110,
+        height: 110,
         colorDark: "#000000",
         colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
+        correctLevel: QRCode.CorrectLevel.M
     });
 }
 
-// initial load with default tests + QR
+// Initial load
 updateCartUI();
-generateQR();
+generateSmallQR();
 
-// auto adjust due/paid sync
+// Auto payment sync
 function syncPayments() {
     const total = getTotalAmount();
     const paidField = document.getElementById('paid');
