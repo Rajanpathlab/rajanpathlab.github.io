@@ -27,7 +27,7 @@
     }  
 
     b, strong {
-        font-weight: 700; /* Bold highlights, absolutely no italics */
+        font-weight: 700;
     }
 
     header {  
@@ -54,11 +54,14 @@
     }  
     nav a:hover { color: var(--accent-teal); }  
 
+    /* Microscope & Lab Grid Silhouette Background */
     .hero {  
         background: #0d3359;  
+        background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%),
+                          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,70 L30,80 L70,80 L70,70 M40,70 L40,40 M40,45 L45,45 M50,40 C50,30 60,30 60,40 L60,65 M55,65 L65,65' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
         color: white;   
         text-align: center;   
-        padding: 60px 20px;  /* Spacing tightly reduced */
+        padding: 60px 20px;  
     }  
       
     .hero h2 {  
@@ -97,7 +100,19 @@
     .strip-item { font-size: 1rem; font-weight: 600; display: flex; align-items: center; color: var(--primary-blue); }  
     .strip i { color: var(--accent-teal); margin-right: 10px; font-size: 1.2rem; }  
 
-    section { padding: 45px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }  
+    /* Subtle Technical Grid Background for sections */
+    section { 
+        padding: 45px 20px; 
+        max-width: 1100px; 
+        margin: 0 auto; 
+        text-align: center;
+    }  
+    
+    .section-wrapper-alt {
+        background: var(--bg-light);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(0,128,128,0.03)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(0,128,128,0.1)'/%3E%3C/svg%3E");
+    }
+
     h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 26px; font-weight: 700; }  
 
     .about-container { display: flex; align-items: center; gap: 40px; text-align: left; flex-wrap: wrap; }  
@@ -195,23 +210,25 @@
     </div>  
 </section>  
 
-<section style="background: #f4f7f9;">  
-    <h2>Our Collection Centers</h2>  
-    <div class="grid-container">  
-        <div class="card" style="border-top: 3px solid var(--urgent-red);">  
-            <i class="fas fa-hospital-user" style="color: var(--urgent-red);"></i>  
-            <h3>J R MEDICAL</h3>  
-            <p>Chilbil Chowk, Manhar</p>  
-            <p style="color: var(--urgent-red); font-weight: bold; margin-top: 10px;">Fasting Samples (Khali Pet)</p>  
+<div class="section-wrapper-alt">
+    <section>  
+        <h2>Our Collection Centers</h2>  
+        <div class="grid-container">  
+            <div class="card" style="border-top: 3px solid var(--urgent-red);">  
+                <i class="fas fa-hospital-user" style="color: var(--urgent-red);"></i>  
+                <h3>J R MEDICAL</h3>  
+                <p>Chilbil Chowk, Manhar</p>  
+                <p style="color: var(--urgent-red); font-weight: bold; margin-top: 10px;">Fasting Samples (Khali Pet)</p>  
+            </div>  
+            <div class="card" style="border-top: 3px solid var(--accent-teal);">  
+                <i class="fas fa-house-chimney" style="color: var(--accent-teal);"></i>  
+                <h3>Home Collection</h3>  
+                <p>Professional Pickup Service</p>  
+                <p style="font-weight: bold; color: var(--primary-blue); margin-top: 10px;">Charge: ₹50</p>  
+            </div>  
         </div>  
-        <div class="card" style="border-top: 3px solid var(--accent-teal);">  
-            <i class="fas fa-house-chimney" style="color: var(--accent-teal);"></i>  
-            <h3>Home Collection</h3>  
-            <p>Professional Pickup Service</p>  
-            <p style="font-weight: bold; color: var(--primary-blue); margin-top: 10px;">Charge: ₹50</p>  
-        </div>  
-    </div>  
-</section>  
+    </section>  
+</div>
 
 <section style="background: white;">  
     <h2>Our Diagnostic Partners</h2>  
@@ -222,19 +239,21 @@
     </div>  
 </section>  
 
-<section style="background: #f4f7f9;">  
-    <h2>Specialized Test Menu</h2>  
-    <div class="grid-container">  
-        <div class="card"><i class="fas fa-microscope" style="color: var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>  
-        <div class="card"><i class="fas fa-vial" style="color: #ff7e5f;"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>  
-        <div class="card"><i class="fas fa-dna" style="color: var(--path-purple);"></i><h3>Aarogyam C Pro</h3><p>69 Health Parameters</p></div>  
-        <div class="card"><i class="fas fa-sun" style="color: #fbc02d;"></i><h3>Vitamin D</h3><p>25-Hydroxy Bone Health</p></div>  
-        <div class="card"><i class="fas fa-bolt" style="color: #0d47a1;"></i><h3>Vitamin B12</h3><p>Nerve & Energy Profile</p></div>  
-        <div class="card"><i class="fas fa-bug" style="color: #c62828;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>  
-        <div class="card"><i class="fas fa-heartbeat" style="color: #ec407a;"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>  
-        <div class="card"><i class="fas fa-hand-holding-droplet" style="color: #ef6c00;"></i><h3>Diabetes Care</h3><p>HbA1c & Sugar</p></div>  
-    </div>  
-</section>  
+<div class="section-wrapper-alt">
+    <section>  
+        <h2>Specialized Test Menu</h2>  
+        <div class="grid-container">  
+            <div class="card"><i class="fas fa-microscope" style="color: var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>  
+            <div class="card"><i class="fas fa-vial" style="color: #ff7e5f;"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>  
+            <div class="card"><i class="fas fa-dna" style="color: var(--path-purple);"></i><h3>Aarogyam C Pro</h3><p>69 Health Parameters</p></div>  
+            <div class="card"><i class="fas fa-sun" style="color: #fbc02d;"></i><h3>Vitamin D</h3><p>25-Hydroxy Bone Health</p></div>  
+            <div class="card"><i class="fas fa-bolt" style="color: #0d47a1;"></i><h3>Vitamin B12</h3><p>Nerve & Energy Profile</p></div>  
+            <div class="card"><i class="fas fa-bug" style="color: #c62828;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>  
+            <div class="card"><i class="fas fa-heartbeat" style="color: #ec407a;"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>  
+            <div class="card"><i class="fas fa-hand-holding-droplet" style="color: #ef6c00;"></i><h3>Diabetes Care</h3><p>HbA1c & Sugar</p></div>  
+        </div>  
+    </section>  
+</div>
 
 <footer>  
     <h2>RAJAN PATH LAB (RPL)</h2>  
