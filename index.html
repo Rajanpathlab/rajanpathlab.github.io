@@ -32,7 +32,6 @@
             --shadow-md: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
             --shadow-lg: 0 25px 40px -14px rgba(0, 0, 0, 0.12);
             --border-radius-card: 28px;
-            --border-radius-element: 18px;
         }
 
         body {
@@ -43,19 +42,10 @@
             line-height: 1.5;
         }
 
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #e2e8f0;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--teal-premium);
-            border-radius: 8px;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: var(--teal-premium); border-radius: 8px; }
 
-        /* Header / Nav */
         .glass-header {
             background: rgba(11, 43, 79, 0.92);
             backdrop-filter: blur(12px);
@@ -66,419 +56,163 @@
             position: sticky;
             top: 0;
             z-index: 1100;
-            transition: all 0.2s ease;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .logo h1 {
             font-size: 1.8rem;
             font-weight: 800;
-            letter-spacing: -0.3px;
             background: linear-gradient(135deg, #FFFFFF 30%, var(--teal-bright) 90%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin: 0;
         }
-        .logo span {
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            color: var(--teal-bright);
-            font-weight: 800;
-        }
+        .logo span { color: var(--teal-bright); background: none; -webkit-background-clip: unset; }
         .nav-links a {
             color: #EFF3FC;
             text-decoration: none;
             margin-left: 28px;
             font-weight: 500;
-            font-size: 1rem;
             transition: 0.2s;
-            letter-spacing: -0.2px;
-            position: relative;
         }
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: var(--teal-bright);
-            transition: 0.25s;
-        }
-        .nav-links a:hover:after { width: 100%; }
         .nav-links a:hover { color: var(--teal-bright); }
-
-        /* Hero section — premium immersive */
         .hero-premium {
             background: radial-gradient(circle at 10% 30%, #0C2E4E, #062037);
-            position: relative;
-            overflow: hidden;
             padding: 5rem 2rem 7rem 2rem;
             text-align: center;
-        }
-        .hero-premium::before {
-            content: "";
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 70%;
-            height: 120%;
-            background: radial-gradient(ellipse, rgba(31,138,140,0.15), transparent 70%);
-            pointer-events: none;
-        }
-        .hero-premium::after {
-            content: "";
-            position: absolute;
-            bottom: -5%;
-            left: -5%;
-            width: 50%;
-            height: 50%;
-            background: radial-gradient(circle, rgba(223,180,94,0.08), transparent 70%);
-            pointer-events: none;
-        }
-        .hero-content {
             position: relative;
-            z-index: 2;
-            max-width: 900px;
-            margin: 0 auto;
         }
         .hero-content h2 {
-            font-size: 3.7rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            letter-spacing: -1px;
             background: linear-gradient(to right, #FFFFFF, #C9F0F0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 1.5rem;
             line-height: 1.2;
         }
-        .hero-badge {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(4px);
-            display: inline-block;
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--teal-bright);
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
+        .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+        .btn-primary, .btn-outline-light {
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
         }
         .btn-primary {
             background: linear-gradient(95deg, var(--teal-premium), #1F6E6F);
             color: white;
-            padding: 1rem 2.2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px -6px rgba(0,0,0,0.3);
             border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
         }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            background: linear-gradient(95deg, #239A9C, #165E60);
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.4);
-        }
+        .btn-primary:hover { transform: translateY(-3px); background: linear-gradient(95deg, #239A9C, #165E60); }
         .btn-outline-light {
             background: transparent;
             border: 1.5px solid rgba(255,255,255,0.65);
-            backdrop-filter: blur(6px);
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.25s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
         }
-        .btn-outline-light:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: var(--teal-bright);
-        }
-
-        /* Info ribbon */
+        .btn-outline-light:hover { background: rgba(255,255,255,0.1); border-color: var(--teal-bright); }
         .info-ribbon {
-            background: var(--white-pure);
-            box-shadow: var(--shadow-md);
+            background: rgba(255,255,255,0.96);
             border-radius: 30px;
             width: fit-content;
-            max-width: 95%;
             margin: -2rem auto 0 auto;
-            position: relative;
-            z-index: 15;
             padding: 0.8rem 2rem;
             display: flex;
-            justify-content: center;
             gap: 3rem;
             flex-wrap: wrap;
-            backdrop-filter: blur(4px);
-            background: rgba(255,255,255,0.96);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            z-index: 15;
         }
-        .ribbon-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            color: var(--primary-deep);
-        }
-        .ribbon-item i {
-            font-size: 1.6rem;
-            color: var(--teal-premium);
-        }
-
-        /* containers */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-        section {
-            padding: 5rem 0;
-        }
-        .section-title {
-            text-align: center;
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: var(--primary-deep);
-            margin-bottom: 3rem;
-            letter-spacing: -0.5px;
-        }
+        .ribbon-item { display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--primary-deep); }
+        .ribbon-item i { color: var(--teal-premium); font-size: 1.6rem; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+        section { padding: 5rem 0; }
+        .section-title { text-align: center; font-size: 2.4rem; font-weight: 800; color: var(--primary-deep); margin-bottom: 3rem; }
         .section-title:after {
-            content: '';
-            display: block;
-            width: 70px;
-            height: 3px;
+            content: ''; display: block; width: 70px; height: 3px;
             background: linear-gradient(90deg, var(--teal-premium), var(--gold-accent));
-            margin: 0.8rem auto 0;
-            border-radius: 3px;
+            margin: 0.8rem auto 0; border-radius: 3px;
         }
-
-        /* about grid */
-        .about-grid {
-            display: flex;
-            gap: 4rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .about-content {
-            flex: 1.5;
-        }
-        .about-content p {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-        .feature-list {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 1.8rem;
-        }
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--mid-gray);
-            padding: 0.8rem 1rem;
-            border-radius: 50px;
-            font-weight: 500;
-        }
-        .feature-item i {
-            color: var(--teal-premium);
-            font-size: 1.3rem;
-        }
-        .about-icon {
-            flex: 1;
-            text-align: center;
-        }
-        .about-icon img {
-            max-width: 240px;
-            opacity: 0.85;
-        }
-
-        /* card grid */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
-        }
-        .service-card {
+        .about-grid { display: flex; gap: 4rem; align-items: center; flex-wrap: wrap; }
+        .about-content { flex: 1.5; }
+        .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.8rem; }
+        .feature-item { display: flex; align-items: center; gap: 12px; background: var(--mid-gray); padding: 0.8rem 1rem; border-radius: 50px; font-weight: 500; }
+        .feature-item i { color: var(--teal-premium); }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .service-card, .collection-card, .partner-card {
             background: var(--white-pure);
-            border-radius: var(--border-radius-card);
-            padding: 1.8rem 1.5rem;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0,0,0,0.02);
-            text-align: center;
-        }
-        .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--teal-bright);
-        }
-        .service-card i {
-            font-size: 2.5rem;
-            color: var(--teal-premium);
-            margin-bottom: 1rem;
-        }
-        .service-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-        .service-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* collection center cards */
-        .collection-flex {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-        .collection-card {
-            flex: 1;
-            min-width: 260px;
-            background: white;
             border-radius: 28px;
-            padding: 2rem 1.5rem;
+            padding: 1.8rem 1.5rem;
+            text-align: center;
             transition: 0.2s;
             box-shadow: var(--shadow-sm);
-            border-top: 5px solid var(--teal-premium);
+            cursor: pointer;
         }
-        .collection-card i {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-        }
-        .fee-badge {
-            background: #ecfdf5;
-            color: #0f766e;
-            font-weight: bold;
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
-            display: inline-block;
-            margin-top: 0.8rem;
-        }
-
-        /* partner logos */
-        .partner-strip {
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem;
-            flex-wrap: wrap;
-        }
-        .partner-card {
-            background: white;
-            border-radius: 2rem;
-            padding: 1.5rem 2rem;
-            text-align: center;
-            min-width: 150px;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-sm);
-        }
-        .partner-card i {
-            font-size: 2.2rem;
-        }
-        .partner-card p {
-            font-weight: 700;
-            margin-top: 0.8rem;
-            font-size: 1rem;
-        }
-
-        /* map + footer */
-        .map-wrapper {
-            border-radius: 32px;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            margin-top: 1.5rem;
-        }
-        footer {
-            background: #0C2B41;
-            color: #CDDFE7;
-            padding: 3.5rem 1rem 2rem;
-            margin-top: 2rem;
-        }
-        .footer-inner {
-            max-width: 1280px;
-            margin: auto;
-            text-align: center;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin: 1.8rem 0;
-        }
-        .footer-links a {
-            color: #e2e8f0;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.2s;
-        }
+        .service-card:hover, .collection-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+        .collection-flex { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+        .collection-card { flex: 1; min-width: 260px; border-top: 5px solid var(--teal-premium); }
+        .fee-badge { background: #ecfdf5; color: #0f766e; padding: 0.3rem 1rem; border-radius: 30px; display: inline-block; margin-top: 0.8rem; }
+        .partner-strip { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+        .map-wrapper { border-radius: 32px; overflow: hidden; margin-top: 1.5rem; }
+        footer { background: #0C2B41; color: #CDDFE7; padding: 3rem 1rem; margin-top: 2rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 1.5rem 0; }
+        .footer-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; }
         .footer-links a:hover { color: var(--teal-bright); }
         .whatsapp-float {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #25D366;
-            color: white;
-            padding: 14px 24px;
-            border-radius: 40px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            z-index: 1100;
-            transition: all 0.2s;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.03);
-            background: #20b859;
+            position: fixed; bottom: 25px; right: 25px;
+            background: #25D366; color: white; padding: 12px 24px;
+            border-radius: 40px; font-weight: 700; display: flex; gap: 8px;
+            text-decoration: none; z-index: 1100; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        /* toast notification */
-        .toast-notify {
+        /* MODAL STYLES */
+        .modal {
+            display: none;
             position: fixed;
-            bottom: 100px;
-            right: 30px;
-            background: #1E293B;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 60px;
-            font-weight: 500;
-            z-index: 1200;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-            backdrop-filter: blur(8px);
-            background: rgba(0,0,0,0.85);
-            transition: 0.2s;
-            pointer-events: none;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
         }
+        .modal-content {
+            background: white;
+            max-width: 480px;
+            width: 90%;
+            border-radius: 32px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            animation: fadeInUp 0.2s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .modal-content h3 { font-size: 1.8rem; color: var(--primary-deep); margin-bottom: 1rem; }
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: 12px 16px;
+            margin: 10px 0;
+            border: 1px solid #cfdfe9;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        .modal-buttons { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: flex-end; }
+        .modal-buttons button { padding: 10px 20px; border-radius: 40px; font-weight: 600; cursor: pointer; border: none; }
+        .btn-submit { background: var(--teal-premium); color: white; }
+        .btn-cancel { background: #eef2f6; color: #333; }
+        .close-modal { float: right; font-size: 1.8rem; cursor: pointer; line-height: 1; }
         @media (max-width: 780px) {
-            .glass-header { flex-direction: column; gap: 0.8rem; }
-            .nav-links a { margin: 0 12px; font-size: 0.9rem; }
-            .hero-content h2 { font-size: 2.2rem; }
-            .section-title { font-size: 1.9rem; }
+            .glass-header { flex-direction: column; }
+            .nav-links a { margin: 0 10px; font-size: 0.85rem; }
+            .hero-content h2 { font-size: 2rem; }
             .feature-list { grid-template-columns: 1fr; }
             .info-ribbon { gap: 1rem; }
         }
@@ -487,9 +221,7 @@
 <body>
 
 <header class="glass-header">
-    <div class="logo">
-        <h1>RAJAN <span>PATH LAB</span></h1>
-    </div>
+    <div class="logo"><h1>RAJAN <span>PATH LAB</span></h1></div>
     <div class="nav-links">
         <a href="#" id="nav-home">Home</a>
         <a href="#" id="nav-tests">Tests</a>
@@ -499,103 +231,81 @@
     </div>
 </header>
 
-<!-- Hero Premium -->
 <div class="hero-premium">
     <div class="hero-content">
-        <div class="hero-badge"><i class="fas fa-microscope"></i> NABL Accredited Standards</div>
+        <div class="hero-badge" style="background: rgba(255,255,255,0.1); display: inline-block; padding: 0.4rem 1.2rem; border-radius: 40px; margin-bottom: 1rem;"><i class="fas fa-microscope"></i> NABL Accredited Standards</div>
         <h2>Accurate Diagnostics <br>for a Healthier Tomorrow</h2>
         <div class="btn-group">
-            <a href="#" class="btn-primary" id="hero-bookBtn"><i class="fas fa-calendar-check"></i> Book Test</a>
-            <a href="#" class="btn-outline-light" id="hero-reportBtn"><i class="fas fa-file-pdf"></i> Download Report</a>
+            <a class="btn-primary" id="hero-bookBtn"><i class="fas fa-calendar-check"></i> Book Test</a>
+            <a class="btn-outline-light" id="hero-reportBtn"><i class="fas fa-file-pdf"></i> Download Report</a>
         </div>
     </div>
 </div>
 
-<!-- contact ribbon -->
 <div class="info-ribbon">
     <div class="ribbon-item"><i class="fas fa-map-marker-alt"></i> Manahar Bhushra, Pandwa Patan Road</div>
     <div class="ribbon-item"><i class="fas fa-phone-alt"></i> 8709946177 / 9931002450</div>
     <div class="ribbon-item"><i class="far fa-clock"></i> 7 Days Open | 7 AM – 8 PM</div>
 </div>
 
-<!-- About Section -->
 <section>
     <div class="container">
         <div class="about-grid">
             <div class="about-content">
-                <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">About Rajan Path Lab</h2>
-                <p>Situated at <strong>Manahar Bhushra (Pandwa Patan Road)</strong>, Rajan Path Lab has emerged as a center of diagnostic excellence. Built on precision, ethical practices, and cutting-edge technology, we deliver clinical accuracy that healthcare providers trust. Our mission is to empower patients with timely and error-free reports, bridging the gap between symptoms and solutions.</p>
+                <h2 class="section-title" style="text-align: left;">About Rajan Path Lab</h2>
+                <p>Situated at <strong>Manahar Bhushra (Pandwa Patan Road)</strong>, Rajan Path Lab delivers diagnostic excellence with precision technology. Trusted by doctors, we offer error-free reports, home collection, and rapid digital delivery.</p>
                 <div class="feature-list">
                     <div class="feature-item"><i class="fas fa-microchip"></i> High-Precision Analyzers</div>
                     <div class="feature-item"><i class="fas fa-chart-line"></i> Zero-Error Protocol</div>
                     <div class="feature-item"><i class="fas fa-laptop-medical"></i> Fast Digital Reports</div>
-                    <div class="feature-item"><i class="fas fa-rupee-sign"></i> Transparent Billing</div>
-                    <div class="feature-item"><i class="fas fa-user-md"></i> Expert Pathologists</div>
-                    <div class="feature-item"><i class="fas fa-truck"></i> Home Collection Facility</div>
+                    <div class="feature-item"><i class="fas fa-truck"></i> Home Collection (₹50)</div>
                 </div>
             </div>
-            <div class="about-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/2937/2937347.png" alt="diagnostic illustration" style="width: 200px;">
-            </div>
+            <div class="about-icon"><img src="https://cdn-icons-png.flaticon.com/512/2937/2937347.png" alt="lab icon" style="width: 200px;"></div>
         </div>
     </div>
 </section>
 
-<!-- Collection Centers -->
 <section style="background: var(--mid-gray);">
     <div class="container">
-        <h2 class="section-title">Our Collection Centres</h2>
+        <h2 class="section-title">Collection Centres</h2>
         <div class="collection-flex">
-            <div class="collection-card">
-                <i class="fas fa-hospital-user" style="color: #E65B5C;"></i>
-                <h3>J R MEDICAL</h3>
-                <p>Chilbil Chowk, Manhar</p>
-                <div class="fee-badge"><i class="fas fa-clock"></i> Fasting Samples (Khali Pet)</div>
-            </div>
-            <div class="collection-card">
-                <i class="fas fa-truck-medical" style="color: var(--teal-premium);"></i>
-                <h3>Home Collection</h3>
-                <p>Professional phlebotomist at your doorstep</p>
-                <div class="fee-badge"><i class="fas fa-rupee-sign"></i> Charge: ₹50 only</div>
-                <small style="display: block; margin-top: 0.6rem;">Call to schedule</small>
-            </div>
+            <div class="collection-card" id="jrMedicalCard"><i class="fas fa-hospital-user" style="color:#E65B5C;"></i><h3>J R MEDICAL</h3><p>Chilbil Chowk, Manhar</p><div class="fee-badge"><i class="fas fa-clock"></i> Fasting Samples</div></div>
+            <div class="collection-card" id="homeCollectionCard"><i class="fas fa-truck-medical" style="color:var(--teal-premium);"></i><h3>Home Collection</h3><p>Professional at your doorstep</p><div class="fee-badge"><i class="fas fa-rupee-sign"></i> Charge: ₹50</div></div>
         </div>
     </div>
 </section>
 
-<!-- Diagnostic Partners -->
 <section>
     <div class="container">
         <h2 class="section-title">Diagnostic Partners</h2>
         <div class="partner-strip">
-            <div class="partner-card"><i class="fas fa-microscope" style="color: #FF6600;"></i><p>Thyrocare</p></div>
-            <div class="partner-card"><i class="fas fa-vials" style="color: #ED1C24;"></i><p>Dr. Lal PathLabs</p></div>
-            <div class="partner-card"><i class="fas fa-flask" style="color: #662D91;"></i><p>Pathkind Labs</p></div>
+            <div class="partner-card"><i class="fas fa-microscope" style="color:#FF6600;"></i><p>Thyrocare</p></div>
+            <div class="partner-card"><i class="fas fa-vials" style="color:#ED1C24;"></i><p>Dr. Lal PathLabs</p></div>
+            <div class="partner-card"><i class="fas fa-flask" style="color:#662D91;"></i><p>Pathkind Labs</p></div>
         </div>
     </div>
 </section>
 
-<!-- Specialized Test Menu -->
 <section style="background: var(--mid-gray);">
     <div class="container">
         <h2 class="section-title">Advanced Test Menu</h2>
         <div class="card-grid">
-            <div class="service-card"><i class="fas fa-tachometer-alt"></i><h3>CBC Test</h3><p>Complete Blood Count with advanced parameters</p></div>
-            <div class="service-card"><i class="fas fa-liver"></i><h3>Liver Function</h3><p>LFT - Bilirubin, enzymes, protein</p></div>
-            <div class="service-card"><i class="fas fa-heartbeat"></i><h3>Aarogyam C Pro</h3><p>69+ Health Parameters</p></div>
-            <div class="service-card"><i class="fas fa-sun"></i><h3>Vitamin D</h3><p>25-Hydroxy, Bone health marker</p></div>
-            <div class="service-card"><i class="fas fa-bolt"></i><h3>Vitamin B12</h3><p>Nerve & energy profile</p></div>
-            <div class="service-card"><i class="fas fa-bug"></i><h3>Dengue Profile</h3><p>NS1, IgG, IgM</p></div>
-            <div class="service-card"><i class="fas fa-thyroid"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH ultra-sensitive</p></div>
-            <div class="service-card"><i class="fas fa-tint"></i><h3>Diabetes Care</h3><p>HbA1c, Fasting, PPBS</p></div>
+            <div class="service-card" data-test="CBC Test"><i class="fas fa-tachometer-alt"></i><h3>CBC Test</h3><p>Complete Blood Count</p></div>
+            <div class="service-card" data-test="Liver Function"><i class="fas fa-liver"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>
+            <div class="service-card" data-test="Aarogyam C Pro"><i class="fas fa-heartbeat"></i><h3>Aarogyam C Pro</h3><p>69+ Parameters</p></div>
+            <div class="service-card" data-test="Vitamin D"><i class="fas fa-sun"></i><h3>Vitamin D</h3><p>25-Hydroxy</p></div>
+            <div class="service-card" data-test="Vitamin B12"><i class="fas fa-bolt"></i><h3>Vitamin B12</h3><p>Nerve & Energy</p></div>
+            <div class="service-card" data-test="Dengue Profile"><i class="fas fa-bug"></i><h3>Dengue Profile</h3><p>NS1, IgG, IgM</p></div>
+            <div class="service-card" data-test="Thyroid Profile"><i class="fas fa-thyroid"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>
+            <div class="service-card" data-test="Diabetes Care"><i class="fas fa-tint"></i><h3>Diabetes Care</h3><p>HbA1c & Sugar</p></div>
         </div>
     </div>
 </section>
 
-<!-- Map & Footer -->
 <footer>
     <div class="footer-inner">
-        <h3 style="color: white; font-weight: 700; font-size: 1.8rem;">RAJAN PATH LAB (RPL)</h3>
+        <h3 style="color: white;">RAJAN PATH LAB (RPL)</h3>
         <div class="map-wrapper">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="260" style="border:0; border-radius: 24px;" allowfullscreen="" loading="lazy"></iframe>
         </div>
@@ -603,75 +313,152 @@
             <a href="#" id="footer-gmap"><i class="fas fa-map-marked-alt"></i> Google Maps</a>
             <a href="#" id="footer-insta"><i class="fab fa-instagram"></i> Instagram</a>
             <a href="tel:+918709946177"><i class="fas fa-phone"></i> 8709946177</a>
-            <a href="#" id="footer-contact"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="#" id="footer-contact"><i class="fas fa-envelope"></i> Contact</a>
         </div>
-        <p style="margin-top: 0.8rem;">🌐 rajanpathlab.github.io | 📍 Manahar Bhushra, Pandwa Patan Road</p>
-        <p style="font-size: 0.75rem; opacity: 0.7;">© 2026 Rajan Path Lab – Excellence in Diagnostic Care. All Rights Reserved.</p>
+        <p>🌐 rajanpathlab.github.io | Manahar Bhushra, Pandwa Patan Road</p>
+        <p style="font-size: 0.75rem;">© 2026 Rajan Path Lab – Excellence in Diagnostic Care</p>
     </div>
 </footer>
 
 <a href="https://wa.me/918709946177" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
 
-<!-- Toast Container -->
-<div id="toastMsg" class="toast-notify" style="opacity:0; visibility:hidden; transition:0.2s;">✨ Notification</div>
+<!-- MODAL FOR BOOKING TEST -->
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeBookingModal">&times;</span>
+        <h3><i class="fas fa-flask"></i> Book a Test</h3>
+        <form id="bookingForm">
+            <input type="text" id="patientName" placeholder="Full Name" required>
+            <input type="tel" id="patientPhone" placeholder="Mobile Number" required>
+            <select id="testSelect" required>
+                <option value="">Select Test Package</option>
+                <option>CBC Test</option>
+                <option>Liver Function Test</option>
+                <option>Thyroid Profile</option>
+                <option>Diabetes Care (HbA1c)</option>
+                <option>Vitamin D & B12 Combo</option>
+                <option>Full Body Checkup</option>
+            </select>
+            <textarea id="address" rows="2" placeholder="Home collection address (optional)"></textarea>
+            <div class="modal-buttons">
+                <button type="button" class="btn-cancel" id="cancelBookingBtn">Cancel</button>
+                <button type="submit" class="btn-submit">Confirm & Book <i class="fab fa-whatsapp"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL FOR DOWNLOAD REPORT -->
+<div id="reportModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeReportModal">&times;</span>
+        <h3><i class="fas fa-file-alt"></i> Download Report</h3>
+        <form id="reportForm">
+            <input type="text" id="reportId" placeholder="Report ID / Mobile Number" required>
+            <input type="date" id="reportDate" placeholder="Approx date of test">
+            <div class="modal-buttons">
+                <button type="button" class="btn-cancel" id="cancelReportBtn">Cancel</button>
+                <button type="submit" class="btn-submit">Get Report Link <i class="fas fa-download"></i></button>
+            </div>
+        </form>
+        <p class="info-text" style="font-size: 12px; margin-top: 15px; color: #5A6E7A;">* Reports will be sent to your WhatsApp/Registered mobile.</p>
+    </div>
+</div>
 
 <script>
-    // elegant interactive toast
-    function showToast(message, isSuccess = true) {
-        const toast = document.getElementById('toastMsg');
-        toast.textContent = message || (isSuccess ? '✓ Action noted' : '⚠️ Try again');
-        toast.style.visibility = 'visible';
-        toast.style.opacity = '1';
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => { toast.style.visibility = 'hidden'; }, 300);
-        }, 2700);
-    }
-
-    // Helper for demo (no backend, but professional response)
-    const handlePremiumDemo = (actionName) => {
-        showToast(`📞 ${actionName}: Call 8709946177 or WhatsApp for assistance`, true);
-    };
+    // Get modal elements
+    const bookModal = document.getElementById('bookingModal');
+    const reportModal = document.getElementById('reportModal');
     
-    // All interactive links that would normally lead to missing pages show premium contact instead
-    document.getElementById('nav-tests')?.addEventListener('click', (e) => { e.preventDefault(); handlePremiumDemo('View Test Menu'); });
-    document.getElementById('nav-book')?.addEventListener('click', (e) => { e.preventDefault(); handlePremiumDemo('Book a Test'); });
-    document.getElementById('nav-report')?.addEventListener('click', (e) => { e.preventDefault(); handlePremiumDemo('Download Report'); });
-    document.getElementById('nav-about')?.addEventListener('click', (e) => { e.preventDefault(); handlePremiumDemo('About / Contact Info'); });
-    document.getElementById('hero-bookBtn')?.addEventListener('click', (e) => { e.preventDefault(); handlePremiumDemo('Book Home Collection / Clinic Visit'); });
-    document.getElementById('hero-reportBtn')?.addEventListener('click', (e) => { e.preventDefault(); handlePremiumDemo('Get Digital Report'); });
-    document.getElementById('footer-gmap')?.addEventListener('click', (e) => { e.preventDefault(); window.open('https://maps.app.goo.gl/example', '_blank'); showToast('📍 Opening Google Maps location', true); });
-    document.getElementById('footer-insta')?.addEventListener('click', (e) => { e.preventDefault(); handlePremiumDemo('Follow us on Instagram'); });
-    document.getElementById('footer-contact')?.addEventListener('click', (e) => { e.preventDefault(); handlePremiumDemo('Reach out to support team'); });
+    // Open modals
+    function openBookingModal() { bookModal.style.display = 'flex'; }
+    function openReportModal() { reportModal.style.display = 'flex'; }
     
-    // home link smooth scroll to hero
-    document.getElementById('nav-home')?.addEventListener('click', (e) => {
+    // Close modals
+    document.getElementById('closeBookingModal').onclick = () => bookModal.style.display = 'none';
+    document.getElementById('closeReportModal').onclick = () => reportModal.style.display = 'none';
+    document.getElementById('cancelBookingBtn').onclick = () => bookModal.style.display = 'none';
+    document.getElementById('cancelReportBtn').onclick = () => reportModal.style.display = 'none';
+    window.onclick = (e) => { if(e.target === bookModal) bookModal.style.display = 'none'; if(e.target === reportModal) reportModal.style.display = 'none'; };
+    
+    // Trigger booking from multiple buttons
+    const allBookButtons = [document.getElementById('nav-book'), document.getElementById('hero-bookBtn'), document.getElementById('nav-tests')];
+    allBookButtons.forEach(btn => { if(btn) btn.addEventListener('click', (e) => { e.preventDefault(); openBookingModal(); }); });
+    document.getElementById('hero-bookBtn')?.addEventListener('click', (e) => { e.preventDefault(); openBookingModal(); });
+    // For test cards quick booking
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const testName = card.getAttribute('data-test') || card.querySelector('h3')?.innerText || 'Test';
+            openBookingModal();
+            const testSelect = document.getElementById('testSelect');
+            if(testSelect) {
+                let found = false;
+                for(let opt of testSelect.options) { if(opt.value === testName) { testSelect.value = testName; found=true; break; } }
+                if(!found && testName) {
+                    const newOpt = document.createElement('option');
+                    newOpt.value = testName;
+                    newOpt.text = testName;
+                    newOpt.selected = true;
+                    testSelect.add(newOpt, 0);
+                }
+            }
+        });
+    });
+    document.getElementById('homeCollectionCard')?.addEventListener('click', () => openBookingModal());
+    document.getElementById('jrMedicalCard')?.addEventListener('click', () => openBookingModal());
+    
+    // Download report open
+    document.getElementById('nav-report')?.addEventListener('click', (e) => { e.preventDefault(); openReportModal(); });
+    document.getElementById('hero-reportBtn')?.addEventListener('click', (e) => { e.preventDefault(); openReportModal(); });
+    
+    // Handle booking form submission (send WhatsApp message)
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        showToast('🏠 Welcome to Rajan Path Lab', true);
+        const name = document.getElementById('patientName').value.trim();
+        const phone = document.getElementById('patientPhone').value.trim();
+        const test = document.getElementById('testSelect').value;
+        const address = document.getElementById('address').value.trim();
+        if(!name || !phone || !test) {
+            alert('Please fill name, mobile number, and select a test.');
+            return;
+        }
+        const message = `🩸 *New Test Booking - Rajan Path Lab*%0A👤 Name: ${name}%0A📞 Mobile: ${phone}%0A🔬 Test: ${test}%0A📍 Address: ${address || 'Visit center'}%0A⏱️ Request from website.`;
+        const whatsappUrl = `https://wa.me/918709946177?text=${message}`;
+        window.open(whatsappUrl, '_blank');
+        bookModal.style.display = 'none';
+        alert('✅ Booking request sent! Lab will contact you within 15 minutes.');
+        document.getElementById('bookingForm').reset();
     });
     
-    // Additional minor interactive: optional for any card "book test" could be integrated, but we keep clean
-    const allBookTriggers = document.querySelectorAll('.btn-book-trigger');
-    allBookTriggers.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); handlePremiumDemo('Schedule Appointment'); }));
-    
-    // Tooltip/richer partner cards effect
-    const partnerCards = document.querySelectorAll('.partner-card');
-    partnerCards.forEach(card => {
-        card.addEventListener('click', () => handlePremiumDemo('Partner Lab Inquiry'));
-    });
-    const testCards = document.querySelectorAll('.service-card');
-    testCards.forEach(card => {
-        card.addEventListener('click', () => { handlePremiumDemo('Test details & booking'); });
-    });
-    // Collection cards interaction
-    const collectCards = document.querySelectorAll('.collection-card');
-    collectCards.forEach(card => {
-        card.addEventListener('click', () => { handlePremiumDemo('Collection center / home pickup info'); });
+    // Handle report download request (WhatsApp interaction)
+    document.getElementById('reportForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const reportId = document.getElementById('reportId').value.trim();
+        const dateVal = document.getElementById('reportDate').value;
+        if(!reportId) {
+            alert('Please enter Report ID or registered mobile number.');
+            return;
+        }
+        const msg = `📄 *Report Download Request*%0AID/Mobile: ${reportId}%0ATest Date: ${dateVal || 'Not specified'}%0ARequest from website. Please share digital report.`;
+        window.open(`https://wa.me/918709946177?text=${msg}`, '_blank');
+        reportModal.style.display = 'none';
+        alert('✅ Request received. Our team will send your reports on WhatsApp instantly.');
+        document.getElementById('reportForm').reset();
     });
     
-    // smooth interactions and dynamic year
-    console.log("Rajan Path Lab | Premium diagnostic interface ready");
+    // Navigation smooth scroll and about section
+    document.getElementById('nav-home')?.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); });
+    document.getElementById('nav-about')?.addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.about-grid')?.scrollIntoView({behavior:'smooth'}); });
+    document.getElementById('footer-gmap')?.addEventListener('click', (e) => { e.preventDefault(); window.open('https://maps.app.goo.gl/example', '_blank'); });
+    document.getElementById('footer-insta')?.addEventListener('click', (e) => { e.preventDefault(); window.open('https://www.instagram.com/lab_technician_3.0', '_blank'); });
+    document.getElementById('footer-contact')?.addEventListener('click', (e) => { e.preventDefault(); alert('Call us at 8709946177 or email: rajanpathlab@care.com'); });
+    
+    // Any other service cards already have modal open via event listener above.
+    // Also partner cards can show info
+    document.querySelectorAll('.partner-card').forEach(card => {
+        card.addEventListener('click', () => { alert('Partner Lab: We collaborate with leading diagnostic chains for accurate results.'); });
+    });
+    console.log("Fully functional: Book Test & Download Report modals working.");
 </script>
 </body>
 </html>
