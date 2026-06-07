@@ -8,157 +8,140 @@
 
 <style>  
     :root {  
-        --primary-blue: #0f172a;   /* Deep Slate/Royal Blue */
-        --accent-teal: #0ea5e9;    /* Premium Electric Cyan */
-        --soft-white: #f8fafc;     /* Clean off-white background */
-        --urgent-red: #ef4444;     /* Crisp Red for primary CTAs */
-        --text-dark: #334155;      /* Smooth charcoal text */
+        --primary-blue: #0a2540;   /* Classical Medical Navy Blue */
+        --accent-teal: #008080;    /* Professional Clinical Teal */
+        --bg-light: #f4f7f9;       /* Light gray background */
+        --urgent-red: #d9383a;     /* Professional Solid Red for Buttons */
+        --text-dark: #2d3748;      /* Sharp, easy to read text */
         --thyro-orange: #ff6600;  
         --lal-blue: #ed1c24;  
         --path-purple: #662d91;  
-        --grad-start: #0f172a;   
-        --grad-end: #0284c7;  
     }  
 
     body {  
-        font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;  
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;  
         margin: 0; padding: 0;  
-        background: var(--soft-white);  
+        background: var(--bg-light);  
         color: var(--text-dark);  
-        line-height: 1.6;  
+        line-height: 1.5;  
     }  
 
+    b, strong {
+        font-weight: 700; /* Bold highlights, absolutely no italics */
+    }
+
     header {  
-        background: rgba(15, 23, 42, 0.95);  
-        backdrop-filter: blur(10px);
+        background: var(--primary-blue);  
         color: white;  
-        padding: 15px 8%;  
+        padding: 12px 5%;  
         display: flex;  
         justify-content: space-between;  
         align-items: center;  
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);  
         position: sticky; top: 0; z-index: 1000;  
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }  
 
-    header h1 { margin: 0; font-size: 24px; letter-spacing: 1px; font-weight: 800; }  
+    header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; font-weight: 700; }  
     header h1 span { color: var(--accent-teal); }  
 
     nav a {   
-        color: #cbd5e1;   
-        margin-left: 30px;   
+        color: #e2e8f0;   
+        margin-left: 20px;   
         text-decoration: none;   
         font-weight: 600;   
-        font-size: 16px;   
-        transition: all 0.3s ease;  
+        font-size: 15px;   
+        transition: 0.2s;  
     }  
     nav a:hover { color: var(--accent-teal); }  
 
     .hero {  
-        background: linear-gradient(135deg, var(--grad-start) 0%, var(--grad-end) 100%);  
+        background: #0d3359;  
         color: white;   
         text-align: center;   
-        padding: 140px 20px;  
-        position: relative;  
+        padding: 60px 20px;  /* Spacing tightly reduced */
     }  
       
     .hero h2 {  
         color: white;  
-        font-size: 3.5rem;   
-        font-weight: 800;  
-        max-width: 900px;  
-        margin: 0 auto 40px auto;  
-        line-height: 1.25;  
-        letter-spacing: -1px;
+        font-size: 2.5rem;   
+        font-weight: 700;  
+        max-width: 800px;  
+        margin: 0 auto 25px auto;  
+        line-height: 1.3;  
     }  
 
-    .btn-container { margin-top: 40px; display: flex; justify-content: center; gap: 20px; }  
+    .btn-container { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }  
     .btn-book, .btn-report { 
         background: var(--urgent-red); 
-        padding: 16px 35px; 
+        padding: 12px 28px; 
         color: white; 
         text-decoration: none; 
-        border-radius: 50px; 
-        font-weight: 700; 
+        border-radius: 4px; 
+        font-weight: bold; 
         font-size: 1rem; 
-        transition: all 0.3s ease; 
-        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        transition: 0.2s; 
+        display: inline-block;
     }  
-    .btn-report {
-        background: transparent;
-        border: 2px solid white;
-        box-shadow: none;
-    }
-    .btn-book:hover { background: #dc2626; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6); }  
-    .btn-report:hover { background: white; color: var(--primary-blue); transform: translateY(-3px); }  
+    .btn-report { background: var(--accent-teal); }
+    .btn-book:hover { background: #b82d2f; }  
+    .btn-report:hover { background: #006666; }  
 
     .strip {  
         background: #ffffff;  
         border-bottom: 1px solid #e2e8f0;  
-        padding: 25px 20px;  
+        padding: 15px 20px;  
         text-align: center;  
-        box-shadow: 0 10px 30px rgba(0,0,0,0.02);
     }  
       
-    .strip-content { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; }  
-    .strip-item { font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; color: var(--primary-blue); }  
-    .strip i { color: var(--accent-teal); margin-right: 12px; font-size: 1.3rem; }  
+    .strip-content { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }  
+    .strip-item { font-size: 1rem; font-weight: 600; display: flex; align-items: center; color: var(--primary-blue); }  
+    .strip i { color: var(--accent-teal); margin-right: 10px; font-size: 1.2rem; }  
 
-    section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }  
-    h2 { color: var(--primary-blue); margin-bottom: 50px; font-size: 36px; font-weight: 800; position: relative; }  
-    h2::after { content: ''; display: block; width: 60px; height: 4px; background: var(--accent-teal); margin: 15px auto 0 auto; border-radius: 2px; }
+    section { padding: 45px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }  
+    h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 26px; font-weight: 700; }  
 
-    .about-container { display: flex; align-items: center; gap: 60px; text-align: left; flex-wrap: wrap; }  
+    .about-container { display: flex; align-items: center; gap: 40px; text-align: left; flex-wrap: wrap; }  
     .about-text { flex: 1; min-width: 300px; }  
-    .about-text h2 { text-align: left; }
-    .about-text h2::after { margin: 15px 0 0 0; }
-    .about-text p { font-size: 1.1rem; color: #475569; }
-    .about-text h3 { color: var(--accent-teal); font-size: 22px; margin-top: 35px; font-weight: 700; }  
-    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }  
-    .feature-item { display: flex; align-items: center; gap: 12px; font-weight: 600; color: #334155; background: #f1f5f9; padding: 12px 20px; border-radius: 8px; }  
-    .feature-item i { color: #10b981; font-size: 1.2rem; }  
+    .about-text p { font-size: 1rem; color: #4a5568; margin-bottom: 15px; }
+    .about-text h3 { color: var(--primary-blue); font-size: 18px; margin-top: 15px; font-weight: 700; border-left: 3px solid var(--accent-teal); padding-left: 8px; }  
+    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }  
+    .feature-item { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.95rem; color: #2d3748; }  
+    .feature-item i { color: var(--accent-teal); }  
 
-    .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }  
-    .card { background: white; padding: 40px 30px; border-radius: 20px; border: 1px solid #e2e8f0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }  
-    .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); border-color: var(--accent-teal); }  
-    .card i { font-size: 40px; margin-bottom: 20px; }  
-    .card h3 { margin: 10px 0; font-size: 1.3rem; color: var(--primary-blue); font-weight: 700; }  
-    .card p { margin: 5px 0; font-size: 1rem; color: #64748b; }  
+    .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }  
+    .card { background: white; padding: 20px 15px; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 2px 5px rgba(0,0,0,0.03); text-align: center; }  
+    .card i { font-size: 30px; margin-bottom: 10px; }  
+    .card h3 { margin: 5px 0; font-size: 1.1rem; color: var(--primary-blue); font-weight: 700; }  
+    .card p { margin: 4px 0; font-size: 0.9rem; color: #4a5568; }  
 
-    .partner-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }  
-    .partner-item { background: white; padding: 30px 20px; border-radius: 20px; width: 200px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; transition: all 0.3s ease; }  
-    .partner-item:hover { transform: scale(1.05); box-shadow: 0 15px 35px rgba(0,0,0,0.08); }
-    .partner-item i { font-size: 45px; margin-bottom: 15px; }  
-    .partner-item p { font-weight: 800; margin: 0; font-size: 16px; color: var(--primary-blue); }  
+    .partner-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }  
+    .partner-item { background: white; padding: 15px; border-radius: 6px; width: 150px; border: 1px solid #cbd5e1; text-align: center; }  
+    .partner-item i { font-size: 32px; margin-bottom: 8px; }  
+    .partner-item p { font-weight: 700; margin: 0; font-size: 14px; color: var(--primary-blue); }  
 
-    .map-container { margin-top: 40px; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.3); max-width: 950px; margin-left: auto; margin-right: auto; border: 4px solid rgba(255,255,255,0.1); }  
+    .map-container { margin-top: 20px; border-radius: 8px; overflow: hidden; max-width: 800px; margin-left: auto; margin-right: auto; border: 1px solid #cbd5e1; }  
 
-    footer { background: #0b0f19; color: #94a3b8; padding: 80px 20px; text-align: center; }  
-    footer h2 { color: white; }
-    footer h2::after { background: var(--accent-teal); }
-    .footer-links { margin: 40px 0; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-    .footer-links a { color: #cbd5e1; text-decoration: none; font-size: 1.1rem; font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 8px; }  
+    footer { background: var(--primary-blue); color: #e2e8f0; padding: 40px 20px; text-align: center; }  
+    .footer-links { margin: 20px 0; }
+    .footer-links a { color: white; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 600; }  
     .footer-links a:hover { color: var(--accent-teal); }  
       
     .whatsapp-float { 
-        position: fixed; bottom: 30px; right: 30px; 
+        position: fixed; bottom: 20px; right: 20px; 
         background: #25D366; color: white; 
-        padding: 15px 28px; border-radius: 50px; 
-        text-decoration: none; font-weight: 700; font-size: 1.05rem;
-        z-index: 1000; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); 
-        display: flex; align-items: center; gap: 10px;
-        transition: all 0.3s ease;
+        padding: 12px 20px; border-radius: 4px; 
+        text-decoration: none; font-weight: bold; font-size: 0.95rem;
+        z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); 
     }  
-    .whatsapp-float:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6); }
 
     @media (max-width: 768px) {  
-        header { flex-direction: column; text-align: center; padding: 20px; }  
-        nav { margin-top: 20px; }  
-        nav a { margin: 0 10px; font-size: 15px; }  
-        .hero h2 { font-size: 2.5rem; }  
-        .strip-content { flex-direction: column; gap: 15px; align-items: center; }
-        .strip-item { font-size: 1rem; }  
+        header { flex-direction: column; text-align: center; padding: 10px; }  
+        nav { margin-top: 10px; }  
+        nav a { margin: 0 8px; font-size: 14px; }  
+        .hero h2 { font-size: 1.8rem; }  
+        .strip-content { flex-direction: column; gap: 8px; }  
         .about-features { grid-template-columns: 1fr; }  
-        section { padding: 60px 20px; }
+        section { padding: 30px 15px; }
     }  
 </style>
 
@@ -177,7 +160,7 @@
 </header>  
 
 <div class="hero">  
-    <h2>Reliable Diagnostics with <br>Advanced Technology</h2>  
+    <h2>Reliable Diagnostics with Advanced Technology</h2>  
     <div class="btn-container">  
         <a class="btn-book" href="book.html">Book Test</a>  
         <a class="btn-report" href="report.html">Download Report</a>  
@@ -207,25 +190,25 @@
             </div>  
         </div>  
         <div class="about-text" style="text-align: center;">  
-            <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width: 250px; opacity: 0.9; filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.05));">  
+            <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width: 180px; opacity: 0.9;">  
         </div>  
     </div>  
 </section>  
 
-<section style="background: #f8fafc;">  
+<section style="background: #f4f7f9;">  
     <h2>Our Collection Centers</h2>  
     <div class="grid-container">  
-        <div class="card" style="border-top: 4px solid #ef4444;">  
-            <i class="fas fa-hospital-user" style="color: #ef4444;"></i>  
+        <div class="card" style="border-top: 3px solid var(--urgent-red);">  
+            <i class="fas fa-hospital-user" style="color: var(--urgent-red);"></i>  
             <h3>J R MEDICAL</h3>  
             <p>Chilbil Chowk, Manhar</p>  
-            <p style="color: #ef4444; font-weight: bold; margin-top: 15px;"><i class="fas fa-clock"></i> Fasting Samples (Khali Pet)</p>  
+            <p style="color: var(--urgent-red); font-weight: bold; margin-top: 10px;">Fasting Samples (Khali Pet)</p>  
         </div>  
-        <div class="card" style="border-top: 4px solid #0ea5e9;">  
-            <i class="fas fa-house-chimney" style="color: #0ea5e9;"></i>  
+        <div class="card" style="border-top: 3px solid var(--accent-teal);">  
+            <i class="fas fa-house-chimney" style="color: var(--accent-teal);"></i>  
             <h3>Home Collection</h3>  
             <p>Professional Pickup Service</p>  
-            <p style="font-weight: bold; color: white; background: var(--primary-blue); padding: 5px 15px; border-radius: 20px; display: inline-block; margin-top: 15px; font-size: 0.9rem;">Charge: ₹50</p>  
+            <p style="font-weight: bold; color: var(--primary-blue); margin-top: 10px;">Charge: ₹50</p>  
         </div>  
     </div>  
 </section>  
@@ -233,18 +216,18 @@
 <section style="background: white;">  
     <h2>Our Diagnostic Partners</h2>  
     <div class="partner-grid">  
-        <div class="partner-item" style="border-bottom: 4px solid var(--thyro-orange);"><i class="fas fa-microscope" style="color: var(--thyro-orange);"></i><p>Thyrocare</p></div>  
-        <div class="partner-item" style="border-bottom: 4px solid var(--lal-blue);"><i class="fas fa-vials" style="color: var(--lal-blue);"></i><p>Dr. Lal PathLabs</p></div>  
-        <div class="partner-item" style="border-bottom: 4px solid var(--path-purple);"><i class="fas fa-flask" style="color: var(--path-purple);"></i><p>Pathkind Labs</p></div>  
+        <div class="partner-item" style="border-bottom: 3px solid var(--thyro-orange);"><i class="fas fa-microscope" style="color: var(--thyro-orange);"></i><p>Thyrocare</p></div>  
+        <div class="partner-item" style="border-bottom: 3px solid var(--lal-blue);"><i class="fas fa-vials" style="color: var(--lal-blue);"></i><p>Dr. Lal PathLabs</p></div>  
+        <div class="partner-item" style="border-bottom: 3px solid var(--path-purple);"><i class="fas fa-flask" style="color: var(--path-purple);"></i><p>Pathkind Labs</p></div>  
     </div>  
 </section>  
 
-<section style="background: #f8fafc;">  
+<section style="background: #f4f7f9;">  
     <h2>Specialized Test Menu</h2>  
     <div class="grid-container">  
-        <div class="card"><i class="fas fa-microscope" style="color: #0ea5e9;"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>  
+        <div class="card"><i class="fas fa-microscope" style="color: var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>  
         <div class="card"><i class="fas fa-vial" style="color: #ff7e5f;"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>  
-        <div class="card"><i class="fas fa-dna" style="color: #662d91;"></i><h3>Aarogyam C Pro</h3><p>69 Health Parameters</p></div>  
+        <div class="card"><i class="fas fa-dna" style="color: var(--path-purple);"></i><h3>Aarogyam C Pro</h3><p>69 Health Parameters</p></div>  
         <div class="card"><i class="fas fa-sun" style="color: #fbc02d;"></i><h3>Vitamin D</h3><p>25-Hydroxy Bone Health</p></div>  
         <div class="card"><i class="fas fa-bolt" style="color: #0d47a1;"></i><h3>Vitamin B12</h3><p>Nerve & Energy Profile</p></div>  
         <div class="card"><i class="fas fa-bug" style="color: #c62828;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>  
@@ -256,15 +239,15 @@
 <footer>  
     <h2>RAJAN PATH LAB (RPL)</h2>  
     <div class="map-container">  
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>  
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>  
     </div>  
     <div class="footer-links">  
         <a href="https://www.google.com/search?kgmid=%2Fg%2F11tn9qwbxl" target="_blank"><i class="fas fa-map-marked-alt"></i> Google Maps</a>  
         <a href="https://www.instagram.com/lab_technician_3.0?igsh=MWNsOGo1M2pzbDk0cg==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>  
         <a href="tel:+918709946177"><i class="fas fa-phone"></i> 8709946177</a>  
     </div>  
-    <p style="color: #64748b; margin-bottom: 5px;">🌐 rajanpathlab.github.io</p>  
-    <p style="font-size: 13px; color: #475569; margin: 0;">© 2026 Rajan Path Lab. All Rights Reserved.</p>  
+    <p>🌐 rajanpathlab.github.io</p>  
+    <p style="font-size: 12px; opacity: 0.7; margin-top: 10px;">© 2026 Rajan Path Lab. All Rights Reserved.</p>  
 </footer>  
 
 <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
