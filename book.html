@@ -21,7 +21,6 @@
     scroll-behavior: smooth;
   }
 
-  /* premium glassmorphism + modern gradients */
   .hero {
     background: radial-gradient(circle at 10% 20%, #0F3B4C, #06212E);
     padding: 70px 20px 80px;
@@ -29,7 +28,6 @@
     color: white;
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(2px);
     border-bottom: 1px solid rgba(255,255,255,0.2);
   }
 
@@ -68,7 +66,6 @@
     border-radius: 80px;
     margin-top: 12px;
     margin-bottom: 18px;
-    border: 0.5px solid rgba(255,255,255,0.3);
   }
 
   .hero p {
@@ -76,7 +73,6 @@
     margin: 0 auto;
     font-weight: 400;
     opacity: 0.92;
-    font-size: 1rem;
   }
 
   .container {
@@ -85,13 +81,10 @@
     padding: 0 24px;
   }
 
-  /* premium card design */
   .card {
     background: rgba(255,255,255,0.98);
     border-radius: 48px;
     box-shadow: 0 35px 60px -20px rgba(0, 20, 40, 0.3), 0 0 0 1px rgba(156, 200, 230, 0.3);
-    backdrop-filter: blur(0px);
-    transition: all 0.2s ease;
     overflow: hidden;
   }
 
@@ -104,7 +97,6 @@
     font-weight: 700;
     color: #1B4F72;
     margin: 34px 0 22px 0;
-    letter-spacing: -0.3px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -131,7 +123,6 @@
     display: block;
     font-size: 0.9rem;
     color: #1C4E6E;
-    letter-spacing: -0.2px;
   }
 
   input, textarea {
@@ -143,7 +134,6 @@
     font-family: 'Inter', sans-serif;
     background: #FFFFFF;
     transition: all 0.2s;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
   }
 
   input:focus, textarea:focus {
@@ -152,15 +142,9 @@
     outline: none;
   }
 
-  /* premium autocomplete styling */
   .autocomplete-wrapper {
     position: relative;
     width: 100%;
-  }
-
-  .autocomplete-input {
-    width: 100%;
-    background: #ffffff;
   }
 
   .autocomplete-dropdown {
@@ -175,7 +159,6 @@
     overflow-y: auto;
     z-index: 120;
     border: 1px solid #d4e2ed;
-    backdrop-filter: blur(2px);
     animation: fadeSlide 0.2s ease;
   }
 
@@ -197,7 +180,6 @@
 
   .dropdown-item:hover {
     background: #EAF9FF;
-    transform: scale(1.01);
   }
 
   .test-price {
@@ -209,14 +191,12 @@
     color: #146b43;
   }
 
-  /* cart premium card */
   .cart-container {
     background: #FBFEFE;
     border-radius: 32px;
     border: 1px solid #E2F0F5;
     margin: 24px 0 18px;
     overflow: hidden;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.03);
   }
 
   .cart-header {
@@ -226,7 +206,6 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 2px solid #E4F0F5;
-    font-size: 1rem;
   }
 
   .cart-items {
@@ -240,7 +219,6 @@
     align-items: center;
     padding: 16px 24px;
     border-bottom: 1px solid #EFF4F9;
-    transition: 0.1s;
   }
 
   .cart-item-info {
@@ -254,7 +232,6 @@
   .cart-item-name {
     font-weight: 600;
     color: #153e52;
-    font-size: 0.95rem;
   }
 
   .cart-item-price {
@@ -279,7 +256,6 @@
 
   .remove-test-btn:hover {
     background: #ffdedb;
-    border-color: #e67e6f;
   }
 
   .cart-total {
@@ -316,7 +292,6 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
   }
 
   .add-test-btn:hover {
@@ -340,7 +315,6 @@
     align-items: center;
     gap: 14px;
     border: 1px solid #D0E6F0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
   }
 
   .feature i {
@@ -365,13 +339,11 @@
     transition: all 0.2s;
     margin-top: 32px;
     font-family: 'Inter', sans-serif;
-    box-shadow: 0 12px 22px -12px rgba(37,211,102,0.4);
   }
 
   .whatsapp-btn:hover {
     transform: scale(1.01);
     background: #1fae56;
-    box-shadow: 0 18px 30px -12px rgba(37,211,102,0.55);
   }
 
   .grid-2col {
@@ -387,7 +359,6 @@
     color: #537e9b;
     border-top: 1px solid #e4eef5;
     padding-top: 24px;
-    letter-spacing: 0.3px;
   }
 
   @media (max-width: 700px) {
@@ -396,13 +367,9 @@
     }
     .grid-2col {
       grid-template-columns: 1fr;
-      gap: 10px;
     }
     .hero h1 {
       font-size: 2.3rem;
-    }
-    .section-title {
-      font-size: 1.3rem;
     }
   }
 
@@ -420,21 +387,21 @@
 
 <section class="hero">
   <h1>Rajan Path Lab</h1>
-  <h2><i class="fas fa-microscope"></i> Precision Diagnostics · Advanced Multi-Test Suite</h2>
-  <p>⚡ Instant test suggestions · Build your own package · Doctor directory with 1‑letter lookup</p>
+  <h2><i class="fas fa-microscope"></i> Precision Diagnostics · Smart Multi-Test Suite</h2>
+  <p>⚡ Type any test → select from list → Add to Cart. Remove anytime. Doctor names appear on first letter!</p>
 </section>
 
 <div class="container">
   <div class="card">
     <div class="form-inner">
       <form id="bookingForm" onsubmit="return false;">
-        <!-- PATIENT SECTION -->
+        <!-- Patient Information -->
         <div class="section-title">
           <i class="fas fa-id-card"></i> Patient Profile
         </div>
         <div class="form-group">
           <label>Full Name <span style="color:#c74f2b;">*</span></label>
-          <input type="text" id="name" placeholder="e.g. Kavya Mehta" autocomplete="off">
+          <input type="text" id="name" placeholder="e.g. Kavya Mehta">
         </div>
         <div class="grid-2col">
           <div class="form-group">
@@ -451,7 +418,7 @@
           <textarea id="address" rows="2" placeholder="Complete address for home collection"></textarea>
         </div>
 
-        <!-- SMART TEST SELECTOR (Multi-test cart) -->
+        <!-- MULTI TEST SECTION -->
         <div class="section-title">
           <i class="fas fa-dna"></i> Test Builder
           <span class="badge-icon" id="testCountBadge">0</span>
@@ -459,14 +426,14 @@
 
         <div class="add-test-area">
           <div class="autocomplete-wrapper" id="testAutocompleteWrapper">
-            <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="🔬 Type test name – LIVER, CBC, THYROID, HBA1C ..." autocomplete="off">
+            <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="🔬 Type test: LIVER, CBC, THYROID, HBA1C ..." autocomplete="off">
             <div id="testDropdownList" class="autocomplete-dropdown"></div>
           </div>
           <button type="button" id="addTestBtn" class="add-test-btn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-          <small class="small-note"><i class="fas fa-lightbulb"></i> Type any keyword → pick from dropdown → add multiple tests. Real‑time total.</small>
+          <small class="small-note"><i class="fas fa-lightbulb"></i> Click on test name from dropdown, then press "Add to Cart". You can add multiple tests.</small>
         </div>
 
-        <!-- Cart area premium -->
+        <!-- Cart display -->
         <div class="cart-container" id="cartContainer">
           <div class="cart-header">
             <span><i class="fas fa-clipboard-list"></i> Your Test Cart</span>
@@ -482,17 +449,17 @@
         </div>
         <input type="hidden" id="cartDataJson" value="[]">
 
-        <!-- REFERRAL / DOCTOR (Autofill on any first letter!) -->
+        <!-- REFERRAL WITH DOCTOR AUTOCOMPLETE (first letter works) -->
         <div class="section-title">
           <i class="fas fa-stethoscope"></i> Referral Details
         </div>
         <div class="form-group">
-          <label>Referred By (Doctor / Person) <span style="color:#0F6B9E;">✨ Type first letter → instant suggestions</span></label>
+          <label>Referred By (Doctor / Person) <span style="color:#0F6B9E;">🔍 Type 1st letter → instant suggestions</span></label>
           <div class="autocomplete-wrapper" id="doctorAutocompleteWrapper">
-            <input type="text" id="refby" class="autocomplete-input" placeholder="Start typing: P, D, K, S, R → full name appears instantly" autocomplete="off">
+            <input type="text" id="refby" class="autocomplete-input" placeholder="Type P, D, K, S, R ... doctor name appears" autocomplete="off">
             <div id="doctorDropdownList" class="autocomplete-dropdown"></div>
           </div>
-          <small class="small-note"><i class="fas fa-bolt"></i> Live directory: 27+ verified doctors. Just press any key and see magic.</small>
+          <small class="small-note"><i class="fas fa-bolt"></i> Live directory: 27+ doctors. Just type any letter to see list.</small>
         </div>
 
         <div class="grid-2col">
@@ -502,7 +469,7 @@
           </div>
         </div>
 
-        <!-- Payment details -->
+        <!-- Payment Information -->
         <div class="section-title">
           <i class="fas fa-receipt"></i> Payment Summary
         </div>
@@ -517,7 +484,6 @@
           </div>
         </div>
 
-        <!-- Why choose us premium -->
         <div class="section-title">
           <i class="fas fa-award"></i> Why Rajan Path Lab?
         </div>
@@ -533,7 +499,7 @@
           <i class="fab fa-whatsapp fa-xl"></i> Book Now via WhatsApp
         </button>
         <div class="footer-note">
-          <i class="fas fa-phone-alt"></i>  +91-8709946177  |  Trusted by 10k+ families  |  #SmartLab
+          <i class="fas fa-phone-alt"></i>  +91-8709946177  |  Trusted by 10k+ families
         </div>
       </form>
     </div>
@@ -541,7 +507,7 @@
 </div>
 
 <script>
-  // ---------- ENHANCED TESTS (46 premium tests) ----------
+  // -------------------- TESTS DATA --------------------
   const testsData = [
     { sno:1, name:"LIVER FUNCTION TEST", price:600 },{ sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600 },{ sno:3, name:"LIPID PROFILE (Fasting)", price:600 },
     { sno:4, name:"THYROID PROFILE", price:500 },{ sno:5, name:"BETA HCG", price:1000 },{ sno:6, name:"HBA1C (3 Month Sugar)", price:600 },
@@ -559,7 +525,7 @@
     { sno:44, name:"OPTIMAL WIDAL", price:300 },{ sno:45, name:"Sodium", price:200 },{ sno:46, name:"Potassium", price:200 }
   ];
 
-  // ---------- DOCTOR DATABASE (As per requirement + extra for premium feel) ----------
+  // -------------------- DOCTOR LIST --------------------
   const doctorMasterList = [
     "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
     "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
@@ -569,10 +535,9 @@
   ];
   const doctorNames = [...doctorMasterList].sort((a,b)=>a.localeCompare(b));
 
-  // cart state
+  // ---------- Cart State ----------
   let cart = [];
   let currentSelectedTest = null;
-  let currentSelectedDoctor = null;
 
   // DOM elements
   const testSearchInput = document.getElementById('testSearchInput');
@@ -586,10 +551,10 @@
   const doctorInput = document.getElementById('refby');
   const doctorDropdown = document.getElementById('doctorDropdownList');
 
-  // Helper: escapeHtml
+  // Helper
   function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-  // ******************* TEST AUTOCOMPLETE (INSTANT) *******************
+  // ========== TEST AUTOCOMPLETE ==========
   function renderTestDropdown(searchTerm) {
     const term = searchTerm.trim().toLowerCase();
     if (term === "") { testDropdown.classList.remove('show'); return; }
@@ -607,25 +572,31 @@
     });
     testDropdown.innerHTML = itemsHtml;
     testDropdown.classList.add('show');
+
+    // attach click handlers to each dropdown item
     document.querySelectorAll('#testDropdownList .dropdown-item[data-name]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const name = el.getAttribute('data-name');
-        const price = parseInt(el.getAttribute('data-price'),10);
-        currentSelectedTest = { name, price };
-        testSearchInput.value = name;
-        testDropdown.classList.remove('show');
-      });
+      el.removeEventListener('click', handleTestItemClick);
+      el.addEventListener('click', handleTestItemClick);
     });
+  }
+
+  function handleTestItemClick(e) {
+    e.stopPropagation();
+    const el = e.currentTarget;
+    const name = el.getAttribute('data-name');
+    const price = parseInt(el.getAttribute('data-price'), 10);
+    currentSelectedTest = { name, price };
+    testSearchInput.value = name;
+    testDropdown.classList.remove('show');
   }
 
   function addCurrentTestToCart() {
     if (!currentSelectedTest) {
       const typed = testSearchInput.value.trim();
-      if (typed === "") { alert("🔍 Please select a test from the dropdown suggestions."); return; }
+      if (typed === "") { alert("🔍 Please type and select a test from the dropdown first."); return; }
       const exactMatch = testsData.find(t => t.name.toLowerCase() === typed.toLowerCase());
       if (exactMatch) currentSelectedTest = { name: exactMatch.name, price: exactMatch.price };
-      else { alert("⚠️ Use dropdown to add tests — ensures correct price."); return; }
+      else { alert("⚠️ Test not found. Please select from the dropdown list."); return; }
     }
     cart.push({ name: currentSelectedTest.name, price: currentSelectedTest.price });
     updateCartUI();
@@ -635,38 +606,59 @@
     testDropdown.classList.remove('show');
   }
 
-  function removeTestFromCart(index) { cart.splice(index,1); updateCartUI(); }
+  // remove using index
+  function removeTestFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+  }
+
+  // update cart UI + use event delegation for remove buttons
   function updateCartUI() {
     if (cart.length === 0) {
       cartItemsDiv.innerHTML = `<div class="empty-cart-msg" style="padding:32px; text-align:center; color:#9ab3c5;">📋 No tests added. Use search & 'Add to Cart'</div>`;
-      cartTotalSpan.innerText = `₹0`; cartItemCountSpan.innerText = `0 items`; testCountBadge.innerText = "0";
-      cartDataJson.value = JSON.stringify([]); return;
+      cartTotalSpan.innerText = `₹0`;
+      cartItemCountSpan.innerText = `0 items`;
+      testCountBadge.innerText = "0";
+      cartDataJson.value = JSON.stringify([]);
+      return;
     }
-    let html = ''; let total = 0;
-    cart.forEach((item, idx) => { total += item.price;
-      html += `<div class="cart-item">
-        <div class="cart-item-info"><span class="cart-item-name"><i class="fas fa-flask"></i> ${item.name}</span><span class="cart-item-price">₹${item.price}</span></div>
-        <div class="cart-item-actions"><button type="button" class="remove-test-btn" data-index="${idx}"><i class="fas fa-trash-alt"></i> Remove</button></div>
+    let html = '';
+    let total = 0;
+    cart.forEach((item, idx) => {
+      total += item.price;
+      html += `<div class="cart-item" data-cart-index="${idx}">
+        <div class="cart-item-info">
+          <span class="cart-item-name"><i class="fas fa-flask"></i> ${escapeHtml(item.name)}</span>
+          <span class="cart-item-price">₹${item.price}</span>
+        </div>
+        <div class="cart-item-actions">
+          <button type="button" class="remove-test-btn" data-remove-index="${idx}"><i class="fas fa-trash-alt"></i> Remove</button>
+        </div>
       </div>`;
     });
     cartItemsDiv.innerHTML = html;
     cartTotalSpan.innerText = `₹${total}`;
-    cartItemCountSpan.innerText = `${cart.length} item${cart.length!==1 ? 's' : ''}`;
+    cartItemCountSpan.innerText = `${cart.length} item${cart.length !== 1 ? 's' : ''}`;
     testCountBadge.innerText = cart.length;
     cartDataJson.value = JSON.stringify(cart);
-    document.querySelectorAll('.remove-test-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => { const idx = parseInt(btn.getAttribute('data-index'),10); removeTestFromCart(idx); });
-    });
   }
 
-  // ************** DOCTOR AUTOCOMPLETE (FIRST LETTER triggers instantly!) **************
-  function renderDoctorDropdownLive(searchTerm) {
+  // DELEGATION: listen for clicks on remove buttons inside cart container
+  document.getElementById('cartContainer').addEventListener('click', function(e) {
+    const btn = e.target.closest('.remove-test-btn');
+    if (btn && btn.hasAttribute('data-remove-index')) {
+      const idx = parseInt(btn.getAttribute('data-remove-index'), 10);
+      if (!isNaN(idx)) removeTestFromCart(idx);
+    }
+  });
+
+  // ========== DOCTOR AUTOCOMPLETE (FIRST LETTER ANY KEY) ==========
+  function renderDoctorDropdown(searchTerm) {
     const term = searchTerm.trim().toLowerCase();
-    // even if term length = 1, it works! that's the magic
     if (term === "") { doctorDropdown.classList.remove('show'); return; }
     const filtered = doctorNames.filter(doc => doc.toLowerCase().includes(term));
     if (filtered.length === 0) {
-      doctorDropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">✨ No doctor found, type another letter</div>`;
+      doctorDropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">✨ No doctor found, try another letter</div>`;
       doctorDropdown.classList.add('show');
       return;
     }
@@ -676,43 +668,42 @@
     });
     doctorDropdown.innerHTML = itemsHtml;
     doctorDropdown.classList.add('show');
+
     document.querySelectorAll('#doctorDropdownList .dropdown-item[data-doctor]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const docName = el.getAttribute('data-doctor');
-        doctorInput.value = docName;
-        currentSelectedDoctor = docName;
-        doctorDropdown.classList.remove('show');
-      });
+      el.removeEventListener('click', handleDoctorItemClick);
+      el.addEventListener('click', handleDoctorItemClick);
     });
   }
 
-  // event listeners: doctor (any keystroke, first letter works)
-  doctorInput.addEventListener('input', (e) => {
-    if (currentSelectedDoctor && e.target.value !== currentSelectedDoctor) currentSelectedDoctor = null;
-    renderDoctorDropdownLive(e.target.value);
-  });
-  doctorInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') doctorDropdown.classList.remove('show'); });
+  function handleDoctorItemClick(e) {
+    e.stopPropagation();
+    const docName = e.currentTarget.getAttribute('data-doctor');
+    doctorInput.value = docName;
+    doctorDropdown.classList.remove('show');
+  }
 
-  // test event listeners
+  // Input listeners
   testSearchInput.addEventListener('input', (e) => {
     if (currentSelectedTest && e.target.value !== currentSelectedTest.name) currentSelectedTest = null;
     renderTestDropdown(e.target.value);
   });
   addTestBtn.addEventListener('click', addCurrentTestToCart);
-  testSearchInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') { e.preventDefault(); addCurrentTestToCart(); } });
+  testSearchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); addCurrentTestToCart(); } });
 
-  // close dropdown on outside click
+  doctorInput.addEventListener('input', (e) => renderDoctorDropdown(e.target.value));
+  doctorInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') doctorDropdown.classList.remove('show'); });
+
+  // Close dropdowns when clicking outside
   document.addEventListener('click', function(e) {
-    if(!document.getElementById('testAutocompleteWrapper')?.contains(e.target)) testDropdown.classList.remove('show');
-    if(!document.getElementById('doctorAutocompleteWrapper')?.contains(e.target)) doctorDropdown.classList.remove('show');
+    if (!document.getElementById('testAutocompleteWrapper')?.contains(e.target)) testDropdown.classList.remove('show');
+    if (!document.getElementById('doctorAutocompleteWrapper')?.contains(e.target)) doctorDropdown.classList.remove('show');
   });
 
-  // default date
+  // set default date
   document.getElementById('date').value = new Date().toISOString().split('T')[0];
   updateCartUI();
 
-  // WhatsApp Sender (premium message layout with doctor + all tests total)
+  // WhatsApp function
   window.sendWhatsApp = function() {
     const patientName = document.getElementById('name').value.trim();
     const mobile = document.getElementById('mobile').value.trim();
@@ -731,8 +722,7 @@
       testLines += `\n🧾 GRAND TOTAL: ₹${cartTotal}`; }
     
     let rawMsg = `🏥 RAJAN PATH LAB (Premium Booking)\n\n👤 Patient: ${patientName}\n🎂 Age: ${age}\n📞 Mobile: ${mobile}\n📍 Address: ${address}\n\n🩺 SELECTED TESTS:\n${testLines}\n\n👨‍⚕️ Referred By: ${doctorValue}\n📅 Preferred Date: ${date}\n💰 Paid: ₹${paid} | Due: ₹${due}\n\n🔬 "Accurate Reports, Trusted Care"`;
-    let encodedMsg = encodeURIComponent(rawMsg);
-    window.open(`https://wa.me/918709946177?text=${encodedMsg}`, "_blank");
+    window.open(`https://wa.me/918709946177?text=${encodeURIComponent(rawMsg)}`, "_blank");
   };
 </script>
 </body>
