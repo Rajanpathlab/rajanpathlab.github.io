@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab - Complete Booking with QR</title>
+<title>Rajan Path Lab - Landscape Booking with QR</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -23,7 +23,7 @@ body {
 
 .hero {
     background: linear-gradient(135deg, #0a3f66, #0F5B8C);
-    padding: 45px 20px;
+    padding: 35px 20px;
     text-align: center;
     color: white;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
@@ -31,143 +31,140 @@ body {
 
 .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     letter-spacing: -0.5px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .hero h2 {
     font-weight: 400;
-    font-size: 1.1rem;
+    font-size: 1rem;
     opacity: 0.95;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .hero p {
     max-width: 750px;
     margin: 0 auto;
-    line-height: 1.6;
-    font-size: 0.9rem;
+    line-height: 1.5;
+    font-size: 0.85rem;
 }
 
 .container {
-    max-width: 1100px;
-    margin: -45px auto 50px;
+    max-width: 1300px;
+    margin: -35px auto 40px;
     padding: 20px;
 }
 
-.main-grid {
-    display: grid;
-    grid-template-columns: 1fr 260px;
-    gap: 24px;
-    align-items: start;
-}
-
-.card {
-    background: #ffffff;
-    border-radius: 32px;
-    padding: 32px 36px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
-}
-
-/* Compact QR Sidebar - Small barcode,不影响表单 */
-.qr-sidebar {
+/* Landscape style form - wider layout */
+.landscape-card {
     background: #ffffff;
     border-radius: 28px;
-    padding: 18px 16px;
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    position: sticky;
-    top: 20px;
+    padding: 28px 32px;
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
 }
 
-.qr-title {
+/* QR Code floating in top-right corner of form */
+.qr-float {
+    float: right;
+    width: 130px;
+    margin-left: 20px;
+    margin-bottom: 15px;
+    background: #fafdff;
+    border-radius: 20px;
+    padding: 12px 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border: 1px solid #e2edf7;
+}
+
+.qr-float .qr-title {
     font-weight: 700;
     color: #0F5B8C;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+    font-size: 0.75rem;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 #qrcode {
     display: flex;
     justify-content: center;
-    margin: 8px 0;
 }
 
 #qrcode img, #qrcode canvas {
-    width: 110px !important;
-    height: 110px !important;
-    border-radius: 12px;
-}
-
-.upi-mini {
-    background: #f0f9ff;
-    padding: 8px;
-    border-radius: 16px;
-    margin: 10px 0;
-}
-
-.upi-id-mini {
-    font-weight: 700;
-    color: #0a5c2e;
-    font-size: 0.7rem;
-    background: white;
-    padding: 5px;
+    width: 85px !important;
+    height: 85px !important;
     border-radius: 10px;
-    font-family: monospace;
+}
+
+.upi-mini-text {
+    font-size: 0.6rem;
+    margin-top: 6px;
+    background: #f0f9ff;
+    padding: 4px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #0a5c2e;
     word-break: break-all;
 }
 
-.lab-contact {
-    font-size: 0.7rem;
-    color: #4a6f8f;
-    margin-top: 8px;
+.scan-small-note {
+    font-size: 0.55rem;
+    color: #6c8db0;
+    margin-top: 5px;
 }
 
-.scan-note {
-    font-size: 0.65rem;
-    color: #6c8db0;
-    margin-top: 8px;
+/* Clear float */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 .section-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #0F5B8C;
-    margin: 24px 0 14px 0;
-    padding-bottom: 8px;
+    margin: 20px 0 12px 0;
+    padding-bottom: 6px;
     border-bottom: 3px solid #e2edf7;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .section-title:first-of-type {
     margin-top: 0;
 }
 
+/* Landscape grid - 2 column layout for form fields */
+.form-grid-2cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
 .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 label {
     font-weight: 600;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     display: block;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #1e4a76;
 }
 
 input, select, textarea {
     width: 100%;
-    padding: 12px 14px;
+    padding: 10px 12px;
     border: 1.5px solid #e2eaf2;
-    border-radius: 14px;
-    font-size: 0.9rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
     font-family: 'Poppins', sans-serif;
     transition: 0.2s;
     outline: none;
@@ -178,8 +175,18 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(15,91,140,0.1);
 }
 
+/* Test selection area */
+.test-area {
+    background: #fafdff;
+    border-radius: 18px;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #dce8f2;
+}
+
 .autocomplete-wrapper {
     position: relative;
+    flex: 1;
 }
 
 .autocomplete-suggestions {
@@ -188,100 +195,96 @@ input:focus, select:focus, textarea:focus {
     left: 0;
     right: 0;
     background: white;
-    border-radius: 14px;
+    border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    max-height: 240px;
+    max-height: 200px;
     overflow-y: auto;
     z-index: 1000;
-    margin-top: 5px;
+    margin-top: 4px;
     border: 1px solid #dce8f2;
 }
 
 .suggestion-item {
-    padding: 10px 14px;
+    padding: 8px 12px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #f0f2f5;
+    font-size: 0.8rem;
 }
 
 .suggestion-item:hover {
     background: #eef5fc;
 }
 
-.suggestion-price {
-    font-weight: 600;
-    color: #0f6b44;
+.test-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.test-row .autocomplete-wrapper {
+    flex: 3;
+}
+
+.test-row .add-btn {
+    flex: 0.5;
+    background: #0F5B8C;
+    color: white;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 40px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.75rem;
+    white-space: nowrap;
 }
 
 .selected-tests {
-    background: #fafdff;
-    border-radius: 18px;
-    padding: 12px 16px;
     margin-top: 12px;
-    border: 1px solid #dce8f2;
 }
 
 .test-badge {
     background: #eef2fa;
-    padding: 5px 12px;
+    padding: 4px 10px;
     border-radius: 40px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin: 4px 6px 4px 0;
+    gap: 6px;
+    margin: 3px 5px 3px 0;
 }
 
 .remove-test {
     background: #ffe0e0;
     border: none;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     cursor: pointer;
-    font-weight: bold;
-}
-
-.add-btn {
-    background: #0F5B8C;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 40px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 10px;
-    width: 100%;
-    font-size: 0.85rem;
+    font-size: 0.7rem;
 }
 
 .price-summary {
     margin-top: 10px;
     font-weight: 700;
-    color: #0f5b45;
+    font-size: 0.85rem;
     background: #eef7f0;
-    padding: 8px 12px;
-    border-radius: 14px;
-}
-
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    padding: 6px 12px;
+    border-radius: 12px;
 }
 
 .whatsapp-btn {
     width: 100%;
     border: none;
-    padding: 16px;
+    padding: 14px;
     border-radius: 50px;
     background: #25D366;
     color: white;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     cursor: pointer;
-    margin-top: 25px;
+    margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -294,27 +297,44 @@ input:focus, select:focus, textarea:focus {
     background: #1da859;
 }
 
-@media (max-width: 850px) {
-    .main-grid {
+.payment-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 900px) {
+    .form-grid-2cols {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 12px;
     }
-    .qr-sidebar {
-        position: static;
-        order: 2;
-        max-width: 280px;
-        margin: 0 auto;
+    .qr-float {
+        float: none;
+        width: 100%;
+        margin: 0 0 15px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
     }
-    .card {
-        order: 1;
-        padding: 24px;
+    .qr-float > div {
+        flex: 1;
+        text-align: center;
     }
-    .grid-2 {
-        grid-template-columns: 1fr;
+    .landscape-card {
+        padding: 20px;
     }
-    #qrcode img, #qrcode canvas {
-        width: 100px !important;
-        height: 100px !important;
+    .test-row {
+        flex-direction: column;
+    }
+    .test-row .add-btn {
+        width: 100%;
+    }
+}
+
+@media (min-width: 901px) {
+    .qr-float {
+        width: 140px;
     }
 }
 </style>
@@ -324,95 +344,110 @@ input:focus, select:focus, textarea:focus {
 <section class="hero">
     <h1>🔬 RAJAN PATH LAB</h1>
     <h2>Trusted Diagnostics • Accurate Results • Digital Reports</h2>
-    <p>Fill the form → Add tests → Send WhatsApp confirmation with report request</p>
+    <p>Landscape form for easy filling | Quick QR payment | WhatsApp confirmation</p>
 </section>
 
 <div class="container">
-    <div class="main-grid">
-        <!-- LEFT: Main Booking Form (पहले जैसा ही - बिना किसी बदलाव के) -->
-        <div class="card">
-            <form id="bookingForm">
-                <div class="section-title"><i class="fas fa-user-circle"></i> Patient Information</div>
-                <div class="form-group">
-                    <label>Patient Name *</label>
-                    <input type="text" id="name" placeholder="e.g., Rajan Kumar" value="Rajan Kumar">
-                </div>
-                <div class="grid-2">
-                    <div class="form-group"><label>Age</label><input type="number" id="age" placeholder="Years" value="20"></div>
-                    <div class="form-group"><label>Mobile Number *</label><input type="tel" id="mobile" placeholder="9876543210" value="8709946177"></div>
-                </div>
-                <div class="form-group"><label>Address</label><textarea id="address" rows="2" placeholder="Complete address">MANAHAR</textarea></div>
-
-                <div class="section-title"><i class="fas fa-microscope"></i> Select Tests (Type to search)</div>
-                <div class="autocomplete-wrapper">
-                    <input type="text" id="testAutocomplete" placeholder="e.g., CBC, Thyroid, Urine Culture..." autocomplete="off">
-                    <div id="suggestionsList" class="autocomplete-suggestions" style="display: none;"></div>
-                </div>
-                <button type="button" id="quickAddBtn" class="add-btn"><i class="fas fa-plus"></i> + Add Test</button>
-
-                <div class="selected-tests" id="selectedTestsContainer">
-                    <h4 style="font-size:0.85rem; margin-bottom:8px;"><i class="fas fa-cart-shopping"></i> Selected Tests</h4>
-                    <div id="selectedTestsList"></div>
-                    <div id="totalPriceSpan" class="price-summary">💰 Total: ₹0</div>
-                </div>
-
-                <div class="form-group" style="margin-top: 10px;">
-                    <label>📝 Additional Test (if not listed)</label>
-                    <input type="text" id="customTestName" placeholder="e.g., Vitamin D, Allergy">
-                </div>
-
-                <div class="section-title"><i class="fas fa-user-md"></i> Referral & Date</div>
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label>Referred By</label>
-                        <select id="refbySelect"><option value="">Select Doctor</option></select>
-                        <input type="text" id="refbyOther" placeholder="Or type name" style="margin-top:6px;" value="Dr. Jitendra Kr. Mehta">
-                    </div>
-                    <div class="form-group">
-                        <label>Test/Sample Date</label>
-                        <input type="date" id="date" value="2026-06-07">
-                    </div>
-                </div>
-
-                <div class="section-title"><i class="fas fa-rupee-sign"></i> Payment Summary</div>
-                <div class="grid-2">
-                    <div class="form-group"><label>Amount Paid (₹)</label><input type="number" id="paid" placeholder="0" value="850"></div>
-                    <div class="form-group"><label>Outstanding Due (₹)</label><input type="number" id="due" placeholder="0" value="150"></div>
-                </div>
-
-                <div class="section-title"><i class="fas fa-file-pdf"></i> Report Request</div>
-                <div class="form-group">
-                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                        <input type="checkbox" id="reportRequest" checked style="width: 18px; height: 18px;"> 
-                        <span>✅ Request Digital Copy of Lab Report (sent on WhatsApp)</span>
-                    </label>
-                </div>
-
-                <button type="button" class="whatsapp-btn" onclick="sendFormattedWhatsApp()">
-                    <i class="fab fa-whatsapp fa-lg"></i> 📄 Send Booking & Report Request
-                </button>
-            </form>
-        </div>
-
-        <!-- RIGHT: छोटा QR Code साइड में - size छोटा कर दिया गया है -->
-        <div class="qr-sidebar">
+    <div class="landscape-card clearfix">
+        
+        <!-- छोटा QR Code - ऊपर दाहिनी तरफ (Float right) -->
+        <div class="qr-float">
             <div class="qr-title">
-                <i class="fas fa-qrcode"></i> Scan & Pay
+                <i class="fas fa-qrcode"></i> SCAN & PAY
             </div>
             <div id="qrcode"></div>
-            <div class="upi-mini">
-                <div class="upi-id-mini">8709946177@okbizaxis</div>
-                <div class="lab-contact">📞 +91 87099 46177</div>
-            </div>
-            <div class="scan-note">
-                <i class="fas fa-mobile-alt"></i> GPay / PhonePe / Paytm
+            <div class="upi-mini-text">8709946177@okbizaxis</div>
+            <div class="scan-small-note">
+                <i class="fas fa-mobile-alt"></i> GPay | PhonePe
             </div>
         </div>
+
+        <form id="bookingForm">
+            <div class="section-title"><i class="fas fa-user-circle"></i> Patient Information</div>
+            <div class="form-grid-2cols">
+                <div class="form-group">
+                    <label>Patient Name *</label>
+                    <input type="text" id="name" placeholder="Full name" value="Rajan Kumar">
+                </div>
+                <div class="form-group">
+                    <label>Age (Years)</label>
+                    <input type="number" id="age" placeholder="Age" value="20">
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number *</label>
+                    <input type="tel" id="mobile" placeholder="9876543210" value="8709946177">
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" id="address" placeholder="Complete address" value="MANAHAR">
+                </div>
+            </div>
+
+            <div class="section-title"><i class="fas fa-microscope"></i> Select Tests (Type to search)</div>
+            <div class="test-area">
+                <div class="test-row">
+                    <div class="autocomplete-wrapper">
+                        <input type="text" id="testAutocomplete" placeholder="e.g., CBC, Thyroid, Urine Culture, Widal..." autocomplete="off">
+                        <div id="suggestionsList" class="autocomplete-suggestions" style="display: none;"></div>
+                    </div>
+                    <button type="button" id="quickAddBtn" class="add-btn"><i class="fas fa-plus"></i> Add Test</button>
+                </div>
+                
+                <div class="selected-tests" id="selectedTestsContainer">
+                    <div id="selectedTestsList"></div>
+                    <div id="totalPriceSpan" class="price-summary">💰 Total Test Value: ₹0</div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 10px;">
+                    <label>📝 Any other test (not in list)</label>
+                    <input type="text" id="customTestName" placeholder="e.g., Vitamin D, Allergy Panel">
+                </div>
+            </div>
+
+            <div class="section-title"><i class="fas fa-user-md"></i> Referral & Schedule</div>
+            <div class="form-grid-2cols">
+                <div class="form-group">
+                    <label>Referred By (Doctor/Self)</label>
+                    <select id="refbySelect">
+                        <option value="">-- Select Doctor --</option>
+                    </select>
+                    <input type="text" id="refbyOther" placeholder="Or type other name" style="margin-top: 6px;" value="Dr. Jitendra Kr. Mehta">
+                </div>
+                <div class="form-group">
+                    <label>Test/Sample Date</label>
+                    <input type="date" id="date" value="2026-06-07">
+                </div>
+            </div>
+
+            <div class="section-title"><i class="fas fa-rupee-sign"></i> Payment Summary</div>
+            <div class="payment-row">
+                <div class="form-group">
+                    <label>Amount Paid (₹)</label>
+                    <input type="number" id="paid" placeholder="0" value="850">
+                </div>
+                <div class="form-group">
+                    <label>Outstanding Due (₹)</label>
+                    <input type="number" id="due" placeholder="0" value="150">
+                </div>
+            </div>
+
+            <div class="section-title"><i class="fas fa-file-pdf"></i> Report Request</div>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" id="reportRequest" checked style="width: 18px; height: 18px;"> 
+                    <span>✅ Request Digital Copy of Lab Report (WhatsApp delivery)</span>
+                </label>
+            </div>
+
+            <button type="button" class="whatsapp-btn" onclick="sendFormattedWhatsApp()">
+                <i class="fab fa-whatsapp fa-lg"></i> 📄 Send Booking & Report Request
+            </button>
+        </form>
     </div>
 </div>
 
 <script>
-// -------------------- FULL TEST DATABASE --------------------
+// -------------------- COMPLETE TEST DATABASE --------------------
 const testsData = [
     { sno:1, name:"LIVER FUNCTION TEST", price:600 },{ sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600 },{ sno:3, name:"LIPID PROFILE (Fasting)", price:600 },
     { sno:4, name:"THYROID PROFILE", price:500 },{ sno:5, name:"BETA HCG", price:1000 },{ sno:6, name:"HBA1C (3 Month Sugar)", price:600 },
@@ -430,7 +465,7 @@ const testsData = [
     { sno:44, name:"OPTIMAL WIDAL", price:300 },{ sno:45, name:"Sodium", price:200 },{ sno:46, name:"Potassium", price:200 }
 ];
 
-// Doctor list
+// Doctor List
 const doctorMasterList = [
     "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
     "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
@@ -449,7 +484,7 @@ sortedDoctors.forEach(doc => {
 });
 refbySelect.innerHTML += `<option value="other">Other (Type below)</option>`;
 
-// Default selected tests (demo as per image)
+// Selected tests state - default demo tests
 let selectedTests = [
     { name: "Complete Blood Count (CBC)", price: 300 },
     { name: "Optimal Package", price: 200 },
@@ -457,7 +492,6 @@ let selectedTests = [
     { name: "Widal Test", price: 100 }
 ];
 
-// Update cart UI
 function updateCartUI() {
     const listDiv = document.getElementById('selectedTestsList');
     const totalSpan = document.getElementById('totalPriceSpan');
@@ -478,19 +512,20 @@ function updateCartUI() {
             if (!isNaN(idx)) {
                 selectedTests.splice(idx, 1);
                 updateCartUI();
+                syncPayments();
             }
         });
     });
 }
 
-// Autocomplete logic
+// Autocomplete
 const testInput = document.getElementById('testAutocomplete');
 const suggestionsDiv = document.getElementById('suggestionsList');
 let currentSelectedSuggestion = null;
 
 function filterTests(query) {
     if (!query.trim()) return [];
-    return testsData.filter(t => t.name.toLowerCase().includes(query.toLowerCase())).slice(0, 10);
+    return testsData.filter(t => t.name.toLowerCase().includes(query.toLowerCase())).slice(0, 8);
 }
 
 function renderSuggestions(suggestions) {
@@ -502,7 +537,7 @@ function renderSuggestions(suggestions) {
     suggestions.forEach(test => {
         const div = document.createElement('div');
         div.className = 'suggestion-item';
-        div.innerHTML = `<span>${test.name}</span><span class="suggestion-price">₹${test.price}</span>`;
+        div.innerHTML = `<span>${test.name}</span><span style="font-weight:600;color:#0f6b44;">₹${test.price}</span>`;
         div.addEventListener('click', () => {
             testInput.value = test.name;
             currentSelectedSuggestion = test;
@@ -539,6 +574,7 @@ document.getElementById('quickAddBtn').addEventListener('click', () => {
         testInput.value = '';
         currentSelectedSuggestion = null;
         suggestionsDiv.style.display = 'none';
+        syncPayments();
     } else if (testInput.value.trim() !== "") {
         alert("Test not found. Please select from suggestions.");
     }
@@ -565,7 +601,19 @@ function getTotalAmount() {
     return selectedTests.reduce((sum, t) => sum + t.price, 0);
 }
 
-// WhatsApp Message - Exactly as per required format
+function syncPayments() {
+    const total = getTotalAmount();
+    const paidField = document.getElementById('paid');
+    const dueField = document.getElementById('due');
+    let paidVal = parseInt(paidField.value) || 0;
+    let dueVal = parseInt(dueField.value) || 0;
+    if (total > 0 && (paidVal + dueVal) !== total && (paidVal > 0 || dueVal > 0)) {
+        if (paidVal > 0 && dueVal === 0 && total >= paidVal) dueField.value = total - paidVal;
+        else if (dueVal > 0 && paidVal === 0 && total >= dueVal) paidField.value = total - dueVal;
+    }
+}
+
+// WhatsApp message exactly as per required format
 function sendFormattedWhatsApp() {
     const name = document.getElementById('name').value.trim();
     const age = document.getElementById('age').value || "—";
@@ -622,30 +670,17 @@ function generateSmallQR() {
     qrDiv.innerHTML = "";
     new QRCode(qrDiv, {
         text: upiString,
-        width: 110,
-        height: 110,
+        width: 85,
+        height: 85,
         colorDark: "#000000",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.M
     });
 }
 
-// Initial load
+// Initialize
 updateCartUI();
 generateSmallQR();
-
-// Auto payment sync
-function syncPayments() {
-    const total = getTotalAmount();
-    const paidField = document.getElementById('paid');
-    const dueField = document.getElementById('due');
-    let paidVal = parseInt(paidField.value) || 0;
-    let dueVal = parseInt(dueField.value) || 0;
-    if (total > 0 && (paidVal + dueVal) !== total && (paidVal > 0 || dueVal > 0)) {
-        if (paidVal > 0 && dueVal === 0 && total >= paidVal) dueField.value = total - paidVal;
-        else if (dueVal > 0 && paidVal === 0 && total >= dueVal) paidField.value = total - dueVal;
-    }
-}
 document.getElementById('paid').addEventListener('input', syncPayments);
 document.getElementById('due').addEventListener('input', syncPayments);
 </script>
