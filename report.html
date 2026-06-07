@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Premier Reports | Patient & Doctor Portal</title>
+  <title>Premier Reports | Auto Doctor List</title>
   <style>
     * {
       margin: 0;
@@ -22,7 +22,6 @@
       position: relative;
     }
 
-    /* Premium subtle grain overlay */
     body::before {
       content: "";
       position: fixed;
@@ -33,20 +32,17 @@
       z-index: 0;
     }
 
-    /* Main card - Classic Premium */
     .classic-premium-card {
       max-width: 760px;
       width: 100%;
       background: #ffffff;
       border-radius: 2rem;
       box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.25);
-      transition: transform 0.2s ease;
       position: relative;
       z-index: 10;
       overflow: hidden;
     }
 
-    /* Gold top border */
     .classic-premium-card::before {
       content: '';
       position: absolute;
@@ -58,7 +54,6 @@
       z-index: 20;
     }
 
-    /* Header - English Classic */
     .premium-header {
       background: #1a212c;
       padding: 1.8rem 2rem 1.4rem;
@@ -90,7 +85,6 @@
       font-weight: 600;
       color: #e6c168;
       border: 0.5px solid rgba(212, 175, 55, 0.5);
-      letter-spacing: 0.5px;
     }
 
     .header-sub {
@@ -101,12 +95,10 @@
       padding-left: 14px;
     }
 
-    /* Form container */
     .form-container {
       padding: 2rem 2rem 1.8rem;
     }
 
-    /* Two column layout for name fields */
     .row-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -114,9 +106,9 @@
       margin-bottom: 1.8rem;
     }
 
-    /* Input groups */
     .input-group {
       margin-bottom: 1.8rem;
+      position: relative;
     }
 
     .input-label {
@@ -174,6 +166,39 @@
       box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
     }
 
+    /* Auto-complete dropdown styles */
+    .autocomplete-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-top: none;
+      border-radius: 0 0 1rem 1rem;
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 100;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      margin-top: -8px;
+      border-top: 1px solid #d4af37;
+    }
+
+    .autocomplete-item {
+      padding: 10px 1.3rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #1e2f3c;
+      transition: background 0.15s;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .autocomplete-item:hover {
+      background: #fef7e0;
+      color: #b8860b;
+    }
+
     .optional-note {
       font-size: 0.7rem;
       margin-top: 8px;
@@ -184,7 +209,6 @@
       gap: 6px;
     }
 
-    /* Insight card (instant detection) */
     .insight-card {
       margin-top: 1.5rem;
       padding: 1rem 1.2rem;
@@ -194,7 +218,6 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      transition: all 0.2s;
     }
 
     .insight-icon {
@@ -217,7 +240,6 @@
       line-height: 1.35;
     }
 
-    /* WhatsApp Premium Button */
     .whatsapp-premium-btn {
       width: 100%;
       background: linear-gradient(98deg, #075E54 0%, #128C7E 100%);
@@ -244,11 +266,6 @@
       box-shadow: 0 14px 26px -10px rgba(7, 94, 84, 0.7);
     }
 
-    .whatsapp-premium-btn:active {
-      transform: translateY(1px);
-    }
-
-    /* Status area */
     .status-area {
       margin-top: 1.2rem;
       padding: 0.9rem 1.2rem;
@@ -279,7 +296,6 @@
       border-left-color: #e6a017;
     }
 
-    /* Footer */
     .premium-footer {
       padding: 1rem 2rem 1.4rem;
       font-size: 0.7rem;
@@ -287,10 +303,8 @@
       border-top: 1px solid #edf2f9;
       display: flex;
       justify-content: space-between;
-      align-items: center;
     }
 
-    /* Shake animation for errors */
     @keyframes elegantShake {
       0% { transform: translateX(0); }
       25% { transform: translateX(-5px); }
@@ -304,16 +318,9 @@
     }
 
     @media (max-width: 650px) {
-      .form-container {
-        padding: 1.5rem;
-      }
-      .row-2col {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      .header-flex h1 {
-        font-size: 1.5rem;
-      }
+      .form-container { padding: 1.5rem; }
+      .row-2col { grid-template-columns: 1fr; gap: 1rem; }
+      .header-flex h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -322,75 +329,54 @@
 <div class="classic-premium-card">
   <div class="premium-header">
     <div class="header-flex">
-      <h1>
-        📋 REPORT PORTAL
-        <span class="classic-badge">WHATSAPP DIRECT</span>
-      </h1>
+      <h1>📋 REPORT PORTAL <span class="classic-badge">WHATSAPP DIRECT</span></h1>
     </div>
-    <div class="header-sub">
-      ◆ Patient ID required · Full patient & doctor details ◆ Report sent instantly to Doctor's WhatsApp
-    </div>
+    <div class="header-sub">◆ Patient ID required · Auto-suggest Doctor List ◆ Report instantly to Doctor's WhatsApp</div>
   </div>
 
   <div class="form-container">
-    <!-- Doctor info badge: pre-configured WhatsApp number -->
     <div class="doctor-note">
-      <span>👨‍⚕️</span> Doctor's WhatsApp: <strong>+91 8709946177</strong> — All reports will be delivered here instantly
+      <span>👨‍⚕️</span> Doctor's WhatsApp: <strong>+91 8709946177</strong> — All reports delivered here
     </div>
 
-    <!-- PATIENT ID - MANDATORY -->
+    <!-- PATIENT ID -->
     <div class="input-group">
-      <div class="input-label">
-        <span>🆔</span> PATIENT ID <span style="color:#b91c1c; font-size:0.7rem;">* required</span>
-      </div>
-      <input type="text" id="patientIdInput" class="classic-input" placeholder="e.g., PAT-5698 , PS7890 , HOSP-1001" autocomplete="off">
-      <div class="optional-note">
-        🔍 Enter ID → Report is instantly recognized & sent to doctor
-      </div>
+      <div class="input-label"><span>🆔</span> PATIENT ID <span style="color:#b91c1c;">*</span></div>
+      <input type="text" id="patientIdInput" class="classic-input" placeholder="e.g., PAT-5698, PS7890" autocomplete="off">
+      <div class="optional-note">🔍 Enter ID → Auto-detects patient info</div>
     </div>
 
-    <!-- Two columns: Patient Name & Doctor Name -->
+    <!-- Two columns: Patient Name & Doctor Name (with auto-suggest) -->
     <div class="row-2col">
-      <div class="input-group" style="margin-bottom: 0;">
-        <div class="input-label">
-          <span>👤</span> PATIENT NAME <span style="color:#b91c1c; font-size:0.7rem;">* required</span>
-        </div>
+      <div class="input-group">
+        <div class="input-label"><span>👤</span> PATIENT NAME <span style="color:#b91c1c;">*</span></div>
         <input type="text" id="patientNameInput" class="classic-input" placeholder="Full patient name" autocomplete="off">
       </div>
-      <div class="input-group" style="margin-bottom: 0;">
-        <div class="input-label">
-          <span>👨‍⚕️</span> DOCTOR NAME <span style="color:#b91c1c; font-size:0.7rem;">* required</span>
-        </div>
-        <input type="text" id="doctorNameInput" class="classic-input" placeholder="Referring doctor's name" autocomplete="off">
+      <div class="input-group" id="doctorGroup" style="position: relative;">
+        <div class="input-label"><span>👨‍⚕️</span> DOCTOR NAME <span style="color:#b91c1c;">*</span></div>
+        <input type="text" id="doctorNameInput" class="classic-input" placeholder="Type or select from list" autocomplete="off">
+        <div id="doctorDropdown" class="autocomplete-list" style="display: none;"></div>
+        <div class="optional-note">✨ Auto-suggest from master list (type to filter)</div>
       </div>
     </div>
 
-    <!-- PATIENT'S MOBILE - Optional -->
+    <!-- PATIENT MOBILE (Optional) -->
     <div class="input-group">
-      <div class="input-label">
-        <span>📞</span> PATIENT'S MOBILE <span style="color:#7f8c8d; font-weight:normal;">(optional)</span>
-      </div>
-      <input type="tel" id="mobileNumberInput" class="classic-input" placeholder="+91 9876543210 or 9876543210" autocomplete="off">
-      <div class="optional-note">
-        💡 Optional: Patient's contact for records (report goes to doctor's WhatsApp)
-      </div>
+      <div class="input-label"><span>📞</span> PATIENT'S MOBILE <span style="color:#7f8c8d;">(optional)</span></div>
+      <input type="tel" id="mobileNumberInput" class="classic-input" placeholder="+91 9876543210">
     </div>
 
-    <!-- Patient Insight (real-time detection based on Patient ID) -->
+    <!-- Insight Card -->
     <div id="insightBox" class="insight-card" style="display: none;">
       <div class="insight-icon">📋</div>
       <div class="insight-text" id="insightMessage">Patient ID matched — Report ready</div>
     </div>
 
-    <!-- MAIN ACTION: SEND REPORT TO DOCTOR'S WHATSAPP -->
     <button id="whatsappSendBtn" class="whatsapp-premium-btn">
       <span>📲</span> SEND REPORT TO DOCTOR'S WHATSAPP →
     </button>
 
-    <!-- Status messages -->
-    <div id="statusMsg" class="status-area">
-      ◆ Enter Patient ID, Patient Name & Doctor Name → Report sent directly to Doctor's WhatsApp (+91 8709946177)
-    </div>
+    <div id="statusMsg" class="status-area">◆ Enter Patient ID, Name & Doctor → Report sent to +91 8709946177</div>
 
     <div class="premium-footer">
       <span>✦ SECURE HEALTH REPORT SYSTEM ✦</span>
@@ -401,115 +387,136 @@
 
 <script>
   (function() {
+    // ======================== DOCTOR MASTER LIST (exactly as provided) ========================
+    const doctorMasterList = [
+        "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
+        "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
+        "SELF", "ALOK MEHTA", "BITTU KUMAR", "BALWANT PANDEY", "RAMESHWAR PRASAD", "R.L. RAM", "RAJU VISHWAKARMA",
+        "SUDAMA PRAJAPATI", "AJIJ ANSARI", "MERAJ ALAM", "VIJAY MEHTA", "RANDHIR KUMAR", "S. SHARMA",
+        "MAJHAR HUSSAIN", "GUDAN PRASAD", "RAJ VISHWAKARMA"
+    ];
+
+    // ======================== PATIENT DATABASE (mock) ========================
+    const patientReportsDB = new Map([
+      ['PAT-5698', { defaultName: 'Saurabh Mehta', reportTitle: 'Cardiac Health Profile', reportSummary: 'ECG normal, Cholesterol 168 mg/dL, BP 120/80. Healthy function.', lastVisit: 'June 10, 2025' }],
+      ['PS7890', { defaultName: 'Priyanka Verma', reportTitle: 'CBC + Diabetes Panel', reportSummary: 'HbA1c: 6.2%, Fasting Glucose 100 mg/dL, all normal.', lastVisit: 'May 22, 2025' }],
+      ['HOSP-1001', { defaultName: 'Ravi Kumar', reportTitle: 'MRI Lumbar Spine', reportSummary: 'Mild disc bulge L4-L5, no nerve compression.', lastVisit: 'April 5, 2025' }],
+      ['HOSP-7788', { defaultName: 'Neelam Gupta', reportTitle: 'Thyroid & Vitamin Profile', reportSummary: 'TSH 3.1, Vitamin D 32 ng/mL.', lastVisit: 'March 18, 2025' }],
+      ['GEN-2024', { defaultName: 'Abhishek Singh', reportTitle: 'Chest X-Ray', reportSummary: 'Chest X-ray clear, lungs normal.', lastVisit: 'May 30, 2025' }],
+      ['KID-4455', { defaultName: 'Aarti Sharma', reportTitle: 'Kidney Function', reportSummary: 'Creatinine 0.9 mg/dL, Urea 28 mg/dL.', lastVisit: 'Feb 12, 2025' }],
+      ['ONCO-123', { defaultName: 'Vikram Sinha', reportTitle: 'Oncology Screening', reportSummary: 'Tumor markers negative.', lastVisit: 'Jan 28, 2025' }]
+    ]);
+
+    function getPatientReport(patientId) {
+      if (!patientId || patientId.trim() === '') return null;
+      const trimmedId = patientId.trim().toUpperCase();
+      if (patientReportsDB.has(trimmedId)) return patientReportsDB.get(trimmedId);
+      return {
+        defaultName: `Patient (${trimmedId})`,
+        reportTitle: 'Digital Health Report (Premium)',
+        reportSummary: `Automated report for ID ${trimmedId}. All parameters normal.`,
+        lastVisit: 'Current date'
+      };
+    }
+
     // DOM elements
     const patientIdInput = document.getElementById('patientIdInput');
     const patientNameInput = document.getElementById('patientNameInput');
-    const doctorNameInput = document.getElementById('doctorNameInput');
+    const doctorInput = document.getElementById('doctorNameInput');
     const mobileInput = document.getElementById('mobileNumberInput');
     const whatsappBtn = document.getElementById('whatsappSendBtn');
     const statusDiv = document.getElementById('statusMsg');
     const insightBox = document.getElementById('insightBox');
     const insightMsgSpan = document.getElementById('insightMessage');
+    const doctorDropdown = document.getElementById('doctorDropdown');
 
-    // ======================== PREMIUM PATIENT DATABASE ========================
-    // As soon as Patient ID is typed, we detect if report exists (real-time)
-    const patientReportsDB = new Map([
-      ['PAT-5698', { 
-        defaultName: 'Saurabh Mehta', 
-        reportTitle: 'Cardiac Health Profile', 
-        reportSummary: 'ECG normal, Cholesterol 168 mg/dL, Triglycerides 130 mg/dL, BP 120/80. Overall healthy cardiac function.',
-        lastVisit: 'June 10, 2025'
-      }],
-      ['PS7890', { 
-        defaultName: 'Priyanka Verma', 
-        reportTitle: 'Complete Blood Count + Diabetes Panel', 
-        reportSummary: 'HbA1c: 6.2%, Fasting Glucose 100 mg/dL, Hemoglobin 13.8 g/dL, all parameters within normal range.',
-        lastVisit: 'May 22, 2025'
-      }],
-      ['HOSP-1001', { 
-        defaultName: 'Ravi Kumar', 
-        reportTitle: 'MRI Lumbar Spine', 
-        reportSummary: 'MRI findings: Mild disc bulge at L4-L5 without nerve root compression. Physiotherapy recommended.',
-        lastVisit: 'April 5, 2025'
-      }],
-      ['HOSP-7788', { 
-        defaultName: 'Neelam Gupta', 
-        reportTitle: 'Thyroid & Vitamin Profile', 
-        reportSummary: 'TSH: 3.1 µIU/mL (normal), Vitamin D: 32 ng/mL, Vitamin B12: 380 pg/mL. Supplementation advised.',
-        lastVisit: 'March 18, 2025'
-      }],
-      ['GEN-2024', { 
-        defaultName: 'Abhishek Singh', 
-        reportTitle: 'Chest X-Ray & General Examination', 
-        reportSummary: 'Chest X-ray clear, lungs normal. Physical examination unremarkable.',
-        lastVisit: 'May 30, 2025'
-      }],
-      ['KID-4455', { 
-        defaultName: 'Aarti Sharma', 
-        reportTitle: 'Kidney Function Test', 
-        reportSummary: 'Creatinine 0.9 mg/dL, Urea 28 mg/dL, Uric Acid 5.2 mg/dL — all within optimal ranges.',
-        lastVisit: 'February 12, 2025'
-      }],
-      ['ONCO-123', { 
-        defaultName: 'Vikram Sinha', 
-        reportTitle: 'Oncology Screening', 
-        reportSummary: 'Tumor markers negative, complete blood count stable. Follow-up in 6 months.',
-        lastVisit: 'January 28, 2025'
-      }]
-    ]);
-
-    // Generic premium fallback: any valid Patient ID generates a professional report
-    function getPatientReport(patientId) {
-      if (!patientId || patientId.trim() === '') return null;
-      const trimmedId = patientId.trim().toUpperCase();
-      if (patientReportsDB.has(trimmedId)) {
-        return patientReportsDB.get(trimmedId);
-      } else {
-        // Premium generic report for any unrecognized ID
-        return {
-          defaultName: `Patient (${trimmedId})`,
-          reportTitle: 'Digital Health Report (Premium Edition)',
-          reportSummary: `This automated report has been generated for Patient ID ${trimmedId}. All standard health parameters are within normal limits. Please consult your physician for detailed interpretation.`,
-          lastVisit: 'Latest record: Current date'
-        };
-      }
-    }
-
-    // Real-time detection: As user types Patient ID, we auto-suggest patient name
     let currentPatientData = null;
 
+    // ======================== AUTO-SUGGEST FOR DOCTOR (filter + manual) ========================
+    function showDoctorSuggestions(filterText) {
+      const filter = filterText.trim().toUpperCase();
+      let filteredDocs = [...doctorMasterList];
+      if (filter !== "") {
+        filteredDocs = doctorMasterList.filter(doc => doc.toUpperCase().includes(filter));
+      }
+      if (filteredDocs.length === 0) {
+        doctorDropdown.style.display = 'none';
+        return;
+      }
+      doctorDropdown.innerHTML = '';
+      filteredDocs.forEach(doc => {
+        const div = document.createElement('div');
+        div.className = 'autocomplete-item';
+        div.textContent = doc;
+        div.addEventListener('click', () => {
+          doctorInput.value = doc;
+          doctorDropdown.style.display = 'none';
+          doctorInput.focus();
+        });
+        doctorDropdown.appendChild(div);
+      });
+      doctorDropdown.style.display = 'block';
+    }
+
+    function hideDoctorDropdown() {
+      setTimeout(() => {
+        if (document.activeElement !== doctorInput) {
+          doctorDropdown.style.display = 'none';
+        }
+      }, 150);
+    }
+
+    doctorInput.addEventListener('input', function(e) {
+      const val = e.target.value;
+      if (val.length >= 0) {
+        showDoctorSuggestions(val);
+      }
+    });
+
+    doctorInput.addEventListener('focus', function() {
+      if (doctorInput.value.trim() !== "") {
+        showDoctorSuggestions(doctorInput.value);
+      } else {
+        showDoctorSuggestions(""); // show full list when focused empty
+      }
+    });
+
+    doctorInput.addEventListener('blur', hideDoctorDropdown);
+    document.addEventListener('click', function(e) {
+      if (!doctorInput.contains(e.target) && !doctorDropdown.contains(e.target)) {
+        doctorDropdown.style.display = 'none';
+      }
+    });
+
+    // ======================== PATIENT ID REAL-TIME DETECTION ========================
     function updateInstantInsight() {
       const pid = patientIdInput.value;
       if (!pid || pid.trim() === '') {
         insightBox.style.display = 'none';
         currentPatientData = null;
-        statusDiv.innerHTML = '◆ Enter Patient ID, Patient Name & Doctor Name → Report sent directly to Doctor\'s WhatsApp (+91 8709946177)';
+        statusDiv.innerHTML = '◆ Enter Patient ID, Patient Name & Doctor → Report sent to +91 8709946177';
         statusDiv.classList.remove('status-success', 'status-error');
         return;
       }
-      
       const patientInfo = getPatientReport(pid);
       if (patientInfo) {
         currentPatientData = patientInfo;
-        // Auto-fill patient name if field is empty (helpful feature)
         if (patientNameInput.value.trim() === '' && patientInfo.defaultName) {
           patientNameInput.value = patientInfo.defaultName;
         }
         insightBox.style.display = 'flex';
         insightMsgSpan.innerHTML = `✅ Patient ID: ${pid.trim().toUpperCase()} — ${patientInfo.defaultName} <span style="color:#b8860b;"> | Report ready</span><br>📄 ${patientInfo.reportTitle} (${patientInfo.lastVisit})`;
-        statusDiv.innerHTML = `🔍 Report found! Patient ID (${pid.trim().toUpperCase()}) report is ready. Fill doctor name and click send.`;
+        statusDiv.innerHTML = `🔍 Report found! Fill doctor name and click send.`;
         statusDiv.classList.remove('status-error');
         statusDiv.classList.add('status-success');
       } else {
-        // Fallback (should not occur)
         insightBox.style.display = 'flex';
-        insightMsgSpan.innerHTML = `ℹ️ Patient ID: ${pid.trim().toUpperCase()} — Report available (Premium Data)`;
+        insightMsgSpan.innerHTML = `ℹ️ Patient ID: ${pid.trim().toUpperCase()} — Report available`;
       }
     }
-
     patientIdInput.addEventListener('input', updateInstantInsight);
 
-    // Generate beautiful English report message for Doctor's WhatsApp with all details
+    // ======================== WHATSAPP MESSAGE GENERATION ========================
     function generateWhatsAppMessage(patientId, patientName, doctorName, patientMobile, patientReport) {
       const pidClean = patientId.trim().toUpperCase();
       const patientNameClean = patientName.trim() || patientReport?.defaultName || 'Not provided';
@@ -534,122 +541,97 @@
       return reportText;
     }
 
-    // Fixed: Doctor's WhatsApp number (as provided by user)
     const DOCTOR_WHATSAPP = "8709946177";
-    
-    // Clean mobile number for WhatsApp API (ensures +91 prefix for Indian numbers)
     function cleanDoctorNumberForWhatsApp(number) {
       let cleaned = number.trim().replace(/[\s\-\(\)]/g, '');
       cleaned = cleaned.replace(/^\+/, '');
-      if (/^\d{10}$/.test(cleaned) && /[789]/.test(cleaned[0])) {
-        return '+91' + cleaned;
-      }
-      if (/^91\d{10}$/.test(cleaned)) {
-        return '+' + cleaned;
-      }
-      if (!cleaned.startsWith('+')) {
-        return '+' + cleaned;
-      }
+      if (/^\d{10}$/.test(cleaned) && /[789]/.test(cleaned[0])) return '+91' + cleaned;
+      if (/^91\d{10}$/.test(cleaned)) return '+' + cleaned;
+      if (!cleaned.startsWith('+')) return '+' + cleaned;
       return cleaned;
     }
 
-    // Send report to Doctor's WhatsApp
     function sendToDoctorWhatsApp(message) {
-      const cleanDoctorNumber = cleanDoctorNumberForWhatsApp(DOCTOR_WHATSAPP);
-      if (!cleanDoctorNumber || cleanDoctorNumber.length < 8) {
-        statusDiv.innerHTML = "⚠️ Configuration error: Doctor's WhatsApp number is invalid. Please contact support.";
+      const cleanNumber = cleanDoctorNumberForWhatsApp(DOCTOR_WHATSAPP);
+      if (!cleanNumber || cleanNumber.length < 8) {
+        statusDiv.innerHTML = "⚠️ Configuration error: Doctor's WhatsApp number invalid.";
         statusDiv.classList.add('status-error');
         return false;
       }
-      
       const encodedMsg = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/${cleanDoctorNumber}?text=${encodedMsg}`;
+      const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodedMsg}`;
       window.open(whatsappUrl, '_blank');
       return true;
     }
 
-    // Validate all required fields
     function validateRequiredFields() {
       const patientId = patientIdInput.value.trim();
       const patientName = patientNameInput.value.trim();
-      const doctorName = doctorNameInput.value.trim();
+      const doctorName = doctorInput.value.trim();
       
       if (!patientId) {
-        statusDiv.innerHTML = "⚠️ Error: Patient ID is required. Please enter a valid Patient ID.";
+        statusDiv.innerHTML = "⚠️ Patient ID is required.";
         statusDiv.classList.add('status-error');
         patientIdInput.classList.add('error-shake');
         setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
         return false;
       }
-      
       if (patientId.length < 2) {
-        statusDiv.innerHTML = "❌ Patient ID must be at least 2 characters long.";
+        statusDiv.innerHTML = "❌ Patient ID must be at least 2 characters.";
         statusDiv.classList.add('status-error');
         patientIdInput.classList.add('error-shake');
         setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
         return false;
       }
-      
       if (!patientName) {
-        statusDiv.innerHTML = "❌ Patient Name is required. Please enter the patient's full name.";
+        statusDiv.innerHTML = "❌ Patient Name is required.";
         statusDiv.classList.add('status-error');
         patientNameInput.classList.add('error-shake');
         setTimeout(() => patientNameInput.classList.remove('error-shake'), 500);
         return false;
       }
-      
       if (!doctorName) {
-        statusDiv.innerHTML = "❌ Doctor Name is required. Please enter the referring doctor's name.";
+        statusDiv.innerHTML = "❌ Doctor Name is required (select from list or type manually).";
         statusDiv.classList.add('status-error');
-        doctorNameInput.classList.add('error-shake');
-        setTimeout(() => doctorNameInput.classList.remove('error-shake'), 500);
+        doctorInput.classList.add('error-shake');
+        setTimeout(() => doctorInput.classList.remove('error-shake'), 500);
         return false;
       }
-      
       return true;
     }
 
-    // Main handler: send report to Doctor's WhatsApp instantly
     async function handleSendReportToDoctor() {
-      // Validate all required fields
-      if (!validateRequiredFields()) {
-        return;
-      }
+      if (!validateRequiredFields()) return;
       
       const patientId = patientIdInput.value;
       const patientName = patientNameInput.value;
-      const doctorName = doctorNameInput.value;
+      const doctorName = doctorInput.value;
       const patientMobile = mobileInput.value;
-      
-      // Fetch patient report data (instant detection)
       const patientReport = getPatientReport(patientId);
+      
       if (!patientReport) {
-        statusDiv.innerHTML = "⚠️ Report not found. Please try again with a valid ID.";
+        statusDiv.innerHTML = "⚠️ Report not found.";
         statusDiv.classList.add('status-error');
         return;
       }
       
-      // Generate the WhatsApp message content for doctor with all details
       const whatsappMsg = generateWhatsAppMessage(patientId, patientName, doctorName, patientMobile, patientReport);
       
-      // UI feedback: loading state
       const originalBtnText = whatsappBtn.innerHTML;
       whatsappBtn.disabled = true;
       whatsappBtn.innerHTML = `<span>⏳</span> SENDING TO DOCTOR...`;
       statusDiv.classList.remove('status-error');
       statusDiv.classList.add('status-loading');
-      statusDiv.innerHTML = `📤 Sending report for ${patientName} (ID: ${patientId.trim().toUpperCase()}) to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP})...`;
+      statusDiv.innerHTML = `📤 Sending report for ${patientName} (ID: ${patientId.trim().toUpperCase()}) to Doctor's WhatsApp...`;
       
-      // Simulate short delay for premium feel
       setTimeout(() => {
         const success = sendToDoctorWhatsApp(whatsappMsg);
         if (success) {
           statusDiv.classList.remove('status-loading');
           statusDiv.classList.add('status-success');
-          statusDiv.innerHTML = `✅ Success! Report for ${patientName} (ID: ${patientId.trim().toUpperCase()}) has been sent to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP}). WhatsApp chat will open.`;
-          // Optional: reset patient mobile? keep as is for multiple entries
+          statusDiv.innerHTML = `✅ Success! Report for ${patientName} sent to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP}).`;
         } else {
-          statusDiv.innerHTML = "❌ Failed to open WhatsApp. Please check your internet connection.";
+          statusDiv.innerHTML = "❌ Failed to open WhatsApp. Check internet.";
           statusDiv.classList.add('status-error');
         }
         whatsappBtn.disabled = false;
@@ -659,7 +641,6 @@
     
     whatsappBtn.addEventListener('click', handleSendReportToDoctor);
     
-    // Enter key support: trigger send when pressing Enter on any field
     function handleKeyPress(e) {
       if (e.key === 'Enter') {
         e.preventDefault();
@@ -668,10 +649,9 @@
     }
     patientIdInput.addEventListener('keypress', handleKeyPress);
     patientNameInput.addEventListener('keypress', handleKeyPress);
-    doctorNameInput.addEventListener('keypress', handleKeyPress);
+    doctorInput.addEventListener('keypress', handleKeyPress);
     mobileInput.addEventListener('keypress', handleKeyPress);
     
-    // Initial focus on Patient ID
     patientIdInput.focus();
   })();
 </script>
