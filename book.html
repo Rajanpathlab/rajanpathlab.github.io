@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab - Auto Reset Booking Form</title>
+<title>Rajan Path Lab - Auto Payment Summary</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -317,7 +317,17 @@ input:focus, select:focus, textarea:focus {
     gap: 15px;
 }
 
-/* Reset button style */
+/* Payment info highlight */
+.payment-hint {
+    font-size: 0.7rem;
+    color: #0f6b44;
+    margin-top: 5px;
+    background: #eef7f0;
+    padding: 4px 8px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
 .reset-note {
     text-align: right;
     font-size: 0.7rem;
@@ -368,7 +378,7 @@ input:focus, select:focus, textarea:focus {
 <section class="hero">
     <h1>🔬 RAJAN PATH LAB</h1>
     <h2>Trusted Diagnostics • Accurate Results • Digital Reports</h2>
-    <p>Refresh / Reopen → Form automatically resets to empty | Add tests & book fresh</p>
+    <p>💰 Auto Payment Calculation: Enter Paid Amount → Due Updates Automatically</p>
 </section>
 
 <div class="container">
@@ -446,12 +456,17 @@ input:focus, select:focus, textarea:focus {
             <div class="section-title"><i class="fas fa-rupee-sign"></i> Payment Summary</div>
             <div class="payment-row">
                 <div class="form-group">
-                    <label>Amount Paid (₹)</label>
-                    <input type="number" id="paid" placeholder="0" value="0">
+                    <label>💰 Total Test Value</label>
+                    <input type="text" id="totalDisplay" readonly style="background:#eef2fa; font-weight:700; color:#0a4b6e;">
                 </div>
                 <div class="form-group">
-                    <label>Outstanding Due (₹)</label>
-                    <input type="number" id="due" placeholder="0" value="0">
+                    <label>✅ Amount Paid (₹)</label>
+                    <input type="number" id="paid" placeholder="Enter paid amount" value="0" step="1">
+                    <div class="payment-hint"><i class="fas fa-magic"></i> Auto-calculates due</div>
+                </div>
+                <div class="form-group">
+                    <label>⏳ Outstanding Due (₹)</label>
+                    <input type="number" id="due" placeholder="Auto updates" readonly style="background:#fff5e8; font-weight:600; color:#c0392b;">
                 </div>
             </div>
 
@@ -467,7 +482,7 @@ input:focus, select:focus, textarea:focus {
                 <i class="fab fa-whatsapp fa-lg"></i> 📄 Send Booking & Report Request
             </button>
             <div class="reset-note">
-                <i class="fas fa-sync-alt"></i> Page refresh = all fields cleared automatically
+                <i class="fas fa-sync-alt"></i> Page refresh = all fields cleared | Paid amount auto-calculates due
             </div>
         </form>
     </div>
@@ -492,7 +507,7 @@ const testsData = [
     { sno:44, name:"OPTIMAL WIDAL", price:300 },{ sno:45, name:"Sodium", price:200 },{ sno:46, name:"Potassium", price:200 }
 ];
 
-// Doctor List - Full master list
+// Doctor List
 const doctorMasterList = [
     "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
     "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
@@ -502,7 +517,6 @@ const doctorMasterList = [
 ];
 const sortedDoctors = [...doctorMasterList].sort();
 
-// Populate doctor dropdown dynamically
 const refbySelect = document.getElementById('refbySelect');
 sortedDoctors.forEach(doc => {
     let opt = document.createElement('option');
@@ -512,13 +526,14 @@ sortedDoctors.forEach(doc => {
 });
 refbySelect.innerHTML += `<option value="other">Other (Type below)</option>`;
 
-// ---------- GLOBAL STATE: Selected tests (always starts empty on page load) ----------
-let selectedTests = [];  // EMPTY on fresh load/refresh
+// ---------- GLOBAL STATE: Selected tests (always starts empty) ----------
+let selectedTests = [];
 
-// Helper: Update cart UI
+// Helper: Update cart UI and total display, then auto-update payment
 function updateCartUI() {
     const listDiv = document.getElementById('selectedTestsList');
     const totalSpan = document.getElementById('totalPriceSpan');
+    const totalDisplayField = document.getElementById('totalDisplay');
     listDiv.innerHTML = '';
     let total = 0;
     selectedTests.forEach((test, idx) => {
@@ -529,19 +544,56 @@ function updateCartUI() {
         listDiv.appendChild(badge);
     });
     totalSpan.innerHTML = `💰 Total Test Value: ₹${total}`;
+    if (totalDisplayField) {
+        totalDisplayField.value = `₹ ${total}`;
+    }
     
-    // Attach remove event listeners
+    // Remove event listeners for remove buttons
     document.querySelectorAll('.remove-test').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const idx = parseInt(btn.getAttribute('data-index'));
             if (!isNaN(idx)) {
                 selectedTests.splice(idx, 1);
                 updateCartUI();
-                syncPayments();
+                autoCalculateDue();  // Recalculate due when tests change
             }
         });
     });
+    
+    // After updating tests, recalculate due
+    autoCalculateDue();
 }
+
+// AUTO PAYMENT LOGIC: jab bhi paid amount change ho ya total change ho, due automatically calculate ho
+function autoCalculateDue() {
+    const total = selectedTests.reduce((sum, t) => sum + t.price, 0);
+    const paidField = document.getElementById('paid');
+    const dueField = document.getElementById('due');
+    
+    let paidValue = parseFloat(paidField.value) || 0;
+    // Agar paid value total se zyada ho to total ke barabar set karein (overpayment not allowed)
+    if (paidValue > total) {
+        paidValue = total;
+        paidField.value = total;
+    }
+    const dueAmount = total - paidValue;
+    dueField.value = dueAmount >= 0 ? dueAmount : 0;
+    
+    // Ensure due field is never negative
+    if (dueAmount < 0) dueField.value = 0;
+}
+
+// Event listener for paid amount field
+document.getElementById('paid').addEventListener('input', function() {
+    const total = selectedTests.reduce((sum, t) => sum + t.price, 0);
+    let paidVal = parseFloat(this.value) || 0;
+    if (paidVal < 0) paidVal = 0;
+    if (paidVal > total && total > 0) {
+        paidVal = total;
+        this.value = total;
+    }
+    autoCalculateDue();
+});
 
 // Autocomplete logic
 const testInput = document.getElementById('testAutocomplete');
@@ -600,7 +652,6 @@ document.getElementById('quickAddBtn').addEventListener('click', () => {
         testInput.value = '';
         currentSelectedSuggestion = null;
         suggestionsDiv.style.display = 'none';
-        syncPayments();
     } else if (testInput.value.trim() !== "") {
         alert("Test not found. Please select from suggestions.");
     }
@@ -626,18 +677,6 @@ function getFormattedTestsForMessage() {
 
 function getTotalAmount() {
     return selectedTests.reduce((sum, t) => sum + t.price, 0);
-}
-
-function syncPayments() {
-    const total = getTotalAmount();
-    const paidField = document.getElementById('paid');
-    const dueField = document.getElementById('due');
-    let paidVal = parseInt(paidField.value) || 0;
-    let dueVal = parseInt(dueField.value) || 0;
-    if (total > 0 && (paidVal + dueVal) !== total && (paidVal > 0 || dueVal > 0)) {
-        if (paidVal > 0 && dueVal === 0 && total >= paidVal) dueField.value = total - paidVal;
-        else if (dueVal > 0 && paidVal === 0 && total >= dueVal) paidField.value = total - dueVal;
-    }
 }
 
 // WhatsApp message exactly as required format
@@ -710,7 +749,7 @@ function generateSmallQR() {
 
 // ---------- AUTO RESET FUNCTION: CLEARS EVERYTHING ON PAGE LOAD ----------
 function resetFormToEmpty() {
-    // Clear all text inputs, number, textarea, date
+    // Clear all text inputs
     document.getElementById('name').value = '';
     document.getElementById('age').value = '';
     document.getElementById('mobile').value = '';
@@ -718,38 +757,37 @@ function resetFormToEmpty() {
     document.getElementById('customTestName').value = '';
     document.getElementById('refbyOther').value = '';
     document.getElementById('paid').value = '0';
-    document.getElementById('due').value = '0';
-    document.getElementById('reportRequest').checked = true;
     
-    // Reset date to today's date
+    // Reset date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').value = today;
     
-    // Reset doctor dropdown to default
+    // Reset doctor dropdown
     if (refbySelect) refbySelect.value = "";
     
     // Clear selected tests array
     selectedTests = [];
-    updateCartUI();  // This will show empty cart with ₹0
+    updateCartUI();  // This will show empty cart with ₹0 and also reset total display
     
-    // Clear autocomplete input
+    // Reset autocomplete
     testInput.value = '';
     currentSelectedSuggestion = null;
     suggestionsDiv.style.display = 'none';
+    
+    // Report request default checked
+    document.getElementById('reportRequest').checked = true;
+    
+    // Force due to 0
+    const dueField = document.getElementById('due');
+    if (dueField) dueField.value = '0';
 }
 
-// Initialize everything: fresh state + populate doctor list + QR
+// Initialize everything
 window.addEventListener('DOMContentLoaded', () => {
-    resetFormToEmpty();      // Ensures no previous data remains
+    resetFormToEmpty();
     generateSmallQR();
-    // Attach payment sync listeners
-    document.getElementById('paid').addEventListener('input', syncPayments);
-    document.getElementById('due').addEventListener('input', syncPayments);
-    // Initial sync
-    syncPayments();
+    autoCalculateDue(); // Initial sync
 });
-
-// Also reset on page refresh (already handled by DOMContentLoaded)
 </script>
 </body>
 </html>
