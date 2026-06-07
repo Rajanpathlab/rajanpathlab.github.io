@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab | Smart Test Booking</title>
+<title>Rajan Path Lab | Multi-Test Booking (Add Multiple Tests)</title>
 <!-- Google Fonts & Font Awesome -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-  *{
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -21,7 +21,6 @@
     scroll-behavior: smooth;
   }
 
-  /* hero section */
   .hero {
     background: linear-gradient(135deg, #0B3B5F, #1C6E9F);
     padding: 60px 20px 70px;
@@ -59,7 +58,7 @@
   }
 
   .container {
-    max-width: 1050px;
+    max-width: 1100px;
     margin: -45px auto 60px;
     padding: 0 20px;
   }
@@ -69,7 +68,6 @@
     border-radius: 32px;
     box-shadow: 0 25px 45px -12px rgba(0,0,0,0.2);
     overflow: hidden;
-    transition: 0.2s;
   }
 
   .form-inner {
@@ -121,7 +119,7 @@
     outline: none;
   }
 
-  /* AUTOCOMPLETE CUSTOM STYLES */
+  /* AUTOCOMPLETE STYLES */
   .autocomplete-wrapper {
     position: relative;
     width: 100%;
@@ -175,35 +173,129 @@
     font-weight: 600;
   }
 
-  .selected-test-preview {
-    background: #EDF4FA;
-    padding: 12px 18px;
-    border-radius: 20px;
-    margin-top: 15px;
-    font-size: 0.85rem;
+  /* MULTI-TEST CART */
+  .cart-container {
+    background: #F9FCFE;
+    border-radius: 24px;
+    border: 1px solid #e2edf2;
+    margin: 10px 0 5px;
+    overflow: hidden;
+  }
+
+  .cart-header {
+    background: #EFF5FA;
+    padding: 14px 20px;
+    font-weight: 600;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dce8f0;
+  }
+
+  .cart-items {
+    padding: 5px 0;
+    max-height: 260px;
+    overflow-y: auto;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #edf3f7;
     flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .cart-item-info {
+    flex: 3;
+    font-weight: 500;
+    display: flex;
     gap: 12px;
-    border-left: 5px solid #14B8A6;
+    flex-wrap: wrap;
+    align-items: baseline;
   }
 
-  .test-badge {
-    font-weight: 600;
-    color: #0F4C81;
+  .cart-item-name {
+    font-size: 0.95rem;
   }
 
-  .clear-test {
-    background: none;
+  .cart-item-price {
+    font-size: 0.85rem;
+    background: #E9F2EB;
+    padding: 3px 12px;
+    border-radius: 50px;
+    color: #1F6E43;
+  }
+
+  .cart-item-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .remove-test-btn {
+    background: #ffe6e5;
     border: none;
-    color: #E05A5A;
-    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 40px;
+    color: #c0392b;
+    font-weight: 500;
     cursor: pointer;
     font-size: 0.75rem;
-    padding: 4px 12px;
+    transition: 0.2s;
+  }
+
+  .remove-test-btn:hover {
+    background: #f5c6c3;
+  }
+
+  .cart-total {
+    background: #F2F8FC;
+    padding: 14px 20px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px solid #DAE8F0;
+    font-size: 1rem;
+  }
+
+  .empty-cart-msg {
+    padding: 24px;
+    text-align: center;
+    color: #8aa0b5;
+    font-style: italic;
+  }
+
+  .add-test-area {
+    margin: 12px 0 5px;
+  }
+
+  .add-test-btn {
+    background: #0F6B9E;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-weight: 500;
+    margin-top: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.85rem;
+  }
+
+  .add-test-btn:hover {
+    background: #0a547d;
+  }
+
+  .badge-icon {
+    background: #14B8A6;
+    color: white;
     border-radius: 30px;
-    background: #fff0f0;
+    padding: 2px 10px;
+    font-size: 0.7rem;
+    margin-left: 10px;
   }
 
   .grid {
@@ -288,9 +380,6 @@
     .hero h1 {
       font-size: 2.2rem;
     }
-    .section-title {
-      font-size: 1.25rem;
-    }
   }
 </style>
 </head>
@@ -298,21 +387,21 @@
 
 <section class="hero">
   <h1>Rajan Path Lab</h1>
-  <h2>Trusted Diagnostics · Accurate Results · Compassionate Care</h2>
-  <p>Effortless test booking — just type the test name, select from smart suggestions, and proceed. No manual typing needed. Touch & go!</p>
+  <h2>Trusted Diagnostics · Multi-Test Booking</h2>
+  <p>✨ Type test name → tap to add → keep adding multiple tests easily. No manual typing for each test. Smart, fast & hassle-free!</p>
 </section>
 
 <div class="container">
   <div class="card">
     <div class="form-inner">
       <form id="bookingForm" onsubmit="return false;">
-        <!-- Patient section -->
+        <!-- Patient Information -->
         <div class="section-title">
           <i class="fas fa-user-circle"></i> Patient Information
         </div>
         <div class="form-group">
           <label>Full Name *</label>
-          <input type="text" id="name" placeholder="e.g. Sunita Verma" autocomplete="off">
+          <input type="text" id="name" placeholder="e.g. Rajan Sharma" autocomplete="off">
         </div>
         <div class="grid">
           <div class="form-group">
@@ -326,29 +415,41 @@
         </div>
         <div class="form-group">
           <label>Address</label>
-          <textarea id="address" rows="2" placeholder="House no., street, city, pincode"></textarea>
+          <textarea id="address" rows="2" placeholder="Complete address"></textarea>
         </div>
 
-        <!-- TEST SECTION WITH AUTOCOMPLETE (SMART TOUCH) -->
+        <!-- MULTI TEST SECTION: SMART AUTOCOMPLETE + CART -->
         <div class="section-title">
-          <i class="fas fa-flask"></i> Test Information
+          <i class="fas fa-flask"></i> Select Tests (Add Multiple)
+          <span class="badge-icon" id="testCountBadge">0</span>
         </div>
-        <div class="form-group">
-          <label>🔍 Search / Select Test Name (type & tap)</label>
+
+        <div class="add-test-area">
           <div class="autocomplete-wrapper" id="autocompleteWrapper">
-            <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="Start typing: LIVER, CBC, THYROID, HBA1C ..." autocomplete="off">
+            <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="🔍 Type test name: LIVER, CBC, THYROID, HBA1C ..." autocomplete="off">
             <div id="dropdownList" class="autocomplete-dropdown"></div>
           </div>
-          <div id="selectedTestCard" class="selected-test-preview" style="display: none;">
-            <span><i class="fas fa-vial"></i> <span id="selectedTestNameDisplay"></span> — <span id="selectedTestPriceDisplay"></span></span>
-            <button type="button" id="clearTestBtn" class="clear-test"><i class="fas fa-times-circle"></i> Change test</button>
-          </div>
-          <small class="small-note"><i class="fas fa-magic"></i> Just tap on any test suggestion — it auto-fills & you're ready to proceed. No manual price entry needed.</small>
+          <button type="button" id="addTestBtn" class="add-test-btn"><i class="fas fa-plus-circle"></i> Add selected test to cart</button>
+          <small class="small-note"><i class="fas fa-magic"></i> Step 1: Type test name → tap suggestion → Step 2: Click 'Add to cart'. Repeat to add more tests.</small>
         </div>
 
-        <!-- hidden fields to store exact test data for WhatsApp -->
-        <input type="hidden" id="selectedTestHiddenName" value="">
-        <input type="hidden" id="selectedTestHiddenPrice" value="0">
+        <!-- Cart display -->
+        <div class="cart-container" id="cartContainer">
+          <div class="cart-header">
+            <span><i class="fas fa-shopping-cart"></i> Test Cart</span>
+            <span id="cartItemCount">0 items</span>
+          </div>
+          <div id="cartItemsList" class="cart-items">
+            <div class="empty-cart-msg">📋 No tests added yet. Search & add above.</div>
+          </div>
+          <div class="cart-total">
+            <span>Total Amount</span>
+            <span id="cartTotalPrice">₹0</span>
+          </div>
+        </div>
+
+        <!-- Hidden field to store cart data JSON for WhatsApp -->
+        <input type="hidden" id="cartDataJson" value="[]">
 
         <div class="grid">
           <div class="form-group">
@@ -361,7 +462,7 @@
           </div>
         </div>
 
-        <!-- Payment -->
+        <!-- Payment Information -->
         <div class="section-title">
           <i class="fas fa-rupee-sign"></i> Payment Information
         </div>
@@ -376,7 +477,7 @@
           </div>
         </div>
 
-        <!-- Why choose -->
+        <!-- Why choose us -->
         <div class="section-title">
           <i class="fas fa-star-of-life"></i> Why Rajan Path Lab?
         </div>
@@ -389,7 +490,7 @@
         </div>
 
         <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
-          <i class="fab fa-whatsapp fa-lg"></i> Confirm Booking via WhatsApp
+          <i class="fab fa-whatsapp fa-lg"></i> Submit Booking via WhatsApp
         </button>
         <div class="footer-note">
           "Excellence in Diagnostics. Confidence in Every Report."
@@ -400,144 +501,110 @@
 </div>
 
 <script>
-  // -------- provided test DATA (46 tests) ----------
+  // -------------------- TESTS DATA --------------------
   const testsData = [
-    { sno:1, name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum (8-10 hrs)", vial:"Gold SST (Serum Separator Tube)", vialColour:"Gold", colourHex:"#D4AF37", desc:"Evaluates liver enzymes, proteins, bilirubin; screens for hepatitis, cirrhosis." },
-    { sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600, volume:"2-3 ml Fasting serum", vial:"Red top / Gold SST", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Measures Urea, Creatinine, Uric acid – renal health marker." },
-    { sno:3, name:"LIPID PROFILE (Fasting)", price:600, volume:"3 ml Fasting (12hrs)", vial:"Red top / SST", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Total Cholesterol, HDL, LDL, Triglycerides – cardiac risk." },
-    { sno:4, name:"THYROID PROFILE", price:500, volume:"2 ml Serum (non-fasting)", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"T3, T4, TSH – regulates metabolism." },
-    { sno:5, name:"BETA HCG", price:1000, volume:"3 ml Serum", vial:"Gold / Plain red", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Quantitative pregnancy & tumor marker." },
-    { sno:6, name:"HBA1C (3 Month Sugar)", price:600, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender (Purple)", colourHex:"#967BB6", desc:"Avg glucose over 3 months – diabetes monitoring." },
-    { sno:7, name:"C-REACTIVE PROTEIN (CRP)", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Inflammation marker – infection, autoimmune." },
-    { sno:8, name:"ANTISTREPTOLYSIN O (ASO)", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Detects past strep infection; rheumatic fever." },
-    { sno:9, name:"R A FACTOR", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Rheumatoid arthritis marker." },
-    { sno:10, name:"HCG PREGNANCY TEST", price:100, volume:"Urine (mid-stream)", vial:"Sterile container", vialColour:"Plain container", colourHex:"#FFFFFF", desc:"Rapid qualitative pregnancy detection." },
-    { sno:11, name:"URINE ROUTINE", price:100, volume:"10-15 ml Urine", vial:"Sterile universal container", vialColour:"Transparent", colourHex:"#F0F4F5", desc:"Microscopic & chemical analysis for UTI, diabetes." },
-    { sno:12, name:"URINE CULTURE", price:400, volume:"Mid-stream urine", vial:"Sterile container", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Identifies bacterial infection & sensitivity." },
-    { sno:13, name:"SEMEN ANALYSIS", price:250, volume:"Whole ejaculate", vial:"Sterile wide-mouth", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Fertility assessment: count, motility, morphology." },
-    { sno:14, name:"MANTOUX TEST", price:200, volume:"Intradermal (0.1ml)", vial:"Tuberculin syringe", vialColour:"Syringe", colourHex:"#AAAAAA", desc:"TB screening (PPD skin test)." },
-    { sno:15, name:"HBSAG", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis B surface antigen screening." },
-    { sno:16, name:"VDRL", price:100, volume:"1 ml Serum", vial:"Plain red / Gold", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Syphilis screening test." },
-    { sno:17, name:"HIV", price:300, volume:"2 ml Serum/Plasma", vial:"Gold or EDTA", vialColour:"Gold / Lavender", colourHex:"#D4AF37,#967BB6", desc:"HIV I & II antibody detection." },
-    { sno:18, name:"HCV", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis C antibody test." },
-    { sno:19, name:"BLOOD UREA", price:150, volume:"2 ml Serum/Plasma", vial:"Red / Green top", vialColour:"Red / Green", colourHex:"#E34234,#3A9B5E", desc:"Kidney function nitrogen waste marker." },
-    { sno:20, name:"SERUM CREATININE", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Kidney filtration marker." },
-    { sno:21, name:"URIC ACID (Fasting)", price:150, volume:"2 ml Fasting Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Gout & renal assessment." },
-    { sno:22, name:"BLOOD SUGAR", price:50, volume:"1 ml Fluoride", vial:"Grey top (Sodium Fluoride)", vialColour:"Grey", colourHex:"#A9B7C0", desc:"Glucose level – diabetes screening." },
-    { sno:23, name:"COMPLETE BLOOD COUNT (CBC)", price:300, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender (Purple)", colourHex:"#967BB6", desc:"Hb, TLC, RBC indices, platelets – general health." },
-    { sno:24, name:"PLATELETS TEST", price:150, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Platelet count – dengue, bleeding disorders." },
-    { sno:25, name:"DENGUE NS1 IGG IGM", price:650, volume:"3 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Early dengue antigen & antibodies." },
-    { sno:26, name:"TYPHIDOT IGG IGM", price:250, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Typhoid fever antibodies detection." },
-    { sno:27, name:"WIDAL", price:100, volume:"2 ml Serum", vial:"Plain red / Gold", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Salmonella typhi antibody test." },
-    { sno:28, name:"OPTIMAL", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Thyroid/wellness marker panel (custom)." },
-    { sno:29, name:"TC DC", price:120, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Total & differential leukocyte count." },
-    { sno:30, name:"BT CT", price:120, volume:"Capillary blood", vial:"Capillary tube", vialColour:"Capillary tube", colourHex:"#D3D3D3", desc:"Bleeding time & Clotting time – hemostasis." },
-    { sno:31, name:"ESR", price:120, volume:"2 ml Sodium citrate", vial:"Black top (Citrate)", vialColour:"Black", colourHex:"#2C2C2C", desc:"Inflammation marker (Westergren method)." },
-    { sno:32, name:"SMEAR OF MP", price:100, volume:"Thick/thin smear", vial:"EDTA blood / slide", vialColour:"Lavender / slide", colourHex:"#967BB6", desc:"Malarial parasite detection." },
-    { sno:33, name:"HB", price:50, volume:"Capillary / 1ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hemoglobin level – anemia screen." },
-    { sno:34, name:"BLOOD GROUP", price:50, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"ABO & Rh typing." },
-    { sno:35, name:"TOTAL PARASITE", price:250, volume:"2 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Malaria & filaria parasite count." },
-    { sno:36, name:"SMEAR OF MP (Repeat)", price:100, volume:"Blood smear", vial:"Slide / EDTA", vialColour:"Lavender / slide", colourHex:"#967BB6", desc:"Malaria parasite microscopy." },
-    { sno:37, name:"BILIRUBIN TEST", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Jaundice assessment (total/direct)." },
-    { sno:38, name:"MP WIDAL HB", price:250, volume:"2 ml + smear", vial:"EDTA & gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Malaria + Widal + Hb combo." },
-    { sno:39, name:"OPTIMAL WIDAL HB", price:350, volume:"2 ml Serum", vial:"Gold SST/EDTA", vialColour:"Gold / Lavender", colourHex:"#D4AF37,#967BB6", desc:"Wellness combo: liver/thyroid/ widal." },
-    { sno:40, name:"CBC MP WIDAL", price:500, volume:"3 ml EDTA", vial:"Lavender + gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Complete triple infection panel." },
-    { sno:41, name:"CBC WIDAL", price:400, volume:"3 ml EDTA + Serum", vial:"Lavender & Gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"CBC plus typhoid screen." },
-    { sno:42, name:"HB WIDAL", price:150, volume:"2 ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hemoglobin + Widal test." },
-    { sno:43, name:"MP WIDAL", price:200, volume:"2 ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Malaria smear + Widal combo." },
-    { sno:44, name:"OPTIMAL WIDAL", price:300, volume:"3 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Optimal wellness + typhoid." },
-    { sno:45, name:"Sodium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top (Heparin) / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Electrolyte balance – hyponatremia." },
-    { sno:46, name:"Potassium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Cardiac & muscle function electrolyte." }
+    { sno:1, name:"LIVER FUNCTION TEST", price:600 },
+    { sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600 },
+    { sno:3, name:"LIPID PROFILE (Fasting)", price:600 },
+    { sno:4, name:"THYROID PROFILE", price:500 },
+    { sno:5, name:"BETA HCG", price:1000 },
+    { sno:6, name:"HBA1C (3 Month Sugar)", price:600 },
+    { sno:7, name:"C-REACTIVE PROTEIN (CRP)", price:400 },
+    { sno:8, name:"ANTISTREPTOLYSIN O (ASO)", price:400 },
+    { sno:9, name:"R A FACTOR", price:400 },
+    { sno:10, name:"HCG PREGNANCY TEST", price:100 },
+    { sno:11, name:"URINE ROUTINE", price:100 },
+    { sno:12, name:"URINE CULTURE", price:400 },
+    { sno:13, name:"SEMEN ANALYSIS", price:250 },
+    { sno:14, name:"MANTOUX TEST", price:200 },
+    { sno:15, name:"HBSAG", price:150 },
+    { sno:16, name:"VDRL", price:100 },
+    { sno:17, name:"HIV", price:300 },
+    { sno:18, name:"HCV", price:200 },
+    { sno:19, name:"BLOOD UREA", price:150 },
+    { sno:20, name:"SERUM CREATININE", price:150 },
+    { sno:21, name:"URIC ACID (Fasting)", price:150 },
+    { sno:22, name:"BLOOD SUGAR", price:50 },
+    { sno:23, name:"COMPLETE BLOOD COUNT (CBC)", price:300 },
+    { sno:24, name:"PLATELETS TEST", price:150 },
+    { sno:25, name:"DENGUE NS1 IGG IGM", price:650 },
+    { sno:26, name:"TYPHIDOT IGG IGM", price:250 },
+    { sno:27, name:"WIDAL", price:100 },
+    { sno:28, name:"OPTIMAL", price:200 },
+    { sno:29, name:"TC DC", price:120 },
+    { sno:30, name:"BT CT", price:120 },
+    { sno:31, name:"ESR", price:120 },
+    { sno:32, name:"SMEAR OF MP", price:100 },
+    { sno:33, name:"HB", price:50 },
+    { sno:34, name:"BLOOD GROUP", price:50 },
+    { sno:35, name:"TOTAL PARASITE", price:250 },
+    { sno:36, name:"SMEAR OF MP (Repeat)", price:100 },
+    { sno:37, name:"BILIRUBIN TEST", price:200 },
+    { sno:38, name:"MP WIDAL HB", price:250 },
+    { sno:39, name:"OPTIMAL WIDAL HB", price:350 },
+    { sno:40, name:"CBC MP WIDAL", price:500 },
+    { sno:41, name:"CBC WIDAL", price:400 },
+    { sno:42, name:"HB WIDAL", price:150 },
+    { sno:43, name:"MP WIDAL", price:200 },
+    { sno:44, name:"OPTIMAL WIDAL", price:300 },
+    { sno:45, name:"Sodium", price:200 },
+    { sno:46, name:"Potassium", price:200 }
   ];
+
+  // Cart array: { name, price }
+  let cart = [];
 
   // DOM elements
   const searchInput = document.getElementById('testSearchInput');
   const dropdown = document.getElementById('dropdownList');
-  const selectedCardDiv = document.getElementById('selectedTestCard');
-  const selectedTestNameSpan = document.getElementById('selectedTestNameDisplay');
-  const selectedTestPriceSpan = document.getElementById('selectedTestPriceDisplay');
-  const clearTestBtn = document.getElementById('clearTestBtn');
-  const hiddenTestName = document.getElementById('selectedTestHiddenName');
-  const hiddenTestPrice = document.getElementById('selectedTestHiddenPrice');
+  const addBtn = document.getElementById('addTestBtn');
+  const cartItemsDiv = document.getElementById('cartItemsList');
+  const cartTotalSpan = document.getElementById('cartTotalPrice');
+  const cartItemCountSpan = document.getElementById('cartItemCount');
+  const testCountBadge = document.getElementById('testCountBadge');
+  const cartDataJson = document.getElementById('cartDataJson');
 
-  let currentSelectedTest = null;   // store { name, price }
+  let currentSelectedSuggestion = null;   // holds { name, price } from dropdown selection
 
-  // Helper: render dropdown based on search term
-  function renderDropdown(searchTerm = '') {
+  // ----- render dropdown based on search term -----
+  function renderDropdown(searchTerm) {
     const term = searchTerm.trim().toLowerCase();
-    let filteredTests = [];
-    if (term === '') {
-      // optional: show first 8 tests as preview? but better to show none or minimal?
-      // according to requirement, dale automatic aay -> on type show matching.
-      filteredTests = [];
-    } else {
-      filteredTests = testsData.filter(t => t.name.toLowerCase().includes(term));
-    }
-
-    if (filteredTests.length === 0 && term !== '') {
-      dropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center; color:#7f8c8d;">⚠️ No test found</div>`;
-      dropdown.classList.add('show');
-      return;
-    }
-    if (term === '') {
+    if (term === "") {
       dropdown.classList.remove('show');
       return;
     }
-
-    // build items
+    const filtered = testsData.filter(t => t.name.toLowerCase().includes(term));
+    if (filtered.length === 0) {
+      dropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">❌ No test found</div>`;
+      dropdown.classList.add('show');
+      return;
+    }
     let itemsHtml = '';
-    filteredTests.slice(0, 12).forEach(test => {
+    filtered.slice(0, 12).forEach(test => {
       itemsHtml += `
         <div class="dropdown-item" data-name="${escapeHtml(test.name)}" data-price="${test.price}">
-          <span><i class="fas fa-microscope"></i> ${test.name}</span>
+          <span><i class="fas fa-vial"></i> ${test.name}</span>
           <span class="test-price">₹${test.price}</span>
         </div>
       `;
     });
-    if (filteredTests.length > 12) {
-      itemsHtml += `<div class="dropdown-item" style="opacity:0.7;">+ ${filteredTests.length - 12} more tests, refine search</div>`;
-    }
     dropdown.innerHTML = itemsHtml;
     dropdown.classList.add('show');
 
-    // attach click listeners to each item
+    // attach click for each suggestion
     document.querySelectorAll('.dropdown-item[data-name]').forEach(el => {
       el.addEventListener('click', (e) => {
         e.stopPropagation();
         const name = el.getAttribute('data-name');
         const price = parseInt(el.getAttribute('data-price'), 10);
-        selectTest(name, price);
+        // set current selection
+        currentSelectedSuggestion = { name, price };
+        searchInput.value = name;
         dropdown.classList.remove('show');
-        searchInput.value = name;   // put selected name into input
       });
     });
   }
 
-  // select test & show preview
-  function selectTest(name, price) {
-    currentSelectedTest = { name, price };
-    hiddenTestName.value = name;
-    hiddenTestPrice.value = price;
-    selectedTestNameSpan.innerHTML = `<strong>${name}</strong>`;
-    selectedTestPriceSpan.innerHTML = `💰 ₹${price}`;
-    selectedCardDiv.style.display = 'flex';
-    // also update placeholder maybe
-    searchInput.value = name;
-    // optional extra: remove dropdown
-    dropdown.classList.remove('show');
-  }
-
-  // clear selection
-  function clearSelection() {
-    currentSelectedTest = null;
-    hiddenTestName.value = '';
-    hiddenTestPrice.value = '0';
-    selectedCardDiv.style.display = 'none';
-    searchInput.value = '';
-    searchInput.focus();
-  }
-
-  // escape html for safety
   function escapeHtml(str) {
     return str.replace(/[&<>]/g, function(m) {
       if (m === '&') return '&amp;';
@@ -547,34 +614,121 @@
     });
   }
 
+  // add current selected test to cart
+  function addCurrentTestToCart() {
+    if (!currentSelectedSuggestion) {
+      // if nothing selected but user typed something, optionally allow manual add? 
+      const typedName = searchInput.value.trim();
+      if (typedName === "") {
+        alert("🔍 Please type a test name and select from dropdown first.");
+        return;
+      }
+      // try to find exact match in testsData to avoid garbage
+      const match = testsData.find(t => t.name.toLowerCase() === typedName.toLowerCase());
+      if (match) {
+        currentSelectedSuggestion = { name: match.name, price: match.price };
+      } else {
+        // show warning: use suggestion
+        alert("⚠️ Please select a test from the dropdown list for accurate price.");
+        return;
+      }
+    }
+
+    const testToAdd = currentSelectedSuggestion;
+    // prevent duplicate? not necessary, but we can add anyway (user might want same test twice? but not typical; we allow)
+    cart.push({ name: testToAdd.name, price: testToAdd.price });
+    updateCartUI();
+    // reset current selection and input field to allow next test
+    currentSelectedSuggestion = null;
+    searchInput.value = "";
+    searchInput.focus();
+    dropdown.classList.remove('show');
+  }
+
+  // remove test from cart by index
+  function removeTestFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+  }
+
+  // update cart UI, total, badge, hidden field
+  function updateCartUI() {
+    // refresh cart list
+    if (cart.length === 0) {
+      cartItemsDiv.innerHTML = `<div class="empty-cart-msg">📋 No tests added yet. Search & add above.</div>`;
+      cartTotalSpan.innerText = `₹0`;
+      cartItemCountSpan.innerText = `0 items`;
+      testCountBadge.innerText = "0";
+      cartDataJson.value = JSON.stringify([]);
+      return;
+    }
+
+    let html = '';
+    let total = 0;
+    cart.forEach((item, idx) => {
+      total += item.price;
+      html += `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <span class="cart-item-name"><i class="fas fa-flask"></i> ${item.name}</span>
+            <span class="cart-item-price">₹${item.price}</span>
+          </div>
+          <div class="cart-item-actions">
+            <button type="button" class="remove-test-btn" data-index="${idx}"><i class="fas fa-trash-alt"></i> Remove</button>
+          </div>
+        </div>
+      `;
+    });
+    cartItemsDiv.innerHTML = html;
+    cartTotalSpan.innerText = `₹${total}`;
+    cartItemCountSpan.innerText = `${cart.length} item${cart.length !== 1 ? 's' : ''}`;
+    testCountBadge.innerText = cart.length;
+    cartDataJson.value = JSON.stringify(cart);
+
+    // attach remove event listeners after render
+    document.querySelectorAll('.remove-test-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(btn.getAttribute('data-index'), 10);
+        removeTestFromCart(idx);
+      });
+    });
+  }
+
   // event listeners
   searchInput.addEventListener('input', (e) => {
     const val = e.target.value;
-    if (currentSelectedTest && val !== currentSelectedTest.name) {
-      // if user manually types and it's different from selected, clear the selected flag
-      if (val.trim() !== currentSelectedTest.name) {
-        clearSelection();
-      }
+    // if user edits, clear current suggestion state
+    if (currentSelectedSuggestion && val !== currentSelectedSuggestion.name) {
+      currentSelectedSuggestion = null;
     }
     renderDropdown(val);
   });
 
-  // close dropdown when clicking outside
+  addBtn.addEventListener('click', () => {
+    addCurrentTestToCart();
+  });
+
+  // click outside to close dropdown
   document.addEventListener('click', function(e) {
     const wrapper = document.getElementById('autocompleteWrapper');
-    if (!wrapper.contains(e.target)) {
+    if (wrapper && !wrapper.contains(e.target)) {
       dropdown.classList.remove('show');
     }
   });
 
-  clearTestBtn.addEventListener('click', () => {
-    clearSelection();
-    renderDropdown('');
+  // set default date
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date').value = today;
+
+  // optional: pressing Enter on input adds test
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addCurrentTestToCart();
+    }
   });
 
-  // optional: if user focuses on input with selected test, can still clear via backspace? we'll keep clear button.
-
-  // WhatsApp send function (enhanced with selected test)
+  // WhatsApp send function with multi-test details
   window.sendWhatsApp = function() {
     const patientName = document.getElementById('name').value.trim();
     const age = document.getElementById('age').value.trim();
@@ -585,45 +739,43 @@
     const paid = document.getElementById('paid').value || '0';
     const due = document.getElementById('due').value || '0';
 
-    // get test info (selected from smart autocomplete)
-    let testFinal = hiddenTestName.value;
-    let testPriceFinal = hiddenTestPrice.value;
-    if (!testFinal && searchInput.value.trim() !== '') {
-      // fallback: if someone typed but didn't select from dropdown, we still accept manual test name
-      testFinal = searchInput.value.trim();
-      testPriceFinal = '—';
-    } else if (!testFinal) {
-      testFinal = 'Not specified';
-      testPriceFinal = '—';
-    }
-
-    let message = 
-      "🧬 RAJAN PATH LAB TEST BOOKING%0A%0A" +
-      "👤 Name: " + (patientName || '—') + "%0A" +
-      "🎂 Age: " + (age || '—') + "%0A" +
-      "📱 Mobile: " + (mobile || '—') + "%0A" +
-      "📍 Address: " + (address || '—') + "%0A%0A" +
-      "🧪 Test: " + testFinal + "   (₹" + (testPriceFinal !== '—' ? testPriceFinal : '—') + ")%0A" +
-      "👨‍⚕️ Referred By: " + (refby || 'Self') + "%0A" +
-      "📅 Preferred Date: " + (date || 'Not set') + "%0A%0A" +
-      "💳 Paid: ₹" + paid + "%0A" +
-      "📝 Due: ₹" + due;
-
     if (!patientName || !mobile) {
       alert("⚠️ Please enter Patient Name and Mobile Number before submitting.");
       return;
     }
 
+    let testListStr = "";
+    let totalCartAmount = 0;
+    if (cart.length === 0) {
+      testListStr = "❌ No test selected";
+    } else {
+      cart.forEach((item, idx) => {
+        testListStr += `${idx+1}. ${item.name} - ₹${item.price}\n`;
+        totalCartAmount += item.price;
+      });
+      testListStr += `\n💰 TOTAL: ₹${totalCartAmount}`;
+    }
+
+    let message = 
+      "🧬 RAJAN PATH LAB MULTI-TEST BOOKING%0A%0A" +
+      "👤 Name: " + (patientName || '—') + "%0A" +
+      "🎂 Age: " + (age || '—') + "%0A" +
+      "📱 Mobile: " + mobile + "%0A" +
+      "📍 Address: " + (address || '—') + "%0A%0A" +
+      "📋 SELECTED TESTS:%0A" + encodeURIComponent(testListStr).replace(/%0A/g, '%0A') + "%0A%0A" +
+      "👨‍⚕️ Referred By: " + (refby || 'Self') + "%0A" +
+      "📅 Preferred Date: " + (date || 'Not set') + "%0A%0A" +
+      "💳 Paid: ₹" + paid + "%0A" +
+      "📝 Due: ₹" + due;
+
+    // clean encoding for whatsapp newlines
+    message = message.replace(/\n/g, '%0A');
     const whatsappNumber = "918709946177";
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
   };
 
-  // set default today's date for better ux
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('date').value = today;
-
-  // initialize: no test selected
-  clearSelection();
+  // initial cart UI
+  updateCartUI();
 </script>
 </body>
 </html>
