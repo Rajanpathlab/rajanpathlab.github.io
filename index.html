@@ -2,128 +2,451 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajan Path Lab | Premium Diagnostics</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Rajan Path Lab | Premium Diagnostics — Accurate Care</title>
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --primary-blue: #0a2e5c; 
-            --accent-teal: #00a8a8;  
-            --soft-white: #f8fafc;   
-            --urgent-red: #e63946;   
-            --text-dark: #1e293b;
-            --thyro-orange: #ff6600;
-            --lal-blue: #ed1c24;
-            --path-purple: #662d91;
-            --grad-start: #113a69; 
-            --grad-end: #0dbba6;
+            --premium-blue: #0B2F5C;
+            --premium-teal: #14B89C;
+            --premium-gold: #F5B042;
+            --premium-dark: #111827;
+            --premium-soft: #F1F5F9;
+            --premium-white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.92);
+            --shadow-premium: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
+            --card-radius: 28px;
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-            margin: 0; padding: 0;
-            background: var(--soft-white);
-            color: var(--text-dark);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background: var(--premium-soft);
+            color: #1E293B;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Premium Gradient & Glass */
+        .glass-nav {
+            background: rgba(11, 47, 92, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 20px 5%;
+            background: var(--premium-blue);
+            padding: 18px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            position: sticky; top: 0; z-index: 1000;
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
 
-        header h1 { margin: 0; font-size: 26px; letter-spacing: 1px; font-weight: 800; }
-        header h1 span { color: var(--accent-teal); }
-
-        nav a { 
-            color: #e2e8f0; 
-            margin-left: 25px; 
-            text-decoration: none; 
-            font-weight: 600; 
-            font-size: 18px; 
-            transition: 0.3s;
+        header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #FFFFFF 30%, #A5F0E0 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
-        nav a:hover { color: var(--accent-teal); }
 
-        .hero {
-            background: linear-gradient(135deg, var(--grad-start) 0%, var(--grad-end) 100%);
-            color: white; 
-            text-align: center; 
-            padding: 120px 20px;
+        header h1 span {
+            background: none;
+            color: var(--premium-teal);
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+
+        nav a {
+            color: #EFF6FF;
+            margin-left: 28px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: 0.25s;
             position: relative;
         }
-        
-        .hero h2 {
-            color: white;
-            font-size: 4rem; 
-            font-weight: 700;
-            max-width: 900px;
-            margin: 0 auto 40px auto;
+
+        nav a:hover {
+            color: var(--premium-teal);
+        }
+
+        /* Premium Hero */
+        .hero-premium {
+            background: radial-gradient(circle at 10% 30%, #0B2F5C, #052040);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 130px 20px 110px;
+        }
+
+        .hero-premium::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.08"><path fill="%2314B89C" d="M0 0 L800 0 L800 800 L0 800z M400 200 L600 400 L400 600 L200 400Z"/></svg>') repeat;
+            top: -50%;
+            left: -50%;
+            animation: slowDrift 40s linear infinite;
+        }
+
+        @keyframes slowDrift {
+            0% { transform: translate(0,0) rotate(0deg);}
+            100% { transform: translate(10%,5%) rotate(3deg);}
+        }
+
+        .hero-premium h2 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            max-width: 950px;
+            margin: 0 auto 30px;
+            position: relative;
+            background: linear-gradient(135deg, #FFFFFF, #B9F6E8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
             line-height: 1.2;
         }
 
-        .btn-container { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
-        .btn-book, .btn-report { background: #e63946; padding: 18px 35px; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 1.1rem; transition: 0.3s; }
-        .btn-book:hover, .btn-report:hover { background: #c52b36; transform: scale(1.05); }
-
-        .strip {
-            background: #ffffff;
-            border-bottom: 2px solid #ddd;
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--primary-blue);
+        .btn-group {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 3;
         }
-        
-        .strip-content { display: inline-block; text-align: left; }
-        .strip-item { font-size: 1.6rem; font-weight: 600; display: flex; align-items: center; margin-bottom: 15px; }
-        .strip-item:last-child { margin-bottom: 0; }
-        .strip i { color: var(--accent-teal); margin-right: 15px; font-size: 1.8rem; }
 
-        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
-        h2 { color: var(--primary-blue); margin-bottom: 40px; font-size: 32px; font-weight: 800; }
+        .btn-primary, .btn-secondary {
+            padding: 14px 38px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 60px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+        }
 
-        .about-container { display: flex; align-items: center; gap: 50px; text-align: left; flex-wrap: wrap; }
-        .about-text { flex: 1; min-width: 300px; }
-        .about-text h3 { color: var(--accent-teal); font-size: 24px; margin-top: 25px; }
-        .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
-        .feature-item { display: flex; align-items: center; gap: 10px; font-weight: 600; }
-        .feature-item i { color: var(--accent-teal); }
+        .btn-primary {
+            background: #E63946;
+            color: white;
+            border: none;
+        }
 
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
-        .card { background: white; padding: 35px 25px; border-radius: 15px; border: 1px solid #e2e8f0; transition: 0.4s; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: var(--accent-teal); }
-        .card i { font-size: 35px; margin-bottom: 15px; }
-        .card h3 { margin: 10px 0; font-size: 1.2rem; color: var(--primary-blue); }
-        .card p { margin: 5px 0; font-size: 0.95rem; color: #64748b; }
+        .btn-primary:hover {
+            background: #C92D3A;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(230,57,70,0.4);
+        }
 
-        .partner-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-        .partner-item { background: white; padding: 25px; border-radius: 20px; width: 180px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-bottom: 4px solid #ddd; }
-        .partner-item i { font-size: 40px; margin-bottom: 10px; }
-        .partner-item p { font-weight: 800; margin: 0; font-size: 15px; }
+        .btn-secondary {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.35);
+        }
 
-        .map-container { margin-top: 30px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.2); max-width: 900px; margin-left: auto; margin-right: auto; }
+        .btn-secondary:hover {
+            background: rgba(20,184,156,0.8);
+            transform: translateY(-4px);
+            border-color: transparent;
+        }
 
-        footer { background: var(--primary-blue); color: #cbd5e1; padding: 60px 20px; text-align: center; }
-        .footer-links a { color:white; text-decoration:none; margin:0 15px; font-size: 1.1rem; transition: 0.3s; }
-        .footer-links a:hover { color: var(--accent-teal); }
-        
-        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        /* premium info strip */
+        .info-strip-premium {
+            background: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #E2E8F0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
 
-        @media (max-width: 768px) {
-            header { flex-direction: column; text-align: center; }
-            nav { margin-top: 15px; }
-            nav a { margin: 0 5px; font-size: 14px; }
-            .hero h2 { font-size: 2.2rem; }
-            .strip-item { font-size: 1.1rem; }
-            .about-features { grid-template-columns: 1fr; }
+        .info-strip-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--premium-blue);
+        }
+
+        .info-strip-item i {
+            font-size: 1.7rem;
+            color: var(--premium-teal);
+        }
+
+        /* Section styles */
+        .section-premium {
+            padding: 80px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--premium-blue);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--premium-teal);
+            margin: 16px auto 0;
+            border-radius: 4px;
+        }
+
+        .about-grid {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .feature-grid-premium {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 600;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.03);
+            transition: 0.2s;
+            border: 1px solid #E9EEF3;
+        }
+
+        .feature-card i {
+            font-size: 28px;
+            color: var(--premium-teal);
+        }
+
+        /* Cards grid */
+        .card-grid-modern {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .premium-card {
+            background: white;
+            border-radius: 28px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 10px 25px -12px rgba(0,0,0,0.1);
+            border: 1px solid #EEF2F8;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-premium);
+            border-color: var(--premium-teal);
+        }
+
+        .premium-card i {
+            font-size: 42px;
+            background: linear-gradient(145deg, var(--premium-blue), var(--premium-teal));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 18px;
+        }
+
+        /* Partner badges */
+        .partner-badge {
+            background: white;
+            border-radius: 40px;
+            padding: 18px 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 800;
+            box-shadow: 0 8px 14px rgba(0,0,0,0.05);
+        }
+
+        /* MODAL GLASS */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(10, 30, 50, 0.85);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-container {
+            background: white;
+            max-width: 520px;
+            width: 90%;
+            border-radius: 40px;
+            padding: 30px 28px;
+            box-shadow: 0 40px 70px rgba(0,0,0,0.4);
+            position: relative;
+            transform: scale(0.97);
+            transition: transform 0.25s;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px; right: 24px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #64748B;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 24px;
+            border: 1.5px solid #E2E8F0;
+            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--premium-teal);
+            box-shadow: 0 0 0 3px rgba(20,184,156,0.2);
+        }
+
+        .submit-btn {
+            background: var(--premium-blue);
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: var(--premium-teal);
+        }
+
+        .report-list {
+            max-height: 340px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .report-item {
+            background: #F8FAFE;
+            border-radius: 20px;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-left: 5px solid var(--premium-teal);
+        }
+
+        .small-download-btn {
+            background: #14B89C;
+            padding: 8px 16px;
+            border-radius: 40px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* map */
+        .map-glow {
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 20px 30px -15px rgba(0,0,0,0.2);
+            margin-top: 30px;
+        }
+
+        footer {
+            background: #0A2540;
+            color: #B9D0E5;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: #25D366;
+            padding: 14px 26px;
+            border-radius: 60px;
+            color: white;
+            font-weight: bold;
+            z-index: 1050;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: 0.2s;
+        }
+
+        @media (max-width: 760px) {
+            header { flex-direction: column; gap: 12px; }
+            nav a { margin: 0 12px; font-size: 0.85rem; }
+            .hero-premium h2 { font-size: 2.2rem; }
+            .section-title { font-size: 1.9rem; }
         }
     </style>
 </head>
@@ -132,106 +455,242 @@
 <header>
     <h1>RAJAN <span>PATH LAB</span></h1>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="tests.html">Tests</a>
-        <a href="book.html">Book Test</a>
-        <a href="report.html">Download Report</a>
-        <a href="contact.html">About</a>
+        <a href="#" id="navHome">Home</a>
+        <a href="#" id="navTests">Tests</a>
+        <a href="#" id="navBookModal">Book Test</a>
+        <a href="#" id="navReportModal">Download Report</a>
+        <a href="#" id="navAbout">About</a>
     </nav>
 </header>
 
-<div class="hero">
-    <h2>Reliable Diagnostics with <br>Advanced Technology</h2>
-    <div class="btn-container">
-        <a class="btn-book" href="book.html">Book Test</a>
-        <a class="btn-report" href="report.html">Download Report</a>
+<div class="hero-premium">
+    <h2>AI-Powered Diagnostics <br> with Human Care</h2>
+    <div class="btn-group">
+        <a href="#" class="btn-primary" id="heroBookBtn"><i class="fas fa-calendar-check"></i> Book Appointment</a>
+        <a href="#" class="btn-secondary" id="heroReportBtn"><i class="fas fa-file-alt"></i> Get Reports</a>
     </div>
 </div>
 
-<div class="strip">
-    <div class="strip-content">
-        <div class="strip-item"><i class="fas fa-map-marker-alt"></i> Manahar Bhushra Pandwa Patan Road</div>
-        <div class="strip-item"><i class="fas fa-phone"></i> 8709946177 / 9931002450</div>
-    </div>
+<div class="info-strip-premium">
+    <div class="info-strip-item"><i class="fas fa-map-pin"></i> Manahar Bhushra, Pandwa Patan Road</div>
+    <div class="info-strip-item"><i class="fas fa-phone-alt"></i> 8709946177 / 9931002450</div>
+    <div class="info-strip-item"><i class="fas fa-clock"></i> Open Daily: 7 AM – 9 PM</div>
 </div>
 
-<section id="about" style="background: white;">
-    <div class="about-container">
+<!-- About Section -->
+<section id="aboutSection" class="section-premium">
+    <div class="about-grid">
         <div class="about-text">
-            <h2>About Rajan Path Lab</h2>
-            <p>Situated in <b>Manahar Bhushra (Pandwa Patan Road)</b>, Rajan Path Lab has established itself as a trusted name in diagnostic healthcare. We are built on the foundational pillars of <b>Clinical Precision, Diagnostic Accuracy, and Ethical Practices</b>. We firmly believe that the cornerstone of effective treatment is an accurate, timely diagnosis. By combining cutting-edge technology with a commitment to integrity, we ensure that every patient receives the highest standard of care.</p>
-            <h3>Why Choose Us?</h3>
-            <div class="about-features">
-                <div class="feature-item"><i class="fas fa-check-circle"></i> High-Precision Analyzers</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Zero-Error Protocol</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Fast Digital Reports</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Transparent Billing</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> 7 Days Open</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Expert Pathology</div>
+            <h2 class="section-title" style="text-align:left; margin-bottom:20px;">About Rajan Path Lab</h2>
+            <p style="font-size:1.05rem; line-height:1.5">Situated in <strong>Manahar Bhushra (Pandwa Patan Road)</strong>, Rajan Path Lab delivers world-class diagnostic accuracy with ethical standards. Our advanced analyzers and zero-error protocol make us the most reliable partner for doctors and patients.</p>
+            <div class="feature-grid-premium">
+                <div class="feature-card"><i class="fas fa-chart-line"></i> High-Precision Analyzers</div>
+                <div class="feature-card"><i class="fas fa-shield-alt"></i> Zero-Error Protocol</div>
+                <div class="feature-card"><i class="fas fa-mobile-alt"></i> Fast Digital Reports</div>
+                <div class="feature-card"><i class="fas fa-rupee-sign"></i> Transparent Billing</div>
+                <div class="feature-card"><i class="fas fa-calendar-week"></i> Open 7 Days</div>
+                <div class="feature-card"><i class="fas fa-user-md"></i> Expert Pathologists</div>
             </div>
         </div>
-        <div class="about-text" style="text-align: center;">
-            <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width: 250px; opacity: 0.8;">
+        <div style="flex:0.7; text-align:center;">
+            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922561.png" alt="Lab Icon" style="width:220px; opacity:0.9;">
         </div>
     </div>
 </section>
 
-<section style="background: #f1f5f9;">
-    <h2>Our Collection Centers</h2>
-    <div class="grid-container">
-        <div class="card" style="border-left: 5px solid #e63946;">
-            <i class="fas fa-hospital-user" style="color: #e63946;"></i>
-            <h3>J R MEDICAL</h3>
-            <p>Chilbil Chowk, Manhar</p>
-            <p style="color: #e63946; font-weight: bold;">Fasting Samples (Khali Pet)</p>
-        </div>
-        <div class="card" style="border-left: 5px solid #00a8a8;">
-            <i class="fas fa-house-chimney" style="color: #00a8a8;"></i>
-            <h3>Home Collection</h3>
-            <p>Professional Pickup Service</p>
-            <p style="font-weight: bold; color: #1e293b;">Charge: ₹50</p>
-        </div>
+<!-- Collection Centers -->
+<section class="section-premium" style="background:#F8FCFE; border-radius: 60px; margin: 20px auto;">
+    <h2 class="section-title">Collection Centers</h2>
+    <div class="card-grid-modern">
+        <div class="premium-card"><i class="fas fa-hospital-user" style="color:#E63946;"></i><h3>J R MEDICAL</h3><p>Chilbil Chowk, Manhar</p><span style="background:#E6394610; padding:4px 12px; border-radius:40px; font-size:0.8rem;">Fasting Samples</span></div>
+        <div class="premium-card"><i class="fas fa-truck-medical"></i><h3>Home Collection</h3><p>Professional Phlebotomist</p><strong style="color:var(--premium-teal);">₹50 Only</strong></div>
     </div>
 </section>
 
-<section>
-    <h2>Our Diagnostic Partners</h2>
-    <div class="partner-grid">
-        <div class="partner-item" style="border-color: var(--thyro-orange);"><i class="fas fa-microscope" style="color: var(--thyro-orange);"></i><p>Thyrocare</p></div>
-        <div class="partner-item" style="border-color: var(--lal-blue);"><i class="fas fa-vials" style="color: var(--lal-blue);"></i><p>Dr. Lal PathLabs</p></div>
-        <div class="partner-item" style="border-color: var(--path-purple);"><i class="fas fa-flask" style="color: var(--path-purple);"></i><p>Pathkind Labs</p></div>
+<!-- Diagnostic Partners -->
+<section class="section-premium">
+    <h2 class="section-title">Trusted Partners</h2>
+    <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap;">
+        <div class="partner-badge"><i class="fas fa-microscope" style="color:#FF6600;"></i> Thyrocare</div>
+        <div class="partner-badge"><i class="fas fa-vials" style="color:#ED1C24;"></i> Dr. Lal PathLabs</div>
+        <div class="partner-badge"><i class="fas fa-flask" style="color:#662D91;"></i> Pathkind Labs</div>
     </div>
 </section>
 
-<section style="background: #ffffff;">
-    <h2>Specialized Test Menu</h2>
-    <div class="grid-container">
-        <div class="card"><i class="fas fa-microscope" style="color: #00a8a8;"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>
-        <div class="card"><i class="fas fa-vial" style="color: #ff7e5f;"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>
-        <div class="card"><i class="fas fa-dna" style="color: #662d91;"></i><h3>Aarogyam C Pro</h3><p>69 Health Parameters</p></div>
-        <div class="card"><i class="fas fa-sun" style="color: #fbc02d;"></i><h3>Vitamin D</h3><p>25-Hydroxy Bone Health</p></div>
-        <div class="card"><i class="fas fa-bolt" style="color: #0d47a1;"></i><h3>Vitamin B12</h3><p>Nerve & Energy Profile</p></div>
-        <div class="card"><i class="fas fa-bug" style="color: #c62828;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>
-        <div class="card"><i class="fas fa-heartbeat" style="color: #ec407a;"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>
-        <div class="card"><i class="fas fa-hand-holding-droplet" style="color: #ef6c00;"></i><h3>Diabetes Care</h3><p>HbA1c & Sugar</p></div>
+<!-- Specialized Test Menu -->
+<section class="section-premium" id="testsSection">
+    <h2 class="section-title">Advanced Test Menu</h2>
+    <div class="card-grid-modern">
+        <div class="premium-card"><i class="fas fa-microscope"></i><h3>CBC Test</h3><p>Complete hemogram</p></div>
+        <div class="premium-card"><i class="fas fa-liver"></i><h3>Liver Function</h3><p>LFT + enzymes</p></div>
+        <div class="premium-card"><i class="fas fa-dna"></i><h3>Aarogyam C Pro</h3><p>69 parameters</p></div>
+        <div class="premium-card"><i class="fas fa-sun"></i><h3>Vitamin D</h3><p>Bone health</p></div>
+        <div class="premium-card"><i class="fas fa-bolt"></i><h3>Vitamin B12</h3><p>Energy profile</p></div>
+        <div class="premium-card"><i class="fas fa-bug"></i><h3>Dengue NS1</h3><p>IgG/IgM</p></div>
+        <div class="premium-card"><i class="fas fa-heartbeat"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>
+        <div class="premium-card"><i class="fas fa-tint"></i><h3>HbA1c</h3><p>Diabetes care</p></div>
     </div>
 </section>
 
-<footer>
-    <h2 style="color: white;">RAJAN PATH LAB (RPL)</h2>
-    <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+<!-- Map + Footer -->
+<section class="section-premium" style="padding-bottom:20px;">
+    <h2 class="section-title">Visit Our Lab</h2>
+    <div class="map-glow">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
-    <div class="footer-links" style="margin: 30px 0;">
-        <a href="https://www.google.com/search?kgmid=%2Fg%2F11tn9qwbxl" target="_blank"><i class="fas fa-map-marked-alt"></i> Google Maps</a>
-        <a href="https://www.instagram.com/lab_technician_3.0?igsh=MWNsOGo1M2pzbDk0cg==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="tel:+918709946177"><i class="fas fa-phone"></i> 8709946177</a>
+</section>
+
+<footer style="background:#0B2F5C; padding: 50px 20px 30px; text-align:center;">
+    <h2 style="color:white;">RAJAN PATH LAB (RPL)</h2>
+    <div style="margin: 30px 0 20px;">
+        <a href="https://www.google.com/search?kgmid=%2Fg%2F11tn9qwbxl" target="_blank" style="color:#C9E9FF; margin:0 15px;"><i class="fab fa-google"></i> Google Maps</a>
+        <a href="https://www.instagram.com/lab_technician_3.0?igsh=MWNsOGo1M2pzbDk0cg==" target="_blank" style="color:#C9E9FF; margin:0 15px;"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="tel:+918709946177" style="color:#C9E9FF; margin:0 15px;"><i class="fas fa-phone"></i> 8709946177</a>
     </div>
-    <p>🌐 rajanpathlab.github.io</p>
-    <p style="font-size: 12px; opacity: 0.6;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
+    <p style="font-size:14px;">📍 Manahar Bhushra, Pandwa Patan Road | 📧 contact@rajanpathlab.com</p>
+    <p style="margin-top:20px; opacity:0.7;">© 2026 Rajan Path Lab — Precision | Ethics | Care</p>
 </footer>
 
-<a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/918709946177" class="whatsapp-float"><i class="fab fa-whatsapp"></i> Book via WhatsApp</a>
 
+<!-- BOOKING & REPORT MODALS + JS -->
+<div id="bookingModal" class="modal-overlay">
+    <div class="modal-container">
+        <span class="modal-close" id="closeBookingModal">&times;</span>
+        <h3 style="font-size:28px; margin-bottom:20px;">🔬 Book a Test</h3>
+        <form id="bookingForm">
+            <div class="form-group"><label>Full Name *</label><input type="text" id="patName" required placeholder="e.g. Rajesh Kumar"></div>
+            <div class="form-group"><label>Mobile Number *</label><input type="tel" id="patMobile" required placeholder="10 digit mobile"></div>
+            <div class="form-group"><label>Select Test</label><select id="testSelect">
+                <option>CBC (Complete Blood Count)</option><option>Liver Function Test</option><option>Aarogyam C Pro (69 params)</option>
+                <option>Vitamin D & B12 Combo</option><option>Dengue Profile</option><option>Thyroid Profile (T3,T4,TSH)</option><option>HbA1c</option>
+            </select></div>
+            <div class="form-group"><label>Preferred Date</label><input type="date" id="prefDate"></div>
+            <button type="submit" class="submit-btn"><i class="fas fa-check-circle"></i> Confirm Booking</button>
+        </form>
+        <p id="bookingMsg" style="margin-top:15px; font-size:0.85rem;"></p>
+    </div>
+</div>
+
+<div id="reportModal" class="modal-overlay">
+    <div class="modal-container">
+        <span class="modal-close" id="closeReportModal">&times;</span>
+        <h3 style="font-size:26px;">📄 Download Reports</h3>
+        <p>Enter registered mobile number to access reports</p>
+        <div class="form-group"><label>Mobile Number *</label><input type="tel" id="reportMobile" placeholder="9876543210"></div>
+        <button id="fetchReportsBtn" class="submit-btn" style="background:#14B89C;">Fetch My Reports</button>
+        <div id="reportListArea" class="report-list"></div>
+    </div>
+</div>
+
+<script>
+    // localStorage management
+    let bookings = JSON.parse(localStorage.getItem('rpl_bookings')) || [];
+
+    function saveBookings() {
+        localStorage.setItem('rpl_bookings', JSON.stringify(bookings));
+    }
+
+    // Helper: generate report HTML per booking
+    function generateMockReportHTML(booking) {
+        const testName = booking.testName;
+        const patient = booking.name;
+        const date = booking.date || new Date().toLocaleDateString();
+        let resultData = "";
+        if(testName.includes("CBC")) resultData = "Hb: 13.8 g/dL, WBC: 7200, Platelets: 2.8L, within normal limits";
+        else if(testName.includes("Liver")) resultData = "SGOT: 32 U/L, SGPT: 28 U/L, Bilirubin: 0.8 mg/dL (Normal)";
+        else if(testName.includes("Aarogyam")) resultData = "Lipid profile within range, Kidney function stable, Thyroid normal";
+        else if(testName.includes("Vitamin D")) resultData = "Vitamin D: 34 ng/mL (Optimal), B12: 480 pg/mL";
+        else if(testName.includes("Dengue")) resultData = "NS1 Antigen: Negative, IgG: Non-reactive, IgM: Non-reactive";
+        else if(testName.includes("Thyroid")) resultData = "TSH: 2.1 µIU/mL, T3: 1.2 ng/mL, T4: 7.8 µg/dL (Euthyroid)";
+        else resultData = "All parameters within reference range. Consult doctor for detailed interpretation.";
+        return `
+            <div style="font-family: 'Inter', monospace; max-width:700px; margin:0 auto; background:white; border-radius:24px; padding:30px; box-shadow:0 10px 25px rgba(0,0,0,0.1);">
+                <h2 style="color:#0B2F5C;">RAJAN PATH LAB</h2>
+                <p><strong>Patient:</strong> ${patient} | <strong>Test:</strong> ${testName} | <strong>Collection Date:</strong> ${date}</p>
+                <hr/>
+                <h3>🔬 Report Summary</h3>
+                <p>${resultData}</p>
+                <p><em>** Digitally generated report **</em></p>
+                <p style="font-size:12px;">Rajan Path Lab | Accuracy assured. This is a simulated diagnostic report for demo.</p>
+            </div>
+        `;
+    }
+
+    // Display report download window
+    function downloadReportAsHTML(booking) {
+        const reportHTML = generateMockReportHTML(booking);
+        const win = window.open();
+        win.document.write(`<!DOCTYPE html><html><head><title>RPL Report - ${booking.name}</title><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"></head><body style="background:#EFF3F8; display:flex; justify-content:center; padding:30px;">${reportHTML}</body></html>`);
+        win.document.close();
+    }
+
+    // booking logic
+    const bookingModal = document.getElementById('bookingModal');
+    const reportModal = document.getElementById('reportModal');
+    const bookingForm = document.getElementById('bookingForm');
+    const bookingMsg = document.getElementById('bookingMsg');
+
+    function openBookingModal() { bookingModal.classList.add('active'); }
+    function closeBookingModal() { bookingModal.classList.remove('active'); bookingMsg.innerText = ''; document.getElementById('bookingForm').reset(); }
+    function openReportModal() { reportModal.classList.add('active'); document.getElementById('reportListArea').innerHTML = ''; document.getElementById('reportMobile').value = ''; }
+    function closeReportModal() { reportModal.classList.remove('active'); }
+
+    document.getElementById('heroBookBtn').addEventListener('click', (e) => { e.preventDefault(); openBookingModal(); });
+    document.getElementById('navBookModal').addEventListener('click', (e) => { e.preventDefault(); openBookingModal(); });
+    document.getElementById('heroReportBtn').addEventListener('click', (e) => { e.preventDefault(); openReportModal(); });
+    document.getElementById('navReportModal').addEventListener('click', (e) => { e.preventDefault(); openReportModal(); });
+    document.getElementById('closeBookingModal').onclick = closeBookingModal;
+    document.getElementById('closeReportModal').onclick = closeReportModal;
+    window.onclick = (e) => { if(e.target === bookingModal) closeBookingModal(); if(e.target === reportModal) closeReportModal(); };
+
+    bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('patName').value.trim();
+        const mobile = document.getElementById('patMobile').value.trim();
+        const testName = document.getElementById('testSelect').value;
+        const prefDate = document.getElementById('prefDate').value || new Date().toISOString().slice(0,10);
+        if(!name || !mobile || mobile.length < 10) { bookingMsg.innerText = "❌ Please enter valid name & 10-digit mobile"; return; }
+        const bookingId = 'RPL' + Date.now() + Math.floor(Math.random()*1000);
+        const newBooking = { id: bookingId, name, mobile, testName, date: prefDate, status: "Report Ready" };
+        bookings.push(newBooking);
+        saveBookings();
+        bookingMsg.innerHTML = `✅ Booking confirmed! ID: ${bookingId}. We'll contact you. Use mobile to download report.`;
+        bookingForm.reset();
+        setTimeout(() => { closeBookingModal(); }, 2000);
+    });
+
+    // fetch report based on mobile
+    document.getElementById('fetchReportsBtn').addEventListener('click', () => {
+        const mobileNum = document.getElementById('reportMobile').value.trim();
+        const listDiv = document.getElementById('reportListArea');
+        if(!mobileNum) { listDiv.innerHTML = '<p style="color:red;">📱 Enter mobile number</p>'; return; }
+        const userBookings = bookings.filter(b => b.mobile === mobileNum);
+        if(userBookings.length === 0) {
+            listDiv.innerHTML = '<div style="background:#FFF2F0; padding:16px; border-radius:24px;">⚠️ No reports found for this number. Please book a test first.</div>';
+            return;
+        }
+        listDiv.innerHTML = `<p style="margin-bottom:12px;"><strong>${userBookings.length}</strong> report(s) found</p>`;
+        userBookings.forEach(booking => {
+            const div = document.createElement('div');
+            div.className = 'report-item';
+            div.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center;"><div><strong>${booking.testName}</strong><br><small>Date: ${booking.date} | ID: ${booking.id}</small></div><button class="small-download-btn" data-id="${booking.id}"><i class="fas fa-download"></i> Report</button></div>`;
+            listDiv.appendChild(div);
+        });
+        document.querySelectorAll('.small-download-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const bid = btn.getAttribute('data-id');
+                const found = bookings.find(b => b.id === bid);
+                if(found) downloadReportAsHTML(found);
+                else alert("Report not found");
+            });
+        });
+    });
+
+    // Smooth navigation links
+    document.getElementById('navHome').addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    document.getElementById('navTests').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('testsSection').scrollIntoView({ behavior: 'smooth' }); });
+    document.getElementById('navAbout').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('aboutSection').scrollIntoView({ behavior: 'smooth' }); });
+</script>
 </body>
 </html>
