@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Premier Reports | Classic WhatsApp Delivery</title>
+  <title>Premier Reports | Direct WhatsApp to Doctor</title>
   <style>
     * {
       margin: 0;
@@ -132,6 +132,19 @@
       justify-content: center;
       border-radius: 12px;
       font-size: 1rem;
+    }
+
+    .doctor-note {
+      background: #f0f4fa;
+      padding: 8px 14px;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      color: #075e54;
+      margin-bottom: 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #d4af3750;
     }
 
     .classic-input {
@@ -299,15 +312,20 @@
     <div class="header-flex">
       <h1>
         📋 REPORT PORTAL
-        <span class="classic-badge">WHATSAPP PREMIUM</span>
+        <span class="classic-badge">WHATSAPP DIRECT</span>
       </h1>
     </div>
     <div class="header-sub">
-      ◆ Patient ID required · Report instantly sent to WhatsApp ◆ Mobile number optional but recommended
+      ◆ Patient ID required · Report instantly sent to Doctor's WhatsApp ◆
     </div>
   </div>
 
   <div class="form-container">
+    <!-- Doctor info badge: pre-configured WhatsApp number -->
+    <div class="doctor-note">
+      <span>👨‍⚕️</span> Doctor's WhatsApp: <strong>+91 8709946177</strong> — All reports will be delivered here instantly
+    </div>
+
     <!-- PATIENT ID - MANDATORY -->
     <div class="input-group">
       <div class="input-label">
@@ -315,18 +333,18 @@
       </div>
       <input type="text" id="patientIdInput" class="classic-input" placeholder="e.g., PAT-5698 , PS7890 , HOSP-1001" autocomplete="off">
       <div class="optional-note">
-        🔍 Enter ID → Report is instantly recognized & ready
+        🔍 Enter ID → Report is instantly recognized & sent to doctor
       </div>
     </div>
 
-    <!-- MOBILE NUMBER - Optional for WhatsApp -->
+    <!-- MOBILE NUMBER - Optional (patient's own number for reference) -->
     <div class="input-group">
       <div class="input-label">
-        <span>📞</span> MOBILE NUMBER <span style="color:#7f8c8d; font-weight:normal;">(optional)</span>
+        <span>📞</span> PATIENT'S MOBILE <span style="color:#7f8c8d; font-weight:normal;">(optional)</span>
       </div>
       <input type="tel" id="mobileNumberInput" class="classic-input" placeholder="+91 9876543210 or 9876543210" autocomplete="off">
       <div class="optional-note">
-        💡 Required for WhatsApp delivery (add your number to receive report)
+        💡 Optional: Patient's contact for records (report goes to doctor's WhatsApp)
       </div>
     </div>
 
@@ -336,14 +354,14 @@
       <div class="insight-text" id="insightMessage">Patient ID matched — Report ready</div>
     </div>
 
-    <!-- MAIN ACTION: SEND TO WHATSAPP -->
+    <!-- MAIN ACTION: SEND REPORT TO DOCTOR'S WHATSAPP -->
     <button id="whatsappSendBtn" class="whatsapp-premium-btn">
-      <span>📲</span> SEND REPORT TO WHATSAPP →
+      <span>📲</span> SEND REPORT TO DOCTOR'S WHATSAPP →
     </button>
 
     <!-- Status messages -->
     <div id="statusMsg" class="status-area">
-      ◆ Enter Patient ID → Report will be sent directly to your WhatsApp
+      ◆ Enter Patient ID → Report will be sent directly to Doctor's WhatsApp (+91 8709946177)
     </div>
 
     <div class="premium-footer">
@@ -410,7 +428,7 @@
       }]
     ]);
 
-    // Generic premium fallback: any valid Patient ID generates a report
+    // Generic premium fallback: any valid Patient ID generates a professional report
     function getPatientReport(patientId) {
       if (!patientId || patientId.trim() === '') return null;
       const trimmedId = patientId.trim().toUpperCase();
@@ -435,7 +453,7 @@
       if (!pid || pid.trim() === '') {
         insightBox.style.display = 'none';
         currentPatientData = null;
-        statusDiv.innerHTML = '◆ Enter Patient ID → Report will be sent directly to your WhatsApp';
+        statusDiv.innerHTML = '◆ Enter Patient ID → Report will be sent directly to Doctor\'s WhatsApp (+91 8709946177)';
         statusDiv.classList.remove('status-success', 'status-error');
         return;
       }
@@ -445,7 +463,7 @@
         currentPatientData = patientInfo;
         insightBox.style.display = 'flex';
         insightMsgSpan.innerHTML = `✅ Patient ID: ${pid.trim().toUpperCase()} — ${patientInfo.name} <span style="color:#b8860b;"> | Report ready</span><br>📄 ${patientInfo.reportTitle} (${patientInfo.lastVisit})`;
-        statusDiv.innerHTML = `🔍 Report found! Patient ID (${pid.trim().toUpperCase()}) report is ready. Click "SEND REPORT TO WHATSAPP".`;
+        statusDiv.innerHTML = `🔍 Report found! Patient ID (${pid.trim().toUpperCase()}) report is ready. Click to send directly to Doctor's WhatsApp.`;
         statusDiv.classList.remove('status-error');
         statusDiv.classList.add('status-success');
       } else {
@@ -457,76 +475,70 @@
 
     patientIdInput.addEventListener('input', updateInstantInsight);
 
-    // Generate beautiful English report message for WhatsApp
-    function generateWhatsAppMessage(patientId, mobileNumber, patientReport) {
+    // Generate beautiful English report message for Doctor's WhatsApp
+    function generateWhatsAppMessage(patientId, patientMobile, patientReport) {
       const pidClean = patientId.trim().toUpperCase();
-      const mobileClean = mobileNumber ? mobileNumber.trim() : '';
-      const mobileDisplay = mobileClean === '' ? 'Not provided (optional)' : mobileClean;
+      const patientMobileClean = patientMobile ? patientMobile.trim() : 'Not provided';
       const now = new Date();
       const dateTime = now.toLocaleString('en-US', { hour12: true, year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
       
-      let reportText = `🏥 *PREMIUM MEDICAL REPORT* 🏥\n\n`;
+      let reportText = `🏥 *NEW PATIENT REPORT REQUEST* 🏥\n\n`;
+      reportText += `📌 *PATIENT DETAILS:*\n`;
       reportText += `▸ Patient ID      : ${pidClean}\n`;
       reportText += `▸ Patient Name    : ${patientReport.name}\n`;
-      reportText += `▸ Report Title    : ${patientReport.reportTitle}\n`;
-      reportText += `▸ Last Visit / Ref: ${patientReport.lastVisit}\n`;
-      reportText += `▸ Mobile (provided): ${mobileDisplay}\n`;
-      reportText += `▸ Generated on    : ${dateTime}\n`;
-      reportText += `\n📋 *REPORT SUMMARY:*\n${patientReport.reportSummary}\n\n`;
+      reportText += `▸ Patient's Mobile : ${patientMobileClean}\n`;
+      reportText += `▸ Last Visit      : ${patientReport.lastVisit}\n`;
+      reportText += `▸ Request Time    : ${dateTime}\n\n`;
+      reportText += `📋 *MEDICAL REPORT SUMMARY:*\n`;
+      reportText += `${patientReport.reportTitle}\n`;
+      reportText += `${patientReport.reportSummary}\n\n`;
       reportText += `✨ *CLASSIC PREMIUM HEALTH SYSTEM* ✨\n`;
-      reportText += `🔒 This report is securely delivered via WhatsApp. Thank you for choosing premium service.`;
+      reportText += `🔒 This report was requested via patient portal. Please review and take necessary action.`;
       return reportText;
     }
 
-    // Clean mobile number for WhatsApp API (supports international format)
-    function cleanMobileForWhatsApp(mobile) {
-      if (!mobile) return '';
-      let cleaned = mobile.trim();
-      cleaned = cleaned.replace(/[\s\-\(\)]/g, '');
-      if (cleaned.startsWith('+')) {
-        cleaned = cleaned.replace(/[^\d+]/g, '');
-      } else {
-        cleaned = cleaned.replace(/[^\d]/g, '');
-        if (cleaned.length === 10 && /[789]/.test(cleaned[0])) {
-          cleaned = '+91' + cleaned;
-        } else if (cleaned.length === 12 && cleaned.startsWith('91')) {
-          cleaned = '+' + cleaned;
-        } else if (cleaned.length >= 8 && !cleaned.startsWith('+')) {
-          cleaned = '+' + cleaned;
-        }
+    // Fixed: Doctor's WhatsApp number (as provided by user)
+    const DOCTOR_WHATSAPP = "8709946177";
+    
+    // Clean mobile number for WhatsApp API (ensures +91 prefix for Indian numbers)
+    function cleanDoctorNumberForWhatsApp(number) {
+      let cleaned = number.trim().replace(/[\s\-\(\)]/g, '');
+      // Remove any '+' if present and re-add correctly
+      cleaned = cleaned.replace(/^\+/, '');
+      // If it's 10 digits and starts with 7/8/9, add +91
+      if (/^\d{10}$/.test(cleaned) && /[789]/.test(cleaned[0])) {
+        return '+91' + cleaned;
+      }
+      // If it's 12 digits starting with 91, add + prefix
+      if (/^91\d{10}$/.test(cleaned)) {
+        return '+' + cleaned;
+      }
+      // Otherwise just add + if missing
+      if (!cleaned.startsWith('+')) {
+        return '+' + cleaned;
       }
       return cleaned;
     }
 
-    // Open WhatsApp with pre-filled message
-    function sendToWhatsApp(mobileNumber, message) {
-      if (!mobileNumber || mobileNumber.trim() === '') {
-        statusDiv.innerHTML = "❌ Please enter a mobile number to receive report on WhatsApp (required for delivery).";
+    // Send report to Doctor's WhatsApp
+    function sendToDoctorWhatsApp(message) {
+      const cleanDoctorNumber = cleanDoctorNumberForWhatsApp(DOCTOR_WHATSAPP);
+      if (!cleanDoctorNumber || cleanDoctorNumber.length < 8) {
+        statusDiv.innerHTML = "⚠️ Configuration error: Doctor's WhatsApp number is invalid. Please contact support.";
         statusDiv.classList.add('status-error');
-        mobileInput.classList.add('error-shake');
-        setTimeout(() => mobileInput.classList.remove('error-shake'), 600);
-        return false;
-      }
-      
-      const cleanNumber = cleanMobileForWhatsApp(mobileNumber);
-      if (!cleanNumber || cleanNumber.length < 8) {
-        statusDiv.innerHTML = "⚠️ Invalid mobile number. Use format like 9876543210 or +919876543210";
-        statusDiv.classList.add('status-error');
-        mobileInput.classList.add('error-shake');
-        setTimeout(() => mobileInput.classList.remove('error-shake'), 600);
         return false;
       }
       
       const encodedMsg = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodedMsg}`;
+      const whatsappUrl = `https://wa.me/${cleanDoctorNumber}?text=${encodedMsg}`;
       window.open(whatsappUrl, '_blank');
       return true;
     }
 
-    // Main handler: send report to WhatsApp instantly
-    async function handleSendReportToWhatsApp() {
+    // Main handler: send report to Doctor's WhatsApp instantly when patient ID is provided
+    async function handleSendReportToDoctor() {
       const patientId = patientIdInput.value;
-      const mobileNumber = mobileInput.value;
+      const patientMobile = mobileInput.value;
       
       // Validate Patient ID (mandatory)
       if (!patientId || patientId.trim() === "") {
@@ -546,7 +558,7 @@
         return;
       }
       
-      // Fetch patient report data
+      // Fetch patient report data (instant detection)
       const patientReport = getPatientReport(patientId);
       if (!patientReport) {
         statusDiv.innerHTML = "⚠️ Report not found. Please try again with a valid ID.";
@@ -554,31 +566,27 @@
         return;
       }
       
-      // Generate the WhatsApp message content
-      const whatsappMsg = generateWhatsAppMessage(patientId, mobileNumber, patientReport);
+      // Generate the WhatsApp message content for doctor
+      const whatsappMsg = generateWhatsAppMessage(patientId, patientMobile, patientReport);
       
       // UI feedback: loading state
       const originalBtnText = whatsappBtn.innerHTML;
       whatsappBtn.disabled = true;
-      whatsappBtn.innerHTML = `<span>⏳</span> PREPARING REPORT...`;
+      whatsappBtn.innerHTML = `<span>⏳</span> SENDING TO DOCTOR...`;
       statusDiv.classList.remove('status-error');
       statusDiv.classList.add('status-loading');
-      statusDiv.innerHTML = `📤 Preparing report for Patient ID ${patientId.trim().toUpperCase()} and redirecting to WhatsApp...`;
+      statusDiv.innerHTML = `📤 Sending report for Patient ID ${patientId.trim().toUpperCase()} to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP})...`;
       
       // Simulate short delay for premium feel
       setTimeout(() => {
-        const success = sendToWhatsApp(mobileNumber, whatsappMsg);
+        const success = sendToDoctorWhatsApp(whatsappMsg);
         if (success) {
           statusDiv.classList.remove('status-loading');
           statusDiv.classList.add('status-success');
-          statusDiv.innerHTML = `✅ Success! Report for Patient ID ${patientId.trim().toUpperCase()} has been sent to WhatsApp. Chat window will open.`;
+          statusDiv.innerHTML = `✅ Success! Report for Patient ID ${patientId.trim().toUpperCase()} has been sent to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP}). WhatsApp chat will open.`;
+          // Optional: clear patient mobile field? not needed, just keep UX smooth
         } else {
-          // Error message already set inside sendToWhatsApp for missing/invalid number
-          if (!mobileNumber || mobileNumber.trim() === '') {
-            statusDiv.innerHTML = "⚠️ WhatsApp delivery requires a mobile number. Please enter your number.";
-          } else {
-            statusDiv.innerHTML = "❌ Failed to open WhatsApp. Please check your number and internet connection.";
-          }
+          statusDiv.innerHTML = "❌ Failed to open WhatsApp. Please check your internet connection.";
           statusDiv.classList.add('status-error');
         }
         whatsappBtn.disabled = false;
@@ -586,14 +594,14 @@
       }, 700);
     }
     
-    whatsappBtn.addEventListener('click', handleSendReportToWhatsApp);
+    whatsappBtn.addEventListener('click', handleSendReportToDoctor);
     
     // Enter key support: if patient ID field is focused and Enter pressed, trigger send
     function handleKeyPress(e) {
       if (e.key === 'Enter') {
         e.preventDefault();
         if (patientIdInput.value.trim() !== "") {
-          handleSendReportToWhatsApp();
+          handleSendReportToDoctor();
         } else {
           statusDiv.innerHTML = "⚠️ Please enter Patient ID first (required)";
           statusDiv.classList.add('status-error');
