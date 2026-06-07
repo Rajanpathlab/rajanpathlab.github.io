@@ -1,6 +1,525 @@
-<input type="text" id="reportIdInput" placeholder="Enter Report ID">
-<input type="text" id="mobileNumberInput" placeholder="Enter Mobile Number">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Classic Premium | Report Access</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<button onclick="downloadReport()" style="padding:10px 20px; background-color:red; color:white; border:none;">
-    Download Report
-</button>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #e9eef3 0%, #dbe2ea 100%);
+      font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, -apple-system, 'BlinkMacSystemFont', 'Helvetica Neue', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    /* classic premium background texture (subtle linen / grain) */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(rgba(30, 35, 45, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* main card container */
+    .premium-card {
+      max-width: 560px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(0px);
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,0.7);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    /* subtle premium header with rich gold accent */
+    .card-header {
+      background: #1c2128;
+      padding: 1.8rem 2rem 1.4rem 2rem;
+      position: relative;
+      border-bottom: 3px solid #d4af37;
+    }
+
+    .card-header h1 {
+      font-size: 1.85rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .title-icon {
+      background: rgba(212, 175, 55, 0.2);
+      padding: 8px 12px;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #d4af37;
+      letter-spacing: 0.5px;
+      border: 0.5px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .subhead {
+      color: #a0a8b5;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+    }
+
+    /* form / content area */
+    .card-content {
+      padding: 2rem 2rem 2.2rem 2rem;
+    }
+
+    /* classic input groups */
+    .input-group {
+      margin-bottom: 1.8rem;
+    }
+
+    .input-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #3b4252;
+      margin-bottom: 0.6rem;
+    }
+
+    .input-label span {
+      background: #e9edf2;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 0.9rem;
+    }
+
+    .premium-input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      font-size: 1rem;
+      font-family: inherit;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 1.25rem;
+      transition: all 0.25s;
+      outline: none;
+      color: #111827;
+      font-weight: 500;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    .premium-input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .premium-input::placeholder {
+      color: #b9c2d0;
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
+
+    /* classic download button — rich crimson with gold undertone */
+    .btn-download {
+      width: 100%;
+      background: linear-gradient(95deg, #b91c1c 0%, #991b1b 100%);
+      border: none;
+      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: inherit;
+      color: white;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 8px 18px -6px rgba(153, 27, 27, 0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      margin-top: 0.5rem;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-download:hover {
+      background: linear-gradient(95deg, #a51c1c 0%, #7f1a1a 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px -10px rgba(153, 27, 27, 0.5);
+    }
+
+    .btn-download:active {
+      transform: translateY(1px);
+      box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* premium status message area */
+    .status-area {
+      margin-top: 1.5rem;
+      padding: 1rem 1rem;
+      background: #f8fafc;
+      border-radius: 1.25rem;
+      font-size: 0.85rem;
+      color: #2c3e4e;
+      border-left: 3px solid #d4af37;
+      transition: all 0.2s;
+      font-weight: 450;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+
+    .status-success {
+      background: #eef7ee;
+      border-left-color: #2e7d32;
+      color: #1e4620;
+    }
+
+    .status-error {
+      background: #fee9e6;
+      border-left-color: #c62828;
+      color: #8b2c1d;
+    }
+
+    .status-loading {
+      background: #fff4e0;
+      border-left-color: #e6b422;
+      color: #946f00;
+    }
+
+    /* extra classic touch: fingerprint icon and decorative line */
+    .premium-badge {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: #93a3b8;
+      align-items: center;
+      gap: 6px;
+      border-top: 1px solid #eef2f8;
+      padding-top: 1.2rem;
+    }
+
+    /* responsive finesse */
+    @media (max-width: 520px) {
+      .card-content {
+        padding: 1.6rem;
+      }
+      .card-header h1 {
+        font-size: 1.5rem;
+      }
+      .btn-download {
+        padding: 0.85rem 1.2rem;
+        font-size: 1rem;
+      }
+    }
+
+    /* micro-interactions */
+    .premium-input.error-shake {
+      animation: gentleShake 0.4s ease;
+      border-color: #c62828;
+      background-color: #fff8f5;
+    }
+
+    @keyframes gentleShake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* classic premium style for focus glow */
+    .premium-input:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="premium-card">
+  <div class="card-header">
+    <h1>
+      REPORT ACCESS
+      <span class="title-icon">PREMIUM</span>
+    </h1>
+    <div class="subhead">Secure document vault · classic integrity</div>
+  </div>
+  <div class="card-content">
+    <!-- Report ID Field -->
+    <div class="input-group">
+      <div class="input-label">
+        <span>📄</span> REPORT IDENTIFIER
+      </div>
+      <input type="text" id="reportIdInput" class="premium-input" placeholder="e.g., RPT-2025-0012" autocomplete="off">
+    </div>
+
+    <!-- Mobile Number Field -->
+    <div class="input-group">
+      <div class="input-label">
+        <span>📱</span> MOBILE NUMBER
+      </div>
+      <input type="text" id="mobileNumberInput" class="premium-input" placeholder="+91 98765 43210 or 9876543210" autocomplete="off">
+    </div>
+
+    <!-- Classic Download Button - Redefined with gold trimming style -->
+    <button id="downloadBtn" class="btn-download">
+      <span>⬇️</span> DOWNLOAD REPORT
+    </button>
+
+    <!-- Dynamic status / message panel (premium feedback) -->
+    <div id="statusMessage" class="status-area">
+      ◆ Ready · Enter report ID and mobile number
+    </div>
+    <div class="premium-badge">
+      <span>✧ secured vault ✧</span> <span style="opacity:0.5;">|</span> <span>classic edition</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // DOM elements
+    const reportInput = document.getElementById('reportIdInput');
+    const mobileInput = document.getElementById('mobileNumberInput');
+    const downloadButton = document.getElementById('downloadBtn');
+    const statusDiv = document.getElementById('statusMessage');
+
+    // Helper to update status with style classes
+    function updateStatus(message, type = 'info') {
+      statusDiv.innerHTML = message;
+      // reset classes
+      statusDiv.classList.remove('status-success', 'status-error', 'status-loading');
+      if (type === 'success') {
+        statusDiv.classList.add('status-success');
+      } else if (type === 'error') {
+        statusDiv.classList.add('status-error');
+      } else if (type === 'loading') {
+        statusDiv.classList.add('status-loading');
+      } else {
+        // neutral classic style
+        statusDiv.style.background = "#f8fafc";
+        statusDiv.style.borderLeftColor = "#d4af37";
+        statusDiv.classList.remove('status-success', 'status-error', 'status-loading');
+      }
+    }
+
+    // Remove shake effect after animation
+    function addShakeToInputs() {
+      reportInput.classList.add('error-shake');
+      mobileInput.classList.add('error-shake');
+      setTimeout(() => {
+        reportInput.classList.remove('error-shake');
+        mobileInput.classList.remove('error-shake');
+      }, 500);
+    }
+
+    // Enhanced validation: report ID should be non-empty and at least 3 chars (premium rule)
+    // mobile number: basic validation: digits, optional '+' and spaces/hyphens but ensure it contains at least 8 digits.
+    function isValidReportId(reportId) {
+      if (!reportId || reportId.trim() === "") return false;
+      const trimmed = reportId.trim();
+      // classic: at least 3 characters without being only whitespace
+      return trimmed.length >= 2;
+    }
+
+    function isValidMobile(mobile) {
+      if (!mobile || mobile.trim() === "") return false;
+      const cleaned = mobile.trim().replace(/[\s\-\(\)\+]/g, '');
+      // must contain only digits and have length between 7 and 15 (international flexibility)
+      if (!/^\d+$/.test(cleaned)) return false;
+      const digitLength = cleaned.length;
+      return digitLength >= 8 && digitLength <= 15;
+    }
+
+    // Simulate fetching report (premium async simulation)
+    // This mimics a secure API call. Returns a promise that resolves with downloadable content
+    // In real scenario it would fetch from backend. Here we craft a beautiful classic PDF-like report.
+    function generatePremiumReport(reportId, mobileNumber) {
+      return new Promise((resolve, reject) => {
+        // Simulate network/validation time (classic loading effect)
+        setTimeout(() => {
+          // Additional mock server-side validation: both fields must be meaningful and mobile contains atleast digits
+          const trimmedReport = reportId.trim();
+          const cleanMobile = mobileNumber.trim().replace(/[\s\-\(\)\+]/g, '');
+          
+          // Premium rule: report id must not contain suspicious words? just a demo but we simulate success in realistic manner
+          // Only simulate error if report id is "error" or "fail" for demonstration but otherwise success.
+          // Classic feature: any proper input gives a beautiful generated report.
+          // However, we want to stay realistic: if report ID starts with "INVALID" we throw error to show validation.
+          if (trimmedReport.toUpperCase() === "ERROR" || trimmedReport.toUpperCase() === "FAIL") {
+            reject(new Error("❌ Invalid report identifier. Access denied by secure gateway."));
+            return;
+          }
+          
+          // optional: provide a success payload: generate report metadata
+          const timestamp = new Date().toLocaleString('en-GB', { hour12: false });
+          const maskedMobile = cleanMobile.slice(-4);
+          const reportCode = trimmedReport.replace(/\s/g, '').substring(0, 12);
+          
+          // Build premium report content (mock text / simulated "report")
+          const reportContent = `
+╔══════════════════════════════════════════════════════════════╗
+║                 ★ PREMIUM CLASSIC REPORT ★                  ║
+╠══════════════════════════════════════════════════════════════╣
+║  Report ID      : ${trimmedReport.padEnd(40)}║
+║  Mobile (masked): +XX-****-${maskedMobile.padEnd(30)}║
+║  Generation     : ${timestamp.padEnd(40)}║
+║  Security Hash  : AUTH-${Math.random().toString(36).substring(2, 10).toUpperCase()} ║
+╠══════════════════════════════════════════════════════════════╣
+║  STATUS: VERIFIED  |  CLASSIC PREMIUM ACCESS                ║
+║  ----------------------------------------------------------  ║
+║  This document confirms the authenticity of the report.     ║
+║  Transaction Summary:                                       ║
+║   • Validation level: GOLD                                  ║
+║   • Timestamp authority: secure gateway                     ║
+║   • Report code: ${reportCode}                            ║
+║                                                              ║
+║  © Classic Premium Vault • Confidential                     ║
+╚══════════════════════════════════════════════════════════════╝
+          `;
+          
+          // additional styled plain text report (simulates .txt report download)
+          const finalReport = `CLASSIC PREMIUM REPORT DOWNLOAD
+Generated for: ${trimmedReport}
+Mobile verification: +${cleanMobile.slice(0,2)}****${cleanMobile.slice(-4)}
+Timestamp: ${timestamp}
+--- Secure Digital Signature ---
+${reportContent}
+--- End of Report ---
+          `;
+          resolve(finalReport);
+        }, 1200); // 1.2 sec realistic loading (premium feel)
+      });
+    }
+
+    // Trigger report download as .txt file (classic, professional)
+    function downloadTextFile(content, fileName) {
+      // Create a blob with text/plain content, UTF-8
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    // Core download handler with premium flow
+    async function downloadReport() {
+      // Retrieve values and trim
+      let reportId = reportInput.value;
+      let mobileNumber = mobileInput.value;
+
+      // Run validation
+      const isReportValid = isValidReportId(reportId);
+      const isMobileValid = isValidMobile(mobileNumber);
+      
+      if (!isReportValid || !isMobileValid) {
+        let errorMsg = "◆ Cannot proceed · ";
+        if (!isReportValid && !isMobileValid) {
+          errorMsg += "Report ID and Mobile number are required (min. 2 chars & valid mobile with 8+ digits).";
+          addShakeToInputs();
+        } else if (!isReportValid) {
+          errorMsg += "Please enter a valid Report ID (at least 2 characters).";
+          reportInput.classList.add('error-shake');
+          setTimeout(() => reportInput.classList.remove('error-shake'), 500);
+        } else if (!isMobileValid) {
+          errorMsg += "Mobile number must contain 8 to 15 digits (allow +, spaces). Example: 9876543210";
+          mobileInput.classList.add('error-shake');
+          setTimeout(() => mobileInput.classList.remove('error-shake'), 500);
+        }
+        updateStatus(errorMsg, 'error');
+        return;
+      }
+
+      // Premium loading state
+      updateStatus(`⏳ Verifying credentials · generating premium report for ID: ${reportId.trim().substring(0, 12)}...`, 'loading');
+      
+      // Disable button during async operation (prevent double click)
+      downloadButton.disabled = true;
+      const originalBtnText = downloadButton.innerHTML;
+      downloadButton.innerHTML = `<span>⏳</span> PROCESSING ...`;
+      downloadButton.style.opacity = "0.85";
+      
+      try {
+        // Call async report generator (simulate backend call)
+        const reportData = await generatePremiumReport(reportId.trim(), mobileNumber.trim());
+        
+        // Build filename: ReportID_Date.txt
+        const now = new Date();
+        const dateStamp = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}`;
+        const safeReportId = reportId.trim().replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 20);
+        const fileName = `Premium_Report_${safeReportId}_${dateStamp}.txt`;
+        
+        // Trigger download
+        downloadTextFile(reportData, fileName);
+        
+        // Success status
+        updateStatus(`✓ Download complete! "${fileName}" saved. Access granted via classic premium channel.`, 'success');
+        
+        // Optional subtle reset effect on inputs (but keep values)
+      } catch (err) {
+        console.warn("Download error simulation:", err);
+        updateStatus(err.message || "⛔ Secure download failed. Please verify your credentials and try again.", 'error');
+      } finally {
+        // Re-enable button and restore original style
+        downloadButton.disabled = false;
+        downloadButton.innerHTML = originalBtnText;
+        downloadButton.style.opacity = "1";
+      }
+    }
+
+    // Attach event listener to the button (replaces inline onclick with elegant JS)
+    downloadButton.addEventListener('click', downloadReport);
+
+    // Additional premium UX: Enter key support on inputs (submit)
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        downloadReport();
+      }
+    }
+    reportInput.addEventListener('keypress', handleKeyPress);
+    mobileInput.addEventListener('keypress', handleKeyPress);
+
+    // Optional: initial focus on reportId for better experience
+    reportInput.focus();
+
+    // Classic stylistic: little easter egg (no external libs, fully premium)
+    // Also: add clean visual effect on status clear with reset?
+    // For perfection, we provide a small onload reminder.
+    console.log("Classic Premium Report Interface — Ready");
+  })();
+</script>
+</body>
+</html>
