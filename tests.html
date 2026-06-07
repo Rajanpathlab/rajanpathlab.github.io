@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Rajan Path Lab | Premium Diagnostic Price List with Sample Guide</title>
+    <title>Rajan Path Lab | Premium Diagnostic Price List with Vial Colour Guide</title>
     <style>
         * {
             margin: 0;
@@ -12,85 +12,80 @@
         }
 
         body {
-            background: linear-gradient(145deg, #e9f0f2 0%, #dbe6e9 100%);
-            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: linear-gradient(145deg, #eef2f5 0%, #e0e9ed 100%);
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Roboto', sans-serif;
             padding: 2rem 1.5rem;
         }
 
-        /* premium glassmorphism container */
+        /* premium glass container */
         .container {
-            max-width: 1400px;
+            max-width: 1500px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(0px);
+            background: rgba(255, 255, 255, 0.98);
             border-radius: 2rem;
-            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.08);
             overflow: hidden;
             transition: all 0.2s;
         }
 
-        /* header with gradient */
+        /* header with rich gradient */
         .header {
-            background: linear-gradient(135deg, #0a3b4b 0%, #0f5c6b 100%);
+            background: linear-gradient(135deg, #0a3b4b 0%, #116b7c 100%);
             padding: 2rem 2rem 1.8rem 2rem;
             text-align: center;
-            border-bottom: 4px solid #f4c542;
+            border-bottom: 4px solid #f5c842;
         }
 
         .header h1 {
             font-size: 2.4rem;
-            letter-spacing: -0.5px;
-            font-weight: 700;
+            letter-spacing: -0.3px;
+            font-weight: 800;
             color: white;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            word-break: keep-all;
         }
 
         .header h1 span {
-            font-weight: 300;
-            font-size: 1.2rem;
-            background: #f4c542;
+            font-weight: 500;
+            font-size: 1.1rem;
+            background: #f5c842;
             color: #0a3b4b;
-            padding: 0.2rem 0.8rem;
+            padding: 0.2rem 1rem;
             border-radius: 40px;
             display: inline-block;
             margin-left: 12px;
             vertical-align: middle;
-            letter-spacing: 0;
         }
 
         .header p {
             color: #d9f0f5;
-            margin-top: 12px;
+            margin-top: 10px;
             font-weight: 500;
-            font-size: 1rem;
         }
 
         .effective {
             background: #f4c54230;
             display: inline-block;
-            padding: 0.3rem 1rem;
+            padding: 0.3rem 1.2rem;
             border-radius: 60px;
-            backdrop-filter: blur(2px);
             font-size: 0.85rem;
             color: #fff3cf;
             margin-top: 12px;
+            backdrop-filter: blur(2px);
         }
 
-        /* search and filter bar */
+        /* search toolbar */
         .toolbar {
-            padding: 1.5rem 2rem 0.5rem 2rem;
+            padding: 1.5rem 2rem 1rem 2rem;
             background: white;
-            border-bottom: 1px solid #e2edf2;
+            border-bottom: 1px solid #dee9ef;
         }
 
         .search-wrapper {
-            position: relative;
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .search-input {
@@ -99,27 +94,27 @@
             font-size: 1rem;
             border: 2px solid #cbdde3;
             border-radius: 44px;
-            background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%230f5c6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat 18px center;
-            transition: all 0.2s ease;
+            background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%23116b7c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat 18px center;
+            transition: 0.2s;
             font-weight: 500;
         }
 
         .search-input:focus {
-            border-color: #0f5c6b;
+            border-color: #116b7c;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(15, 92, 107, 0.2);
+            box-shadow: 0 0 0 3px rgba(17, 107, 124, 0.2);
         }
 
         .stat-badge {
             background: #eef2f5;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 60px;
             font-size: 0.85rem;
-            font-weight: 600;
-            color: #104c64;
+            font-weight: 700;
+            color: #0f4c5c;
         }
 
-        /* table premium style */
+        /* table design with colour coded vials */
         .table-responsive {
             overflow-x: auto;
             padding: 0 0 1rem 0;
@@ -132,91 +127,109 @@
             font-size: 0.9rem;
         }
 
-        .test-table thead tr {
-            background: #1f6d7c;
-        }
-
         .test-table th {
             background: #1f6d7c;
             color: white;
             padding: 18px 12px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-bottom: 2px solid #f4c542;
+            border-bottom: 3px solid #f5c842;
             position: sticky;
             top: 0;
         }
 
-        .test-table th:first-child {
-            border-top-left-radius: 16px;
-        }
-
-        .test-table th:last-child {
-            border-top-right-radius: 16px;
-        }
+        .test-table th:first-child { border-top-left-radius: 16px; }
+        .test-table th:last-child { border-top-right-radius: 16px; }
 
         .test-table td {
             padding: 16px 12px;
             border-bottom: 1px solid #e9f0f3;
-            vertical-align: top;
+            vertical-align: middle;
             background-color: white;
-            transition: background 0.15s ease;
+            transition: background 0.2s;
         }
 
         .test-table tr:hover td {
-            background-color: #fefcf5;
+            background-color: #fef9ef;
         }
 
-        /* column widths */
+        /* column widths (optimized for vial color column) */
         .test-table th:nth-child(1) { width: 5%; text-align: center; }
-        .test-table th:nth-child(2) { width: 28%; }
-        .test-table th:nth-child(3) { width: 12%; text-align: right; }
-        .test-table th:nth-child(4) { width: 18%; }
+        .test-table th:nth-child(2) { width: 26%; }
+        .test-table th:nth-child(3) { width: 10%; text-align: right; }
+        .test-table th:nth-child(4) { width: 16%; }
         .test-table th:nth-child(5) { width: 16%; }
-        .test-table th:nth-child(6) { width: 21%; }
+        .test-table th:nth-child(6) { width: 12%; text-align: center; }
+        .test-table th:nth-child(7) { width: 15%; }
 
         .test-table td:nth-child(3) {
             text-align: right;
             font-weight: 800;
-            color: #0f5c6b;
+            color: #116b7c;
             font-size: 1.05rem;
         }
 
-        .vial-badge {
-            display: inline-block;
-            background: #eef2fb;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+        /* VIAL COLOUR BADGE with actual color swatch */
+        .vial-colour-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f4f9fc;
+            padding: 5px 12px 5px 8px;
+            border-radius: 40px;
             font-weight: 600;
-            color: #0f4c5c;
-            white-space: nowrap;
+            font-size: 0.75rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .colour-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .vial-text {
+            font-weight: 600;
+            color: #1a4c5e;
         }
 
         .volume-badge {
             display: inline-block;
             background: #e1f2e8;
-            padding: 5px 10px;
-            border-radius: 20px;
+            padding: 6px 12px;
+            border-radius: 24px;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #1e6f4c;
         }
 
         .desc-text {
             font-size: 0.78rem;
-            line-height: 1.35;
+            line-height: 1.4;
             color: #4a5b64;
             margin-top: 5px;
         }
 
         .test-name-main {
-            font-weight: 700;
-            color: #0a2e3a;
+            font-weight: 800;
+            color: #083c4a;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .fasting-tag {
+            background: #ffecb3;
+            color: #b45f06;
+            display: inline-block;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-top: 6px;
+            font-weight: 600;
         }
 
         .no-results {
@@ -232,24 +245,17 @@
         footer {
             background: #f8fbfc;
             text-align: center;
-            padding: 1.5rem;
+            padding: 1.3rem;
             font-size: 0.8rem;
             border-top: 1px solid #dce8ed;
-            color: #3b6c78;
+            color: #2c6e7a;
+            font-weight: 500;
         }
 
-        @media (max-width: 950px) {
+        @media (max-width: 1000px) {
             body { padding: 1rem; }
             .test-table th, .test-table td { padding: 12px 8px; font-size: 0.8rem; }
-            .vial-badge, .volume-badge { font-size: 0.68rem; white-space: normal; }
-        }
-
-        @media (max-width: 780px) {
-            .test-table th:nth-child(4), .test-table td:nth-child(4),
-            .test-table th:nth-child(5), .test-table td:nth-child(5) {
-                min-width: 100px;
-            }
-            .test-name-main { font-size: 0.85rem; }
+            .vial-colour-badge { font-size: 0.68rem; padding: 3px 8px; }
         }
     </style>
 </head>
@@ -258,15 +264,16 @@
 <div class="container">
     <div class="header">
         <h1>🔬 RAJAN PATH LAB <span>premium diagnostics</span></h1>
-        <p>Accurate · Trusted · Advanced Technology</p>
-        <div class="effective">✅ Revised Price List w.e.f. 01 January 2026 | Complete Sample Guide</div>
+        <p>Precision Health · Advanced Technology · Transparent Pricing</p>
+        <div class="effective">✅ Revised Price List w.e.f. 01 January 2026 | Complete Vial Colour Guide</div>
     </div>
 
     <div class="toolbar">
         <div class="search-wrapper">
-            <input type="text" id="searchInput" class="search-input" placeholder="Search by test name, vial type, or requirement... (e.g., CBC, gold, serum, Fasting)">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by test name, vial colour (lavender, gold, grey), or requirement...">
             <div class="stat-badge" id="resultCount">📋 46+ tests available</div>
         </div>
+        <div style="font-size: 0.7rem; color: #6a8b9a; margin-top: 8px; padding-left: 8px;">💡 Tip: Try "lavender", "gold top", "grey", "EDTA" to filter by vial colour</div>
     </div>
 
     <div class="table-responsive">
@@ -276,94 +283,103 @@
                     <th>#</th>
                     <th>Test Name</th>
                     <th>Price (₹)</th>
-                    <th>Sample Volume & Requirement</th>
-                    <th>Vial / Container</th>
-                    <th>Clinical Insight</th>
+                    <th>Sample Volume & Req.</th>
+                    <th>Vial / Tube</th>
+                    <th>Vial Colour</th>
+                    <th>Quick Info</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <!-- data will be injected via JS, enriched with extra details -->
+                <!-- dynamic injection -->
             </tbody>
         </table>
         <div id="noResults" class="no-results">
-            🧪 No matching tests found. Try different keyword (Liver, CBC, Thyroid, etc.)
+            🧪 No matching tests found. Try "gold", "lavender", "CBC", "Thyroid" etc.
         </div>
     </div>
     <footer>
-        ⚕️ *Fasting required where mentioned | Collection time: Morning preferred for lipid, glucose, KFT | Home sample available | Accurate reports within 24H*
+        ⚕️ *Fasting = 8-12 hrs (water allowed) | Home collection available | Colour-coded vials help accurate sampling | Reports digitally*
     </footer>
 </div>
 
 <script>
-    // Enhanced test dataset with volume, vial type, and description
+    // Enhanced dataset with vial colour field (explicit colour name & hex)
     const testsData = [
-        { sno:1, name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum (8-10 hrs fast)", vial:"Gold / SST (Serum Separator Tube)", desc:"Evaluates liver enzymes, proteins, bilirubin; screens for hepatitis, cirrhosis." },
-        { sno:2, name:"KIDNEY FUNCTION TEST (Fasting Blood)", price:600, volume:"2-3 ml Fasting serum", vial:"Red top / Gold SST", desc:"Measures Urea, Creatinine, Uric acid – key for renal health." },
-        { sno:3, name:"LIPID PROFILE (Fasting Blood)", price:600, volume:"3 ml Fasting (12hrs)", vial:"Red top / SST", desc:"Total Cholesterol, HDL, LDL, Triglycerides – cardiac risk marker." },
-        { sno:4, name:"THYROID PROFILE", price:500, volume:"2 ml Serum (non-fasting)", vial:"Gold SST", desc:"T3, T4, TSH – regulates metabolism & energy." },
-        { sno:5, name:"BETA HCG", price:1000, volume:"3 ml Serum", vial:"Gold / Plain red", desc:"Quantitative pregnancy test & tumor marker." },
-        { sno:6, name:"HBA1C (3 Month Sugar)", price:600, volume:"2 ml Whole blood (EDTA)", vial:"Lavender top (EDTA)", desc:"Avg glucose over 3 months – diabetes monitoring." },
-        { sno:7, name:"C-REACTIVE PROTEIN (CRP)", price:400, volume:"2 ml Serum", vial:"Gold SST", desc:"Inflammation marker – infection, autoimmune." },
-        { sno:8, name:"ANTISTREPTOLYSIN O TITER (ASO)", price:400, volume:"2 ml Serum", vial:"Gold SST", desc:"Detects past strep infection; rheumatic fever." },
-        { sno:9, name:"R A FACTOR", price:400, volume:"2 ml Serum", vial:"Gold SST", desc:"Rheumatoid arthritis marker." },
-        { sno:10, name:"HCG PREGNANCY TEST", price:100, volume:"Urine (mid-stream)", vial:"Sterile container", desc:"Rapid qualitative pregnancy detection." },
-        { sno:11, name:"URINE ROUTINE", price:100, volume:"10-15 ml Urine", vial:"Sterile universal container", desc:"Microscopic & chemical analysis for UTI, diabetes." },
-        { sno:12, name:"URINE CULTURE", price:400, volume:"Mid-stream urine", vial:"Sterile container", desc:"Identifies bacterial infection & sensitivity." },
-        { sno:13, name:"SEMEN ANALYSIS", price:250, volume:"Whole ejaculate", vial:"Sterile wide-mouth container", desc:"Fertility assessment: count, motility, morphology." },
-        { sno:14, name:"MANTOUX TEST", price:200, volume:"Intradermal (0.1ml)", vial:"Tuberculin syringe", desc:"TB screening (PPD skin test)." },
-        { sno:15, name:"HBSAG", price:150, volume:"2 ml Serum", vial:"Gold SST", desc:"Hepatitis B surface antigen screening." },
-        { sno:16, name:"VDRL", price:100, volume:"1 ml Serum", vial:"Plain red / Gold", desc:"Syphilis screening test." },
-        { sno:17, name:"HIV", price:300, volume:"2 ml Serum/Plasma", vial:"Gold or EDTA", desc:"HIV I & II antibody detection." },
-        { sno:18, name:"HCV", price:200, volume:"2 ml Serum", vial:"Gold SST", desc:"Hepatitis C antibody test." },
-        { sno:19, name:"BLOOD UREA", price:150, volume:"2 ml Serum/Plasma", vial:"Red / Green top", desc:"Kidney function nitrogen waste marker." },
-        { sno:20, name:"SERUM CREATININE", price:150, volume:"2 ml Serum", vial:"Gold SST", desc:"Kidney filtration marker." },
-        { sno:21, name:"URIC ACID (Fasting Blood)", price:150, volume:"2 ml Fasting Serum", vial:"Gold SST", desc:"Gout & renal assessment." },
-        { sno:22, name:"BLOOD SUGAR", price:50, volume:"1 ml Fluoride (Fasting/Random)", vial:"Grey top (Sodium Fluoride)", desc:"Glucose level – diabetes screening." },
-        { sno:23, name:"COMPLETE BLOOD COUNT (CBC)", price:300, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", desc:"Hb, TLC, RBC indices, platelets – general health." },
-        { sno:24, name:"PLATELETS TEST", price:150, volume:"1 ml EDTA blood", vial:"Lavender top", desc:"Platelet count – dengue, bleeding disorders." },
-        { sno:25, name:"DENGUE TEST NS1 IGG IGM", price:650, volume:"3 ml Serum", vial:"Gold SST", desc:"Early dengue antigen & antibodies." },
-        { sno:26, name:"TYPHIDOT IGG IGM", price:250, volume:"2 ml Serum", vial:"Gold SST", desc:"Typhoid fever antibodies detection." },
-        { sno:27, name:"WIDAL", price:100, volume:"2 ml Serum", vial:"Plain red / Gold", desc:"Salmonella typhi antibody test." },
-        { sno:28, name:"OPTIMAL", price:200, volume:"2 ml Serum", vial:"Gold SST", desc:"Thyroid/wellness marker panel (custom)." },
-        { sno:29, name:"TC DC", price:120, volume:"1 ml EDTA blood", vial:"Lavender top", desc:"Total & differential leukocyte count." },
-        { sno:30, name:"BT CT", price:120, volume:"Capillary blood", vial:"special capillary tube", desc:"Bleeding time & Clotting time – hemostasis." },
-        { sno:31, name:"ESR", price:120, volume:"2 ml Sodium citrate", vial:"Black top (Citrate)", desc:"Inflammation marker (Westergren method)." },
-        { sno:32, name:"SMEAR OF MP", price:100, volume:"Thick/thin smear", vial:"EDTA blood / slide", desc:"Malarial parasite detection." },
-        { sno:33, name:"HB", price:50, volume:"Capillary / 1ml EDTA", vial:"Lavender top", desc:"Hemoglobin level – anemia screen." },
-        { sno:34, name:"BLOOD GROUP", price:50, volume:"1 ml EDTA blood", vial:"Lavender top", desc:"ABO & Rh typing." },
-        { sno:35, name:"TOTAL PARASITE", price:250, volume:"2 ml EDTA blood", vial:"Lavender top", desc:"Malaria & filaria parasite count." },
-        { sno:36, name:"SMEAR OF MP (Repeat)", price:100, volume:"Blood smear", vial:"Slide / EDTA", desc:"Malaria parasite microscopy." },
-        { sno:37, name:"BILIRUBIN TEST", price:200, volume:"2 ml Serum", vial:"Gold SST", desc:"Jaundice assessment (total/direct)." },
-        { sno:38, name:"MP WIDAL HB", price:250, volume:"2 ml + smear", vial:"EDTA & gold", desc:"Malaria + Widal + Hb combo." },
-        { sno:39, name:"OPTIMAL WIDAL HB", price:350, volume:"2 ml Serum", vial:"Gold SST/EDTA", desc:"Wellness combo: liver/thyroid/ widal." },
-        { sno:40, name:"CBC MP WIDAL", price:500, volume:"3 ml EDTA", vial:"Lavender + gold", desc:"Complete triple infection panel." },
-        { sno:41, name:"CBC WIDAL", price:400, volume:"3 ml EDTA + Serum", vial:"Lavender & Gold", desc:"CBC plus typhoid screen." },
-        { sno:42, name:"HB WIDAL", price:150, volume:"2 ml EDTA", vial:"Lavender top", desc:"Hemoglobin + Widal test." },
-        { sno:43, name:"MP WIDAL", price:200, volume:"2 ml EDTA", vial:"Lavender top", desc:"Malaria smear + Widal combo." },
-        { sno:44, name:"OPTIMAL WIDAL", price:300, volume:"3 ml Serum", vial:"Gold SST", desc:"Optimal wellness + typhoid." },
-        { sno:45, name:"Sodium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top (Heparin) / Gold", desc:"Electrolyte balance – hyponatremia." },
-        { sno:46, name:"Potassium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top / Gold", desc:"Cardiac & muscle function electrolyte." }
+        { sno:1, name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum (8-10 hrs)", vial:"Gold SST (Serum Separator Tube)", vialColour:"Gold", colourHex:"#D4AF37", desc:"Evaluates liver enzymes, proteins, bilirubin; screens for hepatitis, cirrhosis." },
+        { sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600, volume:"2-3 ml Fasting serum", vial:"Red top / Gold SST", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Measures Urea, Creatinine, Uric acid – renal health marker." },
+        { sno:3, name:"LIPID PROFILE (Fasting)", price:600, volume:"3 ml Fasting (12hrs)", vial:"Red top / SST", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Total Cholesterol, HDL, LDL, Triglycerides – cardiac risk." },
+        { sno:4, name:"THYROID PROFILE", price:500, volume:"2 ml Serum (non-fasting)", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"T3, T4, TSH – regulates metabolism." },
+        { sno:5, name:"BETA HCG", price:1000, volume:"3 ml Serum", vial:"Gold / Plain red", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Quantitative pregnancy & tumor marker." },
+        { sno:6, name:"HBA1C (3 Month Sugar)", price:600, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender (Purple)", colourHex:"#967BB6", desc:"Avg glucose over 3 months – diabetes monitoring." },
+        { sno:7, name:"C-REACTIVE PROTEIN (CRP)", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Inflammation marker – infection, autoimmune." },
+        { sno:8, name:"ANTISTREPTOLYSIN O (ASO)", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Detects past strep infection; rheumatic fever." },
+        { sno:9, name:"R A FACTOR", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Rheumatoid arthritis marker." },
+        { sno:10, name:"HCG PREGNANCY TEST", price:100, volume:"Urine (mid-stream)", vial:"Sterile container", vialColour:"Plain container", colourHex:"#FFFFFF", desc:"Rapid qualitative pregnancy detection." },
+        { sno:11, name:"URINE ROUTINE", price:100, volume:"10-15 ml Urine", vial:"Sterile universal container", vialColour:"Transparent", colourHex:"#F0F4F5", desc:"Microscopic & chemical analysis for UTI, diabetes." },
+        { sno:12, name:"URINE CULTURE", price:400, volume:"Mid-stream urine", vial:"Sterile container", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Identifies bacterial infection & sensitivity." },
+        { sno:13, name:"SEMEN ANALYSIS", price:250, volume:"Whole ejaculate", vial:"Sterile wide-mouth", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Fertility assessment: count, motility, morphology." },
+        { sno:14, name:"MANTOUX TEST", price:200, volume:"Intradermal (0.1ml)", vial:"Tuberculin syringe", vialColour:"Syringe", colourHex:"#AAAAAA", desc:"TB screening (PPD skin test)." },
+        { sno:15, name:"HBSAG", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis B surface antigen screening." },
+        { sno:16, name:"VDRL", price:100, volume:"1 ml Serum", vial:"Plain red / Gold", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Syphilis screening test." },
+        { sno:17, name:"HIV", price:300, volume:"2 ml Serum/Plasma", vial:"Gold or EDTA", vialColour:"Gold / Lavender", colourHex:"#D4AF37,#967BB6", desc:"HIV I & II antibody detection." },
+        { sno:18, name:"HCV", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis C antibody test." },
+        { sno:19, name:"BLOOD UREA", price:150, volume:"2 ml Serum/Plasma", vial:"Red / Green top", vialColour:"Red / Green", colourHex:"#E34234,#3A9B5E", desc:"Kidney function nitrogen waste marker." },
+        { sno:20, name:"SERUM CREATININE", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Kidney filtration marker." },
+        { sno:21, name:"URIC ACID (Fasting)", price:150, volume:"2 ml Fasting Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Gout & renal assessment." },
+        { sno:22, name:"BLOOD SUGAR", price:50, volume:"1 ml Fluoride", vial:"Grey top (Sodium Fluoride)", vialColour:"Grey", colourHex:"#A9B7C0", desc:"Glucose level – diabetes screening." },
+        { sno:23, name:"COMPLETE BLOOD COUNT (CBC)", price:300, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender (Purple)", colourHex:"#967BB6", desc:"Hb, TLC, RBC indices, platelets – general health." },
+        { sno:24, name:"PLATELETS TEST", price:150, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Platelet count – dengue, bleeding disorders." },
+        { sno:25, name:"DENGUE NS1 IGG IGM", price:650, volume:"3 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Early dengue antigen & antibodies." },
+        { sno:26, name:"TYPHIDOT IGG IGM", price:250, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Typhoid fever antibodies detection." },
+        { sno:27, name:"WIDAL", price:100, volume:"2 ml Serum", vial:"Plain red / Gold", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Salmonella typhi antibody test." },
+        { sno:28, name:"OPTIMAL", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Thyroid/wellness marker panel (custom)." },
+        { sno:29, name:"TC DC", price:120, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Total & differential leukocyte count." },
+        { sno:30, name:"BT CT", price:120, volume:"Capillary blood", vial:"Capillary tube", vialColour:"Capillary tube", colourHex:"#D3D3D3", desc:"Bleeding time & Clotting time – hemostasis." },
+        { sno:31, name:"ESR", price:120, volume:"2 ml Sodium citrate", vial:"Black top (Citrate)", vialColour:"Black", colourHex:"#2C2C2C", desc:"Inflammation marker (Westergren method)." },
+        { sno:32, name:"SMEAR OF MP", price:100, volume:"Thick/thin smear", vial:"EDTA blood / slide", vialColour:"Lavender / slide", colourHex:"#967BB6", desc:"Malarial parasite detection." },
+        { sno:33, name:"HB", price:50, volume:"Capillary / 1ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hemoglobin level – anemia screen." },
+        { sno:34, name:"BLOOD GROUP", price:50, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"ABO & Rh typing." },
+        { sno:35, name:"TOTAL PARASITE", price:250, volume:"2 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Malaria & filaria parasite count." },
+        { sno:36, name:"SMEAR OF MP (Repeat)", price:100, volume:"Blood smear", vial:"Slide / EDTA", vialColour:"Lavender / slide", colourHex:"#967BB6", desc:"Malaria parasite microscopy." },
+        { sno:37, name:"BILIRUBIN TEST", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Jaundice assessment (total/direct)." },
+        { sno:38, name:"MP WIDAL HB", price:250, volume:"2 ml + smear", vial:"EDTA & gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Malaria + Widal + Hb combo." },
+        { sno:39, name:"OPTIMAL WIDAL HB", price:350, volume:"2 ml Serum", vial:"Gold SST/EDTA", vialColour:"Gold / Lavender", colourHex:"#D4AF37,#967BB6", desc:"Wellness combo: liver/thyroid/ widal." },
+        { sno:40, name:"CBC MP WIDAL", price:500, volume:"3 ml EDTA", vial:"Lavender + gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Complete triple infection panel." },
+        { sno:41, name:"CBC WIDAL", price:400, volume:"3 ml EDTA + Serum", vial:"Lavender & Gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"CBC plus typhoid screen." },
+        { sno:42, name:"HB WIDAL", price:150, volume:"2 ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hemoglobin + Widal test." },
+        { sno:43, name:"MP WIDAL", price:200, volume:"2 ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Malaria smear + Widal combo." },
+        { sno:44, name:"OPTIMAL WIDAL", price:300, volume:"3 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Optimal wellness + typhoid." },
+        { sno:45, name:"Sodium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top (Heparin) / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Electrolyte balance – hyponatremia." },
+        { sno:46, name:"Potassium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Cardiac & muscle function electrolyte." }
     ];
 
-    // Function to render table with filter
+    // Helper to render colour dot and name with multiple colours
+    function renderVialColourCell(colourName, colourHexRaw) {
+        let hexList = colourHexRaw.split(',');
+        let nameList = colourName.split('/');
+        let dotsHtml = '';
+        for(let i=0; i<hexList.length; i++) {
+            dotsHtml += `<span class="colour-dot" style="background-color: ${hexList[i].trim()}; margin-right: 4px;"></span>`;
+        }
+        return `<div class="vial-colour-badge">${dotsHtml}<span class="vial-text">${colourName}</span></div>`;
+    }
+
     function renderTable(filterText = "") {
         const tbody = document.getElementById("tableBody");
         const noResultsDiv = document.getElementById("noResults");
         const resultSpan = document.getElementById("resultCount");
-        
         const lowerFilter = filterText.toLowerCase();
         
-        // filtering logic across name, vial, volume, description
         const filteredTests = testsData.filter(test => {
             if (lowerFilter === "") return true;
             return test.name.toLowerCase().includes(lowerFilter) ||
                    test.vial.toLowerCase().includes(lowerFilter) ||
+                   test.vialColour.toLowerCase().includes(lowerFilter) ||
                    test.volume.toLowerCase().includes(lowerFilter) ||
                    test.desc.toLowerCase().includes(lowerFilter);
         });
         
-        // update result count
-        resultSpan.innerText = `🔍 ${filteredTests.length} test${filteredTests.length !== 1 ? 's' : ''} found`;
+        resultSpan.innerText = `🔍 ${filteredTests.length} test${filteredTests.length !== 1 ? 's' : ''} available`;
         
         if (filteredTests.length === 0) {
             tbody.innerHTML = "";
@@ -374,39 +390,40 @@
         
         let html = "";
         filteredTests.forEach(test => {
+            // Fasting indicator
+            let fastingHtml = test.volume.toLowerCase().includes("fasting") ? `<div class="fasting-tag">🌙 Fasting required</div>` : "";
+            // short description for quick info column
+            let quickDesc = test.desc.split('.')[0].substring(0, 65);
+            if(quickDesc.length < 5) quickDesc = test.desc.substring(0, 60);
+            
             html += `<tr>
-                        <td style="text-align:center; font-weight:600;">${test.sno}</td>
+                        <td style="text-align:center; font-weight:700;">${test.sno}</td>
                         <td>
                             <span class="test-name-main">${test.name}</span>
-                            <div class="desc-text">🧪 ${test.desc.substring(0, 80)}${test.desc.length>80?'...':''}</div>
+                            ${fastingHtml}
                         </td>
                         <td>₹ ${test.price}</td>
                         <td>
                             <div class="volume-badge">💉 ${test.volume}</div>
-                            ${test.volume.includes('Fasting') ? '<div class="desc-text" style="margin-top:6px;">🌟 Fasting required</div>' : ''}
                         </td>
-                        <td><span class="vial-badge">🧴 ${test.vial}</span></td>
-                        <td><span class="desc-text">📌 ${test.desc}</span></td>
+                        <td><span style="font-weight:500;">${test.vial}</span></td>
+                        <td style="text-align: center;">${renderVialColourCell(test.vialColour, test.colourHex)}</td>
+                        <td><span class="desc-text">📌 ${quickDesc}${quickDesc.length >= 60 ? '…' : ''}</span></td>
                      </tr>`;
         });
         
         tbody.innerHTML = html;
     }
     
-    // live search handler with debounce
+    // live search
     const searchInput = document.getElementById("searchInput");
     function handleSearch() {
         renderTable(searchInput.value);
     }
-    
     searchInput.addEventListener("keyup", handleSearch);
-    
-    // initial load
     renderTable("");
-    
-    // optional: add tooltip or dynamic counts
 </script>
 
-<!-- premium description + vial requirement fully integrated with searchable rich fields -->
+<!-- premium design with vial colour swatches, helping lab staff & patients understand requirements at a glance -->
 </body>
 </html>
