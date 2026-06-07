@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab | Elite Diagnostics Suite</title>
-<!-- Google Fonts & Font Awesome Premium Look -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<title>Rajan Path Lab | Instant Add on Select</title>
+<!-- Google Fonts & Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
   * {
@@ -31,17 +31,6 @@
     border-bottom: 1px solid rgba(255,255,255,0.2);
   }
 
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: -30%;
-    left: -20%;
-    width: 140%;
-    height: 140%;
-    background: radial-gradient(circle, rgba(255,255,240,0.08) 0%, rgba(0,0,0,0) 70%);
-    pointer-events: none;
-  }
-
   .hero h1 {
     font-family: 'Playfair Display', serif;
     font-size: 3.7rem;
@@ -51,7 +40,6 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
   .hero h2 {
@@ -387,8 +375,8 @@
 
 <section class="hero">
   <h1>Rajan Path Lab</h1>
-  <h2><i class="fas fa-microscope"></i> Precision Diagnostics · Smart Multi-Test Suite</h2>
-  <p>⚡ Type any test → select from list → Add to Cart. Remove anytime. Doctor names appear on first letter!</p>
+  <h2><i class="fas fa-microscope"></i> Instant Test Add · Smart Doctor Fill</h2>
+  <p>⚡ Click on any test from dropdown → instantly added to cart. Click on doctor name → instantly filled. No extra clicks!</p>
 </section>
 
 <div class="container">
@@ -418,7 +406,7 @@
           <textarea id="address" rows="2" placeholder="Complete address for home collection"></textarea>
         </div>
 
-        <!-- MULTI TEST SECTION -->
+        <!-- MULTI TEST SECTION - INSTANT ADD ON CLICK -->
         <div class="section-title">
           <i class="fas fa-dna"></i> Test Builder
           <span class="badge-icon" id="testCountBadge">0</span>
@@ -426,11 +414,10 @@
 
         <div class="add-test-area">
           <div class="autocomplete-wrapper" id="testAutocompleteWrapper">
-            <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="🔬 Type test: LIVER, CBC, THYROID, HBA1C ..." autocomplete="off">
+            <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="🔬 Type test name: LIVER, CBC, THYROID ..." autocomplete="off">
             <div id="testDropdownList" class="autocomplete-dropdown"></div>
           </div>
-          <button type="button" id="addTestBtn" class="add-test-btn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-          <small class="small-note"><i class="fas fa-lightbulb"></i> Click on test name from dropdown, then press "Add to Cart". You can add multiple tests.</small>
+          <small class="small-note"><i class="fas fa-mouse-pointer"></i> Just click any test from the list → it will be added to cart immediately!</small>
         </div>
 
         <!-- Cart display -->
@@ -440,7 +427,7 @@
             <span id="cartItemCount">0 items</span>
           </div>
           <div id="cartItemsList" class="cart-items">
-            <div class="empty-cart-msg" style="padding:32px; text-align:center; color:#9ab3c5;">➕ Add tests using the search above.</div>
+            <div class="empty-cart-msg" style="padding:32px; text-align:center; color:#9ab3c5;">➕ Type a test and click on the suggestion to add.</div>
           </div>
           <div class="cart-total">
             <span><i class="fas fa-rupee-sign"></i> Total Amount</span>
@@ -449,17 +436,17 @@
         </div>
         <input type="hidden" id="cartDataJson" value="[]">
 
-        <!-- REFERRAL WITH DOCTOR AUTOCOMPLETE (first letter works) -->
+        <!-- REFERRAL WITH DOCTOR AUTOCOMPLETE (instant fill) -->
         <div class="section-title">
           <i class="fas fa-stethoscope"></i> Referral Details
         </div>
         <div class="form-group">
-          <label>Referred By (Doctor / Person) <span style="color:#0F6B9E;">🔍 Type 1st letter → instant suggestions</span></label>
+          <label>Referred By (Doctor / Person) <span style="color:#0F6B9E;">🔍 Click any name from dropdown</span></label>
           <div class="autocomplete-wrapper" id="doctorAutocompleteWrapper">
-            <input type="text" id="refby" class="autocomplete-input" placeholder="Type P, D, K, S, R ... doctor name appears" autocomplete="off">
+            <input type="text" id="refby" class="autocomplete-input" placeholder="Type any letter (P, D, S...) → click doctor name" autocomplete="off">
             <div id="doctorDropdownList" class="autocomplete-dropdown"></div>
           </div>
-          <small class="small-note"><i class="fas fa-bolt"></i> Live directory: 27+ doctors. Just type any letter to see list.</small>
+          <small class="small-note"><i class="fas fa-bolt"></i> Just click on any doctor name → it will fill automatically.</small>
         </div>
 
         <div class="grid-2col">
@@ -488,18 +475,18 @@
           <i class="fas fa-award"></i> Why Rajan Path Lab?
         </div>
         <div class="features">
-          <div class="feature"><i class="fas fa-certificate"></i> NABL Accredited Standards</div>
+          <div class="feature"><i class="fas fa-certificate"></i> NABL Accredited</div>
           <div class="feature"><i class="fas fa-clock"></i> Same-Day Reports</div>
-          <div class="feature"><i class="fas fa-hand-holding-heart"></i> Home Collection Available</div>
+          <div class="feature"><i class="fas fa-hand-holding-heart"></i> Home Collection</div>
           <div class="feature"><i class="fas fa-chart-line"></i> 20+ Years of Excellence</div>
-          <div class="feature"><i class="fas fa-shield-alt"></i> Strict Quality Controls</div>
+          <div class="feature"><i class="fas fa-shield-alt"></i> Quality Assurance</div>
         </div>
 
         <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
           <i class="fab fa-whatsapp fa-xl"></i> Book Now via WhatsApp
         </button>
         <div class="footer-note">
-          <i class="fas fa-phone-alt"></i>  +91-8709946177  |  Trusted by 10k+ families
+          <i class="fas fa-phone-alt"></i>  +91-8709946177  |  Trusted Diagnostics
         </div>
       </form>
     </div>
@@ -537,12 +524,10 @@
 
   // ---------- Cart State ----------
   let cart = [];
-  let currentSelectedTest = null;
 
   // DOM elements
   const testSearchInput = document.getElementById('testSearchInput');
   const testDropdown = document.getElementById('testDropdownList');
-  const addTestBtn = document.getElementById('addTestBtn');
   const cartItemsDiv = document.getElementById('cartItemsList');
   const cartTotalSpan = document.getElementById('cartTotalPrice');
   const cartItemCountSpan = document.getElementById('cartItemCount');
@@ -551,10 +536,9 @@
   const doctorInput = document.getElementById('refby');
   const doctorDropdown = document.getElementById('doctorDropdownList');
 
-  // Helper
-  function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+  function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-  // ========== TEST AUTOCOMPLETE ==========
+  // ========== TEST: INSTANT ADD ON CLICK ==========
   function renderTestDropdown(searchTerm) {
     const term = searchTerm.trim().toLowerCase();
     if (term === "") { testDropdown.classList.remove('show'); return; }
@@ -572,50 +556,70 @@
     });
     testDropdown.innerHTML = itemsHtml;
     testDropdown.classList.add('show');
-
-    // attach click handlers to each dropdown item
-    document.querySelectorAll('#testDropdownList .dropdown-item[data-name]').forEach(el => {
-      el.removeEventListener('click', handleTestItemClick);
-      el.addEventListener('click', handleTestItemClick);
-    });
   }
 
-  function handleTestItemClick(e) {
-    e.stopPropagation();
-    const el = e.currentTarget;
-    const name = el.getAttribute('data-name');
-    const price = parseInt(el.getAttribute('data-price'), 10);
-    currentSelectedTest = { name, price };
-    testSearchInput.value = name;
-    testDropdown.classList.remove('show');
-  }
-
-  function addCurrentTestToCart() {
-    if (!currentSelectedTest) {
-      const typed = testSearchInput.value.trim();
-      if (typed === "") { alert("🔍 Please type and select a test from the dropdown first."); return; }
-      const exactMatch = testsData.find(t => t.name.toLowerCase() === typed.toLowerCase());
-      if (exactMatch) currentSelectedTest = { name: exactMatch.name, price: exactMatch.price };
-      else { alert("⚠️ Test not found. Please select from the dropdown list."); return; }
-    }
-    cart.push({ name: currentSelectedTest.name, price: currentSelectedTest.price });
+  // Handle test click: add to cart immediately
+  function handleTestDropdownClick(e) {
+    const item = e.target.closest('.dropdown-item[data-name]');
+    if (!item) return;
+    const name = item.getAttribute('data-name');
+    const price = parseInt(item.getAttribute('data-price'), 10);
+    // Add to cart
+    cart.push({ name: name, price: price });
     updateCartUI();
-    currentSelectedTest = null;
+    // Clear input and close dropdown, keep focus for next test
     testSearchInput.value = "";
     testSearchInput.focus();
     testDropdown.classList.remove('show');
   }
 
-  // remove using index
+  testDropdown.addEventListener('click', handleTestDropdownClick);
+
+  // Input event for showing dropdown
+  testSearchInput.addEventListener('input', (e) => {
+    renderTestDropdown(e.target.value);
+  });
+
+  // ========== DOCTOR: INSTANT FILL ON CLICK ==========
+  function renderDoctorDropdown(searchTerm) {
+    const term = searchTerm.trim().toLowerCase();
+    if (term === "") { doctorDropdown.classList.remove('show'); return; }
+    const filtered = doctorNames.filter(doc => doc.toLowerCase().includes(term));
+    if (filtered.length === 0) {
+      doctorDropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">✨ No doctor found</div>`;
+      doctorDropdown.classList.add('show');
+      return;
+    }
+    let itemsHtml = '';
+    filtered.slice(0, 18).forEach(doc => {
+      itemsHtml += `<div class="dropdown-item" data-doctor="${escapeHtml(doc)}"><span><i class="fas fa-user-md"></i> ${doc}</span></div>`;
+    });
+    doctorDropdown.innerHTML = itemsHtml;
+    doctorDropdown.classList.add('show');
+  }
+
+  function handleDoctorDropdownClick(e) {
+    const item = e.target.closest('.dropdown-item[data-doctor]');
+    if (!item) return;
+    const docName = item.getAttribute('data-doctor');
+    doctorInput.value = docName;
+    doctorDropdown.classList.remove('show');
+  }
+
+  doctorDropdown.addEventListener('click', handleDoctorDropdownClick);
+  doctorInput.addEventListener('input', (e) => {
+    renderDoctorDropdown(e.target.value);
+  });
+
+  // ========== Remove from cart (Event Delegation) ==========
   function removeTestFromCart(index) {
     cart.splice(index, 1);
     updateCartUI();
   }
 
-  // update cart UI + use event delegation for remove buttons
   function updateCartUI() {
     if (cart.length === 0) {
-      cartItemsDiv.innerHTML = `<div class="empty-cart-msg" style="padding:32px; text-align:center; color:#9ab3c5;">📋 No tests added. Use search & 'Add to Cart'</div>`;
+      cartItemsDiv.innerHTML = `<div class="empty-cart-msg" style="padding:32px; text-align:center; color:#9ab3c5;">📋 No tests added. Type test name and click on the suggestion.</div>`;
       cartTotalSpan.innerText = `₹0`;
       cartItemCountSpan.innerText = `0 items`;
       testCountBadge.innerText = "0";
@@ -626,7 +630,7 @@
     let total = 0;
     cart.forEach((item, idx) => {
       total += item.price;
-      html += `<div class="cart-item" data-cart-index="${idx}">
+      html += `<div class="cart-item">
         <div class="cart-item-info">
           <span class="cart-item-name"><i class="fas fa-flask"></i> ${escapeHtml(item.name)}</span>
           <span class="cart-item-price">₹${item.price}</span>
@@ -643,7 +647,7 @@
     cartDataJson.value = JSON.stringify(cart);
   }
 
-  // DELEGATION: listen for clicks on remove buttons inside cart container
+  // Remove button delegation
   document.getElementById('cartContainer').addEventListener('click', function(e) {
     const btn = e.target.closest('.remove-test-btn');
     if (btn && btn.hasAttribute('data-remove-index')) {
@@ -652,58 +656,17 @@
     }
   });
 
-  // ========== DOCTOR AUTOCOMPLETE (FIRST LETTER ANY KEY) ==========
-  function renderDoctorDropdown(searchTerm) {
-    const term = searchTerm.trim().toLowerCase();
-    if (term === "") { doctorDropdown.classList.remove('show'); return; }
-    const filtered = doctorNames.filter(doc => doc.toLowerCase().includes(term));
-    if (filtered.length === 0) {
-      doctorDropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">✨ No doctor found, try another letter</div>`;
-      doctorDropdown.classList.add('show');
-      return;
-    }
-    let itemsHtml = '';
-    filtered.slice(0, 18).forEach(doc => {
-      itemsHtml += `<div class="dropdown-item" data-doctor="${escapeHtml(doc)}"><span><i class="fas fa-user-md"></i> ${doc}</span></div>`;
-    });
-    doctorDropdown.innerHTML = itemsHtml;
-    doctorDropdown.classList.add('show');
-
-    document.querySelectorAll('#doctorDropdownList .dropdown-item[data-doctor]').forEach(el => {
-      el.removeEventListener('click', handleDoctorItemClick);
-      el.addEventListener('click', handleDoctorItemClick);
-    });
-  }
-
-  function handleDoctorItemClick(e) {
-    e.stopPropagation();
-    const docName = e.currentTarget.getAttribute('data-doctor');
-    doctorInput.value = docName;
-    doctorDropdown.classList.remove('show');
-  }
-
-  // Input listeners
-  testSearchInput.addEventListener('input', (e) => {
-    if (currentSelectedTest && e.target.value !== currentSelectedTest.name) currentSelectedTest = null;
-    renderTestDropdown(e.target.value);
-  });
-  addTestBtn.addEventListener('click', addCurrentTestToCart);
-  testSearchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); addCurrentTestToCart(); } });
-
-  doctorInput.addEventListener('input', (e) => renderDoctorDropdown(e.target.value));
-  doctorInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') doctorDropdown.classList.remove('show'); });
-
-  // Close dropdowns when clicking outside
+  // Close dropdowns on outside click
   document.addEventListener('click', function(e) {
     if (!document.getElementById('testAutocompleteWrapper')?.contains(e.target)) testDropdown.classList.remove('show');
     if (!document.getElementById('doctorAutocompleteWrapper')?.contains(e.target)) doctorDropdown.classList.remove('show');
   });
 
-  // set default date
+  // Set default date
   document.getElementById('date').value = new Date().toISOString().split('T')[0];
   updateCartUI();
 
-  // WhatsApp function
+  // WhatsApp send function
   window.sendWhatsApp = function() {
     const patientName = document.getElementById('name').value.trim();
     const mobile = document.getElementById('mobile').value.trim();
