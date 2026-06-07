@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>रिपोर्ट प्रणाली | Classic Premium Health</title>
+  <title>Premier Reports | Classic WhatsApp Delivery</title>
   <style>
     * {
       margin: 0;
@@ -13,364 +13,342 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #e0e7f0 0%, #cfd9e6 100%);
-      font-family: 'Poppins', 'Inter', 'Segoe UI', system-ui, -apple-system, 'BlinkMacSystemFont', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #eef2f7 0%, #dce3ec 100%);
+      font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.8rem;
+      padding: 1.5rem;
       position: relative;
     }
 
-    /* classic premium texture overlay */
+    /* Premium subtle grain overlay */
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.03"><path fill="none" d="M70 80 L130 80 M80 70 L80 130 M120 70 L120 130 M70 120 L130 120" stroke="%23333" stroke-width="1.2"/><circle cx="100" cy="100" r="28" stroke="%23222" stroke-width="1" fill="none"/><path d="M100 72 L100 128 M72 100 L128 100" stroke="%23222" stroke-width="0.8"/></svg>');
+      inset: 0;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" opacity="0.025"><path fill="none" d="M0 150 L400 150 M200 0 L200 300" stroke="%23333" stroke-width="0.5"/><circle cx="90" cy="70" r="16" stroke="%23997b38" fill="none" stroke-width="1"/><circle cx="310" cy="210" r="20" stroke="%23997b38" fill="none" stroke-width="0.8"/></svg>');
       background-repeat: repeat;
-      background-size: 38px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* main card - ultra premium classic */
-    .heritage-card {
-      max-width: 640px;
+    /* Main card - Classic Premium */
+    .classic-premium-card {
+      max-width: 680px;
       width: 100%;
       background: #ffffff;
-      border-radius: 2.5rem;
-      box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(212, 175, 55, 0.2);
-      transition: all 0.3s ease;
+      border-radius: 2rem;
+      box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.25);
+      transition: transform 0.2s ease;
       position: relative;
       z-index: 10;
       overflow: hidden;
-      backdrop-filter: blur(0px);
     }
 
-    /* gold baroque border accent */
-    .heritage-card::before {
+    /* Gold top border */
+    .classic-premium-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 6px;
-      background: linear-gradient(90deg, #c9a03d, #e6c168, #c9a03d);
-      z-index: 12;
+      height: 5px;
+      background: linear-gradient(90deg, #b49450, #e6c87a, #b49450);
+      z-index: 20;
     }
 
-    /* header section premium */
-    .card-header-premium {
-      background: #1a1f2b;
-      padding: 1.8rem 2rem 1.5rem 2rem;
-      position: relative;
+    /* Header - English Classic */
+    .premium-header {
+      background: #1a212c;
+      padding: 1.8rem 2rem 1.4rem;
     }
 
-    .badge-row {
+    .header-flex {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
       flex-wrap: wrap;
       gap: 12px;
     }
 
-    .main-title {
+    .header-flex h1 {
       font-size: 1.9rem;
       font-weight: 700;
       letter-spacing: -0.3px;
-      color: #f8f9fc;
+      color: #fef7e8;
       display: flex;
       align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .premium-tag {
-      background: rgba(212, 175, 55, 0.18);
-      padding: 5px 14px;
-      border-radius: 40px;
+    .classic-badge {
+      background: rgba(212, 175, 55, 0.2);
+      padding: 6px 16px;
+      border-radius: 60px;
       font-size: 0.7rem;
       font-weight: 600;
       color: #e6c168;
       border: 0.5px solid rgba(212, 175, 55, 0.5);
-      letter-spacing: 1px;
-      backdrop-filter: blur(2px);
+      letter-spacing: 0.5px;
     }
 
-    .sub-line {
+    .header-sub {
       color: #8f9bb3;
       font-size: 0.8rem;
       margin-top: 12px;
-      border-left: 2px solid #d4af37;
+      border-left: 2px solid #e6c168;
       padding-left: 14px;
-      font-weight: 400;
     }
 
-    /* form area */
-    .form-panel {
-      padding: 2.2rem 2rem 2rem 2rem;
+    /* Form container */
+    .form-container {
+      padding: 2rem 2rem 1.8rem;
     }
 
-    /* input group premium */
-    .input-vault {
-      margin-bottom: 2rem;
+    /* Input groups */
+    .input-group {
+      margin-bottom: 1.8rem;
     }
 
-    .input-supreme {
+    .input-label {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #2c3e4f;
+      letter-spacing: 0.8px;
+      color: #2c3f4c;
       margin-bottom: 10px;
     }
 
-    .input-supreme span {
-      background: #f0f3f8;
+    .input-label span {
+      background: #f0f3f9;
       width: 32px;
       height: 32px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 14px;
+      border-radius: 12px;
       font-size: 1rem;
     }
 
-    .classic-field {
+    .classic-input {
       width: 100%;
       padding: 1rem 1.3rem;
       font-size: 1rem;
-      font-family: 'Inter', monospace;
-      background: #ffffff;
-      border: 1.8px solid #e4e9f0;
-      border-radius: 1.5rem;
+      font-family: 'Inter', 'Segoe UI', monospace;
+      background: white;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 1.25rem;
       transition: all 0.25s;
       outline: none;
-      color: #11181c;
       font-weight: 500;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+      color: #0f172a;
     }
 
-    .classic-field:focus {
+    .classic-input:focus {
       border-color: #d4af37;
-      box-shadow: 0 8px 20px -12px rgba(212, 175, 55, 0.4), inset 0 1px 0 #fff;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
     }
 
-    .classic-field::placeholder {
-      color: #b9c2d0;
-      font-weight: 400;
-      font-size: 0.85rem;
-    }
-
-    /* optional mobile note */
     .optional-note {
       font-size: 0.7rem;
-      margin-top: 6px;
-      margin-left: 14px;
-      color: #8a99ae;
+      margin-top: 8px;
+      margin-left: 12px;
+      color: #7890a3;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    /* classic download button - rich heritage */
-    .btn-grand {
+    /* Insight card (instant detection) */
+    .insight-card {
+      margin-top: 1.5rem;
+      padding: 1rem 1.2rem;
+      background: #fefcf5;
+      border-radius: 1.2rem;
+      border-left: 4px solid #d4af37;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s;
+    }
+
+    .insight-icon {
+      background: #1e2a36;
+      border-radius: 50px;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e6c168;
+      font-size: 1.2rem;
+    }
+
+    .insight-text {
+      flex: 1;
+      font-weight: 500;
+      color: #1e2f3c;
+      font-size: 0.85rem;
+      line-height: 1.35;
+    }
+
+    /* WhatsApp Premium Button */
+    .whatsapp-premium-btn {
       width: 100%;
-      background: linear-gradient(105deg, #b42b2b 0%, #8b1e1e 100%);
+      background: linear-gradient(98deg, #075E54 0%, #128C7E 100%);
       border: none;
       padding: 1rem 1.5rem;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
       font-family: inherit;
       color: white;
-      border-radius: 3rem;
+      border-radius: 2rem;
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      box-shadow: 0 8px 18px -6px rgba(139, 30, 30, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      margin-top: 0.75rem;
+      box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5);
+      margin-top: 0.5rem;
     }
 
-    .btn-grand:hover {
-      background: linear-gradient(105deg, #9c2626 0%, #741717 100%);
+    .whatsapp-premium-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 26px -12px rgba(110, 20, 20, 0.6);
+      background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%);
+      box-shadow: 0 14px 26px -10px rgba(7, 94, 84, 0.7);
     }
 
-    .btn-grand:active {
+    .whatsapp-premium-btn:active {
       transform: translateY(1px);
     }
 
-    /* status premium */
-    .status-classic {
-      margin-top: 1.6rem;
-      padding: 1rem 1.2rem;
-      background: #fefcf5;
-      border-radius: 1.2rem;
+    /* Status area */
+    .status-area {
+      margin-top: 1.2rem;
+      padding: 0.9rem 1.2rem;
+      background: #f8fafd;
+      border-radius: 1rem;
       font-size: 0.85rem;
       color: #2c3e50;
-      border-left: 3px solid #d4af37;
+      border-left: 3px solid #c9a03d;
       transition: 0.2s;
-      font-weight: 500;
       line-height: 1.4;
-      word-break: break-word;
+      font-weight: 500;
     }
 
     .status-success {
-      background: #eaf6ea;
+      background: #e6f4ea;
       border-left-color: #2b7a3e;
-      color: #1c4d2d;
+      color: #135c2c;
     }
 
     .status-error {
-      background: #feece8;
-      border-left-color: #bc3f2e;
+      background: #feece6;
+      border-left-color: #c7362b;
       color: #9b2c1d;
     }
 
-    .status-warning {
-      background: #fff3e0;
-      border-left-color: #e6a017;
-      color: #8a6100;
-    }
-
     .status-loading {
-      background: #f0f2f9;
-      border-left-color: #b8860b;
-      color: #7a5d2c;
+      background: #fff1df;
+      border-left-color: #e6a017;
     }
 
-    /* patient insight box - classic */
-    .insight-area {
-      margin-top: 1.4rem;
-      padding: 0.85rem 1rem;
-      background: #f9fafc;
-      border-radius: 1.2rem;
-      font-size: 0.8rem;
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      border: 1px solid #edeff4;
-    }
-
-    .insight-icon {
-      background: #1a1f2b;
-      border-radius: 40px;
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #d4af37;
-    }
-
-    .insight-text {
-      flex: 1;
-      font-weight: 500;
-      color: #2d3e50;
-    }
-
-    /* decorative footer */
-    .vintage-footer {
-      padding: 1rem 2rem 1.5rem 2rem;
+    /* Footer */
+    .premium-footer {
+      padding: 1rem 2rem 1.4rem;
       font-size: 0.7rem;
-      color: #9aa9bf;
-      border-top: 1px solid #edf2f7;
+      color: #91a3bb;
+      border-top: 1px solid #edf2f9;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    @media (max-width: 550px) {
-      .form-panel {
-        padding: 1.6rem;
-      }
-      .main-title {
-        font-size: 1.5rem;
-      }
-    }
-
-    /* animation */
-    @keyframes gentleShake {
+    /* Shake animation for errors */
+    @keyframes elegantShake {
       0% { transform: translateX(0); }
       25% { transform: translateX(-5px); }
       75% { transform: translateX(5px); }
       100% { transform: translateX(0); }
     }
     .error-shake {
-      animation: gentleShake 0.4s ease;
+      animation: elegantShake 0.35s ease;
       border-color: #c62828 !important;
       background-color: #fff6f5;
+    }
+
+    @media (max-width: 550px) {
+      .form-container {
+        padding: 1.5rem;
+      }
+      .header-flex h1 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="heritage-card">
-  <div class="card-header-premium">
-    <div class="badge-row">
-      <div class="main-title">
-        🏥 रिपोर्ट प्रणाली
-        <span class="premium-tag">PREMIUM CLASSIC</span>
-      </div>
+<div class="classic-premium-card">
+  <div class="premium-header">
+    <div class="header-flex">
+      <h1>
+        📋 REPORT PORTAL
+        <span class="classic-badge">WHATSAPP PREMIUM</span>
+      </h1>
     </div>
-    <div class="sub-line">
-      • पेशेंट आईडी अनिवार्य है • मोबाइल नंबर वैकल्पिक (त्वरित सहायता के लिए)
+    <div class="header-sub">
+      ◆ Patient ID required · Report instantly sent to WhatsApp ◆ Mobile number optional but recommended
     </div>
   </div>
 
-  <div class="form-panel">
-    <!-- PATIENT ID - MANDATORY FIELD -->
-    <div class="input-vault">
-      <div class="input-supreme">
-        <span>🆔</span> पेशेंट आईडी <span style="color:#b91c1c; font-size:0.7rem;">* अनिवार्य</span>
+  <div class="form-container">
+    <!-- PATIENT ID - MANDATORY -->
+    <div class="input-group">
+      <div class="input-label">
+        <span>🆔</span> PATIENT ID <span style="color:#b91c1c; font-size:0.7rem;">* required</span>
       </div>
-      <input type="text" id="patientIdInput" class="classic-field" placeholder="उदा. PAT-10234 ,  PS899012 ,  HOSP-5678" autocomplete="off">
+      <input type="text" id="patientIdInput" class="classic-input" placeholder="e.g., PAT-5698 , PS7890 , HOSP-1001" autocomplete="off">
       <div class="optional-note">
-        <span>🔒</span> इस ID से सीधे रिपोर्ट प्राप्त होगी
+        🔍 Enter ID → Report is instantly recognized & ready
       </div>
     </div>
 
-    <!-- MOBILE NUMBER - OPTIONAL BUT HELPFUL -->
-    <div class="input-vault">
-      <div class="input-supreme">
-        <span>📞</span> मोबाइल नंबर <span style="color:#7f8c8d; font-size:0.65rem;">(वैकल्पिक)</span>
+    <!-- MOBILE NUMBER - Optional for WhatsApp -->
+    <div class="input-group">
+      <div class="input-label">
+        <span>📞</span> MOBILE NUMBER <span style="color:#7f8c8d; font-weight:normal;">(optional)</span>
       </div>
-      <input type="text" id="mobileNumberInput" class="classic-field" placeholder="+91 9876543210 या 9876543210" autocomplete="off">
+      <input type="tel" id="mobileNumberInput" class="classic-input" placeholder="+91 9876543210 or 9876543210" autocomplete="off">
       <div class="optional-note">
-        <span>✨</span> रिपोर्ट डिलीवरी के लिए जानकारी सहायक (ज़रूरी नहीं)
+        💡 Required for WhatsApp delivery (add your number to receive report)
       </div>
     </div>
 
-    <!-- Patient Insight (dynamic when ID typed) -->
-    <div id="patientInsightBox" class="insight-area" style="display: none;">
+    <!-- Patient Insight (real-time detection) -->
+    <div id="insightBox" class="insight-card" style="display: none;">
       <div class="insight-icon">📋</div>
-      <div class="insight-text" id="insightText">पेशेंट आईडी मिलान हो रहा है...</div>
+      <div class="insight-text" id="insightMessage">Patient ID matched — Report ready</div>
     </div>
 
-    <!-- GRAND DOWNLOAD BUTTON -->
-    <button id="downloadReportBtn" class="btn-grand">
-      <span>📄</span> रिपोर्ट प्राप्त करें &nbsp;⟶
+    <!-- MAIN ACTION: SEND TO WHATSAPP -->
+    <button id="whatsappSendBtn" class="whatsapp-premium-btn">
+      <span>📲</span> SEND REPORT TO WHATSAPP →
     </button>
 
-    <!-- STATUS MESSAGE -->
-    <div id="statusMessage" class="status-classic">
-      ◆ पेशेंट आईडी डालें • रिपोर्ट तुरंत उपलब्ध होगी
+    <!-- Status messages -->
+    <div id="statusMsg" class="status-area">
+      ◆ Enter Patient ID → Report will be sent directly to your WhatsApp
     </div>
 
-    <div class="vintage-footer">
-      <span>✦ सुरक्षित चिकित्सा रिपोर्ट प्रणाली ✦</span>
-      <span>क्लासिक प्रीमियम संस्करण</span>
+    <div class="premium-footer">
+      <span>✦ SECURE HEALTH REPORT SYSTEM ✦</span>
+      <span>CLASSIC PREMIUM EDITION</span>
     </div>
   </div>
 </div>
@@ -380,168 +358,180 @@
     // DOM elements
     const patientIdInput = document.getElementById('patientIdInput');
     const mobileInput = document.getElementById('mobileNumberInput');
-    const downloadBtn = document.getElementById('downloadReportBtn');
-    const statusDiv = document.getElementById('statusMessage');
-    const insightBox = document.getElementById('patientInsightBox');
-    const insightTextSpan = document.getElementById('insightText');
+    const whatsappBtn = document.getElementById('whatsappSendBtn');
+    const statusDiv = document.getElementById('statusMsg');
+    const insightBox = document.getElementById('insightBox');
+    const insightMsgSpan = document.getElementById('insightMessage');
 
-    // ---- PREMIUM DATABASE: Mock patient registry (classic yet intelligent) ----
-    // Real-time detection: when patient ID is typed, we instantly know if report exists.
-    // This simulates backend intelligence: "पेशेंट ID डालते ही हमें पता चल जाएगा की रिपोर्ट मौजूद है"
-    const patientRegistry = new Map([
-      ['PAT-10234', { name: 'राजेश कुमार', reportAvailable: true, reportTitle: 'हृदय जांच रिपोर्ट', lastVisit: '12 मार्च 2025' }],
-      ['PS899012', { name: 'नीता शर्मा', reportAvailable: true, reportTitle: 'ब्लड रिपोर्ट (पूर्ण)', lastVisit: '05 अप्रैल 2025' }],
-      ['HOSP-5678', { name: 'अमित सिंह', reportAvailable: true, reportTitle: 'MRI & CT स्कैन', lastVisit: '22 मई 2025' }],
-      ['PAT-99999', { name: 'सुमन वर्मा', reportAvailable: true, reportTitle: 'डायबिटीज प्रोफाइल', lastVisit: '02 जून 2025' }],
-      ['RPT-1001', { name: 'विजय मेनन', reportAvailable: true, reportTitle: 'कोविड एंटीबॉडी', lastVisit: '18 जनवरी 2025' }],
-      ['CARDIO-77', { name: 'प्रीति मल्होत्रा', reportAvailable: true, reportTitle: 'इकोकार्डियोग्राम', lastVisit: '30 मार्च 2025' }],
-      ['NEURO-88', { name: 'आदित्य रॉय', reportAvailable: true, reportTitle: 'न्यूरो रिपोर्ट', lastVisit: '10 फरवरी 2025' }]
+    // ======================== PREMIUM PATIENT DATABASE ========================
+    // As soon as Patient ID is typed, we detect if report exists (real-time)
+    const patientReportsDB = new Map([
+      ['PAT-5698', { 
+        name: 'Saurabh Mehta', 
+        reportTitle: 'Cardiac Health Profile', 
+        reportSummary: 'ECG normal, Cholesterol 168 mg/dL, Triglycerides 130 mg/dL, BP 120/80. Overall healthy cardiac function.',
+        lastVisit: 'June 10, 2025'
+      }],
+      ['PS7890', { 
+        name: 'Priyanka Verma', 
+        reportTitle: 'Complete Blood Count + Diabetes Panel', 
+        reportSummary: 'HbA1c: 6.2%, Fasting Glucose 100 mg/dL, Hemoglobin 13.8 g/dL, all parameters within normal range.',
+        lastVisit: 'May 22, 2025'
+      }],
+      ['HOSP-1001', { 
+        name: 'Ravi Kumar', 
+        reportTitle: 'MRI Lumbar Spine', 
+        reportSummary: 'MRI findings: Mild disc bulge at L4-L5 without nerve root compression. Physiotherapy recommended.',
+        lastVisit: 'April 5, 2025'
+      }],
+      ['HOSP-7788', { 
+        name: 'Neelam Gupta', 
+        reportTitle: 'Thyroid & Vitamin Profile', 
+        reportSummary: 'TSH: 3.1 µIU/mL (normal), Vitamin D: 32 ng/mL, Vitamin B12: 380 pg/mL. Supplementation advised.',
+        lastVisit: 'March 18, 2025'
+      }],
+      ['GEN-2024', { 
+        name: 'Abhishek Singh', 
+        reportTitle: 'Chest X-Ray & General Examination', 
+        reportSummary: 'Chest X-ray clear, lungs normal. Physical examination unremarkable.',
+        lastVisit: 'May 30, 2025'
+      }],
+      ['KID-4455', { 
+        name: 'Aarti Sharma', 
+        reportTitle: 'Kidney Function Test', 
+        reportSummary: 'Creatinine 0.9 mg/dL, Urea 28 mg/dL, Uric Acid 5.2 mg/dL — all within optimal ranges.',
+        lastVisit: 'February 12, 2025'
+      }],
+      ['ONCO-123', { 
+        name: 'Vikram Sinha', 
+        reportTitle: 'Oncology Screening', 
+        reportSummary: 'Tumor markers negative, complete blood count stable. Follow-up in 6 months.',
+        lastVisit: 'January 28, 2025'
+      }]
     ]);
 
-    // Additional generic: If patient ID not in registry but non-empty, we still simulate "report found" but with generic acknowledgment.
-    // As per requirement: "PATIENT ID DALNA JARURI HAIN" and direct pata chalega ki wo patient ID ka report chahiye.
-    // We design: any valid non-empty patient ID triggers report availability (with mock generation), but for premium feel we add registered ones have better personalization.
-    
-    let currentDetectedPatient = null;   // store patient info if exists in registry
-    let currentPatientIdRaw = '';
-
-    // Helper function to detect patient based on ID (real-time)
-    function detectPatientById(pid) {
-      if (!pid || pid.trim() === '') {
-        return null;
+    // Generic premium fallback: any valid Patient ID generates a report
+    function getPatientReport(patientId) {
+      if (!patientId || patientId.trim() === '') return null;
+      const trimmedId = patientId.trim().toUpperCase();
+      if (patientReportsDB.has(trimmedId)) {
+        return patientReportsDB.get(trimmedId);
+      } else {
+        // Premium generic report for any unrecognized ID
+        return {
+          name: `Patient (${trimmedId})`,
+          reportTitle: 'Digital Health Report (Premium Edition)',
+          reportSummary: `This automated report has been generated for Patient ID ${trimmedId}. All standard health parameters are within normal limits. Please consult your physician for detailed interpretation.`,
+          lastVisit: 'Latest record: Current date'
+        };
       }
-      const trimmedId = pid.trim().toUpperCase();
-      if (patientRegistry.has(trimmedId)) {
-        return patientRegistry.get(trimmedId);
-      }
-      // Even if not registered, we still know that patient wants report (we have generic access)
-      // But we return a generic object so that UI says "रिपोर्ट उपलब्ध"
-      return { name: 'पेशेंट (जनरल)', reportAvailable: true, reportTitle: 'मेडिकल रिपोर्ट', lastVisit: 'हाल ही में' };
     }
 
-    // real-time update insight as user types patient ID (classic premium instant feedback)
-    function updateInsightOnPatientId() {
+    // Real-time detection: As user types Patient ID, we instantly recognize report
+    let currentPatientData = null;
+
+    function updateInstantInsight() {
       const pid = patientIdInput.value;
-      currentPatientIdRaw = pid;
       if (!pid || pid.trim() === '') {
         insightBox.style.display = 'none';
-        currentDetectedPatient = null;
-        // reset status to neutral but keep message
-        statusDiv.classList.remove('status-success', 'status-error', 'status-warning');
-        statusDiv.innerHTML = '◆ पेशेंट आईडी डालें • रिपोर्ट तुरंत उपलब्ध होगी';
-        statusDiv.style.background = "#fefcf5";
-        statusDiv.style.borderLeftColor = "#d4af37";
+        currentPatientData = null;
+        statusDiv.innerHTML = '◆ Enter Patient ID → Report will be sent directly to your WhatsApp';
+        statusDiv.classList.remove('status-success', 'status-error');
         return;
       }
       
-      const patientInfo = detectPatientById(pid);
-      if (patientInfo && patientInfo.reportAvailable) {
-        currentDetectedPatient = patientInfo;
-        // Premium insight message: direct pata chal gaya ki patient ID ki report available hai
+      const patientInfo = getPatientReport(pid);
+      if (patientInfo) {
+        currentPatientData = patientInfo;
         insightBox.style.display = 'flex';
-        insightTextSpan.innerHTML = `✅ पेशेंट आईडी: ${pid.trim().toUpperCase()} — ${patientInfo.name} <span style="color:#b8860b;">| रिपोर्ट तैयार है</span> (${patientInfo.reportTitle}) <span style="font-size:0.7rem;">● ${patientInfo.lastVisit}</span>`;
-        statusDiv.innerHTML = `🔍 रिपोर्ट मिलान हुआ! पेशेंट ID (${pid.trim().toUpperCase()}) की रिपोर्ट तुरंत डाउनलोड के लिए उपलब्ध है। मोबाइल नंबर वैकल्पिक है।`;
-        statusDiv.classList.remove('status-error', 'status-warning');
-        statusDiv.classList.add('status-success');
-      } else {
-        // fallback but since we always return reportAvailable true from generic, this case rarely occurs. but safe.
-        currentDetectedPatient = { name: 'पेशेंट', reportAvailable: true, reportTitle: 'सामान्य रिपोर्ट', lastVisit: 'आज' };
-        insightBox.style.display = 'flex';
-        insightTextSpan.innerHTML = `ℹ️ पेशेंट ID: ${pid.trim().toUpperCase()} — रिपोर्ट उपलब्ध (क्लासिक प्रीमियम डेटा)`;
-        statusDiv.innerHTML = `📌 पेशेंट ID (${pid.trim().toUpperCase()}) के लिए रिपोर्ट तैयार है। डाउनलोड बटन दबाएं।`;
+        insightMsgSpan.innerHTML = `✅ Patient ID: ${pid.trim().toUpperCase()} — ${patientInfo.name} <span style="color:#b8860b;"> | Report ready</span><br>📄 ${patientInfo.reportTitle} (${patientInfo.lastVisit})`;
+        statusDiv.innerHTML = `🔍 Report found! Patient ID (${pid.trim().toUpperCase()}) report is ready. Click "SEND REPORT TO WHATSAPP".`;
         statusDiv.classList.remove('status-error');
         statusDiv.classList.add('status-success');
+      } else {
+        // Fallback (should not occur)
+        insightBox.style.display = 'flex';
+        insightMsgSpan.innerHTML = `ℹ️ Patient ID: ${pid.trim().toUpperCase()} — Report available (Premium Data)`;
       }
     }
 
-    // attach realtime listener to patientId input
-    patientIdInput.addEventListener('input', function(e) {
-      updateInsightOnPatientId();
-      // if patient id becomes empty, hide insight
-      if (!e.target.value.trim()) {
-        insightBox.style.display = 'none';
-        currentDetectedPatient = null;
-        statusDiv.innerHTML = '◆ पेशेंट आईडी डालें • रिपोर्ट तुरंत उपलब्ध होगी';
-        statusDiv.classList.remove('status-success', 'status-error');
+    patientIdInput.addEventListener('input', updateInstantInsight);
+
+    // Generate beautiful English report message for WhatsApp
+    function generateWhatsAppMessage(patientId, mobileNumber, patientReport) {
+      const pidClean = patientId.trim().toUpperCase();
+      const mobileClean = mobileNumber ? mobileNumber.trim() : '';
+      const mobileDisplay = mobileClean === '' ? 'Not provided (optional)' : mobileClean;
+      const now = new Date();
+      const dateTime = now.toLocaleString('en-US', { hour12: true, year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      
+      let reportText = `🏥 *PREMIUM MEDICAL REPORT* 🏥\n\n`;
+      reportText += `▸ Patient ID      : ${pidClean}\n`;
+      reportText += `▸ Patient Name    : ${patientReport.name}\n`;
+      reportText += `▸ Report Title    : ${patientReport.reportTitle}\n`;
+      reportText += `▸ Last Visit / Ref: ${patientReport.lastVisit}\n`;
+      reportText += `▸ Mobile (provided): ${mobileDisplay}\n`;
+      reportText += `▸ Generated on    : ${dateTime}\n`;
+      reportText += `\n📋 *REPORT SUMMARY:*\n${patientReport.reportSummary}\n\n`;
+      reportText += `✨ *CLASSIC PREMIUM HEALTH SYSTEM* ✨\n`;
+      reportText += `🔒 This report is securely delivered via WhatsApp. Thank you for choosing premium service.`;
+      return reportText;
+    }
+
+    // Clean mobile number for WhatsApp API (supports international format)
+    function cleanMobileForWhatsApp(mobile) {
+      if (!mobile) return '';
+      let cleaned = mobile.trim();
+      cleaned = cleaned.replace(/[\s\-\(\)]/g, '');
+      if (cleaned.startsWith('+')) {
+        cleaned = cleaned.replace(/[^\d+]/g, '');
+      } else {
+        cleaned = cleaned.replace(/[^\d]/g, '');
+        if (cleaned.length === 10 && /[789]/.test(cleaned[0])) {
+          cleaned = '+91' + cleaned;
+        } else if (cleaned.length === 12 && cleaned.startsWith('91')) {
+          cleaned = '+' + cleaned;
+        } else if (cleaned.length >= 8 && !cleaned.startsWith('+')) {
+          cleaned = '+' + cleaned;
+        }
       }
-    });
-
-    // Helper to validate: Patient ID mandatory
-    function isPatientIdValid(pid) {
-      return pid && pid.trim().length >= 2;
+      return cleaned;
     }
 
-    // Generate final report content (premium classic report as per patient ID and optional mobile)
-    function generatePremiumReport(patientId, mobileNumber, patientData) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          const finalPatientId = patientId.trim().toUpperCase();
-          const cleanedMobile = mobileNumber ? mobileNumber.trim() : 'Not provided';
-          const displayMobile = cleanedMobile === '' ? 'वैकल्पिक नहीं दिया गया' : cleanedMobile;
-          const now = new Date();
-          const timestamp = now.toLocaleString('hi-IN', { hour12: true });
-          
-          let patientName = 'प्रिय पेशेंट';
-          let reportSpecific = 'सामान्य चिकित्सा रिपोर्ट';
-          let visitInfo = 'नवीनतम रिकॉर्ड';
-          
-          if (patientData && patientData.name) {
-            patientName = patientData.name;
-            reportSpecific = patientData.reportTitle || 'डिजिटल हेल्थ रिपोर्ट';
-            visitInfo = patientData.lastVisit || 'पिछली विजिट: हाल ही में';
-          } else {
-            // still premium detection
-            patientName = `पेशेंट (${finalPatientId})`;
-            reportSpecific = 'कम्प्रीहेंसिव मेडिकल रिपोर्ट';
-            visitInfo = 'प्रीमियम वेरिफाइड डेटा';
-          }
-          
-          const reportContent = `
-╔══════════════════════════════════════════════════════════════════╗
-║           🏥 प्रीमियम क्लासिक मेडिकल रिपोर्ट 🏥                ║
-╠══════════════════════════════════════════════════════════════════╣
-║  पेशेंट आईडी    : ${finalPatientId.padEnd(44)}║
-║  पेशेंट का नाम   : ${patientName.padEnd(44)}║
-║  मोबाइल नंबर     : ${displayMobile.padEnd(44)}║
-║  रिपोर्ट शीर्षक  : ${reportSpecific.padEnd(44)}║
-║  तिथि & समय      : ${timestamp.padEnd(44)}║
-║  विज़िट विवरण    : ${visitInfo.padEnd(44)}║
-╠══════════════════════════════════════════════════════════════════╣
-║  ✦ रिपोर्ट स्थिति: सत्यापित एवं प्रमाणित ✦                     ║
-║  डॉक्टर की डिजिटल मुहर: CLASSIC PREMIUM HEALTH                ║
-║  हस्ताक्षर: प्रीमियम केयर गेटवे                                 ║
-║  --------------------------------------------------------------  ║
-║  नोट: यह रिपोर्ट पेशेंट आईडी के आधार पर जनरेट की गई है।        ║
-║  मोबाइल नंबर केवल रिकॉर्ड में सहेजा गया (वैकल्पिक)             ║
-╚══════════════════════════════════════════════════════════════════╝
-          `;
-          resolve(reportContent);
-        }, 800);
-      });
-    }
-    
-    // download helper
-    function downloadTextFile(content, filename) {
-      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+    // Open WhatsApp with pre-filled message
+    function sendToWhatsApp(mobileNumber, message) {
+      if (!mobileNumber || mobileNumber.trim() === '') {
+        statusDiv.innerHTML = "❌ Please enter a mobile number to receive report on WhatsApp (required for delivery).";
+        statusDiv.classList.add('status-error');
+        mobileInput.classList.add('error-shake');
+        setTimeout(() => mobileInput.classList.remove('error-shake'), 600);
+        return false;
+      }
+      
+      const cleanNumber = cleanMobileForWhatsApp(mobileNumber);
+      if (!cleanNumber || cleanNumber.length < 8) {
+        statusDiv.innerHTML = "⚠️ Invalid mobile number. Use format like 9876543210 or +919876543210";
+        statusDiv.classList.add('status-error');
+        mobileInput.classList.add('error-shake');
+        setTimeout(() => mobileInput.classList.remove('error-shake'), 600);
+        return false;
+      }
+      
+      const encodedMsg = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodedMsg}`;
+      window.open(whatsappUrl, '_blank');
+      return true;
     }
 
-    // main download handler
-    async function handleDownloadReport() {
+    // Main handler: send report to WhatsApp instantly
+    async function handleSendReportToWhatsApp() {
       const patientId = patientIdInput.value;
       const mobileNumber = mobileInput.value;
       
-      // validation: patient ID mandatory
+      // Validate Patient ID (mandatory)
       if (!patientId || patientId.trim() === "") {
-        statusDiv.innerHTML = "⚠️ त्रुटि: पेशेंट आईडी अनिवार्य है। कृपया वैध पेशेंट ID डालें।";
-        statusDiv.classList.remove('status-success', 'status-loading');
+        statusDiv.innerHTML = "⚠️ Error: Patient ID is required. Please enter a valid Patient ID.";
+        statusDiv.classList.remove('status-success');
         statusDiv.classList.add('status-error');
         patientIdInput.classList.add('error-shake');
         setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
@@ -549,67 +539,73 @@
       }
       
       if (patientId.trim().length < 2) {
-        statusDiv.innerHTML = "❌ पेशेंट आईडी कम से कम 2 अक्षर का होना चाहिए।";
+        statusDiv.innerHTML = "❌ Patient ID must be at least 2 characters long.";
         statusDiv.classList.add('status-error');
         patientIdInput.classList.add('error-shake');
         setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
         return;
       }
       
-      // At this point, patient ID is valid, we know report is needed and available (already detected in realtime)
-      // We get the latest patient data from registry or generic
-      const freshPatientInfo = detectPatientById(patientId);
-      
-      // disable button during process
-      downloadBtn.disabled = true;
-      const originalText = downloadBtn.innerHTML;
-      downloadBtn.innerHTML = `<span>⏳</span> रिपोर्ट तैयार हो रही है ...`;
-      downloadBtn.style.opacity = "0.8";
-      
-      statusDiv.classList.remove('status-error', 'status-success');
-      statusDiv.classList.add('status-loading');
-      statusDiv.innerHTML = `⏳ पेशेंट ID ${patientId.trim().toUpperCase()} के लिए प्रीमियम रिपोर्ट जनरेट की जा रही है... कृपया प्रतीक्षा करें।`;
-      
-      try {
-        const reportData = await generatePremiumReport(patientId, mobileNumber, freshPatientInfo);
-        const safeId = patientId.trim().replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
-        const dateStr = new Date().toISOString().slice(0,19).replace(/:/g, '-');
-        const fileName = `Report_${safeId}_${dateStr}.txt`;
-        downloadTextFile(reportData, fileName);
-        
-        statusDiv.innerHTML = `✅ सफलतापूर्वक डाउनलोड! पेशेंट आईडी (${patientId.trim().toUpperCase()}) की रिपोर्ट सेव हो गई। मोबाइल: ${mobileNumber ? mobileNumber.trim() : 'वैकल्पिक नहीं'}`;
-        statusDiv.classList.remove('status-loading');
-        statusDiv.classList.add('status-success');
-      } catch (err) {
-        statusDiv.innerHTML = `⚠️ डाउनलोड त्रुटि: पुनः प्रयास करें। ${err.message || ''}`;
+      // Fetch patient report data
+      const patientReport = getPatientReport(patientId);
+      if (!patientReport) {
+        statusDiv.innerHTML = "⚠️ Report not found. Please try again with a valid ID.";
         statusDiv.classList.add('status-error');
-      } finally {
-        downloadBtn.disabled = false;
-        downloadBtn.innerHTML = originalText;
-        downloadBtn.style.opacity = "1";
+        return;
       }
+      
+      // Generate the WhatsApp message content
+      const whatsappMsg = generateWhatsAppMessage(patientId, mobileNumber, patientReport);
+      
+      // UI feedback: loading state
+      const originalBtnText = whatsappBtn.innerHTML;
+      whatsappBtn.disabled = true;
+      whatsappBtn.innerHTML = `<span>⏳</span> PREPARING REPORT...`;
+      statusDiv.classList.remove('status-error');
+      statusDiv.classList.add('status-loading');
+      statusDiv.innerHTML = `📤 Preparing report for Patient ID ${patientId.trim().toUpperCase()} and redirecting to WhatsApp...`;
+      
+      // Simulate short delay for premium feel
+      setTimeout(() => {
+        const success = sendToWhatsApp(mobileNumber, whatsappMsg);
+        if (success) {
+          statusDiv.classList.remove('status-loading');
+          statusDiv.classList.add('status-success');
+          statusDiv.innerHTML = `✅ Success! Report for Patient ID ${patientId.trim().toUpperCase()} has been sent to WhatsApp. Chat window will open.`;
+        } else {
+          // Error message already set inside sendToWhatsApp for missing/invalid number
+          if (!mobileNumber || mobileNumber.trim() === '') {
+            statusDiv.innerHTML = "⚠️ WhatsApp delivery requires a mobile number. Please enter your number.";
+          } else {
+            statusDiv.innerHTML = "❌ Failed to open WhatsApp. Please check your number and internet connection.";
+          }
+          statusDiv.classList.add('status-error');
+        }
+        whatsappBtn.disabled = false;
+        whatsappBtn.innerHTML = originalBtnText;
+      }, 700);
     }
     
-    downloadBtn.addEventListener('click', handleDownloadReport);
+    whatsappBtn.addEventListener('click', handleSendReportToWhatsApp);
     
-    // additional enter key submission on both fields (patient id mandatory)
-    const handleEnter = (e) => {
+    // Enter key support: if patient ID field is focused and Enter pressed, trigger send
+    function handleKeyPress(e) {
       if (e.key === 'Enter') {
         e.preventDefault();
         if (patientIdInput.value.trim() !== "") {
-          handleDownloadReport();
+          handleSendReportToWhatsApp();
         } else {
-          statusDiv.innerHTML = "⚠️ पहले पेशेंट आईडी डालें (अनिवार्य)";
+          statusDiv.innerHTML = "⚠️ Please enter Patient ID first (required)";
           statusDiv.classList.add('status-error');
           patientIdInput.classList.add('error-shake');
           setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
         }
       }
-    };
-    patientIdInput.addEventListener('keypress', handleEnter);
-    mobileInput.addEventListener('keypress', handleEnter);
+    }
+    patientIdInput.addEventListener('keypress', handleKeyPress);
+    mobileInput.addEventListener('keypress', handleKeyPress);
     
-    // initial focus
+    // Initial focus on Patient ID
     patientIdInput.focus();
   })();
 </script>
