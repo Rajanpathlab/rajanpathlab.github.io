@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab - Landscape Booking with QR</title>
+<title>Rajan Path Lab - Auto Reset Booking Form</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -117,7 +117,7 @@ body {
     margin-top: 5px;
 }
 
-/* Clear float */
+/* Clear fix */
 .clearfix::after {
     content: "";
     clear: both;
@@ -168,6 +168,7 @@ input, select, textarea {
     font-family: 'Poppins', sans-serif;
     transition: 0.2s;
     outline: none;
+    background: #fff;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -238,6 +239,12 @@ input:focus, select:focus, textarea:focus {
     cursor: pointer;
     font-size: 0.75rem;
     white-space: nowrap;
+    transition: 0.2s;
+}
+
+.test-row .add-btn:hover {
+    background: #0a486e;
+    transform: translateY(-1px);
 }
 
 .selected-tests {
@@ -263,6 +270,13 @@ input:focus, select:focus, textarea:focus {
     height: 18px;
     cursor: pointer;
     font-size: 0.7rem;
+    font-weight: bold;
+    transition: 0.1s;
+}
+
+.remove-test:hover {
+    background: #e74c3c;
+    color: white;
 }
 
 .price-summary {
@@ -301,6 +315,16 @@ input:focus, select:focus, textarea:focus {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
+}
+
+/* Reset button style */
+.reset-note {
+    text-align: right;
+    font-size: 0.7rem;
+    color: #8ba9c9;
+    margin-top: 8px;
+    border-top: 1px solid #eef2f7;
+    padding-top: 10px;
 }
 
 @media (max-width: 900px) {
@@ -344,13 +368,13 @@ input:focus, select:focus, textarea:focus {
 <section class="hero">
     <h1>🔬 RAJAN PATH LAB</h1>
     <h2>Trusted Diagnostics • Accurate Results • Digital Reports</h2>
-    <p>Landscape form for easy filling | Quick QR payment | WhatsApp confirmation</p>
+    <p>Refresh / Reopen → Form automatically resets to empty | Add tests & book fresh</p>
 </section>
 
 <div class="container">
     <div class="landscape-card clearfix">
         
-        <!-- छोटा QR Code - ऊपर दाहिनी तरफ (Float right) -->
+        <!-- छोटा QR Code - ऊपर दाहिनी तरफ -->
         <div class="qr-float">
             <div class="qr-title">
                 <i class="fas fa-qrcode"></i> SCAN & PAY
@@ -362,24 +386,24 @@ input:focus, select:focus, textarea:focus {
             </div>
         </div>
 
-        <form id="bookingForm">
+        <form id="bookingForm" autocomplete="off">
             <div class="section-title"><i class="fas fa-user-circle"></i> Patient Information</div>
             <div class="form-grid-2cols">
                 <div class="form-group">
                     <label>Patient Name *</label>
-                    <input type="text" id="name" placeholder="Full name" value="Rajan Kumar">
+                    <input type="text" id="name" placeholder="Full name">
                 </div>
                 <div class="form-group">
                     <label>Age (Years)</label>
-                    <input type="number" id="age" placeholder="Age" value="20">
+                    <input type="number" id="age" placeholder="Age">
                 </div>
                 <div class="form-group">
                     <label>Mobile Number *</label>
-                    <input type="tel" id="mobile" placeholder="9876543210" value="8709946177">
+                    <input type="tel" id="mobile" placeholder="9876543210">
                 </div>
                 <div class="form-group">
                     <label>Address</label>
-                    <input type="text" id="address" placeholder="Complete address" value="MANAHAR">
+                    <input type="text" id="address" placeholder="Complete address">
                 </div>
             </div>
 
@@ -411,11 +435,11 @@ input:focus, select:focus, textarea:focus {
                     <select id="refbySelect">
                         <option value="">-- Select Doctor --</option>
                     </select>
-                    <input type="text" id="refbyOther" placeholder="Or type other name" style="margin-top: 6px;" value="Dr. Jitendra Kr. Mehta">
+                    <input type="text" id="refbyOther" placeholder="Or type other name" style="margin-top: 6px;">
                 </div>
                 <div class="form-group">
                     <label>Test/Sample Date</label>
-                    <input type="date" id="date" value="2026-06-07">
+                    <input type="date" id="date">
                 </div>
             </div>
 
@@ -423,11 +447,11 @@ input:focus, select:focus, textarea:focus {
             <div class="payment-row">
                 <div class="form-group">
                     <label>Amount Paid (₹)</label>
-                    <input type="number" id="paid" placeholder="0" value="850">
+                    <input type="number" id="paid" placeholder="0" value="0">
                 </div>
                 <div class="form-group">
                     <label>Outstanding Due (₹)</label>
-                    <input type="number" id="due" placeholder="0" value="150">
+                    <input type="number" id="due" placeholder="0" value="0">
                 </div>
             </div>
 
@@ -442,6 +466,9 @@ input:focus, select:focus, textarea:focus {
             <button type="button" class="whatsapp-btn" onclick="sendFormattedWhatsApp()">
                 <i class="fab fa-whatsapp fa-lg"></i> 📄 Send Booking & Report Request
             </button>
+            <div class="reset-note">
+                <i class="fas fa-sync-alt"></i> Page refresh = all fields cleared automatically
+            </div>
         </form>
     </div>
 </div>
@@ -465,7 +492,7 @@ const testsData = [
     { sno:44, name:"OPTIMAL WIDAL", price:300 },{ sno:45, name:"Sodium", price:200 },{ sno:46, name:"Potassium", price:200 }
 ];
 
-// Doctor List
+// Doctor List - Full master list
 const doctorMasterList = [
     "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
     "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
@@ -475,6 +502,7 @@ const doctorMasterList = [
 ];
 const sortedDoctors = [...doctorMasterList].sort();
 
+// Populate doctor dropdown dynamically
 const refbySelect = document.getElementById('refbySelect');
 sortedDoctors.forEach(doc => {
     let opt = document.createElement('option');
@@ -484,14 +512,10 @@ sortedDoctors.forEach(doc => {
 });
 refbySelect.innerHTML += `<option value="other">Other (Type below)</option>`;
 
-// Selected tests state - default demo tests
-let selectedTests = [
-    { name: "Complete Blood Count (CBC)", price: 300 },
-    { name: "Optimal Package", price: 200 },
-    { name: "Urine Culture", price: 400 },
-    { name: "Widal Test", price: 100 }
-];
+// ---------- GLOBAL STATE: Selected tests (always starts empty on page load) ----------
+let selectedTests = [];  // EMPTY on fresh load/refresh
 
+// Helper: Update cart UI
 function updateCartUI() {
     const listDiv = document.getElementById('selectedTestsList');
     const totalSpan = document.getElementById('totalPriceSpan');
@@ -506,6 +530,7 @@ function updateCartUI() {
     });
     totalSpan.innerHTML = `💰 Total Test Value: ₹${total}`;
     
+    // Attach remove event listeners
     document.querySelectorAll('.remove-test').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const idx = parseInt(btn.getAttribute('data-index'));
@@ -518,7 +543,7 @@ function updateCartUI() {
     });
 }
 
-// Autocomplete
+// Autocomplete logic
 const testInput = document.getElementById('testAutocomplete');
 const suggestionsDiv = document.getElementById('suggestionsList');
 let currentSelectedSuggestion = null;
@@ -556,6 +581,7 @@ testInput.addEventListener('input', (e) => {
 });
 testInput.addEventListener('blur', () => setTimeout(() => suggestionsDiv.style.display = 'none', 150));
 
+// Add test button logic
 document.getElementById('quickAddBtn').addEventListener('click', () => {
     let testToAdd = null;
     if (currentSelectedSuggestion && currentSelectedSuggestion.name === testInput.value.trim()) {
@@ -594,6 +620,7 @@ function getFormattedTestsForMessage() {
     });
     const extra = document.getElementById('customTestName').value.trim();
     if (extra) testsList.push(`• Extra: ${extra}`);
+    if (testsList.length === 0) testsList.push("• No tests selected");
     return testsList.join('\n');
 }
 
@@ -613,22 +640,23 @@ function syncPayments() {
     }
 }
 
-// WhatsApp message exactly as per required format
+// WhatsApp message exactly as required format
 function sendFormattedWhatsApp() {
     const name = document.getElementById('name').value.trim();
     const age = document.getElementById('age').value || "—";
     const mobile = document.getElementById('mobile').value.trim();
     const address = document.getElementById('address').value.trim() || "—";
     const referred = getReferredBy();
-    const testDate = document.getElementById('date').value || new Date().toISOString().split('T')[0];
+    const testDate = document.getElementById('date').value;
     let paid = document.getElementById('paid').value || "0";
     let due = document.getElementById('due').value || "0";
     const reportRequest = document.getElementById('reportRequest').checked;
     const testsText = getFormattedTestsForMessage();
     const totalVal = getTotalAmount();
     
-    if (!name) { alert("Please enter patient name"); return; }
-    if (!mobile) { alert("Mobile number required"); return; }
+    if (!name) { alert("❌ Please enter patient name"); return; }
+    if (!mobile) { alert("❌ Mobile number is required"); return; }
+    if (!testDate) { alert("❌ Please select test date"); return; }
     
     let message = `🔬 RAJAN PATH LAB\n`;
     message += `Diagnostic Booking Confirmation & Report Request\n`;
@@ -667,22 +695,61 @@ function sendFormattedWhatsApp() {
 function generateSmallQR() {
     const upiString = "upi://pay?pa=8709946177@okbizaxis&pn=Rajan%20Path%20Lab&am=0&cu=INR";
     const qrDiv = document.getElementById('qrcode');
-    qrDiv.innerHTML = "";
-    new QRCode(qrDiv, {
-        text: upiString,
-        width: 85,
-        height: 85,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.M
-    });
+    if (qrDiv) {
+        qrDiv.innerHTML = "";
+        new QRCode(qrDiv, {
+            text: upiString,
+            width: 85,
+            height: 85,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    }
 }
 
-// Initialize
-updateCartUI();
-generateSmallQR();
-document.getElementById('paid').addEventListener('input', syncPayments);
-document.getElementById('due').addEventListener('input', syncPayments);
+// ---------- AUTO RESET FUNCTION: CLEARS EVERYTHING ON PAGE LOAD ----------
+function resetFormToEmpty() {
+    // Clear all text inputs, number, textarea, date
+    document.getElementById('name').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('mobile').value = '';
+    document.getElementById('address').value = '';
+    document.getElementById('customTestName').value = '';
+    document.getElementById('refbyOther').value = '';
+    document.getElementById('paid').value = '0';
+    document.getElementById('due').value = '0';
+    document.getElementById('reportRequest').checked = true;
+    
+    // Reset date to today's date
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').value = today;
+    
+    // Reset doctor dropdown to default
+    if (refbySelect) refbySelect.value = "";
+    
+    // Clear selected tests array
+    selectedTests = [];
+    updateCartUI();  // This will show empty cart with ₹0
+    
+    // Clear autocomplete input
+    testInput.value = '';
+    currentSelectedSuggestion = null;
+    suggestionsDiv.style.display = 'none';
+}
+
+// Initialize everything: fresh state + populate doctor list + QR
+window.addEventListener('DOMContentLoaded', () => {
+    resetFormToEmpty();      // Ensures no previous data remains
+    generateSmallQR();
+    // Attach payment sync listeners
+    document.getElementById('paid').addEventListener('input', syncPayments);
+    document.getElementById('due').addEventListener('input', syncPayments);
+    // Initial sync
+    syncPayments();
+});
+
+// Also reset on page refresh (already handled by DOMContentLoaded)
 </script>
 </body>
 </html>
