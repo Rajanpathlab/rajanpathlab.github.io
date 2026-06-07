@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab | Multi-Test Booking (Add Multiple Tests)</title>
+<title>Rajan Path Lab | Smart Test Booking with Doctor Autofill</title>
 <!-- Google Fonts & Font Awesome -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -387,8 +387,8 @@
 
 <section class="hero">
   <h1>Rajan Path Lab</h1>
-  <h2>Trusted Diagnostics · Multi-Test Booking</h2>
-  <p>✨ Type test name → tap to add → keep adding multiple tests easily. No manual typing for each test. Smart, fast & hassle-free!</p>
+  <h2>Trusted Diagnostics · Smart Multi-Test Booking</h2>
+  <p>✨ Type test name → tap to add → keep adding multiple tests. Doctor name auto-suggests from our verified list. Quick & effortless!</p>
 </section>
 
 <div class="container">
@@ -425,12 +425,12 @@
         </div>
 
         <div class="add-test-area">
-          <div class="autocomplete-wrapper" id="autocompleteWrapper">
+          <div class="autocomplete-wrapper" id="testAutocompleteWrapper">
             <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="🔍 Type test name: LIVER, CBC, THYROID, HBA1C ..." autocomplete="off">
-            <div id="dropdownList" class="autocomplete-dropdown"></div>
+            <div id="testDropdownList" class="autocomplete-dropdown"></div>
           </div>
           <button type="button" id="addTestBtn" class="add-test-btn"><i class="fas fa-plus-circle"></i> Add selected test to cart</button>
-          <small class="small-note"><i class="fas fa-magic"></i> Step 1: Type test name → tap suggestion → Step 2: Click 'Add to cart'. Repeat to add more tests.</small>
+          <small class="small-note"><i class="fas fa-magic"></i> Step 1: Type test → tap suggestion → Step 2: Click 'Add to cart'. Repeat for multiple tests.</small>
         </div>
 
         <!-- Cart display -->
@@ -451,11 +451,20 @@
         <!-- Hidden field to store cart data JSON for WhatsApp -->
         <input type="hidden" id="cartDataJson" value="[]">
 
-        <div class="grid">
-          <div class="form-group">
-            <label>Referred By (Doctor / Self)</label>
-            <input type="text" id="refby" placeholder="Dr. Sharma / Self">
+        <!-- Referred By Section WITH DOCTOR AUTOCOMPLETE -->
+        <div class="section-title">
+          <i class="fas fa-user-md"></i> Referral Information
+        </div>
+        <div class="form-group">
+          <label>Referred By (Doctor / Person) <span style="color:#0F6B9E;">🔍 Type to autofill</span></label>
+          <div class="autocomplete-wrapper" id="doctorAutocompleteWrapper">
+            <input type="text" id="refby" class="autocomplete-input" placeholder="Start typing doctor name e.g. PRAWESH, DHARMENDRA, SELF..." autocomplete="off">
+            <div id="doctorDropdownList" class="autocomplete-dropdown"></div>
           </div>
+          <small class="small-note"><i class="fas fa-stethoscope"></i> Doctor names load automatically from our directory. Just type & select.</small>
+        </div>
+
+        <div class="grid">
           <div class="form-group">
             <label>Preferred Date</label>
             <input type="date" id="date">
@@ -501,7 +510,7 @@
 </div>
 
 <script>
-  // -------------------- TESTS DATA --------------------
+  // -------------------- TESTS DATA (full 46 tests) --------------------
   const testsData = [
     { sno:1, name:"LIVER FUNCTION TEST", price:600 },
     { sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600 },
@@ -551,32 +560,52 @@
     { sno:46, name:"Potassium", price:200 }
   ];
 
-  // Cart array: { name, price }
+  // -------------------- DOCTOR LIST (as provided) --------------------
+  const doctorListRaw = [
+    "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA",
+    "CHHOTU GUPTA", "SUNIL KUMAR", "KIRAN VERMA", "SUNIL ANAND",
+    "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)",
+    "RAJESH KUMAR (B.A.M.S)", "SELF", "ALOK MEHTA", "BITTU KUMAR",
+    "BALWANT PANDEY", "RAMESHWAR PRASAD", "R.L. RAM",
+    "RAJU VISHWAKARMA", "SUDAMA PRAJAPATI", "AJIJ ANSARI",
+    "MERAJ ALAM", "VIJAY MEHTA", "RANDHIR KUMAR", "S. SHARMA",
+    "MAJHAR HUSSAIN", "GUDAN PRASAD", "RAJ VISHWAKARMA"
+  ];
+
+  // Sort for better UX
+  const doctorNames = [...doctorListRaw].sort();
+
+  // ---------- Cart State ----------
   let cart = [];
 
-  // DOM elements
-  const searchInput = document.getElementById('testSearchInput');
-  const dropdown = document.getElementById('dropdownList');
-  const addBtn = document.getElementById('addTestBtn');
+  // DOM elements for Test
+  const testSearchInput = document.getElementById('testSearchInput');
+  const testDropdown = document.getElementById('testDropdownList');
+  const addTestBtn = document.getElementById('addTestBtn');
   const cartItemsDiv = document.getElementById('cartItemsList');
   const cartTotalSpan = document.getElementById('cartTotalPrice');
   const cartItemCountSpan = document.getElementById('cartItemCount');
   const testCountBadge = document.getElementById('testCountBadge');
   const cartDataJson = document.getElementById('cartDataJson');
 
-  let currentSelectedSuggestion = null;   // holds { name, price } from dropdown selection
+  // DOM elements for Doctor
+  const doctorInput = document.getElementById('refby');
+  const doctorDropdown = document.getElementById('doctorDropdownList');
 
-  // ----- render dropdown based on search term -----
-  function renderDropdown(searchTerm) {
+  let currentSelectedTest = null;   // { name, price }
+  let currentSelectedDoctor = null;
+
+  // ========== TEST AUTOCOMPLETE FUNCTIONS ==========
+  function renderTestDropdown(searchTerm) {
     const term = searchTerm.trim().toLowerCase();
     if (term === "") {
-      dropdown.classList.remove('show');
+      testDropdown.classList.remove('show');
       return;
     }
     const filtered = testsData.filter(t => t.name.toLowerCase().includes(term));
     if (filtered.length === 0) {
-      dropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">❌ No test found</div>`;
-      dropdown.classList.add('show');
+      testDropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">❌ No test found</div>`;
+      testDropdown.classList.add('show');
       return;
     }
     let itemsHtml = '';
@@ -588,72 +617,50 @@
         </div>
       `;
     });
-    dropdown.innerHTML = itemsHtml;
-    dropdown.classList.add('show');
+    testDropdown.innerHTML = itemsHtml;
+    testDropdown.classList.add('show');
 
-    // attach click for each suggestion
-    document.querySelectorAll('.dropdown-item[data-name]').forEach(el => {
+    document.querySelectorAll('#testDropdownList .dropdown-item[data-name]').forEach(el => {
       el.addEventListener('click', (e) => {
         e.stopPropagation();
         const name = el.getAttribute('data-name');
         const price = parseInt(el.getAttribute('data-price'), 10);
-        // set current selection
-        currentSelectedSuggestion = { name, price };
-        searchInput.value = name;
-        dropdown.classList.remove('show');
+        currentSelectedTest = { name, price };
+        testSearchInput.value = name;
+        testDropdown.classList.remove('show');
       });
     });
   }
 
-  function escapeHtml(str) {
-    return str.replace(/[&<>]/g, function(m) {
-      if (m === '&') return '&amp;';
-      if (m === '<') return '&lt;';
-      if (m === '>') return '&gt;';
-      return m;
-    });
-  }
-
-  // add current selected test to cart
   function addCurrentTestToCart() {
-    if (!currentSelectedSuggestion) {
-      // if nothing selected but user typed something, optionally allow manual add? 
-      const typedName = searchInput.value.trim();
+    if (!currentSelectedTest) {
+      const typedName = testSearchInput.value.trim();
       if (typedName === "") {
         alert("🔍 Please type a test name and select from dropdown first.");
         return;
       }
-      // try to find exact match in testsData to avoid garbage
       const match = testsData.find(t => t.name.toLowerCase() === typedName.toLowerCase());
       if (match) {
-        currentSelectedSuggestion = { name: match.name, price: match.price };
+        currentSelectedTest = { name: match.name, price: match.price };
       } else {
-        // show warning: use suggestion
         alert("⚠️ Please select a test from the dropdown list for accurate price.");
         return;
       }
     }
-
-    const testToAdd = currentSelectedSuggestion;
-    // prevent duplicate? not necessary, but we can add anyway (user might want same test twice? but not typical; we allow)
-    cart.push({ name: testToAdd.name, price: testToAdd.price });
+    cart.push({ name: currentSelectedTest.name, price: currentSelectedTest.price });
     updateCartUI();
-    // reset current selection and input field to allow next test
-    currentSelectedSuggestion = null;
-    searchInput.value = "";
-    searchInput.focus();
-    dropdown.classList.remove('show');
+    currentSelectedTest = null;
+    testSearchInput.value = "";
+    testSearchInput.focus();
+    testDropdown.classList.remove('show');
   }
 
-  // remove test from cart by index
   function removeTestFromCart(index) {
     cart.splice(index, 1);
     updateCartUI();
   }
 
-  // update cart UI, total, badge, hidden field
   function updateCartUI() {
-    // refresh cart list
     if (cart.length === 0) {
       cartItemsDiv.innerHTML = `<div class="empty-cart-msg">📋 No tests added yet. Search & add above.</div>`;
       cartTotalSpan.innerText = `₹0`;
@@ -662,7 +669,6 @@
       cartDataJson.value = JSON.stringify([]);
       return;
     }
-
     let html = '';
     let total = 0;
     cart.forEach((item, idx) => {
@@ -684,8 +690,6 @@
     cartItemCountSpan.innerText = `${cart.length} item${cart.length !== 1 ? 's' : ''}`;
     testCountBadge.innerText = cart.length;
     cartDataJson.value = JSON.stringify(cart);
-
-    // attach remove event listeners after render
     document.querySelectorAll('.remove-test-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const idx = parseInt(btn.getAttribute('data-index'), 10);
@@ -694,47 +698,95 @@
     });
   }
 
-  // event listeners
-  searchInput.addEventListener('input', (e) => {
-    const val = e.target.value;
-    // if user edits, clear current suggestion state
-    if (currentSelectedSuggestion && val !== currentSelectedSuggestion.name) {
-      currentSelectedSuggestion = null;
+  // ========== DOCTOR AUTOCOMPLETE FUNCTIONS ==========
+  function renderDoctorDropdown(searchTerm) {
+    const term = searchTerm.trim().toLowerCase();
+    if (term === "") {
+      doctorDropdown.classList.remove('show');
+      return;
     }
-    renderDropdown(val);
-  });
-
-  addBtn.addEventListener('click', () => {
-    addCurrentTestToCart();
-  });
-
-  // click outside to close dropdown
-  document.addEventListener('click', function(e) {
-    const wrapper = document.getElementById('autocompleteWrapper');
-    if (wrapper && !wrapper.contains(e.target)) {
-      dropdown.classList.remove('show');
+    const filtered = doctorNames.filter(doc => doc.toLowerCase().includes(term));
+    if (filtered.length === 0) {
+      doctorDropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">❌ No doctor found</div>`;
+      doctorDropdown.classList.add('show');
+      return;
     }
+    let itemsHtml = '';
+    filtered.slice(0, 15).forEach(doc => {
+      itemsHtml += `
+        <div class="dropdown-item" data-doctor="${escapeHtml(doc)}">
+          <span><i class="fas fa-stethoscope"></i> ${doc}</span>
+        </div>
+      `;
+    });
+    doctorDropdown.innerHTML = itemsHtml;
+    doctorDropdown.classList.add('show');
+
+    document.querySelectorAll('#doctorDropdownList .dropdown-item[data-doctor]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const doctorName = el.getAttribute('data-doctor');
+        doctorInput.value = doctorName;
+        currentSelectedDoctor = doctorName;
+        doctorDropdown.classList.remove('show');
+      });
+    });
+  }
+
+  // ========== EVENT LISTENERS ==========
+  testSearchInput.addEventListener('input', (e) => {
+    if (currentSelectedTest && e.target.value !== currentSelectedTest.name) {
+      currentSelectedTest = null;
+    }
+    renderTestDropdown(e.target.value);
   });
 
-  // set default date
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('date').value = today;
-
-  // optional: pressing Enter on input adds test
-  searchInput.addEventListener('keypress', (e) => {
+  addTestBtn.addEventListener('click', addCurrentTestToCart);
+  testSearchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       addCurrentTestToCart();
     }
   });
 
-  // WhatsApp send function with multi-test details
+  // Doctor input listeners
+  doctorInput.addEventListener('input', (e) => {
+    if (currentSelectedDoctor && e.target.value !== currentSelectedDoctor) {
+      currentSelectedDoctor = null;
+    }
+    renderDoctorDropdown(e.target.value);
+  });
+
+  doctorInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      doctorDropdown.classList.remove('show');
+    }
+  });
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', function(e) {
+    const testWrapper = document.getElementById('testAutocompleteWrapper');
+    const doctorWrapper = document.getElementById('doctorAutocompleteWrapper');
+    if (testWrapper && !testWrapper.contains(e.target)) {
+      testDropdown.classList.remove('show');
+    }
+    if (doctorWrapper && !doctorWrapper.contains(e.target)) {
+      doctorDropdown.classList.remove('show');
+    }
+  });
+
+  // Set default date
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date').value = today;
+
+  // ========== WHATSAPP MESSAGE with doctor name, tests, total ==========
   window.sendWhatsApp = function() {
     const patientName = document.getElementById('name').value.trim();
     const age = document.getElementById('age').value.trim();
     const mobile = document.getElementById('mobile').value.trim();
     const address = document.getElementById('address').value.trim();
-    const refby = document.getElementById('refby').value.trim();
+    const doctorValue = doctorInput.value.trim() || "Not specified";
     const date = document.getElementById('date').value;
     const paid = document.getElementById('paid').value || '0';
     const due = document.getElementById('due').value || '0';
@@ -763,12 +815,11 @@
       "📱 Mobile: " + mobile + "%0A" +
       "📍 Address: " + (address || '—') + "%0A%0A" +
       "📋 SELECTED TESTS:%0A" + encodeURIComponent(testListStr).replace(/%0A/g, '%0A') + "%0A%0A" +
-      "👨‍⚕️ Referred By: " + (refby || 'Self') + "%0A" +
+      "👨‍⚕️ Referred By: " + doctorValue + "%0A" +
       "📅 Preferred Date: " + (date || 'Not set') + "%0A%0A" +
       "💳 Paid: ₹" + paid + "%0A" +
       "📝 Due: ₹" + due;
 
-    // clean encoding for whatsapp newlines
     message = message.replace(/\n/g, '%0A');
     const whatsappNumber = "918709946177";
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
