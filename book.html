@@ -2,333 +2,628 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rajan Path Lab - Test Booking</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Rajan Path Lab | Smart Test Booking</title>
+<!-- Google Fonts & Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-body{
-font-family:'Poppins',sans-serif;
-background:#f4f8fb;
-color:#333;
-}
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #eef5fa;
+    color: #1A2C3E;
+    scroll-behavior: smooth;
+  }
 
-.hero{
-background:linear-gradient(135deg,#0F4C81,#1b6ca8);
-padding:70px 20px;
-text-align:center;
-color:#fff;
-}
+  /* hero section */
+  .hero {
+    background: linear-gradient(135deg, #0B3B5F, #1C6E9F);
+    padding: 60px 20px 70px;
+    text-align: center;
+    color: white;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  }
 
-.hero h1{
-font-family:'Playfair Display',serif;
-font-size:3rem;
-margin-bottom:10px;
-}
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    letter-spacing: -0.5px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
 
-.hero h2{
-font-size:1.2rem;
-font-weight:400;
-opacity:.95;
-margin-bottom:20px;
-}
+  .hero h2 {
+    font-weight: 400;
+    font-size: 1.2rem;
+    background: rgba(255,255,255,0.18);
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 60px;
+    backdrop-filter: blur(4px);
+    margin-bottom: 15px;
+  }
 
-.hero p{
-max-width:750px;
-margin:auto;
-line-height:1.8;
-font-size:1rem;
-}
+  .hero p {
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 300;
+    opacity: 0.95;
+  }
 
-.container{
-max-width:950px;
-margin:-50px auto 50px;
-padding:20px;
-}
+  .container {
+    max-width: 1050px;
+    margin: -45px auto 60px;
+    padding: 0 20px;
+  }
 
-.card{
-background:#fff;
-border-radius:22px;
-padding:35px;
-box-shadow:0 10px 40px rgba(0,0,0,.08);
-}
+  .card {
+    background: white;
+    border-radius: 32px;
+    box-shadow: 0 25px 45px -12px rgba(0,0,0,0.2);
+    overflow: hidden;
+    transition: 0.2s;
+  }
 
-.section-title{
-font-size:1.3rem;
-font-weight:600;
-color:#0F4C81;
-margin-bottom:20px;
-padding-bottom:10px;
-border-bottom:2px solid #eef2f7;
-}
+  .form-inner {
+    padding: 30px 35px 40px;
+  }
 
-.form-group{
-margin-bottom:18px;
-}
+  .section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #0F4C81;
+    margin: 28px 0 18px 0;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #EAF2F9;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-label{
-display:block;
-font-weight:500;
-margin-bottom:8px;
-}
+  .section-title:first-of-type {
+    margin-top: 0;
+  }
 
-input,textarea{
-width:100%;
-padding:14px 16px;
-border:1px solid #dbe4ef;
-border-radius:12px;
-font-size:15px;
-outline:none;
-transition:.3s;
-}
+  .form-group {
+    margin-bottom: 22px;
+  }
 
-input:focus,
-textarea:focus{
-border-color:#0F4C81;
-box-shadow:0 0 0 4px rgba(15,76,129,.1);
-}
+  label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 0.9rem;
+    color: #1f3b4c;
+  }
 
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
-}
+  input, textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1.5px solid #e2edf2;
+    border-radius: 20px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.25s ease;
+    background: #FEFEFE;
+  }
 
-.features{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
-margin-top:15px;
-}
+  input:focus, textarea:focus {
+    border-color: #0F6B9E;
+    box-shadow: 0 0 0 4px rgba(15,107,158,0.12);
+    outline: none;
+  }
 
-.feature{
-background:#f8fbff;
-padding:15px;
-border-radius:12px;
-}
+  /* AUTOCOMPLETE CUSTOM STYLES */
+  .autocomplete-wrapper {
+    position: relative;
+    width: 100%;
+  }
 
-.feature i{
-color:#14B8A6;
-margin-right:8px;
-}
+  .autocomplete-input {
+    width: 100%;
+  }
 
-.whatsapp-btn{
-width:100%;
-border:none;
-padding:18px;
-border-radius:14px;
-background:#25D366;
-color:#fff;
-font-size:18px;
-font-weight:600;
-cursor:pointer;
-transition:.3s;
-margin-top:20px;
-}
+  .autocomplete-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 20px;
+    margin-top: 8px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 99;
+    border: 1px solid #e0ecf3;
+    display: none;
+  }
 
-.whatsapp-btn:hover{
-transform:translateY(-2px);
-box-shadow:0 8px 20px rgba(37,211,102,.35);
-}
+  .autocomplete-dropdown.show {
+    display: block;
+  }
 
-.whatsapp-btn i{
-margin-right:10px;
-}
+  .dropdown-item {
+    padding: 12px 18px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f4f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+    font-weight: 500;
+  }
 
-.footer-note{
-text-align:center;
-margin-top:25px;
-font-style:italic;
-color:#666;
-}
+  .dropdown-item:hover {
+    background: #EFF9FF;
+  }
 
-@media(max-width:768px){
+  .test-price {
+    font-size: 0.8rem;
+    background: #EAF4E8;
+    padding: 4px 10px;
+    border-radius: 50px;
+    color: #2B6E3C;
+    font-weight: 600;
+  }
 
-.hero h1{
-font-size:2.2rem;
-}
+  .selected-test-preview {
+    background: #EDF4FA;
+    padding: 12px 18px;
+    border-radius: 20px;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-left: 5px solid #14B8A6;
+  }
 
-.grid{
-grid-template-columns:1fr;
-}
+  .test-badge {
+    font-weight: 600;
+    color: #0F4C81;
+  }
 
-.card{
-padding:22px;
-}
+  .clear-test {
+    background: none;
+    border: none;
+    color: #E05A5A;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 30px;
+    background: #fff0f0;
+  }
 
-}
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px,1fr));
+    gap: 14px;
+    margin: 15px 0 20px;
+  }
+
+  .feature {
+    background: #F9FDFF;
+    border-radius: 28px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #ddebf2;
+  }
+
+  .feature i {
+    color: #14B8A6;
+    font-size: 1.2rem;
+  }
+
+  .whatsapp-btn {
+    width: 100%;
+    background: #25D366;
+    border: none;
+    padding: 18px;
+    border-radius: 48px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 25px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .whatsapp-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(37,211,102,0.35);
+    background: #20bd5a;
+  }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 0.85rem;
+    color: #5E7C94;
+    border-top: 1px dashed #d4e2ec;
+    padding-top: 20px;
+  }
+
+  .small-note {
+    font-size: 0.75rem;
+    color: #6c8eae;
+    margin-top: 8px;
+    display: block;
+  }
+
+  @media (max-width: 700px) {
+    .form-inner {
+      padding: 20px;
+    }
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+    .section-title {
+      font-size: 1.25rem;
+    }
+  }
 </style>
 </head>
-
 <body>
 
 <section class="hero">
-<h1>Rajan Path Lab</h1>
-<h2>Trusted Diagnostics • Accurate Results • Compassionate Care</h2>
-<p>
-Your health deserves precision and timely attention.
-Complete the form below to schedule your diagnostic test.
-Our team will review your request and confirm your appointment promptly.
-</p>
+  <h1>Rajan Path Lab</h1>
+  <h2>Trusted Diagnostics · Accurate Results · Compassionate Care</h2>
+  <p>Effortless test booking — just type the test name, select from smart suggestions, and proceed. No manual typing needed. Touch & go!</p>
 </section>
 
 <div class="container">
-<div class="card">
+  <div class="card">
+    <div class="form-inner">
+      <form id="bookingForm" onsubmit="return false;">
+        <!-- Patient section -->
+        <div class="section-title">
+          <i class="fas fa-user-circle"></i> Patient Information
+        </div>
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="name" placeholder="e.g. Sunita Verma" autocomplete="off">
+        </div>
+        <div class="grid">
+          <div class="form-group">
+            <label>Age (Years)</label>
+            <input type="number" id="age" placeholder="Age">
+          </div>
+          <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="mobile" placeholder="9876543210">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Address</label>
+          <textarea id="address" rows="2" placeholder="House no., street, city, pincode"></textarea>
+        </div>
 
-<div class="section-title">
-Schedule Your Diagnostic Test
-</div>
+        <!-- TEST SECTION WITH AUTOCOMPLETE (SMART TOUCH) -->
+        <div class="section-title">
+          <i class="fas fa-flask"></i> Test Information
+        </div>
+        <div class="form-group">
+          <label>🔍 Search / Select Test Name (type & tap)</label>
+          <div class="autocomplete-wrapper" id="autocompleteWrapper">
+            <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="Start typing: LIVER, CBC, THYROID, HBA1C ..." autocomplete="off">
+            <div id="dropdownList" class="autocomplete-dropdown"></div>
+          </div>
+          <div id="selectedTestCard" class="selected-test-preview" style="display: none;">
+            <span><i class="fas fa-vial"></i> <span id="selectedTestNameDisplay"></span> — <span id="selectedTestPriceDisplay"></span></span>
+            <button type="button" id="clearTestBtn" class="clear-test"><i class="fas fa-times-circle"></i> Change test</button>
+          </div>
+          <small class="small-note"><i class="fas fa-magic"></i> Just tap on any test suggestion — it auto-fills & you're ready to proceed. No manual price entry needed.</small>
+        </div>
 
-<form id="bookingForm">
+        <!-- hidden fields to store exact test data for WhatsApp -->
+        <input type="hidden" id="selectedTestHiddenName" value="">
+        <input type="hidden" id="selectedTestHiddenPrice" value="0">
 
-<div class="section-title">
-👤 Patient Information
-</div>
+        <div class="grid">
+          <div class="form-group">
+            <label>Referred By (Doctor / Self)</label>
+            <input type="text" id="refby" placeholder="Dr. Sharma / Self">
+          </div>
+          <div class="form-group">
+            <label>Preferred Date</label>
+            <input type="date" id="date">
+          </div>
+        </div>
 
-<div class="form-group">
-<label>Patient Name</label>
-<input type="text" id="name" placeholder="Enter full name">
-</div>
+        <!-- Payment -->
+        <div class="section-title">
+          <i class="fas fa-rupee-sign"></i> Payment Information
+        </div>
+        <div class="grid">
+          <div class="form-group">
+            <label>Amount Paid (₹)</label>
+            <input type="number" id="paid" placeholder="0" value="0">
+          </div>
+          <div class="form-group">
+            <label>Outstanding Due (₹)</label>
+            <input type="number" id="due" placeholder="0" value="0">
+          </div>
+        </div>
 
-<div class="grid">
+        <!-- Why choose -->
+        <div class="section-title">
+          <i class="fas fa-star-of-life"></i> Why Rajan Path Lab?
+        </div>
+        <div class="features">
+          <div class="feature"><i class="fas fa-check-circle"></i> Accurate & Reliable Testing</div>
+          <div class="feature"><i class="fas fa-user-md"></i> Experienced Professionals</div>
+          <div class="feature"><i class="fas fa-file-medical"></i> Timely Report Delivery</div>
+          <div class="feature"><i class="fas fa-shield-heart"></i> Hygienic Sample Collection</div>
+          <div class="feature"><i class="fas fa-heartbeat"></i> Patient-Centric Care</div>
+        </div>
 
-<div class="form-group">
-<label>Age</label>
-<input type="number" id="age" placeholder="Enter age">
-</div>
-
-<div class="form-group">
-<label>Mobile Number</label>
-<input type="tel" id="mobile" placeholder="Enter mobile number">
-</div>
-
-</div>
-
-<div class="form-group">
-<label>Address</label>
-<textarea id="address" rows="3" placeholder="Complete address"></textarea>
-</div>
-
-<div class="section-title">
-🧪 Test Information
-</div>
-
-<div class="form-group">
-<label>Test Name</label>
-<input type="text" id="test" placeholder="CBC, LFT, KFT, Thyroid Profile etc.">
-</div>
-
-<div class="grid">
-
-<div class="form-group">
-<label>Referred By</label>
-<input type="text" id="refby" placeholder="Doctor / Person">
-</div>
-
-<div class="form-group">
-<label>Preferred Date</label>
-<input type="date" id="date">
-</div>
-
-</div>
-
-<div class="section-title">
-💳 Payment Information
-</div>
-
-<div class="grid">
-
-<div class="form-group">
-<label>Amount Paid (₹)</label>
-<input type="number" id="paid" placeholder="0">
-</div>
-
-<div class="form-group">
-<label>Outstanding Due (₹)</label>
-<input type="number" id="due" placeholder="0">
-</div>
-
-</div>
-
-<div class="section-title">
-Why Choose Rajan Path Lab?
-</div>
-
-<div class="features">
-
-<div class="feature">
-<i class="fas fa-check-circle"></i>
-Accurate & Reliable Testing
-</div>
-
-<div class="feature">
-<i class="fas fa-user-md"></i>
-Experienced Laboratory Professionals
-</div>
-
-<div class="feature">
-<i class="fas fa-file-medical"></i>
-Timely Report Delivery
-</div>
-
-<div class="feature">
-<i class="fas fa-shield-heart"></i>
-Hygienic Sample Collection
-</div>
-
-<div class="feature">
-<i class="fas fa-heart"></i>
-Patient-Centric Care
-</div>
-
-</div>
-
-<button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
-<i class="fab fa-whatsapp"></i>
-Submit Booking via WhatsApp
-</button>
-
-<div class="footer-note">
-"Excellence in Diagnostics. Confidence in Every Report."
-</div>
-
-</form>
-
-</div>
+        <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
+          <i class="fab fa-whatsapp fa-lg"></i> Confirm Booking via WhatsApp
+        </button>
+        <div class="footer-note">
+          "Excellence in Diagnostics. Confidence in Every Report."
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <script>
+  // -------- provided test DATA (46 tests) ----------
+  const testsData = [
+    { sno:1, name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum (8-10 hrs)", vial:"Gold SST (Serum Separator Tube)", vialColour:"Gold", colourHex:"#D4AF37", desc:"Evaluates liver enzymes, proteins, bilirubin; screens for hepatitis, cirrhosis." },
+    { sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600, volume:"2-3 ml Fasting serum", vial:"Red top / Gold SST", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Measures Urea, Creatinine, Uric acid – renal health marker." },
+    { sno:3, name:"LIPID PROFILE (Fasting)", price:600, volume:"3 ml Fasting (12hrs)", vial:"Red top / SST", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Total Cholesterol, HDL, LDL, Triglycerides – cardiac risk." },
+    { sno:4, name:"THYROID PROFILE", price:500, volume:"2 ml Serum (non-fasting)", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"T3, T4, TSH – regulates metabolism." },
+    { sno:5, name:"BETA HCG", price:1000, volume:"3 ml Serum", vial:"Gold / Plain red", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Quantitative pregnancy & tumor marker." },
+    { sno:6, name:"HBA1C (3 Month Sugar)", price:600, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender (Purple)", colourHex:"#967BB6", desc:"Avg glucose over 3 months – diabetes monitoring." },
+    { sno:7, name:"C-REACTIVE PROTEIN (CRP)", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Inflammation marker – infection, autoimmune." },
+    { sno:8, name:"ANTISTREPTOLYSIN O (ASO)", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Detects past strep infection; rheumatic fever." },
+    { sno:9, name:"R A FACTOR", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Rheumatoid arthritis marker." },
+    { sno:10, name:"HCG PREGNANCY TEST", price:100, volume:"Urine (mid-stream)", vial:"Sterile container", vialColour:"Plain container", colourHex:"#FFFFFF", desc:"Rapid qualitative pregnancy detection." },
+    { sno:11, name:"URINE ROUTINE", price:100, volume:"10-15 ml Urine", vial:"Sterile universal container", vialColour:"Transparent", colourHex:"#F0F4F5", desc:"Microscopic & chemical analysis for UTI, diabetes." },
+    { sno:12, name:"URINE CULTURE", price:400, volume:"Mid-stream urine", vial:"Sterile container", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Identifies bacterial infection & sensitivity." },
+    { sno:13, name:"SEMEN ANALYSIS", price:250, volume:"Whole ejaculate", vial:"Sterile wide-mouth", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Fertility assessment: count, motility, morphology." },
+    { sno:14, name:"MANTOUX TEST", price:200, volume:"Intradermal (0.1ml)", vial:"Tuberculin syringe", vialColour:"Syringe", colourHex:"#AAAAAA", desc:"TB screening (PPD skin test)." },
+    { sno:15, name:"HBSAG", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis B surface antigen screening." },
+    { sno:16, name:"VDRL", price:100, volume:"1 ml Serum", vial:"Plain red / Gold", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Syphilis screening test." },
+    { sno:17, name:"HIV", price:300, volume:"2 ml Serum/Plasma", vial:"Gold or EDTA", vialColour:"Gold / Lavender", colourHex:"#D4AF37,#967BB6", desc:"HIV I & II antibody detection." },
+    { sno:18, name:"HCV", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis C antibody test." },
+    { sno:19, name:"BLOOD UREA", price:150, volume:"2 ml Serum/Plasma", vial:"Red / Green top", vialColour:"Red / Green", colourHex:"#E34234,#3A9B5E", desc:"Kidney function nitrogen waste marker." },
+    { sno:20, name:"SERUM CREATININE", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Kidney filtration marker." },
+    { sno:21, name:"URIC ACID (Fasting)", price:150, volume:"2 ml Fasting Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Gout & renal assessment." },
+    { sno:22, name:"BLOOD SUGAR", price:50, volume:"1 ml Fluoride", vial:"Grey top (Sodium Fluoride)", vialColour:"Grey", colourHex:"#A9B7C0", desc:"Glucose level – diabetes screening." },
+    { sno:23, name:"COMPLETE BLOOD COUNT (CBC)", price:300, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender (Purple)", colourHex:"#967BB6", desc:"Hb, TLC, RBC indices, platelets – general health." },
+    { sno:24, name:"PLATELETS TEST", price:150, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Platelet count – dengue, bleeding disorders." },
+    { sno:25, name:"DENGUE NS1 IGG IGM", price:650, volume:"3 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Early dengue antigen & antibodies." },
+    { sno:26, name:"TYPHIDOT IGG IGM", price:250, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Typhoid fever antibodies detection." },
+    { sno:27, name:"WIDAL", price:100, volume:"2 ml Serum", vial:"Plain red / Gold", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Salmonella typhi antibody test." },
+    { sno:28, name:"OPTIMAL", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Thyroid/wellness marker panel (custom)." },
+    { sno:29, name:"TC DC", price:120, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Total & differential leukocyte count." },
+    { sno:30, name:"BT CT", price:120, volume:"Capillary blood", vial:"Capillary tube", vialColour:"Capillary tube", colourHex:"#D3D3D3", desc:"Bleeding time & Clotting time – hemostasis." },
+    { sno:31, name:"ESR", price:120, volume:"2 ml Sodium citrate", vial:"Black top (Citrate)", vialColour:"Black", colourHex:"#2C2C2C", desc:"Inflammation marker (Westergren method)." },
+    { sno:32, name:"SMEAR OF MP", price:100, volume:"Thick/thin smear", vial:"EDTA blood / slide", vialColour:"Lavender / slide", colourHex:"#967BB6", desc:"Malarial parasite detection." },
+    { sno:33, name:"HB", price:50, volume:"Capillary / 1ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hemoglobin level – anemia screen." },
+    { sno:34, name:"BLOOD GROUP", price:50, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"ABO & Rh typing." },
+    { sno:35, name:"TOTAL PARASITE", price:250, volume:"2 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Malaria & filaria parasite count." },
+    { sno:36, name:"SMEAR OF MP (Repeat)", price:100, volume:"Blood smear", vial:"Slide / EDTA", vialColour:"Lavender / slide", colourHex:"#967BB6", desc:"Malaria parasite microscopy." },
+    { sno:37, name:"BILIRUBIN TEST", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Jaundice assessment (total/direct)." },
+    { sno:38, name:"MP WIDAL HB", price:250, volume:"2 ml + smear", vial:"EDTA & gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Malaria + Widal + Hb combo." },
+    { sno:39, name:"OPTIMAL WIDAL HB", price:350, volume:"2 ml Serum", vial:"Gold SST/EDTA", vialColour:"Gold / Lavender", colourHex:"#D4AF37,#967BB6", desc:"Wellness combo: liver/thyroid/ widal." },
+    { sno:40, name:"CBC MP WIDAL", price:500, volume:"3 ml EDTA", vial:"Lavender + gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Complete triple infection panel." },
+    { sno:41, name:"CBC WIDAL", price:400, volume:"3 ml EDTA + Serum", vial:"Lavender & Gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"CBC plus typhoid screen." },
+    { sno:42, name:"HB WIDAL", price:150, volume:"2 ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hemoglobin + Widal test." },
+    { sno:43, name:"MP WIDAL", price:200, volume:"2 ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Malaria smear + Widal combo." },
+    { sno:44, name:"OPTIMAL WIDAL", price:300, volume:"3 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Optimal wellness + typhoid." },
+    { sno:45, name:"Sodium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top (Heparin) / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Electrolyte balance – hyponatremia." },
+    { sno:46, name:"Potassium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Cardiac & muscle function electrolyte." }
+  ];
 
-function sendWhatsApp(){
+  // DOM elements
+  const searchInput = document.getElementById('testSearchInput');
+  const dropdown = document.getElementById('dropdownList');
+  const selectedCardDiv = document.getElementById('selectedTestCard');
+  const selectedTestNameSpan = document.getElementById('selectedTestNameDisplay');
+  const selectedTestPriceSpan = document.getElementById('selectedTestPriceDisplay');
+  const clearTestBtn = document.getElementById('clearTestBtn');
+  const hiddenTestName = document.getElementById('selectedTestHiddenName');
+  const hiddenTestPrice = document.getElementById('selectedTestHiddenPrice');
 
-let message =
-"🧬 *RAJAN PATH LAB TEST BOOKING*%0A%0A"+
-"👤 Name: "+document.getElementById('name').value+"%0A"+
-"🎂 Age: "+document.getElementById('age').value+"%0A"+
-"📱 Mobile: "+document.getElementById('mobile').value+"%0A"+
-"📍 Address: "+document.getElementById('address').value+"%0A%0A"+
-"🧪 Test: "+document.getElementById('test').value+"%0A"+
-"👨‍⚕️ Referred By: "+document.getElementById('refby').value+"%0A"+
-"📅 Date: "+document.getElementById('date').value+"%0A%0A"+
-"💳 Paid: ₹"+document.getElementById('paid').value+"%0A"+
-"📝 Due: ₹"+document.getElementById('due').value;
+  let currentSelectedTest = null;   // store { name, price }
 
-window.open(
-"https://wa.me/918709946177?text="+message,
-"_blank"
-);
+  // Helper: render dropdown based on search term
+  function renderDropdown(searchTerm = '') {
+    const term = searchTerm.trim().toLowerCase();
+    let filteredTests = [];
+    if (term === '') {
+      // optional: show first 8 tests as preview? but better to show none or minimal?
+      // according to requirement, dale automatic aay -> on type show matching.
+      filteredTests = [];
+    } else {
+      filteredTests = testsData.filter(t => t.name.toLowerCase().includes(term));
+    }
 
-}
+    if (filteredTests.length === 0 && term !== '') {
+      dropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center; color:#7f8c8d;">⚠️ No test found</div>`;
+      dropdown.classList.add('show');
+      return;
+    }
+    if (term === '') {
+      dropdown.classList.remove('show');
+      return;
+    }
 
+    // build items
+    let itemsHtml = '';
+    filteredTests.slice(0, 12).forEach(test => {
+      itemsHtml += `
+        <div class="dropdown-item" data-name="${escapeHtml(test.name)}" data-price="${test.price}">
+          <span><i class="fas fa-microscope"></i> ${test.name}</span>
+          <span class="test-price">₹${test.price}</span>
+        </div>
+      `;
+    });
+    if (filteredTests.length > 12) {
+      itemsHtml += `<div class="dropdown-item" style="opacity:0.7;">+ ${filteredTests.length - 12} more tests, refine search</div>`;
+    }
+    dropdown.innerHTML = itemsHtml;
+    dropdown.classList.add('show');
+
+    // attach click listeners to each item
+    document.querySelectorAll('.dropdown-item[data-name]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const name = el.getAttribute('data-name');
+        const price = parseInt(el.getAttribute('data-price'), 10);
+        selectTest(name, price);
+        dropdown.classList.remove('show');
+        searchInput.value = name;   // put selected name into input
+      });
+    });
+  }
+
+  // select test & show preview
+  function selectTest(name, price) {
+    currentSelectedTest = { name, price };
+    hiddenTestName.value = name;
+    hiddenTestPrice.value = price;
+    selectedTestNameSpan.innerHTML = `<strong>${name}</strong>`;
+    selectedTestPriceSpan.innerHTML = `💰 ₹${price}`;
+    selectedCardDiv.style.display = 'flex';
+    // also update placeholder maybe
+    searchInput.value = name;
+    // optional extra: remove dropdown
+    dropdown.classList.remove('show');
+  }
+
+  // clear selection
+  function clearSelection() {
+    currentSelectedTest = null;
+    hiddenTestName.value = '';
+    hiddenTestPrice.value = '0';
+    selectedCardDiv.style.display = 'none';
+    searchInput.value = '';
+    searchInput.focus();
+  }
+
+  // escape html for safety
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // event listeners
+  searchInput.addEventListener('input', (e) => {
+    const val = e.target.value;
+    if (currentSelectedTest && val !== currentSelectedTest.name) {
+      // if user manually types and it's different from selected, clear the selected flag
+      if (val.trim() !== currentSelectedTest.name) {
+        clearSelection();
+      }
+    }
+    renderDropdown(val);
+  });
+
+  // close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    const wrapper = document.getElementById('autocompleteWrapper');
+    if (!wrapper.contains(e.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+
+  clearTestBtn.addEventListener('click', () => {
+    clearSelection();
+    renderDropdown('');
+  });
+
+  // optional: if user focuses on input with selected test, can still clear via backspace? we'll keep clear button.
+
+  // WhatsApp send function (enhanced with selected test)
+  window.sendWhatsApp = function() {
+    const patientName = document.getElementById('name').value.trim();
+    const age = document.getElementById('age').value.trim();
+    const mobile = document.getElementById('mobile').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const refby = document.getElementById('refby').value.trim();
+    const date = document.getElementById('date').value;
+    const paid = document.getElementById('paid').value || '0';
+    const due = document.getElementById('due').value || '0';
+
+    // get test info (selected from smart autocomplete)
+    let testFinal = hiddenTestName.value;
+    let testPriceFinal = hiddenTestPrice.value;
+    if (!testFinal && searchInput.value.trim() !== '') {
+      // fallback: if someone typed but didn't select from dropdown, we still accept manual test name
+      testFinal = searchInput.value.trim();
+      testPriceFinal = '—';
+    } else if (!testFinal) {
+      testFinal = 'Not specified';
+      testPriceFinal = '—';
+    }
+
+    let message = 
+      "🧬 RAJAN PATH LAB TEST BOOKING%0A%0A" +
+      "👤 Name: " + (patientName || '—') + "%0A" +
+      "🎂 Age: " + (age || '—') + "%0A" +
+      "📱 Mobile: " + (mobile || '—') + "%0A" +
+      "📍 Address: " + (address || '—') + "%0A%0A" +
+      "🧪 Test: " + testFinal + "   (₹" + (testPriceFinal !== '—' ? testPriceFinal : '—') + ")%0A" +
+      "👨‍⚕️ Referred By: " + (refby || 'Self') + "%0A" +
+      "📅 Preferred Date: " + (date || 'Not set') + "%0A%0A" +
+      "💳 Paid: ₹" + paid + "%0A" +
+      "📝 Due: ₹" + due;
+
+    if (!patientName || !mobile) {
+      alert("⚠️ Please enter Patient Name and Mobile Number before submitting.");
+      return;
+    }
+
+    const whatsappNumber = "918709946177";
+    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
+  };
+
+  // set default today's date for better ux
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date').value = today;
+
+  // initialize: no test selected
+  clearSelection();
 </script>
-
 </body>
 </html>
