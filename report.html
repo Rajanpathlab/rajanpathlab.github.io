@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Premier Reports | Direct WhatsApp to Doctor</title>
+  <title>Premier Reports | Patient & Doctor Portal</title>
   <style>
     * {
       margin: 0;
@@ -35,7 +35,7 @@
 
     /* Main card - Classic Premium */
     .classic-premium-card {
-      max-width: 680px;
+      max-width: 760px;
       width: 100%;
       background: #ffffff;
       border-radius: 2rem;
@@ -104,6 +104,14 @@
     /* Form container */
     .form-container {
       padding: 2rem 2rem 1.8rem;
+    }
+
+    /* Two column layout for name fields */
+    .row-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
     }
 
     /* Input groups */
@@ -295,9 +303,13 @@
       background-color: #fff6f5;
     }
 
-    @media (max-width: 550px) {
+    @media (max-width: 650px) {
       .form-container {
         padding: 1.5rem;
+      }
+      .row-2col {
+        grid-template-columns: 1fr;
+        gap: 1rem;
       }
       .header-flex h1 {
         font-size: 1.5rem;
@@ -316,7 +328,7 @@
       </h1>
     </div>
     <div class="header-sub">
-      ◆ Patient ID required · Report instantly sent to Doctor's WhatsApp ◆
+      ◆ Patient ID required · Full patient & doctor details ◆ Report sent instantly to Doctor's WhatsApp
     </div>
   </div>
 
@@ -337,7 +349,23 @@
       </div>
     </div>
 
-    <!-- MOBILE NUMBER - Optional (patient's own number for reference) -->
+    <!-- Two columns: Patient Name & Doctor Name -->
+    <div class="row-2col">
+      <div class="input-group" style="margin-bottom: 0;">
+        <div class="input-label">
+          <span>👤</span> PATIENT NAME <span style="color:#b91c1c; font-size:0.7rem;">* required</span>
+        </div>
+        <input type="text" id="patientNameInput" class="classic-input" placeholder="Full patient name" autocomplete="off">
+      </div>
+      <div class="input-group" style="margin-bottom: 0;">
+        <div class="input-label">
+          <span>👨‍⚕️</span> DOCTOR NAME <span style="color:#b91c1c; font-size:0.7rem;">* required</span>
+        </div>
+        <input type="text" id="doctorNameInput" class="classic-input" placeholder="Referring doctor's name" autocomplete="off">
+      </div>
+    </div>
+
+    <!-- PATIENT'S MOBILE - Optional -->
     <div class="input-group">
       <div class="input-label">
         <span>📞</span> PATIENT'S MOBILE <span style="color:#7f8c8d; font-weight:normal;">(optional)</span>
@@ -348,7 +376,7 @@
       </div>
     </div>
 
-    <!-- Patient Insight (real-time detection) -->
+    <!-- Patient Insight (real-time detection based on Patient ID) -->
     <div id="insightBox" class="insight-card" style="display: none;">
       <div class="insight-icon">📋</div>
       <div class="insight-text" id="insightMessage">Patient ID matched — Report ready</div>
@@ -361,7 +389,7 @@
 
     <!-- Status messages -->
     <div id="statusMsg" class="status-area">
-      ◆ Enter Patient ID → Report will be sent directly to Doctor's WhatsApp (+91 8709946177)
+      ◆ Enter Patient ID, Patient Name & Doctor Name → Report sent directly to Doctor's WhatsApp (+91 8709946177)
     </div>
 
     <div class="premium-footer">
@@ -375,6 +403,8 @@
   (function() {
     // DOM elements
     const patientIdInput = document.getElementById('patientIdInput');
+    const patientNameInput = document.getElementById('patientNameInput');
+    const doctorNameInput = document.getElementById('doctorNameInput');
     const mobileInput = document.getElementById('mobileNumberInput');
     const whatsappBtn = document.getElementById('whatsappSendBtn');
     const statusDiv = document.getElementById('statusMsg');
@@ -385,43 +415,43 @@
     // As soon as Patient ID is typed, we detect if report exists (real-time)
     const patientReportsDB = new Map([
       ['PAT-5698', { 
-        name: 'Saurabh Mehta', 
+        defaultName: 'Saurabh Mehta', 
         reportTitle: 'Cardiac Health Profile', 
         reportSummary: 'ECG normal, Cholesterol 168 mg/dL, Triglycerides 130 mg/dL, BP 120/80. Overall healthy cardiac function.',
         lastVisit: 'June 10, 2025'
       }],
       ['PS7890', { 
-        name: 'Priyanka Verma', 
+        defaultName: 'Priyanka Verma', 
         reportTitle: 'Complete Blood Count + Diabetes Panel', 
         reportSummary: 'HbA1c: 6.2%, Fasting Glucose 100 mg/dL, Hemoglobin 13.8 g/dL, all parameters within normal range.',
         lastVisit: 'May 22, 2025'
       }],
       ['HOSP-1001', { 
-        name: 'Ravi Kumar', 
+        defaultName: 'Ravi Kumar', 
         reportTitle: 'MRI Lumbar Spine', 
         reportSummary: 'MRI findings: Mild disc bulge at L4-L5 without nerve root compression. Physiotherapy recommended.',
         lastVisit: 'April 5, 2025'
       }],
       ['HOSP-7788', { 
-        name: 'Neelam Gupta', 
+        defaultName: 'Neelam Gupta', 
         reportTitle: 'Thyroid & Vitamin Profile', 
         reportSummary: 'TSH: 3.1 µIU/mL (normal), Vitamin D: 32 ng/mL, Vitamin B12: 380 pg/mL. Supplementation advised.',
         lastVisit: 'March 18, 2025'
       }],
       ['GEN-2024', { 
-        name: 'Abhishek Singh', 
+        defaultName: 'Abhishek Singh', 
         reportTitle: 'Chest X-Ray & General Examination', 
         reportSummary: 'Chest X-ray clear, lungs normal. Physical examination unremarkable.',
         lastVisit: 'May 30, 2025'
       }],
       ['KID-4455', { 
-        name: 'Aarti Sharma', 
+        defaultName: 'Aarti Sharma', 
         reportTitle: 'Kidney Function Test', 
         reportSummary: 'Creatinine 0.9 mg/dL, Urea 28 mg/dL, Uric Acid 5.2 mg/dL — all within optimal ranges.',
         lastVisit: 'February 12, 2025'
       }],
       ['ONCO-123', { 
-        name: 'Vikram Sinha', 
+        defaultName: 'Vikram Sinha', 
         reportTitle: 'Oncology Screening', 
         reportSummary: 'Tumor markers negative, complete blood count stable. Follow-up in 6 months.',
         lastVisit: 'January 28, 2025'
@@ -437,7 +467,7 @@
       } else {
         // Premium generic report for any unrecognized ID
         return {
-          name: `Patient (${trimmedId})`,
+          defaultName: `Patient (${trimmedId})`,
           reportTitle: 'Digital Health Report (Premium Edition)',
           reportSummary: `This automated report has been generated for Patient ID ${trimmedId}. All standard health parameters are within normal limits. Please consult your physician for detailed interpretation.`,
           lastVisit: 'Latest record: Current date'
@@ -445,7 +475,7 @@
       }
     }
 
-    // Real-time detection: As user types Patient ID, we instantly recognize report
+    // Real-time detection: As user types Patient ID, we auto-suggest patient name
     let currentPatientData = null;
 
     function updateInstantInsight() {
@@ -453,7 +483,7 @@
       if (!pid || pid.trim() === '') {
         insightBox.style.display = 'none';
         currentPatientData = null;
-        statusDiv.innerHTML = '◆ Enter Patient ID → Report will be sent directly to Doctor\'s WhatsApp (+91 8709946177)';
+        statusDiv.innerHTML = '◆ Enter Patient ID, Patient Name & Doctor Name → Report sent directly to Doctor\'s WhatsApp (+91 8709946177)';
         statusDiv.classList.remove('status-success', 'status-error');
         return;
       }
@@ -461,9 +491,13 @@
       const patientInfo = getPatientReport(pid);
       if (patientInfo) {
         currentPatientData = patientInfo;
+        // Auto-fill patient name if field is empty (helpful feature)
+        if (patientNameInput.value.trim() === '' && patientInfo.defaultName) {
+          patientNameInput.value = patientInfo.defaultName;
+        }
         insightBox.style.display = 'flex';
-        insightMsgSpan.innerHTML = `✅ Patient ID: ${pid.trim().toUpperCase()} — ${patientInfo.name} <span style="color:#b8860b;"> | Report ready</span><br>📄 ${patientInfo.reportTitle} (${patientInfo.lastVisit})`;
-        statusDiv.innerHTML = `🔍 Report found! Patient ID (${pid.trim().toUpperCase()}) report is ready. Click to send directly to Doctor's WhatsApp.`;
+        insightMsgSpan.innerHTML = `✅ Patient ID: ${pid.trim().toUpperCase()} — ${patientInfo.defaultName} <span style="color:#b8860b;"> | Report ready</span><br>📄 ${patientInfo.reportTitle} (${patientInfo.lastVisit})`;
+        statusDiv.innerHTML = `🔍 Report found! Patient ID (${pid.trim().toUpperCase()}) report is ready. Fill doctor name and click send.`;
         statusDiv.classList.remove('status-error');
         statusDiv.classList.add('status-success');
       } else {
@@ -475,9 +509,11 @@
 
     patientIdInput.addEventListener('input', updateInstantInsight);
 
-    // Generate beautiful English report message for Doctor's WhatsApp
-    function generateWhatsAppMessage(patientId, patientMobile, patientReport) {
+    // Generate beautiful English report message for Doctor's WhatsApp with all details
+    function generateWhatsAppMessage(patientId, patientName, doctorName, patientMobile, patientReport) {
       const pidClean = patientId.trim().toUpperCase();
+      const patientNameClean = patientName.trim() || patientReport?.defaultName || 'Not provided';
+      const doctorNameClean = doctorName.trim() || 'Not specified';
       const patientMobileClean = patientMobile ? patientMobile.trim() : 'Not provided';
       const now = new Date();
       const dateTime = now.toLocaleString('en-US', { hour12: true, year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -485,13 +521,14 @@
       let reportText = `🏥 *NEW PATIENT REPORT REQUEST* 🏥\n\n`;
       reportText += `📌 *PATIENT DETAILS:*\n`;
       reportText += `▸ Patient ID      : ${pidClean}\n`;
-      reportText += `▸ Patient Name    : ${patientReport.name}\n`;
-      reportText += `▸ Patient's Mobile : ${patientMobileClean}\n`;
-      reportText += `▸ Last Visit      : ${patientReport.lastVisit}\n`;
+      reportText += `▸ Patient Name    : ${patientNameClean}\n`;
+      reportText += `▸ Patient Mobile  : ${patientMobileClean}\n`;
+      reportText += `▸ Doctor Name     : ${doctorNameClean}\n`;
+      reportText += `▸ Last Visit      : ${patientReport?.lastVisit || 'Recent'}\n`;
       reportText += `▸ Request Time    : ${dateTime}\n\n`;
       reportText += `📋 *MEDICAL REPORT SUMMARY:*\n`;
-      reportText += `${patientReport.reportTitle}\n`;
-      reportText += `${patientReport.reportSummary}\n\n`;
+      reportText += `📄 ${patientReport?.reportTitle || 'General Health Report'}\n`;
+      reportText += `${patientReport?.reportSummary || 'Complete medical report generated successfully.'}\n\n`;
       reportText += `✨ *CLASSIC PREMIUM HEALTH SYSTEM* ✨\n`;
       reportText += `🔒 This report was requested via patient portal. Please review and take necessary action.`;
       return reportText;
@@ -503,17 +540,13 @@
     // Clean mobile number for WhatsApp API (ensures +91 prefix for Indian numbers)
     function cleanDoctorNumberForWhatsApp(number) {
       let cleaned = number.trim().replace(/[\s\-\(\)]/g, '');
-      // Remove any '+' if present and re-add correctly
       cleaned = cleaned.replace(/^\+/, '');
-      // If it's 10 digits and starts with 7/8/9, add +91
       if (/^\d{10}$/.test(cleaned) && /[789]/.test(cleaned[0])) {
         return '+91' + cleaned;
       }
-      // If it's 12 digits starting with 91, add + prefix
       if (/^91\d{10}$/.test(cleaned)) {
         return '+' + cleaned;
       }
-      // Otherwise just add + if missing
       if (!cleaned.startsWith('+')) {
         return '+' + cleaned;
       }
@@ -535,28 +568,58 @@
       return true;
     }
 
-    // Main handler: send report to Doctor's WhatsApp instantly when patient ID is provided
-    async function handleSendReportToDoctor() {
-      const patientId = patientIdInput.value;
-      const patientMobile = mobileInput.value;
+    // Validate all required fields
+    function validateRequiredFields() {
+      const patientId = patientIdInput.value.trim();
+      const patientName = patientNameInput.value.trim();
+      const doctorName = doctorNameInput.value.trim();
       
-      // Validate Patient ID (mandatory)
-      if (!patientId || patientId.trim() === "") {
+      if (!patientId) {
         statusDiv.innerHTML = "⚠️ Error: Patient ID is required. Please enter a valid Patient ID.";
-        statusDiv.classList.remove('status-success');
         statusDiv.classList.add('status-error');
         patientIdInput.classList.add('error-shake');
         setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
-        return;
+        return false;
       }
       
-      if (patientId.trim().length < 2) {
+      if (patientId.length < 2) {
         statusDiv.innerHTML = "❌ Patient ID must be at least 2 characters long.";
         statusDiv.classList.add('status-error');
         patientIdInput.classList.add('error-shake');
         setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
+        return false;
+      }
+      
+      if (!patientName) {
+        statusDiv.innerHTML = "❌ Patient Name is required. Please enter the patient's full name.";
+        statusDiv.classList.add('status-error');
+        patientNameInput.classList.add('error-shake');
+        setTimeout(() => patientNameInput.classList.remove('error-shake'), 500);
+        return false;
+      }
+      
+      if (!doctorName) {
+        statusDiv.innerHTML = "❌ Doctor Name is required. Please enter the referring doctor's name.";
+        statusDiv.classList.add('status-error');
+        doctorNameInput.classList.add('error-shake');
+        setTimeout(() => doctorNameInput.classList.remove('error-shake'), 500);
+        return false;
+      }
+      
+      return true;
+    }
+
+    // Main handler: send report to Doctor's WhatsApp instantly
+    async function handleSendReportToDoctor() {
+      // Validate all required fields
+      if (!validateRequiredFields()) {
         return;
       }
+      
+      const patientId = patientIdInput.value;
+      const patientName = patientNameInput.value;
+      const doctorName = doctorNameInput.value;
+      const patientMobile = mobileInput.value;
       
       // Fetch patient report data (instant detection)
       const patientReport = getPatientReport(patientId);
@@ -566,8 +629,8 @@
         return;
       }
       
-      // Generate the WhatsApp message content for doctor
-      const whatsappMsg = generateWhatsAppMessage(patientId, patientMobile, patientReport);
+      // Generate the WhatsApp message content for doctor with all details
+      const whatsappMsg = generateWhatsAppMessage(patientId, patientName, doctorName, patientMobile, patientReport);
       
       // UI feedback: loading state
       const originalBtnText = whatsappBtn.innerHTML;
@@ -575,7 +638,7 @@
       whatsappBtn.innerHTML = `<span>⏳</span> SENDING TO DOCTOR...`;
       statusDiv.classList.remove('status-error');
       statusDiv.classList.add('status-loading');
-      statusDiv.innerHTML = `📤 Sending report for Patient ID ${patientId.trim().toUpperCase()} to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP})...`;
+      statusDiv.innerHTML = `📤 Sending report for ${patientName} (ID: ${patientId.trim().toUpperCase()}) to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP})...`;
       
       // Simulate short delay for premium feel
       setTimeout(() => {
@@ -583,8 +646,8 @@
         if (success) {
           statusDiv.classList.remove('status-loading');
           statusDiv.classList.add('status-success');
-          statusDiv.innerHTML = `✅ Success! Report for Patient ID ${patientId.trim().toUpperCase()} has been sent to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP}). WhatsApp chat will open.`;
-          // Optional: clear patient mobile field? not needed, just keep UX smooth
+          statusDiv.innerHTML = `✅ Success! Report for ${patientName} (ID: ${patientId.trim().toUpperCase()}) has been sent to Doctor's WhatsApp (+91 ${DOCTOR_WHATSAPP}). WhatsApp chat will open.`;
+          // Optional: reset patient mobile? keep as is for multiple entries
         } else {
           statusDiv.innerHTML = "❌ Failed to open WhatsApp. Please check your internet connection.";
           statusDiv.classList.add('status-error');
@@ -596,21 +659,16 @@
     
     whatsappBtn.addEventListener('click', handleSendReportToDoctor);
     
-    // Enter key support: if patient ID field is focused and Enter pressed, trigger send
+    // Enter key support: trigger send when pressing Enter on any field
     function handleKeyPress(e) {
       if (e.key === 'Enter') {
         e.preventDefault();
-        if (patientIdInput.value.trim() !== "") {
-          handleSendReportToDoctor();
-        } else {
-          statusDiv.innerHTML = "⚠️ Please enter Patient ID first (required)";
-          statusDiv.classList.add('status-error');
-          patientIdInput.classList.add('error-shake');
-          setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
-        }
+        handleSendReportToDoctor();
       }
     }
     patientIdInput.addEventListener('keypress', handleKeyPress);
+    patientNameInput.addEventListener('keypress', handleKeyPress);
+    doctorNameInput.addEventListener('keypress', handleKeyPress);
     mobileInput.addEventListener('keypress', handleKeyPress);
     
     // Initial focus on Patient ID
