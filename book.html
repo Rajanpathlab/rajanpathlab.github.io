@@ -2,479 +2,380 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab | Smart Dropdown Auto-Close</title>
-<!-- Google Fonts & Font Awesome -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Rajan Path Lab - Advanced Test Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-  * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(145deg, #f0f7fc 0%, #e9f0f5 100%);
-    color: #11212E;
-    scroll-behavior: smooth;
-  }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f7fc;
+    color: #1a2c3e;
+}
 
-  .hero {
-    background: radial-gradient(circle at 10% 20%, #0F3B4C, #06212E);
-    padding: 70px 20px 80px;
+.hero {
+    background: linear-gradient(135deg, #0a3f66, #0F5B8C);
+    padding: 60px 20px;
     text-align: center;
     color: white;
     position: relative;
-    overflow: hidden;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-  }
+}
 
-  .hero h1 {
+.hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 3.7rem;
-    letter-spacing: -0.02em;
-    font-weight: 800;
-    background: linear-gradient(135deg, #FFF 40%, #c1e4ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
+    font-size: 3rem;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+}
 
-  .hero h2 {
-    font-weight: 500;
-    font-size: 1.1rem;
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(12px);
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 28px;
-    border-radius: 80px;
-    margin-top: 12px;
-    margin-bottom: 18px;
-  }
-
-  .hero p {
-    max-width: 700px;
-    margin: 0 auto;
+.hero h2 {
     font-weight: 400;
-    opacity: 0.92;
-  }
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-bottom: 15px;
+}
 
-  .container {
-    max-width: 1200px;
-    margin: -55px auto 70px;
-    padding: 0 24px;
-  }
+.hero p {
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
 
-  .card {
-    background: rgba(255,255,255,0.98);
-    border-radius: 48px;
-    box-shadow: 0 35px 60px -20px rgba(0, 20, 40, 0.3), 0 0 0 1px rgba(156, 200, 230, 0.3);
-    overflow: hidden;
-  }
+.container {
+    max-width: 1000px;
+    margin: -45px auto 50px;
+    padding: 20px;
+}
 
-  .form-inner {
-    padding: 38px 42px 48px;
-  }
+.card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 30px 35px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s;
+}
 
-  .section-title {
-    font-size: 1.5rem;
+.section-title {
+    font-size: 1.25rem;
     font-weight: 700;
-    color: #1B4F72;
-    margin: 34px 0 22px 0;
+    color: #0F5B8C;
+    margin: 25px 0 15px 0;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #e2edf7;
     display: flex;
     align-items: center;
-    gap: 12px;
-    border-left: 5px solid #14B8A6;
-    padding-left: 18px;
-  }
+    gap: 8px;
+}
 
-  .section-title:first-of-type {
+.section-title:first-of-type {
     margin-top: 0;
-  }
+}
 
-  .section-title i {
-    color: #108c7c;
-    font-size: 1.6rem;
-  }
+.form-group {
+    margin-bottom: 18px;
+}
 
-  .form-group {
-    margin-bottom: 26px;
-  }
-
-  label {
-    font-weight: 600;
-    margin-bottom: 9px;
+label {
+    font-weight: 500;
+    margin-bottom: 6px;
     display: block;
     font-size: 0.9rem;
-    color: #1C4E6E;
-  }
+    color: #2c4a6e;
+}
 
-  input, textarea {
+input, select, textarea {
     width: 100%;
-    padding: 15px 20px;
-    border: 1.5px solid #E2EEF5;
-    border-radius: 28px;
-    font-size: 0.95rem;
-    font-family: 'Inter', sans-serif;
-    background: #FFFFFF;
-    transition: all 0.2s;
-  }
-
-  input:focus, textarea:focus {
-    border-color: #2C9CD4;
-    box-shadow: 0 0 0 4px rgba(44,156,212,0.15);
+    padding: 12px 14px;
+    border: 1.5px solid #e0eaf2;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    transition: 0.2s;
     outline: none;
-  }
+}
 
-  .autocomplete-wrapper {
-    position: relative;
-    width: 100%;
-  }
+input:focus, select:focus, textarea:focus {
+    border-color: #0F5B8C;
+    box-shadow: 0 0 0 3px rgba(15,91,140,0.1);
+}
 
-  .autocomplete-dropdown {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    right: 0;
-    background: white;
-    border-radius: 28px;
-    box-shadow: 0 18px 32px -12px rgba(0,0,0,0.2);
-    max-height: 320px;
-    overflow-y: auto;
-    z-index: 120;
-    border: 1px solid #d4e2ed;
-    animation: fadeSlide 0.2s ease;
-  }
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
 
-  @keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .dropdown-item {
-    padding: 14px 20px;
-    cursor: pointer;
-    border-bottom: 1px solid #edf3f8;
+/* test & doctor row */
+.test-select-row {
     display: flex;
-    justify-content: space-between;
+    gap: 12px;
     align-items: center;
+    flex-wrap: wrap;
+}
+
+.test-select-row select {
+    flex: 3;
+}
+
+.test-select-row button {
+    flex: 0.5;
+    background: #eef2fa;
+    border: none;
+    padding: 12px 14px;
+    border-radius: 14px;
     font-weight: 500;
-    transition: all 0.15s;
-  }
+    color: #0F5B8C;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.85rem;
+}
 
-  .dropdown-item:hover {
-    background: #EAF9FF;
-  }
+.test-select-row button:hover {
+    background: #d9e4f0;
+}
 
-  .test-price {
-    font-size: 0.75rem;
-    background: #E1F5F0;
+.selected-tests {
+    background: #f9fdfe;
+    border-radius: 16px;
+    padding: 12px 15px;
+    margin-top: 10px;
+    border: 1px solid #e2edf7;
+}
+
+.selected-tests h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #0a4b6e;
+    margin-bottom: 8px;
+}
+
+#selectedTestsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.test-badge {
+    background: #e9f2f9;
     padding: 5px 12px;
     border-radius: 50px;
-    font-weight: 700;
-    color: #146b43;
-  }
-
-  .cart-container {
-    background: #FBFEFE;
-    border-radius: 32px;
-    border: 1px solid #E2F0F5;
-    margin: 24px 0 18px;
-    overflow: hidden;
-  }
-
-  .cart-header {
-    background: linear-gradient(95deg, #F2F9FC, #FFFFFF);
-    padding: 18px 24px;
-    font-weight: 700;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 2px solid #E4F0F5;
-  }
-
-  .cart-items {
-    max-height: 280px;
-    overflow-y: auto;
-  }
-
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 24px;
-    border-bottom: 1px solid #EFF4F9;
-  }
-
-  .cart-item-info {
-    flex: 3;
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    align-items: baseline;
-  }
-
-  .cart-item-name {
-    font-weight: 600;
-    color: #153e52;
-  }
-
-  .cart-item-price {
-    background: #EAF4EA;
-    padding: 4px 14px;
-    border-radius: 40px;
-    font-weight: 600;
-    font-size: 0.8rem;
-  }
-
-  .remove-test-btn {
-    background: none;
-    border: 1px solid #ffccc9;
-    padding: 6px 16px;
-    border-radius: 40px;
-    color: #c0392b;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 0.7rem;
-    transition: 0.15s;
-  }
-
-  .remove-test-btn:hover {
-    background: #ffdedb;
-  }
-
-  .cart-total {
-    background: #F6FBFE;
-    padding: 18px 24px;
-    font-weight: 800;
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2rem;
-    border-top: 2px solid #DCEAF2;
-    color: #0E4A6F;
-  }
-
-  .badge-icon {
-    background: #0F7A6E;
-    color: white;
-    border-radius: 60px;
-    padding: 4px 14px;
-    font-size: 0.8rem;
-    margin-left: 12px;
-  }
-
-  .features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 14px;
-    margin: 20px 0 10px;
-  }
-
-  .feature {
-    background: #F8FEFF;
-    border-radius: 30px;
-    padding: 14px 18px;
+    font-size: 0.75rem;
     font-weight: 500;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 14px;
-    border: 1px solid #D0E6F0;
-  }
+    gap: 6px;
+    color: #0a4b6e;
+}
 
-  .feature i {
-    color: #14B8A6;
-    font-size: 1.3rem;
-  }
-
-  .whatsapp-btn {
-    width: 100%;
-    background: linear-gradient(95deg, #25D366, #20b859);
+.remove-test {
+    background: none;
     border: none;
-    padding: 20px;
-    border-radius: 60px;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: bold;
+    color: #b91c1c;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0 4px;
+    border-radius: 20px;
+}
+
+.remove-test:hover {
+    color: #a00000;
+    transform: scale(1.1);
+}
+
+.price-summary {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    background: #ecf7f0;
+    padding: 8px 12px;
+    border-radius: 14px;
+    font-weight: 500;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+    margin: 15px 0 10px;
+}
+
+.feature {
+    background: #f8fbfe;
+    padding: 12px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.feature i {
+    color: #14B8A6;
+    width: 24px;
+}
+
+.whatsapp-btn {
+    width: 100%;
+    border: none;
+    padding: 18px;
+    border-radius: 40px;
+    background: #25D366;
     color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 32px;
-    font-family: 'Inter', sans-serif;
-  }
+    gap: 12px;
+    box-shadow: 0 6px 14px rgba(37,211,102,0.3);
+}
 
-  .whatsapp-btn:hover {
-    transform: scale(1.01);
-    background: #1fae56;
-  }
+.whatsapp-btn:hover {
+    transform: translateY(-2px);
+    background: #20b859;
+}
 
-  .grid-2col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-  }
-
-  .footer-note {
+.footer-note {
     text-align: center;
-    margin-top: 34px;
+    margin-top: 28px;
+    font-style: italic;
+    color: #5e7e9e;
     font-size: 0.8rem;
-    color: #537e9b;
-    border-top: 1px solid #e4eef5;
-    padding-top: 24px;
-  }
+}
 
-  @media (max-width: 700px) {
-    .form-inner {
-      padding: 24px;
+@media (max-width: 680px) {
+    .card {
+        padding: 22px;
     }
-    .grid-2col {
-      grid-template-columns: 1fr;
+    .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .test-select-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .test-select-row button {
+        width: 100%;
     }
     .hero h1 {
-      font-size: 2.3rem;
+        font-size: 2.2rem;
     }
-  }
-
-  .small-note {
-    font-size: 0.7rem;
-    color: #5e8db0;
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+}
 </style>
 </head>
 <body>
 
 <section class="hero">
-  <h1>Rajan Path Lab</h1>
-  <h2><i class="fas fa-microscope"></i> Instant Add · Auto-Close Dropdowns</h2>
-  <p>⚡ Click test → adds to cart & dropdown closes. Click doctor → fills name & dropdown closes. Move cursor away → dropdown disappears.</p>
+    <h1>Rajan Path Lab</h1>
+    <h2>Precision Diagnostics • Compassionate Care • Since 1995</h2>
+    <p>Choose from 46+ specialized tests. Fill the booking form, and our team will reach out. All details are securely sent via WhatsApp to our lab manager.</p>
 </section>
 
 <div class="container">
-  <div class="card">
-    <div class="form-inner">
-      <form id="bookingForm" onsubmit="return false;">
-        <!-- Patient Information -->
-        <div class="section-title">
-          <i class="fas fa-id-card"></i> Patient Profile
-        </div>
-        <div class="form-group">
-          <label>Full Name <span style="color:#c74f2b;">*</span></label>
-          <input type="text" id="name" placeholder="e.g. Kavya Mehta">
-        </div>
-        <div class="grid-2col">
-          <div class="form-group">
-            <label>Age (Yrs)</label>
-            <input type="number" id="age" placeholder="Age">
-          </div>
-          <div class="form-group">
-            <label>Mobile Number <span style="color:#c74f2b;">*</span></label>
-            <input type="tel" id="mobile" placeholder="9876543210">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Address</label>
-          <textarea id="address" rows="2" placeholder="Complete address for home collection"></textarea>
-        </div>
+    <div class="card">
+        <form id="bookingForm">
+            <!-- Patient Section -->
+            <div class="section-title"><i class="fas fa-user-circle"></i> Patient Information</div>
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" id="name" placeholder="e.g., Rajesh Kumar" required>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Age (Years)</label>
+                    <input type="number" id="age" placeholder="Age">
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number *</label>
+                    <input type="tel" id="mobile" placeholder="9876543210" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Complete Address</label>
+                <textarea id="address" rows="2" placeholder="Street, City, Pincode"></textarea>
+            </div>
 
-        <!-- MULTI TEST SECTION - INSTANT ADD ON CLICK -->
-        <div class="section-title">
-          <i class="fas fa-dna"></i> Test Builder
-          <span class="badge-icon" id="testCountBadge">0</span>
-        </div>
+            <!-- Test Booking Section: Dynamic Multi-test -->
+            <div class="section-title"><i class="fas fa-flask"></i> Select Tests (Multiple Allowed)</div>
+            <div class="test-select-row">
+                <select id="testSelector">
+                    <option value="">-- Choose a diagnostic test --</option>
+                </select>
+                <button type="button" id="addTestBtn"><i class="fas fa-plus-circle"></i> Add Test</button>
+            </div>
+            
+            <div class="selected-tests" id="selectedTestsContainer" style="display: none;">
+                <h4><i class="fas fa-list-ul"></i> Selected Tests & Prices</h4>
+                <div id="selectedTestsList"></div>
+                <div id="totalPriceSpan" class="price-summary">💰 Total Amount: ₹0</div>
+            </div>
+            
+            <!-- Custom text test fallback (optional but allows manual entry) -->
+            <div class="form-group" style="margin-top: 12px;">
+                <label>Or manually write test name (if not listed)</label>
+                <input type="text" id="customTestName" placeholder="e.g., Any other test / package">
+            </div>
 
-        <div class="add-test-area">
-          <div class="autocomplete-wrapper" id="testAutocompleteWrapper">
-            <input type="text" id="testSearchInput" class="autocomplete-input" placeholder="🔬 Type test name: LIVER, CBC, THYROID ..." autocomplete="off">
-            <div id="testDropdownList" class="autocomplete-dropdown"></div>
-          </div>
-          <small class="small-note"><i class="fas fa-mouse-pointer"></i> Click any test → instantly added. Dropdown auto-closes.</small>
-        </div>
+            <!-- Referral & Date -->
+            <div class="section-title"><i class="fas fa-user-md"></i> Referral & Schedule</div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Referred By (Doctor/Self)</label>
+                    <select id="refbySelect">
+                        <option value="">-- Select Doctor --</option>
+                    </select>
+                    <input type="text" id="refbyOther" placeholder="Or type other name" style="margin-top: 8px;">
+                </div>
+                <div class="form-group">
+                    <label>Preferred Date</label>
+                    <input type="date" id="date">
+                </div>
+            </div>
 
-        <!-- Cart display -->
-        <div class="cart-container" id="cartContainer">
-          <div class="cart-header">
-            <span><i class="fas fa-clipboard-list"></i> Your Test Cart</span>
-            <span id="cartItemCount">0 items</span>
-          </div>
-          <div id="cartItemsList" class="cart-items">
-            <div class="empty-cart-msg" style="padding:32px; text-align:center; color:#9ab3c5;">➕ Type a test and click on the suggestion to add.</div>
-          </div>
-          <div class="cart-total">
-            <span><i class="fas fa-rupee-sign"></i> Total Amount</span>
-            <span id="cartTotalPrice">₹0</span>
-          </div>
-        </div>
-        <input type="hidden" id="cartDataJson" value="[]">
+            <!-- Payment Info -->
+            <div class="section-title"><i class="fas fa-rupee-sign"></i> Payment Details</div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Amount Paid (₹)</label>
+                    <input type="number" id="paid" placeholder="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Outstanding Due (₹)</label>
+                    <input type="number" id="due" placeholder="0" value="0">
+                </div>
+            </div>
 
-        <!-- REFERRAL WITH DOCTOR AUTOCOMPLETE (instant fill) -->
-        <div class="section-title">
-          <i class="fas fa-stethoscope"></i> Referral Details
-        </div>
-        <div class="form-group">
-          <label>Referred By (Doctor / Person) <span style="color:#0F6B9E;">🔍 Click any name from dropdown</span></label>
-          <div class="autocomplete-wrapper" id="doctorAutocompleteWrapper">
-            <input type="text" id="refby" class="autocomplete-input" placeholder="Type any letter (P, D, S...) → click doctor name" autocomplete="off">
-            <div id="doctorDropdownList" class="autocomplete-dropdown"></div>
-          </div>
-          <small class="small-note"><i class="fas fa-bolt"></i> Click doctor name → field fills & dropdown closes.</small>
-        </div>
+            <!-- Why Choose Us -->
+            <div class="section-title"><i class="fas fa-star-of-life"></i> Why Rajan Path Lab?</div>
+            <div class="features">
+                <div class="feature"><i class="fas fa-check-circle"></i> NABL Accredited Techniques</div>
+                <div class="feature"><i class="fas fa-user-md"></i> Expert Pathologists</div>
+                <div class="feature"><i class="fas fa-chart-line"></i> Rapid & Accurate Reports</div>
+                <div class="feature"><i class="fas fa-hand-holding-heart"></i> Home Collection Available</div>
+                <div class="feature"><i class="fas fa-microscope"></i> 46+ Specialized Tests</div>
+            </div>
 
-        <div class="grid-2col">
-          <div class="form-group">
-            <label>Preferred Date</label>
-            <input type="date" id="date">
-          </div>
-        </div>
-
-        <!-- Payment Information -->
-        <div class="section-title">
-          <i class="fas fa-receipt"></i> Payment Summary
-        </div>
-        <div class="grid-2col">
-          <div class="form-group">
-            <label>Amount Paid (₹)</label>
-            <input type="number" id="paid" placeholder="0" value="0">
-          </div>
-          <div class="form-group">
-            <label>Outstanding Due (₹)</label>
-            <input type="number" id="due" placeholder="0" value="0">
-          </div>
-        </div>
-
-        <div class="section-title">
-          <i class="fas fa-award"></i> Why Rajan Path Lab?
-        </div>
-        <div class="features">
-          <div class="feature"><i class="fas fa-certificate"></i> NABL Accredited</div>
-          <div class="feature"><i class="fas fa-clock"></i> Same-Day Reports</div>
-          <div class="feature"><i class="fas fa-hand-holding-heart"></i> Home Collection</div>
-          <div class="feature"><i class="fas fa-chart-line"></i> 20+ Years of Excellence</div>
-          <div class="feature"><i class="fas fa-shield-alt"></i> Quality Assurance</div>
-        </div>
-
-        <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
-          <i class="fab fa-whatsapp fa-xl"></i> Book Now via WhatsApp
-        </button>
-        <div class="footer-note">
-          <i class="fas fa-phone-alt"></i>  +91-8709946177  |  Trusted Diagnostics
-        </div>
-      </form>
+            <button type="button" class="whatsapp-btn" onclick="sendWhatsApp()">
+                <i class="fab fa-whatsapp fa-lg"></i> Confirm Booking via WhatsApp
+            </button>
+            <div class="footer-note">✔️ No extra charges | Reports will be shared digitally | Our team will confirm slot</div>
+        </form>
     </div>
-  </div>
 </div>
 
 <script>
-  // -------------------- TESTS DATA --------------------
-  const testsData = [
+// -------- Data Integration ----------
+const testsData = [
     { sno:1, name:"LIVER FUNCTION TEST", price:600 },{ sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600 },{ sno:3, name:"LIPID PROFILE (Fasting)", price:600 },
     { sno:4, name:"THYROID PROFILE", price:500 },{ sno:5, name:"BETA HCG", price:1000 },{ sno:6, name:"HBA1C (3 Month Sugar)", price:600 },
     { sno:7, name:"C-REACTIVE PROTEIN (CRP)", price:400 },{ sno:8, name:"ANTISTREPTOLYSIN O (ASO)", price:400 },{ sno:9, name:"R A FACTOR", price:400 },
@@ -489,185 +390,206 @@
     { sno:37, name:"BILIRUBIN TEST", price:200 },{ sno:38, name:"MP WIDAL HB", price:250 },{ sno:39, name:"OPTIMAL WIDAL HB", price:350 },
     { sno:40, name:"CBC MP WIDAL", price:500 },{ sno:41, name:"CBC WIDAL", price:400 },{ sno:42, name:"HB WIDAL", price:150 },{ sno:43, name:"MP WIDAL", price:200 },
     { sno:44, name:"OPTIMAL WIDAL", price:300 },{ sno:45, name:"Sodium", price:200 },{ sno:46, name:"Potassium", price:200 }
-  ];
+];
 
-  // -------------------- DOCTOR LIST --------------------
-  const doctorMasterList = [
+const doctorMasterList = [
     "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
     "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
     "SELF", "ALOK MEHTA", "BITTU KUMAR", "BALWANT PANDEY", "RAMESHWAR PRASAD", "R.L. RAM", "RAJU VISHWAKARMA",
     "SUDAMA PRAJAPATI", "AJIJ ANSARI", "MERAJ ALAM", "VIJAY MEHTA", "RANDHIR KUMAR", "S. SHARMA",
     "MAJHAR HUSSAIN", "GUDAN PRASAD", "RAJ VISHWAKARMA"
-  ];
-  const doctorNames = [...doctorMasterList].sort((a,b)=>a.localeCompare(b));
+];
+const sortedDoctors = [...doctorMasterList].sort((a,b) => a.localeCompare(b));
 
-  // ---------- Cart State ----------
-  let cart = [];
+// Populate test dropdown
+const testSelect = document.getElementById('testSelector');
+testsData.forEach(test => {
+    const option = document.createElement('option');
+    option.value = JSON.stringify({ name: test.name, price: test.price });
+    option.textContent = `${test.name}  (₹${test.price})`;
+    testSelect.appendChild(option);
+});
 
-  // DOM elements
-  const testSearchInput = document.getElementById('testSearchInput');
-  const testDropdown = document.getElementById('testDropdownList');
-  const cartItemsDiv = document.getElementById('cartItemsList');
-  const cartTotalSpan = document.getElementById('cartTotalPrice');
-  const cartItemCountSpan = document.getElementById('cartItemCount');
-  const testCountBadge = document.getElementById('testCountBadge');
-  const cartDataJson = document.getElementById('cartDataJson');
-  const doctorInput = document.getElementById('refby');
-  const doctorDropdown = document.getElementById('doctorDropdownList');
+// Populate doctor dropdown
+const refbySelect = document.getElementById('refbySelect');
+sortedDoctors.forEach(doc => {
+    const opt = document.createElement('option');
+    opt.value = doc;
+    opt.textContent = doc;
+    refbySelect.appendChild(opt);
+});
+refbySelect.innerHTML += `<option value="other">Other (Type below)</option>`;
 
-  function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+// State for selected tests
+let selectedTests = []; // each element { name, price }
 
-  // ========== TEST: INSTANT ADD ON CLICK & AUTO-CLOSE ==========
-  function renderTestDropdown(searchTerm) {
-    const term = searchTerm.trim().toLowerCase();
-    if (term === "") { testDropdown.classList.remove('show'); return; }
-    const filtered = testsData.filter(t => t.name.toLowerCase().includes(term));
-    if (filtered.length === 0) {
-      testDropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">🔍 No test match</div>`;
-      testDropdown.classList.add('show'); return;
+function updateSelectedTestsUI() {
+    const container = document.getElementById('selectedTestsContainer');
+    const listDiv = document.getElementById('selectedTestsList');
+    const totalSpan = document.getElementById('totalPriceSpan');
+    
+    if (selectedTests.length === 0) {
+        container.style.display = 'none';
+        return;
     }
-    let itemsHtml = '';
-    filtered.slice(0, 14).forEach(test => {
-      itemsHtml += `<div class="dropdown-item" data-name="${escapeHtml(test.name)}" data-price="${test.price}">
-        <span><i class="fas fa-microscope"></i> ${test.name}</span>
-        <span class="test-price">₹${test.price}</span>
-      </div>`;
-    });
-    testDropdown.innerHTML = itemsHtml;
-    testDropdown.classList.add('show');
-  }
-
-  function handleTestDropdownClick(e) {
-    const item = e.target.closest('.dropdown-item[data-name]');
-    if (!item) return;
-    const name = item.getAttribute('data-name');
-    const price = parseInt(item.getAttribute('data-price'), 10);
-    cart.push({ name: name, price: price });
-    updateCartUI();
-    testSearchInput.value = "";
-    testDropdown.classList.remove('show');
-    testSearchInput.focus();
-  }
-
-  testDropdown.addEventListener('click', handleTestDropdownClick);
-  testSearchInput.addEventListener('input', (e) => renderTestDropdown(e.target.value));
-  // BLUR: hide dropdown when focus leaves the input (cursor moves away)
-  testSearchInput.addEventListener('blur', () => {
-    setTimeout(() => { testDropdown.classList.remove('show'); }, 200);
-  });
-
-  // ========== DOCTOR: INSTANT FILL & AUTO-CLOSE ==========
-  function renderDoctorDropdown(searchTerm) {
-    const term = searchTerm.trim().toLowerCase();
-    if (term === "") { doctorDropdown.classList.remove('show'); return; }
-    const filtered = doctorNames.filter(doc => doc.toLowerCase().includes(term));
-    if (filtered.length === 0) {
-      doctorDropdown.innerHTML = `<div class="dropdown-item" style="justify-content:center;">✨ No doctor found</div>`;
-      doctorDropdown.classList.add('show');
-      return;
-    }
-    let itemsHtml = '';
-    filtered.slice(0, 18).forEach(doc => {
-      itemsHtml += `<div class="dropdown-item" data-doctor="${escapeHtml(doc)}"><span><i class="fas fa-user-md"></i> ${doc}</span></div>`;
-    });
-    doctorDropdown.innerHTML = itemsHtml;
-    doctorDropdown.classList.add('show');
-  }
-
-  function handleDoctorDropdownClick(e) {
-    const item = e.target.closest('.dropdown-item[data-doctor]');
-    if (!item) return;
-    const docName = item.getAttribute('data-doctor');
-    doctorInput.value = docName;
-    doctorDropdown.classList.remove('show');
-  }
-
-  doctorDropdown.addEventListener('click', handleDoctorDropdownClick);
-  doctorInput.addEventListener('input', (e) => renderDoctorDropdown(e.target.value));
-  // BLUR: hide dropdown when focus leaves doctor input
-  doctorInput.addEventListener('blur', () => {
-    setTimeout(() => { doctorDropdown.classList.remove('show'); }, 200);
-  });
-
-  // ========== Remove from cart (Event Delegation) ==========
-  function removeTestFromCart(index) {
-    cart.splice(index, 1);
-    updateCartUI();
-  }
-
-  function updateCartUI() {
-    if (cart.length === 0) {
-      cartItemsDiv.innerHTML = `<div class="empty-cart-msg" style="padding:32px; text-align:center; color:#9ab3c5;">📋 No tests added. Type test name and click on the suggestion.</div>`;
-      cartTotalSpan.innerText = `₹0`;
-      cartItemCountSpan.innerText = `0 items`;
-      testCountBadge.innerText = "0";
-      cartDataJson.value = JSON.stringify([]);
-      return;
-    }
-    let html = '';
+    container.style.display = 'block';
+    listDiv.innerHTML = '';
     let total = 0;
-    cart.forEach((item, idx) => {
-      total += item.price;
-      html += `<div class="cart-item">
-        <div class="cart-item-info">
-          <span class="cart-item-name"><i class="fas fa-flask"></i> ${escapeHtml(item.name)}</span>
-          <span class="cart-item-price">₹${item.price}</span>
-        </div>
-        <div class="cart-item-actions">
-          <button type="button" class="remove-test-btn" data-remove-index="${idx}"><i class="fas fa-trash-alt"></i> Remove</button>
-        </div>
-      </div>`;
+    selectedTests.forEach((test, idx) => {
+        total += test.price;
+        const badge = document.createElement('div');
+        badge.className = 'test-badge';
+        badge.innerHTML = `${test.name} (₹${test.price}) <button class="remove-test" data-index="${idx}">✕</button>`;
+        listDiv.appendChild(badge);
     });
-    cartItemsDiv.innerHTML = html;
-    cartTotalSpan.innerText = `₹${total}`;
-    cartItemCountSpan.innerText = `${cart.length} item${cart.length !== 1 ? 's' : ''}`;
-    testCountBadge.innerText = cart.length;
-    cartDataJson.value = JSON.stringify(cart);
-  }
+    totalSpan.innerHTML = `💰 Total Billable Amount: ₹${total}`;
+    
+    // attach remove events
+    document.querySelectorAll('.remove-test').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = parseInt(btn.getAttribute('data-index'));
+            if (!isNaN(index)) {
+                selectedTests.splice(index, 1);
+                updateSelectedTestsUI();
+            }
+        });
+    });
+}
 
-  document.getElementById('cartContainer').addEventListener('click', function(e) {
-    const btn = e.target.closest('.remove-test-btn');
-    if (btn && btn.hasAttribute('data-remove-index')) {
-      const idx = parseInt(btn.getAttribute('data-remove-index'), 10);
-      if (!isNaN(idx)) removeTestFromCart(idx);
+document.getElementById('addTestBtn').addEventListener('click', () => {
+    const selectedVal = testSelect.value;
+    if (!selectedVal) {
+        alert("Please select a test from the dropdown.");
+        return;
     }
-  });
+    const testObj = JSON.parse(selectedVal);
+    // avoid duplicate by name? optional but fine keep as per preference
+    selectedTests.push({ name: testObj.name, price: testObj.price });
+    updateSelectedTestsUI();
+    testSelect.value = ""; // reset
+});
 
-  // Close dropdowns when clicking anywhere outside (additional safety)
-  document.addEventListener('click', function(e) {
-    if (!document.getElementById('testAutocompleteWrapper')?.contains(e.target)) {
-      testDropdown.classList.remove('show');
+// sync manual custom test name if needed (we'll treat extra)
+function getFormattedTests() {
+    let testLines = [];
+    // Selected tests from list
+    selectedTests.forEach(t => {
+        testLines.push(`${t.name} (₹${t.price})`);
+    });
+    const customTestRaw = document.getElementById('customTestName').value.trim();
+    if (customTestRaw) {
+        testLines.push(`📋 Custom / Extra: ${customTestRaw}`);
     }
-    if (!document.getElementById('doctorAutocompleteWrapper')?.contains(e.target)) {
-      doctorDropdown.classList.remove('show');
+    if (testLines.length === 0) return "Not specified";
+    return testLines.join(" | ");
+}
+
+function getTotalBillSummary() {
+    let total = 0;
+    selectedTests.forEach(t => total += t.price);
+    return total;
+}
+
+// get referred by value
+function getReferredBy() {
+    const selectVal = refbySelect.value;
+    const otherInput = document.getElementById('refbyOther').value.trim();
+    if (selectVal === "other") {
+        return otherInput || "Other (not specified)";
+    } else if (selectVal && selectVal !== "") {
+        return selectVal;
+    } else {
+        return otherInput || "Not mentioned";
     }
-  });
+}
 
-  // Set default date
-  document.getElementById('date').value = new Date().toISOString().split('T')[0];
-  updateCartUI();
-
-  // WhatsApp send function
-  window.sendWhatsApp = function() {
+// Main WhatsApp send
+function sendWhatsApp() {
+    // basic validations
     const patientName = document.getElementById('name').value.trim();
     const mobile = document.getElementById('mobile').value.trim();
-    if (!patientName || !mobile) { alert("❌ Please provide Patient Name & Mobile Number."); return; }
-    const age = document.getElementById('age').value || '—';
-    const address = document.getElementById('address').value.trim() || '—';
-    const doctorValue = doctorInput.value.trim() || "Self/Other";
-    const date = document.getElementById('date').value || '—';
-    const paid = document.getElementById('paid').value || '0';
-    const due = document.getElementById('due').value || '0';
-
-    let testLines = "";
-    let cartTotal = 0;
-    if (cart.length === 0) testLines = "⚠️ No test selected";
-    else { cart.forEach((t,idx) => { testLines += `${idx+1}. ${t.name} — ₹${t.price}\n`; cartTotal += t.price; });
-      testLines += `\n🧾 GRAND TOTAL: ₹${cartTotal}`; }
+    if (!patientName) {
+        alert("❌ Please enter patient name.");
+        return;
+    }
+    if (!mobile) {
+        alert("❌ Mobile number is required for confirmation.");
+        return;
+    }
     
-    let rawMsg = `🏥 RAJAN PATH LAB (Premium Booking)\n\n👤 Patient: ${patientName}\n🎂 Age: ${age}\n📞 Mobile: ${mobile}\n📍 Address: ${address}\n\n🩺 SELECTED TESTS:\n${testLines}\n\n👨‍⚕️ Referred By: ${doctorValue}\n📅 Preferred Date: ${date}\n💰 Paid: ₹${paid} | Due: ₹${due}\n\n🔬 "Accurate Reports, Trusted Care"`;
-    window.open(`https://wa.me/918709946177?text=${encodeURIComponent(rawMsg)}`, "_blank");
-  };
+    const name = patientName || "—";
+    const age = document.getElementById('age').value || "—";
+    const address = document.getElementById('address').value.trim() || "Not Provided";
+    const testDetails = getFormattedTests();
+    const referred = getReferredBy();
+    const preferredDate = document.getElementById('date').value || "Not specified";
+    let paidAmount = document.getElementById('paid').value;
+    let dueAmount = document.getElementById('due').value;
+    paidAmount = (paidAmount === "") ? "0" : paidAmount;
+    dueAmount = (dueAmount === "") ? "0" : dueAmount;
+    
+    const totalTestValue = getTotalBillSummary();
+    let dynamicDueCalc = "";
+    if(parseInt(paidAmount) + parseInt(dueAmount) !== totalTestValue && selectedTests.length > 0) {
+        dynamicDueCalc = `⚠️ Note: Sum of Paid+Due (₹${parseInt(paidAmount)+parseInt(dueAmount)}) doesn't match total test value ₹${totalTestValue}. Please adjust.`;
+    }
+    
+    // Build final WhatsApp message (clean formatting)
+    let message = `🏥 *RAJAN PATH LAB* - Booking Request%0A`;
+    message += `━━━━━━━━━━━━━━━━━━%0A`;
+    message += `👤 *Patient:* ${name}%0A`;
+    message += `🎂 *Age:* ${age}%0A`;
+    message += `📞 *Mobile:* ${mobile}%0A`;
+    message += `📍 *Address:* ${address}%0A`;
+    message += `━━━━━━━━━━━━━━━━━━%0A`;
+    message += `🧪 *Selected Tests:*%0A${testDetails}%0A`;
+    if(selectedTests.length > 0) {
+        message += `💰 *Total Test Value:* ₹${totalTestValue}%0A`;
+    }
+    message += `👨‍⚕️ *Referred By:* ${referred}%0A`;
+    message += `📅 *Preferred Date:* ${preferredDate}%0A`;
+    message += `━━━━━━━━━━━━━━━━━━%0A`;
+    message += `💵 *Amount Paid:* ₹${paidAmount}%0A`;
+    message += `📝 *Outstanding Due:* ₹${dueAmount}%0A`;
+    if (dynamicDueCalc) message += `${dynamicDueCalc}%0A`;
+    message += `━━━━━━━━━━━━━━━━━━%0A`;
+    message += `✅ *Booking via Website* | Kindly confirm time slot.`;
+    
+    // Encode message for URL
+    const encodedMsg = encodeURIComponent(message).replace(/%(0A|20)/g, function(match) {
+        if (match === '%0A') return '%0A';
+        if (match === '%20') return '%20';
+        return match;
+    }).replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/₹/g, '%E2%82%B9');
+    
+    // WhatsApp number (same as original)
+    const whatsappNumber = "918709946177";
+    const url = `https://wa.me/${whatsappNumber}?text=${encodedMsg}`;
+    window.open(url, '_blank');
+}
+
+// Set minimum date to today
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('date').min = today;
+
+// Optional: sync due/paid auto suggestion based on total test value – but keep manual
+document.getElementById('paid').addEventListener('input', function() {
+    const total = getTotalBillSummary();
+    const paidVal = parseInt(this.value) || 0;
+    const dueField = document.getElementById('due');
+    if (total >= paidVal && selectedTests.length > 0) {
+        const autoDue = total - paidVal;
+        if(autoDue >= 0) dueField.value = autoDue;
+    }
+});
+document.getElementById('due').addEventListener('input', function() {
+    const total = getTotalBillSummary();
+    const dueVal = parseInt(this.value) || 0;
+    const paidField = document.getElementById('paid');
+    if (total >= dueVal && selectedTests.length > 0) {
+        paidField.value = total - dueVal;
+    }
+});
 </script>
 </body>
 </html>
