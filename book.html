@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab - Persistent WhatsApp Format</title>
+<title>Rajan Path Lab - Universal WhatsApp Format</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -331,6 +331,16 @@ input:focus, select:focus, textarea:focus {
     padding-top: 10px;
 }
 
+.optional-badge {
+    font-size: 0.65rem;
+    font-weight: normal;
+    background: #e2edf7;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+    color: #0F5B8C;
+}
+
 @media (max-width: 900px) {
     .form-grid-2cols {
         grid-template-columns: 1fr;
@@ -372,7 +382,7 @@ input:focus, select:focus, textarea:focus {
 <section class="hero">
     <h1>🔬 RAJAN PATH LAB</h1>
     <h2>Trusted Diagnostics • Accurate Results • Digital Reports</h2>
-    <p>💰 Auto Payment | Same Format on Laptop & Mobile | No Broken Emojis | <strong>📱 Auto-Save: Form fills itself even if phone lost/refreshed</strong></p>
+    <p>💰 Auto Payment | Same Format on Laptop & Mobile | 📱 Mobile Number Optional</p>
 </section>
 
 <div class="container">
@@ -393,7 +403,7 @@ input:focus, select:focus, textarea:focus {
             <div class="section-title"><i class="fas fa-user-circle"></i> Patient Information</div>
             <div class="form-grid-2cols">
                 <div class="form-group">
-                    <label>Patient Name *</label>
+                    <label>Patient Name * <span style="color:#e74c3c; font-size:0.7rem;">(Required)</span></label>
                     <input type="text" id="name" placeholder="Full name">
                 </div>
                 <div class="form-group">
@@ -401,8 +411,8 @@ input:focus, select:focus, textarea:focus {
                     <input type="number" id="age" placeholder="Age">
                 </div>
                 <div class="form-group">
-                    <label>Mobile Number *</label>
-                    <input type="tel" id="mobile" placeholder="9876543210">
+                    <label>Mobile Number <span class="optional-badge">Optional</span></label>
+                    <input type="tel" id="mobile" placeholder="9876543210 (Optional)">
                 </div>
                 <div class="form-group">
                     <label>Address</label>
@@ -475,7 +485,7 @@ input:focus, select:focus, textarea:focus {
                 <i class="fab fa-whatsapp fa-lg"></i> 📄 Send Booking & Report Request
             </button>
             <div class="reset-note">
-                <i class="fas fa-sync-alt"></i> 🔒 AUTO-PERSIST: Data saves automatically. Even if phone lost/refreshed — form auto-fills itself.
+                <i class="fas fa-sync-alt"></i> 🔒 Auto-save | Mobile number optional - bina number daale bhi kaam karega
             </div>
         </form>
     </div>
@@ -521,7 +531,7 @@ refbySelect.innerHTML += `<option value="other">Other (Type below)</option>`;
 
 let selectedTests = [];
 
-// ---------- PERSISTENCE (LOCALSTORAGE) : PHONE LOST / REFRESH = AUTO FILL ----------
+// ---------- PERSISTENCE (LOCALSTORAGE) ----------
 function saveAllData() {
     try {
         const state = {
@@ -567,7 +577,6 @@ function restoreAllData() {
     } catch(e) { console.warn(e); return false; }
 }
 
-// Auto-save on every input change
 function attachAutoSave() {
     const inputs = ['name', 'age', 'mobile', 'address', 'customTestName', 'refbyOther', 'date', 'paid'];
     inputs.forEach(id => {
@@ -605,12 +614,12 @@ function updateCartUI() {
                 selectedTests.splice(idx, 1);
                 updateCartUI();
                 autoCalculateDue();
-                saveAllData();   // persist after removal
+                saveAllData();
             }
         });
     });
     autoCalculateDue();
-    saveAllData();  // ensure selectedTests saved after any change
+    saveAllData();
 }
 
 function autoCalculateDue() {
@@ -723,7 +732,7 @@ function getTotalAmount() {
     return selectedTests.reduce((sum, t) => sum + t.price, 0);
 }
 
-// FIXED: UNIVERSAL WHATSAPP MESSAGE - Same format on Laptop & Mobile
+// WhatsApp send function - MOBILE NUMBER OPTIONAL (no validation required)
 function sendFormattedWhatsApp() {
     const name = document.getElementById('name').value.trim();
     const age = document.getElementById('age').value || "-";
@@ -737,11 +746,16 @@ function sendFormattedWhatsApp() {
     const testsText = getFormattedTestsForMessage();
     const totalVal = getTotalAmount();
     
-    if (!name) { alert("Please enter patient name"); return; }
-    if (!mobile) { alert("Mobile number required"); return; }
-    if (!testDate) { alert("Please select test date"); return; }
+    // ONLY NAME IS MANDATORY now - mobile is optional
+    if (!name) { alert("⚠️ Please enter patient name (Required)"); return; }
+    if (!testDate) { alert("⚠️ Please select test date"); return; }
     
-    mobile = mobile.replace(/\s/g, '');
+    // If mobile is empty, show as "Not provided"
+    if (!mobile) {
+        mobile = "Not provided";
+    } else {
+        mobile = mobile.replace(/\s/g, '');
+    }
     
     let message = "";
     message += "🔬 RAJAN PATH LAB\n";
@@ -794,42 +808,11 @@ function generateSmallQR() {
     }
 }
 
-function resetFormToEmpty() {
-    // Only used for initial empty state if no saved data
-    if(localStorage.getItem('rajanPathLabFormData')) return; // let restore handle
-    document.getElementById('name').value = '';
-    document.getElementById('age').value = '';
-    document.getElementById('mobile').value = '';
-    document.getElementById('address').value = '';
-    document.getElementById('customTestName').value = '';
-    document.getElementById('refbyOther').value = '';
-    document.getElementById('paid').value = '0';
-    
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('date').value = today;
-    
-    if (refbySelect) refbySelect.value = "";
-    
-    selectedTests = [];
-    updateCartUI();
-    
-    testInput.value = '';
-    currentSelectedSuggestion = null;
-    suggestionsDiv.style.display = 'none';
-    
-    document.getElementById('reportRequest').checked = true;
-    
-    const dueField = document.getElementById('due');
-    if (dueField) dueField.value = '0';
-    saveAllData();
-}
-
-// MAIN INIT: auto-restore from localStorage (even after phone lost/browser refresh)
+// MAIN INIT
 window.addEventListener('DOMContentLoaded', () => {
     generateSmallQR();
     const hasSaved = restoreAllData();
     if (!hasSaved) {
-        // first time ever: set default date and zero paid
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('date').value = today;
         document.getElementById('paid').value = '0';
@@ -837,16 +820,12 @@ window.addEventListener('DOMContentLoaded', () => {
         updateCartUI();
         saveAllData();
     } else {
-        // ensure due calculation and sync
         autoCalculateDue();
-        // double-check any tests ui render
         updateCartUI();
     }
     attachAutoSave();
-    // additional event listeners for dynamic fields
     document.getElementById('refbyOther').addEventListener('input', () => saveAllData());
     document.getElementById('customTestName').addEventListener('input', () => saveAllData());
-    // ensure manual override for test removal saving already inside updateCartUI -> saveAllData
 });
 </script>
 </body>
