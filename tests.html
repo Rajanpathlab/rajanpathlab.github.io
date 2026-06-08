@@ -265,7 +265,7 @@
             <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by test name, vial colour (lavender, gold, grey), or requirement...">
             <div class="stat-badge" id="resultCount">📋 Loading tests...</div>
         </div>
-        <div style="font-size: 0.7rem; color: #6a8b9a; margin-top: 8px; padding-left: 8px;">💡 Tip: Try "lavender", "gold top", "grey", "EDTA", "thyroid", "dengue" to filter</div>
+        <div style="font-size: 0.7rem; color: #6a8b9a; margin-top: 8px; padding-left: 8px;">💡 Tip: Try "platelet", "thyroid", "dengue", "vitamin", "prolactin", "LH", "FSH" to filter</div>
     </div>
 
     <div class="table-responsive">
@@ -282,15 +282,22 @@
 
 <script>
     const testsData = [
-        // Existing core tests
+        // === CORE EXISTING TESTS ===
         { name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Liver enzymes, proteins, bilirubin – hepatitis & cirrhosis screen." },
         { name:"KIDNEY FUNCTION TEST", price:600, volume:"2-3 ml Fasting serum", vial:"Red top / Gold SST", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Urea, Creatinine, Uric acid – renal health." },
         { name:"LIPID PROFILE", price:600, volume:"3 ml Fasting (12hrs)", vial:"Red top / SST", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Total cholesterol, HDL, LDL, Triglycerides." },
         { name:"THYROID PROFILE", price:500, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"T3, T4, TSH – thyroid function." },
         { name:"COMPLETE BLOOD COUNT (CBC)", price:300, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hb, TLC, RBC, Platelets – general health." },
         { name:"HBA1C", price:600, volume:"2 ml Whole blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"3-month avg glucose – diabetes monitoring." },
+        { name:"C-REACTIVE PROTEIN (CRP)", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Inflammation marker – infection, autoimmune." },
+        { name:"URINE ROUTINE", price:100, volume:"10-15 ml Urine", vial:"Sterile container", vialColour:"Transparent", colourHex:"#F0F4F5", desc:"Microscopic & chemical analysis for UTI, diabetes." },
+        { name:"URINE CULTURE", price:400, volume:"Mid-stream urine", vial:"Sterile container", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Identifies bacterial infection & sensitivity." },
+        { name:"BLOOD SUGAR", price:50, volume:"1 ml Fluoride", vial:"Grey top", vialColour:"Grey", colourHex:"#A9B7C0", desc:"Glucose level – diabetes screening." },
+        { name:"HBSAG", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis B surface antigen screening." },
+        { name:"HIV", price:300, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"HIV I & II antibody detection." },
+        { name:"WIDAL", price:100, volume:"2 ml Serum", vial:"Plain red / Gold", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Salmonella typhi antibody test." },
         
-        // NEW TESTS ADDED AS PER USER REQUEST
+        // === NEW TESTS ADDED AS PER USER REQUEST ===
         { name:"PLATELET COUNT", price:150, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Platelet count – dengue, bleeding disorders, thrombocytopenia." },
         { name:"KIDNEY COMPLETE (KFT + Electrolytes)", price:900, volume:"3 ml Fasting serum", vial:"Gold SST + Green", vialColour:"Gold / Green", colourHex:"#D4AF37,#3A9B5E", desc:"Complete renal panel: Urea, Creatinine, Uric acid + Sodium, Potassium, Chloride." },
         { name:"PREGNANCY COMBO (HCG + CBC + Urine)", price:400, volume:"Blood 3ml + Urine", vial:"Lavender + Gold + Sterile", vialColour:"Lavender / Gold / Sterile", colourHex:"#967BB6,#D4AF37,#FFFFFF", desc:"Pregnancy confirmation with CBC & urine routine – complete antenatal screen." },
@@ -303,17 +310,13 @@
         { name:"T4 (Thyroxine)", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Thyroxine levels – thyroid function." },
         { name:"FREE T3", price:350, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Free T3 – unbound active thyroid hormone." },
         { name:"FREE T4", price:350, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Free T4 – unbound thyroxine, more accurate." },
-        { name:"PROLACTIN", price:600, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Prolactin hormone – galactorrhea, infertility, pituitary disorders." },
+        { name:"PROLACTIN", price:600, volume:"2 ml Serum", vial:"Gold SST", vialColur:"Gold", colourHex:"#D4AF37", desc:"Prolactin hormone – galactorrhea, infertility, pituitary disorders." },
         { name:"LH (Luteinizing Hormone)", price:570, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"LH – ovulation, fertility, PCOS, menopause assessment." },
         { name:"FSH (Follicle Stimulating Hormone)", price:580, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"FSH – ovarian reserve, fertility, menopause workup." },
         
-        // Additional combo panels
+        // === COMBO PANELS ===
         { name:"CBC + WIDAL + OPTIMAL PANEL", price:600, volume:"3 ml EDTA + 2 ml Serum", vial:"Lavender + Gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Complete wellness: CBC, Typhoid & metabolic panel." },
-        { name:"URINE CULTURE", price:400, volume:"Mid-stream urine", vial:"Sterile container", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Bacterial infection & antibiotic sensitivity." },
-        { name:"URINE ROUTINE", price:100, volume:"10 ml Urine", vial:"Sterile container", vialColour:"Transparent", colourHex:"#F0F4F5", desc:"Physical, chemical & microscopic urine analysis." },
-        { name:"BLOOD SUGAR (Fasting)", price:50, volume:"1 ml Fluoride", vial:"Grey top", vialColour:"Grey", colourHex:"#A9B7C0", desc:"Glucose level – diabetes screening." },
-        { name:"HBSAG", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis B surface antigen." },
-        { name:"HIV", price:300, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"HIV I & II antibody detection." }
+        { name:"CBC + OPTIMAL (Wellness Starter)", price:500, volume:"3 ml EDTA + 2 ml Serum", vial:"Lavender + Gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"CBC with Optimal wellness (LFT, KFT, Lipid, Thyroid)." }
     ];
 
     function renderVialColourCell(colourName, colourHexRaw) {
