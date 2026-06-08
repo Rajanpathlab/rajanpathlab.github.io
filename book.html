@@ -331,16 +331,6 @@ input:focus, select:focus, textarea:focus {
     padding-top: 10px;
 }
 
-.optional-badge {
-    font-size: 0.65rem;
-    font-weight: normal;
-    background: #e2edf7;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin-left: 8px;
-    color: #0F5B8C;
-}
-
 @media (max-width: 900px) {
     .form-grid-2cols {
         grid-template-columns: 1fr;
@@ -382,7 +372,7 @@ input:focus, select:focus, textarea:focus {
 <section class="hero">
     <h1>🔬 RAJAN PATH LAB</h1>
     <h2>Trusted Diagnostics • Accurate Results • Digital Reports</h2>
-    <p>💰 Auto Payment | Same Format on Laptop & Mobile | 📱 Mobile Number Optional</p>
+    <p>💰 Auto Payment | Same Format on Laptop & Mobile | No Broken Emojis</p>
 </section>
 
 <div class="container">
@@ -403,7 +393,7 @@ input:focus, select:focus, textarea:focus {
             <div class="section-title"><i class="fas fa-user-circle"></i> Patient Information</div>
             <div class="form-grid-2cols">
                 <div class="form-group">
-                    <label>Patient Name * <span style="color:#e74c3c; font-size:0.7rem;">(Required)</span></label>
+                    <label>Patient Name *</label>
                     <input type="text" id="name" placeholder="Full name">
                 </div>
                 <div class="form-group">
@@ -411,8 +401,8 @@ input:focus, select:focus, textarea:focus {
                     <input type="number" id="age" placeholder="Age">
                 </div>
                 <div class="form-group">
-                    <label>Mobile Number <span class="optional-badge">Optional</span></label>
-                    <input type="tel" id="mobile" placeholder="9876543210 (Optional)">
+                    <label>Mobile Number *</label>
+                    <input type="tel" id="mobile" placeholder="9876543210">
                 </div>
                 <div class="form-group">
                     <label>Address</label>
@@ -485,7 +475,7 @@ input:focus, select:focus, textarea:focus {
                 <i class="fab fa-whatsapp fa-lg"></i> 📄 Send Booking & Report Request
             </button>
             <div class="reset-note">
-                <i class="fas fa-sync-alt"></i> 🔒 Auto-save | Mobile number optional - bina number daale bhi kaam karega
+                <i class="fas fa-sync-alt"></i> Page refresh = all fields cleared | Same format on ALL devices
             </div>
         </form>
     </div>
@@ -531,64 +521,6 @@ refbySelect.innerHTML += `<option value="other">Other (Type below)</option>`;
 
 let selectedTests = [];
 
-// ---------- PERSISTENCE (LOCALSTORAGE) ----------
-function saveAllData() {
-    try {
-        const state = {
-            name: document.getElementById('name').value,
-            age: document.getElementById('age').value,
-            mobile: document.getElementById('mobile').value,
-            address: document.getElementById('address').value,
-            customTestName: document.getElementById('customTestName').value,
-            refbySelectVal: document.getElementById('refbySelect').value,
-            refbyOtherVal: document.getElementById('refbyOther').value,
-            date: document.getElementById('date').value,
-            paid: document.getElementById('paid').value,
-            reportRequest: document.getElementById('reportRequest').checked,
-            selectedTests: selectedTests.map(t => ({ name: t.name, price: t.price }))
-        };
-        localStorage.setItem('rajanPathLabFormData', JSON.stringify(state));
-    } catch(e) { console.warn(e); }
-}
-
-function restoreAllData() {
-    const saved = localStorage.getItem('rajanPathLabFormData');
-    if (!saved) return false;
-    try {
-        const state = JSON.parse(saved);
-        document.getElementById('name').value = state.name || '';
-        document.getElementById('age').value = state.age || '';
-        document.getElementById('mobile').value = state.mobile || '';
-        document.getElementById('address').value = state.address || '';
-        document.getElementById('customTestName').value = state.customTestName || '';
-        if (state.refbySelectVal) document.getElementById('refbySelect').value = state.refbySelectVal;
-        document.getElementById('refbyOther').value = state.refbyOtherVal || '';
-        if (state.date) document.getElementById('date').value = state.date;
-        if (state.paid !== undefined) document.getElementById('paid').value = state.paid;
-        document.getElementById('reportRequest').checked = state.reportRequest === true;
-        
-        if (state.selectedTests && Array.isArray(state.selectedTests)) {
-            selectedTests = state.selectedTests.filter(t => t && t.name);
-        } else {
-            selectedTests = [];
-        }
-        updateCartUI();
-        return true;
-    } catch(e) { console.warn(e); return false; }
-}
-
-function attachAutoSave() {
-    const inputs = ['name', 'age', 'mobile', 'address', 'customTestName', 'refbyOther', 'date', 'paid'];
-    inputs.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('input', () => { saveAllData(); autoCalculateDue(); });
-    });
-    const refSelect = document.getElementById('refbySelect');
-    if(refSelect) refSelect.addEventListener('change', () => saveAllData());
-    const reportChk = document.getElementById('reportRequest');
-    if(reportChk) reportChk.addEventListener('change', () => saveAllData());
-}
-
 function updateCartUI() {
     const listDiv = document.getElementById('selectedTestsList');
     const totalSpan = document.getElementById('totalPriceSpan');
@@ -614,12 +546,10 @@ function updateCartUI() {
                 selectedTests.splice(idx, 1);
                 updateCartUI();
                 autoCalculateDue();
-                saveAllData();
             }
         });
     });
     autoCalculateDue();
-    saveAllData();
 }
 
 function autoCalculateDue() {
@@ -628,13 +558,12 @@ function autoCalculateDue() {
     const dueField = document.getElementById('due');
     
     let paidValue = parseFloat(paidField.value) || 0;
-    if (paidValue > total && total > 0) {
+    if (paidValue > total) {
         paidValue = total;
         paidField.value = total;
-    } else if (paidValue < 0) paidValue = 0;
+    }
     const dueAmount = total - paidValue;
     dueField.value = dueAmount >= 0 ? dueAmount : 0;
-    saveAllData();
 }
 
 document.getElementById('paid').addEventListener('input', function() {
@@ -704,7 +633,6 @@ document.getElementById('quickAddBtn').addEventListener('click', () => {
         testInput.value = '';
         currentSelectedSuggestion = null;
         suggestionsDiv.style.display = 'none';
-        saveAllData();
     } else if (testInput.value.trim() !== "") {
         alert("Test not found. Please select from suggestions.");
     }
@@ -732,7 +660,11 @@ function getTotalAmount() {
     return selectedTests.reduce((sum, t) => sum + t.price, 0);
 }
 
-// WhatsApp send function - MOBILE NUMBER OPTIONAL (no validation required)
+// ============================================================
+// UNIVERSAL WHATSAPP MESSAGE - same format on laptop & mobile
+// Mobile number is REQUIRED & validated before sending message.
+// The system will NOT proceed without a valid mobile number.
+// ============================================================
 function sendFormattedWhatsApp() {
     const name = document.getElementById('name').value.trim();
     const age = document.getElementById('age').value || "-";
@@ -746,17 +678,32 @@ function sendFormattedWhatsApp() {
     const testsText = getFormattedTestsForMessage();
     const totalVal = getTotalAmount();
     
-    // ONLY NAME IS MANDATORY now - mobile is optional
-    if (!name) { alert("⚠️ Please enter patient name (Required)"); return; }
-    if (!testDate) { alert("⚠️ Please select test date"); return; }
-    
-    // If mobile is empty, show as "Not provided"
-    if (!mobile) {
-        mobile = "Not provided";
-    } else {
-        mobile = mobile.replace(/\s/g, '');
+    // ---- CRITICAL VALIDATION: Mobile number is mandatory ----
+    if (!name) { 
+        alert("❌ Patient name is required"); 
+        return; 
+    }
+    if (!mobile) { 
+        alert("❌ Mobile Number is REQUIRED!\nPlease enter patient's mobile number to proceed.\nWithout mobile number, booking cannot be sent."); 
+        // Focus on mobile field for easy correction
+        document.getElementById('mobile').focus();
+        return; 
+    }
+    if (!testDate) { 
+        alert("❌ Please select test/sample date"); 
+        return; 
     }
     
+    // Basic mobile validation (Indian number approx)
+    let cleanMobile = mobile.replace(/\D/g, '');
+    if (cleanMobile.length < 10) {
+        alert("❌ Please enter a valid 10-digit mobile number");
+        document.getElementById('mobile').focus();
+        return;
+    }
+    if (cleanMobile.length > 10) cleanMobile = cleanMobile.slice(-10);
+    
+    // UNIVERSAL MESSAGE FORMAT - Works exactly same on ALL devices
     let message = "";
     message += "🔬 RAJAN PATH LAB\n";
     message += "Diagnostic Booking Confirmation & Report Request\n";
@@ -766,7 +713,7 @@ function sendFormattedWhatsApp() {
     message += "🎂 Age: " + age + " Years\n";
     message += "👨‍⚕️ Referred By: " + referred + "\n";
     message += "📅 Sample/Test Date: " + testDate + "\n";
-    message += "📱 Mobile: " + mobile + "\n";
+    message += "📱 Mobile: " + cleanMobile + "\n";
     message += "📍 Address: " + address + "\n";
     message += "━━━━━━━━━━━━━━━━━━━━━━━\n";
     message += "🧪 Tests Booked\n";
@@ -787,6 +734,7 @@ function sendFormattedWhatsApp() {
     message += "🙏 Thank you for choosing RAJAN PATH LAB\n";
     message += "🏥 Accurate Diagnostics • Trusted Care • Fast Reporting";
     
+    // Proper encoding for WhatsApp
     const encodedMsg = encodeURIComponent(message);
     const waNumber = "918709946177";
     window.open(`https://wa.me/${waNumber}?text=${encodedMsg}`, '_blank');
@@ -808,24 +756,37 @@ function generateSmallQR() {
     }
 }
 
-// MAIN INIT
+function resetFormToEmpty() {
+    document.getElementById('name').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('mobile').value = '';
+    document.getElementById('address').value = '';
+    document.getElementById('customTestName').value = '';
+    document.getElementById('refbyOther').value = '';
+    document.getElementById('paid').value = '0';
+    
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').value = today;
+    
+    if (refbySelect) refbySelect.value = "";
+    
+    selectedTests = [];
+    updateCartUI();
+    
+    testInput.value = '';
+    currentSelectedSuggestion = null;
+    suggestionsDiv.style.display = 'none';
+    
+    document.getElementById('reportRequest').checked = true;
+    
+    const dueField = document.getElementById('due');
+    if (dueField) dueField.value = '0';
+}
+
 window.addEventListener('DOMContentLoaded', () => {
+    resetFormToEmpty();
     generateSmallQR();
-    const hasSaved = restoreAllData();
-    if (!hasSaved) {
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('date').value = today;
-        document.getElementById('paid').value = '0';
-        selectedTests = [];
-        updateCartUI();
-        saveAllData();
-    } else {
-        autoCalculateDue();
-        updateCartUI();
-    }
-    attachAutoSave();
-    document.getElementById('refbyOther').addEventListener('input', () => saveAllData());
-    document.getElementById('customTestName').addEventListener('input', () => saveAllData());
+    autoCalculateDue();
 });
 </script>
 </body>
