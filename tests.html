@@ -155,7 +155,7 @@
             background-color: #fef9ef;
         }
 
-        /* column widths (optimized for vial color column) */
+        /* column widths */
         .test-table th:nth-child(1) { width: 5%; text-align: center; }
         .test-table th:nth-child(2) { width: 26%; }
         .test-table th:nth-child(3) { width: 10%; text-align: right; }
@@ -232,6 +232,18 @@
             font-weight: 600;
         }
 
+        .package-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            display: inline-block;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-top: 6px;
+            font-weight: 700;
+            margin-left: 6px;
+        }
+
         .no-results {
             text-align: center;
             padding: 3rem;
@@ -265,15 +277,15 @@
     <div class="header">
         <h1>🔬 RAJAN PATH LAB <span>premium diagnostics</span></h1>
         <p>Precision Health · Advanced Technology · Transparent Pricing</p>
-        <div class="effective">✅ Revised Price List w.e.f. 01 January 2026 | Complete Vial Colour Guide | 80+ Individual Tests</div>
+        <div class="effective">✅ Revised Price List w.e.f. 01 January 2026 | Complete Vial Colour Guide | 85+ Tests & Panels</div>
     </div>
 
     <div class="toolbar">
         <div class="search-wrapper">
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by test name, vial colour (lavender, gold, grey, green, black, blue), or requirement...">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by test name, vial colour (lavender, gold, grey, green, black), or requirement...">
             <div class="stat-badge" id="resultCount">📋 Loading tests...</div>
         </div>
-        <div style="font-size: 0.7rem; color: #6a8b9a; margin-top: 8px; padding-left: 8px;">💡 Tip: Try "lavender", "gold top", "grey", "EDTA", "green", "sodium citrate" to filter by vial colour</div>
+        <div style="font-size: 0.7rem; color: #6a8b9a; margin-top: 8px; padding-left: 8px;">💡 Tip: Try "lavender", "gold top", "grey", "EDTA", "CBC", "OPTIMAL", "WIDAL", "URINE CULTURE"</div>
     </div>
 
     <div class="table-responsive">
@@ -294,19 +306,19 @@
             </tbody>
         </table>
         <div id="noResults" class="no-results">
-            🧪 No matching tests found. Try "gold", "lavender", "CBC", "Thyroid", "iron", "vitamin", "magnesium" etc.
+            🧪 No matching tests found. Try "gold", "lavender", "CBC", "Thyroid", "OPTIMAL", "WIDAL", "URINE CULTURE" etc.
         </div>
     </div>
     <footer>
         ⚕️ *Fasting = 8-12 hrs (water allowed) | Home collection available | Colour-coded vials help accurate sampling | Reports digitally*<br>
-        📌 Comprehensive single-test menu: Hormones, Vitamins, Minerals, Cardiac Markers, Tumor Markers & Special Assays
+        📌 Comprehensive menu: Single tests, Profiles & Value Panels | New: CBC+OPTIMAL+WIDAL panel & Urine Culture combo
     </footer>
 </div>
 
 <script>
-    // EXPANDED DATASET – 80+ SINGLE, INDIVIDUAL TESTS (Full coverage including hormones, vitamins, minerals, cardiac, specials)
+    // EXPANDED DATASET – Full tests including the newly requested composites
     const testsData = [
-        // --- ORIGINAL CORE TESTS (46) KEPT WITH SLIGHT ENHANCEMENTS ----
+        // --- ORIGINAL CORE TESTS (1-46) ---
         { sno:1, name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum (8-10 hrs)", vial:"Gold SST (Serum Separator Tube)", vialColour:"Gold", colourHex:"#D4AF37", desc:"Evaluates liver enzymes, proteins, bilirubin; screens for hepatitis, cirrhosis." },
         { sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600, volume:"2-3 ml Fasting serum", vial:"Red top / Gold SST", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Measures Urea, Creatinine, Uric acid – renal health marker." },
         { sno:3, name:"LIPID PROFILE (Fasting)", price:600, volume:"3 ml Fasting (12hrs)", vial:"Red top / SST", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Total Cholesterol, HDL, LDL, Triglycerides – cardiac risk." },
@@ -354,7 +366,7 @@
         { sno:45, name:"SODIUM (Na)", price:200, volume:"1 ml Serum/Plasma", vial:"Green top (Heparin) / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Electrolyte balance – hyponatremia." },
         { sno:46, name:"POTASSIUM (K)", price:200, volume:"1 ml Serum/Plasma", vial:"Green top / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Cardiac & muscle function electrolyte." },
         
-        // ========== NEW ADDITION: SINGLE, INDIVIDUAL TESTS (HORMONES, VITAMINS, MINERALS, CARDIAC MARKERS, TUMOR MARKERS, SPECIALS) ==========
+        // --- SINGLE TESTS (HORMONES, VITAMINS, CARDIAC, TUMOR MARKERS) 47-86 ---
         { sno:47, name:"VITAMIN B12 (Cyanocobalamin)", price:800, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Neurological health, megaloblastic anemia marker." },
         { sno:48, name:"VITAMIN D (25-Hydroxy)", price:1200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Bone health, immunity, deficiency screening." },
         { sno:49, name:"FERRITIN", price:550, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Iron stores indicator – anemia & hemochromatosis." },
@@ -393,5 +405,4 @@
         { sno:82, name:"SGOT (AST)", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatocellular injury marker." },
         { sno:83, name:"SGPT (ALT)", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Liver inflammation, hepatitis marker." },
         { sno:84, name:"TOTAL PROTEIN", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Nutritional status, liver/kidney disease." },
-        { sno:85, name:"ALBUMIN (Serum)", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Liver synthetic function, malnutrition." },
-        { sno:86, name:"GLOBULIN & A/G Ratio", price:200, volume:"2 ml Serum", vial
+        { sno:85, name:"ALBUMIN (Serum)", price:150, volume:"
