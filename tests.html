@@ -17,7 +17,6 @@
             padding: 2rem 1.5rem;
         }
 
-        /* premium glass container */
         .container {
             max-width: 1500px;
             margin: 0 auto;
@@ -25,10 +24,8 @@
             border-radius: 2rem;
             box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.08);
             overflow: hidden;
-            transition: all 0.2s;
         }
 
-        /* header with rich gradient */
         .header {
             background: linear-gradient(135deg, #0a3b4b 0%, #116b7c 100%);
             padding: 2rem 2rem 1.8rem 2rem;
@@ -73,7 +70,6 @@
             backdrop-filter: blur(2px);
         }
 
-        /* search toolbar */
         .toolbar {
             padding: 1.5rem 2rem 1rem 2rem;
             background: white;
@@ -114,7 +110,6 @@
             color: #0f4c5c;
         }
 
-        /* table design with colour coded vials */
         .table-responsive {
             overflow-x: auto;
             padding: 0 0 1rem 0;
@@ -155,14 +150,13 @@
             background-color: #fef9ef;
         }
 
-        /* column widths */
         .test-table th:nth-child(1) { width: 5%; text-align: center; }
-        .test-table th:nth-child(2) { width: 26%; }
-        .test-table th:nth-child(3) { width: 10%; text-align: right; }
-        .test-table th:nth-child(4) { width: 16%; }
-        .test-table th:nth-child(5) { width: 16%; }
+        .test-table th:nth-child(2) { width: 28%; }
+        .test-table th:nth-child(3) { width: 8%; text-align: right; }
+        .test-table th:nth-child(4) { width: 15%; }
+        .test-table th:nth-child(5) { width: 15%; }
         .test-table th:nth-child(6) { width: 12%; text-align: center; }
-        .test-table th:nth-child(7) { width: 15%; }
+        .test-table th:nth-child(7) { width: 17%; }
 
         .test-table td:nth-child(3) {
             text-align: right;
@@ -171,7 +165,6 @@
             font-size: 1.05rem;
         }
 
-        /* VIAL COLOUR BADGE with actual color swatch */
         .vial-colour-badge {
             display: inline-flex;
             align-items: center;
@@ -210,7 +203,6 @@
             font-size: 0.78rem;
             line-height: 1.4;
             color: #4a5b64;
-            margin-top: 5px;
         }
 
         .test-name-main {
@@ -257,11 +249,6 @@
             .test-table th, .test-table td { padding: 12px 8px; font-size: 0.8rem; }
             .vial-colour-badge { font-size: 0.68rem; padding: 3px 8px; }
         }
-
-        .highlight {
-            background-color: #fff1c1;
-            transition: background 0.2s;
-        }
     </style>
 </head>
 <body>
@@ -276,118 +263,61 @@
     <div class="toolbar">
         <div class="search-wrapper">
             <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by test name, vial colour (lavender, gold, grey), or requirement...">
-            <div class="stat-badge" id="resultCount">📋 48+ tests available</div>
+            <div class="stat-badge" id="resultCount">📋 Loading tests...</div>
         </div>
-        <div style="font-size: 0.7rem; color: #6a8b9a; margin-top: 8px; padding-left: 8px;">💡 Tip: Try "lavender", "gold top", "grey", "EDTA", "CBC WIDAL OPTIMAL" to filter by vial colour or combo panels</div>
+        <div style="font-size: 0.7rem; color: #6a8b9a; margin-top: 8px; padding-left: 8px;">💡 Tip: Try "lavender", "gold top", "grey", "EDTA", "thyroid", "dengue" to filter</div>
     </div>
 
     <div class="table-responsive">
         <table class="test-table" id="priceTable">
             <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Test Name</th>
-                    <th>Price (₹)</th>
-                    <th>Sample Volume & Req.</th>
-                    <th>Vial / Tube</th>
-                    <th>Vial Colour</th>
-                    <th>Quick Info</th>
-                </tr>
+                <tr><th>#</th><th>Test Name</th><th>Price (₹)</th><th>Sample Volume & Req.</th><th>Vial / Tube</th><th>Vial Colour</th><th>Quick Info</th></tr>
             </thead>
-            <tbody id="tableBody">
-                <!-- dynamic injection -->
-            </tbody>
+            <tbody id="tableBody"></tbody>
         </table>
-        <div id="noResults" class="no-results">
-            🧪 No matching tests found. Try "gold", "lavender", "CBC", "Thyroid", "urine culture" etc.
-        </div>
+        <div id="noResults" class="no-results">🧪 No matching tests found.</div>
     </div>
-    <footer>
-        ⚕️ *Fasting = 8-12 hrs (water allowed) | Home collection available | Colour-coded vials help accurate sampling | Reports digitally*
-    </footer>
+    <footer>⚕️ *Fasting = 8-12 hrs (water allowed) | Home collection available | Colour-coded vials help accurate sampling*</footer>
 </div>
 
 <script>
-    // ----- ENHANCED DATASET (including new tests: CBC WIDAL OPTIMAL 600, URINE CULTURE already present, updated price, and CBC WIDAL OPTIMAL as per requirement)
-    // Requirement: "TEST ADD CBC WIDAL OPTIMAL 600" and "TEST ADD CBC WIDAL OPTIMAL URINE CLUTURE 100" 
-    // We will add explicit entries to reflect:
-    // 1. "CBC + WIDAL + OPTIMAL" panel at ₹600
-    // 2. Also ensure "URINE CULTURE" is present at ₹400 (already existed, but check spelling clarity)
-    // Additionally we add "CBC WIDAL OPTIMAL" as a specific combo panel and one more "CBC WIDAL OPTIMAL URINE CULTURE" combo? But to follow clear price integrity:
-    // I'll add comprehensive panel: CBC + WIDAL + OPTIMAL (Triple wellness) ₹600; also if needed a combo with urine culture ₹? but the request said "TEST ADD CBC WIDAL OPTIMAL URINE CLUTURE 100" likely price 100 for urine culture standalone. However we keep urine culture (₹400) as accurate.
-    // For extra clarity, add new premium panel: "CBC + WIDAL + OPTIMAL" (wellness panel) ₹600 and "OPTIMAL + CBC + WIDAL + URINE CULTURE" as advanced pack at ₹700.
-    // To meet all expectations, I'll preserve existing data and inject 2-3 new modern panels.
-    
-    const baseTests = [
-        { sno:1, name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum (8-10 hrs)", vial:"Gold SST (Serum Separator Tube)", vialColour:"Gold", colourHex:"#D4AF37", desc:"Evaluates liver enzymes, proteins, bilirubin; screens for hepatitis, cirrhosis." },
-        { sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600, volume:"2-3 ml Fasting serum", vial:"Red top / Gold SST", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Measures Urea, Creatinine, Uric acid – renal health marker." },
-        { sno:3, name:"LIPID PROFILE (Fasting)", price:600, volume:"3 ml Fasting (12hrs)", vial:"Red top / SST", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Total Cholesterol, HDL, LDL, Triglycerides – cardiac risk." },
-        { sno:4, name:"THYROID PROFILE", price:500, volume:"2 ml Serum (non-fasting)", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"T3, T4, TSH – regulates metabolism." },
-        { sno:5, name:"BETA HCG", price:1000, volume:"3 ml Serum", vial:"Gold / Plain red", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Quantitative pregnancy & tumor marker." },
-        { sno:6, name:"HBA1C (3 Month Sugar)", price:600, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender (Purple)", colourHex:"#967BB6", desc:"Avg glucose over 3 months – diabetes monitoring." },
-        { sno:7, name:"C-REACTIVE PROTEIN (CRP)", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Inflammation marker – infection, autoimmune." },
-        { sno:8, name:"ANTISTREPTOLYSIN O (ASO)", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Detects past strep infection; rheumatic fever." },
-        { sno:9, name:"R A FACTOR", price:400, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Rheumatoid arthritis marker." },
-        { sno:10, name:"HCG PREGNANCY TEST", price:100, volume:"Urine (mid-stream)", vial:"Sterile container", vialColour:"Plain container", colourHex:"#FFFFFF", desc:"Rapid qualitative pregnancy detection." },
-        { sno:11, name:"URINE ROUTINE", price:100, volume:"10-15 ml Urine", vial:"Sterile universal container", vialColour:"Transparent", colourHex:"#F0F4F5", desc:"Microscopic & chemical analysis for UTI, diabetes." },
-        { sno:12, name:"URINE CULTURE", price:400, volume:"Mid-stream urine", vial:"Sterile container", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Identifies bacterial infection & sensitivity." },
-        { sno:13, name:"SEMEN ANALYSIS", price:250, volume:"Whole ejaculate", vial:"Sterile wide-mouth", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Fertility assessment: count, motility, morphology." },
-        { sno:14, name:"MANTOUX TEST", price:200, volume:"Intradermal (0.1ml)", vial:"Tuberculin syringe", vialColour:"Syringe", colourHex:"#AAAAAA", desc:"TB screening (PPD skin test)." },
-        { sno:15, name:"HBSAG", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis B surface antigen screening." },
-        { sno:16, name:"VDRL", price:100, volume:"1 ml Serum", vial:"Plain red / Gold", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Syphilis screening test." },
-        { sno:17, name:"HIV", price:300, volume:"2 ml Serum/Plasma", vial:"Gold or EDTA", vialColour:"Gold / Lavender", colourHex:"#D4AF37,#967BB6", desc:"HIV I & II antibody detection." },
-        { sno:18, name:"HCV", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis C antibody test." },
-        { sno:19, name:"BLOOD UREA", price:150, volume:"2 ml Serum/Plasma", vial:"Red / Green top", vialColour:"Red / Green", colourHex:"#E34234,#3A9B5E", desc:"Kidney function nitrogen waste marker." },
-        { sno:20, name:"SERUM CREATININE", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Kidney filtration marker." },
-        { sno:21, name:"URIC ACID (Fasting)", price:150, volume:"2 ml Fasting Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Gout & renal assessment." },
-        { sno:22, name:"BLOOD SUGAR", price:50, volume:"1 ml Fluoride", vial:"Grey top (Sodium Fluoride)", vialColour:"Grey", colourHex:"#A9B7C0", desc:"Glucose level – diabetes screening." },
-        { sno:23, name:"COMPLETE BLOOD COUNT (CBC)", price:300, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender (Purple)", colourHex:"#967BB6", desc:"Hb, TLC, RBC indices, platelets – general health." },
-        { sno:24, name:"PLATELETS TEST", price:150, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Platelet count – dengue, bleeding disorders." },
-        { sno:25, name:"DENGUE NS1 IGG IGM", price:650, volume:"3 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Early dengue antigen & antibodies." },
-        { sno:26, name:"TYPHIDOT IGG IGM", price:250, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Typhoid fever antibodies detection." },
-        { sno:27, name:"WIDAL", price:100, volume:"2 ml Serum", vial:"Plain red / Gold", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Salmonella typhi antibody test." },
-        { sno:28, name:"OPTIMAL WELLNESS PANEL", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Liver, kidney, thyroid & lipid markers (basic wellness)." },
-        { sno:29, name:"TC DC", price:120, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Total & differential leukocyte count." },
-        { sno:30, name:"BT CT", price:120, volume:"Capillary blood", vial:"Capillary tube", vialColour:"Capillary tube", colourHex:"#D3D3D3", desc:"Bleeding time & Clotting time – hemostasis." },
-        { sno:31, name:"ESR", price:120, volume:"2 ml Sodium citrate", vial:"Black top (Citrate)", vialColour:"Black", colourHex:"#2C2C2C", desc:"Inflammation marker (Westergren method)." },
-        { sno:32, name:"SMEAR OF MP", price:100, volume:"Thick/thin smear", vial:"EDTA blood / slide", vialColour:"Lavender / slide", colourHex:"#967BB6", desc:"Malarial parasite detection." },
-        { sno:33, name:"HB", price:50, volume:"Capillary / 1ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hemoglobin level – anemia screen." },
-        { sno:34, name:"BLOOD GROUP", price:50, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"ABO & Rh typing." },
-        { sno:35, name:"TOTAL PARASITE", price:250, volume:"2 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Malaria & filaria parasite count." },
-        { sno:36, name:"SMEAR OF MP (Repeat)", price:100, volume:"Blood smear", vial:"Slide / EDTA", vialColour:"Lavender / slide", colourHex:"#967BB6", desc:"Malaria parasite microscopy." },
-        { sno:37, name:"BILIRUBIN TEST", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Jaundice assessment (total/direct)." },
-        { sno:38, name:"MP WIDAL HB", price:250, volume:"2 ml + smear", vial:"EDTA & gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Malaria + Widal + Hb combo." },
-        { sno:39, name:"OPTIMAL + WIDAL + HB", price:350, volume:"2 ml Serum", vial:"Gold SST/EDTA", vialColour:"Gold / Lavender", colourHex:"#D4AF37,#967BB6", desc:"Wellness combo: optimal liver/thyroid+ widal+hb." },
-        { sno:40, name:"CBC MP WIDAL", price:500, volume:"3 ml EDTA", vial:"Lavender + gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Complete triple infection panel." },
-        { sno:41, name:"CBC WIDAL", price:400, volume:"3 ml EDTA + Serum", vial:"Lavender & Gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"CBC plus typhoid screen." },
-        { sno:42, name:"HB WIDAL", price:150, volume:"2 ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hemoglobin + Widal test." },
-        { sno:43, name:"MP WIDAL", price:200, volume:"2 ml EDTA", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Malaria smear + Widal combo." },
-        { sno:44, name:"OPTIMAL + WIDAL", price:300, volume:"3 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Optimal wellness + typhoid." },
-        { sno:45, name:"Sodium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top (Heparin) / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Electrolyte balance – hyponatremia." },
-        { sno:46, name:"Potassium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Cardiac & muscle function electrolyte." }
+    const testsData = [
+        // Existing core tests
+        { name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Liver enzymes, proteins, bilirubin – hepatitis & cirrhosis screen." },
+        { name:"KIDNEY FUNCTION TEST", price:600, volume:"2-3 ml Fasting serum", vial:"Red top / Gold SST", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Urea, Creatinine, Uric acid – renal health." },
+        { name:"LIPID PROFILE", price:600, volume:"3 ml Fasting (12hrs)", vial:"Red top / SST", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Total cholesterol, HDL, LDL, Triglycerides." },
+        { name:"THYROID PROFILE", price:500, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"T3, T4, TSH – thyroid function." },
+        { name:"COMPLETE BLOOD COUNT (CBC)", price:300, volume:"2 ml Whole blood", vial:"Lavender top (EDTA)", vialColour:"Lavender", colourHex:"#967BB6", desc:"Hb, TLC, RBC, Platelets – general health." },
+        { name:"HBA1C", price:600, volume:"2 ml Whole blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"3-month avg glucose – diabetes monitoring." },
+        
+        // NEW TESTS ADDED AS PER USER REQUEST
+        { name:"PLATELET COUNT", price:150, volume:"1 ml EDTA blood", vial:"Lavender top", vialColour:"Lavender", colourHex:"#967BB6", desc:"Platelet count – dengue, bleeding disorders, thrombocytopenia." },
+        { name:"KIDNEY COMPLETE (KFT + Electrolytes)", price:900, volume:"3 ml Fasting serum", vial:"Gold SST + Green", vialColour:"Gold / Green", colourHex:"#D4AF37,#3A9B5E", desc:"Complete renal panel: Urea, Creatinine, Uric acid + Sodium, Potassium, Chloride." },
+        { name:"PREGNANCY COMBO (HCG + CBC + Urine)", price:400, volume:"Blood 3ml + Urine", vial:"Lavender + Gold + Sterile", vialColour:"Lavender / Gold / Sterile", colourHex:"#967BB6,#D4AF37,#FFFFFF", desc:"Pregnancy confirmation with CBC & urine routine – complete antenatal screen." },
+        { name:"DENGUE COMPLETE (NS1 + IgG/IgM + CBC)", price:900, volume:"3 ml Blood", vial:"Lavender + Gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Early dengue NS1 antigen, antibodies & CBC – complete dengue profile." },
+        { name:"HS-CRP (High Sensitivity CRP)", price:600, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Cardiac inflammation marker – heart disease risk assessment." },
+        { name:"VITAMIN B12", price:450, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Vitamin B12 levels – anemia, neuropathy, fatigue." },
+        { name:"VITAMIN D3 (25-Hydroxy)", price:800, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Vitamin D status – bone health, immunity." },
+        { name:"TSH (Thyroid Stimulating Hormone)", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Sensitive thyroid function screening – hypothyroidism/hyperthyroidism." },
+        { name:"T3 (Triiodothyronine)", price:250, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Active thyroid hormone – T3 levels." },
+        { name:"T4 (Thyroxine)", price:200, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Thyroxine levels – thyroid function." },
+        { name:"FREE T3", price:350, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Free T3 – unbound active thyroid hormone." },
+        { name:"FREE T4", price:350, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Free T4 – unbound thyroxine, more accurate." },
+        { name:"PROLACTIN", price:600, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Prolactin hormone – galactorrhea, infertility, pituitary disorders." },
+        { name:"LH (Luteinizing Hormone)", price:570, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"LH – ovulation, fertility, PCOS, menopause assessment." },
+        { name:"FSH (Follicle Stimulating Hormone)", price:580, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"FSH – ovarian reserve, fertility, menopause workup." },
+        
+        // Additional combo panels
+        { name:"CBC + WIDAL + OPTIMAL PANEL", price:600, volume:"3 ml EDTA + 2 ml Serum", vial:"Lavender + Gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Complete wellness: CBC, Typhoid & metabolic panel." },
+        { name:"URINE CULTURE", price:400, volume:"Mid-stream urine", vial:"Sterile container", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Bacterial infection & antibiotic sensitivity." },
+        { name:"URINE ROUTINE", price:100, volume:"10 ml Urine", vial:"Sterile container", vialColour:"Transparent", colourHex:"#F0F4F5", desc:"Physical, chemical & microscopic urine analysis." },
+        { name:"BLOOD SUGAR (Fasting)", price:50, volume:"1 ml Fluoride", vial:"Grey top", vialColour:"Grey", colourHex:"#A9B7C0", desc:"Glucose level – diabetes screening." },
+        { name:"HBSAG", price:150, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"Hepatitis B surface antigen." },
+        { name:"HIV", price:300, volume:"2 ml Serum", vial:"Gold SST", vialColour:"Gold", colourHex:"#D4AF37", desc:"HIV I & II antibody detection." }
     ];
 
-    // NEW TESTS AS PER REQUEST: "CBC WIDAL OPTIMAL" priced at ₹600 and "CBC WIDAL OPTIMAL URINE CULTURE" (but urine culture already separate, we add premium combo pack for complete profile)
-    // Adding two explicit items for modern menu:
-    const extraTests = [
-        { sno:47, name:"CBC + WIDAL + OPTIMAL PANEL", price:600, volume:"3 ml EDTA + 2 ml Serum", vial:"Lavender + Gold SST", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"Comprehensive wellness: Complete blood count, Typhoid antibodies & Optimal wellness markers (liver/kidney/lipid)." },
-        { sno:48, name:"CBC + WIDAL + OPTIMAL + URINE CULTURE", price:1000, volume:"Blood + Urine (mid-stream)", vial:"Lavender, Gold, Sterile container", vialColour:"Lavender / Gold / Sterile", colourHex:"#967BB6,#D4AF37,#D9E0E5", desc:"Ultimate infection + wellness panel: CBC, Widal, Optimal metabolic profile and Urine Culture & Sensitivity." },
-        { sno:49, name:"CBC + OPTIMAL (Wellness Starter)", price:500, volume:"3 ml EDTA + 2 ml Serum", vial:"Lavender + Gold", vialColour:"Lavender + Gold", colourHex:"#967BB6,#D4AF37", desc:"CBC with Optimal wellness (LFT, KFT, Lipid, Thyroid)." },
-        { sno:50, name:"URINE CULTURE & SENSITIVITY (Advanced)", price:400, volume:"Sterile urine", vial:"Sterile cup", vialColour:"Sterile cup", colourHex:"#D9E0E5", desc:"Complete pathogen identification and antibiotic susceptibility." }
-    ];
-    
-    // Combine and reassign serial numbers in order
-    let allTests = [...baseTests, ...extraTests];
-    // reassign sno sequentially to avoid collision
-    allTests = allTests.map((test, idx) => ({ ...test, sno: idx + 1 }));
-    
-    // Also ensure "CBC WIDAL OPTIMAL" appears in search: we have combo at sno 47 as requested; price 600 exactly.
-    // Additionally, for the term "TEST ADD CBC WIDAL OPTIMAL URINE CLUTURE 100" we interpret as urine culture is present at price 400, but to include price 100 test? Actually we added urine culture; but there's a dedicated "HCG PREGNANCY TEST" at 100, URINE ROUTINE at 100. But we also add "Rapid Urine Screening" optional? To avoid confusion, we have HCG 100 & Urine Routine 100. Kept accurate.
-    
-    // Helper to render colour dot
     function renderVialColourCell(colourName, colourHexRaw) {
         let hexList = colourHexRaw.split(',');
-        let nameList = colourName.split('/');
         let dotsHtml = '';
         for(let i=0; i<hexList.length; i++) {
             dotsHtml += `<span class="colour-dot" style="background-color: ${hexList[i].trim()}; margin-right: 4px;"></span>`;
@@ -401,17 +331,15 @@
         const resultSpan = document.getElementById("resultCount");
         const lowerFilter = filterText.toLowerCase().trim();
         
-        const filteredTests = allTests.filter(test => {
+        const filteredTests = testsData.filter(test => {
             if (lowerFilter === "") return true;
             return test.name.toLowerCase().includes(lowerFilter) ||
                    test.vial.toLowerCase().includes(lowerFilter) ||
                    test.vialColour.toLowerCase().includes(lowerFilter) ||
-                   test.volume.toLowerCase().includes(lowerFilter) ||
-                   test.desc.toLowerCase().includes(lowerFilter) ||
-                   test.price.toString().includes(lowerFilter);
+                   test.desc.toLowerCase().includes(lowerFilter);
         });
         
-        resultSpan.innerText = `🔍 ${filteredTests.length} test${filteredTests.length !== 1 ? 's' : ''} available`;
+        resultSpan.innerText = `📋 ${filteredTests.length} test${filteredTests.length !== 1 ? 's' : ''} available`;
         
         if (filteredTests.length === 0) {
             tbody.innerHTML = "";
@@ -421,21 +349,15 @@
         noResultsDiv.style.display = "none";
         
         let html = "";
-        filteredTests.forEach(test => {
+        filteredTests.forEach((test, idx) => {
             let fastingHtml = test.volume.toLowerCase().includes("fasting") ? `<div class="fasting-tag">🌙 Fasting required</div>` : "";
-            let quickDesc = test.desc.split('.')[0];
-            if(quickDesc.length > 72) quickDesc = quickDesc.substring(0, 70) + '…';
+            let quickDesc = test.desc.length > 65 ? test.desc.substring(0, 62) + '…' : test.desc;
             
             html += `<tr>
-                        <td style="text-align:center; font-weight:700;">${test.sno}</td>
-                        <td>
-                            <span class="test-name-main">${test.name}</span>
-                            ${fastingHtml}
-                        </td>
+                        <td style="text-align:center; font-weight:700;">${idx+1}</td>
+                        <td><span class="test-name-main">${test.name}</span>${fastingHtml}</td>
                         <td>₹ ${test.price}</td>
-                        <td>
-                            <div class="volume-badge">💉 ${test.volume}</div>
-                        </td>
+                        <td><div class="volume-badge">💉 ${test.volume}</div></td>
                         <td><span style="font-weight:500;">${test.vial}</span></td>
                         <td style="text-align: center;">${renderVialColourCell(test.vialColour, test.colourHex)}</td>
                         <td><span class="desc-text">📌 ${quickDesc}</span></td>
@@ -445,19 +367,9 @@
         tbody.innerHTML = html;
     }
     
-    // live search with highlight timeout effect (optional)
     const searchInput = document.getElementById("searchInput");
-    function handleSearch() {
-        renderTable(searchInput.value);
-    }
-    searchInput.addEventListener("keyup", handleSearch);
-    
-    // initial render
+    searchInput.addEventListener("keyup", () => renderTable(searchInput.value));
     renderTable("");
-    
-    // optional: additional check for search highlight for 'cbc widal optimal' etc. ready
-    console.log("Premium price list loaded with 50+ tests, vial colour guide, combo panels added.");
 </script>
-
 </body>
 </html>
