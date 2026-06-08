@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab - Universal Booking | Mobile Optional</title>
+<title>Rajan Path Lab - Universal Booking | Live Time with Seconds & AM/PM</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -341,6 +341,26 @@ input:focus, select:focus, textarea:focus {
     color: #0F5B8C;
 }
 
+.live-time-badge {
+    background: #e8f5e9;
+    border-left: 3px solid #2e7d32;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    margin-top: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.datetime-readonly {
+    background: #f5f9ff;
+    font-family: monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0a3f66;
+}
+
 @media (max-width: 900px) {
     .form-grid-2cols {
         grid-template-columns: 1fr;
@@ -382,7 +402,7 @@ input:focus, select:focus, textarea:focus {
 <section class="hero">
     <h1>🔬 RAJAN PATH LAB</h1>
     <h2>Trusted Diagnostics • Accurate Results • Digital Reports</h2>
-    <p>💰 Auto Payment | Live Current Time | Mobile Optional</p>
+    <p>⏰ Live Auto Time (Seconds & AM/PM) | Mobile Optional | Instant Booking</p>
 </section>
 
 <div class="container">
@@ -452,8 +472,11 @@ input:focus, select:focus, textarea:focus {
                 </div>
                 <div class="form-group">
                     <label>Test / Sample Date & Time <span style="color:#e74c3c;">*</span></label>
-                    <input type="datetime-local" id="datetime" step="1">
-                    <div class="payment-hint"><i class="fas fa-clock"></i> Auto-filled with current time</div>
+                    <input type="text" id="datetimeDisplay" readonly class="datetime-readonly" style="background:#f0f7ff; font-weight:600;">
+                    <div class="live-time-badge">
+                        <i class="fas fa-clock" style="color:#2e7d32;"></i> 
+                        <span id="liveTimeLabel">Updating live time...</span>
+                    </div>
                 </div>
             </div>
 
@@ -486,7 +509,7 @@ input:focus, select:focus, textarea:focus {
                 <i class="fab fa-whatsapp fa-lg"></i> 📄 Send Booking & Report Request
             </button>
             <div class="reset-note">
-                <i class="fas fa-sync-alt"></i> Page refresh resets all fields | Mobile number is OPTIONAL
+                <i class="fas fa-sync-alt"></i> Live time auto-updates with Seconds & AM/PM | Mobile optional
             </div>
         </form>
     </div>
@@ -671,26 +694,56 @@ function getTotalAmount() {
     return selectedTests.reduce((sum, t) => sum + t.price, 0);
 }
 
-// NEW: Only Name and DateTime are mandatory. Mobile is OPTIONAL.
+// LIVE TIME WITH SECONDS & AM/PM
+let currentDateTime = "";
+
+function updateLiveDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 12-hour format
+    const hours12 = String(hours).padStart(2, '0');
+    
+    const formattedTime = `${day}/${month}/${year} • ${hours12}:${minutes}:${seconds} ${ampm}`;
+    currentDateTime = `${year}-${month}-${day} at ${hours12}:${minutes}:${seconds} ${ampm}`;
+    
+    const displayField = document.getElementById('datetimeDisplay');
+    const liveLabel = document.getElementById('liveTimeLabel');
+    
+    if (displayField) {
+        displayField.value = formattedTime;
+    }
+    if (liveLabel) {
+        liveLabel.innerHTML = `<i class="fas fa-hourglass-half"></i> Live: ${hours12}:${minutes}:${seconds} ${ampm}`;
+    }
+}
+
+// Update every second
+setInterval(updateLiveDateTime, 1000);
+updateLiveDateTime();
+
+// Validation - Only Name required, DateTime is auto-filled
 function validateMandatoryFields() {
     const name = document.getElementById('name').value.trim();
-    const datetime = document.getElementById('datetime').value;
     
     if (!name) {
         alert("👤 Patient Name is required.");
         return false;
     }
-    if (!datetime) {
-        alert("⏰ Test / Sample Date & Time is REQUIRED. Please select date and time.");
-        return false;
-    }
     return true;
 }
 
-// UNIVERSAL WHATSAPP MESSAGE with current date-time (mobile optional)
+// Send WhatsApp message with live timestamp
 function sendFormattedWhatsApp() {
     if (!validateMandatoryFields()) {
-        alert("❌ Booking cannot be sent: Patient Name and Sample Date/Time are mandatory.\nMobile number is optional.");
+        alert("❌ Please enter Patient Name to proceed. Mobile number is optional.");
         return;
     }
     
@@ -699,8 +752,7 @@ function sendFormattedWhatsApp() {
     let mobile = document.getElementById('mobile').value.trim();
     const address = document.getElementById('address').value.trim() || "-";
     const referred = getReferredBy();
-    let rawDateTime = document.getElementById('datetime').value;
-    let formattedDateTime = rawDateTime ? rawDateTime.replace('T', ' at ') : "Not specified";
+    const sampleDateTime = currentDateTime; // Live timestamp with seconds & AM/PM
     
     let paid = document.getElementById('paid').value || "0";
     let due = document.getElementById('due').value || "0";
@@ -711,7 +763,7 @@ function sendFormattedWhatsApp() {
     // If mobile is empty, show as "Not provided"
     const mobileDisplay = mobile ? mobile : "Not provided";
     
-    // UNIVERSAL FORMAT - works on all devices
+    // UNIVERSAL WHATSAPP FORMAT
     let message = "";
     message += "🔬 RAJAN PATH LAB\n";
     message += "Diagnostic Booking Confirmation & Report Request\n";
@@ -720,7 +772,7 @@ function sendFormattedWhatsApp() {
     message += "👤 Patient Name: " + name + "\n";
     message += "🎂 Age: " + age + " Years\n";
     message += "👨‍⚕️ Referred By: " + referred + "\n";
-    message += "📅 Sample Date & Time: " + formattedDateTime + "\n";
+    message += "📅 Sample Date & Time: " + sampleDateTime + "\n";
     message += "📱 Mobile: " + mobileDisplay + "\n";
     message += "📍 Address: " + address + "\n";
     message += "━━━━━━━━━━━━━━━━━━━━━━━\n";
@@ -772,16 +824,6 @@ function resetFormToEmpty() {
     document.getElementById('refbyOther').value = '';
     document.getElementById('paid').value = '0';
     
-    // SET CURRENT DATE & TIME (LIVE - exact current hour & minute)
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const defaultDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
-    document.getElementById('datetime').value = defaultDateTime;
-    
     if (refbySelect) refbySelect.value = "";
     
     selectedTests = [];
@@ -795,12 +837,16 @@ function resetFormToEmpty() {
     
     const dueField = document.getElementById('due');
     if (dueField) dueField.value = '0';
+    
+    // Live time continues to update automatically
+    updateLiveDateTime();
 }
 
 window.addEventListener('DOMContentLoaded', () => {
     resetFormToEmpty();
     generateSmallQR();
     autoCalculateDue();
+    updateLiveDateTime();
 });
 </script>
 </body>
