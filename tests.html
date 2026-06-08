@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Rajan Path Lab | Premium Diagnostic Price List with Vial Colour Guide</title>
+    <title>Rajan Path Lab | Premium Diagnostics — Vial Colour Guide & Price List</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            background: linear-gradient(145deg, #eef2f5 0%, #e0e9ed 100%);
+            background: linear-gradient(145deg, #eef2f5 0%, #dee7ed 100%);
             font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Roboto', sans-serif;
             padding: 2rem 1.5rem;
         }
@@ -23,15 +23,15 @@
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.98);
             border-radius: 2rem;
-            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 28px 50px -15px rgba(0, 0, 0, 0.3), 0 4px 18px rgba(0, 0, 0, 0.08);
             overflow: hidden;
             transition: all 0.2s;
         }
 
         /* header with rich gradient */
         .header {
-            background: linear-gradient(135deg, #0a3b4b 0%, #116b7c 100%);
-            padding: 2rem 2rem 1.8rem 2rem;
+            background: linear-gradient(135deg, #083c4a 0%, #0f5e6e 100%);
+            padding: 2rem 2rem 1.6rem 2rem;
             text-align: center;
             border-bottom: 4px solid #f5c842;
         }
@@ -46,9 +46,9 @@
 
         .header h1 span {
             font-weight: 500;
-            font-size: 1.1rem;
+            font-size: 1rem;
             background: #f5c842;
-            color: #0a3b4b;
+            color: #083c4a;
             padding: 0.2rem 1rem;
             border-radius: 40px;
             display: inline-block;
@@ -58,7 +58,7 @@
 
         .header p {
             color: #d9f0f5;
-            margin-top: 10px;
+            margin-top: 8px;
             font-weight: 500;
         }
 
@@ -73,9 +73,9 @@
             backdrop-filter: blur(2px);
         }
 
-        /* search toolbar */
+        /* dual action toolbar + add test panel */
         .toolbar {
-            padding: 1.5rem 2rem 1rem 2rem;
+            padding: 1.2rem 2rem 0.8rem 2rem;
             background: white;
             border-bottom: 1px solid #dee9ef;
         }
@@ -85,7 +85,7 @@
             flex-wrap: wrap;
             gap: 12px;
             align-items: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .search-input {
@@ -112,6 +112,94 @@
             font-size: 0.85rem;
             font-weight: 700;
             color: #0f4c5c;
+        }
+
+        /* add test card  — professional, compact yet fully functional */
+        .add-test-panel {
+            background: #f8fafc;
+            border-radius: 28px;
+            padding: 1.2rem 1.5rem;
+            margin-top: 0.2rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #dce8ef;
+            transition: all 0.2s;
+        }
+
+        .add-test-title {
+            font-weight: 800;
+            color: #0a4b5c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .add-test-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: flex-end;
+        }
+
+        .input-group {
+            flex: 1 1 160px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .input-group label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #2e6f7e;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input, .input-group select {
+            padding: 10px 12px;
+            border-radius: 20px;
+            border: 1.5px solid #cbdde3;
+            background: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: #0f5e6e;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(15,94,110,0.2);
+        }
+
+        .btn-add {
+            background: linear-gradient(105deg, #0f5e6e, #0c4856);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 36px;
+            color: white;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-top: 6px;
+        }
+
+        .btn-add:hover {
+            background: linear-gradient(105deg, #0e7488, #0b5c6b);
+            transform: translateY(-1px);
+        }
+
+        .vial-sample {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #eef3f7;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
         }
 
         /* table design with colour coded vials */
@@ -155,13 +243,12 @@
             background-color: #fef9ef;
         }
 
-        /* column widths (optimized for vial color column) */
         .test-table th:nth-child(1) { width: 5%; text-align: center; }
-        .test-table th:nth-child(2) { width: 26%; }
+        .test-table th:nth-child(2) { width: 24%; }
         .test-table th:nth-child(3) { width: 10%; text-align: right; }
-        .test-table th:nth-child(4) { width: 16%; }
-        .test-table th:nth-child(5) { width: 16%; }
-        .test-table th:nth-child(6) { width: 12%; text-align: center; }
+        .test-table th:nth-child(4) { width: 14%; }
+        .test-table th:nth-child(5) { width: 18%; }
+        .test-table th:nth-child(6) { width: 14%; text-align: center; }
         .test-table th:nth-child(7) { width: 15%; }
 
         .test-table td:nth-child(3) {
@@ -171,28 +258,28 @@
             font-size: 1.05rem;
         }
 
-        /* VIAL COLOUR BADGE with actual color swatch */
+        /* VIAL COLOUR BADGE — SINGLE GLANCE PROFESSIONAL */
         .vial-colour-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             background: #f4f9fc;
-            padding: 5px 12px 5px 8px;
+            padding: 5px 14px 5px 10px;
             border-radius: 40px;
             font-weight: 600;
             font-size: 0.75rem;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         .colour-dot {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: inline-block;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
             border: 1px solid rgba(0,0,0,0.1);
         }
         .vial-text {
-            font-weight: 600;
+            font-weight: 700;
             color: #1a4c5e;
         }
 
@@ -256,6 +343,8 @@
             body { padding: 1rem; }
             .test-table th, .test-table td { padding: 12px 8px; font-size: 0.8rem; }
             .vial-colour-badge { font-size: 0.68rem; padding: 3px 8px; }
+            .add-test-grid { flex-direction: column; align-items: stretch; }
+            .btn-add { width: 100%; }
         }
     </style>
 </head>
@@ -265,15 +354,59 @@
     <div class="header">
         <h1>🔬 RAJAN PATH LAB <span>premium diagnostics</span></h1>
         <p>Precision Health · Advanced Technology · Transparent Pricing</p>
-        <div class="effective">✅ Revised Price List w.e.f. 01 January 2026 | Complete Vial Colour Guide</div>
+        <div class="effective">✅ Revised Price List w.e.f. 01 April 2026 | Single-glance Vial Colour System</div>
     </div>
 
     <div class="toolbar">
         <div class="search-wrapper">
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by test name, vial colour (lavender, gold, grey), or requirement...">
-            <div class="stat-badge" id="resultCount">📋 46+ tests available</div>
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search test, vial colour (lavender, gold, grey, black, green) or requirement...">
+            <div class="stat-badge" id="resultCount">📋 Loading tests...</div>
         </div>
-        <div style="font-size: 0.7rem; color: #6a8b9a; margin-top: 8px; padding-left: 8px;">💡 Tip: Try "lavender", "gold top", "grey", "EDTA" to filter by vial colour</div>
+
+        <!-- ADD TEST PANEL — PROFESSIONAL & EASY TO EXTEND -->
+        <div class="add-test-panel">
+            <div class="add-test-title">
+                <span>➕ ADD NEW TEST</span> 
+                <span style="font-size: 0.7rem; background:#e3eef2; padding:2px 10px; border-radius:30px;">dynamic extension</span>
+            </div>
+            <div class="add-test-grid">
+                <div class="input-group">
+                    <label>Test name</label>
+                    <input type="text" id="newTestName" placeholder="e.g., VITAMIN D, TOTAL">
+                </div>
+                <div class="input-group">
+                    <label>Price (₹)</label>
+                    <input type="number" id="newPrice" placeholder="1200">
+                </div>
+                <div class="input-group">
+                    <label>Volume / Req.</label>
+                    <input type="text" id="newVolume" placeholder="3 ml Serum">
+                </div>
+                <div class="input-group">
+                    <label>Vial / Tube</label>
+                    <input type="text" id="newVial" placeholder="Gold SST / Lavender EDTA">
+                </div>
+                <div class="input-group">
+                    <label>Vial Colour (name)</label>
+                    <select id="newVialColourSelect">
+                        <option value="Gold">Gold (SST)</option>
+                        <option value="Lavender (Purple)">Lavender (Purple) EDTA</option>
+                        <option value="Red">Red (Plain)</option>
+                        <option value="Grey">Grey (Fluoride)</option>
+                        <option value="Green">Green (Heparin)</option>
+                        <option value="Black">Black (Citrate ESR)</option>
+                        <option value="Sterile container">Sterile container</option>
+                        <option value="Lavender + Gold">Lavender + Gold</option>
+                        <option value="Green / Gold">Green / Gold</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Quick info (desc)</label>
+                    <input type="text" id="newDesc" placeholder="e.g., Vitamin D status, bone health">
+                </div>
+                <div class="btn-add" id="addTestBtn">➕ ADD & SAVE</div>
+            </div>
+        </div>
     </div>
 
     <div class="table-responsive">
@@ -290,21 +423,21 @@
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <!-- dynamic injection -->
+                <!-- dynamic render -->
             </tbody>
-        </table>
+         </table>
         <div id="noResults" class="no-results">
-            🧪 No matching tests found. Try "gold", "lavender", "CBC", "Thyroid" etc.
+            🧪 No matching tests found. Try different keyword or add a new test using the panel above.
         </div>
     </div>
     <footer>
-        ⚕️ *Fasting = 8-12 hrs (water allowed) | Home collection available | Colour-coded vials help accurate sampling | Reports digitally*
+        ⚕️ *Fasting = 8-12 hrs (water allowed) | Colour-coded vials ensure accurate sampling | Dynamic add-test with integrated vial guide*
     </footer>
 </div>
 
 <script>
-    // Enhanced dataset with vial colour field (explicit colour name & hex)
-    const testsData = [
+    // ---------- BASE DATA (46 original tests with full vial colours & hex) ----------
+    const baseTestsData = [
         { sno:1, name:"LIVER FUNCTION TEST", price:600, volume:"3-4 ml Fasting serum (8-10 hrs)", vial:"Gold SST (Serum Separator Tube)", vialColour:"Gold", colourHex:"#D4AF37", desc:"Evaluates liver enzymes, proteins, bilirubin; screens for hepatitis, cirrhosis." },
         { sno:2, name:"KIDNEY FUNCTION TEST (Fasting)", price:600, volume:"2-3 ml Fasting serum", vial:"Red top / Gold SST", vialColour:"Gold / Red", colourHex:"#D4AF37,#E34234", desc:"Measures Urea, Creatinine, Uric acid – renal health marker." },
         { sno:3, name:"LIPID PROFILE (Fasting)", price:600, volume:"3 ml Fasting (12hrs)", vial:"Red top / SST", vialColour:"Red / Gold", colourHex:"#E34234,#D4AF37", desc:"Total Cholesterol, HDL, LDL, Triglycerides – cardiac risk." },
@@ -353,15 +486,41 @@
         { sno:46, name:"Potassium", price:200, volume:"1 ml Serum/Plasma", vial:"Green top / Gold", vialColour:"Green / Gold", colourHex:"#3A9B5E,#D4AF37", desc:"Cardiac & muscle function electrolyte." }
     ];
 
-    // Helper to render colour dot and name with multiple colours
-    function renderVialColourCell(colourName, colourHexRaw) {
-        let hexList = colourHexRaw.split(',');
-        let nameList = colourName.split('/');
-        let dotsHtml = '';
-        for(let i=0; i<hexList.length; i++) {
-            dotsHtml += `<span class="colour-dot" style="background-color: ${hexList[i].trim()}; margin-right: 4px;"></span>`;
+    // master list (will be mutated with new tests)
+    let masterTests = [...baseTestsData];
+
+    // mapping for colour hex based on vialColour string (to support dynamic new entries)
+    function getColourHexFromVialName(vialColourStr) {
+        const lower = vialColourStr.toLowerCase();
+        if (lower.includes("gold")) return "#D4AF37";
+        if (lower.includes("lavender") || lower.includes("purple")) return "#967BB6";
+        if (lower.includes("red")) return "#E34234";
+        if (lower.includes("grey")) return "#A9B7C0";
+        if (lower.includes("green")) return "#3A9B5E";
+        if (lower.includes("black")) return "#2C2C2C";
+        if (lower.includes("sterile") || lower.includes("container")) return "#D9E0E5";
+        if (lower.includes("transparent")) return "#F0F4F5";
+        return "#BBCCD5";  // neutral fallback
+    }
+
+    // Render vial colour badge (single dip / glance) 
+    function renderVialColourCell(vialColourName, optionalHex) {
+        let colourNames = vialColourName.split('/');
+        let hexString = "";
+        if (optionalHex && optionalHex !== "#") hexString = optionalHex;
+        else {
+            let hexParts = [];
+            for (let nm of colourNames) {
+                hexParts.push(getColourHexFromVialName(nm.trim()));
+            }
+            hexString = hexParts.join(',');
         }
-        return `<div class="vial-colour-badge">${dotsHtml}<span class="vial-text">${colourName}</span></div>`;
+        let hexList = hexString.split(',');
+        let dotsHtml = '';
+        for (let i = 0; i < hexList.length; i++) {
+            dotsHtml += `<span class="colour-dot" style="background-color: ${hexList[i].trim()}; margin-right: 5px;"></span>`;
+        }
+        return `<div class="vial-colour-badge">${dotsHtml}<span class="vial-text">${vialColourName}</span></div>`;
     }
 
     function renderTable(filterText = "") {
@@ -370,7 +529,7 @@
         const resultSpan = document.getElementById("resultCount");
         const lowerFilter = filterText.toLowerCase();
         
-        const filteredTests = testsData.filter(test => {
+        const filteredTests = masterTests.filter(test => {
             if (lowerFilter === "") return true;
             return test.name.toLowerCase().includes(lowerFilter) ||
                    test.vial.toLowerCase().includes(lowerFilter) ||
@@ -379,7 +538,7 @@
                    test.desc.toLowerCase().includes(lowerFilter);
         });
         
-        resultSpan.innerText = `🔍 ${filteredTests.length} test${filteredTests.length !== 1 ? 's' : ''} available`;
+        resultSpan.innerText = `📋 ${filteredTests.length} test${filteredTests.length !== 1 ? 's' : ''} available`;
         
         if (filteredTests.length === 0) {
             tbody.innerHTML = "";
@@ -390,11 +549,9 @@
         
         let html = "";
         filteredTests.forEach(test => {
-            // Fasting indicator
             let fastingHtml = test.volume.toLowerCase().includes("fasting") ? `<div class="fasting-tag">🌙 Fasting required</div>` : "";
-            // short description for quick info column
-            let quickDesc = test.desc.split('.')[0].substring(0, 65);
-            if(quickDesc.length < 5) quickDesc = test.desc.substring(0, 60);
+            let quickDesc = (test.desc || "Detailed report available.").split('.')[0];
+            if(quickDesc.length > 68) quickDesc = quickDesc.substring(0, 65)+'…';
             
             html += `<tr>
                         <td style="text-align:center; font-weight:700;">${test.sno}</td>
@@ -403,27 +560,65 @@
                             ${fastingHtml}
                         </td>
                         <td>₹ ${test.price}</td>
-                        <td>
-                            <div class="volume-badge">💉 ${test.volume}</div>
-                        </td>
+                        <td><div class="volume-badge">💉 ${test.volume}</div></td>
                         <td><span style="font-weight:500;">${test.vial}</span></td>
-                        <td style="text-align: center;">${renderVialColourCell(test.vialColour, test.colourHex)}</td>
-                        <td><span class="desc-text">📌 ${quickDesc}${quickDesc.length >= 60 ? '…' : ''}</span></td>
-                     </tr>`;
+                        <td style="text-align: center;">${renderVialColourCell(test.vialColour, test.colourHex || "")}</td>
+                        <td><span class="desc-text">📌 ${quickDesc}</span></td>
+                      </tr>`;
         });
-        
         tbody.innerHTML = html;
     }
-    
-    // live search
-    const searchInput = document.getElementById("searchInput");
-    function handleSearch() {
-        renderTable(searchInput.value);
-    }
-    searchInput.addEventListener("keyup", handleSearch);
-    renderTable("");
-</script>
 
-<!-- premium design with vial colour swatches, helping lab staff & patients understand requirements at a glance -->
-</body>
-</html>
+    // function to refresh SNos dynamically
+    function reindexAndRender() {
+        masterTests.forEach((test, idx) => { test.sno = idx + 1; });
+        const currentSearch = document.getElementById("searchInput").value;
+        renderTable(currentSearch);
+    }
+
+    // ADD NEW TEST (dynamic insertion) preserves original + new tests
+    function addNewTest() {
+        const name = document.getElementById("newTestName").value.trim();
+        const price = parseInt(document.getElementById("newPrice").value, 10);
+        const volume = document.getElementById("newVolume").value.trim();
+        const vial = document.getElementById("newVial").value.trim();
+        let vialColour = document.getElementById("newVialColourSelect").value;
+        const desc = document.getElementById("newDesc").value.trim();
+
+        if (!name || isNaN(price) || price <= 0 || !volume || !vial) {
+            alert("⚠️ Please fill all mandatory fields: Test Name, Price, Volume, Vial/Tube");
+            return;
+        }
+        if (!vialColour) vialColour = "Gold";
+        // construct colourHex based on selected vialColour
+        let colourHex = getColourHexFromVialName(vialColour);
+        // if multiple colours from select like "Lavender + Gold" -> custom multiple
+        if (vialColour.includes("+") || vialColour.includes("/")) {
+            let parts = vialColour.split(/[\+\/]+/).map(s => getColourHexFromVialName(s.trim()));
+            colourHex = parts.join(',');
+        } else {
+            colourHex = getColourHexFromVialName(vialColour);
+        }
+        const newTest = {
+            sno: masterTests.length + 1,
+            name: name.toUpperCase(),
+            price: price,
+            volume: volume,
+            vial: vial,
+            vialColour: vialColour,
+            colourHex: colourHex,
+            desc: desc || "Custom test added via lab manager"
+        };
+        masterTests.push(newTest);
+        // clear form
+        document.getElementById("newTestName").value = "";
+        document.getElementById("newPrice").value = "";
+        document.getElementById("newVolume").value = "";
+        document.getElementById("newVial").value = "";
+        document.getElementById("newDesc").value = "";
+        reindexAndRender();
+        // optional feedback
+        const searchInputDom = document.getElementById("searchInput");
+        searchInputDom.value = "";
+        renderTable("");
+    }
