@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Rajan Path Lab - Universal WhatsApp Format</title>
+<title>Rajan Path Lab - Universal Booking | Sample Date & Mobile Required</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -331,6 +331,24 @@ input:focus, select:focus, textarea:focus {
     padding-top: 10px;
 }
 
+.required-star {
+    color: #e74c3c;
+    margin-left: 3px;
+}
+
+.mobile-warning {
+    background: #fff1f0;
+    border-left: 4px solid #e74c3c;
+    padding: 8px 12px;
+    border-radius: 12px;
+    margin-top: 5px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #b33c2e;
+}
+
 @media (max-width: 900px) {
     .form-grid-2cols {
         grid-template-columns: 1fr;
@@ -372,7 +390,7 @@ input:focus, select:focus, textarea:focus {
 <section class="hero">
     <h1>🔬 RAJAN PATH LAB</h1>
     <h2>Trusted Diagnostics • Accurate Results • Digital Reports</h2>
-    <p>💰 Auto Payment | Same Format on Laptop & Mobile | No Broken Emojis</p>
+    <p>💰 Auto Payment | Sample Date & Mobile Mandatory | Universal WhatsApp Format</p>
 </section>
 
 <div class="container">
@@ -393,7 +411,7 @@ input:focus, select:focus, textarea:focus {
             <div class="section-title"><i class="fas fa-user-circle"></i> Patient Information</div>
             <div class="form-grid-2cols">
                 <div class="form-group">
-                    <label>Patient Name *</label>
+                    <label>Patient Name <span class="required-star">*</span></label>
                     <input type="text" id="name" placeholder="Full name">
                 </div>
                 <div class="form-group">
@@ -401,8 +419,11 @@ input:focus, select:focus, textarea:focus {
                     <input type="number" id="age" placeholder="Age">
                 </div>
                 <div class="form-group">
-                    <label>Mobile Number *</label>
+                    <label>Mobile Number <span class="required-star">*</span></label>
                     <input type="tel" id="mobile" placeholder="9876543210">
+                    <div class="mobile-warning" id="mobileWarning" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i> Mobile number is REQUIRED to proceed with booking.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Address</label>
@@ -441,8 +462,9 @@ input:focus, select:focus, textarea:focus {
                     <input type="text" id="refbyOther" placeholder="Or type other name" style="margin-top: 6px;">
                 </div>
                 <div class="form-group">
-                    <label>Test/Sample Date</label>
-                    <input type="date" id="date">
+                    <label>Test / Sample Date & Time <span class="required-star">*</span></label>
+                    <input type="datetime-local" id="datetime" step="1">
+                    <div class="payment-hint"><i class="fas fa-calendar-alt"></i> Required: Date & Time of sample collection</div>
                 </div>
             </div>
 
@@ -475,7 +497,7 @@ input:focus, select:focus, textarea:focus {
                 <i class="fab fa-whatsapp fa-lg"></i> 📄 Send Booking & Report Request
             </button>
             <div class="reset-note">
-                <i class="fas fa-sync-alt"></i> Page refresh = all fields cleared | Same format on ALL devices
+                <i class="fas fa-sync-alt"></i> Page refresh resets all fields | Mobile & Date/Time mandatory for booking
             </div>
         </form>
     </div>
@@ -660,50 +682,63 @@ function getTotalAmount() {
     return selectedTests.reduce((sum, t) => sum + t.price, 0);
 }
 
-// ============================================================
-// UNIVERSAL WHATSAPP MESSAGE - same format on laptop & mobile
-// Mobile number is REQUIRED & validated before sending message.
-// The system will NOT proceed without a valid mobile number.
-// ============================================================
+// Enhanced mobile & datetime validation
+function validateMandatoryFields() {
+    const mobile = document.getElementById('mobile').value.trim();
+    const datetime = document.getElementById('datetime').value;
+    const name = document.getElementById('name').value.trim();
+    const warningDiv = document.getElementById('mobileWarning');
+    
+    let isValid = true;
+    if (!mobile) {
+        warningDiv.style.display = 'flex';
+        isValid = false;
+    } else {
+        warningDiv.style.display = 'none';
+    }
+    if (!datetime) {
+        alert("⏰ Test / Sample Date & Time is REQUIRED. Please select date and time for sample collection.");
+        return false;
+    }
+    if (!name) {
+        alert("👤 Patient Name is required.");
+        return false;
+    }
+    const phoneRegex = /^[0-9]{10}$/;
+    if (mobile && !phoneRegex.test(mobile)) {
+        alert("📱 Please enter a valid 10-digit mobile number.");
+        return false;
+    }
+    return isValid;
+}
+
+// UNIVERSAL WHATSAPP MESSAGE with proper date-time formatting
 function sendFormattedWhatsApp() {
+    if (!validateMandatoryFields()) {
+        alert("❌ Booking cannot be sent: Mobile number and Sample Date/Time are mandatory.\nPlease fill all required fields.");
+        return;
+    }
+    
     const name = document.getElementById('name').value.trim();
     const age = document.getElementById('age').value || "-";
     let mobile = document.getElementById('mobile').value.trim();
     const address = document.getElementById('address').value.trim() || "-";
     const referred = getReferredBy();
-    const testDate = document.getElementById('date').value;
+    let rawDateTime = document.getElementById('datetime').value;
+    let formattedDateTime = rawDateTime ? rawDateTime.replace('T', ' • Time: ') : "Not specified";
+    if (formattedDateTime && formattedDateTime.includes('T')) {
+        formattedDateTime = formattedDateTime.replace('T', ' at ');
+    }
     let paid = document.getElementById('paid').value || "0";
     let due = document.getElementById('due').value || "0";
     const reportRequest = document.getElementById('reportRequest').checked;
     const testsText = getFormattedTestsForMessage();
     const totalVal = getTotalAmount();
     
-    // ---- CRITICAL VALIDATION: Mobile number is mandatory ----
-    if (!name) { 
-        alert("❌ Patient name is required"); 
-        return; 
-    }
-    if (!mobile) { 
-        alert("❌ Mobile Number is REQUIRED!\nPlease enter patient's mobile number to proceed.\nWithout mobile number, booking cannot be sent."); 
-        // Focus on mobile field for easy correction
-        document.getElementById('mobile').focus();
-        return; 
-    }
-    if (!testDate) { 
-        alert("❌ Please select test/sample date"); 
-        return; 
-    }
+    // Remove spaces
+    mobile = mobile.replace(/\s/g, '');
     
-    // Basic mobile validation (Indian number approx)
-    let cleanMobile = mobile.replace(/\D/g, '');
-    if (cleanMobile.length < 10) {
-        alert("❌ Please enter a valid 10-digit mobile number");
-        document.getElementById('mobile').focus();
-        return;
-    }
-    if (cleanMobile.length > 10) cleanMobile = cleanMobile.slice(-10);
-    
-    // UNIVERSAL MESSAGE FORMAT - Works exactly same on ALL devices
+    // UNIVERSAL FORMAT - works on all devices, includes sample datetime
     let message = "";
     message += "🔬 RAJAN PATH LAB\n";
     message += "Diagnostic Booking Confirmation & Report Request\n";
@@ -712,8 +747,8 @@ function sendFormattedWhatsApp() {
     message += "👤 Patient Name: " + name + "\n";
     message += "🎂 Age: " + age + " Years\n";
     message += "👨‍⚕️ Referred By: " + referred + "\n";
-    message += "📅 Sample/Test Date: " + testDate + "\n";
-    message += "📱 Mobile: " + cleanMobile + "\n";
+    message += "📅 Sample Date & Time: " + formattedDateTime + "\n";
+    message += "📱 Mobile: " + mobile + "\n";
     message += "📍 Address: " + address + "\n";
     message += "━━━━━━━━━━━━━━━━━━━━━━━\n";
     message += "🧪 Tests Booked\n";
@@ -734,7 +769,6 @@ function sendFormattedWhatsApp() {
     message += "🙏 Thank you for choosing RAJAN PATH LAB\n";
     message += "🏥 Accurate Diagnostics • Trusted Care • Fast Reporting";
     
-    // Proper encoding for WhatsApp
     const encodedMsg = encodeURIComponent(message);
     const waNumber = "918709946177";
     window.open(`https://wa.me/${waNumber}?text=${encodedMsg}`, '_blank');
@@ -765,8 +799,15 @@ function resetFormToEmpty() {
     document.getElementById('refbyOther').value = '';
     document.getElementById('paid').value = '0';
     
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('date').value = today;
+    // Set default date-time to current date + 10 AM default for better UX, but user must select ideally
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = "10";
+    const minutes = "00";
+    const defaultDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+    document.getElementById('datetime').value = defaultDateTime;
     
     if (refbySelect) refbySelect.value = "";
     
@@ -778,10 +819,20 @@ function resetFormToEmpty() {
     suggestionsDiv.style.display = 'none';
     
     document.getElementById('reportRequest').checked = true;
+    document.getElementById('mobileWarning').style.display = 'none';
     
     const dueField = document.getElementById('due');
     if (dueField) dueField.value = '0';
 }
+
+// Real-time mobile warning hide on typing
+document.getElementById('mobile').addEventListener('input', function() {
+    if (this.value.trim().length > 0) {
+        document.getElementById('mobileWarning').style.display = 'none';
+    } else {
+        document.getElementById('mobileWarning').style.display = 'flex';
+    }
+});
 
 window.addEventListener('DOMContentLoaded', () => {
     resetFormToEmpty();
