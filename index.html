@@ -2164,4 +2164,331 @@
     </script>
 
 </body>
-</html>
+</html><?php
+// api.php - Complete Backend for Rajan Path Lab
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(200); exit; }
+
+// ─── DATABASE ───
+$host = 'localhost';
+$dbname = 'rajan_path_lab';
+$user = 'root';
+$pass = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'error' => 'DB: ' . $e->getMessage()]);
+    exit;
+}
+
+function logActivity($action) {
+    global $pdo;
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    $user = $_SESSION['admin_user'] ?? 'admin';
+    $stmt = $pdo->prepare("INSERT INTO activity_log (admin_user, action, ip) VALUES (?, ?, ?)");
+    $stmt->execute([$user, $action, $ip]);
+}
+
+function sendResponse($data, $code = 200) {
+    http_response_code($code);
+    echo json_encode($data);
+    exit;
+}
+
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+$action = $_GET['action'] ?? '';
+
+// ─── AUTO-CREATE ADMIN ───
+try {
+    $stmt = $pdo->prepare("SELECT id FROM admins WHERE username = 'Rajan5530'");
+    $stmt->execute();
+    if (!$stmt->fetch()) {
+        $hash = password_hash('Rkchandra5530', PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)");
+        $stmt->execute(['Rajan5530', $hash]);
+    }
+} catch (Exception $e) { /* ignore */ }
+
+// ─── ROUTER ───
+switch ($action) {
+
+    case 'patients':
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method === 'GET') {
+            $search = $_GET['search'] ?? '';
+            $sql = "SELECT * FROM patients";
+            $params = [];
+            if ($search) {
+                $sql .= " WHERE name LIKE ? OR phone LIKE ? OR patient_id LIKE ?";
+                $params = ["%$search%", "%$search%", "%$search%"];
+            }
+            $sql .= " ORDER BY created_at DESC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            sendResponse(['success' => true, 'data' => $stmt->fetchAll()]);
+        }
+        if ($method === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $name = trim($data['name'] ?? '');
+            $phone = trim($data['phone'] ?? '');
+            $test = trim($data['test'] ?? '');
+            $status = $data['status'] ?? 'pending';
+            $due = floatval($data['due'] ?? 0);
+            if (empty($name) || empty($phone)) sendResponse(['success' => false, 'error' => 'Name and phone required'], 400);
+            $stmt = $pdo->query("SELECT MAX(CAST(SUBSTRING(patient_id,2) AS UNSIGNED)) as max_id FROM patients");
+            $row = $stmt->fetch();
+            $nextId = ($row['max_id'] ?? 0) + 1;
+            $patientId = 'P' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+            $sql = "INSERT INTO patients (patient_id, name, phone, test, status, due_amount) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            if ($stmt->execute([$patientId, $name, $phone, $test, $status, $due])) {
+                logActivity("Added patient $patientId");
+                sendResponse(['success' => true, 'patient_id' => $patientId]);
+            }
+            sendResponse(['success' => false, 'error' => 'Insert failed'], 500);
+        }
+        if ($method === 'DELETE') {
+            $id = $_GET['id'] ?? '';
+            if (!$id) sendResponse(['success' => false, 'error' => 'ID required'], 400);
+            $stmt = $pdo->prepare("DELETE FROM patients WHERE patient_id = ?");
+            if ($stmt->execute([$id])) { logActivity("Deleted patient $id"); sendResponse(['success' => true]); }
+            sendResponse(['success' => false, 'error' => 'Delete failed'], 500);
+        }
+        break;
+
+    case 'reports':
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method === 'GET') {
+            // Download by ID
+            if (isset($_GET['action']) && $_GET['action'] === 'download' && isset($_GET['id'])) {
+                $id = intval($_GET['id']);
+                $stmt = $pdo->prepare("SELECT file_path FROM reports WHERE id = ?");
+                $stmt->execute([$id]);
+                $row = $stmt->fetch();
+                if ($row) {
+                    $file = basename($row['file_path']);
+                    $path = __DIR__ . '/uploads/' . $file;
+                    if (file_exists($path)) {
+                        header('Content-Type: application/pdf');
+                        header('Content-Disposition: attachment; filename="' . $file . '"');
+                        readfile($path);
+                        exit;
+                    }
+                }
+                sendResponse(['success' => false, 'error' => 'File not found'], 404);
+            }
+            // List reports (optionally filter by patient_id)
+            $patient_id = $_GET['patient_id'] ?? '';
+            $sql = "SELECT r.*, p.name FROM reports r JOIN patients p ON r.patient_id = p.patient_id";
+            if ($patient_id) $sql .= " WHERE r.patient_id = ?";
+            $sql .= " ORDER BY uploaded_at DESC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($patient_id ? [$patient_id] : []);
+            sendResponse(['success' => true, 'data' => $stmt->fetchAll()]);
+        }
+        if ($method === 'POST') {
+            $patientId = $_POST['patient_id'] ?? '';
+            $testName = $_POST['test'] ?? '';
+            $replace = ($_POST['replace'] ?? 'no') === 'yes';
+            $file = $_FILES['file'] ?? null;
+            if (!$patientId || !$testName || !$file || $file['error'] !== UPLOAD_ERR_OK) {
+                sendResponse(['success' => false, 'error' => 'Missing data or upload error'], 400);
+            }
+            $uploadDir = __DIR__ . '/uploads/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+            if ($replace) {
+                $stmt = $pdo->prepare("SELECT file_path FROM reports WHERE patient_id = ? AND test_name = ?");
+                $stmt->execute([$patientId, $testName]);
+                $old = $stmt->fetch();
+                if ($old && file_exists($uploadDir . $old['file_path'])) {
+                    unlink($uploadDir . $old['file_path']);
+                    $pdo->prepare("DELETE FROM reports WHERE patient_id = ? AND test_name = ?")->execute([$patientId, $testName]);
+                }
+            }
+            $filename = $patientId . '_' . preg_replace('/[^a-zA-Z0-9]/', '_', $testName) . '_' . date('Ymd_His') . '.pdf';
+            $target = $uploadDir . $filename;
+            if (move_uploaded_file($file['tmp_name'], $target)) {
+                $sql = "INSERT INTO reports (patient_id, test_name, file_path) VALUES (?, ?, ?)";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$patientId, $testName, $filename]);
+                logActivity("Uploaded report for $patientId");
+                sendResponse(['success' => true, 'file' => $filename]);
+            }
+            sendResponse(['success' => false, 'error' => 'File move failed'], 500);
+        }
+        if ($method === 'DELETE') {
+            $id = $_GET['id'] ?? 0;
+            if (!$id) sendResponse(['success' => false, 'error' => 'ID required'], 400);
+            $stmt = $pdo->prepare("SELECT file_path FROM reports WHERE id = ?");
+            $stmt->execute([$id]);
+            $row = $stmt->fetch();
+            if ($row) {
+                $path = __DIR__ . '/uploads/' . $row['file_path'];
+                if (file_exists($path)) unlink($path);
+                $pdo->prepare("DELETE FROM reports WHERE id = ?")->execute([$id]);
+                logActivity("Deleted report ID $id");
+                sendResponse(['success' => true]);
+            }
+            sendResponse(['success' => false, 'error' => 'Report not found'], 404);
+        }
+        break;
+
+    case 'whatsapp':
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') sendResponse(['success' => false, 'error' => 'Method not allowed'], 405);
+        $data = json_decode(file_get_contents('php://input'), true);
+        $phone = $data['phone'] ?? '';
+        $message = $data['message'] ?? '';
+        if (!$phone || !$message) sendResponse(['success' => false, 'error' => 'Phone and message required'], 400);
+        logActivity("WhatsApp (dummy) to $phone: $message");
+        sendResponse(['success' => true, 'info' => 'Dummy mode – set Twilio to enable']);
+        break;
+
+    case 'payments':
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method === 'GET') {
+            $paid = $pdo->query("SELECT SUM(amount) FROM payments WHERE status='paid'")->fetchColumn();
+            $unpaid = $pdo->query("SELECT SUM(amount) FROM payments WHERE status='unpaid'")->fetchColumn();
+            $countPaid = $pdo->query("SELECT COUNT(*) FROM payments WHERE status='paid'")->fetchColumn();
+            $countUnpaid = $pdo->query("SELECT COUNT(*) FROM payments WHERE status='unpaid'")->fetchColumn();
+            sendResponse(['success' => true, 'data' => [
+                'total_paid' => floatval($paid ?? 0),
+                'total_due' => floatval($unpaid ?? 0),
+                'paid_count' => intval($countPaid),
+                'unpaid_count' => intval($countUnpaid)
+            ]]);
+        }
+        if ($method === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $patientId = $data['patient_id'] ?? '';
+            if (!$patientId) sendResponse(['success' => false, 'error' => 'Patient ID required'], 400);
+            $pdo->prepare("UPDATE payments SET status='paid', payment_date=NOW() WHERE patient_id = ? AND status='unpaid'")->execute([$patientId]);
+            $pdo->prepare("UPDATE patients SET due_amount = 0 WHERE patient_id = ?")->execute([$patientId]);
+            logActivity("Marked payment paid for $patientId");
+            sendResponse(['success' => true]);
+        }
+        break;
+
+    case 'analytics':
+        $today = date('Y-m-d');
+        $todayPatients = $pdo->query("SELECT COUNT(*) FROM patients WHERE DATE(created_at) = '$today'")->fetchColumn();
+        $totalReports = $pdo->query("SELECT COUNT(*) FROM reports")->fetchColumn();
+        $pendingReports = $pdo->query("SELECT COUNT(*) FROM patients WHERE status='pending'")->fetchColumn();
+        $cultureProcess = $pdo->query("SELECT COUNT(*) FROM patients WHERE test LIKE '%Urine%' AND status='process'")->fetchColumn();
+        $duePatients = $pdo->query("SELECT COUNT(*) FROM patients WHERE due_amount > 0")->fetchColumn();
+        $monthlyRevenue = $pdo->query("SELECT SUM(amount) FROM payments WHERE status='paid' AND MONTH(payment_date)=MONTH(CURDATE())")->fetchColumn();
+        $testWise = $pdo->query("SELECT test, COUNT(*) as count, SUM(due_amount) as revenue FROM patients GROUP BY test")->fetchAll();
+        sendResponse(['success' => true, 'data' => [
+            'today_patients' => intval($todayPatients),
+            'total_reports' => intval($totalReports),
+            'pending_reports' => intval($pendingReports),
+            'culture_process' => intval($cultureProcess),
+            'due_patients' => intval($duePatients),
+            'monthly_revenue' => floatval($monthlyRevenue ?? 0),
+            'test_wise' => $testWise
+        ]]);
+        break;
+
+    case 'backup':
+        $subAction = $_GET['sub'] ?? '';
+        if ($subAction === 'database') {
+            $backupDir = __DIR__ . '/backups/';
+            if (!is_dir($backupDir)) mkdir($backupDir, 0777, true);
+            $filename = 'db_backup_' . date('Y-m-d_H-i-s') . '.sql';
+            $path = $backupDir . $filename;
+            exec("mysqldump --user=root --password= --host=localhost rajan_path_lab > $path 2>&1", $output, $code);
+            if ($code === 0 && file_exists($path)) {
+                logActivity("DB backup: $filename");
+                sendResponse(['success' => true, 'file' => $filename]);
+            }
+            sendResponse(['success' => false, 'error' => 'Backup failed'], 500);
+        }
+        if ($subAction === 'pdf') {
+            $backupDir = __DIR__ . '/backups/';
+            if (!is_dir($backupDir)) mkdir($backupDir, 0777, true);
+            $zipFile = 'pdf_backup_' . date('Y-m-d') . '.zip';
+            $zipPath = $backupDir . $zipFile;
+            $zip = new ZipArchive();
+            if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+                $files = glob(__DIR__ . '/uploads/*.pdf');
+                foreach ($files as $f) $zip->addFile($f, basename($f));
+                $zip->close();
+                logActivity("PDF backup: $zipFile");
+                sendResponse(['success' => true, 'file' => $zipFile]);
+            }
+            sendResponse(['success' => false, 'error' => 'PDF backup failed'], 500);
+        }
+        if ($subAction === 'restore' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                $tmp = $_FILES['file']['tmp_name'];
+                exec("mysql --user=root --password= --host=localhost rajan_path_lab < $tmp 2>&1", $output, $code);
+                if ($code === 0) { logActivity("Restored DB"); sendResponse(['success' => true]); }
+                sendResponse(['success' => false, 'error' => implode(' ', $output)], 500);
+            }
+            sendResponse(['success' => false, 'error' => 'No file'], 400);
+        }
+        sendResponse(['success' => false, 'error' => 'Invalid backup action'], 400);
+        break;
+
+    case 'auth':
+        $subAction = $_GET['sub'] ?? '';
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($subAction === 'login' && $method === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $username = $data['username'] ?? '';
+            $password = $data['password'] ?? '';
+            $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ?");
+            $stmt->execute([$username]);
+            $admin = $stmt->fetch();
+            if ($admin && password_verify($password, $admin['password_hash'])) {
+                $_SESSION['admin_user'] = $username;
+                $_SESSION['admin_id'] = $admin['id'];
+                $pdo->prepare("UPDATE admins SET last_login = NOW() WHERE id = ?")->execute([$admin['id']]);
+                logActivity("Login: $username");
+                sendResponse(['success' => true, 'username' => $username]);
+            }
+            sendResponse(['success' => false, 'error' => 'Invalid credentials'], 401);
+        }
+        if ($subAction === 'logout' && $method === 'POST') {
+            session_destroy();
+            sendResponse(['success' => true]);
+        }
+        if ($subAction === 'change_password' && $method === 'POST') {
+            if (!isset($_SESSION['admin_user'])) sendResponse(['success' => false, 'error' => 'Unauthorized'], 401);
+            $data = json_decode(file_get_contents('php://input'), true);
+            $old = $data['old_password'] ?? '';
+            $new = $data['new_password'] ?? '';
+            if (strlen($new) < 6) sendResponse(['success' => false, 'error' => 'Password too short'], 400);
+            $stmt = $pdo->prepare("SELECT password_hash FROM admins WHERE username = ?");
+            $stmt->execute([$_SESSION['admin_user']]);
+            $row = $stmt->fetch();
+            if ($row && password_verify($old, $row['password_hash'])) {
+                $hash = password_hash($new, PASSWORD_DEFAULT);
+                $pdo->prepare("UPDATE admins SET password_hash = ? WHERE username = ?")->execute([$hash, $_SESSION['admin_user']]);
+                logActivity("Password changed for " . $_SESSION['admin_user']);
+                sendResponse(['success' => true]);
+            }
+            sendResponse(['success' => false, 'error' => 'Old password incorrect'], 401);
+        }
+        if ($subAction === 'activity_log' && $method === 'GET') {
+            if (!isset($_SESSION['admin_user'])) sendResponse(['success' => false, 'error' => 'Unauthorized'], 401);
+            $stmt = $pdo->query("SELECT * FROM activity_log ORDER BY created_at DESC LIMIT 100");
+            sendResponse(['success' => true, 'data' => $stmt->fetchAll()]);
+        }
+        if ($subAction === 'check' && $method === 'GET') {
+            sendResponse(['success' => isset($_SESSION['admin_user']), 'username' => $_SESSION['admin_user'] ?? null]);
+        }
+        sendResponse(['success' => false, 'error' => 'Invalid auth action'], 400);
+        break;
+
+    default:
+        sendResponse(['success' => false, 'error' => 'Invalid action: ' . $action], 400);
+}
