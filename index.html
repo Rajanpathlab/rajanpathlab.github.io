@@ -354,7 +354,7 @@
                         </div>
                     </div>
 
-                    <!-- PATIENTS (65+ TESTS) -->
+                    <!-- PATIENTS – ALL 65 TESTS -->
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
@@ -363,14 +363,15 @@
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210" /></label>
                             <label>Test
                                 <select id="patTest">
+                                    <!-- ALL 65 TESTS FROM PRICE LIST -->
                                     <option value="LIVER FUNCTION TEST">LIVER FUNCTION TEST</option>
-                                    <option value="KIDNEY FUNCTION TEST">KIDNEY FUNCTION TEST</option>
-                                    <option value="LIPID PROFILE">LIPID PROFILE</option>
+                                    <option value="KIDNEY FUNCTION TEST (Fasting)">KIDNEY FUNCTION TEST (Fasting)</option>
+                                    <option value="LIPID PROFILE (Fasting)">LIPID PROFILE (Fasting)</option>
                                     <option value="THYROID PROFILE">THYROID PROFILE</option>
                                     <option value="BETA HCG">BETA HCG</option>
-                                    <option value="HBA1C">HBA1C</option>
-                                    <option value="C-REACTIVE PROTEIN">C-REACTIVE PROTEIN</option>
-                                    <option value="ANTISTREPTOLYSIN O">ANTISTREPTOLYSIN O</option>
+                                    <option value="HBA1C (3 Month Sugar)">HBA1C (3 Month Sugar)</option>
+                                    <option value="C-REACTIVE PROTEIN (CRP)">C-REACTIVE PROTEIN (CRP)</option>
+                                    <option value="ANTISTREPTOLYSIN O (ASO)">ANTISTREPTOLYSIN O (ASO)</option>
                                     <option value="R A FACTOR">R A FACTOR</option>
                                     <option value="HCG PREGNANCY TEST">HCG PREGNANCY TEST</option>
                                     <option value="URINE ROUTINE">URINE ROUTINE</option>
@@ -383,7 +384,7 @@
                                     <option value="HCV">HCV</option>
                                     <option value="BLOOD UREA">BLOOD UREA</option>
                                     <option value="SERUM CREATININE">SERUM CREATININE</option>
-                                    <option value="URIC ACID">URIC ACID</option>
+                                    <option value="URIC ACID (Fasting)">URIC ACID (Fasting)</option>
                                     <option value="BLOOD SUGAR">BLOOD SUGAR</option>
                                     <option value="COMPLETE BLOOD COUNT (CBC)">COMPLETE BLOOD COUNT (CBC)</option>
                                     <option value="PLATELETS TEST">PLATELETS TEST</option>
@@ -398,6 +399,7 @@
                                     <option value="HB">HB</option>
                                     <option value="BLOOD GROUP">BLOOD GROUP</option>
                                     <option value="TOTAL PARASITE">TOTAL PARASITE</option>
+                                    <option value="SMEAR OF MP (Repeat)">SMEAR OF MP (Repeat)</option>
                                     <option value="BILIRUBIN TEST">BILIRUBIN TEST</option>
                                     <option value="MP WIDAL HB">MP WIDAL HB</option>
                                     <option value="OPTIMAL WIDAL HB">OPTIMAL WIDAL HB</option>
@@ -411,22 +413,22 @@
                                     <option value="CBC + WIDAL + OPTIMAL">CBC + WIDAL + OPTIMAL</option>
                                     <option value="URINE CULTURE (Advanced)">URINE CULTURE (Advanced)</option>
                                     <option value="PLATELET COUNT">PLATELET COUNT</option>
-                                    <option value="KIDNEY COMPLETE">KIDNEY COMPLETE</option>
-                                    <option value="PREGNANCY COMBO">PREGNANCY COMBO</option>
-                                    <option value="DENGUE COMPLETE">DENGUE COMPLETE</option>
-                                    <option value="HS-CRP">HS-CRP</option>
+                                    <option value="KIDNEY COMPLETE (KFT + Electrolytes)">KIDNEY COMPLETE (KFT + Electrolytes)</option>
+                                    <option value="PREGNANCY COMBO (HCG + CBC + Urine)">PREGNANCY COMBO (HCG + CBC + Urine)</option>
+                                    <option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)">DENGUE COMPLETE (NS1 + IgG/IgM + CBC)</option>
+                                    <option value="HS-CRP (High Sensitivity CRP)">HS-CRP (High Sensitivity CRP)</option>
                                     <option value="VITAMIN B12">VITAMIN B12</option>
-                                    <option value="VITAMIN D3">VITAMIN D3</option>
-                                    <option value="TSH">TSH</option>
-                                    <option value="T3">T3</option>
-                                    <option value="T4">T4</option>
+                                    <option value="VITAMIN D3 (25-Hydroxy)">VITAMIN D3 (25-Hydroxy)</option>
+                                    <option value="TSH (Thyroid Stimulating Hormone)">TSH (Thyroid Stimulating Hormone)</option>
+                                    <option value="T3 (Triiodothyronine)">T3 (Triiodothyronine)</option>
+                                    <option value="T4 (Thyroxine)">T4 (Thyroxine)</option>
                                     <option value="FREE T3">FREE T3</option>
                                     <option value="FREE T4">FREE T4</option>
                                     <option value="PROLACTIN">PROLACTIN</option>
-                                    <option value="LH">LH</option>
-                                    <option value="FSH">FSH</option>
-                                    <option value="TESTOSTERONE">TESTOSTERONE</option>
-                                    <option value="IRON STUDIES">IRON STUDIES</option>
+                                    <option value="LH (Luteinizing Hormone)">LH (Luteinizing Hormone)</option>
+                                    <option value="FSH (Follicle Stimulating Hormone)">FSH (Follicle Stimulating Hormone)</option>
+                                    <option value="TESTOSTERONE (Total)">TESTOSTERONE (Total)</option>
+                                    <option value="IRON STUDIES (Iron/TIBC/Ferritin)">IRON STUDIES (Iron/TIBC/Ferritin)</option>
                                     <option value="CBC WIDAL BSR" selected>CBC WIDAL BSR</option>
                                 </select>
                             </label>
@@ -719,8 +721,17 @@
             function openPortal() { portalModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
             function closePortal() { portalModal.classList.remove('active'); document.body.style.overflow = ''; $('portalStatus').className = 'portal-status'; $('portalStatus').textContent = '◆ Enter your Patient ID and click "VIEW MY REPORTS"'; $('portalReportList').style.display = 'none'; $('portalPatientId').value = ''; }
 
-            $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
-            $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
+            // Add portal button to nav
+            const nav = document.querySelector('nav');
+            const portalBtn = document.createElement('button');
+            portalBtn.className = 'admin-login-btn';
+            portalBtn.id = 'openPatientPortalBtn';
+            portalBtn.innerHTML = '<i class="fas fa-file-pdf"></i> My Reports';
+            portalBtn.style.background = '#25D366';
+            portalBtn.style.marginLeft = '10px';
+            portalBtn.addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
+            nav.appendChild(portalBtn);
+
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
@@ -1435,17 +1446,6 @@
             openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));
             console.log('✅ Rajan Path Lab · Complete Admin Panel with 65+ Tests');
             console.log('🔑 Login: Rajan5530 / Rkchandra5530');
-
-            // ─── ADD PATIENT PORTAL BUTTON TO NAV ───
-            const nav = document.querySelector('nav');
-            const portalBtn = document.createElement('button');
-            portalBtn.className = 'admin-login-btn';
-            portalBtn.id = 'openPatientPortalBtn';
-            portalBtn.innerHTML = '<i class="fas fa-file-pdf"></i> My Reports';
-            portalBtn.style.background = '#25D366';
-            portalBtn.style.marginLeft = '10px';
-            portalBtn.addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
-            nav.appendChild(portalBtn);
 
         })();
     </script>
