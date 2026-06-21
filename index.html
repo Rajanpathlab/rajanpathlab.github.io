@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajan Path Lab | Premium Diagnostics</title>
+    <title>Rajan Path Lab | Admin Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
-
+    <!-- No jsPDF needed now, we use IndexedDB for actual PDF -->
     <style>
-        /* ─── All Styles (complete) ─── */
+        /* ─── All styles (same as before) ─── */
         :root { --primary-blue: #0a2540; --accent-teal: #008080; --bg-light: #f4f7f9; --urgent-red: #d9383a; --text-dark: #2d3748; --thyro-orange: #ff6600; --lal-blue: #ed1c24; --path-purple: #662d91; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.5; }
         b, strong { font-weight: 700; }
@@ -368,6 +367,7 @@
                                 <button class="btn btn-outline btn-sm" id="refreshReports"><i class="fas fa-sync"></i></button>
                             </div>
                         </div>
+                        <div id="uploadMessage" style="margin:10px 0; font-weight:bold; color:red;"></div>
                         <div class="table-wrap">
                             <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>
                         </div>
@@ -500,12 +500,20 @@
                 'admin': 'admin123'
             };
 
-            // ─── DATA PERSISTENCE ───
+            // ─── DATA PERSISTENCE (localStorage) ───
             function loadData(key, defaultData) {
                 try {
                     const stored = localStorage.getItem('rpl_' + key);
-                    if (stored) return JSON.parse(stored);
-                } catch (e) {}
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+                        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                        // If empty array, fall back to default? but we want to keep empty if user deleted all.
+                        // We'll return the stored array even if empty.
+                        return parsed;
+                    }
+                } catch (e) {
+                    console.warn('Failed to parse stored data for ' + key, e);
+                }
                 return defaultData;
             }
 
@@ -513,24 +521,81 @@
                 localStorage.setItem('rpl_' + key, JSON.stringify(data));
             }
 
-            // Default data with custom IDs
+            // Default data
             const defaultPatients = [
                 { patient_id: 'P001', name: 'Ravi Kumar', phone: '9876543210', test: 'CBC', status: 'pending', due_amount: 450 },
                 { patient_id: 'P002', name: 'Priya Singh', phone: '9876543211', test: 'Thyroid', status: 'process', due_amount: 0 },
                 { patient_id: 'RPL-062026-1186', name: 'Rajesh Gupta', phone: '9876543214', test: 'CBC WIDAL BSR', status: 'pending', due_amount: 0 }
             ];
-
             const defaultReports = [
                 { id: 1, patient_id: 'P001', name: 'Ravi Kumar', test_name: 'CBC', file_path: 'P001_CBC.pdf', uploaded_at: new Date().toLocaleString() },
                 { id: 2, patient_id: 'P002', name: 'Priya Singh', test_name: 'Thyroid', file_path: 'P002_Thyroid.pdf', uploaded_at: new Date().toLocaleString() }
             ];
-
             const defaultPayments = { total_paid: 12500, total_due: 6800, paid_count: 45, unpaid_count: 12 };
             const defaultLogs = [
                 { created_at: new Date().toLocaleString(), admin_user: 'Rajan5530', action: 'Logged in', ip: '127.0.0.1' },
                 { created_at: new Date(Date.now() - 300000).toLocaleString(), admin_user: 'Rajan5530', action: 'Viewed dashboard', ip: '127.0.0.1' }
             ];
 
+            // ─── INDEXED DB FOR PDF FILES ───
+            let db = null;
+            const DB_NAME = 'RPL_PDF_DB';
+            const STORE_NAME = 'pdf_files';
+
+            function openDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(DB_NAME, 1);
+                    request.onupgradeneeded = function(e) {
+                        const db = e.target.result;
+                        if (!db.objectStoreNames.contains(STORE_NAME)) {
+                            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                        }
+                    };
+                    request.onsuccess = function(e) {
+                        db = e.target.result;
+                        resolve(db);
+                    };
+                    request.onerror = function(e) {
+                        reject(e.target.error);
+                    };
+                });
+            }
+
+            function savePDFFile(reportId, fileBlob) {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject('DB not open');
+                    const tx = db.transaction(STORE_NAME, 'readwrite');
+                    const store = tx.objectStore(STORE_NAME);
+                    const record = { id: reportId.toString(), file: fileBlob };
+                    const request = store.put(record);
+                    request.onsuccess = () => resolve();
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            function getPDFFile(reportId) {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject('DB not open');
+                    const tx = db.transaction(STORE_NAME, 'readonly');
+                    const store = tx.objectStore(STORE_NAME);
+                    const request = store.get(reportId.toString());
+                    request.onsuccess = () => resolve(request.result ? request.result.file : null);
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            function deletePDFFile(reportId) {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject('DB not open');
+                    const tx = db.transaction(STORE_NAME, 'readwrite');
+                    const store = tx.objectStore(STORE_NAME);
+                    const request = store.delete(reportId.toString());
+                    request.onsuccess = () => resolve();
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            // ─── LOAD / SAVE ───
             let patients = loadData('patients', defaultPatients);
             let reports = loadData('reports', defaultReports);
             let payments = loadData('payments', defaultPayments);
@@ -574,7 +639,13 @@
                     result.style.color = 'green';
                     result.textContent = '✅ Login successful!';
                     loginModal.classList.remove('show');
-                    showAdmin();
+                    // Ensure DB open before showing admin
+                    openDB().then(() => {
+                        showAdmin();
+                    }).catch((err) => {
+                        console.warn('IndexedDB error, but continuing', err);
+                        showAdmin();
+                    });
                 } else {
                     result.style.color = 'red';
                     result.textContent = '❌ Invalid username or password';
@@ -671,24 +742,25 @@
                 });
             }
 
-            // ─── REPORT DOWNLOAD ───
-            function downloadReport(report) {
-                if (typeof window.jspdf === 'undefined') {
-                    alert('jsPDF library not loaded. Please refresh.');
-                    return;
+            // ─── REPORT DOWNLOAD (from IndexedDB) ───
+            async function downloadReport(report) {
+                try {
+                    const fileBlob = await getPDFFile(report.id);
+                    if (!fileBlob) {
+                        alert('PDF file not found in storage.');
+                        return;
+                    }
+                    const url = URL.createObjectURL(fileBlob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = report.file_path || 'report.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                } catch (e) {
+                    alert('Error downloading file: ' + e.message);
                 }
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                doc.setFontSize(18);
-                doc.text('RAJAN PATH LAB - REPORT', 20, 25);
-                doc.setFontSize(12);
-                doc.text('Patient: ' + report.name + ' (ID: ' + report.patient_id + ')', 20, 45);
-                doc.text('Test: ' + report.test_name, 20, 55);
-                doc.text('Date: ' + report.uploaded_at, 20, 65);
-                doc.line(20, 72, 190, 72);
-                doc.text('This is a sample diagnostic report generated by Rajan Path Lab.', 20, 85);
-                doc.text('For any queries, contact: 8709946177', 20, 95);
-                doc.save(report.file_path || 'report.pdf');
             }
 
             // ─── DASHBOARD ───
@@ -766,7 +838,7 @@
                 }
             }
 
-            // ─── ADD PATIENT (with custom ID) ───
+            // ─── ADD PATIENT ───
             $('addPatientBtn').addEventListener('click', function() {
                 const patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
@@ -776,13 +848,11 @@
                 const due = parseFloat($('patDue').value) || 0;
 
                 if (!name || !phone) { alert('Name & Phone required'); return; }
-                // If no custom ID provided, auto-generate
                 let id = patientId;
                 if (!id) {
                     const nextId = patients.length + 1;
                     id = 'P' + String(nextId).padStart(3, '0');
                 }
-                // Check duplicate
                 if (patients.find(p => p.patient_id === id)) {
                     alert('Patient ID already exists!');
                     return;
@@ -812,13 +882,20 @@
                 if (e.target.closest('.btn-del-patient')) {
                     const id = e.target.closest('.btn-del-patient').dataset.id;
                     if (confirm(`Delete patient #${id}?`)) {
-                        patients = patients.filter(p => p.patient_id !== id);
-                        // Also delete associated reports
+                        // Also delete associated reports and their PDF files
+                        const toDelete = reports.filter(r => r.patient_id === id);
+                        toDelete.forEach(async (r) => {
+                            try {
+                                await deletePDFFile(r.id);
+                            } catch (e) { console.warn('Failed to delete PDF', e); }
+                        });
                         reports = reports.filter(r => r.patient_id !== id);
+                        patients = patients.filter(p => p.patient_id !== id);
                         saveAll();
                         alert('Deleted!');
                         loadPatients();
                         loadDashboard();
+                        loadReports();
                     }
                 }
             });
@@ -853,7 +930,7 @@
                 }
             }
 
-            // ─── DOWNLOAD REPORT ───
+            // ─── DOWNLOAD REPORT (event) ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-download-report')) {
                     const id = parseInt(e.target.closest('.btn-download-report').dataset.id);
@@ -867,53 +944,71 @@
             });
 
             // ─── UPLOAD REPORT ───
-            $('uploadReportBtn').addEventListener('click', function() {
+            $('uploadReportBtn').addEventListener('click', async function() {
                 const pid = $('reportPatientId').value.trim();
                 const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
                 const replace = $('reportReplace').value;
+                const msgDiv = $('uploadMessage');
 
-                if (!pid || !test || !file) {
-                    alert('Patient ID, Test, and PDF required');
-                    return;
-                }
+                msgDiv.textContent = '';
+                msgDiv.style.color = 'red';
 
-                // Find patient
+                if (!pid) { msgDiv.textContent = '❌ Patient ID is required.'; return; }
+                if (!test) { msgDiv.textContent = '❌ Test Name is required.'; return; }
+                if (!file) { msgDiv.textContent = '❌ Please select a PDF file.'; return; }
+
                 const patient = patients.find(p => p.patient_id === pid);
                 if (!patient) {
-                    alert('Patient not found! Please add patient first.');
+                    msgDiv.textContent = '❌ Patient not found! Please add patient first (ID: ' + pid + ').';
                     return;
                 }
 
-                // Check if report exists
                 const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
                 if (existing && replace === 'no') {
-                    alert('Report already exists! Use Replace = Yes to overwrite.');
+                    msgDiv.textContent = '❌ Report already exists. Use Replace = Yes to overwrite.';
                     return;
                 }
 
-                // Remove old if replacing
                 if (existing && replace === 'yes') {
+                    // Delete old PDF from IndexedDB
+                    try {
+                        await deletePDFFile(existing.id);
+                    } catch (e) { console.warn('Failed to delete old PDF', e); }
                     reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
                 }
 
+                const newId = reports.length + 1;
                 const newReport = {
-                    id: reports.length + 1,
+                    id: newId,
                     patient_id: pid,
                     name: patient.name,
                     test_name: test,
                     file_path: file.name,
                     uploaded_at: new Date().toLocaleString()
                 };
+
+                // Save PDF to IndexedDB
+                try {
+                    await savePDFFile(newId, file);
+                } catch (e) {
+                    msgDiv.textContent = '❌ Failed to store PDF: ' + e.message;
+                    return;
+                }
+
                 reports.push(newReport);
                 saveAll();
 
-                alert('✅ Report uploaded for ' + patient.name + ' (' + pid + ')');
+                msgDiv.style.color = 'green';
+                msgDiv.textContent = '✅ Report uploaded for ' + patient.name + ' (' + pid + ')';
+
                 $('reportPatientId').value = '';
                 $('reportTestName').value = '';
                 $('reportFile').value = '';
                 loadReports();
                 loadDashboard();
+
+                setTimeout(() => { msgDiv.textContent = ''; }, 5000);
             });
 
             $('refreshReports').addEventListener('click', loadReports);
@@ -923,11 +1018,16 @@
                 if (e.target.closest('.btn-del-report')) {
                     const id = parseInt(e.target.closest('.btn-del-report').dataset.id);
                     if (confirm('Delete report?')) {
-                        reports = reports.filter(r => r.id !== id);
-                        saveAll();
-                        alert('Deleted!');
-                        loadReports();
-                        loadDashboard();
+                        // Delete from IndexedDB
+                        deletePDFFile(id).then(() => {
+                            reports = reports.filter(r => r.id !== id);
+                            saveAll();
+                            alert('Deleted!');
+                            loadReports();
+                            loadDashboard();
+                        }).catch((err) => {
+                            alert('Error deleting PDF file: ' + err.message);
+                        });
                     }
                 }
             });
@@ -1132,9 +1232,16 @@
             });
 
             // ─── INIT ───
-            console.log('✅ Rajan Path Lab · Persistent Admin Panel');
+            // Open DB early
+            openDB().then(() => {
+                console.log('IndexedDB ready');
+            }).catch((e) => {
+                console.warn('IndexedDB not available', e);
+            });
+
+            console.log('✅ Rajan Path Lab · Persistent Admin with PDF storage');
             console.log('🔑 Default credentials: Rajan5530 / Rkchandra5530');
-            console.log('📦 Supports any Patient ID format (P001, RPL-062026-1186, etc.)');
+            console.log('📦 Data saved in localStorage and IndexedDB.');
 
         })();
     </script>
