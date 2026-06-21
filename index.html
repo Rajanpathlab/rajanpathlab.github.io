@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Rajan Path Lab | Premium Diagnostics</title>  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
-    <!-- Charts & QR for Admin (will load only when admin panel is opened) -->  
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>  
 
@@ -59,7 +58,6 @@
         }  
         nav a:hover { color: var(--accent-teal); }  
 
-        /* ─── ADDED: ADMIN BUTTON (only addition to header) ─── */  
         .admin-login-btn {  
             background: var(--accent-teal);  
             color: white;  
@@ -570,7 +568,6 @@
             .table-wrap th, .table-wrap td { padding: 6px 8px; }  
         }  
 
-        /* ─── SIDEBAR OVERLAY FOR MOBILE ─── */  
         .sidebar-overlay {  
             display: none;  
             position: fixed;  
@@ -584,10 +581,7 @@
 
 <body>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- PATIENT WEBSITE (ORIGINAL – 100% UNCHANGED EXCEPT ADMIN BUTTON) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── PATIENT WEBSITE (ORIGINAL) ─── -->  
     <header>  
         <h1>RAJAN <span>PATH LAB</span></h1>  
         <nav>  
@@ -596,7 +590,6 @@
             <a href="book.html">Book Test</a>  
             <a href="report.html">Download Report</a>  
             <a href="contact.html">About</a>  
-            <!-- ADDED: Admin Login Button (only addition) -->  
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>  
         </nav>  
     </header>  
@@ -698,18 +691,15 @@
 
     <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- ADMIN LOGIN MODAL (Overlay) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── ADMIN LOGIN MODAL ─── -->  
     <div class="login-modal" id="loginModal">  
         <div class="login-modal-content">  
             <h3><i class="fas fa-lock"></i> Admin Login</h3>  
             <form id="loginForm">  
                 <label>Username</label>  
-                <input type="text" id="loginUsername" placeholder="Rajan5530" value="Rajan5530" />  
+                <input type="text" id="loginUsername" placeholder="Enter username" />  
                 <label>Password</label>  
-                <input type="password" id="loginPassword" placeholder="********" value="Rkchandra5530" />  
+                <input type="password" id="loginPassword" placeholder="Enter password" />  
                 <button type="submit" class="btn-book" style="width:100%;background:var(--accent-teal);border:none;padding:10px;"><i class="fas fa-sign-in-alt"></i> Login</button>  
                 <button type="button" class="btn-close" id="closeLoginModal">Cancel</button>  
             </form>  
@@ -717,26 +707,18 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- ADMIN PANEL (FULL OVERLAY) – HIDDEN BY DEFAULT -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── ADMIN PANEL ─── -->  
     <div id="adminPanelWrapper">  
         <div id="adminPanelContainer">  
-
-            <!-- Admin Header -->  
             <div class="admin-header">  
                 <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin</h2>  
                 <div class="admin-user">  
-                    <span id="adminUsername">Rajan5530</span>  
+                    <span id="adminUsername">Admin</span>  
                     <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>  
                     <button class="dark-toggle" id="adminDarkToggle"><i class="fas fa-moon"></i></button>  
                 </div>  
             </div>  
-
-            <!-- Admin Body -->  
             <div class="admin-body">  
-                <!-- Sidebar -->  
                 <div class="admin-sidebar" id="adminSidebar">  
                     <div class="nav-label">Main</div>  
                     <a class="active" data-section="dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>  
@@ -750,11 +732,8 @@
                     <div class="nav-label" style="margin-top:8px;">System</div>  
                     <a data-section="security"><i class="fas fa-shield-alt"></i> Security</a>  
                 </div>  
-
-                <!-- Content -->  
                 <div class="admin-content">  
-
-                    <!-- DASHBOARD -->  
+                    <!-- Dashboard -->  
                     <div class="admin-section active" id="sec-dashboard">  
                         <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>  
                         <div class="stats-grid" id="dashboardStats">  
@@ -773,8 +752,7 @@
                             <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
-
-                    <!-- PATIENTS -->  
+                    <!-- Patients -->  
                     <div class="admin-section" id="sec-patients">  
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>  
                         <div class="form-grid">  
@@ -796,8 +774,7 @@
                             <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
-
-                    <!-- REPORTS -->  
+                    <!-- Reports -->  
                     <div class="admin-section" id="sec-reports">  
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>  
                         <div class="form-grid">  
@@ -814,8 +791,7 @@
                             <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
-
-                    <!-- WHATSAPP -->  
+                    <!-- WhatsApp -->  
                     <div class="admin-section" id="sec-whatsapp">  
                         <h2 style="text-align:left;"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp System</h2>  
                         <div class="template-box">  
@@ -838,8 +814,7 @@
                             <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
-
-                    <!-- PAYMENTS -->  
+                    <!-- Payments -->  
                     <div class="admin-section" id="sec-payments">  
                         <h2 style="text-align:left;"><i class="fas fa-rupee-sign"></i> Payment / Dues <span class="premium-badge">UPI+QR</span></h2>  
                         <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));" id="paymentStats">  
@@ -856,8 +831,7 @@
                             <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
-
-                    <!-- ANALYTICS -->  
+                    <!-- Analytics -->  
                     <div class="admin-section" id="sec-analytics">  
                         <h2 style="text-align:left;"><i class="fas fa-chart-bar"></i> Reports &amp; Analytics</h2>  
                         <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">  
@@ -870,8 +844,7 @@
                             <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
-
-                    <!-- BACKUP -->  
+                    <!-- Backup -->  
                     <div class="admin-section" id="sec-backup">  
                         <h2 style="text-align:left;"><i class="fas fa-database"></i> Backup &amp; Restore</h2>  
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px;">  
@@ -896,8 +869,7 @@
                             <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
-
-                    <!-- SECURITY -->  
+                    <!-- Security -->  
                     <div class="admin-section" id="sec-security">  
                         <h2 style="text-align:left;"><i class="fas fa-shield-alt"></i> Security</h2>  
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px;">  
@@ -921,16 +893,12 @@
                             <table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>IP</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
-
                 </div>  
             </div>  
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- UPI MODAL (for admin payments) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── UPI MODAL ─── -->  
     <div class="upi-modal" id="upiModal">  
         <div class="upi-modal-content">  
             <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>  
@@ -940,18 +908,13 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- JAVASCRIPT – ONLY ADMIN PANEL LOGIC, PATIENT SITE UNTOUCHED -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── JAVASCRIPT ─── -->  
     <script>  
         (function() {  
             'use strict';  
 
-            // ── API BASE ──  
             const API_BASE = 'api.php?action=';  
 
-            // ── HELPER ──  
             function apiCall(action, method = 'GET', body = null) {  
                 const opts = { method, headers: {} };  
                 if (body) { opts.headers['Content-Type'] = 'application/json';  
@@ -962,14 +925,12 @@
                         return d; });  
             }  
 
-            // ── DOM REFS ──  
             const $ = id => document.getElementById(id);  
 
             const loginModal = $('loginModal');  
             const adminWrapper = $('adminPanelWrapper');  
             const upiModal = $('upiModal');  
 
-            // ── OPEN LOGIN ──  
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));  
             $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));  
             window.addEventListener('click', (e) => {  
@@ -977,7 +938,6 @@
                 if (e.target === upiModal) upiModal.classList.remove('show');  
             });  
 
-            // ── LOGIN ──  
             $('loginForm').addEventListener('submit', async function(e) {  
                 e.preventDefault();  
                 const username = $('loginUsername').value.trim();  
@@ -993,7 +953,6 @@
                     result.textContent = '❌ ' + err.message; }  
             });  
 
-            // ── SHOW/HIDE ADMIN ──  
             function showAdmin() {  
                 adminWrapper.classList.add('active');  
                 document.body.style.overflow = 'hidden';  
@@ -1013,7 +972,6 @@
                 document.body.style.overflow = '';  
             }  
 
-            // ── LOGOUT ──  
             function logout() {  
                 apiCall('auth&sub=logout', 'POST').catch(() => {});  
                 hideAdmin();  
@@ -1021,7 +979,6 @@
             $('logoutBtn').addEventListener('click', logout);  
             $('logoutBtn2').addEventListener('click', logout);  
 
-            // ── ADMIN DARK MODE ──  
             let adminDark = false;  
             $('adminDarkToggle').addEventListener('click', function() {  
                 adminDark = !adminDark;  
@@ -1029,7 +986,6 @@
                 this.innerHTML = adminDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';  
             });  
 
-            // ── ADMIN SECTION NAV ──  
             const adminSections = {  
                 dashboard: $('sec-dashboard'),  
                 patients: $('sec-patients'),  
@@ -1066,7 +1022,7 @@
                 });  
             });  
 
-            // ─── ADMIN: DASHBOARD ───  
+            // ─── LOAD FUNCTIONS (same as earlier) ───  
             async function loadDashboard() {  
                 try {  
                     const data = await apiCall('analytics');  
@@ -1080,7 +1036,6 @@
                         $('dRevenue').textContent = '₹' + (d.monthly_revenue ?? 0).toLocaleString();  
                     }  
                 } catch (e) { console.warn('Dashboard error', e); }  
-
                 try {  
                     const patients = await apiCall('patients');  
                     const tbody = $('dRecentPatients');  
@@ -1090,7 +1045,6 @@
                         ).join('');  
                     } else { tbody.innerHTML = '<tr><td colspan="4">No patients</td></tr>'; }  
                 } catch (e) { console.warn('Recent patients error', e); }  
-
                 try {  
                     const ctx1 = $('chartWeekly')?.getContext('2d');  
                     if (ctx1) {  
@@ -1123,7 +1077,6 @@
                 } catch (e) { console.warn('Chart error', e); }  
             }  
 
-            // ─── ADMIN: PATIENTS ───  
             async function loadPatients() {  
                 try {  
                     const data = await apiCall('patients');  
@@ -1213,7 +1166,6 @@
                 } else { loadPatients(); }  
             });  
 
-            // ─── ADMIN: REPORTS ───  
             async function loadReports() {  
                 try {  
                     const data = await apiCall('reports');  
@@ -1267,7 +1219,6 @@
                 }  
             });  
 
-            // ─── ADMIN: WHATSAPP ───  
             async function loadWhatsAppPatients() {  
                 try {  
                     const data = await apiCall('patients');  
@@ -1327,7 +1278,6 @@
                 if (phone) sendWhatsApp(phone, 'Reminder: Your payment is due at Rajan Path Lab.');  
             });  
 
-            // ─── ADMIN: PAYMENTS ───  
             async function loadPayments() {  
                 try {  
                     const data = await apiCall('payments');  
@@ -1337,7 +1287,6 @@
                         $('pTotalDue').textContent = '₹' + (data.data.total_due ?? 0).toLocaleString();  
                     }  
                 } catch (e) { console.warn('Payment stats error', e); }  
-
                 try {  
                     const data = await apiCall('patients');  
                     const tbody = $('paymentsTableBody');  
@@ -1369,7 +1318,6 @@
 
             $('refreshPayments').addEventListener('click', loadPayments);  
 
-            // ─── UPI MODAL ───  
             $('upiPayBtn').addEventListener('click', function() {  
                 upiModal.classList.add('show');  
                 const container = $('upiQR');  
@@ -1388,7 +1336,6 @@
 
             $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));  
 
-            // ─── ADMIN: ANALYTICS ───  
             async function loadAnalytics() {  
                 try {  
                     const data = await apiCall('analytics');  
@@ -1411,7 +1358,6 @@
                 } catch (e) { console.warn('Analytics error', e); }  
             }  
 
-            // ─── ADMIN: BACKUP ───  
             function loadBackupList() {  
                 $('backupListBody').innerHTML = `  
                     <tr><td>rpl_db_backup.sql</td><td>Database</td><td>Today</td><td><button class="btn btn-sm btn-primary"><i class="fas fa-download"></i></button></td></tr>  
@@ -1445,7 +1391,6 @@
                     .catch(e => alert('Error: ' + e.message));  
             });  
 
-            // ─── ADMIN: SECURITY ───  
             async function loadActivityLog() {  
                 try {  
                     const data = await apiCall('auth&sub=activity_log');  
@@ -1471,18 +1416,376 @@
                     .catch(e => alert('Error: ' + e.message));  
             });  
 
-            // ─── CHECK LOGIN STATUS ───  
+            // Check login status  
             apiCall('auth&sub=check').then(data => {  
                 if (data.success && data.username) {  
                     showAdmin();  
                 }  
             }).catch(() => {});  
 
-            console.log('✅ Rajan Path Lab · Patient Website (Original) + Admin Panel Overlay');  
-            console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');  
-
+            console.log('✅ Rajan Path Lab · Patient + Admin (Login fields hidden)');  
+            console.log('🔑 Default credentials: Rajan5530 / Rkchandra5530 (change in api.php)');  
         })();  
     </script>  
-
 </body>  
-</html>  
+</html><?php
+// api.php - Rajan Path Lab Admin Backend
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(200); exit; }
+
+// ── DATABASE CONNECTION ──
+$host = 'localhost';
+$dbname = 'rajan_path_lab';
+$user = 'root';
+$pass = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'error' => 'DB: ' . $e->getMessage()]);
+    exit;
+}
+
+function logActivity($action) {
+    global $pdo;
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    $user = $_SESSION['admin_user'] ?? 'admin';
+    $stmt = $pdo->prepare("INSERT INTO activity_log (admin_user, action, ip) VALUES (?, ?, ?)");
+    $stmt->execute([$user, $action, $ip]);
+}
+
+function sendResponse($data, $code = 200) {
+    http_response_code($code);
+    echo json_encode($data);
+    exit;
+}
+
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+$action = $_GET['action'] ?? '';
+
+// ── AUTO-CREATE ADMIN (DEFAULT CREDENTIALS) ──
+try {
+    $stmt = $pdo->prepare("SELECT id FROM admins WHERE username = 'Rajan5530'");
+    $stmt->execute();
+    if (!$stmt->fetch()) {
+        $hash = password_hash('Rkchandra5530', PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)");
+        $stmt->execute(['Rajan5530', $hash]);
+    }
+} catch (Exception $e) { /* ignore */ }
+
+// ── ROUTER ──
+switch ($action) {
+
+    case 'patients':
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method === 'GET') {
+            $search = $_GET['search'] ?? '';
+            $sql = "SELECT * FROM patients";
+            $params = [];
+            if ($search) {
+                $sql .= " WHERE name LIKE ? OR phone LIKE ? OR patient_id LIKE ?";
+                $params = ["%$search%", "%$search%", "%$search%"];
+            }
+            $sql .= " ORDER BY created_at DESC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            sendResponse(['success' => true, 'data' => $stmt->fetchAll()]);
+        }
+        if ($method === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $name = trim($data['name'] ?? '');
+            $phone = trim($data['phone'] ?? '');
+            $test = trim($data['test'] ?? '');
+            $status = $data['status'] ?? 'pending';
+            $due = floatval($data['due'] ?? 0);
+            if (empty($name) || empty($phone)) sendResponse(['success' => false, 'error' => 'Name and phone required'], 400);
+            $stmt = $pdo->query("SELECT MAX(CAST(SUBSTRING(patient_id,2) AS UNSIGNED)) as max_id FROM patients");
+            $row = $stmt->fetch();
+            $nextId = ($row['max_id'] ?? 0) + 1;
+            $patientId = 'P' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+            $sql = "INSERT INTO patients (patient_id, name, phone, test, status, due_amount) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            if ($stmt->execute([$patientId, $name, $phone, $test, $status, $due])) {
+                logActivity("Added patient $patientId");
+                sendResponse(['success' => true, 'patient_id' => $patientId]);
+            }
+            sendResponse(['success' => false, 'error' => 'Insert failed'], 500);
+        }
+        if ($method === 'DELETE') {
+            $id = $_GET['id'] ?? '';
+            if (!$id) sendResponse(['success' => false, 'error' => 'ID required'], 400);
+            $stmt = $pdo->prepare("DELETE FROM patients WHERE patient_id = ?");
+            if ($stmt->execute([$id])) { logActivity("Deleted patient $id"); sendResponse(['success' => true]); }
+            sendResponse(['success' => false, 'error' => 'Delete failed'], 500);
+        }
+        break;
+
+    case 'reports':
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method === 'GET') {
+            if (isset($_GET['action']) && $_GET['action'] === 'download' && isset($_GET['file'])) {
+                $file = basename($_GET['file']);
+                $path = __DIR__ . '/uploads/' . $file;
+                if (file_exists($path)) {
+                    header('Content-Type: application/pdf');
+                    header('Content-Disposition: attachment; filename="' . $file . '"');
+                    readfile($path);
+                    exit;
+                }
+                sendResponse(['success' => false, 'error' => 'File not found'], 404);
+            }
+            $sql = "SELECT r.*, p.name FROM reports r JOIN patients p ON r.patient_id = p.patient_id ORDER BY uploaded_at DESC";
+            sendResponse(['success' => true, 'data' => $pdo->query($sql)->fetchAll()]);
+        }
+        if ($method === 'POST') {
+            $patientId = $_POST['patient_id'] ?? '';
+            $testName = $_POST['test'] ?? '';
+            $replace = ($_POST['replace'] ?? 'no') === 'yes';
+            $file = $_FILES['file'] ?? null;
+            if (!$patientId || !$testName || !$file || $file['error'] !== UPLOAD_ERR_OK) {
+                sendResponse(['success' => false, 'error' => 'Missing data or upload error'], 400);
+            }
+            $uploadDir = __DIR__ . '/uploads/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+            if ($replace) {
+                $stmt = $pdo->prepare("SELECT file_path FROM reports WHERE patient_id = ? AND test_name = ?");
+                $stmt->execute([$patientId, $testName]);
+                $old = $stmt->fetch();
+                if ($old && file_exists($uploadDir . $old['file_path'])) {
+                    unlink($uploadDir . $old['file_path']);
+                    $pdo->prepare("DELETE FROM reports WHERE patient_id = ? AND test_name = ?")->execute([$patientId, $testName]);
+                }
+            }
+            $filename = $patientId . '_' . preg_replace('/[^a-zA-Z0-9]/', '_', $testName) . '_' . date('Ymd_His') . '.pdf';
+            $target = $uploadDir . $filename;
+            if (move_uploaded_file($file['tmp_name'], $target)) {
+                $sql = "INSERT INTO reports (patient_id, test_name, file_path) VALUES (?, ?, ?)";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$patientId, $testName, $filename]);
+                logActivity("Uploaded report for $patientId");
+                sendResponse(['success' => true, 'file' => $filename]);
+            }
+            sendResponse(['success' => false, 'error' => 'File move failed'], 500);
+        }
+        if ($method === 'DELETE') {
+            $id = $_GET['id'] ?? 0;
+            if (!$id) sendResponse(['success' => false, 'error' => 'ID required'], 400);
+            $stmt = $pdo->prepare("SELECT file_path FROM reports WHERE id = ?");
+            $stmt->execute([$id]);
+            $row = $stmt->fetch();
+            if ($row) {
+                $path = __DIR__ . '/uploads/' . $row['file_path'];
+                if (file_exists($path)) unlink($path);
+                $pdo->prepare("DELETE FROM reports WHERE id = ?")->execute([$id]);
+                logActivity("Deleted report ID $id");
+                sendResponse(['success' => true]);
+            }
+            sendResponse(['success' => false, 'error' => 'Report not found'], 404);
+        }
+        break;
+
+    case 'whatsapp':
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') sendResponse(['success' => false, 'error' => 'Method not allowed'], 405);
+        $data = json_decode(file_get_contents('php://input'), true);
+        $phone = $data['phone'] ?? '';
+        $message = $data['message'] ?? '';
+        if (!$phone || !$message) sendResponse(['success' => false, 'error' => 'Phone and message required'], 400);
+        logActivity("WhatsApp (dummy) to $phone: $message");
+        sendResponse(['success' => true, 'info' => 'Dummy mode – set Twilio to enable']);
+        break;
+
+    case 'payments':
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method === 'GET') {
+            $paid = $pdo->query("SELECT SUM(amount) FROM payments WHERE status='paid'")->fetchColumn();
+            $unpaid = $pdo->query("SELECT SUM(amount) FROM payments WHERE status='unpaid'")->fetchColumn();
+            $countPaid = $pdo->query("SELECT COUNT(*) FROM payments WHERE status='paid'")->fetchColumn();
+            $countUnpaid = $pdo->query("SELECT COUNT(*) FROM payments WHERE status='unpaid'")->fetchColumn();
+            sendResponse(['success' => true, 'data' => [
+                'total_paid' => floatval($paid ?? 0),
+                'total_due' => floatval($unpaid ?? 0),
+                'paid_count' => intval($countPaid),
+                'unpaid_count' => intval($countUnpaid)
+            ]]);
+        }
+        if ($method === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $patientId = $data['patient_id'] ?? '';
+            if (!$patientId) sendResponse(['success' => false, 'error' => 'Patient ID required'], 400);
+            $pdo->prepare("UPDATE payments SET status='paid', payment_date=NOW() WHERE patient_id = ? AND status='unpaid'")->execute([$patientId]);
+            $pdo->prepare("UPDATE patients SET due_amount = 0 WHERE patient_id = ?")->execute([$patientId]);
+            logActivity("Marked payment paid for $patientId");
+            sendResponse(['success' => true]);
+        }
+        break;
+
+    case 'analytics':
+        $today = date('Y-m-d');
+        $todayPatients = $pdo->query("SELECT COUNT(*) FROM patients WHERE DATE(created_at) = '$today'")->fetchColumn();
+        $totalReports = $pdo->query("SELECT COUNT(*) FROM reports")->fetchColumn();
+        $pendingReports = $pdo->query("SELECT COUNT(*) FROM patients WHERE status='pending'")->fetchColumn();
+        $cultureProcess = $pdo->query("SELECT COUNT(*) FROM patients WHERE test LIKE '%Urine%' AND status='process'")->fetchColumn();
+        $duePatients = $pdo->query("SELECT COUNT(*) FROM patients WHERE due_amount > 0")->fetchColumn();
+        $monthlyRevenue = $pdo->query("SELECT SUM(amount) FROM payments WHERE status='paid' AND MONTH(payment_date)=MONTH(CURDATE())")->fetchColumn();
+        $testWise = $pdo->query("SELECT test, COUNT(*) as count, SUM(due_amount) as revenue FROM patients GROUP BY test")->fetchAll();
+        sendResponse(['success' => true, 'data' => [
+            'today_patients' => intval($todayPatients),
+            'total_reports' => intval($totalReports),
+            'pending_reports' => intval($pendingReports),
+            'culture_process' => intval($cultureProcess),
+            'due_patients' => intval($duePatients),
+            'monthly_revenue' => floatval($monthlyRevenue ?? 0),
+            'test_wise' => $testWise
+        ]]);
+        break;
+
+    case 'backup':
+        $subAction = $_GET['sub'] ?? '';
+        if ($subAction === 'database') {
+            $backupDir = __DIR__ . '/backups/';
+            if (!is_dir($backupDir)) mkdir($backupDir, 0777, true);
+            $filename = 'db_backup_' . date('Y-m-d_H-i-s') . '.sql';
+            $path = $backupDir . $filename;
+            exec("mysqldump --user=root --password= --host=localhost rajan_path_lab > $path 2>&1", $output, $code);
+            if ($code === 0 && file_exists($path)) {
+                logActivity("DB backup: $filename");
+                sendResponse(['success' => true, 'file' => $filename]);
+            }
+            sendResponse(['success' => false, 'error' => 'Backup failed'], 500);
+        }
+        if ($subAction === 'pdf') {
+            $backupDir = __DIR__ . '/backups/';
+            if (!is_dir($backupDir)) mkdir($backupDir, 0777, true);
+            $zipFile = 'pdf_backup_' . date('Y-m-d') . '.zip';
+            $zipPath = $backupDir . $zipFile;
+            $zip = new ZipArchive();
+            if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+                $files = glob(__DIR__ . '/uploads/*.pdf');
+                foreach ($files as $f) $zip->addFile($f, basename($f));
+                $zip->close();
+                logActivity("PDF backup: $zipFile");
+                sendResponse(['success' => true, 'file' => $zipFile]);
+            }
+            sendResponse(['success' => false, 'error' => 'PDF backup failed'], 500);
+        }
+        if ($subAction === 'restore' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                $tmp = $_FILES['file']['tmp_name'];
+                exec("mysql --user=root --password= --host=localhost rajan_path_lab < $tmp 2>&1", $output, $code);
+                if ($code === 0) { logActivity("Restored DB"); sendResponse(['success' => true]); }
+                sendResponse(['success' => false, 'error' => implode(' ', $output)], 500);
+            }
+            sendResponse(['success' => false, 'error' => 'No file'], 400);
+        }
+        sendResponse(['success' => false, 'error' => 'Invalid backup action'], 400);
+        break;
+
+    case 'auth':
+        $subAction = $_GET['sub'] ?? '';
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($subAction === 'login' && $method === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $username = $data['username'] ?? '';
+            $password = $data['password'] ?? '';
+            $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ?");
+            $stmt->execute([$username]);
+            $admin = $stmt->fetch();
+            if ($admin && password_verify($password, $admin['password_hash'])) {
+                $_SESSION['admin_user'] = $username;
+                $_SESSION['admin_id'] = $admin['id'];
+                $pdo->prepare("UPDATE admins SET last_login = NOW() WHERE id = ?")->execute([$admin['id']]);
+                logActivity("Login: $username");
+                sendResponse(['success' => true, 'username' => $username]);
+            }
+            sendResponse(['success' => false, 'error' => 'Invalid credentials'], 401);
+        }
+        if ($subAction === 'logout' && $method === 'POST') {
+            session_destroy();
+            sendResponse(['success' => true]);
+        }
+        if ($subAction === 'change_password' && $method === 'POST') {
+            if (!isset($_SESSION['admin_user'])) sendResponse(['success' => false, 'error' => 'Unauthorized'], 401);
+            $data = json_decode(file_get_contents('php://input'), true);
+            $old = $data['old_password'] ?? '';
+            $new = $data['new_password'] ?? '';
+            if (strlen($new) < 6) sendResponse(['success' => false, 'error' => 'Password too short'], 400);
+            $stmt = $pdo->prepare("SELECT password_hash FROM admins WHERE username = ?");
+            $stmt->execute([$_SESSION['admin_user']]);
+            $row = $stmt->fetch();
+            if ($row && password_verify($old, $row['password_hash'])) {
+                $hash = password_hash($new, PASSWORD_DEFAULT);
+                $pdo->prepare("UPDATE admins SET password_hash = ? WHERE username = ?")->execute([$hash, $_SESSION['admin_user']]);
+                logActivity("Password changed for " . $_SESSION['admin_user']);
+                sendResponse(['success' => true]);
+            }
+            sendResponse(['success' => false, 'error' => 'Old password incorrect'], 401);
+        }
+        if ($subAction === 'activity_log' && $method === 'GET') {
+            if (!isset($_SESSION['admin_user'])) sendResponse(['success' => false, 'error' => 'Unauthorized'], 401);
+            $stmt = $pdo->query("SELECT * FROM activity_log ORDER BY created_at DESC LIMIT 100");
+            sendResponse(['success' => true, 'data' => $stmt->fetchAll()]);
+        }
+        if ($subAction === 'check' && $method === 'GET') {
+            sendResponse(['success' => isset($_SESSION['admin_user']), 'username' => $_SESSION['admin_user'] ?? null]);
+        }
+        sendResponse(['success' => false, 'error' => 'Invalid auth action'], 400);
+        break;
+
+    default:
+        sendResponse(['success' => false, 'error' => 'Invalid action: ' . $action], 400);
+}CREATE DATABASE IF NOT EXISTS rajan_path_lab;
+USE rajan_path_lab;
+
+CREATE TABLE patients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id VARCHAR(20) UNIQUE NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    test VARCHAR(100),
+    status ENUM('pending','process','done') DEFAULT 'pending',
+    due_amount DECIMAL(10,2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id VARCHAR(20) NOT NULL,
+    test_name VARCHAR(100) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE payments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id VARCHAR(20) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    status ENUM('paid','unpaid') DEFAULT 'unpaid',
+    order_id VARCHAR(100) NULL,
+    payment_date TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE activity_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_user VARCHAR(50) NOT NULL,
+    action TEXT NOT NULL,
+    ip VARCHAR(45) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    last_login TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
