@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Rajan Path Lab | Premium Diagnostics</title>  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
-    <!-- Charts & QR for Admin (loaded only when needed) -->  
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>  
 
@@ -59,7 +58,7 @@
         }  
         nav a:hover { color: var(--accent-teal); }  
 
-        /* ─── ADDED: ADMIN BUTTON & PATIENT PORTAL BUTTON (only additions) ─── */  
+        /* ─── ADDED: ADMIN BUTTON & PATIENT PORTAL BUTTON ─── */  
         .admin-login-btn, .patient-portal-btn {  
             background: var(--accent-teal);  
             color: white;  
@@ -110,7 +109,6 @@
         .btn-book:hover { background: #b82d2f; }  
         .btn-report:hover { background: #006666; }  
 
-        /* ─── ADDED: Patient Portal Hero Button ─── */  
         .btn-portal {  
             background: #25D366;  
             padding: 12px 28px;  
@@ -196,7 +194,7 @@
             section { padding: 30px 15px; }  
         }  
 
-        /* ─── ADMIN PANEL STYLES (HIDDEN BY DEFAULT) ─── */  
+        /* ─── ADMIN PANEL STYLES ─── */  
         #adminPanelWrapper {  
             display: none;  
             position: fixed;  
@@ -219,7 +217,6 @@
             min-height: 90vh;  
         }  
 
-        /* Admin Header */  
         .admin-header {  
             background: var(--primary-blue);  
             color: white;  
@@ -254,7 +251,6 @@
 
         .admin-body { display: flex; min-height: calc(90vh - 60px); }  
 
-        /* Admin Sidebar */  
         .admin-sidebar {  
             width: 220px;  
             background: var(--primary-blue);  
@@ -295,7 +291,6 @@
         .admin-section.active { display: block; }  
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }  
 
-        /* Admin Stats */  
         .stats-grid {  
             display: grid;  
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));  
@@ -330,7 +325,6 @@
         .stat-card .info h4 { font-size: 20px; font-weight: 700; margin: 0; }  
         .stat-card .info p { font-size: 12px; margin: 2px 0 0 0; color: #64748b; }  
 
-        /* Admin Tables */  
         .table-wrap {  
             background: white;  
             border: 1px solid #e2e8f0;  
@@ -460,7 +454,6 @@
             margin-left: 6px;  
         }  
 
-        /* ─── LOGIN MODAL ─── */  
         .login-modal {  
             display: none;  
             position: fixed;  
@@ -500,7 +493,6 @@
             margin-top: 6px;  
         }  
 
-        /* ─── UPI MODAL ─── */  
         .upi-modal {  
             display: none;  
             position: fixed;  
@@ -562,9 +554,40 @@
         .portal-input-group { margin-bottom: 1.5rem; position: relative; }  
         .portal-input-label { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; color: #2c3f4c; margin-bottom: 10px; }  
         .portal-input-label span { background: #f0f3f9; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1rem; }  
-        .portal-input { width: 100%; padding: 1rem 1.3rem; font-size: 1rem; font-family: 'Inter', 'Segoe UI', monospace; background: white; border: 1.5px solid #e2e8f0; border-radius: 1.25rem; transition: all 0.25s; outline: none; font-weight: 500; color: #0f172a; }  
+        /* ─── UPDATED: Input placeholder says ID or Mobile ─── */  
+        .portal-input {  
+            width: 100%;  
+            padding: 1rem 1.3rem;  
+            font-size: 1rem;  
+            font-family: 'Inter', 'Segoe UI', monospace;  
+            background: white;  
+            border: 1.5px solid #e2e8f0;  
+            border-radius: 1.25rem;  
+            transition: all 0.25s;  
+            outline: none;  
+            font-weight: 500;  
+            color: #0f172a;  
+        }  
         .portal-input:focus { border-color: #d4af37; box-shadow: 0 4px 14px rgba(212,175,55,0.2); }  
-        .portal-btn { width: 100%; background: linear-gradient(98deg, #075E54 0%, #128C7E 100%); border: none; padding: 1rem 1.5rem; font-size: 1rem; font-weight: 700; font-family: inherit; color: white; border-radius: 2rem; cursor: pointer; transition: all 0.25s cubic-bezier(0.2,0.9,0.4,1.1); display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 8px 20px -8px rgba(7,94,84,0.5); margin-top: 0.5rem; }  
+        .portal-btn {  
+            width: 100%;  
+            background: linear-gradient(98deg, #075E54 0%, #128C7E 100%);  
+            border: none;  
+            padding: 1rem 1.5rem;  
+            font-size: 1rem;  
+            font-weight: 700;  
+            font-family: inherit;  
+            color: white;  
+            border-radius: 2rem;  
+            cursor: pointer;  
+            transition: all 0.25s cubic-bezier(0.2,0.9,0.4,1.1);  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            gap: 12px;  
+            box-shadow: 0 8px 20px -8px rgba(7,94,84,0.5);  
+            margin-top: 0.5rem;  
+        }  
         .portal-btn:hover { transform: translateY(-2px); background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%); box-shadow: 0 14px 26px -10px rgba(7,94,84,0.7); }  
         .portal-status { margin-top: 1.2rem; padding: 0.9rem 1.2rem; background: #f8fafd; border-radius: 1rem; font-size: 0.85rem; color: #2c3e50; border-left: 3px solid #c9a03d; transition: 0.2s; line-height: 1.4; font-weight: 500; }  
         .portal-status.success { background: #e6f4ea; border-left-color: #2b7a3e; color: #135c2c; }  
@@ -620,10 +643,7 @@
 </head>  
 <body>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- ORIGINAL PATIENT WEBSITE (100% UNCHANGED) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── ORIGINAL PATIENT WEBSITE ─── -->  
     <header>  
         <h1>RAJAN <span>PATH LAB</span></h1>  
         <nav>  
@@ -632,7 +652,6 @@
             <a href="book.html">Book Test</a>  
             <a href="report.html">Download Report</a>  
             <a href="contact.html">About</a>  
-            <!-- ADDED: Patient Portal & Admin buttons (only additions) -->  
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>  
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>  
         </nav>  
@@ -643,7 +662,6 @@
         <div class="btn-container">  
             <a class="btn-book" href="book.html">Book Test</a>  
             <a class="btn-report" href="report.html">Download Report</a>  
-            <!-- ADDED: Patient Portal Hero Button -->  
             <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>  
         </div>  
     </div>  
@@ -737,10 +755,7 @@
 
     <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- ADMIN LOGIN MODAL -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── ADMIN LOGIN MODAL ─── -->  
     <div class="login-modal" id="loginModal">  
         <div class="login-modal-content">  
             <h3><i class="fas fa-lock"></i> Admin Login</h3>  
@@ -756,10 +771,7 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- ADMIN PANEL (OVERLAY) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── ADMIN PANEL ─── -->  
     <div id="adminPanelWrapper">  
         <div id="adminPanelContainer">  
             <div class="admin-header">  
@@ -806,7 +818,7 @@
                         </div>  
                     </div>  
 
-                    <!-- PATIENTS (65+ TESTS) -->  
+                    <!-- PATIENTS -->  
                     <div class="admin-section" id="sec-patients">  
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>  
                         <div class="form-grid">  
@@ -1030,10 +1042,7 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- UPI MODAL (for admin payments) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── UPI MODAL ─── -->  
     <div class="upi-modal" id="upiModal">  
         <div class="upi-modal-content">  
             <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>  
@@ -1043,27 +1052,24 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- PATIENT PORTAL MODAL -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── PATIENT PORTAL MODAL ─── -->  
     <div class="patient-portal-modal" id="patientPortalModal">  
         <div class="patient-portal-content">  
             <div class="portal-header">  
                 <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>  
-                <div class="portal-sub">◆ Enter your Patient ID to view & download reports ◆</div>  
+                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>  
             </div>  
             <div class="portal-body">  
                 <div class="portal-input-group">  
                     <div class="portal-input-label">  
-                        <span>🆔</span> PATIENT ID  
+                        <span>🔍</span> PATIENT ID OR MOBILE  
                     </div>  
-                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter your Patient ID (e.g. P001 or RPL-062026-1186)" autocomplete="off">  
+                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number (e.g. P001, RPL-062026-1186, or 9876543210)" autocomplete="off">  
                 </div>  
                 <button id="portalFetchBtn" class="portal-btn">  
                     <span>🔍</span> VIEW MY REPORTS →  
                 </button>  
-                <div id="portalStatus" class="portal-status">◆ Enter your Patient ID and click "VIEW MY REPORTS"</div>  
+                <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>  
                 <div id="portalReportList" class="portal-report-list" style="display: none;"></div>  
                 <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>  
             </div>  
@@ -1074,10 +1080,7 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- JAVASCRIPT – ONLY ADMIN & PATIENT PORTAL LOGIC -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── JAVASCRIPT ─── -->  
     <script>  
         (function() {  
             'use strict';  
@@ -1188,7 +1191,7 @@
 
             // ─── PATIENT PORTAL ───  
             function openPortal() { portalModal.classList.add('active'); document.body.style.overflow = 'hidden'; }  
-            function closePortal() { portalModal.classList.remove('active'); document.body.style.overflow = ''; $('portalStatus').className = 'portal-status'; $('portalStatus').textContent = '◆ Enter your Patient ID and click "VIEW MY REPORTS"'; $('portalReportList').style.display = 'none'; $('portalPatientId').value = ''; }  
+            function closePortal() { portalModal.classList.remove('active'); document.body.style.overflow = ''; $('portalStatus').className = 'portal-status'; $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"'; $('portalReportList').style.display = 'none'; $('portalPatientId').value = ''; }  
 
             $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });  
             $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });  
@@ -1196,13 +1199,13 @@
             portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });  
 
             $('portalFetchBtn').addEventListener('click', async function() {  
-                const patientId = $('portalPatientId').value.trim();  
+                const searchValue = $('portalPatientId').value.trim();  
                 const statusDiv = $('portalStatus');  
                 const listDiv = $('portalReportList');  
 
-                if (!patientId) {  
+                if (!searchValue) {  
                     statusDiv.className = 'portal-status error';  
-                    statusDiv.innerHTML = '⚠️ Please enter your Patient ID.';  
+                    statusDiv.innerHTML = '⚠️ Please enter your Patient ID or Mobile Number.';  
                     listDiv.style.display = 'none';  
                     return;  
                 }  
@@ -1210,24 +1213,31 @@
                 patients = loadData('patients', defaultPatients);  
                 reports = loadData('reports', defaultReports);  
 
-                const patient = patients.find(p => p.patient_id === patientId);  
+                // ─── SEARCH BY PATIENT ID OR MOBILE NUMBER ───  
+                const patient = patients.find(p =>   
+                    p.patient_id === searchValue ||   
+                    p.phone === searchValue  
+                );  
+
                 if (!patient) {  
                     statusDiv.className = 'portal-status error';  
-                    statusDiv.innerHTML = '❌ No patient found with ID: ' + patientId;  
+                    statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;  
                     listDiv.style.display = 'none';  
                     return;  
                 }  
 
-                const patientReports = reports.filter(r => r.patient_id === patientId);  
+                const patientReports = reports.filter(r => r.patient_id === patient.patient_id);  
                 if (patientReports.length === 0) {  
                     statusDiv.className = 'portal-status';  
-                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (' + patientId + ')';  
+                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (ID: ' + patient.patient_id + ')';  
                     listDiv.style.display = 'none';  
                     return;  
                 }  
 
+                // Show how patient was found  
+                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';  
                 statusDiv.className = 'portal-status success';  
-                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name + '. Due amount: ₹' + patient.due_amount;  
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name + ' (via ' + foundBy + '). Due amount: ₹' + patient.due_amount;  
 
                 let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';  
                 for (const report of patientReports) {  
@@ -1854,10 +1864,10 @@
 
             // ─── INIT ───  
             openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));  
-            console.log('✅ Rajan Path Lab · Original Patient Website + Admin Panel + Patient Portal');  
+            console.log('✅ Rajan Path Lab · Original Patient Website + Admin Panel + Patient Portal (ID/Mobile Search)');  
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');  
             console.log('📦 Data saved in localStorage and IndexedDB.');  
-            console.log('👤 Patients click "My Reports" to download reports (due check enabled).');  
+            console.log('👤 Patients can search by Patient ID OR Mobile Number.');  
 
         })();  
     </script>  
