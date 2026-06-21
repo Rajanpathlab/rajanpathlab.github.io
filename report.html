@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Premier Reports | Classic Edition</title>
+  <title>Patient Report Download | Rajan Path Lab</title>
   <style>
     * {
       margin: 0;
@@ -33,7 +33,7 @@
     }
 
     .classic-premium-card {
-      max-width: 760px;
+      max-width: 860px;
       width: 100%;
       background: #ffffff;
       border-radius: 2rem;
@@ -99,13 +99,6 @@
       padding: 2rem 2rem 1.8rem;
     }
 
-    .row-2col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.2rem;
-      margin-bottom: 1rem;
-    }
-
     .input-group {
       margin-bottom: 1.5rem;
       position: relative;
@@ -134,19 +127,6 @@
       font-size: 1rem;
     }
 
-    .doctor-note {
-      background: #f0f4fa;
-      padding: 8px 14px;
-      border-radius: 1rem;
-      font-size: 0.75rem;
-      color: #075e54;
-      margin-bottom: 1.2rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid #d4af3750;
-    }
-
     .classic-input {
       width: 100%;
       padding: 1rem 1.3rem;
@@ -164,48 +144,6 @@
     .classic-input:focus {
       border-color: #d4af37;
       box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
-    }
-
-    .autocomplete-list {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-top: none;
-      border-radius: 0 0 1rem 1rem;
-      max-height: 220px;
-      overflow-y: auto;
-      z-index: 100;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      margin-top: -8px;
-      border-top: 1px solid #d4af37;
-    }
-
-    .autocomplete-item {
-      padding: 10px 1.3rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #1e2f3c;
-      transition: background 0.15s;
-      border-bottom: 1px solid #f0f2f5;
-    }
-
-    .autocomplete-item:hover {
-      background: #fef7e0;
-      color: #b8860b;
-    }
-
-    .optional-note {
-      font-size: 0.7rem;
-      margin-top: 8px;
-      margin-left: 12px;
-      color: #7890a3;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .whatsapp-premium-btn {
@@ -268,6 +206,83 @@
       border-left-color: #e6a017;
     }
 
+    .report-list {
+      margin-top: 1.5rem;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 1.5rem;
+    }
+
+    .report-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      padding: 0.8rem 1.2rem;
+      border-radius: 1rem;
+      margin-bottom: 0.8rem;
+      border: 1px solid #edf2f7;
+      transition: 0.2s;
+    }
+
+    .report-item:hover {
+      background: #f1f5f9;
+    }
+
+    .report-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .report-info .test-name {
+      font-weight: 600;
+      color: #1a212c;
+    }
+
+    .report-info .upload-date {
+      font-size: 0.8rem;
+      color: #7890a3;
+    }
+
+    .report-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .download-btn {
+      background: #d4af37;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.8rem;
+    }
+
+    .download-btn:hover {
+      background: #b8960e;
+      transform: scale(1.02);
+    }
+
+    .download-btn:disabled {
+      background: #b0b8c5;
+      cursor: not-allowed;
+      opacity: 0.6;
+      transform: none;
+    }
+
+    .due-badge {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 0.2rem 0.8rem;
+      border-radius: 2rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
     .premium-footer {
       padding: 1rem 2rem 1.4rem;
       font-size: 0.7rem;
@@ -277,22 +292,11 @@
       justify-content: space-between;
     }
 
-    @keyframes elegantShake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-      100% { transform: translateX(0); }
-    }
-    .error-shake {
-      animation: elegantShake 0.35s ease;
-      border-color: #d4af37 !important;
-      background-color: #fffef8;
-    }
-
     @media (max-width: 650px) {
       .form-container { padding: 1.5rem; }
-      .row-2col { grid-template-columns: 1fr; gap: 0; }
       .header-flex h1 { font-size: 1.5rem; }
+      .report-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .report-actions { width: 100%; justify-content: flex-end; }
     }
   </style>
 </head>
@@ -301,274 +305,224 @@
 <div class="classic-premium-card">
   <div class="premium-header">
     <div class="header-flex">
-      <h1>📋 REPORT PORTAL <span class="classic-badge">WHATSAPP DIRECT</span></h1>
+      <h1>📄 PATIENT REPORT PORTAL <span class="classic-badge">DOWNLOAD</span></h1>
     </div>
-    <div class="header-sub">◆ Enter patient details ◆ Report sent directly to Doctor's WhatsApp</div>
+    <div class="header-sub">◆ Enter your Patient ID to view & download reports ◆</div>
   </div>
 
   <div class="form-container">
-    <div class="doctor-note">
-      <span>👨‍⚕️</span> Doctor's WhatsApp: <strong>+91 8709946177</strong>
-    </div>
-
-    <!-- PATIENT ID -->
+    <!-- PATIENT ID INPUT -->
     <div class="input-group">
       <div class="input-label">
         <span>🆔</span> PATIENT ID
       </div>
-      <input type="text" id="patientIdInput" class="classic-input" placeholder="Enter patient ID" autocomplete="off">
+      <input type="text" id="patientIdInput" class="classic-input" placeholder="Enter your Patient ID (e.g. P001 or RPL-062026-1186)" autocomplete="off">
     </div>
 
-    <!-- Two columns: Patient Name & Doctor Name -->
-    <div class="row-2col">
-      <!-- PATIENT NAME -->
-      <div class="input-group">
-        <div class="input-label">
-          <span>👤</span> PATIENT NAME
-        </div>
-        <input type="text" id="patientNameInput" class="classic-input" placeholder="Enter patient full name" autocomplete="off">
-      </div>
-
-      <!-- DOCTOR NAME with auto-suggest -->
-      <div class="input-group" id="doctorGroup">
-        <div class="input-label">
-          <span>👨‍⚕️</span> DOCTOR NAME
-        </div>
-        <input type="text" id="doctorNameInput" class="classic-input" placeholder="Type or select from list" autocomplete="off">
-        <div id="doctorDropdown" class="autocomplete-list" style="display: none;"></div>
-      </div>
-    </div>
-
-    <!-- PATIENT MOBILE - Optional -->
-    <div class="input-group">
-      <div class="input-label">
-        <span>📞</span> PATIENT MOBILE
-      </div>
-      <input type="tel" id="mobileNumberInput" class="classic-input" placeholder="Enter mobile number (optional)" autocomplete="off">
-    </div>
-
-    <!-- Send Button -->
-    <button id="whatsappSendBtn" class="whatsapp-premium-btn">
-      <span>📲</span> SEND REPORT TO DOCTOR'S WHATSAPP →
+    <!-- Search / Fetch Button -->
+    <button id="fetchReportBtn" class="whatsapp-premium-btn">
+      <span>🔍</span> VIEW MY REPORTS →
     </button>
 
     <!-- Status Message -->
     <div id="statusMsg" class="status-area">
-      ◆ Fill all fields → Report sent to Doctor's WhatsApp
+      ◆ Enter your Patient ID and click "VIEW MY REPORTS"
     </div>
 
+    <!-- Report List will be injected here -->
+    <div id="reportListContainer" class="report-list" style="display: none;"></div>
+
     <div class="premium-footer">
-      <span>✦ SECURE HEALTH REPORT SYSTEM ✦</span>
-      <span>CLASSIC PREMIUM EDITION</span>
+      <span>✦ SECURE DOWNLOAD SYSTEM ✦</span>
+      <span>RAJAN PATH LAB</span>
     </div>
   </div>
 </div>
 
 <script>
   (function() {
-    // ======================== DOCTOR MASTER LIST ========================
-    const doctorMasterList = [
-        "PRAWESH MEHTA", "PARSHNATH MEHTA", "DHARMENDRA MEHTA", "JITENDRA KR MEHTA", "CHHOTU GUPTA", "SUNIL KUMAR",
-        "KIRAN VERMA", "SUNIL ANAND", "PANKAJ KUMAR (B.H.M.S)", "ARUN KUMAR (B.A.M.S)", "RAJESH KUMAR (B.A.M.S)",
-        "SELF", "ALOK MEHTA", "BITTU KUMAR", "BALWANT PANDEY", "RAMESHWAR PRASAD", "R.L. RAM", "RAJU VISHWAKARMA",
-        "SUDAMA PRAJAPATI", "AJIJ ANSARI", "MERAJ ALAM", "VIJAY MEHTA", "RANDHIR KUMAR", "S. SHARMA",
-        "MAJHAR HUSSAIN", "GUDAN PRASAD", "RAJ VISHWAKARMA"
-    ];
+    'use strict';
 
-    // ======================== DOM ELEMENTS ========================
+    // ─── CONSTANTS ───
+    const DB_NAME = 'RPL_PDF_DB';
+    const STORE_NAME = 'pdf_files';
+    let db = null;
+
+    // ─── DOM REFS ───
     const patientIdInput = document.getElementById('patientIdInput');
-    const patientNameInput = document.getElementById('patientNameInput');
-    const doctorInput = document.getElementById('doctorNameInput');
-    const mobileInput = document.getElementById('mobileNumberInput');
-    const whatsappBtn = document.getElementById('whatsappSendBtn');
+    const fetchBtn = document.getElementById('fetchReportBtn');
     const statusDiv = document.getElementById('statusMsg');
-    const doctorDropdown = document.getElementById('doctorDropdown');
+    const reportListContainer = document.getElementById('reportListContainer');
 
-    // ======================== DOCTOR AUTO-SUGGEST ========================
-    function showDoctorSuggestions(filterText) {
-      const filter = filterText.trim().toUpperCase();
-      let filteredDocs = [...doctorMasterList];
-      if (filter !== "") {
-        filteredDocs = doctorMasterList.filter(doc => doc.toUpperCase().includes(filter));
-      }
-      if (filteredDocs.length === 0) {
-        doctorDropdown.style.display = 'none';
+    // ─── INDEXED DB HELPERS ───
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = function(e) {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+        request.onsuccess = function(e) {
+          db = e.target.result;
+          resolve(db);
+        };
+        request.onerror = function(e) {
+          reject(e.target.error);
+        };
+      });
+    }
+
+    function getPDFFile(reportId) {
+      return new Promise((resolve, reject) => {
+        if (!db) return reject('DB not open');
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const request = store.get(reportId.toString());
+        request.onsuccess = () => resolve(request.result ? request.result.file : null);
+        request.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    // ─── DATA LOADING FROM localStorage ───
+    function loadData(key, defaultData) {
+      try {
+        const stored = localStorage.getItem('rpl_' + key);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          return parsed; // could be empty array
+        }
+      } catch (e) { /* ignore */ }
+      return defaultData;
+    }
+
+    // ─── MAIN FETCH FUNCTION ───
+    async function fetchPatientReports() {
+      const patientId = patientIdInput.value.trim();
+      if (!patientId) {
+        statusDiv.innerHTML = '⚠️ Please enter your Patient ID.';
+        statusDiv.className = 'status-area status-error';
+        reportListContainer.style.display = 'none';
         return;
       }
-      doctorDropdown.innerHTML = '';
-      filteredDocs.forEach(doc => {
-        const div = document.createElement('div');
-        div.className = 'autocomplete-item';
-        div.textContent = doc;
-        div.addEventListener('click', () => {
-          doctorInput.value = doc;
-          doctorDropdown.style.display = 'none';
-          doctorInput.focus();
+
+      // Load patients and reports from localStorage
+      const defaultPatients = [
+        { patient_id: 'P001', name: 'Ravi Kumar', phone: '9876543210', test: 'CBC', status: 'pending', due_amount: 450 },
+        { patient_id: 'P002', name: 'Priya Singh', phone: '9876543211', test: 'Thyroid', status: 'process', due_amount: 0 },
+        { patient_id: 'RPL-062026-1186', name: 'Rajesh Gupta', phone: '9876543214', test: 'CBC WIDAL BSR', status: 'pending', due_amount: 0 }
+      ];
+      const defaultReports = [
+        { id: 1, patient_id: 'P001', name: 'Ravi Kumar', test_name: 'CBC', file_path: 'P001_CBC.pdf', uploaded_at: new Date().toLocaleString() },
+        { id: 2, patient_id: 'P002', name: 'Priya Singh', test_name: 'Thyroid', file_path: 'P002_Thyroid.pdf', uploaded_at: new Date().toLocaleString() }
+      ];
+
+      const patients = loadData('patients', defaultPatients);
+      const reports = loadData('reports', defaultReports);
+
+      // Find patient
+      const patient = patients.find(p => p.patient_id === patientId);
+      if (!patient) {
+        statusDiv.innerHTML = `❌ No patient found with ID: ${patientId}`;
+        statusDiv.className = 'status-area status-error';
+        reportListContainer.style.display = 'none';
+        return;
+      }
+
+      // Get reports for this patient
+      const patientReports = reports.filter(r => r.patient_id === patientId);
+      if (patientReports.length === 0) {
+        statusDiv.innerHTML = `ℹ️ No reports found for patient: ${patient.name} (${patientId})`;
+        statusDiv.className = 'status-area';
+        reportListContainer.style.display = 'none';
+        return;
+      }
+
+      // Display reports
+      statusDiv.innerHTML = `✅ Found ${patientReports.length} report(s) for ${patient.name}. Due amount: ₹${patient.due_amount}`;
+      statusDiv.className = 'status-area status-success';
+
+      // Build report list HTML
+      let html = `<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>`;
+      for (const report of patientReports) {
+        const canDownload = patient.due_amount === 0;
+        const dueBadge = patient.due_amount > 0 ? `<span class="due-badge">₹${patient.due_amount} DUE</span>` : '';
+        html += `
+          <div class="report-item">
+            <div class="report-info">
+              <span class="test-name">${report.test_name}</span>
+              <span class="upload-date">📅 ${report.uploaded_at}</span>
+            </div>
+            <div class="report-actions">
+              ${dueBadge}
+              <button class="download-btn" data-report-id="${report.id}" data-patient-due="${patient.due_amount}" ${canDownload ? '' : 'disabled'}>
+                ${canDownload ? '⬇️ Download' : '🔒 Locked'}
+              </button>
+            </div>
+          </div>
+        `;
+      }
+      reportListContainer.innerHTML = html;
+      reportListContainer.style.display = 'block';
+
+      // Attach download event listeners
+      document.querySelectorAll('.download-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+          const reportId = parseInt(this.dataset.reportId);
+          const due = parseFloat(this.dataset.patientDue);
+          if (due > 0) {
+            statusDiv.innerHTML = '❌ Payment pending. Please clear dues to download report.';
+            statusDiv.className = 'status-area status-error';
+            return;
+          }
+          // Download
+          try {
+            const fileBlob = await getPDFFile(reportId);
+            if (!fileBlob) {
+              statusDiv.innerHTML = '❌ PDF file not found in storage.';
+              statusDiv.className = 'status-area status-error';
+              return;
+            }
+            const url = URL.createObjectURL(fileBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            const report = patientReports.find(r => r.id === reportId);
+            a.download = report ? report.file_path : 'report.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            statusDiv.innerHTML = '✅ Download started!';
+            statusDiv.className = 'status-area status-success';
+          } catch (e) {
+            statusDiv.innerHTML = '❌ Error downloading: ' + e.message;
+            statusDiv.className = 'status-area status-error';
+          }
         });
-        doctorDropdown.appendChild(div);
       });
-      doctorDropdown.style.display = 'block';
     }
 
-    function hideDoctorDropdown() {
-      setTimeout(() => {
-        if (document.activeElement !== doctorInput) {
-          doctorDropdown.style.display = 'none';
-        }
-      }, 150);
-    }
-
-    doctorInput.addEventListener('input', function(e) {
-      showDoctorSuggestions(e.target.value);
+    // ─── EVENT LISTENERS ───
+    fetchBtn.addEventListener('click', fetchPatientReports);
+    patientIdInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') fetchPatientReports();
     });
 
-    doctorInput.addEventListener('focus', function() {
-      showDoctorSuggestions(doctorInput.value);
+    // ─── INIT ───
+    // Open IndexedDB
+    openDB().then(() => {
+      console.log('✅ IndexedDB ready for patient portal.');
+    }).catch(e => {
+      console.warn('IndexedDB not available', e);
     });
 
-    doctorInput.addEventListener('blur', hideDoctorDropdown);
-    
-    document.addEventListener('click', function(e) {
-      if (!doctorInput.contains(e.target) && !doctorDropdown.contains(e.target)) {
-        doctorDropdown.style.display = 'none';
-      }
-    });
-
-    // ======================== GENERATE REPORT MESSAGE ========================
-    function generateWhatsAppMessage(patientId, patientName, doctorName, patientMobile) {
-      const pidClean = patientId.trim().toUpperCase();
-      const patientNameClean = patientName.trim() || 'Not provided';
-      const doctorNameClean = doctorName.trim() || 'Not specified';
-      const patientMobileClean = patientMobile ? patientMobile.trim() : 'Not provided';
-      const now = new Date();
-      const dateTime = now.toLocaleString('en-US', { hour12: true, year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-      
-      let reportText = `🏥 *NEW PATIENT REPORT REQUEST* 🏥\n\n`;
-      reportText += `📌 *PATIENT DETAILS:*\n`;
-      reportText += `▸ Patient ID      : ${pidClean}\n`;
-      reportText += `▸ Patient Name    : ${patientNameClean}\n`;
-      reportText += `▸ Patient Mobile  : ${patientMobileClean}\n`;
-      reportText += `▸ Doctor Name     : ${doctorNameClean}\n`;
-      reportText += `▸ Request Time    : ${dateTime}\n\n`;
-      reportText += `📋 *MEDICAL REPORT SUMMARY:*\n`;
-      reportText += `Complete medical report has been requested for the above patient.\n\n`;
-      reportText += `✨ *CLASSIC PREMIUM HEALTH SYSTEM* ✨\n`;
-      reportText += `🔒 This report was requested via patient portal. Please review and take necessary action.`;
-      return reportText;
-    }
-
-    // ======================== WHATSAPP NUMBER ========================
-    const DOCTOR_WHATSAPP = "8709946177";
-    
-    function cleanDoctorNumberForWhatsApp(number) {
-      let cleaned = number.trim().replace(/[\s\-\(\)]/g, '');
-      cleaned = cleaned.replace(/^\+/, '');
-      if (/^\d{10}$/.test(cleaned) && /[789]/.test(cleaned[0])) return '+91' + cleaned;
-      if (/^91\d{10}$/.test(cleaned)) return '+' + cleaned;
-      if (!cleaned.startsWith('+')) return '+' + cleaned;
-      return cleaned;
-    }
-
-    function sendToDoctorWhatsApp(message) {
-      const cleanNumber = cleanDoctorNumberForWhatsApp(DOCTOR_WHATSAPP);
-      if (!cleanNumber || cleanNumber.length < 8) {
-        statusDiv.innerHTML = "⚠️ Configuration error: Doctor's WhatsApp number invalid.";
-        statusDiv.classList.add('status-error');
-        return false;
-      }
-      const encodedMsg = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodedMsg}`;
-      window.open(whatsappUrl, '_blank');
-      return true;
-    }
-
-    // ======================== VALIDATION ========================
-    function validateRequiredFields() {
-      const patientId = patientIdInput.value.trim();
-      const patientName = patientNameInput.value.trim();
-      const doctorName = doctorInput.value.trim();
-      
-      if (!patientId) {
-        statusDiv.innerHTML = "⚠️ Patient ID is required.";
-        statusDiv.classList.add('status-error');
-        patientIdInput.classList.add('error-shake');
-        setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
-        return false;
-      }
-      if (patientId.length < 2) {
-        statusDiv.innerHTML = "❌ Patient ID must be at least 2 characters.";
-        statusDiv.classList.add('status-error');
-        patientIdInput.classList.add('error-shake');
-        setTimeout(() => patientIdInput.classList.remove('error-shake'), 500);
-        return false;
-      }
-      if (!patientName) {
-        statusDiv.innerHTML = "❌ Patient Name is required.";
-        statusDiv.classList.add('status-error');
-        patientNameInput.classList.add('error-shake');
-        setTimeout(() => patientNameInput.classList.remove('error-shake'), 500);
-        return false;
-      }
-      if (!doctorName) {
-        statusDiv.innerHTML = "❌ Doctor Name is required.";
-        statusDiv.classList.add('status-error');
-        doctorInput.classList.add('error-shake');
-        setTimeout(() => doctorInput.classList.remove('error-shake'), 500);
-        return false;
-      }
-      return true;
-    }
-
-    // ======================== MAIN SEND FUNCTION ========================
-    async function handleSendReportToDoctor() {
-      if (!validateRequiredFields()) return;
-      
-      const patientId = patientIdInput.value;
-      const patientName = patientNameInput.value;
-      const doctorName = doctorInput.value;
-      const patientMobile = mobileInput.value;
-      
-      const whatsappMsg = generateWhatsAppMessage(patientId, patientName, doctorName, patientMobile);
-      
-      const originalBtnText = whatsappBtn.innerHTML;
-      whatsappBtn.disabled = true;
-      whatsappBtn.innerHTML = `<span>⏳</span> SENDING TO DOCTOR...`;
-      statusDiv.classList.remove('status-error');
-      statusDiv.classList.add('status-loading');
-      statusDiv.innerHTML = `📤 Sending report for ${patientName} to Doctor's WhatsApp...`;
-      
-      setTimeout(() => {
-        const success = sendToDoctorWhatsApp(whatsappMsg);
-        if (success) {
-          statusDiv.classList.remove('status-loading');
-          statusDiv.classList.add('status-success');
-          statusDiv.innerHTML = `✅ Success! Report for ${patientName} sent to Doctor's WhatsApp.`;
-        } else {
-          statusDiv.innerHTML = "❌ Failed to open WhatsApp. Check internet connection.";
-          statusDiv.classList.add('status-error');
-        }
-        whatsappBtn.disabled = false;
-        whatsappBtn.innerHTML = originalBtnText;
-      }, 600);
-    }
-    
-    whatsappBtn.addEventListener('click', handleSendReportToDoctor);
-    
-    // Enter key support
-    function handleKeyPress(e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        handleSendReportToDoctor();
-      }
-    }
-    patientIdInput.addEventListener('keypress', handleKeyPress);
-    patientNameInput.addEventListener('keypress', handleKeyPress);
-    doctorInput.addEventListener('keypress', handleKeyPress);
-    mobileInput.addEventListener('keypress', handleKeyPress);
-    
-    // Initial focus
+    // Auto-focus
     patientIdInput.focus();
+
   })();
 </script>
+
 </body>
 </html>
