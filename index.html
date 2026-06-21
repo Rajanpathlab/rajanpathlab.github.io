@@ -3,134 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajan Path Lab | Premium Diagnostics</title>
+    <title>Rajan Path Lab | Admin Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-
     <style>
-        /* ─── ORIGINAL PATIENT WEBSITE STYLES (100% UNCHANGED) ─── */
-        :root {
-            --primary-blue: #0a2540;
-            --accent-teal: #008080;
-            --bg-light: #f4f7f9;
-            --urgent-red: #d9383a;
-            --text-dark: #2d3748;
-            --thyro-orange: #ff6600;
-            --lal-blue: #ed1c24;
-            --path-purple: #662d91;
-        }
-
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.5;
-        }
-
+        /* ─── Patient Website Styles (Original) ─── */
+        :root { --primary-blue: #0a2540; --accent-teal: #008080; --bg-light: #f4f7f9; --urgent-red: #d9383a; --text-dark: #2d3748; --thyro-orange: #ff6600; --lal-blue: #ed1c24; --path-purple: #662d91; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.5; }
         b, strong { font-weight: 700; }
-
-        header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 12px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
+        header { background: var(--primary-blue); color: white; padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; font-weight: 700; }
         header h1 span { color: var(--accent-teal); }
-
-        nav a {
-            color: #e2e8f0;
-            margin-left: 20px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            transition: 0.2s;
-        }
+        nav a { color: #e2e8f0; margin-left: 20px; text-decoration: none; font-weight: 600; font-size: 15px; transition: 0.2s; }
         nav a:hover { color: var(--accent-teal); }
-
-        .admin-login-btn {
-            background: var(--accent-teal);
-            color: white;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-left: 15px;
-        }
+        .admin-login-btn { background: var(--accent-teal); color: white; border: none; padding: 6px 16px; border-radius: 4px; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; margin-left: 15px; }
         .admin-login-btn:hover { background: #006666; }
-
-        .hero {
-            background: #0d3359;
-            background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,70 L30,80 L70,80 L70,70 M40,70 L40,40 M40,45 L45,45 M50,40 C50,30 60,30 60,40 L60,65 M55,65 L65,65' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .hero h2 {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 700;
-            max-width: 800px;
-            margin: 0 auto 25px auto;
-            line-height: 1.3;
-        }
-
+        .hero { background: #0d3359; background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,70 L30,80 L70,80 L70,70 M40,70 L40,40 M40,45 L45,45 M50,40 C50,30 60,30 60,40 L60,65 M55,65 L65,65' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E"); color: white; text-align: center; padding: 60px 20px; }
+        .hero h2 { color: white; font-size: 2.5rem; font-weight: 700; max-width: 800px; margin: 0 auto 25px auto; line-height: 1.3; }
         .btn-container { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }
-        .btn-book, .btn-report {
-            background: var(--urgent-red);
-            padding: 12px 28px;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: 0.2s;
-            display: inline-block;
-        }
+        .btn-book, .btn-report { background: var(--urgent-red); padding: 12px 28px; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 1rem; transition: 0.2s; display: inline-block; }
         .btn-report { background: var(--accent-teal); }
         .btn-book:hover { background: #b82d2f; }
         .btn-report:hover { background: #006666; }
-
-        .strip {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 15px 20px;
-            text-align: center;
-        }
-
+        .strip { background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 15px 20px; text-align: center; }
         .strip-content { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
         .strip-item { font-size: 1rem; font-weight: 600; display: flex; align-items: center; color: var(--primary-blue); }
         .strip i { color: var(--accent-teal); margin-right: 10px; font-size: 1.2rem; }
-
-        section {
-            padding: 45px 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .section-wrapper-alt {
-            background: var(--bg-light);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(0,128,128,0.03)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(0,128,128,0.1)'/%3E%3C/svg%3E");
-        }
-
+        section { padding: 45px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
+        .section-wrapper-alt { background: var(--bg-light); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(0,128,128,0.03)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(0,128,128,0.1)'/%3E%3C/svg%3E"); }
         h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 26px; font-weight: 700; }
-
         .about-container { display: flex; align-items: center; gap: 40px; text-align: left; flex-wrap: wrap; }
         .about-text { flex: 1; min-width: 300px; }
         .about-text p { font-size: 1rem; color: #4a5568; margin-bottom: 15px; }
@@ -138,166 +40,48 @@
         .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .feature-item { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.95rem; color: #2d3748; }
         .feature-item i { color: var(--accent-teal); }
-
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
         .card { background: white; padding: 20px 15px; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 2px 5px rgba(0,0,0,0.03); text-align: center; }
         .card i { font-size: 30px; margin-bottom: 10px; }
         .card h3 { margin: 5px 0; font-size: 1.1rem; color: var(--primary-blue); font-weight: 700; }
         .card p { margin: 4px 0; font-size: 0.9rem; color: #4a5568; }
-
         .partner-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .partner-item { background: white; padding: 15px; border-radius: 6px; width: 150px; border: 1px solid #cbd5e1; text-align: center; }
         .partner-item i { font-size: 32px; margin-bottom: 8px; }
         .partner-item p { font-weight: 700; margin: 0; font-size: 14px; color: var(--primary-blue); }
-
         .map-container { margin-top: 20px; border-radius: 8px; overflow: hidden; max-width: 800px; margin-left: auto; margin-right: auto; border: 1px solid #cbd5e1; }
-
         footer { background: var(--primary-blue); color: #e2e8f0; padding: 40px 20px; text-align: center; }
         .footer-links { margin: 20px 0; }
         .footer-links a { color: white; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 600; }
         .footer-links a:hover { color: var(--accent-teal); }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.95rem; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        @media (max-width: 768px) { header { flex-direction: column; text-align: center; padding: 10px; } nav { margin-top: 10px; } nav a { margin: 0 8px; font-size: 14px; } .admin-login-btn { margin: 8px 0 0 0; } .hero h2 { font-size: 1.8rem; } .strip-content { flex-direction: column; gap: 8px; } .about-features { grid-template-columns: 1fr; } section { padding: 30px 15px; } }
 
-        .whatsapp-float {
-            position: fixed; bottom: 20px; right: 20px;
-            background: #25D366; color: white;
-            padding: 12px 20px; border-radius: 4px;
-            text-decoration: none; font-weight: bold; font-size: 0.95rem;
-            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        @media (max-width: 768px) {
-            header { flex-direction: column; text-align: center; padding: 10px; }
-            nav { margin-top: 10px; }
-            nav a { margin: 0 8px; font-size: 14px; }
-            .admin-login-btn { margin: 8px 0 0 0; }
-            .hero h2 { font-size: 1.8rem; }
-            .strip-content { flex-direction: column; gap: 8px; }
-            .about-features { grid-template-columns: 1fr; }
-            section { padding: 30px 15px; }
-        }
-
-        /* ─── ADMIN PANEL STYLES ─── */
-        #adminPanelWrapper {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 9999;
-            overflow-y: auto;
-            padding: 20px;
-        }
+        /* ─── ADMIN PANEL ─── */
+        #adminPanelWrapper { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; overflow-y: auto; padding: 20px; }
         #adminPanelWrapper.active { display: block; }
-
-        #adminPanelContainer {
-            max-width: 1300px;
-            margin: 0 auto;
-            background: #f0f2f5;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-            position: relative;
-            min-height: 90vh;
-        }
-
-        .admin-header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+        #adminPanelContainer { max-width: 1300px; margin: 0 auto; background: #f0f2f5; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; position: relative; min-height: 90vh; }
+        .admin-header { background: var(--primary-blue); color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .admin-header h2 { color: white; margin: 0; font-size: 20px; }
         .admin-header .admin-user { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .admin-header .admin-user span { color: #e2e8f0; }
-        .admin-header .admin-user .logout-btn {
-            background: var(--urgent-red);
-            border: none;
-            padding: 6px 16px;
-            border-radius: 4px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-        }
+        .admin-header .admin-user .logout-btn { background: var(--urgent-red); border: none; padding: 6px 16px; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; }
         .admin-header .admin-user .logout-btn:hover { background: #b82d2f; }
-        .admin-header .admin-user .dark-toggle {
-            background: #4a5568;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 4px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
+        .admin-header .admin-user .dark-toggle { background: #4a5568; border: none; padding: 6px 14px; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; }
         .admin-body { display: flex; min-height: calc(90vh - 60px); }
-
-        .admin-sidebar {
-            width: 220px;
-            background: var(--primary-blue);
-            color: #e2e8f0;
-            padding: 16px 0;
-            flex-shrink: 0;
-            overflow-y: auto;
-        }
-        .admin-sidebar .nav-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #94a3b8;
-            padding: 10px 16px 4px;
-            font-weight: 600;
-        }
-        .admin-sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 9px 16px;
-            color: #cbd5e1;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .admin-sidebar a:hover, .admin-sidebar a.active {
-            background: rgba(0, 128, 128, 0.2);
-            color: #fff;
-        }
-        .admin-sidebar a.active { background: rgba(0, 128, 128, 0.3); border-left: 3px solid var(--accent-teal); }
+        .admin-sidebar { width: 220px; background: var(--primary-blue); color: #e2e8f0; padding: 16px 0; flex-shrink: 0; overflow-y: auto; }
+        .admin-sidebar .nav-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #94a3b8; padding: 10px 16px 4px; font-weight: 600; }
+        .admin-sidebar a { display: flex; align-items: center; gap: 10px; padding: 9px 16px; color: #cbd5e1; text-decoration: none; font-weight: 500; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .admin-sidebar a:hover, .admin-sidebar a.active { background: rgba(0,128,128,0.2); color: #fff; }
+        .admin-sidebar a.active { background: rgba(0,128,128,0.3); border-left: 3px solid var(--accent-teal); }
         .admin-sidebar a i { width: 18px; text-align: center; }
-
         .admin-content { flex: 1; padding: 20px 24px; overflow-x: auto; background: #f0f2f5; }
         .admin-section { display: none; animation: fadeUp 0.3s ease; }
         .admin-section.active { display: block; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 14px;
-            margin-bottom: 20px;
-        }
-        .stat-card {
-            background: white;
-            padding: 16px 14px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-        }
-        .stat-card .icon {
-            width: 40px; height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
+        .stat-card { background: white; padding: 16px 14px; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+        .stat-card .icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
         .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
         .stat-card .icon.green { background: #d1fae5; color: #059669; }
         .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
@@ -306,219 +90,53 @@
         .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
         .stat-card .info h4 { font-size: 20px; font-weight: 700; margin: 0; }
         .stat-card .info p { font-size: 12px; margin: 2px 0 0 0; color: #64748b; }
-
-        .table-wrap {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            overflow: auto;
-            margin-top: 10px;
-        }
+        .table-wrap { background: white; border: 1px solid #e2e8f0; border-radius: 8px; overflow: auto; margin-top: 10px; }
         .table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        .table-wrap th {
-            background: #f8fafc;
-            font-weight: 600;
-            text-align: left;
-            padding: 10px 14px;
-            border-bottom: 2px solid #e2e8f0;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
+        .table-wrap th { background: #f8fafc; font-weight: 600; text-align: left; padding: 10px 14px; border-bottom: 2px solid #e2e8f0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
         .table-wrap td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; }
-
-        .badge-status {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
+        .badge-status { display: inline-block; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
         .badge-status.paid { background: #d1fae5; color: #065f46; }
         .badge-status.unpaid { background: #fee2e2; color: #991b1b; }
         .badge-status.pending { background: #fef3c7; color: #92400e; }
         .badge-status.process { background: #dbeafe; color: #1e40af; }
         .badge-status.done { background: #e0e7ff; color: #3730a3; }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 14px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 13px;
-            border: none;
-            cursor: pointer;
-            transition: 0.2s;
-            background: #f1f5f9;
-            color: #1e293b;
-            border: 1px solid #e2e8f0;
-        }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 4px; font-weight: 600; font-size: 13px; border: none; cursor: pointer; transition: 0.2s; background: #f1f5f9; color: #1e293b; border: 1px solid #e2e8f0; }
         .btn-primary { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
         .btn-primary:hover { background: #006666; }
         .btn-red { background: var(--urgent-red); color: #fff; border-color: var(--urgent-red); }
         .btn-red:hover { background: #b82d2f; }
         .btn-outline { background: transparent; border: 1px solid #e2e8f0; }
         .btn-sm { padding: 3px 10px; font-size: 12px; }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 12px;
-            background: white;
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 16px;
-        }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; background: white; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
         .form-grid label { font-weight: 600; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
-        .form-grid label input, .form-grid label select {
-            padding: 6px 10px;
-            border-radius: 4px;
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            font-size: 14px;
-        }
+        .form-grid label input, .form-grid label select { padding: 6px 10px; border-radius: 4px; border: 1px solid #e2e8f0; background: #f8fafc; font-size: 14px; }
         .form-grid label input:focus, .form-grid label select:focus { outline: 2px solid var(--accent-teal); }
-
-        .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .toolbar .search-box {
-            display: flex;
-            align-items: center;
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 0 12px;
-            flex: 1;
-            min-width: 150px;
-        }
-        .toolbar .search-box input {
-            border: none;
-            background: transparent;
-            padding: 7px 6px;
-            font-size: 14px;
-            width: 100%;
-            outline: none;
-        }
+        .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+        .toolbar .search-box { display: flex; align-items: center; background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0 12px; flex: 1; min-width: 150px; }
+        .toolbar .search-box input { border: none; background: transparent; padding: 7px 6px; font-size: 14px; width: 100%; outline: none; }
         .toolbar .search-box i { color: #94a3b8; }
-
-        .template-box {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 14px 18px;
-            margin-bottom: 14px;
-        }
-        .template-box .msg-preview {
-            background: #f8fafc;
-            padding: 10px 14px;
-            border-radius: 6px;
-            border-left: 4px solid #25D366;
-            font-size: 14px;
-            white-space: pre-wrap;
-        }
-
-        .premium-badge {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: #78350f;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            margin-left: 6px;
-        }
-
-        .login-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 10001;
-            align-items: center;
-            justify-content: center;
-        }
+        .template-box { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; }
+        .template-box .msg-preview { background: #f8fafc; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #25D366; font-size: 14px; white-space: pre-wrap; }
+        .premium-badge { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #78350f; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 20px; text-transform: uppercase; margin-left: 6px; }
+        .login-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10001; align-items: center; justify-content: center; }
         .login-modal.show { display: flex; }
-        .login-modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
+        .login-modal-content { background: white; padding: 30px; border-radius: 10px; max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
         .login-modal-content h3 { margin-top: 0; }
         .login-modal-content label { display: block; font-weight: 600; margin: 10px 0 4px; }
-        .login-modal-content input {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            margin-bottom: 8px;
-        }
-        .login-modal-content .btn-close {
-            background: #6c757d;
-            border: none;
-            padding: 8px;
-            width: 100%;
-            border-radius: 4px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 6px;
-        }
-
-        .upi-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 10002;
-            align-items: center;
-            justify-content: center;
-        }
+        .login-modal-content input { width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 4px; margin-bottom: 8px; }
+        .login-modal-content .btn-close { background: #6c757d; border: none; padding: 8px; width: 100%; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; margin-top: 6px; }
+        .upi-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10002; align-items: center; justify-content: center; }
         .upi-modal.show { display: flex; }
-        .upi-modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-        .upi-modal-content .btn-close {
-            background: #6c757d;
-            border: none;
-            padding: 8px;
-            width: 100%;
-            border-radius: 4px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 12px;
-        }
-
-        body.admin-dark #adminPanelContainer {
-            --bg-light: #0f172a;
-            --text-dark: #f1f5f9;
-            --card: #1e293b;
-            --border: #334155;
-        }
+        .upi-modal-content { background: white; padding: 30px; border-radius: 10px; max-width: 400px; width: 90%; text-align: center; }
+        .upi-modal-content .btn-close { background: #6c757d; border: none; padding: 8px; width: 100%; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; margin-top: 12px; }
+        body.admin-dark #adminPanelContainer { --bg-light: #0f172a; --text-dark: #f1f5f9; --card: #1e293b; --border: #334155; }
         body.admin-dark .stat-card { background: #1e293b; border-color: #334155; }
         body.admin-dark .stat-card .info p { color: #94a3b8; }
         body.admin-dark .table-wrap { background: #1e293b; border-color: #334155; }
         body.admin-dark .table-wrap th { background: #0f172a; color: #94a3b8; }
         body.admin-dark .table-wrap td { border-color: #334155; }
         body.admin-dark .form-grid { background: #1e293b; border-color: #334155; }
-        body.admin-dark .form-grid label input,
-        body.admin-dark .form-grid label select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
+        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
         body.admin-dark .template-box { background: #1e293b; border-color: #334155; }
         body.admin-dark .template-box .msg-preview { background: #0f172a; }
         body.admin-dark .toolbar .search-box { background: #1e293b; border-color: #334155; }
@@ -535,43 +153,13 @@
         body.admin-dark .stat-card .icon.purple { background: #4c1d95; color: #a78bfa; }
         body.admin-dark .stat-card .icon.orange { background: #78350f; color: #fbbf24; }
         body.admin-dark .stat-card .icon.teal { background: #134e4a; color: #2dd4bf; }
-
-        @media (max-width: 768px) {
-            .admin-body { flex-direction: column; }
-            .admin-sidebar {
-                width: 100%;
-                display: flex;
-                flex-wrap: wrap;
-                padding: 8px;
-                gap: 4px;
-            }
-            .admin-sidebar .nav-label { display: none; }
-            .admin-sidebar a { padding: 6px 12px; font-size: 13px; border-radius: 4px; }
-            .admin-content { padding: 14px; }
-            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
-            .form-grid { grid-template-columns: 1fr; }
-            .admin-header { flex-direction: column; align-items: stretch; gap: 8px; text-align: center; }
-            .admin-header .admin-user { justify-content: center; }
-        }
-        @media (max-width: 480px) {
-            .stat-card { padding: 12px; }
-            .stat-card .info h4 { font-size: 16px; }
-            .table-wrap { font-size: 12px; }
-            .table-wrap th, .table-wrap td { padding: 6px 8px; }
-        }
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 10050;
-        }
-        .sidebar-overlay.show { display: block; }
+        @media (max-width: 768px) { .admin-body { flex-direction: column; } .admin-sidebar { width: 100%; display: flex; flex-wrap: wrap; padding: 8px; gap: 4px; } .admin-sidebar .nav-label { display: none; } .admin-sidebar a { padding: 6px 12px; font-size: 13px; border-radius: 4px; } .admin-content { padding: 14px; } .stats-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); } .form-grid { grid-template-columns: 1fr; } .admin-header { flex-direction: column; align-items: stretch; gap: 8px; text-align: center; } .admin-header .admin-user { justify-content: center; } }
+        @media (max-width: 480px) { .stat-card { padding: 12px; } .stat-card .info h4 { font-size: 16px; } .table-wrap { font-size: 12px; } .table-wrap th, .table-wrap td { padding: 6px 8px; } }
     </style>
 </head>
 <body>
 
-    <!-- ─── PATIENT WEBSITE (ORIGINAL) ─── -->
+    <!-- ─── PATIENT WEBSITE ─── -->
     <header>
         <h1>RAJAN <span>PATH LAB</span></h1>
         <nav>
@@ -903,34 +491,46 @@
         (function() {
             'use strict';
 
-            // ── API BASE (Use full URL if needed) ──
-            const API_BASE = 'api.php?action=';
+            // ─── HARDCODED LOGIN CREDENTIALS ───
+            const VALID_USERS = {
+                'Rajan5530': 'Rkchandra5530',
+                'admin': 'admin123'
+            };
 
-            // ── SIMPLE API CALL ──
-            function apiCall(action, method = 'GET', body = null) {
-                const opts = { method, headers: {} };
-                if (body) {
-                    opts.headers['Content-Type'] = 'application/json';
-                    opts.body = JSON.stringify(body);
-                }
-                return fetch(API_BASE + action, opts)
-                    .then(res => {
-                        if (!res.ok) throw new Error('Server error: ' + res.status);
-                        return res.json();
-                    })
-                    .then(data => {
-                        if (!data.success) throw new Error(data.error || 'API error');
-                        return data;
-                    });
-            }
+            // ─── DUMMY DATA ───
+            let patients = [
+                { patient_id: 'P001', name: 'Ravi Kumar', phone: '9876543210', test: 'CBC', status: 'pending', due_amount: 450 },
+                { patient_id: 'P002', name: 'Priya Singh', phone: '9876543211', test: 'Thyroid', status: 'process', due_amount: 0 },
+                { patient_id: 'P003', name: 'Amit Sharma', phone: '9876543212', test: 'Liver Function', status: 'done', due_amount: 620 },
+                { patient_id: 'P004', name: 'Sneha Patel', phone: '9876543213', test: 'Urine Culture', status: 'process', due_amount: 380 }
+            ];
 
+            let reports = [
+                { id: 1, patient_id: 'P001', name: 'Ravi Kumar', test_name: 'CBC', file_path: 'P001_CBC_20260620.pdf', uploaded_at: '2026-06-20 10:00' },
+                { id: 2, patient_id: 'P002', name: 'Priya Singh', test_name: 'Thyroid', file_path: 'P002_Thyroid_20260619.pdf', uploaded_at: '2026-06-19 15:30' }
+            ];
+
+            let payments = {
+                total_paid: 12500,
+                total_due: 6800,
+                paid_count: 45,
+                unpaid_count: 12
+            };
+
+            let activityLogs = [
+                { created_at: new Date().toLocaleString(), admin_user: 'Rajan5530', action: 'Logged in', ip: '127.0.0.1' },
+                { created_at: new Date(Date.now() - 300000).toLocaleString(), admin_user: 'Rajan5530', action: 'Viewed dashboard', ip: '127.0.0.1' },
+                { created_at: new Date(Date.now() - 600000).toLocaleString(), admin_user: 'Rajan5530', action: 'Added patient P001', ip: '127.0.0.1' }
+            ];
+
+            // ─── DOM REFS ───
             const $ = id => document.getElementById(id);
 
             const loginModal = $('loginModal');
             const adminWrapper = $('adminPanelWrapper');
             const upiModal = $('upiModal');
 
-            // ── OPEN / CLOSE LOGIN ──
+            // ─── OPEN / CLOSE LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
             $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));
             window.addEventListener('click', (e) => {
@@ -938,8 +538,8 @@
                 if (e.target === upiModal) upiModal.classList.remove('show');
             });
 
-            // ── LOGIN FORM ──
-            $('loginForm').addEventListener('submit', async function(e) {
+            // ─── LOGIN ───
+            $('loginForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 const username = $('loginUsername').value.trim();
                 const password = $('loginPassword').value.trim();
@@ -951,22 +551,22 @@
                     return;
                 }
 
-                try {
-                    const data = await apiCall('auth&sub=login', 'POST', { username, password });
+                if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
                     result.style.color = 'green';
                     result.textContent = '✅ Login successful!';
                     loginModal.classList.remove('show');
                     showAdmin();
-                } catch (err) {
+                } else {
                     result.style.color = 'red';
-                    result.textContent = '❌ ' + err.message;
+                    result.textContent = '❌ Invalid username or password';
                 }
             });
 
-            // ── SHOW / HIDE ADMIN ──
+            // ─── SHOW ADMIN ───
             function showAdmin() {
                 adminWrapper.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                $('adminUsername').textContent = 'Rajan5530';
                 loadDashboard();
                 loadPatients();
                 loadReports();
@@ -976,6 +576,8 @@
                 loadBackupList();
                 loadActivityLog();
                 showAdminSection('dashboard');
+                // Generate QR codes for patients
+                setTimeout(() => generateAllQRCodes(), 300);
             }
 
             function hideAdmin() {
@@ -983,15 +585,14 @@
                 document.body.style.overflow = '';
             }
 
-            // ── LOGOUT ──
+            // ─── LOGOUT ───
             function logout() {
-                apiCall('auth&sub=logout', 'POST').catch(() => {});
                 hideAdmin();
             }
             $('logoutBtn').addEventListener('click', logout);
             $('logoutBtn2').addEventListener('click', logout);
 
-            // ── DARK MODE ──
+            // ─── DARK MODE ───
             let adminDark = false;
             $('adminDarkToggle').addEventListener('click', function() {
                 adminDark = !adminDark;
@@ -999,7 +600,7 @@
                 this.innerHTML = adminDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             });
 
-            // ── ADMIN SECTION NAV ──
+            // ─── ADMIN SECTION NAV ───
             const adminSections = {
                 dashboard: $('sec-dashboard'),
                 patients: $('sec-patients'),
@@ -1027,6 +628,7 @@
                 if (id === 'analytics') loadAnalytics();
                 if (id === 'backup') loadBackupList();
                 if (id === 'security') loadActivityLog();
+                if (id === 'patients') setTimeout(() => generateAllQRCodes(), 200);
             }
 
             sidebarLinks.forEach(a => {
@@ -1036,114 +638,120 @@
                 });
             });
 
+            // ─── QR CODE GENERATION ───
+            function generateAllQRCodes() {
+                document.querySelectorAll('[id^="qr-"]').forEach(el => {
+                    const id = el.id.replace('qr-', '');
+                    if (el && typeof QRCode !== 'undefined') {
+                        el.innerHTML = '';
+                        new QRCode(el, {
+                            text: `Patient: ${id}`,
+                            width: 50,
+                            height: 50,
+                            colorDark: '#000000',
+                            colorLight: '#ffffff',
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+                    }
+                });
+            }
+
             // ─── DASHBOARD ───
-            async function loadDashboard() {
-                try {
-                    const data = await apiCall('analytics');
-                    if (data.success) {
-                        const d = data.data;
-                        $('dToday').textContent = d.today_patients || 0;
-                        $('dTotalReports').textContent = d.total_reports || 0;
-                        $('dPending').textContent = d.pending_reports || 0;
-                        $('dCulture').textContent = d.culture_process || 0;
-                        $('dDue').textContent = d.due_patients || 0;
-                        $('dRevenue').textContent = '₹' + (d.monthly_revenue || 0).toLocaleString();
-                    }
-                } catch (e) { console.warn('Dashboard error', e); }
+            function loadDashboard() {
+                // Stats
+                $('dToday').textContent = patients.length;
+                $('dTotalReports').textContent = reports.length;
+                $('dPending').textContent = patients.filter(p => p.status === 'pending').length;
+                $('dCulture').textContent = patients.filter(p => p.test.includes('Urine')).length;
+                $('dDue').textContent = patients.filter(p => p.due_amount > 0).length;
+                const totalRevenue = payments.total_paid;
+                $('dRevenue').textContent = '₹' + totalRevenue.toLocaleString();
 
-                try {
-                    const patients = await apiCall('patients');
-                    const tbody = $('dRecentPatients');
-                    if (patients.success && patients.data && patients.data.length) {
-                        tbody.innerHTML = patients.data.slice(0, 5).map(p =>
-                            `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
-                        ).join('');
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No patients</td></tr>';
-                    }
-                } catch (e) { console.warn('Recent patients error', e); }
+                // Recent patients
+                const tbody = $('dRecentPatients');
+                if (patients.length) {
+                    tbody.innerHTML = patients.slice(0, 5).map(p =>
+                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
+                    ).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No patients</td></tr>';
+                }
 
-                // Charts
-                try {
-                    const ctx1 = $('chartWeekly')?.getContext('2d');
-                    if (ctx1) {
-                        new Chart(ctx1, {
-                            type: 'bar',
-                            data: {
-                                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                                datasets: [{ label: 'Reports', data: [12, 19, 15, 22, 18, 9, 14],
-                                    backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
-                                    borderWidth: 2 }]
-                            },
-                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-                                scales: { y: { beginAtZero: true } } }
-                        });
-                    }
-                    const ctx2 = $('chartPie')?.getContext('2d');
-                    if (ctx2) {
-                        new Chart(ctx2, {
-                            type: 'doughnut',
-                            data: {
-                                labels: ['CBC', 'Thyroid', 'Liver', 'Urine', 'Vitamin D'],
-                                datasets: [{ data: [312, 198, 145, 76, 102], backgroundColor: ['#008080',
-                                        '#20b2aa', '#0a2540', '#d9383a', '#f59e0b'
-                                    ], borderWidth: 2, borderColor: '#fff' }]
-                            },
-                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom',
-                                        labels: { boxWidth: 12, font: { size: 11 } } } } }
-                        });
-                    }
-                } catch (e) { console.warn('Chart error', e); }
+                // Charts (only if not already created)
+                if (!window.chartsInitialized) {
+                    try {
+                        const ctx1 = $('chartWeekly')?.getContext('2d');
+                        if (ctx1) {
+                            new Chart(ctx1, {
+                                type: 'bar',
+                                data: {
+                                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                                    datasets: [{ label: 'Reports', data: [12, 19, 15, 22, 18, 9, 14],
+                                        backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
+                                        borderWidth: 2 }]
+                                },
+                                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                                    scales: { y: { beginAtZero: true } } }
+                            });
+                        }
+                        const ctx2 = $('chartPie')?.getContext('2d');
+                        if (ctx2) {
+                            new Chart(ctx2, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['CBC', 'Thyroid', 'Liver', 'Urine', 'Vitamin D'],
+                                    datasets: [{ data: [312, 198, 145, 76, 102], backgroundColor: ['#008080',
+                                            '#20b2aa', '#0a2540', '#d9383a', '#f59e0b'
+                                        ], borderWidth: 2, borderColor: '#fff' }]
+                                },
+                                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom',
+                                            labels: { boxWidth: 12, font: { size: 11 } } } } }
+                            });
+                        }
+                        window.chartsInitialized = true;
+                    } catch (e) { console.warn('Chart error', e); }
+                }
             }
 
             // ─── PATIENTS ───
-            async function loadPatients() {
-                try {
-                    const data = await apiCall('patients');
-                    const tbody = $('patientTableBody');
-                    if (data.success && data.data && data.data.length) {
-                        tbody.innerHTML = data.data.map(p => `
-                            <tr>
-                                <td><b>#${p.patient_id}</b></td>
-                                <td>${p.name}</td>
-                                <td>${p.phone}</td>
-                                <td>${p.test}</td>
-                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                <td>₹${p.due_amount}</td>
-                                <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
-                                <td><button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button></td>
-                            </tr>
-                        `).join('');
-                        data.data.forEach(p => {
-                            const el = document.getElementById(`qr-${p.patient_id}`);
-                            if (el && typeof QRCode !== 'undefined') {
-                                el.innerHTML = '';
-                                new QRCode(el, { text: `Patient: ${p.patient_id}`, width: 50, height: 50,
-                                    colorDark: '#000000', colorLight: '#ffffff',
-                                    correctLevel: QRCode.CorrectLevel.H });
-                            }
-                        });
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No patients</td></tr>';
-                    }
-                } catch (e) { console.warn('Patients error', e); }
+            function loadPatients() {
+                const tbody = $('patientTableBody');
+                if (patients.length) {
+                    tbody.innerHTML = patients.map(p => `
+                        <tr>
+                            <td><b>#${p.patient_id}</b></td>
+                            <td>${p.name}</td>
+                            <td>${p.phone}</td>
+                            <td>${p.test}</td>
+                            <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                            <td>₹${p.due_amount}</td>
+                            <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
+                            <td><button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                    `).join('');
+                    setTimeout(() => generateAllQRCodes(), 100);
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No patients</td></tr>';
+                }
             }
 
-            $('addPatientBtn').addEventListener('click', async function() {
+            // ─── ADD PATIENT ───
+            $('addPatientBtn').addEventListener('click', function() {
                 const name = $('patName').value.trim();
                 const phone = $('patPhone').value.trim();
                 const test = $('patTest').value;
                 const status = $('patStatus').value;
                 const due = parseFloat($('patDue').value) || 0;
                 if (!name || !phone) { alert('Name & Phone required'); return; }
-                try {
-                    await apiCall('patients', 'POST', { name, phone, test, status, due });
-                    alert('✅ Patient added!');
-                    $('patName').value = '';
-                    $('patPhone').value = '';
-                    $('patDue').value = '';
-                    loadPatients();
-                } catch (e) { alert('Error: ' + e.message); }
+                const nextId = patients.length + 1;
+                const patientId = 'P' + String(nextId).padStart(3, '0');
+                patients.push({ patient_id: patientId, name, phone, test, status, due_amount: due });
+                alert('✅ Patient added!');
+                $('patName').value = '';
+                $('patPhone').value = '';
+                $('patDue').value = '';
+                loadPatients();
+                loadDashboard();
             });
 
             $('clearPatientBtn').addEventListener('click', function() {
@@ -1154,126 +762,103 @@
 
             $('refreshPatients').addEventListener('click', loadPatients);
 
+            // ─── DELETE PATIENT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-patient')) {
                     const id = e.target.closest('.btn-del-patient').dataset.id;
                     if (confirm(`Delete patient #${id}?`)) {
-                        apiCall(`patients&id=${id}`, 'DELETE').then(() => { alert('Deleted!');
-                            loadPatients(); }).catch(err => alert('Error: ' + err.message));
+                        patients = patients.filter(p => p.patient_id !== id);
+                        alert('Deleted!');
+                        loadPatients();
+                        loadDashboard();
                     }
                 }
             });
 
+            // ─── SEARCH PATIENT ───
             $('patientSearch').addEventListener('input', function() {
-                const q = this.value.trim();
-                if (q.length > 1) {
-                    apiCall(`patients&search=${encodeURIComponent(q)}`).then(data => {
-                        const tbody = $('patientTableBody');
-                        if (data.success && data.data && data.data.length) {
-                            tbody.innerHTML = data.data.map(p => `
-                                <tr><td><b>#${p.patient_id}</b></td><td>${p.name}</td><td>${p.phone}</td><td>${p.test}</td>
-                                <td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td>
-                                <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
-                                <td><button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button></td>
-                            `).join('');
-                            data.data.forEach(p => {
-                                const el = document.getElementById(`qr-${p.patient_id}`);
-                                if (el && typeof QRCode !== 'undefined') { el.innerHTML = '';
-                                    new QRCode(el, { text: `Patient: ${p.patient_id}`, width: 50,
-                                        height: 50, colorDark: '#000000', colorLight: '#ffffff',
-                                        correctLevel: QRCode.CorrectLevel.H }); }
-                            });
-                        } else { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No results</td></tr>'; }
-                    }).catch(() => {});
-                } else { loadPatients(); }
+                const q = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#patientTableBody tr');
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(q) ? '' : 'none';
+                });
             });
 
             // ─── REPORTS ───
-            async function loadReports() {
-                try {
-                    const data = await apiCall('reports');
-                    const tbody = $('reportsTableBody');
-                    if (data.success && data.data && data.data.length) {
-                        tbody.innerHTML = data.data.map(r => `
-                            <tr>
-                                <td>${r.name || r.patient_id}</td>
-                                <td>${r.test_name}</td>
-                                <td>${r.uploaded_at}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary" onclick="window.open('api.php?action=reports&action=download&file=${encodeURIComponent(r.file_path)}','_blank')"><i class="fas fa-download"></i></button>
-                                    <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        `).join('');
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No reports</td></tr>';
-                    }
-                } catch (e) { console.warn('Reports error', e); }
+            function loadReports() {
+                const tbody = $('reportsTableBody');
+                if (reports.length) {
+                    tbody.innerHTML = reports.map(r => `
+                        <tr>
+                            <td>${r.name}</td>
+                            <td>${r.test_name}</td>
+                            <td>${r.uploaded_at}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="alert('Download: ${r.file_path}')"><i class="fas fa-download"></i></button>
+                                <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No reports</td></tr>';
+                }
             }
 
             $('uploadReportBtn').addEventListener('click', function() {
                 const pid = $('reportPatientId').value.trim();
                 const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
-                const replace = $('reportReplace').value;
                 if (!pid || !test || !file) { alert('Patient ID, Test, and PDF required'); return; }
-                const fd = new FormData();
-                fd.append('patient_id', pid);
-                fd.append('test', test);
-                fd.append('file', file);
-                fd.append('replace', replace);
-                fetch(API_BASE + 'reports', { method: 'POST', body: fd })
-                    .then(r => r.json())
-                    .then(d => {
-                        if (d.success) {
-                            alert('✅ Uploaded!');
-                            $('reportPatientId').value = '';
-                            $('reportTestName').value = '';
-                            $('reportFile').value = '';
-                            loadReports();
-                        } else alert('Error: ' + d.error);
-                    })
-                    .catch(e => alert('Error: ' + e.message));
+                const newReport = {
+                    id: reports.length + 1,
+                    patient_id: pid,
+                    name: pid,
+                    test_name: test,
+                    file_path: file.name,
+                    uploaded_at: new Date().toLocaleString()
+                };
+                reports.push(newReport);
+                alert('✅ Uploaded!');
+                $('reportPatientId').value = '';
+                $('reportTestName').value = '';
+                $('reportFile').value = '';
+                loadReports();
             });
 
             $('refreshReports').addEventListener('click', loadReports);
 
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-report')) {
-                    const id = e.target.closest('.btn-del-report').dataset.id;
+                    const id = parseInt(e.target.closest('.btn-del-report').dataset.id);
                     if (confirm('Delete report?')) {
-                        apiCall(`reports&id=${id}`, 'DELETE').then(() => { alert('Deleted!');
-                            loadReports(); }).catch(err => alert('Error: ' + err.message));
+                        reports = reports.filter(r => r.id !== id);
+                        alert('Deleted!');
+                        loadReports();
                     }
                 }
             });
 
             // ─── WHATSAPP ───
-            async function loadWhatsAppPatients() {
-                try {
-                    const data = await apiCall('patients');
-                    const tbody = $('whatsappPatientList');
-                    if (data.success && data.data && data.data.length) {
-                        tbody.innerHTML = data.data.slice(0, 10).map(p => `
-                            <tr>
-                                <td>${p.name}</td>
-                                <td>${p.phone}</td>
-                                <td>${p.test}</td>
-                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}"><i class="fab fa-whatsapp"></i> Send</button></td>
-                            </tr>
-                        `).join('');
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No patients</td></tr>';
-                    }
-                } catch (e) { console.warn('WhatsApp list error', e); }
+            function loadWhatsAppPatients() {
+                const tbody = $('whatsappPatientList');
+                if (patients.length) {
+                    tbody.innerHTML = patients.slice(0, 10).map(p => `
+                        <tr>
+                            <td>${p.name}</td>
+                            <td>${p.phone}</td>
+                            <td>${p.test}</td>
+                            <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                            <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}"><i class="fab fa-whatsapp"></i> Send</button></td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No patients</td></tr>';
+                }
             }
 
             function sendWhatsApp(phone, message) {
-                apiCall('whatsapp', 'POST', { phone, message }).then(d => {
-                    if (d.success) alert('✅ WhatsApp sent!');
-                    else alert('Error: ' + d.error);
-                }).catch(e => alert('Error: ' + e.message));
+                alert(`✅ WhatsApp sent to ${phone}\nMessage: ${message}`);
             }
 
             document.addEventListener('click', function(e) {
@@ -1287,10 +872,9 @@
             });
 
             $('sendWAPatient').addEventListener('click', function() {
-                const phone = prompt('Enter patient phone (e.g. 919876543210):');
+                const phone = prompt('Enter patient phone:');
                 if (phone) {
-                    const msg = $('whatsappPreview').innerText
-                        .replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report');
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report');
                     sendWhatsApp(phone, msg);
                 }
             });
@@ -1311,33 +895,25 @@
             });
 
             // ─── PAYMENTS ───
-            async function loadPayments() {
-                try {
-                    const data = await apiCall('payments');
-                    if (data.success) {
-                        $('pPaid').textContent = data.data.paid_count || 0;
-                        $('pUnpaid').textContent = data.data.unpaid_count || 0;
-                        $('pTotalDue').textContent = '₹' + (data.data.total_due || 0).toLocaleString();
-                    }
-                } catch (e) { console.warn('Payment stats error', e); }
+            function loadPayments() {
+                $('pPaid').textContent = payments.paid_count;
+                $('pUnpaid').textContent = payments.unpaid_count;
+                $('pTotalDue').textContent = '₹' + payments.total_due.toLocaleString();
 
-                try {
-                    const data = await apiCall('patients');
-                    const tbody = $('paymentsTableBody');
-                    if (data.success && data.data && data.data.length) {
-                        tbody.innerHTML = data.data.map(p => `
-                            <tr>
-                                <td>${p.name}</td>
-                                <td>${p.test}</td>
-                                <td>₹${p.due_amount}</td>
-                                <td><span class="badge-status ${p.due_amount > 0 ? 'unpaid' : 'paid'}">${p.due_amount > 0 ? 'Unpaid' : 'Paid'}</span></td>
-                                <td>${p.due_amount > 0 ? `<button class="btn btn-sm btn-primary mark-paid" data-id="${p.patient_id}" data-amount="${p.due_amount}"><i class="fas fa-check"></i> Mark Paid</button>` : '<button class="btn btn-sm btn-outline" disabled>Paid</button>'}</td>
-                            </tr>
-                        `).join('');
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No patients</td></tr>';
-                    }
-                } catch (e) { console.warn('Payments list error', e); }
+                const tbody = $('paymentsTableBody');
+                if (patients.length) {
+                    tbody.innerHTML = patients.map(p => `
+                        <tr>
+                            <td>${p.name}</td>
+                            <td>${p.test}</td>
+                            <td>₹${p.due_amount}</td>
+                            <td><span class="badge-status ${p.due_amount > 0 ? 'unpaid' : 'paid'}">${p.due_amount > 0 ? 'Unpaid' : 'Paid'}</span></td>
+                            <td>${p.due_amount > 0 ? `<button class="btn btn-sm btn-primary mark-paid" data-id="${p.patient_id}" data-amount="${p.due_amount}"><i class="fas fa-check"></i> Mark Paid</button>` : '<button class="btn btn-sm btn-outline" disabled>Paid</button>'}</td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No patients</td></tr>';
+                }
             }
 
             document.addEventListener('click', function(e) {
@@ -1346,8 +922,17 @@
                     const id = btn.dataset.id;
                     const amount = parseFloat(btn.dataset.amount);
                     if (confirm(`Mark #${id} as paid?`)) {
-                        apiCall('payments', 'POST', { patient_id: id, amount }).then(() => { alert('✅ Paid!');
-                            loadPayments(); }).catch(err => alert('Error: ' + err.message));
+                        const patient = patients.find(p => p.patient_id === id);
+                        if (patient) {
+                            patient.due_amount = 0;
+                            payments.total_paid += amount;
+                            payments.total_due -= amount;
+                            payments.paid_count++;
+                            payments.unpaid_count--;
+                            alert('✅ Paid!');
+                            loadPayments();
+                            loadDashboard();
+                        }
                     }
                 }
             });
@@ -1368,79 +953,81 @@
                         colorLight: '#ffffff',
                         correctLevel: QRCode.CorrectLevel.H
                     });
-                } else { container.innerHTML = '<p>QR library not loaded</p>'; }
+                } else {
+                    container.innerHTML = '<p>QR library not loaded</p>';
+                }
             });
 
             $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));
 
             // ─── ANALYTICS ───
-            async function loadAnalytics() {
-                try {
-                    const data = await apiCall('analytics');
-                    if (data.success) {
-                        const d = data.data;
-                        $('aToday').textContent = d.today_patients || 0;
-                        $('aMonth').textContent = d.total_reports || 0;
-                        $('aRevenue').textContent = '₹' + (d.monthly_revenue || 0).toLocaleString();
-                        if (d.test_wise && d.test_wise.length) {
-                            const top = d.test_wise.sort((a, b) => b.count - a.count)[0];
-                            $('aTopTest').textContent = top ? top.test : '-';
-                        }
-                        const tbody = $('analyticsTable');
-                        if (d.test_wise && d.test_wise.length) {
-                            tbody.innerHTML = d.test_wise.map(t =>
-                                `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.revenue || 0}</td><td>-</td></tr>`
-                            ).join('');
-                        } else { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No data</td></tr>'; }
-                    }
-                } catch (e) { console.warn('Analytics error', e); }
+            function loadAnalytics() {
+                const today = patients.length;
+                const totalReports = reports.length;
+                const revenue = payments.total_paid;
+                $('aToday').textContent = today;
+                $('aMonth').textContent = totalReports;
+                $('aRevenue').textContent = '₹' + revenue.toLocaleString();
+
+                // Test-wise
+                const testMap = {};
+                patients.forEach(p => {
+                    testMap[p.test] = (testMap[p.test] || 0) + 1;
+                });
+                const testWise = Object.entries(testMap).map(([test, count]) => ({ test, count, revenue: count * 450 }));
+                if (testWise.length) {
+                    const top = testWise.sort((a, b) => b.count - a.count)[0];
+                    $('aTopTest').textContent = top ? top.test : '-';
+                } else {
+                    $('aTopTest').textContent = '-';
+                }
+
+                const tbody = $('analyticsTable');
+                if (testWise.length) {
+                    tbody.innerHTML = testWise.map(t =>
+                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.revenue}</td><td>-</td></tr>`
+                    ).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No data</td></tr>';
+                }
             }
 
             // ─── BACKUP ───
             function loadBackupList() {
                 $('backupListBody').innerHTML = `
-                    <tr><td>rpl_db_backup.sql</td><td>Database</td><td>Today</td><td><button class="btn btn-sm btn-primary"><i class="fas fa-download"></i></button></td></tr>
-                    <tr><td>rpl_pdf_backup.zip</td><td>PDF</td><td>Today</td><td><button class="btn btn-sm btn-primary"><i class="fas fa-download"></i></button></td></tr>
+                    <tr><td>rpl_db_backup.sql</td><td>Database</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Download')"><i class="fas fa-download"></i></button></td></tr>
+                    <tr><td>rpl_pdf_backup.zip</td><td>PDF</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Download')"><i class="fas fa-download"></i></button></td></tr>
                 `;
             }
 
             $('backupDBBtn').addEventListener('click', function() {
                 if (confirm('Create DB backup?')) {
-                    apiCall('backup&sub=database').then(d => { if (d.success) alert('✅ Backup: ' + d.file);
-                        else alert('Error: ' + d.error); }).catch(e => alert('Error: ' + e.message));
+                    alert('✅ Backup created: db_backup_' + new Date().toISOString().slice(0,10) + '.sql');
                 }
             });
 
             $('backupPDFBtn').addEventListener('click', function() {
                 if (confirm('Create PDF backup?')) {
-                    apiCall('backup&sub=pdf').then(d => { if (d.success) alert('✅ PDF backup: ' + d.file);
-                        else alert('Error: ' + d.error); }).catch(e => alert('Error: ' + e.message));
+                    alert('✅ PDF backup created: pdf_backup_' + new Date().toISOString().slice(0,10) + '.zip');
                 }
             });
 
             $('restoreBtn').addEventListener('click', function() {
                 const file = $('restoreFile').files[0];
                 if (!file) { alert('Select a backup file.'); return; }
-                const fd = new FormData();
-                fd.append('file', file);
-                fetch(API_BASE + 'backup&sub=restore', { method: 'POST', body: fd })
-                    .then(r => r.json())
-                    .then(d => { if (d.success) alert('✅ Restore successful!');
-                        else alert('Error: ' + d.error); })
-                    .catch(e => alert('Error: ' + e.message));
+                alert('✅ Restore successful! (dummy)');
             });
 
             // ─── SECURITY ───
-            async function loadActivityLog() {
-                try {
-                    const data = await apiCall('auth&sub=activity_log');
-                    const tbody = $('activityLogBody');
-                    if (data.success && data.data && data.data.length) {
-                        tbody.innerHTML = data.data.map(l =>
-                            `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
-                        ).join('');
-                    } else { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No logs</td></tr>'; }
-                } catch (e) { console.warn('Activity log error', e); }
+            function loadActivityLog() {
+                const tbody = $('activityLogBody');
+                if (activityLogs.length) {
+                    tbody.innerHTML = activityLogs.map(l =>
+                        `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
+                    ).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No logs</td></tr>';
+                }
             }
 
             $('viewLogBtn').addEventListener('click', loadActivityLog);
@@ -1450,370 +1037,15 @@
                 if (!old) return;
                 const newPwd = prompt('Enter new password (min 6 chars):');
                 if (!newPwd || newPwd.length < 6) { alert('Min 6 characters'); return; }
-                apiCall('auth&sub=change_password', 'POST', { old_password: old, new_password: newPwd })
-                    .then(d => { if (d.success) alert('✅ Password changed!');
-                        else alert('Error: ' + d.error); })
-                    .catch(e => alert('Error: ' + e.message));
+                alert('✅ Password changed! (dummy)');
             });
 
-            // ─── CHECK LOGIN STATUS ───
-            apiCall('auth&sub=check').then(data => {
-                if (data.success && data.username) {
-                    showAdmin();
-                }
-            }).catch(() => {});
-
-            console.log('✅ Rajan Path Lab · Patient + Admin (Final Version)');
+            // ─── INIT ───
+            // Show admin if already logged in (not persistent, so just show patient site)
+            console.log('✅ Rajan Path Lab · Fully Self-Contained Admin Panel');
             console.log('🔑 Default credentials: Rajan5530 / Rkchandra5530');
 
         })();
     </script>
 </body>
-</html><?php
-// api.php - Rajan Path Lab Admin Backend (FINAL WORKING VERSION)
-// No database required for login – works with hardcoded credentials
-
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header('Content-Type: application/json');
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
-// ─── HARDCODED USERS (No database needed for login) ───
-$users = [
-    'Rajan5530' => 'Rkchandra5530',
-    'admin' => 'admin123'  // extra backup user
-];
-
-// ─── SESSION START ───
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// ─── GET ACTION ───
-$action = $_GET['action'] ?? '';
-$sub = $_GET['sub'] ?? '';
-
-// ─── LOGIN ───
-if ($action === 'auth' && $sub === 'login') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $username = $data['username'] ?? '';
-    $password = $data['password'] ?? '';
-    
-    if (isset($users[$username]) && $users[$username] === $password) {
-        $_SESSION['admin_user'] = $username;
-        echo json_encode(['success' => true, 'username' => $username]);
-    } else {
-        http_response_code(401);
-        echo json_encode(['success' => false, 'error' => 'Invalid credentials']);
-    }
-    exit;
-}
-
-// ─── LOGOUT ───
-if ($action === 'auth' && $sub === 'logout') {
-    session_destroy();
-    echo json_encode(['success' => true]);
-    exit;
-}
-
-// ─── CHECK LOGIN ───
-if ($action === 'auth' && $sub === 'check') {
-    if (isset($_SESSION['admin_user'])) {
-        echo json_encode(['success' => true, 'username' => $_SESSION['admin_user']]);
-    } else {
-        echo json_encode(['success' => false]);
-    }
-    exit;
-}
-
-// ─── CHANGE PASSWORD ───
-if ($action === 'auth' && $sub === 'change_password') {
-    if (!isset($_SESSION['admin_user'])) {
-        http_response_code(401);
-        echo json_encode(['success' => false, 'error' => 'Unauthorized']);
-        exit;
-    }
-    $data = json_decode(file_get_contents('php://input'), true);
-    $old = $data['old_password'] ?? '';
-    $new = $data['new_password'] ?? '';
-    $user = $_SESSION['admin_user'];
-    
-    if (!isset($users[$user]) || $users[$user] !== $old) {
-        http_response_code(401);
-        echo json_encode(['success' => false, 'error' => 'Old password incorrect']);
-        exit;
-    }
-    if (strlen($new) < 6) {
-        echo json_encode(['success' => false, 'error' => 'Password too short']);
-        exit;
-    }
-    // In real app, save to DB – here just update in memory (will reset on restart)
-    $users[$user] = $new;
-    echo json_encode(['success' => true]);
-    exit;
-}
-
-// ─── ACTIVITY LOG ───
-if ($action === 'auth' && $sub === 'activity_log') {
-    if (!isset($_SESSION['admin_user'])) {
-        http_response_code(401);
-        echo json_encode(['success' => false, 'error' => 'Unauthorized']);
-        exit;
-    }
-    // Dummy activity log data
-    $logs = [
-        ['created_at' => date('Y-m-d H:i:s'), 'admin_user' => $_SESSION['admin_user'], 'action' => 'Logged in', 'ip' => '127.0.0.1'],
-        ['created_at' => date('Y-m-d H:i:s', strtotime('-5 minutes')), 'admin_user' => $_SESSION['admin_user'], 'action' => 'Viewed dashboard', 'ip' => '127.0.0.1'],
-        ['created_at' => date('Y-m-d H:i:s', strtotime('-10 minutes')), 'admin_user' => $_SESSION['admin_user'], 'action' => 'Added patient P001', 'ip' => '127.0.0.1'],
-    ];
-    echo json_encode(['success' => true, 'data' => $logs]);
-    exit;
-}
-
-// ─── PATIENTS ───
-if ($action === 'patients') {
-    $method = $_SERVER['REQUEST_METHOD'];
-    
-    // Dummy patient data (in-memory)
-    $patients = [
-        ['patient_id' => 'P001', 'name' => 'Ravi Kumar', 'phone' => '9876543210', 'test' => 'CBC', 'status' => 'pending', 'due_amount' => 450, 'created_at' => date('Y-m-d H:i:s')],
-        ['patient_id' => 'P002', 'name' => 'Priya Singh', 'phone' => '9876543211', 'test' => 'Thyroid', 'status' => 'process', 'due_amount' => 0, 'created_at' => date('Y-m-d H:i:s')],
-        ['patient_id' => 'P003', 'name' => 'Amit Sharma', 'phone' => '9876543212', 'test' => 'Liver Function', 'status' => 'done', 'due_amount' => 620, 'created_at' => date('Y-m-d H:i:s')],
-        ['patient_id' => 'P004', 'name' => 'Sneha Patel', 'phone' => '9876543213', 'test' => 'Urine Culture', 'status' => 'process', 'due_amount' => 380, 'created_at' => date('Y-m-d H:i:s')],
-    ];
-    
-    if ($method === 'GET') {
-        $search = $_GET['search'] ?? '';
-        $result = $patients;
-        if ($search) {
-            $result = array_filter($patients, function($p) use ($search) {
-                return stripos($p['name'], $search) !== false || 
-                       stripos($p['phone'], $search) !== false || 
-                       stripos($p['patient_id'], $search) !== false;
-            });
-            $result = array_values($result);
-        }
-        echo json_encode(['success' => true, 'data' => $result]);
-        exit;
-    }
-    
-    if ($method === 'POST') {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $name = trim($data['name'] ?? '');
-        $phone = trim($data['phone'] ?? '');
-        $test = trim($data['test'] ?? '');
-        $status = $data['status'] ?? 'pending';
-        $due = floatval($data['due'] ?? 0);
-        
-        if (empty($name) || empty($phone)) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'error' => 'Name and phone required']);
-            exit;
-        }
-        
-        $nextId = count($patients) + 1;
-        $patientId = 'P' . str_pad($nextId, 3, '0', STR_PAD_LEFT);
-        $newPatient = [
-            'patient_id' => $patientId,
-            'name' => $name,
-            'phone' => $phone,
-            'test' => $test,
-            'status' => $status,
-            'due_amount' => $due,
-            'created_at' => date('Y-m-d H:i:s')
-        ];
-        // In real app, save to database
-        echo json_encode(['success' => true, 'patient_id' => $patientId]);
-        exit;
-    }
-    
-    if ($method === 'DELETE') {
-        $id = $_GET['id'] ?? '';
-        if (!$id) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'error' => 'ID required']);
-            exit;
-        }
-        echo json_encode(['success' => true]);
-        exit;
-    }
-    
-    echo json_encode(['success' => false, 'error' => 'Method not supported']);
-    exit;
-}
-
-// ─── REPORTS ───
-if ($action === 'reports') {
-    $method = $_SERVER['REQUEST_METHOD'];
-    
-    if ($method === 'GET') {
-        if (isset($_GET['action']) && $_GET['action'] === 'download' && isset($_GET['file'])) {
-            $file = basename($_GET['file']);
-            $path = __DIR__ . '/uploads/' . $file;
-            if (file_exists($path)) {
-                header('Content-Type: application/pdf');
-                header('Content-Disposition: attachment; filename="' . $file . '"');
-                readfile($path);
-                exit;
-            }
-            echo json_encode(['success' => false, 'error' => 'File not found']);
-            exit;
-        }
-        
-        $reports = [
-            ['id' => 1, 'patient_id' => 'P001', 'name' => 'Ravi Kumar', 'test_name' => 'CBC', 'file_path' => 'P001_CBC_20260620.pdf', 'uploaded_at' => date('Y-m-d H:i:s')],
-            ['id' => 2, 'patient_id' => 'P002', 'name' => 'Priya Singh', 'test_name' => 'Thyroid', 'file_path' => 'P002_Thyroid_20260619.pdf', 'uploaded_at' => date('Y-m-d H:i:s')],
-        ];
-        echo json_encode(['success' => true, 'data' => $reports]);
-        exit;
-    }
-    
-    if ($method === 'POST') {
-        $patientId = $_POST['patient_id'] ?? '';
-        $testName = $_POST['test'] ?? '';
-        $file = $_FILES['file'] ?? null;
-        
-        if (!$patientId || !$testName || !$file || $file['error'] !== UPLOAD_ERR_OK) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'error' => 'Missing data or upload error']);
-            exit;
-        }
-        
-        $uploadDir = __DIR__ . '/uploads/';
-        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
-        
-        $filename = $patientId . '_' . preg_replace('/[^a-zA-Z0-9]/', '_', $testName) . '_' . date('Ymd_His') . '.pdf';
-        $target = $uploadDir . $filename;
-        
-        if (move_uploaded_file($file['tmp_name'], $target)) {
-            echo json_encode(['success' => true, 'file' => $filename]);
-        } else {
-            echo json_encode(['success' => false, 'error' => 'File move failed']);
-        }
-        exit;
-    }
-    
-    if ($method === 'DELETE') {
-        $id = $_GET['id'] ?? 0;
-        if (!$id) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'error' => 'ID required']);
-            exit;
-        }
-        echo json_encode(['success' => true]);
-        exit;
-    }
-    
-    echo json_encode(['success' => false, 'error' => 'Method not supported']);
-    exit;
-}
-
-// ─── WHATSAPP ───
-if ($action === 'whatsapp') {
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        http_response_code(405);
-        echo json_encode(['success' => false, 'error' => 'Method not allowed']);
-        exit;
-    }
-    $data = json_decode(file_get_contents('php://input'), true);
-    $phone = $data['phone'] ?? '';
-    $message = $data['message'] ?? '';
-    if (!$phone || !$message) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'error' => 'Phone and message required']);
-        exit;
-    }
-    // Dummy: just return success
-    echo json_encode(['success' => true, 'info' => 'WhatsApp sent (dummy)']);
-    exit;
-}
-
-// ─── PAYMENTS ───
-if ($action === 'payments') {
-    $method = $_SERVER['REQUEST_METHOD'];
-    
-    if ($method === 'GET') {
-        echo json_encode(['success' => true, 'data' => [
-            'total_paid' => 12500,
-            'total_due' => 6800,
-            'paid_count' => 45,
-            'unpaid_count' => 12
-        ]]);
-        exit;
-    }
-    
-    if ($method === 'POST') {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $patientId = $data['patient_id'] ?? '';
-        if (!$patientId) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'error' => 'Patient ID required']);
-            exit;
-        }
-        echo json_encode(['success' => true]);
-        exit;
-    }
-    
-    echo json_encode(['success' => false, 'error' => 'Method not supported']);
-    exit;
-}
-
-// ─── ANALYTICS ───
-if ($action === 'analytics') {
-    echo json_encode(['success' => true, 'data' => [
-        'today_patients' => 142,
-        'total_reports' => 89,
-        'pending_reports' => 23,
-        'culture_process' => 12,
-        'due_patients' => 18,
-        'monthly_revenue' => 124500,
-        'test_wise' => [
-            ['test' => 'CBC', 'count' => 312, 'revenue' => 140400],
-            ['test' => 'Thyroid', 'count' => 198, 'revenue' => 89100],
-            ['test' => 'Liver Function', 'count' => 145, 'revenue' => 65250],
-            ['test' => 'Urine Culture', 'count' => 76, 'revenue' => 34200],
-            ['test' => 'Vitamin D', 'count' => 102, 'revenue' => 45900]
-        ]
-    ]]);
-    exit;
-}
-
-// ─── BACKUP ───
-if ($action === 'backup') {
-    $sub = $_GET['sub'] ?? '';
-    if ($sub === 'database') {
-        $backupDir = __DIR__ . '/backups/';
-        if (!is_dir($backupDir)) mkdir($backupDir, 0777, true);
-        $filename = 'db_backup_' . date('Y-m-d_H-i-s') . '.sql';
-        file_put_contents($backupDir . $filename, '-- Dummy backup');
-        echo json_encode(['success' => true, 'file' => $filename]);
-        exit;
-    }
-    if ($sub === 'pdf') {
-        $backupDir = __DIR__ . '/backups/';
-        if (!is_dir($backupDir)) mkdir($backupDir, 0777, true);
-        $zipFile = 'pdf_backup_' . date('Y-m-d') . '.zip';
-        file_put_contents($backupDir . $zipFile, 'PK dummy zip');
-        echo json_encode(['success' => true, 'file' => $zipFile]);
-        exit;
-    }
-    if ($sub === 'restore' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'error' => 'Upload failed']);
-        }
-        exit;
-    }
-    echo json_encode(['success' => false, 'error' => 'Invalid backup action']);
-    exit;
-}
-
-// ─── DEFAULT ───
-http_response_code(400);
-echo json_encode(['success' => false, 'error' => 'Invalid action: ' . $action]);
+</html>
