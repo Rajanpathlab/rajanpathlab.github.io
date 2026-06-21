@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 
     <style>
-        /* ─── All Styles (same as before, kept intact) ─── */
+        /* ─── All Styles (complete) ─── */
         :root { --primary-blue: #0a2540; --accent-teal: #008080; --bg-light: #f4f7f9; --urgent-red: #d9383a; --text-dark: #2d3748; --thyro-orange: #ff6600; --lal-blue: #ed1c24; --path-purple: #662d91; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.5; }
         b, strong { font-weight: 700; }
@@ -59,7 +59,7 @@
         .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.95rem; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
         @media (max-width: 768px) { header { flex-direction: column; text-align: center; padding: 10px; } nav { margin-top: 10px; } nav a { margin: 0 8px; font-size: 14px; } .admin-login-btn { margin: 8px 0 0 0; } .hero h2 { font-size: 1.8rem; } .strip-content { flex-direction: column; gap: 8px; } .about-features { grid-template-columns: 1fr; } section { padding: 30px 15px; } }
 
-        /* ─── ADMIN PANEL STYLES (unchanged) ─── */
+        /* ─── ADMIN PANEL ─── */
         #adminPanelWrapper { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; overflow-y: auto; padding: 20px; }
         #adminPanelWrapper.active { display: block; }
         #adminPanelContainer { max-width: 1300px; margin: 0 auto; background: #f0f2f5; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; position: relative; min-height: 90vh; }
@@ -336,9 +336,10 @@
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
+                            <label>Patient ID <input type="text" id="patId" placeholder="P001 or RPL-062026-1186" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210" /></label>
-                            <label>Test <select id="patTest"><option>CBC</option><option>Thyroid</option><option>Liver Function</option><option>Urine Culture</option><option>Vitamin D</option></select></label>
+                            <label>Test <select id="patTest"><option>CBC</option><option>Thyroid</option><option>Liver Function</option><option>Urine Culture</option><option>Vitamin D</option><option>CBC WIDAL BSR</option></select></label>
                             <label>Status <select id="patStatus"><option>pending</option><option>process</option><option>done</option></select></label>
                             <label>Due <input type="number" id="patDue" placeholder="0" /></label>
                             <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
@@ -358,7 +359,7 @@
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                         <div class="form-grid">
-                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="#P001" /></label>
+                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="P001 or RPL-062026-1186" /></label>
                             <label>Test Name <input type="text" id="reportTestName" placeholder="CBC" /></label>
                             <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>
                             <label>Replace <select id="reportReplace"><option value="no">No</option><option value="yes">Yes</option></select></label>
@@ -493,18 +494,18 @@
         (function() {
             'use strict';
 
-            // ─── HARDCODED LOGIN ───
+            // ─── LOGIN ───
             const VALID_USERS = {
                 'Rajan5530': 'Rkchandra5530',
                 'admin': 'admin123'
             };
 
-            // ─── DATA PERSISTENCE WITH LOCALSTORAGE ───
+            // ─── DATA PERSISTENCE ───
             function loadData(key, defaultData) {
                 try {
                     const stored = localStorage.getItem('rpl_' + key);
                     if (stored) return JSON.parse(stored);
-                } catch (e) { /* ignore */ }
+                } catch (e) {}
                 return defaultData;
             }
 
@@ -512,38 +513,29 @@
                 localStorage.setItem('rpl_' + key, JSON.stringify(data));
             }
 
-            // Default data
+            // Default data with custom IDs
             const defaultPatients = [
                 { patient_id: 'P001', name: 'Ravi Kumar', phone: '9876543210', test: 'CBC', status: 'pending', due_amount: 450 },
                 { patient_id: 'P002', name: 'Priya Singh', phone: '9876543211', test: 'Thyroid', status: 'process', due_amount: 0 },
-                { patient_id: 'P003', name: 'Amit Sharma', phone: '9876543212', test: 'Liver Function', status: 'done', due_amount: 620 },
-                { patient_id: 'P004', name: 'Sneha Patel', phone: '9876543213', test: 'Urine Culture', status: 'process', due_amount: 380 }
+                { patient_id: 'RPL-062026-1186', name: 'Rajesh Gupta', phone: '9876543214', test: 'CBC WIDAL BSR', status: 'pending', due_amount: 0 }
             ];
 
             const defaultReports = [
-                { id: 1, patient_id: 'P001', name: 'Ravi Kumar', test_name: 'CBC', file_path: 'P001_CBC_20260620.pdf', uploaded_at: new Date().toLocaleString() },
-                { id: 2, patient_id: 'P002', name: 'Priya Singh', test_name: 'Thyroid', file_path: 'P002_Thyroid_20260619.pdf', uploaded_at: new Date().toLocaleString() }
+                { id: 1, patient_id: 'P001', name: 'Ravi Kumar', test_name: 'CBC', file_path: 'P001_CBC.pdf', uploaded_at: new Date().toLocaleString() },
+                { id: 2, patient_id: 'P002', name: 'Priya Singh', test_name: 'Thyroid', file_path: 'P002_Thyroid.pdf', uploaded_at: new Date().toLocaleString() }
             ];
 
-            const defaultPayments = {
-                total_paid: 12500,
-                total_due: 6800,
-                paid_count: 45,
-                unpaid_count: 12
-            };
-
+            const defaultPayments = { total_paid: 12500, total_due: 6800, paid_count: 45, unpaid_count: 12 };
             const defaultLogs = [
                 { created_at: new Date().toLocaleString(), admin_user: 'Rajan5530', action: 'Logged in', ip: '127.0.0.1' },
                 { created_at: new Date(Date.now() - 300000).toLocaleString(), admin_user: 'Rajan5530', action: 'Viewed dashboard', ip: '127.0.0.1' }
             ];
 
-            // Load or initialize
             let patients = loadData('patients', defaultPatients);
             let reports = loadData('reports', defaultReports);
             let payments = loadData('payments', defaultPayments);
             let activityLogs = loadData('logs', defaultLogs);
 
-            // Save functions
             function saveAll() {
                 saveData('patients', patients);
                 saveData('reports', reports);
@@ -611,10 +603,7 @@
                 document.body.style.overflow = '';
             }
 
-            // ─── LOGOUT ───
-            function logout() {
-                hideAdmin();
-            }
+            function logout() { hideAdmin(); }
             $('logoutBtn').addEventListener('click', logout);
             $('logoutBtn2').addEventListener('click', logout);
 
@@ -626,7 +615,7 @@
                 this.innerHTML = adminDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             });
 
-            // ─── ADMIN SECTION NAV ───
+            // ─── SECTION NAV ───
             const adminSections = {
                 dashboard: $('sec-dashboard'),
                 patients: $('sec-patients'),
@@ -664,7 +653,7 @@
                 });
             });
 
-            // ─── QR CODE GENERATION ───
+            // ─── QR CODE ───
             function generateAllQRCodes() {
                 document.querySelectorAll('[id^="qr-"]').forEach(el => {
                     const id = el.id.replace('qr-', '');
@@ -682,7 +671,7 @@
                 });
             }
 
-            // ─── REPORT DOWNLOAD FUNCTION (generates PDF) ───
+            // ─── REPORT DOWNLOAD ───
             function downloadReport(report) {
                 if (typeof window.jspdf === 'undefined') {
                     alert('jsPDF library not loaded. Please refresh.');
@@ -690,13 +679,15 @@
                 }
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
-                doc.setFontSize(16);
-                doc.text('Rajan Path Lab - Report', 20, 20);
+                doc.setFontSize(18);
+                doc.text('RAJAN PATH LAB - REPORT', 20, 25);
                 doc.setFontSize(12);
-                doc.text('Patient: ' + report.name + ' (' + report.patient_id + ')', 20, 40);
-                doc.text('Test: ' + report.test_name, 20, 50);
-                doc.text('Date: ' + report.uploaded_at, 20, 60);
-                doc.text('This is a sample report generated by Rajan Path Lab.', 20, 80);
+                doc.text('Patient: ' + report.name + ' (ID: ' + report.patient_id + ')', 20, 45);
+                doc.text('Test: ' + report.test_name, 20, 55);
+                doc.text('Date: ' + report.uploaded_at, 20, 65);
+                doc.line(20, 72, 190, 72);
+                doc.text('This is a sample diagnostic report generated by Rajan Path Lab.', 20, 85);
+                doc.text('For any queries, contact: 8709946177', 20, 95);
                 doc.save(report.file_path || 'report.pdf');
             }
 
@@ -715,10 +706,9 @@
                         `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
                     ).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No patients</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="4">No patients</td></tr>';
                 }
 
-                // Charts (only once)
                 if (!window.chartsInitialized) {
                     try {
                         const ctx1 = $('chartWeekly')?.getContext('2d');
@@ -760,7 +750,7 @@
                 if (patients.length) {
                     tbody.innerHTML = patients.map(p => `
                         <tr>
-                            <td><b>#${p.patient_id}</b></td>
+                            <td><b>${p.patient_id}</b></td>
                             <td>${p.name}</td>
                             <td>${p.phone}</td>
                             <td>${p.test}</td>
@@ -772,23 +762,35 @@
                     `).join('');
                     setTimeout(() => generateAllQRCodes(), 100);
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No patients</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="8">No patients</td></tr>';
                 }
             }
 
-            // ─── ADD PATIENT ───
+            // ─── ADD PATIENT (with custom ID) ───
             $('addPatientBtn').addEventListener('click', function() {
+                const patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
                 const phone = $('patPhone').value.trim();
                 const test = $('patTest').value;
                 const status = $('patStatus').value;
                 const due = parseFloat($('patDue').value) || 0;
+
                 if (!name || !phone) { alert('Name & Phone required'); return; }
-                const nextId = patients.length + 1;
-                const patientId = 'P' + String(nextId).padStart(3, '0');
-                patients.push({ patient_id: patientId, name, phone, test, status, due_amount: due });
+                // If no custom ID provided, auto-generate
+                let id = patientId;
+                if (!id) {
+                    const nextId = patients.length + 1;
+                    id = 'P' + String(nextId).padStart(3, '0');
+                }
+                // Check duplicate
+                if (patients.find(p => p.patient_id === id)) {
+                    alert('Patient ID already exists!');
+                    return;
+                }
+                patients.push({ patient_id: id, name, phone, test, status, due_amount: due });
                 saveAll();
-                alert('✅ Patient added!');
+                alert('✅ Patient ' + id + ' added!');
+                $('patId').value = '';
                 $('patName').value = '';
                 $('patPhone').value = '';
                 $('patDue').value = '';
@@ -797,6 +799,7 @@
             });
 
             $('clearPatientBtn').addEventListener('click', function() {
+                $('patId').value = '';
                 $('patName').value = '';
                 $('patPhone').value = '';
                 $('patDue').value = '';
@@ -810,6 +813,8 @@
                     const id = e.target.closest('.btn-del-patient').dataset.id;
                     if (confirm(`Delete patient #${id}?`)) {
                         patients = patients.filter(p => p.patient_id !== id);
+                        // Also delete associated reports
+                        reports = reports.filter(r => r.patient_id !== id);
                         saveAll();
                         alert('Deleted!');
                         loadPatients();
@@ -818,7 +823,7 @@
                 }
             });
 
-            // ─── SEARCH PATIENT ───
+            // ─── SEARCH ───
             $('patientSearch').addEventListener('input', function() {
                 const q = this.value.toLowerCase();
                 const rows = document.querySelectorAll('#patientTableBody tr');
@@ -834,7 +839,7 @@
                 if (reports.length) {
                     tbody.innerHTML = reports.map(r => `
                         <tr>
-                            <td>${r.name}</td>
+                            <td>${r.name} (${r.patient_id})</td>
                             <td>${r.test_name}</td>
                             <td>${r.uploaded_at}</td>
                             <td>
@@ -844,11 +849,11 @@
                         </tr>
                     `).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No reports</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
                 }
             }
 
-            // ─── DOWNLOAD REPORT (event delegation) ───
+            // ─── DOWNLOAD REPORT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-download-report')) {
                     const id = parseInt(e.target.closest('.btn-download-report').dataset.id);
@@ -866,9 +871,32 @@
                 const pid = $('reportPatientId').value.trim();
                 const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
-                if (!pid || !test || !file) { alert('Patient ID, Test, and PDF required'); return; }
+                const replace = $('reportReplace').value;
+
+                if (!pid || !test || !file) {
+                    alert('Patient ID, Test, and PDF required');
+                    return;
+                }
+
+                // Find patient
                 const patient = patients.find(p => p.patient_id === pid);
-                if (!patient) { alert('Patient not found'); return; }
+                if (!patient) {
+                    alert('Patient not found! Please add patient first.');
+                    return;
+                }
+
+                // Check if report exists
+                const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
+                if (existing && replace === 'no') {
+                    alert('Report already exists! Use Replace = Yes to overwrite.');
+                    return;
+                }
+
+                // Remove old if replacing
+                if (existing && replace === 'yes') {
+                    reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
+                }
+
                 const newReport = {
                     id: reports.length + 1,
                     patient_id: pid,
@@ -879,7 +907,8 @@
                 };
                 reports.push(newReport);
                 saveAll();
-                alert('✅ Uploaded!');
+
+                alert('✅ Report uploaded for ' + patient.name + ' (' + pid + ')');
                 $('reportPatientId').value = '';
                 $('reportTestName').value = '';
                 $('reportFile').value = '';
@@ -917,12 +946,12 @@
                         </tr>
                     `).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No patients</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
                 }
             }
 
             function sendWhatsApp(phone, message) {
-                alert(`✅ WhatsApp sent to ${phone}\nMessage: ${message}`);
+                alert('✅ WhatsApp sent to ' + phone + '\nMessage: ' + message);
             }
 
             document.addEventListener('click', function(e) {
@@ -938,7 +967,8 @@
             $('sendWAPatient').addEventListener('click', function() {
                 const phone = prompt('Enter patient phone:');
                 if (phone) {
-                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report');
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g,
+                    'Report');
                     sendWhatsApp(phone, msg);
                 }
             });
@@ -976,7 +1006,7 @@
                         </tr>
                     `).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No patients</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
                 }
             }
 
@@ -985,7 +1015,7 @@
                     const btn = e.target.closest('.mark-paid');
                     const id = btn.dataset.id;
                     const amount = parseFloat(btn.dataset.amount);
-                    if (confirm(`Mark #${id} as paid?`)) {
+                    if (confirm('Mark #' + id + ' as paid?')) {
                         const patient = patients.find(p => p.patient_id === id);
                         if (patient) {
                             patient.due_amount = 0;
@@ -1027,12 +1057,9 @@
 
             // ─── ANALYTICS ───
             function loadAnalytics() {
-                const today = patients.length;
-                const totalReports = reports.length;
-                const revenue = payments.total_paid;
-                $('aToday').textContent = today;
-                $('aMonth').textContent = totalReports;
-                $('aRevenue').textContent = '₹' + revenue.toLocaleString();
+                $('aToday').textContent = patients.length;
+                $('aMonth').textContent = reports.length;
+                $('aRevenue').textContent = '₹' + (payments.total_paid || 0).toLocaleString();
 
                 const testMap = {};
                 patients.forEach(p => {
@@ -1052,7 +1079,7 @@
                         `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.revenue}</td><td>-</td></tr>`
                     ).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No data</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="4">No data</td></tr>';
                 }
             }
 
@@ -1066,13 +1093,13 @@
 
             $('backupDBBtn').addEventListener('click', function() {
                 if (confirm('Create DB backup?')) {
-                    alert('✅ Backup created: db_backup_' + new Date().toISOString().slice(0,10) + '.sql');
+                    alert('✅ Backup created: db_backup_' + new Date().toISOString().slice(0, 10) + '.sql');
                 }
             });
 
             $('backupPDFBtn').addEventListener('click', function() {
                 if (confirm('Create PDF backup?')) {
-                    alert('✅ PDF backup created: pdf_backup_' + new Date().toISOString().slice(0,10) + '.zip');
+                    alert('✅ PDF backup created: pdf_backup_' + new Date().toISOString().slice(0, 10) + '.zip');
                 }
             });
 
@@ -1090,7 +1117,7 @@
                         `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
                     ).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No logs</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="4">No logs</td></tr>';
                 }
             }
 
@@ -1107,7 +1134,7 @@
             // ─── INIT ───
             console.log('✅ Rajan Path Lab · Persistent Admin Panel');
             console.log('🔑 Default credentials: Rajan5530 / Rkchandra5530');
-            console.log('📦 Data is saved in localStorage and persists after page reload.');
+            console.log('📦 Supports any Patient ID format (P001, RPL-062026-1186, etc.)');
 
         })();
     </script>
