@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajan Path Lab | Admin Panel</title>
+    <title>Rajan Path Lab | Premium Diagnostics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+
     <style>
-        /* ─── Patient Website Styles (Original) ─── */
+        /* ─── All Styles (same as before, kept intact) ─── */
         :root { --primary-blue: #0a2540; --accent-teal: #008080; --bg-light: #f4f7f9; --urgent-red: #d9383a; --text-dark: #2d3748; --thyro-orange: #ff6600; --lal-blue: #ed1c24; --path-purple: #662d91; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.5; }
         b, strong { font-weight: 700; }
@@ -57,7 +59,7 @@
         .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.95rem; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
         @media (max-width: 768px) { header { flex-direction: column; text-align: center; padding: 10px; } nav { margin-top: 10px; } nav a { margin: 0 8px; font-size: 14px; } .admin-login-btn { margin: 8px 0 0 0; } .hero h2 { font-size: 1.8rem; } .strip-content { flex-direction: column; gap: 8px; } .about-features { grid-template-columns: 1fr; } section { padding: 30px 15px; } }
 
-        /* ─── ADMIN PANEL ─── */
+        /* ─── ADMIN PANEL STYLES (unchanged) ─── */
         #adminPanelWrapper { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; overflow-y: auto; padding: 20px; }
         #adminPanelWrapper.active { display: block; }
         #adminPanelContainer { max-width: 1300px; margin: 0 auto; background: #f0f2f5; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; position: relative; min-height: 90vh; }
@@ -491,37 +493,63 @@
         (function() {
             'use strict';
 
-            // ─── HARDCODED LOGIN CREDENTIALS ───
+            // ─── HARDCODED LOGIN ───
             const VALID_USERS = {
                 'Rajan5530': 'Rkchandra5530',
                 'admin': 'admin123'
             };
 
-            // ─── DUMMY DATA ───
-            let patients = [
+            // ─── DATA PERSISTENCE WITH LOCALSTORAGE ───
+            function loadData(key, defaultData) {
+                try {
+                    const stored = localStorage.getItem('rpl_' + key);
+                    if (stored) return JSON.parse(stored);
+                } catch (e) { /* ignore */ }
+                return defaultData;
+            }
+
+            function saveData(key, data) {
+                localStorage.setItem('rpl_' + key, JSON.stringify(data));
+            }
+
+            // Default data
+            const defaultPatients = [
                 { patient_id: 'P001', name: 'Ravi Kumar', phone: '9876543210', test: 'CBC', status: 'pending', due_amount: 450 },
                 { patient_id: 'P002', name: 'Priya Singh', phone: '9876543211', test: 'Thyroid', status: 'process', due_amount: 0 },
                 { patient_id: 'P003', name: 'Amit Sharma', phone: '9876543212', test: 'Liver Function', status: 'done', due_amount: 620 },
                 { patient_id: 'P004', name: 'Sneha Patel', phone: '9876543213', test: 'Urine Culture', status: 'process', due_amount: 380 }
             ];
 
-            let reports = [
-                { id: 1, patient_id: 'P001', name: 'Ravi Kumar', test_name: 'CBC', file_path: 'P001_CBC_20260620.pdf', uploaded_at: '2026-06-20 10:00' },
-                { id: 2, patient_id: 'P002', name: 'Priya Singh', test_name: 'Thyroid', file_path: 'P002_Thyroid_20260619.pdf', uploaded_at: '2026-06-19 15:30' }
+            const defaultReports = [
+                { id: 1, patient_id: 'P001', name: 'Ravi Kumar', test_name: 'CBC', file_path: 'P001_CBC_20260620.pdf', uploaded_at: new Date().toLocaleString() },
+                { id: 2, patient_id: 'P002', name: 'Priya Singh', test_name: 'Thyroid', file_path: 'P002_Thyroid_20260619.pdf', uploaded_at: new Date().toLocaleString() }
             ];
 
-            let payments = {
+            const defaultPayments = {
                 total_paid: 12500,
                 total_due: 6800,
                 paid_count: 45,
                 unpaid_count: 12
             };
 
-            let activityLogs = [
+            const defaultLogs = [
                 { created_at: new Date().toLocaleString(), admin_user: 'Rajan5530', action: 'Logged in', ip: '127.0.0.1' },
-                { created_at: new Date(Date.now() - 300000).toLocaleString(), admin_user: 'Rajan5530', action: 'Viewed dashboard', ip: '127.0.0.1' },
-                { created_at: new Date(Date.now() - 600000).toLocaleString(), admin_user: 'Rajan5530', action: 'Added patient P001', ip: '127.0.0.1' }
+                { created_at: new Date(Date.now() - 300000).toLocaleString(), admin_user: 'Rajan5530', action: 'Viewed dashboard', ip: '127.0.0.1' }
             ];
+
+            // Load or initialize
+            let patients = loadData('patients', defaultPatients);
+            let reports = loadData('reports', defaultReports);
+            let payments = loadData('payments', defaultPayments);
+            let activityLogs = loadData('logs', defaultLogs);
+
+            // Save functions
+            function saveAll() {
+                saveData('patients', patients);
+                saveData('reports', reports);
+                saveData('payments', payments);
+                saveData('logs', activityLogs);
+            }
 
             // ─── DOM REFS ───
             const $ = id => document.getElementById(id);
@@ -530,7 +558,7 @@
             const adminWrapper = $('adminPanelWrapper');
             const upiModal = $('upiModal');
 
-            // ─── OPEN / CLOSE LOGIN ───
+            // ─── LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
             $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));
             window.addEventListener('click', (e) => {
@@ -538,7 +566,6 @@
                 if (e.target === upiModal) upiModal.classList.remove('show');
             });
 
-            // ─── LOGIN ───
             $('loginForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 const username = $('loginUsername').value.trim();
@@ -576,7 +603,6 @@
                 loadBackupList();
                 loadActivityLog();
                 showAdminSection('dashboard');
-                // Generate QR codes for patients
                 setTimeout(() => generateAllQRCodes(), 300);
             }
 
@@ -656,18 +682,33 @@
                 });
             }
 
+            // ─── REPORT DOWNLOAD FUNCTION (generates PDF) ───
+            function downloadReport(report) {
+                if (typeof window.jspdf === 'undefined') {
+                    alert('jsPDF library not loaded. Please refresh.');
+                    return;
+                }
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                doc.setFontSize(16);
+                doc.text('Rajan Path Lab - Report', 20, 20);
+                doc.setFontSize(12);
+                doc.text('Patient: ' + report.name + ' (' + report.patient_id + ')', 20, 40);
+                doc.text('Test: ' + report.test_name, 20, 50);
+                doc.text('Date: ' + report.uploaded_at, 20, 60);
+                doc.text('This is a sample report generated by Rajan Path Lab.', 20, 80);
+                doc.save(report.file_path || 'report.pdf');
+            }
+
             // ─── DASHBOARD ───
             function loadDashboard() {
-                // Stats
                 $('dToday').textContent = patients.length;
                 $('dTotalReports').textContent = reports.length;
                 $('dPending').textContent = patients.filter(p => p.status === 'pending').length;
-                $('dCulture').textContent = patients.filter(p => p.test.includes('Urine')).length;
+                $('dCulture').textContent = patients.filter(p => p.test && p.test.includes('Urine')).length;
                 $('dDue').textContent = patients.filter(p => p.due_amount > 0).length;
-                const totalRevenue = payments.total_paid;
-                $('dRevenue').textContent = '₹' + totalRevenue.toLocaleString();
+                $('dRevenue').textContent = '₹' + (payments.total_paid || 0).toLocaleString();
 
-                // Recent patients
                 const tbody = $('dRecentPatients');
                 if (patients.length) {
                     tbody.innerHTML = patients.slice(0, 5).map(p =>
@@ -677,7 +718,7 @@
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No patients</td></tr>';
                 }
 
-                // Charts (only if not already created)
+                // Charts (only once)
                 if (!window.chartsInitialized) {
                     try {
                         const ctx1 = $('chartWeekly')?.getContext('2d');
@@ -746,6 +787,7 @@
                 const nextId = patients.length + 1;
                 const patientId = 'P' + String(nextId).padStart(3, '0');
                 patients.push({ patient_id: patientId, name, phone, test, status, due_amount: due });
+                saveAll();
                 alert('✅ Patient added!');
                 $('patName').value = '';
                 $('patPhone').value = '';
@@ -768,6 +810,7 @@
                     const id = e.target.closest('.btn-del-patient').dataset.id;
                     if (confirm(`Delete patient #${id}?`)) {
                         patients = patients.filter(p => p.patient_id !== id);
+                        saveAll();
                         alert('Deleted!');
                         loadPatients();
                         loadDashboard();
@@ -795,7 +838,7 @@
                             <td>${r.test_name}</td>
                             <td>${r.uploaded_at}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary" onclick="alert('Download: ${r.file_path}')"><i class="fas fa-download"></i></button>
+                                <button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}"><i class="fas fa-download"></i></button>
                                 <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
@@ -805,36 +848,57 @@
                 }
             }
 
+            // ─── DOWNLOAD REPORT (event delegation) ───
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-download-report')) {
+                    const id = parseInt(e.target.closest('.btn-download-report').dataset.id);
+                    const report = reports.find(r => r.id === id);
+                    if (report) {
+                        downloadReport(report);
+                    } else {
+                        alert('Report not found');
+                    }
+                }
+            });
+
+            // ─── UPLOAD REPORT ───
             $('uploadReportBtn').addEventListener('click', function() {
                 const pid = $('reportPatientId').value.trim();
                 const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
                 if (!pid || !test || !file) { alert('Patient ID, Test, and PDF required'); return; }
+                const patient = patients.find(p => p.patient_id === pid);
+                if (!patient) { alert('Patient not found'); return; }
                 const newReport = {
                     id: reports.length + 1,
                     patient_id: pid,
-                    name: pid,
+                    name: patient.name,
                     test_name: test,
                     file_path: file.name,
                     uploaded_at: new Date().toLocaleString()
                 };
                 reports.push(newReport);
+                saveAll();
                 alert('✅ Uploaded!');
                 $('reportPatientId').value = '';
                 $('reportTestName').value = '';
                 $('reportFile').value = '';
                 loadReports();
+                loadDashboard();
             });
 
             $('refreshReports').addEventListener('click', loadReports);
 
+            // ─── DELETE REPORT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-report')) {
                     const id = parseInt(e.target.closest('.btn-del-report').dataset.id);
                     if (confirm('Delete report?')) {
                         reports = reports.filter(r => r.id !== id);
+                        saveAll();
                         alert('Deleted!');
                         loadReports();
+                        loadDashboard();
                     }
                 }
             });
@@ -929,6 +993,7 @@
                             payments.total_due -= amount;
                             payments.paid_count++;
                             payments.unpaid_count--;
+                            saveAll();
                             alert('✅ Paid!');
                             loadPayments();
                             loadDashboard();
@@ -969,10 +1034,9 @@
                 $('aMonth').textContent = totalReports;
                 $('aRevenue').textContent = '₹' + revenue.toLocaleString();
 
-                // Test-wise
                 const testMap = {};
                 patients.forEach(p => {
-                    testMap[p.test] = (testMap[p.test] || 0) + 1;
+                    if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1;
                 });
                 const testWise = Object.entries(testMap).map(([test, count]) => ({ test, count, revenue: count * 450 }));
                 if (testWise.length) {
@@ -1041,9 +1105,9 @@
             });
 
             // ─── INIT ───
-            // Show admin if already logged in (not persistent, so just show patient site)
-            console.log('✅ Rajan Path Lab · Fully Self-Contained Admin Panel');
+            console.log('✅ Rajan Path Lab · Persistent Admin Panel');
             console.log('🔑 Default credentials: Rajan5530 / Rkchandra5530');
+            console.log('📦 Data is saved in localStorage and persists after page reload.');
 
         })();
     </script>
