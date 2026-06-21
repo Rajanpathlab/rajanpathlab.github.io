@@ -8,8 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
     <style>
-        /* ─── All styles (same as before) ─── */
-        /* Keeping it compact for brevity, same as previous admin panel */
+        /* ─── ALL STYLES ─── */
         :root { --primary-blue: #0a2540; --accent-teal: #008080; --bg-light: #f4f7f9; --urgent-red: #d9383a; --text-dark: #2d3748; }
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; background: var(--bg-light); color: var(--text-dark); line-height:1.5; }
@@ -126,6 +125,37 @@
         .upi-modal.show { display:flex; }
         .upi-modal-content { background:white; padding:30px; border-radius:10px; max-width:400px; width:90%; text-align:center; }
         .upi-modal-content .btn-close { background:#6c757d; border:none; padding:8px; width:100%; border-radius:4px; color:white; font-weight:600; cursor:pointer; margin-top:12px; }
+        .patient-portal-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10050; overflow-y:auto; padding:20px; align-items:center; justify-content:center; }
+        .patient-portal-modal.active { display:flex; }
+        .patient-portal-content { max-width:860px; width:100%; background:#ffffff; border-radius:2rem; box-shadow:0 30px 45px -20px rgba(0,0,0,0.35),0 0 0 1px rgba(212,175,55,0.25); overflow:hidden; max-height:95vh; overflow-y:auto; }
+        .portal-header { background:#1a212c; padding:1.8rem 2rem 1.4rem; }
+        .portal-header h1 { font-size:1.9rem; font-weight:700; color:#fef7e8; display:flex; align-items:center; gap:12px; }
+        .portal-header .portal-badge { background:rgba(212,175,55,0.2); padding:6px 16px; border-radius:60px; font-size:0.7rem; font-weight:600; color:#e6c168; border:0.5px solid rgba(212,175,55,0.5); }
+        .portal-header .portal-sub { color:#8f9bb3; font-size:0.8rem; margin-top:12px; border-left:2px solid #e6c168; padding-left:14px; }
+        .portal-body { padding:2rem 2rem 1.8rem; }
+        .portal-input-group { margin-bottom:1.5rem; }
+        .portal-input-label { display:flex; align-items:center; gap:12px; font-weight:700; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.8px; color:#2c3f4c; margin-bottom:10px; }
+        .portal-input-label span { background:#f0f3f9; width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center; border-radius:12px; font-size:1rem; }
+        .portal-input { width:100%; padding:1rem 1.3rem; font-size:1rem; background:white; border:1.5px solid #e2e8f0; border-radius:1.25rem; outline:none; font-weight:500; color:#0f172a; }
+        .portal-input:focus { border-color:#d4af37; box-shadow:0 4px 14px rgba(212,175,55,0.2); }
+        .portal-btn { width:100%; background:linear-gradient(98deg,#075E54 0%,#128C7E 100%); border:none; padding:1rem 1.5rem; font-size:1rem; font-weight:700; color:white; border-radius:2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:12px; box-shadow:0 8px 20px -8px rgba(7,94,84,0.5); margin-top:0.5rem; }
+        .portal-btn:hover { transform:translateY(-2px); background:linear-gradient(98deg,#064e44 0%,#0e6b5f 100%); }
+        .portal-status { margin-top:1.2rem; padding:0.9rem 1.2rem; background:#f8fafd; border-radius:1rem; font-size:0.85rem; color:#2c3e50; border-left:3px solid #c9a03d; }
+        .portal-status.success { background:#e6f4ea; border-left-color:#2b7a3e; color:#135c2c; }
+        .portal-status.error { background:#fef5f0; border-left-color:#d4873a; color:#8b5a2b; }
+        .portal-report-list { margin-top:1.5rem; border-top:1px solid #e2e8f0; padding-top:1.5rem; }
+        .portal-report-item { display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:0.8rem 1.2rem; border-radius:1rem; margin-bottom:0.8rem; border:1px solid #edf2f7; }
+        .portal-report-info .test-name { font-weight:600; color:#1a212c; }
+        .portal-report-info .upload-date { font-size:0.8rem; color:#7890a3; }
+        .portal-report-actions { display:flex; align-items:center; gap:12px; }
+        .portal-download-btn { background:#d4af37; border:none; padding:0.4rem 1rem; border-radius:2rem; font-weight:600; color:white; cursor:pointer; font-size:0.8rem; }
+        .portal-download-btn:hover { background:#b8960e; }
+        .portal-download-btn:disabled { background:#b0b8c5; cursor:not-allowed; opacity:0.6; }
+        .portal-due-badge { background:#fee2e2; color:#991b1b; padding:0.2rem 0.8rem; border-radius:2rem; font-size:0.7rem; font-weight:700; }
+        .portal-close-btn { background:#6c757d; border:none; padding:8px 16px; border-radius:2rem; font-weight:600; color:white; cursor:pointer; font-size:0.8rem; margin-top:1rem; }
+        .portal-close-btn:hover { background:#5a6268; }
+        .portal-footer { padding:1rem 2rem 1.4rem; font-size:0.7rem; color:#91a3bb; border-top:1px solid #edf2f9; display:flex; justify-content:space-between; }
+        @media (max-width:650px) { .portal-body { padding:1.5rem; } .portal-header h1 { font-size:1.5rem; } .portal-report-item { flex-direction:column; align-items:flex-start; gap:10px; } .portal-report-actions { width:100%; justify-content:flex-end; } }
         body.admin-dark #adminPanelContainer { --bg-light:#0f172a; --text-dark:#f1f5f9; --card:#1e293b; --border:#334155; }
         body.admin-dark .stat-card { background:#1e293b; border-color:#334155; }
         body.admin-dark .stat-card .info p { color:#94a3b8; }
@@ -148,7 +178,7 @@
         body.admin-dark .stat-card .icon.purple { background:#4c1d95; color:#a78bfa; }
         body.admin-dark .stat-card .icon.orange { background:#78350f; color:#fbbf24; }
         body.admin-dark .stat-card .icon.teal { background:#134e4a; color:#2dd4bf; }
-        @media (max-width:768px) { .admin-body { flex-direction:column; } .admin-sidebar { width:100%; display:flex; flex-wrap:wrap; padding:8px; gap:4px; } .admin-sidebar .nav-label { display:none; } .admin-sidebar a { padding:6px 12px; font-size:13px; border-radius:4px; } .admin-content { padding:14px; } .stats-grid { grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); } .form-grid { grid-template-columns:1fr; } .admin-header { flex-direction:column; align-items:stretch; text-align:center; } .admin-header .admin-user { justify-content:center; } }
+        @media (max-width:768px) { .admin-body { flex-direction:column; } .admin-sidebar { width:100%; display:flex; flex-wrap:wrap; padding:8px; gap:4px; } .admin-sidebar .nav-label { display:none; } .admin-sidebar a { padding:6px 12px; font-size:13px; } .admin-content { padding:14px; } .stats-grid { grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); } .form-grid { grid-template-columns:1fr; } .admin-header { flex-direction:column; text-align:center; } .admin-header .admin-user { justify-content:center; } }
         @media (max-width:480px) { .stat-card { padding:12px; } .stat-card .info h4 { font-size:16px; } .table-wrap { font-size:12px; } .table-wrap th, .table-wrap td { padding:6px 8px; } }
     </style>
 </head>
@@ -324,16 +354,15 @@
                         </div>
                     </div>
 
-                    <!-- PATIENTS (UPDATED TEST DROPDOWN) -->
+                    <!-- PATIENTS (65+ TESTS) -->
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
-                            <label>Patient ID <input type="text" id="patId" placeholder="RPL-062026-1186" /></label>
+                            <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210" /></label>
                             <label>Test
                                 <select id="patTest">
-                                    <!-- All tests from price list -->
                                     <option value="LIVER FUNCTION TEST">LIVER FUNCTION TEST</option>
                                     <option value="KIDNEY FUNCTION TEST">KIDNEY FUNCTION TEST</option>
                                     <option value="LIPID PROFILE">LIPID PROFILE</option>
@@ -558,6 +587,27 @@
         </div>
     </div>
 
+    <!-- ─── PATIENT PORTAL MODAL ─── -->
+    <div class="patient-portal-modal" id="patientPortalModal">
+        <div class="patient-portal-content">
+            <div class="portal-header">
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>
+                <div class="portal-sub">◆ Enter your Patient ID to view & download reports ◆</div>
+            </div>
+            <div class="portal-body">
+                <div class="portal-input-group">
+                    <div class="portal-input-label"><span>🆔</span> PATIENT ID</div>
+                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter your Patient ID" autocomplete="off">
+                </div>
+                <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
+                <div id="portalStatus" class="portal-status">◆ Enter your Patient ID and click "VIEW MY REPORTS"</div>
+                <div id="portalReportList" class="portal-report-list" style="display:none;"></div>
+                <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
+            </div>
+            <div class="portal-footer"><span>✦ SECURE DOWNLOAD SYSTEM ✦</span><span>RAJAN PATH LAB</span></div>
+        </div>
+    </div>
+
     <!-- ─── JAVASCRIPT ─── -->
     <script>
         (function() {
@@ -654,6 +704,7 @@
             const loginModal = $('loginModal');
             const adminWrapper = $('adminPanelWrapper');
             const upiModal = $('upiModal');
+            const portalModal = $('patientPortalModal');
 
             // ─── REAL WHATSAPP ───
             function sendWhatsApp(phone, message) {
@@ -663,6 +714,108 @@
                 if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;
                 window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
             }
+
+            // ─── PATIENT PORTAL ───
+            function openPortal() { portalModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+            function closePortal() { portalModal.classList.remove('active'); document.body.style.overflow = ''; $('portalStatus').className = 'portal-status'; $('portalStatus').textContent = '◆ Enter your Patient ID and click "VIEW MY REPORTS"'; $('portalReportList').style.display = 'none'; $('portalPatientId').value = ''; }
+
+            $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
+            $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
+            $('closePortalBtn').addEventListener('click', closePortal);
+            portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
+
+            $('portalFetchBtn').addEventListener('click', async function() {
+                const patientId = $('portalPatientId').value.trim();
+                const statusDiv = $('portalStatus');
+                const listDiv = $('portalReportList');
+
+                if (!patientId) {
+                    statusDiv.className = 'portal-status error';
+                    statusDiv.innerHTML = '⚠️ Please enter your Patient ID.';
+                    listDiv.style.display = 'none';
+                    return;
+                }
+
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
+
+                const patient = patients.find(p => p.patient_id === patientId);
+                if (!patient) {
+                    statusDiv.className = 'portal-status error';
+                    statusDiv.innerHTML = '❌ No patient found with ID: ' + patientId;
+                    listDiv.style.display = 'none';
+                    return;
+                }
+
+                const patientReports = reports.filter(r => r.patient_id === patientId);
+                if (patientReports.length === 0) {
+                    statusDiv.className = 'portal-status';
+                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (' + patientId + ')';
+                    listDiv.style.display = 'none';
+                    return;
+                }
+
+                statusDiv.className = 'portal-status success';
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name + '. Due amount: ₹' + patient.due_amount;
+
+                let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
+                for (const report of patientReports) {
+                    const canDownload = patient.due_amount === 0;
+                    const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient.due_amount + ' DUE</span>' : '';
+                    html += `
+                        <div class="portal-report-item">
+                            <div class="portal-report-info">
+                                <span class="test-name">${report.test_name}</span>
+                                <span class="upload-date">📅 ${report.uploaded_at}</span>
+                            </div>
+                            <div class="portal-report-actions">
+                                ${dueBadge}
+                                <button class="portal-download-btn" data-report-id="${report.id}" data-patient-due="${patient.due_amount}" ${canDownload ? '' : 'disabled'}>
+                                    ${canDownload ? '⬇️ Download' : '🔒 Locked'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                listDiv.innerHTML = html;
+                listDiv.style.display = 'block';
+
+                listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
+                    btn.addEventListener('click', async function() {
+                        const reportId = parseInt(this.dataset.reportId);
+                        const due = parseFloat(this.dataset.patientDue);
+                        if (due > 0) {
+                            statusDiv.className = 'portal-status error';
+                            statusDiv.innerHTML = '❌ Payment pending. Please clear dues to download report.';
+                            return;
+                        }
+                        try {
+                            const fileBlob = await getPDFFile(reportId);
+                            if (!fileBlob) {
+                                statusDiv.className = 'portal-status error';
+                                statusDiv.innerHTML = '❌ PDF file not found in storage.';
+                                return;
+                            }
+                            const url = URL.createObjectURL(fileBlob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            const report = patientReports.find(r => r.id === reportId);
+                            a.download = report ? report.file_path : 'report.pdf';
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                            statusDiv.className = 'portal-status success';
+                            statusDiv.innerHTML = '✅ Download started!';
+                        } catch (e) {
+                            statusDiv.className = 'portal-status error';
+                            statusDiv.innerHTML = '❌ Error downloading: ' + e.message;
+                        }
+                    });
+                });
+            });
+
+            $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn').click(); });
 
             // ─── LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
@@ -832,8 +985,6 @@
                 } else {
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
                 }
-
-                // Charts
                 updateCharts();
             }
 
@@ -933,7 +1084,12 @@
 
                 if (!name || !phone) { alert('Name & Phone required'); return; }
                 let id = patientId;
-                if (!id) { const nextId = patients.length + 1; id = 'RPL-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + String(nextId).padStart(4,'0'); }
+                if (!id) {
+                    const nextId = patients.length + 1;
+                    const today = new Date();
+                    const dateStr = today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
+                    id = 'RPL-' + dateStr + '-' + String(nextId).padStart(4,'0');
+                }
                 if (patients.find(p => p.patient_id === id)) { alert('Patient ID already exists!'); return; }
 
                 patients.push({
@@ -1277,8 +1433,19 @@
 
             // ─── INIT ───
             openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));
-            console.log('✅ Rajan Path Lab · Admin Panel with 65+ Tests');
+            console.log('✅ Rajan Path Lab · Complete Admin Panel with 65+ Tests');
             console.log('🔑 Login: Rajan5530 / Rkchandra5530');
+
+            // ─── ADD PATIENT PORTAL BUTTON TO NAV ───
+            const nav = document.querySelector('nav');
+            const portalBtn = document.createElement('button');
+            portalBtn.className = 'admin-login-btn';
+            portalBtn.id = 'openPatientPortalBtn';
+            portalBtn.innerHTML = '<i class="fas fa-file-pdf"></i> My Reports';
+            portalBtn.style.background = '#25D366';
+            portalBtn.style.marginLeft = '10px';
+            portalBtn.addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
+            nav.appendChild(portalBtn);
 
         })();
     </script>
