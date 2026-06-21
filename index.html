@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Rajan Path Lab | Premium Diagnostics</title>  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
-    <!-- Charts & QR for Admin (loaded only when needed) -->  
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>  
 
@@ -59,7 +58,6 @@
         }  
         nav a:hover { color: var(--accent-teal); }  
 
-        /* ─── ADDED: ADMIN BUTTON & PATIENT PORTAL BUTTON (only additions to header) ─── */  
         .admin-login-btn, .patient-portal-btn {  
             background: var(--accent-teal);  
             color: white;  
@@ -110,7 +108,6 @@
         .btn-book:hover { background: #b82d2f; }  
         .btn-report:hover { background: #006666; }  
 
-        /* ─── ADDED: Patient Portal Hero Button ─── */  
         .btn-portal {  
             background: #25D366;  
             padding: 12px 28px;  
@@ -196,7 +193,7 @@
             section { padding: 30px 15px; }  
         }  
 
-        /* ─── ADMIN PANEL STYLES (HIDDEN BY DEFAULT) ─── */  
+        /* ─── ADMIN PANEL STYLES ─── */  
         #adminPanelWrapper {  
             display: none;  
             position: fixed;  
@@ -219,7 +216,6 @@
             min-height: 90vh;  
         }  
 
-        /* Admin Header */  
         .admin-header {  
             background: var(--primary-blue);  
             color: white;  
@@ -254,7 +250,6 @@
 
         .admin-body { display: flex; min-height: calc(90vh - 60px); }  
 
-        /* Admin Sidebar */  
         .admin-sidebar {  
             width: 220px;  
             background: var(--primary-blue);  
@@ -295,7 +290,6 @@
         .admin-section.active { display: block; }  
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }  
 
-        /* Admin Stats */  
         .stats-grid {  
             display: grid;  
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));  
@@ -330,7 +324,6 @@
         .stat-card .info h4 { font-size: 20px; font-weight: 700; margin: 0; }  
         .stat-card .info p { font-size: 12px; margin: 2px 0 0 0; color: #64748b; }  
 
-        /* Admin Tables */  
         .table-wrap {  
             background: white;  
             border: 1px solid #e2e8f0;  
@@ -460,7 +453,6 @@
             margin-left: 6px;  
         }  
 
-        /* ─── LOGIN MODAL ─── */  
         .login-modal {  
             display: none;  
             position: fixed;  
@@ -500,7 +492,6 @@
             margin-top: 6px;  
         }  
 
-        /* ─── UPI MODAL ─── */  
         .upi-modal {  
             display: none;  
             position: fixed;  
@@ -585,7 +576,6 @@
         .portal-footer { padding: 1rem 2rem 1.4rem; font-size: 0.7rem; color: #91a3bb; border-top: 1px solid #edf2f9; display: flex; justify-content: space-between; }  
         @media (max-width: 650px) { .portal-body { padding: 1.5rem; } .portal-header h1 { font-size: 1.5rem; } .portal-report-item { flex-direction: column; align-items: flex-start; gap: 10px; } .portal-report-actions { width: 100%; justify-content: flex-end; } }  
 
-        /* ─── DARK MODE FOR ADMIN ─── */  
         body.admin-dark #adminPanelContainer {  
             --bg-light: #0f172a;  
             --text-dark: #f1f5f9;  
@@ -620,10 +610,7 @@
 </head>  
 <body>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- ORIGINAL PATIENT WEBSITE (100% UNCHANGED) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── ORIGINAL PATIENT WEBSITE ─── -->  
     <header>  
         <h1>RAJAN <span>PATH LAB</span></h1>  
         <nav>  
@@ -632,7 +619,6 @@
             <a href="book.html">Book Test</a>  
             <a href="report.html">Download Report</a>  
             <a href="contact.html">About</a>  
-            <!-- ADDED: Patient Portal & Admin buttons only (original patient site unchanged) -->  
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>  
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>  
         </nav>  
@@ -643,7 +629,6 @@
         <div class="btn-container">  
             <a class="btn-book" href="book.html">Book Test</a>  
             <a class="btn-report" href="report.html">Download Report</a>  
-            <!-- ADDED: Patient Portal Hero Button -->  
             <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>  
         </div>  
     </div>  
@@ -737,10 +722,7 @@
 
     <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- ADMIN LOGIN MODAL -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── ADMIN LOGIN MODAL ─── -->  
     <div class="login-modal" id="loginModal">  
         <div class="login-modal-content">  
             <h3><i class="fas fa-lock"></i> Admin Login</h3>  
@@ -756,10 +738,7 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- ADMIN PANEL (OVERLAY) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── ADMIN PANEL ─── -->  
     <div id="adminPanelWrapper">  
         <div id="adminPanelContainer">  
             <div class="admin-header">  
@@ -961,10 +940,7 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- UPI MODAL (for admin payments) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── UPI MODAL ─── -->  
     <div class="upi-modal" id="upiModal">  
         <div class="upi-modal-content">  
             <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>  
@@ -974,10 +950,7 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- PATIENT PORTAL MODAL -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── PATIENT PORTAL MODAL ─── -->  
     <div class="patient-portal-modal" id="patientPortalModal">  
         <div class="patient-portal-content">  
             <div class="portal-header">  
@@ -1005,10 +978,7 @@
         </div>  
     </div>  
 
-    <!-- ─────────────────────────────────────────────────────── -->
-    <!-- JAVASCRIPT – ONLY ADMIN & PATIENT PORTAL LOGIC (patient site untouched) -->
-    <!-- ─────────────────────────────────────────────────────── -->
-
+    <!-- ─── JAVASCRIPT ─── -->  
     <script>  
         (function() {  
             'use strict';  
@@ -1019,7 +989,7 @@
                 'admin': 'admin123'  
             };  
 
-            // ─── DATA PERSISTENCE (localStorage) ───  
+            // ─── DATA PERSISTENCE ───  
             function loadData(key, defaultData) {  
                 try {  
                     const stored = localStorage.getItem('rpl_' + key);  
@@ -1060,7 +1030,7 @@
                 saveData('logs', activityLogs);  
             }  
 
-            // ─── INDEXED DB FOR PDF FILES ───  
+            // ─── INDEXED DB FOR PDF ───  
             let db = null;  
             const DB_NAME = 'RPL_PDF_DB';  
             const STORE_NAME = 'pdf_files';  
@@ -1217,6 +1187,17 @@
             });  
 
             $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn').click(); });  
+
+            // ─── REAL WHATSAPP FUNCTION ───  
+            function sendWhatsApp(phone, message) {  
+                // Clean phone number  
+                let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');  
+                if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);  
+                if (/^\d{10}$/.test(cleanPhone)) cleanPhone = '+91' + cleanPhone;  
+                if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;  
+                const url = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message);  
+                window.open(url, '_blank');  
+            }  
 
             // ─── ADMIN LOGIN ───  
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));  
@@ -1513,8 +1494,7 @@
                 } else { tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>'; }  
             }  
 
-            function sendWhatsApp(phone, message) { alert('✅ WhatsApp sent to ' + phone + '\nMessage: ' + message); }  
-
+            // ─── WHATSAPP SEND EVENTS ───  
             document.addEventListener('click', function(e) {  
                 if (e.target.closest('.wa-send')) {  
                     const btn = e.target.closest('.wa-send');  
@@ -1524,18 +1504,23 @@
             });  
 
             $('sendWAPatient').addEventListener('click', function() {  
-                const phone = prompt('Enter patient phone:');  
-                if (phone) { const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report');  
-                    sendWhatsApp(phone, msg); }  
+                const phone = prompt('Enter patient phone (e.g. 9876543210):');  
+                if (phone) {  
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report');  
+                    sendWhatsApp(phone, msg);  
+                }  
             });  
+
             $('sendWADoctor').addEventListener('click', function() {  
                 const phone = prompt('Enter doctor phone:');  
                 if (phone) sendWhatsApp(phone, 'Doctor: Report ready for patient.');  
             });  
+
             $('sendUrineUpdate').addEventListener('click', function() {  
                 const phone = prompt('Enter patient phone:');  
                 if (phone) sendWhatsApp(phone, 'Urine Culture under process. Results in 48 hrs.');  
             });  
+
             $('dueReminderBtn').addEventListener('click', function() {  
                 const phone = prompt('Enter patient phone for due reminder:');  
                 if (phone) sendWhatsApp(phone, 'Reminder: Your payment is due at Rajan Path Lab.');  
@@ -1646,10 +1631,9 @@
 
             // ─── INIT ───  
             openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));  
-            console.log('✅ Rajan Path Lab · Original Patient Website + Admin Panel + Patient Portal');  
+            console.log('✅ Rajan Path Lab · WhatsApp Now Works!');  
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');  
-            console.log('📦 Data saved in localStorage and IndexedDB.');  
-            console.log('👤 Patients click "My Reports" to download reports (due check enabled).');  
+            console.log('📱 WhatsApp: Enter phone number → opens WhatsApp with pre-filled message.');  
 
         })();  
     </script>  
