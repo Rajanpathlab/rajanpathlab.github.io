@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Rajan Path Lab | Premium Diagnostics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
@@ -193,7 +193,7 @@
             section { padding: 30px 15px; }
         }
 
-        /* ─── ADMIN PANEL STYLES ─── */
+        /* ─── ADMIN PANEL STYLES (SAME AS BEFORE) ─── */
         #adminPanelWrapper {
             display: none;
             position: fixed;
@@ -398,8 +398,6 @@
             font-size: 14px;
         }
         .form-grid label input:focus, .form-grid label select:focus { outline: 2px solid var(--accent-teal); }
-
-        /* ─── DATALIST INPUT STYLING ─── */
         .form-grid label input[list] {
             padding: 6px 10px;
             border-radius: 4px;
@@ -410,7 +408,6 @@
         }
         .form-grid label input[list]:focus {
             outline: 2px solid var(--accent-teal);
-            outline-offset: 1px;
         }
 
         .toolbar {
@@ -536,7 +533,6 @@
             margin-top: 12px;
         }
 
-        /* ─── PATIENT PORTAL MODAL ─── */
         .patient-portal-modal {
             display: none;
             position: fixed;
@@ -600,7 +596,7 @@
             box-shadow: 0 8px 20px -8px rgba(7,94,84,0.5);
             margin-top: 0.5rem;
         }
-        .portal-btn:hover { transform: translateY(-2px); background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%); box-shadow: 0 14px 26px -10px rgba(7,94,84,0.7); }
+        .portal-btn:hover { transform: translateY(-2px); background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%); }
         .portal-status { margin-top: 1.2rem; padding: 0.9rem 1.2rem; background: #f8fafd; border-radius: 1rem; font-size: 0.85rem; color: #2c3e50; border-left: 3px solid #c9a03d; transition: 0.2s; line-height: 1.4; font-weight: 500; }
         .portal-status.success { background: #e6f4ea; border-left-color: #2b7a3e; color: #135c2c; }
         .portal-status.error { background: #fef5f0; border-left-color: #d4873a; color: #8b5a2b; }
@@ -688,7 +684,7 @@
         <div class="about-container">
             <div class="about-text">
                 <h2>About Rajan Path Lab</h2>
-                <p>Situated in <b>Manahar Bhushra (Pandwa Patan Road)</b>, Rajan Path Lab has established itself as a trusted name in diagnostic healthcare. We are built on the foundational pillars of <b>Clinical Precision, Diagnostic Accuracy, and Ethical Practices</b>. We firmly believe that the cornerstone of effective treatment is an accurate, timely diagnosis. By combining cutting-edge technology with a commitment to integrity, we ensure that every patient receives the highest standard of care.</p>
+                <p>Situated in <b>Manahar Bhushra (Pandwa Patan Road)</b>, Rajan Path Lab has established itself as a trusted name in diagnostic healthcare. We are built on the foundational pillars of <b>Clinical Precision, Diagnostic Accuracy, and Ethical Practices</b>.</p>
                 <h3>Why Choose Us?</h3>
                 <div class="about-features">
                     <div class="feature-item"><i class="fas fa-check-circle"></i> High-Precision Analyzers</div>
@@ -699,8 +695,8 @@
                     <div class="feature-item"><i class="fas fa-check-circle"></i> Expert Pathology</div>
                 </div>
             </div>
-            <div class="about-text" style="text-align: center;">
-                <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width: 180px; opacity: 0.9;">
+            <div style="text-align:center;">
+                <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width:180px;opacity:0.9;">
             </div>
         </div>
     </section>
@@ -709,28 +705,28 @@
         <section>
             <h2>Our Collection Centers</h2>
             <div class="grid-container">
-                <div class="card" style="border-top: 3px solid var(--urgent-red);">
-                    <i class="fas fa-hospital-user" style="color: var(--urgent-red);"></i>
+                <div class="card" style="border-top:3px solid var(--urgent-red);">
+                    <i class="fas fa-hospital-user" style="color:var(--urgent-red);"></i>
                     <h3>J R MEDICAL</h3>
                     <p>Chilbil Chowk, Manhar</p>
-                    <p style="color: var(--urgent-red); font-weight: bold; margin-top: 10px;">Fasting Samples (Khali Pet)</p>
+                    <p style="color:var(--urgent-red);font-weight:bold;margin-top:10px;">Fasting Samples</p>
                 </div>
-                <div class="card" style="border-top: 3px solid var(--accent-teal);">
-                    <i class="fas fa-house-chimney" style="color: var(--accent-teal);"></i>
+                <div class="card" style="border-top:3px solid var(--accent-teal);">
+                    <i class="fas fa-house-chimney" style="color:var(--accent-teal);"></i>
                     <h3>Home Collection</h3>
                     <p>Professional Pickup Service</p>
-                    <p style="font-weight: bold; color: var(--primary-blue); margin-top: 10px;">Charge: ₹50</p>
+                    <p style="font-weight:bold;color:var(--primary-blue);margin-top:10px;">₹50</p>
                 </div>
             </div>
         </section>
     </div>
 
-    <section style="background: white;">
+    <section style="background:white;">
         <h2>Our Diagnostic Partners</h2>
         <div class="partner-grid">
-            <div class="partner-item" style="border-bottom: 3px solid var(--thyro-orange);"><i class="fas fa-microscope" style="color: var(--thyro-orange);"></i><p>Thyrocare</p></div>
-            <div class="partner-item" style="border-bottom: 3px solid var(--lal-blue);"><i class="fas fa-vials" style="color: var(--lal-blue);"></i><p>Dr. Lal PathLabs</p></div>
-            <div class="partner-item" style="border-bottom: 3px solid var(--path-purple);"><i class="fas fa-flask" style="color: var(--path-purple);"></i><p>Pathkind Labs</p></div>
+            <div class="partner-item" style="border-bottom:3px solid #ff6600;"><i class="fas fa-microscope" style="color:#ff6600;"></i><p>Thyrocare</p></div>
+            <div class="partner-item" style="border-bottom:3px solid #ed1c24;"><i class="fas fa-vials" style="color:#ed1c24;"></i><p>Dr. Lal PathLabs</p></div>
+            <div class="partner-item" style="border-bottom:3px solid #662d91;"><i class="fas fa-flask" style="color:#662d91;"></i><p>Pathkind Labs</p></div>
         </div>
     </section>
 
@@ -738,14 +734,14 @@
         <section>
             <h2>Specialized Test Menu</h2>
             <div class="grid-container">
-                <div class="card"><i class="fas fa-microscope" style="color: var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>
-                <div class="card"><i class="fas fa-vial" style="color: #ff7e5f;"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>
-                <div class="card"><i class="fas fa-dna" style="color: var(--path-purple);"></i><h3>Aarogyam C Pro</h3><p>69 Health Parameters</p></div>
-                <div class="card"><i class="fas fa-sun" style="color: #fbc02d;"></i><h3>Vitamin D</h3><p>25-Hydroxy Bone Health</p></div>
-                <div class="card"><i class="fas fa-bolt" style="color: #0d47a1;"></i><h3>Vitamin B12</h3><p>Nerve & Energy Profile</p></div>
-                <div class="card"><i class="fas fa-bug" style="color: #c62828;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>
-                <div class="card"><i class="fas fa-heartbeat" style="color: #ec407a;"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>
-                <div class="card"><i class="fas fa-hand-holding-droplet" style="color: #ef6c00;"></i><h3>Diabetes Care</h3><p>HbA1c & Sugar</p></div>
+                <div class="card"><i class="fas fa-microscope" style="color:var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>
+                <div class="card"><i class="fas fa-vial" style="color:#ff7e5f;"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>
+                <div class="card"><i class="fas fa-dna" style="color:#662d91;"></i><h3>Aarogyam C Pro</h3><p>69 Parameters</p></div>
+                <div class="card"><i class="fas fa-sun" style="color:#fbc02d;"></i><h3>Vitamin D</h3><p>Bone Health</p></div>
+                <div class="card"><i class="fas fa-bolt" style="color:#0d47a1;"></i><h3>Vitamin B12</h3><p>Nerve Profile</p></div>
+                <div class="card"><i class="fas fa-bug" style="color:#c62828;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>
+                <div class="card"><i class="fas fa-heartbeat" style="color:#ec407a;"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>
+                <div class="card"><i class="fas fa-hand-holding-droplet" style="color:#ef6c00;"></i><h3>Diabetes Care</h3><p>HbA1c & Sugar</p></div>
             </div>
         </section>
     </div>
@@ -756,12 +752,12 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
         <div class="footer-links">
-            <a href="https://www.google.com/search?kgmid=%2Fg%2F11tn9qwbxl" target="_blank"><i class="fas fa-map-marked-alt"></i> Google Maps</a>
-            <a href="https://www.instagram.com/lab_technician_3.0?igsh=MWNsOGo1M2pzbDk0cg==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#"><i class="fas fa-map-marked-alt"></i> Google Maps</a>
+            <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
             <a href="tel:+918709946177"><i class="fas fa-phone"></i> 8709946177</a>
         </div>
         <p>🌐 rajanpathlab.github.io</p>
-        <p style="font-size: 12px; opacity: 0.7; margin-top: 10px;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
+        <p style="font-size:12px;opacity:0.7;margin-top:10px;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
     </footer>
 
     <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
@@ -1170,7 +1166,20 @@
             // ─── LOGIN ───
             const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
-            // ─── DATA PERSISTENCE (localStorage) ───
+            // ─── NORMALIZE PHONE NUMBER ───
+            function normalizePhone(phone) {
+                if (!phone) return '';
+                // Remove spaces, dashes, parentheses, dots
+                let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
+                // Remove leading +91 or 91 if present
+                if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
+                if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
+                // Remove leading zero
+                if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
+                return cleaned;
+            }
+
+            // ─── DATA PERSISTENCE (localStorage + IndexedDB) ───
             function loadData(key, defaultData) {
                 try {
                     const stored = localStorage.getItem('rpl_' + key);
@@ -1182,7 +1191,20 @@
                 } catch (e) { console.warn('Failed to parse stored data for ' + key, e); }
                 return defaultData;
             }
-            function saveData(key, data) { localStorage.setItem('rpl_' + key, JSON.stringify(data)); }
+
+            function saveData(key, data) {
+                try {
+                    localStorage.setItem('rpl_' + key, JSON.stringify(data));
+                } catch (e) {
+                    console.warn('Failed to save data to localStorage', e);
+                    // Fallback: try to save without non-essential data
+                    try {
+                        localStorage.setItem('rpl_' + key, JSON.stringify(data));
+                    } catch (e2) {
+                        console.error('Storage full! Please clear some data.', e2);
+                    }
+                }
+            }
 
             // ─── NO DEFAULT DATA ───
             const defaultPatients = [];
@@ -1272,11 +1294,32 @@
             }
 
             // ─── PATIENT PORTAL ───
-            function openPortal() { portalModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
-            function closePortal() { portalModal.classList.remove('active'); document.body.style.overflow = ''; $('portalStatus').className = 'portal-status'; $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"'; $('portalReportList').style.display = 'none'; $('portalPatientId').value = ''; }
+            function openPortal() {
+                portalModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                // Force reload data when portal opens
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
+                // Reset status
+                $('portalStatus').className = 'portal-status';
+                $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                $('portalReportList').style.display = 'none';
+                $('portalPatientId').value = '';
+            }
 
-            $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
-            $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
+            function closePortal() {
+                portalModal.classList.remove('active');
+                document.body.style.overflow = '';
+                $('portalStatus').className = 'portal-status';
+                $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                $('portalReportList').style.display = 'none';
+                $('portalPatientId').value = '';
+            }
+
+            $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault();
+                openPortal(); });
+            $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault();
+                openPortal(); });
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
@@ -1296,11 +1339,27 @@
                 patients = loadData('patients', defaultPatients);
                 reports = loadData('reports', defaultReports);
 
-                // Search by Patient ID OR Mobile Number
-                const patient = patients.find(p =>
-                    p.patient_id === searchValue ||
-                    p.phone === searchValue
-                );
+                // ─── SEARCH BY PATIENT ID OR NORMALIZED PHONE ───
+                const normalizedSearch = normalizePhone(searchValue);
+
+                // Try to find by patient_id first
+                let patient = patients.find(p => p.patient_id === searchValue);
+
+                // If not found by ID, try by phone (normalized)
+                if (!patient) {
+                    patient = patients.find(p => {
+                        const normalizedPhone = normalizePhone(p.phone || '');
+                        return normalizedPhone === normalizedSearch || p.phone === searchValue;
+                    });
+                }
+
+                // If still not found, try partial match on phone
+                if (!patient && normalizedSearch.length >= 4) {
+                    patient = patients.find(p => {
+                        const normalizedPhone = normalizePhone(p.phone || '');
+                        return normalizedPhone.includes(normalizedSearch) || (p.phone || '').includes(searchValue);
+                    });
+                }
 
                 if (!patient) {
                     statusDiv.className = 'portal-status error';
@@ -1312,19 +1371,22 @@
                 const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
                 if (patientReports.length === 0) {
                     statusDiv.className = 'portal-status';
-                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (ID: ' + patient.patient_id + ')';
+                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (ID: ' + patient
+                        .patient_id + ')';
                     listDiv.style.display = 'none';
                     return;
                 }
 
                 const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
                 statusDiv.className = 'portal-status success';
-                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name + ' (via ' + foundBy + '). Due amount: ₹' + patient.due_amount;
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
+                    ' (via ' + foundBy + '). Due amount: ₹' + patient.due_amount;
 
                 let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
                     const canDownload = patient.due_amount === 0;
-                    const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient.due_amount + ' DUE</span>' : '';
+                    const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient
+                        .due_amount + ' DUE</span>' : '';
                     html += `
                         <div class="portal-report-item">
                             <div class="portal-report-info">
@@ -1349,7 +1411,8 @@
                         const due = parseFloat(this.dataset.patientDue);
                         if (due > 0) {
                             statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML = '❌ Payment pending. Please clear dues to download report.';
+                            statusDiv.innerHTML =
+                            '❌ Payment pending. Please clear dues to download report.';
                             return;
                         }
                         try {
@@ -1378,7 +1441,8 @@
                 });
             });
 
-            $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn').click(); });
+            $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn')
+                .click(); });
 
             // ─── ADMIN LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
@@ -1579,7 +1643,9 @@
                         type: 'bar',
                         data: {
                             labels: days,
-                            datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }]
+                            datasets: [{ label: 'Patients', data: weeklyData,
+                                backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
+                                borderWidth: 2 }]
                         },
                         options: {
                             responsive: true,
@@ -1593,14 +1659,17 @@
                 const ctx2 = $('chartPie')?.getContext('2d');
                 if (ctx2) {
                     if (chartPieInstance) chartPieInstance.destroy();
-                    const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a', '#ff6600'];
+                    const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a',
+                        '#ff6600'
+                    ];
                     chartPieInstance = new Chart(ctx2, {
                         type: 'doughnut',
                         data: {
                             labels: testLabels.length ? testLabels : ['No Data'],
                             datasets: [{
                                 data: testLabels.length ? testData : [1],
-                                backgroundColor: testLabels.length ? colors.slice(0, testLabels.length) : ['#ccc'],
+                                backgroundColor: testLabels.length ? colors.slice(0, testLabels
+                                    .length) : ['#ccc'],
                                 borderWidth: 2,
                                 borderColor: '#fff'
                             }]
@@ -1608,7 +1677,8 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
+                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,
+                                    font: { size: 11 } } } }
                         }
                     });
                 }
@@ -1650,11 +1720,13 @@
                 if (!id) {
                     const nextId = patients.length + 1;
                     const today = new Date();
-                    const dateStr = today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
-                    id = 'RPL-' + dateStr + '-' + String(nextId).padStart(4,'0');
+                    const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today
+                        .getDate()).padStart(2, '0');
+                    id = 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
                 }
-                // Check if patient already exists
-                if (patients.find(p => p.patient_id === id || p.phone === phone)) {
+                // Check duplicate
+                const normalizedPhone = normalizePhone(phone);
+                if (patients.find(p => p.patient_id === id || normalizePhone(p.phone) === normalizedPhone)) {
                     alert('Patient ID or Phone already exists!');
                     return;
                 }
@@ -1759,7 +1831,8 @@
                 if (!patient) { msgDiv.textContent = '❌ Patient not found! Please add patient first.'; return; }
 
                 const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
-                if (existing && replace === 'no') { msgDiv.textContent = '❌ Report already exists. Use Replace = Yes to overwrite.'; return; }
+                if (existing && replace === 'no') { msgDiv.textContent =
+                    '❌ Report already exists. Use Replace = Yes to overwrite.'; return; }
                 if (existing && replace === 'yes') {
                     try { await deletePDFFile(existing.id); } catch (e) {}
                     reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
@@ -1829,7 +1902,8 @@
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.wa-send')) {
                     const btn = e.target.closest('.wa-send');
-                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn.dataset.test);
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(
+                        /{test}/g, btn.dataset.test);
                     sendWhatsApp(btn.dataset.phone, msg);
                 }
             });
@@ -1837,7 +1911,8 @@
             $('sendWAPatient').addEventListener('click', function() {
                 const phone = prompt('Enter patient phone (e.g. 9876543210):');
                 if (phone) {
-                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report');
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g,
+                        'Report');
                     sendWhatsApp(phone, msg);
                 }
             });
@@ -1941,7 +2016,8 @@
                 let topTest = '-';
                 let topCount = 0;
                 Object.keys(testMap).forEach(key => {
-                    if (testMap[key] > topCount) { topCount = testMap[key]; topTest = key; }
+                    if (testMap[key] > topCount) { topCount = testMap[key];
+                        topTest = key; }
                 });
 
                 $('aToday').textContent = todayCount;
@@ -1968,10 +2044,12 @@
                 `;
             }
             $('backupDBBtn').addEventListener('click', function() {
-                if (confirm('Create DB backup?')) alert('✅ Backup created: db_backup_' + new Date().toISOString().slice(0, 10) + '.sql');
+                if (confirm('Create DB backup?')) alert('✅ Backup created: db_backup_' + new Date().toISOString()
+                    .slice(0, 10) + '.sql');
             });
             $('backupPDFBtn').addEventListener('click', function() {
-                if (confirm('Create PDF backup?')) alert('✅ PDF backup created: pdf_backup_' + new Date().toISOString().slice(0, 10) + '.zip');
+                if (confirm('Create PDF backup?')) alert('✅ PDF backup created: pdf_backup_' + new Date()
+                    .toISOString().slice(0, 10) + '.zip');
             });
             $('restoreBtn').addEventListener('click', function() {
                 const file = $('restoreFile').files[0];
@@ -2001,11 +2079,22 @@
             });
 
             // ─── INIT ───
-            openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));
-            console.log('✅ Rajan Path Lab · All Issues Fixed');
+            openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available',
+            e));
+
+            // ─── TEST IF STORAGE IS WORKING ───
+            try {
+                localStorage.setItem('test_storage', 'working');
+                localStorage.removeItem('test_storage');
+                console.log('✅ localStorage is working');
+            } catch (e) {
+                console.warn('⚠️ localStorage may be full or blocked:', e);
+            }
+
+            console.log('✅ Rajan Path Lab · Fixed Mobile Search & Storage');
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
             console.log('📦 No default data - only your added patients.');
-            console.log('👤 Patients can search by ID or Mobile Number.');
+            console.log('👤 Patients can search by ID or Mobile Number (normalized).');
 
         })();
     </script>
