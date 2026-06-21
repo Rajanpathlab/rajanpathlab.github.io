@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
     <style>
-        /* ─── ORIGINAL PATIENT WEBSITE STYLES (100% UNCHANGED) ─── */
+        /* ─── ORIGINAL PATIENT WEBSITE STYLES ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
@@ -399,6 +399,20 @@
         }
         .form-grid label input:focus, .form-grid label select:focus { outline: 2px solid var(--accent-teal); }
 
+        /* ─── DATALIST INPUT STYLING ─── */
+        .form-grid label input[list] {
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 14px;
+            width: 100%;
+        }
+        .form-grid label input[list]:focus {
+            outline: 2px solid var(--accent-teal);
+            outline-offset: 1px;
+        }
+
         .toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -606,7 +620,6 @@
         .portal-footer { padding: 1rem 2rem 1.4rem; font-size: 0.7rem; color: #91a3bb; border-top: 1px solid #edf2f9; display: flex; justify-content: space-between; }
         @media (max-width: 650px) { .portal-body { padding: 1.5rem; } .portal-header h1 { font-size: 1.5rem; } .portal-report-item { flex-direction: column; align-items: flex-start; gap: 10px; } .portal-report-actions { width: 100%; justify-content: flex-end; } }
 
-        /* ─── DARK MODE FOR ADMIN ─── */
         body.admin-dark #adminPanelContainer {
             --bg-light: #0f172a;
             --text-dark: #f1f5f9;
@@ -800,19 +813,19 @@
                     <div class="admin-section active" id="sec-dashboard">
                         <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
                         <div class="stats-grid" id="dashboardStats">
-                            <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">-</h4><p>Today's Patients</p></div></div>
-                            <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">-</h4><p>Total Reports</p></div></div>
-                            <div class="stat-card"><div class="icon red"><i class="fas fa-clock"></i></div><div class="info"><h4 id="dPending">-</h4><p>Pending Reports</p></div></div>
-                            <div class="stat-card"><div class="icon purple"><i class="fas fa-flask"></i></div><div class="info"><h4 id="dCulture">-</h4><p>Urine Culture Process</p></div></div>
-                            <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dDue">-</h4><p>Due Payment Patients</p></div></div>
-                            <div class="stat-card"><div class="icon teal"><i class="fas fa-calendar-check"></i></div><div class="info"><h4 id="dRevenue">-</h4><p>Monthly Revenue</p></div></div>
+                            <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">0</h4><p>Today's Patients</p></div></div>
+                            <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">0</h4><p>Total Reports</p></div></div>
+                            <div class="stat-card"><div class="icon red"><i class="fas fa-clock"></i></div><div class="info"><h4 id="dPending">0</h4><p>Pending Reports</p></div></div>
+                            <div class="stat-card"><div class="icon purple"><i class="fas fa-flask"></i></div><div class="info"><h4 id="dCulture">0</h4><p>Urine Culture Process</p></div></div>
+                            <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dDue">0</h4><p>Due Payment Patients</p></div></div>
+                            <div class="stat-card"><div class="icon teal"><i class="fas fa-calendar-check"></i></div><div class="info"><h4 id="dRevenue">₹0</h4><p>Monthly Revenue</p></div></div>
                         </div>
                         <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;">
-                            <div class="card"><h4><i class="fas fa-chart-line"></i> Weekly Reports</h4><canvas id="chartWeekly" style="max-height:180px;"></canvas></div>
-                            <div class="card"><h4><i class="fas fa-chart-pie"></i> Test-wise</h4><canvas id="chartPie" style="max-height:180px;"></canvas></div>
+                            <div class="card"><h4><i class="fas fa-chart-line"></i> Weekly Reports</h4><canvas id="chartWeekly" style="max-height:180px;width:100%;"></canvas></div>
+                            <div class="card"><h4><i class="fas fa-chart-pie"></i> Test-wise</h4><canvas id="chartPie" style="max-height:180px;width:100%;"></canvas></div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -820,79 +833,79 @@
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
-                            <label>Patient ID <input type="text" id="patId" placeholder="RPL-062026-1186" /></label>
+                            <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210" /></label>
                             <label>Test
-                                <select id="patTest">
-                                    <!-- ALL 65 TESTS -->
-                                    <option value="LIVER FUNCTION TEST">LIVER FUNCTION TEST</option>
-                                    <option value="KIDNEY FUNCTION TEST (Fasting)">KIDNEY FUNCTION TEST (Fasting)</option>
-                                    <option value="LIPID PROFILE (Fasting)">LIPID PROFILE (Fasting)</option>
-                                    <option value="THYROID PROFILE">THYROID PROFILE</option>
-                                    <option value="BETA HCG">BETA HCG</option>
-                                    <option value="HBA1C (3 Month Sugar)">HBA1C (3 Month Sugar)</option>
-                                    <option value="C-REACTIVE PROTEIN (CRP)">C-REACTIVE PROTEIN (CRP)</option>
-                                    <option value="ANTISTREPTOLYSIN O (ASO)">ANTISTREPTOLYSIN O (ASO)</option>
-                                    <option value="R A FACTOR">R A FACTOR</option>
-                                    <option value="HCG PREGNANCY TEST">HCG PREGNANCY TEST</option>
-                                    <option value="URINE ROUTINE">URINE ROUTINE</option>
-                                    <option value="URINE CULTURE">URINE CULTURE</option>
-                                    <option value="SEMEN ANALYSIS">SEMEN ANALYSIS</option>
-                                    <option value="MANTOUX TEST">MANTOUX TEST</option>
-                                    <option value="HBSAG">HBSAG</option>
-                                    <option value="VDRL">VDRL</option>
-                                    <option value="HIV">HIV</option>
-                                    <option value="HCV">HCV</option>
-                                    <option value="BLOOD UREA">BLOOD UREA</option>
-                                    <option value="SERUM CREATININE">SERUM CREATININE</option>
-                                    <option value="URIC ACID (Fasting)">URIC ACID (Fasting)</option>
-                                    <option value="BLOOD SUGAR">BLOOD SUGAR</option>
-                                    <option value="COMPLETE BLOOD COUNT (CBC)">COMPLETE BLOOD COUNT (CBC)</option>
-                                    <option value="PLATELETS TEST">PLATELETS TEST</option>
-                                    <option value="DENGUE NS1 IGG IGM">DENGUE NS1 IGG IGM</option>
-                                    <option value="TYPHIDOT IGG IGM">TYPHIDOT IGG IGM</option>
-                                    <option value="WIDAL">WIDAL</option>
-                                    <option value="OPTIMAL">OPTIMAL</option>
-                                    <option value="TC DC">TC DC</option>
-                                    <option value="BT CT">BT CT</option>
-                                    <option value="ESR">ESR</option>
-                                    <option value="SMEAR OF MP">SMEAR OF MP</option>
-                                    <option value="HB">HB</option>
-                                    <option value="BLOOD GROUP">BLOOD GROUP</option>
-                                    <option value="TOTAL PARASITE">TOTAL PARASITE</option>
-                                    <option value="SMEAR OF MP (Repeat)">SMEAR OF MP (Repeat)</option>
-                                    <option value="BILIRUBIN TEST">BILIRUBIN TEST</option>
-                                    <option value="MP WIDAL HB">MP WIDAL HB</option>
-                                    <option value="OPTIMAL WIDAL HB">OPTIMAL WIDAL HB</option>
-                                    <option value="CBC MP WIDAL">CBC MP WIDAL</option>
-                                    <option value="CBC WIDAL">CBC WIDAL</option>
-                                    <option value="HB WIDAL">HB WIDAL</option>
-                                    <option value="MP WIDAL">MP WIDAL</option>
-                                    <option value="OPTIMAL WIDAL">OPTIMAL WIDAL</option>
-                                    <option value="SODIUM">SODIUM</option>
-                                    <option value="POTASSIUM">POTASSIUM</option>
-                                    <option value="CBC + WIDAL + OPTIMAL">CBC + WIDAL + OPTIMAL</option>
-                                    <option value="URINE CULTURE (Advanced)">URINE CULTURE (Advanced)</option>
-                                    <option value="PLATELET COUNT">PLATELET COUNT</option>
-                                    <option value="KIDNEY COMPLETE (KFT + Electrolytes)">KIDNEY COMPLETE (KFT + Electrolytes)</option>
-                                    <option value="PREGNANCY COMBO (HCG + CBC + Urine)">PREGNANCY COMBO (HCG + CBC + Urine)</option>
-                                    <option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)">DENGUE COMPLETE (NS1 + IgG/IgM + CBC)</option>
-                                    <option value="HS-CRP (High Sensitivity CRP)">HS-CRP (High Sensitivity CRP)</option>
-                                    <option value="VITAMIN B12">VITAMIN B12</option>
-                                    <option value="VITAMIN D3 (25-Hydroxy)">VITAMIN D3 (25-Hydroxy)</option>
-                                    <option value="TSH (Thyroid Stimulating Hormone)">TSH (Thyroid Stimulating Hormone)</option>
-                                    <option value="T3 (Triiodothyronine)">T3 (Triiodothyronine)</option>
-                                    <option value="T4 (Thyroxine)">T4 (Thyroxine)</option>
-                                    <option value="FREE T3">FREE T3</option>
-                                    <option value="FREE T4">FREE T4</option>
-                                    <option value="PROLACTIN">PROLACTIN</option>
-                                    <option value="LH (Luteinizing Hormone)">LH (Luteinizing Hormone)</option>
-                                    <option value="FSH (Follicle Stimulating Hormone)">FSH (Follicle Stimulating Hormone)</option>
-                                    <option value="TESTOSTERONE (Total)">TESTOSTERONE (Total)</option>
-                                    <option value="IRON STUDIES (Iron/TIBC/Ferritin)">IRON STUDIES (Iron/TIBC/Ferritin)</option>
-                                    <option value="CBC WIDAL BSR" selected>CBC WIDAL BSR</option>
-                                </select>
+                                <input type="text" id="patTest" list="testList" placeholder="Type or select test" autocomplete="off" />
+                                <datalist id="testList">
+                                    <option value="LIVER FUNCTION TEST">
+                                    <option value="KIDNEY FUNCTION TEST (Fasting)">
+                                    <option value="LIPID PROFILE (Fasting)">
+                                    <option value="THYROID PROFILE">
+                                    <option value="BETA HCG">
+                                    <option value="HBA1C (3 Month Sugar)">
+                                    <option value="C-REACTIVE PROTEIN (CRP)">
+                                    <option value="ANTISTREPTOLYSIN O (ASO)">
+                                    <option value="R A FACTOR">
+                                    <option value="HCG PREGNANCY TEST">
+                                    <option value="URINE ROUTINE">
+                                    <option value="URINE CULTURE">
+                                    <option value="SEMEN ANALYSIS">
+                                    <option value="MANTOUX TEST">
+                                    <option value="HBSAG">
+                                    <option value="VDRL">
+                                    <option value="HIV">
+                                    <option value="HCV">
+                                    <option value="BLOOD UREA">
+                                    <option value="SERUM CREATININE">
+                                    <option value="URIC ACID (Fasting)">
+                                    <option value="BLOOD SUGAR">
+                                    <option value="COMPLETE BLOOD COUNT (CBC)">
+                                    <option value="PLATELETS TEST">
+                                    <option value="DENGUE NS1 IGG IGM">
+                                    <option value="TYPHIDOT IGG IGM">
+                                    <option value="WIDAL">
+                                    <option value="OPTIMAL">
+                                    <option value="TC DC">
+                                    <option value="BT CT">
+                                    <option value="ESR">
+                                    <option value="SMEAR OF MP">
+                                    <option value="HB">
+                                    <option value="BLOOD GROUP">
+                                    <option value="TOTAL PARASITE">
+                                    <option value="SMEAR OF MP (Repeat)">
+                                    <option value="BILIRUBIN TEST">
+                                    <option value="MP WIDAL HB">
+                                    <option value="OPTIMAL WIDAL HB">
+                                    <option value="CBC MP WIDAL">
+                                    <option value="CBC WIDAL">
+                                    <option value="HB WIDAL">
+                                    <option value="MP WIDAL">
+                                    <option value="OPTIMAL WIDAL">
+                                    <option value="SODIUM">
+                                    <option value="POTASSIUM">
+                                    <option value="CBC + WIDAL + OPTIMAL">
+                                    <option value="URINE CULTURE (Advanced)">
+                                    <option value="PLATELET COUNT">
+                                    <option value="KIDNEY COMPLETE (KFT + Electrolytes)">
+                                    <option value="PREGNANCY COMBO (HCG + CBC + Urine)">
+                                    <option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)">
+                                    <option value="HS-CRP (High Sensitivity CRP)">
+                                    <option value="VITAMIN B12">
+                                    <option value="VITAMIN D3 (25-Hydroxy)">
+                                    <option value="TSH (Thyroid Stimulating Hormone)">
+                                    <option value="T3 (Triiodothyronine)">
+                                    <option value="T4 (Thyroxine)">
+                                    <option value="FREE T3">
+                                    <option value="FREE T4">
+                                    <option value="PROLACTIN">
+                                    <option value="LH (Luteinizing Hormone)">
+                                    <option value="FSH (Follicle Stimulating Hormone)">
+                                    <option value="TESTOSTERONE (Total)">
+                                    <option value="IRON STUDIES (Iron/TIBC/Ferritin)">
+                                    <option value="CBC WIDAL BSR">
+                                </datalist>
                             </label>
                             <label>Status <select id="patStatus"><option>pending</option><option>process</option><option>done</option></select></label>
                             <label>Due <input type="number" id="patDue" placeholder="0" /></label>
@@ -906,85 +919,85 @@
                             <button class="btn btn-outline btn-sm" id="refreshPatients"><i class="fas fa-sync"></i></button>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
                     </div>
 
-                    <!-- REPORTS - WITH ALL 65 TESTS -->
+                    <!-- REPORTS -->
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                         <div class="form-grid">
                             <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-062026-1186" /></label>
                             <label>Test Name
-                                <select id="reportTestName">
-                                    <!-- ALL 65 TESTS -->
-                                    <option value="LIVER FUNCTION TEST">LIVER FUNCTION TEST</option>
-                                    <option value="KIDNEY FUNCTION TEST (Fasting)">KIDNEY FUNCTION TEST (Fasting)</option>
-                                    <option value="LIPID PROFILE (Fasting)">LIPID PROFILE (Fasting)</option>
-                                    <option value="THYROID PROFILE">THYROID PROFILE</option>
-                                    <option value="BETA HCG">BETA HCG</option>
-                                    <option value="HBA1C (3 Month Sugar)">HBA1C (3 Month Sugar)</option>
-                                    <option value="C-REACTIVE PROTEIN (CRP)">C-REACTIVE PROTEIN (CRP)</option>
-                                    <option value="ANTISTREPTOLYSIN O (ASO)">ANTISTREPTOLYSIN O (ASO)</option>
-                                    <option value="R A FACTOR">R A FACTOR</option>
-                                    <option value="HCG PREGNANCY TEST">HCG PREGNANCY TEST</option>
-                                    <option value="URINE ROUTINE">URINE ROUTINE</option>
-                                    <option value="URINE CULTURE">URINE CULTURE</option>
-                                    <option value="SEMEN ANALYSIS">SEMEN ANALYSIS</option>
-                                    <option value="MANTOUX TEST">MANTOUX TEST</option>
-                                    <option value="HBSAG">HBSAG</option>
-                                    <option value="VDRL">VDRL</option>
-                                    <option value="HIV">HIV</option>
-                                    <option value="HCV">HCV</option>
-                                    <option value="BLOOD UREA">BLOOD UREA</option>
-                                    <option value="SERUM CREATININE">SERUM CREATININE</option>
-                                    <option value="URIC ACID (Fasting)">URIC ACID (Fasting)</option>
-                                    <option value="BLOOD SUGAR">BLOOD SUGAR</option>
-                                    <option value="COMPLETE BLOOD COUNT (CBC)">COMPLETE BLOOD COUNT (CBC)</option>
-                                    <option value="PLATELETS TEST">PLATELETS TEST</option>
-                                    <option value="DENGUE NS1 IGG IGM">DENGUE NS1 IGG IGM</option>
-                                    <option value="TYPHIDOT IGG IGM">TYPHIDOT IGG IGM</option>
-                                    <option value="WIDAL">WIDAL</option>
-                                    <option value="OPTIMAL">OPTIMAL</option>
-                                    <option value="TC DC">TC DC</option>
-                                    <option value="BT CT">BT CT</option>
-                                    <option value="ESR">ESR</option>
-                                    <option value="SMEAR OF MP">SMEAR OF MP</option>
-                                    <option value="HB">HB</option>
-                                    <option value="BLOOD GROUP">BLOOD GROUP</option>
-                                    <option value="TOTAL PARASITE">TOTAL PARASITE</option>
-                                    <option value="SMEAR OF MP (Repeat)">SMEAR OF MP (Repeat)</option>
-                                    <option value="BILIRUBIN TEST">BILIRUBIN TEST</option>
-                                    <option value="MP WIDAL HB">MP WIDAL HB</option>
-                                    <option value="OPTIMAL WIDAL HB">OPTIMAL WIDAL HB</option>
-                                    <option value="CBC MP WIDAL">CBC MP WIDAL</option>
-                                    <option value="CBC WIDAL">CBC WIDAL</option>
-                                    <option value="HB WIDAL">HB WIDAL</option>
-                                    <option value="MP WIDAL">MP WIDAL</option>
-                                    <option value="OPTIMAL WIDAL">OPTIMAL WIDAL</option>
-                                    <option value="SODIUM">SODIUM</option>
-                                    <option value="POTASSIUM">POTASSIUM</option>
-                                    <option value="CBC + WIDAL + OPTIMAL">CBC + WIDAL + OPTIMAL</option>
-                                    <option value="URINE CULTURE (Advanced)">URINE CULTURE (Advanced)</option>
-                                    <option value="PLATELET COUNT">PLATELET COUNT</option>
-                                    <option value="KIDNEY COMPLETE (KFT + Electrolytes)">KIDNEY COMPLETE (KFT + Electrolytes)</option>
-                                    <option value="PREGNANCY COMBO (HCG + CBC + Urine)">PREGNANCY COMBO (HCG + CBC + Urine)</option>
-                                    <option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)">DENGUE COMPLETE (NS1 + IgG/IgM + CBC)</option>
-                                    <option value="HS-CRP (High Sensitivity CRP)">HS-CRP (High Sensitivity CRP)</option>
-                                    <option value="VITAMIN B12">VITAMIN B12</option>
-                                    <option value="VITAMIN D3 (25-Hydroxy)">VITAMIN D3 (25-Hydroxy)</option>
-                                    <option value="TSH (Thyroid Stimulating Hormone)">TSH (Thyroid Stimulating Hormone)</option>
-                                    <option value="T3 (Triiodothyronine)">T3 (Triiodothyronine)</option>
-                                    <option value="T4 (Thyroxine)">T4 (Thyroxine)</option>
-                                    <option value="FREE T3">FREE T3</option>
-                                    <option value="FREE T4">FREE T4</option>
-                                    <option value="PROLACTIN">PROLACTIN</option>
-                                    <option value="LH (Luteinizing Hormone)">LH (Luteinizing Hormone)</option>
-                                    <option value="FSH (Follicle Stimulating Hormone)">FSH (Follicle Stimulating Hormone)</option>
-                                    <option value="TESTOSTERONE (Total)">TESTOSTERONE (Total)</option>
-                                    <option value="IRON STUDIES (Iron/TIBC/Ferritin)">IRON STUDIES (Iron/TIBC/Ferritin)</option>
-                                    <option value="CBC WIDAL BSR" selected>CBC WIDAL BSR</option>
-                                </select>
+                                <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" />
+                                <datalist id="testList2">
+                                    <option value="LIVER FUNCTION TEST">
+                                    <option value="KIDNEY FUNCTION TEST (Fasting)">
+                                    <option value="LIPID PROFILE (Fasting)">
+                                    <option value="THYROID PROFILE">
+                                    <option value="BETA HCG">
+                                    <option value="HBA1C (3 Month Sugar)">
+                                    <option value="C-REACTIVE PROTEIN (CRP)">
+                                    <option value="ANTISTREPTOLYSIN O (ASO)">
+                                    <option value="R A FACTOR">
+                                    <option value="HCG PREGNANCY TEST">
+                                    <option value="URINE ROUTINE">
+                                    <option value="URINE CULTURE">
+                                    <option value="SEMEN ANALYSIS">
+                                    <option value="MANTOUX TEST">
+                                    <option value="HBSAG">
+                                    <option value="VDRL">
+                                    <option value="HIV">
+                                    <option value="HCV">
+                                    <option value="BLOOD UREA">
+                                    <option value="SERUM CREATININE">
+                                    <option value="URIC ACID (Fasting)">
+                                    <option value="BLOOD SUGAR">
+                                    <option value="COMPLETE BLOOD COUNT (CBC)">
+                                    <option value="PLATELETS TEST">
+                                    <option value="DENGUE NS1 IGG IGM">
+                                    <option value="TYPHIDOT IGG IGM">
+                                    <option value="WIDAL">
+                                    <option value="OPTIMAL">
+                                    <option value="TC DC">
+                                    <option value="BT CT">
+                                    <option value="ESR">
+                                    <option value="SMEAR OF MP">
+                                    <option value="HB">
+                                    <option value="BLOOD GROUP">
+                                    <option value="TOTAL PARASITE">
+                                    <option value="SMEAR OF MP (Repeat)">
+                                    <option value="BILIRUBIN TEST">
+                                    <option value="MP WIDAL HB">
+                                    <option value="OPTIMAL WIDAL HB">
+                                    <option value="CBC MP WIDAL">
+                                    <option value="CBC WIDAL">
+                                    <option value="HB WIDAL">
+                                    <option value="MP WIDAL">
+                                    <option value="OPTIMAL WIDAL">
+                                    <option value="SODIUM">
+                                    <option value="POTASSIUM">
+                                    <option value="CBC + WIDAL + OPTIMAL">
+                                    <option value="URINE CULTURE (Advanced)">
+                                    <option value="PLATELET COUNT">
+                                    <option value="KIDNEY COMPLETE (KFT + Electrolytes)">
+                                    <option value="PREGNANCY COMBO (HCG + CBC + Urine)">
+                                    <option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)">
+                                    <option value="HS-CRP (High Sensitivity CRP)">
+                                    <option value="VITAMIN B12">
+                                    <option value="VITAMIN D3 (25-Hydroxy)">
+                                    <option value="TSH (Thyroid Stimulating Hormone)">
+                                    <option value="T3 (Triiodothyronine)">
+                                    <option value="T4 (Thyroxine)">
+                                    <option value="FREE T3">
+                                    <option value="FREE T4">
+                                    <option value="PROLACTIN">
+                                    <option value="LH (Luteinizing Hormone)">
+                                    <option value="FSH (Follicle Stimulating Hormone)">
+                                    <option value="TESTOSTERONE (Total)">
+                                    <option value="IRON STUDIES (Iron/TIBC/Ferritin)">
+                                    <option value="CBC WIDAL BSR">
+                                </datalist>
                             </label>
                             <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>
                             <label>Replace <select id="reportReplace"><option value="no">No</option><option value="yes">Yes</option></select></label>
@@ -995,7 +1008,7 @@
                         </div>
                         <div id="uploadMessage" style="margin:10px 0; font-weight:bold; color:red;"></div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1019,7 +1032,7 @@
                             <button class="btn btn-primary" style="background:#7c3aed;border-color:#7c3aed;margin-top:8px;" id="sendUrineUpdate"><i class="fas fa-paper-plane"></i> Send Update</button>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1027,9 +1040,9 @@
                     <div class="admin-section" id="sec-payments">
                         <h2 style="text-align:left;"><i class="fas fa-rupee-sign"></i> Payment / Dues <span class="premium-badge">UPI+QR</span></h2>
                         <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));" id="paymentStats">
-                            <div class="stat-card"><div class="icon green"><i class="fas fa-check-circle"></i></div><div class="info"><h4 id="pPaid">-</h4><p>Paid</p></div></div>
-                            <div class="stat-card"><div class="icon red"><i class="fas fa-times-circle"></i></div><div class="info"><h4 id="pUnpaid">-</h4><p>Unpaid</p></div></div>
-                            <div class="stat-card"><div class="icon orange"><i class="fas fa-clock"></i></div><div class="info"><h4 id="pTotalDue">-</h4><p>Total Due</p></div></div>
+                            <div class="stat-card"><div class="icon green"><i class="fas fa-check-circle"></i></div><div class="info"><h4 id="pPaid">0</h4><p>Paid</p></div></div>
+                            <div class="stat-card"><div class="icon red"><i class="fas fa-times-circle"></i></div><div class="info"><h4 id="pUnpaid">0</h4><p>Unpaid</p></div></div>
+                            <div class="stat-card"><div class="icon orange"><i class="fas fa-clock"></i></div><div class="info"><h4 id="pTotalDue">₹0</h4><p>Total Due</p></div></div>
                         </div>
                         <div class="toolbar">
                             <button class="btn btn-red" id="dueReminderBtn"><i class="fas fa-bell"></i> Due Reminder</button>
@@ -1037,7 +1050,7 @@
                             <button class="btn btn-outline btn-sm" id="refreshPayments"><i class="fas fa-sync"></i></button>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1045,13 +1058,13 @@
                     <div class="admin-section" id="sec-analytics">
                         <h2 style="text-align:left;"><i class="fas fa-chart-bar"></i> Reports &amp; Analytics</h2>
                         <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
-                            <div class="stat-card"><div class="icon blue"><i class="fas fa-calendar-day"></i></div><div class="info"><h4 id="aToday">-</h4><p>Today</p></div></div>
-                            <div class="stat-card"><div class="icon green"><i class="fas fa-calendar-alt"></i></div><div class="info"><h4 id="aMonth">-</h4><p>This Month</p></div></div>
+                            <div class="stat-card"><div class="icon blue"><i class="fas fa-calendar-day"></i></div><div class="info"><h4 id="aToday">0</h4><p>Today</p></div></div>
+                            <div class="stat-card"><div class="icon green"><i class="fas fa-calendar-alt"></i></div><div class="info"><h4 id="aMonth">0</h4><p>This Month</p></div></div>
                             <div class="stat-card"><div class="icon purple"><i class="fas fa-vial"></i></div><div class="info"><h4 id="aTopTest">-</h4><p>Top Test</p></div></div>
-                            <div class="stat-card"><div class="icon orange"><i class="fas fa-rupee-sign"></i></div><div class="info"><h4 id="aRevenue">-</h4><p>Revenue</p></div></div>
+                            <div class="stat-card"><div class="icon orange"><i class="fas fa-rupee-sign"></i></div><div class="info"><h4 id="aRevenue">₹0</h4><p>Revenue</p></div></div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1077,7 +1090,7 @@
                             </div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No backups</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1102,7 +1115,7 @@
                             </div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>IP</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>IP</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1155,9 +1168,7 @@
             'use strict';
 
             // ─── LOGIN ───
-            const VALID_USERS = {
-                'Rajan5530': 'Rkchandra5530'
-            };
+            const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
             // ─── DATA PERSISTENCE (localStorage) ───
             function loadData(key, defaultData) {
@@ -1173,11 +1184,13 @@
             }
             function saveData(key, data) { localStorage.setItem('rpl_' + key, JSON.stringify(data)); }
 
+            // ─── NO DEFAULT DATA ───
             const defaultPatients = [];
             const defaultReports = [];
             const defaultPayments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0 };
             const defaultLogs = [];
 
+            // ─── LOAD DATA ───
             let patients = loadData('patients', defaultPatients);
             let reports = loadData('reports', defaultReports);
             let payments = loadData('payments', defaultPayments);
@@ -1190,7 +1203,7 @@
                 saveData('logs', activityLogs);
             }
 
-            // ─── INDEXED DB FOR PDF FILES ───
+            // ─── INDEXED DB FOR PDF ───
             let db = null;
             const DB_NAME = 'RPL_PDF_DB';
             const STORE_NAME = 'pdf_files';
@@ -1249,7 +1262,7 @@
             const upiModal = $('upiModal');
             const portalModal = $('patientPortalModal');
 
-            // ─── REAL WHATSAPP FUNCTION ───
+            // ─── REAL WHATSAPP ───
             function sendWhatsApp(phone, message) {
                 let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');
                 if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
@@ -1279,6 +1292,7 @@
                     return;
                 }
 
+                // Reload data from localStorage
                 patients = loadData('patients', defaultPatients);
                 reports = loadData('reports', defaultReports);
 
@@ -1379,13 +1393,19 @@
                 const username = $('loginUsername').value.trim();
                 const password = $('loginPassword').value.trim();
                 const result = $('loginResult');
-                if (!username || !password) { result.style.color = 'red'; result.textContent = 'Please enter username and password'; return; }
+                if (!username || !password) {
+                    result.style.color = 'red';
+                    result.textContent = 'Please enter username and password';
+                    return;
+                }
                 if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
-                    result.style.color = 'green'; result.textContent = '✅ Login successful!';
+                    result.style.color = 'green';
+                    result.textContent = '✅ Login successful!';
                     loginModal.classList.remove('show');
                     openDB().then(() => showAdmin()).catch(() => showAdmin());
                 } else {
-                    result.style.color = 'red'; result.textContent = '❌ Invalid username or password';
+                    result.style.color = 'red';
+                    result.textContent = '❌ Invalid username or password';
                 }
             });
 
@@ -1399,7 +1419,11 @@
                 setTimeout(() => generateAllQRCodes(), 300);
             }
 
-            function hideAdmin() { adminWrapper.classList.remove('active'); document.body.style.overflow = ''; }
+            function hideAdmin() {
+                adminWrapper.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
             function logout() { hideAdmin(); }
             $('logoutBtn').addEventListener('click', logout);
             $('logoutBtn2').addEventListener('click', logout);
@@ -1414,15 +1438,24 @@
 
             // ─── SECTION NAV ───
             const adminSections = {
-                dashboard: $('sec-dashboard'), patients: $('sec-patients'), reports: $('sec-reports'),
-                whatsapp: $('sec-whatsapp'), payments: $('sec-payments'), analytics: $('sec-analytics'),
-                backup: $('sec-backup'), security: $('sec-security')
+                dashboard: $('sec-dashboard'),
+                patients: $('sec-patients'),
+                reports: $('sec-reports'),
+                whatsapp: $('sec-whatsapp'),
+                payments: $('sec-payments'),
+                analytics: $('sec-analytics'),
+                backup: $('sec-backup'),
+                security: $('sec-security')
             };
             const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');
 
             function showAdminSection(id) {
-                Object.keys(adminSections).forEach(k => adminSections[k].classList.toggle('active', k === id));
-                sidebarLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));
+                Object.keys(adminSections).forEach(k => {
+                    adminSections[k].classList.toggle('active', k === id);
+                });
+                sidebarLinks.forEach(a => {
+                    a.classList.toggle('active', a.dataset.section === id);
+                });
                 if (id === 'dashboard') refreshDashboard();
                 if (id === 'patients') refreshPatients();
                 if (id === 'reports') refreshReports();
@@ -1433,8 +1466,12 @@
                 if (id === 'security') refreshSecurity();
                 if (id === 'patients') setTimeout(() => generateAllQRCodes(), 200);
             }
+
             sidebarLinks.forEach(a => {
-                a.addEventListener('click', function(e) { e.preventDefault(); showAdminSection(this.dataset.section); });
+                a.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showAdminSection(this.dataset.section);
+                });
             });
 
             // ─── QR CODE ───
@@ -1443,7 +1480,14 @@
                     const id = el.id.replace('qr-', '');
                     if (el && typeof QRCode !== 'undefined') {
                         el.innerHTML = '';
-                        new QRCode(el, { text: 'Patient: ' + id, width: 50, height: 50, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
+                        new QRCode(el, {
+                            text: 'Patient: ' + id,
+                            width: 50,
+                            height: 50,
+                            colorDark: '#000000',
+                            colorLight: '#ffffff',
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
                     }
                 });
             }
@@ -1533,8 +1577,16 @@
                     if (chartWeeklyInstance) chartWeeklyInstance.destroy();
                     chartWeeklyInstance = new Chart(ctx1, {
                         type: 'bar',
-                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }] },
-                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                        data: {
+                            labels: days,
+                            datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                        }
                     });
                 }
 
@@ -1544,8 +1596,20 @@
                     const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a', '#ff6600'];
                     chartPieInstance = new Chart(ctx2, {
                         type: 'doughnut',
-                        data: { labels: testLabels.length ? testLabels : ['No Data'], datasets: [{ data: testLabels.length ? testData : [1], backgroundColor: testLabels.length ? colors.slice(0, testLabels.length) : ['#ccc'], borderWidth: 2, borderColor: '#fff' }] },
-                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } } }
+                        data: {
+                            labels: testLabels.length ? testLabels : ['No Data'],
+                            datasets: [{
+                                data: testLabels.length ? testData : [1],
+                                backgroundColor: testLabels.length ? colors.slice(0, testLabels.length) : ['#ccc'],
+                                borderWidth: 2,
+                                borderColor: '#fff'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
+                        }
                     });
                 }
             }
@@ -1577,7 +1641,7 @@
                 const patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
                 const phone = $('patPhone').value.trim();
-                const test = $('patTest').value;
+                const test = $('patTest').value.trim();
                 const status = $('patStatus').value;
                 const due = parseFloat($('patDue').value) || 0;
 
@@ -1589,13 +1653,17 @@
                     const dateStr = today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
                     id = 'RPL-' + dateStr + '-' + String(nextId).padStart(4,'0');
                 }
-                if (patients.find(p => p.patient_id === id)) { alert('Patient ID already exists!'); return; }
+                // Check if patient already exists
+                if (patients.find(p => p.patient_id === id || p.phone === phone)) {
+                    alert('Patient ID or Phone already exists!');
+                    return;
+                }
 
                 patients.push({
                     patient_id: id,
                     name,
                     phone,
-                    test,
+                    test: test || 'Not Specified',
                     status,
                     due_amount: due,
                     created_at: new Date().toISOString()
@@ -1605,6 +1673,7 @@
                 $('patId').value = '';
                 $('patName').value = '';
                 $('patPhone').value = '';
+                $('patTest').value = '';
                 $('patDue').value = '';
                 refreshAll();
             });
@@ -1613,6 +1682,7 @@
                 $('patId').value = '';
                 $('patName').value = '';
                 $('patPhone').value = '';
+                $('patTest').value = '';
                 $('patDue').value = '';
             });
             $('refreshPatients').addEventListener('click', refreshPatients);
@@ -1674,7 +1744,7 @@
             // ─── UPLOAD REPORT ───
             $('uploadReportBtn').addEventListener('click', async function() {
                 const pid = $('reportPatientId').value.trim();
-                const test = $('reportTestName').value;
+                const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
                 const replace = $('reportReplace').value;
                 const msgDiv = $('uploadMessage');
@@ -1700,7 +1770,7 @@
                     id: newId,
                     patient_id: pid,
                     name: patient.name,
-                    test_name: test,
+                    test_name: test || 'Not Specified',
                     file_path: file.name,
                     uploaded_at: new Date().toLocaleString()
                 };
@@ -1715,7 +1785,7 @@
                 msgDiv.style.color = 'green';
                 msgDiv.textContent = '✅ Report uploaded for ' + patient.name + ' (' + pid + ')';
                 $('reportPatientId').value = '';
-                $('reportTestName').selectedIndex = 0;
+                $('reportTestName').value = '';
                 $('reportFile').value = '';
                 refreshAll();
                 setTimeout(() => { msgDiv.textContent = ''; }, 5000);
@@ -1932,9 +2002,10 @@
 
             // ─── INIT ───
             openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));
-            console.log('✅ Rajan Path Lab · All 65 Tests Added');
+            console.log('✅ Rajan Path Lab · All Issues Fixed');
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
-            console.log('📦 Data saved in localStorage and IndexedDB.');
+            console.log('📦 No default data - only your added patients.');
+            console.log('👤 Patients can search by ID or Mobile Number.');
 
         })();
     </script>
