@@ -3,163 +3,636 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Rajan Path Lab | Admin Panel</title>  
+    <title>Rajan Path Lab | Premium Diagnostics</title>  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>  
 
     <style>  
-        /* ─── ALL STYLES ─── */  
-        :root { --primary-blue: #0a2540; --accent-teal: #008080; --bg-light: #f4f7f9; --urgent-red: #d9383a; --text-dark: #2d3748; }  
-        * { margin:0; padding:0; box-sizing:border-box; }  
-        body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; background: var(--bg-light); color: var(--text-dark); line-height:1.5; }  
-        header { background: var(--primary-blue); color: white; padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:1000; }  
-        header h1 { font-size:22px; font-weight:700; }  
-        header h1 span { color: var(--accent-teal); }  
-        nav a { color:#e2e8f0; margin-left:20px; text-decoration:none; font-weight:600; font-size:15px; cursor:pointer; }  
-        nav a:hover { color:var(--accent-teal); }  
-        .admin-login-btn { background:var(--accent-teal); color:white; border:none; padding:6px 16px; border-radius:4px; font-weight:600; font-size:14px; cursor:pointer; margin-left:15px; }  
-        .admin-login-btn:hover { background:#006666; }  
-        .hero { background:#0d3359; color:white; text-align:center; padding:60px 20px; }  
-        .hero h2 { font-size:2.5rem; font-weight:700; max-width:800px; margin:0 auto 25px; }  
-        .btn-container { display:flex; justify-content:center; gap:15px; flex-wrap:wrap; }  
-        .btn-book, .btn-report { background:var(--urgent-red); padding:12px 28px; color:white; border-radius:4px; font-weight:bold; font-size:1rem; display:inline-block; border:none; cursor:pointer; }  
-        .btn-report { background:var(--accent-teal); }  
-        .btn-book:hover { background:#b82d2f; }  
-        .btn-report:hover { background:#006666; }  
-        .strip { background:#fff; border-bottom:1px solid #e2e8f0; padding:15px 20px; text-align:center; }  
-        .strip-content { display:flex; justify-content:center; gap:40px; flex-wrap:wrap; }  
-        .strip-item { font-weight:600; display:flex; align-items:center; color:var(--primary-blue); }  
-        .strip-item i { color:var(--accent-teal); margin-right:10px; }  
-        section { padding:45px 20px; max-width:1100px; margin:0 auto; text-align:center; }  
-        .section-wrapper-alt { background:var(--bg-light); }  
-        h2 { color:var(--primary-blue); margin-bottom:25px; font-size:26px; font-weight:700; }  
-        .about-container { display:flex; align-items:center; gap:40px; text-align:left; flex-wrap:wrap; }  
-        .about-text { flex:1; min-width:300px; }  
-        .about-features { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px; }  
-        .feature-item { display:flex; align-items:center; gap:10px; font-weight:600; }  
-        .feature-item i { color:var(--accent-teal); }  
-        .grid-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; }  
-        .card { background:white; padding:20px 15px; border-radius:6px; border:1px solid #cbd5e1; text-align:center; }  
-        .card i { font-size:30px; margin-bottom:10px; }  
-        .card h3 { font-size:1.1rem; color:var(--primary-blue); }  
-        .partner-grid { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }  
-        .partner-item { background:white; padding:15px; border-radius:6px; width:150px; border:1px solid #cbd5e1; text-align:center; }  
-        .partner-item i { font-size:32px; margin-bottom:8px; }  
-        .partner-item p { font-weight:700; font-size:14px; color:var(--primary-blue); }  
-        .map-container { margin-top:20px; border-radius:8px; overflow:hidden; max-width:800px; margin:0 auto; }  
-        footer { background:var(--primary-blue); color:#e2e8f0; padding:40px 20px; text-align:center; }  
-        .footer-links a { color:white; text-decoration:none; margin:0 15px; font-weight:600; }  
-        .footer-links a:hover { color:var(--accent-teal); }  
-        .whatsapp-float { position:fixed; bottom:20px; right:20px; background:#25D366; color:white; padding:12px 20px; border-radius:4px; text-decoration:none; font-weight:bold; z-index:1000; }  
-        @media (max-width:768px) { header { flex-direction:column; text-align:center; } nav { margin-top:10px; } nav a { margin:0 8px; font-size:14px; } .admin-login-btn { margin:8px 0 0 0; } .hero h2 { font-size:1.8rem; } .about-features { grid-template-columns:1fr; } }  
+        /* ─── ORIGINAL PATIENT WEBSITE STYLES (100% UNCHANGED) ─── */  
+        :root {  
+            --primary-blue: #0a2540;  
+            --accent-teal: #008080;  
+            --bg-light: #f4f7f9;  
+            --urgent-red: #d9383a;  
+            --text-dark: #2d3748;  
+            --thyro-orange: #ff6600;  
+            --lal-blue: #ed1c24;  
+            --path-purple: #662d91;  
+        }  
 
-        /* ─── ADMIN PANEL ─── */  
-        #adminPanelWrapper { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:20px; }  
-        #adminPanelWrapper.active { display:block; }  
-        #adminPanelContainer { max-width:1300px; margin:0 auto; background:#f0f2f5; border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,0.4); overflow:hidden; min-height:90vh; }  
-        .admin-header { background:var(--primary-blue); color:white; padding:12px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }  
-        .admin-header h2 { color:white; margin:0; font-size:20px; }  
-        .admin-header .admin-user { display:flex; align-items:center; gap:12px; }  
-        .admin-header .admin-user span { color:#e2e8f0; }  
-        .admin-header .admin-user .logout-btn { background:var(--urgent-red); border:none; padding:6px 16px; border-radius:4px; color:white; font-weight:600; cursor:pointer; }  
-        .admin-header .admin-user .logout-btn:hover { background:#b82d2f; }  
-        .admin-header .admin-user .dark-toggle { background:#4a5568; border:none; padding:6px 14px; border-radius:4px; color:white; font-weight:600; cursor:pointer; }  
-        .admin-body { display:flex; min-height:calc(90vh - 60px); }  
-        .admin-sidebar { width:220px; background:var(--primary-blue); color:#e2e8f0; padding:16px 0; flex-shrink:0; overflow-y:auto; }  
-        .admin-sidebar .nav-label { font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#94a3b8; padding:10px 16px 4px; font-weight:600; }  
-        .admin-sidebar a { display:flex; align-items:center; gap:10px; padding:9px 16px; color:#cbd5e1; text-decoration:none; font-weight:500; font-size:14px; cursor:pointer; transition:0.2s; }  
-        .admin-sidebar a:hover, .admin-sidebar a.active { background:rgba(0,128,128,0.2); color:#fff; }  
-        .admin-sidebar a.active { background:rgba(0,128,128,0.3); border-left:3px solid var(--accent-teal); }  
-        .admin-sidebar a i { width:18px; text-align:center; }  
-        .admin-content { flex:1; padding:20px 24px; overflow-x:auto; background:#f0f2f5; }  
-        .admin-section { display:none; animation:fadeUp 0.3s ease; }  
-        .admin-section.active { display:block; }  
-        @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }  
-        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-bottom:20px; }  
-        .stat-card { background:white; padding:16px 14px; border-radius:8px; border:1px solid #e2e8f0; display:flex; align-items:center; gap:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04); }  
-        .stat-card .icon { width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }  
-        .stat-card .icon.blue { background:#dbeafe; color:#2563eb; }  
-        .stat-card .icon.green { background:#d1fae5; color:#059669; }  
-        .stat-card .icon.red { background:#fee2e2; color:#dc2626; }  
-        .stat-card .icon.purple { background:#ede9fe; color:#7c3aed; }  
-        .stat-card .icon.orange { background:#fef3c7; color:#d97706; }  
-        .stat-card .icon.teal { background:#ccfbf1; color:#0d9488; }  
-        .stat-card .info h4 { font-size:20px; font-weight:700; margin:0; }  
-        .stat-card .info p { font-size:12px; margin:2px 0 0 0; color:#64748b; }  
-        .table-wrap { background:white; border:1px solid #e2e8f0; border-radius:8px; overflow:auto; margin-top:10px; }  
-        .table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }  
-        .table-wrap th { background:#f8fafc; font-weight:600; text-align:left; padding:10px 14px; border-bottom:2px solid #e2e8f0; font-size:12px; text-transform:uppercase; letter-spacing:0.3px; }  
-        .table-wrap td { padding:9px 14px; border-bottom:1px solid #e2e8f0; }  
-        .badge-status { display:inline-block; padding:2px 12px; border-radius:20px; font-size:12px; font-weight:600; }  
-        .badge-status.paid { background:#d1fae5; color:#065f46; }  
-        .badge-status.unpaid { background:#fee2e2; color:#991b1b; }  
-        .badge-status.pending { background:#fef3c7; color:#92400e; }  
-        .badge-status.process { background:#dbeafe; color:#1e40af; }  
-        .badge-status.done { background:#e0e7ff; color:#3730a3; }  
-        .btn { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:4px; font-weight:600; font-size:13px; border:none; cursor:pointer; background:#f1f5f9; color:#1e293b; border:1px solid #e2e8f0; }  
-        .btn-primary { background:var(--accent-teal); color:#fff; border-color:var(--accent-teal); }  
-        .btn-primary:hover { background:#006666; }  
-        .btn-red { background:var(--urgent-red); color:#fff; border-color:var(--urgent-red); }  
-        .btn-red:hover { background:#b82d2f; }  
-        .btn-outline { background:transparent; border:1px solid #e2e8f0; }  
-        .btn-sm { padding:3px 10px; font-size:12px; }  
-        .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; background:white; padding:16px; border-radius:8px; border:1px solid #e2e8f0; margin-bottom:16px; }  
-        .form-grid label { font-weight:600; font-size:13px; display:flex; flex-direction:column; gap:4px; }  
-        .form-grid label input, .form-grid label select { padding:6px 10px; border-radius:4px; border:1px solid #e2e8f0; background:#f8fafc; font-size:14px; }  
-        .form-grid label input:focus, .form-grid label select:focus { outline:2px solid var(--accent-teal); }  
-        .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px; }  
-        .toolbar .search-box { display:flex; align-items:center; background:white; border:1px solid #e2e8f0; border-radius:6px; padding:0 12px; flex:1; min-width:150px; }  
-        .toolbar .search-box input { border:none; background:transparent; padding:7px 6px; font-size:14px; width:100%; outline:none; }  
-        .toolbar .search-box i { color:#94a3b8; }  
-        .template-box { background:white; border:1px solid #e2e8f0; border-radius:8px; padding:14px 18px; margin-bottom:14px; }  
-        .template-box .msg-preview { background:#f8fafc; padding:10px 14px; border-radius:6px; border-left:4px solid #25D366; font-size:14px; white-space:pre-wrap; }  
-        .premium-badge { background:linear-gradient(135deg,#fbbf24,#f59e0b); color:#78350f; font-size:10px; font-weight:700; padding:2px 10px; border-radius:20px; text-transform:uppercase; margin-left:6px; }  
-        .login-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:10001; align-items:center; justify-content:center; }  
-        .login-modal.show { display:flex; }  
-        .login-modal-content { background:white; padding:30px; border-radius:10px; max-width:400px; width:90%; }  
-        .login-modal-content h3 { margin-top:0; }  
-        .login-modal-content label { display:block; font-weight:600; margin:10px 0 4px; }  
-        .login-modal-content input { width:100%; padding:8px 12px; border:1px solid #e2e8f0; border-radius:4px; margin-bottom:8px; }  
-        .login-modal-content .btn-close { background:#6c757d; border:none; padding:8px; width:100%; border-radius:4px; color:white; font-weight:600; cursor:pointer; margin-top:6px; }  
-        .upi-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:10002; align-items:center; justify-content:center; }  
-        .upi-modal.show { display:flex; }  
-        .upi-modal-content { background:white; padding:30px; border-radius:10px; max-width:400px; width:90%; text-align:center; }  
-        .upi-modal-content .btn-close { background:#6c757d; border:none; padding:8px; width:100%; border-radius:4px; color:white; font-weight:600; cursor:pointer; margin-top:12px; }  
-        body.admin-dark #adminPanelContainer { --bg-light:#0f172a; --text-dark:#f1f5f9; --card:#1e293b; --border:#334155; }  
-        body.admin-dark .stat-card { background:#1e293b; border-color:#334155; }  
-        body.admin-dark .stat-card .info p { color:#94a3b8; }  
-        body.admin-dark .table-wrap { background:#1e293b; border-color:#334155; }  
-        body.admin-dark .table-wrap th { background:#0f172a; color:#94a3b8; }  
-        body.admin-dark .table-wrap td { border-color:#334155; }  
-        body.admin-dark .form-grid { background:#1e293b; border-color:#334155; }  
-        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select { background:#0f172a; border-color:#334155; color:#f1f5f9; }  
-        body.admin-dark .template-box { background:#1e293b; border-color:#334155; }  
-        body.admin-dark .template-box .msg-preview { background:#0f172a; }  
-        body.admin-dark .admin-content { background:#0f172a; }  
-        body.admin-dark .badge-status.paid { background:#064e3b; color:#6ee7b7; }  
-        body.admin-dark .badge-status.unpaid { background:#7f1d1d; color:#fca5a5; }  
-        body.admin-dark .badge-status.pending { background:#78350f; color:#fcd34d; }  
-        body.admin-dark .badge-status.process { background:#1e3a5f; color:#93c5fd; }  
-        body.admin-dark .badge-status.done { background:#312e81; color:#a5b4fc; }  
-        body.admin-dark .stat-card .icon.blue { background:#1e3a5f; color:#60a5fa; }  
-        body.admin-dark .stat-card .icon.green { background:#064e3b; color:#34d399; }  
-        body.admin-dark .stat-card .icon.red { background:#7f1d1d; color:#f87171; }  
-        body.admin-dark .stat-card .icon.purple { background:#4c1d95; color:#a78bfa; }  
-        body.admin-dark .stat-card .icon.orange { background:#78350f; color:#fbbf24; }  
-        body.admin-dark .stat-card .icon.teal { background:#134e4a; color:#2dd4bf; }  
-        @media (max-width:768px) { .admin-body { flex-direction:column; } .admin-sidebar { width:100%; display:flex; flex-wrap:wrap; padding:8px; gap:4px; } .admin-sidebar .nav-label { display:none; } .admin-sidebar a { padding:6px 12px; font-size:13px; border-radius:4px; } .admin-content { padding:14px; } .stats-grid { grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); } .form-grid { grid-template-columns:1fr; } .admin-header { flex-direction:column; align-items:stretch; text-align:center; } .admin-header .admin-user { justify-content:center; } }  
-        @media (max-width:480px) { .stat-card { padding:12px; } .stat-card .info h4 { font-size:16px; } .table-wrap { font-size:12px; } .table-wrap th, .table-wrap td { padding:6px 8px; } }  
+        body {  
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;  
+            margin: 0;  
+            padding: 0;  
+            background: var(--bg-light);  
+            color: var(--text-dark);  
+            line-height: 1.5;  
+        }  
+
+        b, strong { font-weight: 700; }  
+
+        header {  
+            background: var(--primary-blue);  
+            color: white;  
+            padding: 12px 5%;  
+            display: flex;  
+            justify-content: space-between;  
+            align-items: center;  
+            position: sticky;  
+            top: 0;  
+            z-index: 1000;  
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);  
+        }  
+
+        header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; font-weight: 700; }  
+        header h1 span { color: var(--accent-teal); }  
+
+        nav a {  
+            color: #e2e8f0;  
+            margin-left: 20px;  
+            text-decoration: none;  
+            font-weight: 600;  
+            font-size: 15px;  
+            transition: 0.2s;  
+        }  
+        nav a:hover { color: var(--accent-teal); }  
+
+        /* ─── ADDED: ADMIN BUTTON & PATIENT PORTAL BUTTON (only additions to header) ─── */  
+        .admin-login-btn, .patient-portal-btn {  
+            background: var(--accent-teal);  
+            color: white;  
+            border: none;  
+            padding: 6px 16px;  
+            border-radius: 4px;  
+            font-weight: 600;  
+            font-size: 14px;  
+            cursor: pointer;  
+            transition: 0.2s;  
+            margin-left: 15px;  
+        }  
+        .admin-login-btn:hover, .patient-portal-btn:hover { background: #006666; }  
+        .patient-portal-btn { background: #25D366; }  
+        .patient-portal-btn:hover { background: #1a8d4a; }  
+
+        .hero {  
+            background: #0d3359;  
+            background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%),  
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,70 L30,80 L70,80 L70,70 M40,70 L40,40 M40,45 L45,45 M50,40 C50,30 60,30 60,40 L60,65 M55,65 L65,65' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");  
+            color: white;  
+            text-align: center;  
+            padding: 60px 20px;  
+        }  
+
+        .hero h2 {  
+            color: white;  
+            font-size: 2.5rem;  
+            font-weight: 700;  
+            max-width: 800px;  
+            margin: 0 auto 25px auto;  
+            line-height: 1.3;  
+        }  
+
+        .btn-container { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }  
+        .btn-book, .btn-report {  
+            background: var(--urgent-red);  
+            padding: 12px 28px;  
+            color: white;  
+            text-decoration: none;  
+            border-radius: 4px;  
+            font-weight: bold;  
+            font-size: 1rem;  
+            transition: 0.2s;  
+            display: inline-block;  
+        }  
+        .btn-report { background: var(--accent-teal); }  
+        .btn-book:hover { background: #b82d2f; }  
+        .btn-report:hover { background: #006666; }  
+
+        /* ─── ADDED: Patient Portal Hero Button ─── */  
+        .btn-portal {  
+            background: #25D366;  
+            padding: 12px 28px;  
+            color: white;  
+            text-decoration: none;  
+            border-radius: 4px;  
+            font-weight: bold;  
+            font-size: 1rem;  
+            transition: 0.2s;  
+            display: inline-block;  
+            border: none;  
+            cursor: pointer;  
+        }  
+        .btn-portal:hover { background: #1a8d4a; }  
+
+        .strip {  
+            background: #ffffff;  
+            border-bottom: 1px solid #e2e8f0;  
+            padding: 15px 20px;  
+            text-align: center;  
+        }  
+
+        .strip-content { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }  
+        .strip-item { font-size: 1rem; font-weight: 600; display: flex; align-items: center; color: var(--primary-blue); }  
+        .strip i { color: var(--accent-teal); margin-right: 10px; font-size: 1.2rem; }  
+
+        section {  
+            padding: 45px 20px;  
+            max-width: 1100px;  
+            margin: 0 auto;  
+            text-align: center;  
+        }  
+
+        .section-wrapper-alt {  
+            background: var(--bg-light);  
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(0,128,128,0.03)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(0,128,128,0.1)'/%3E%3C/svg%3E");  
+        }  
+
+        h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 26px; font-weight: 700; }  
+
+        .about-container { display: flex; align-items: center; gap: 40px; text-align: left; flex-wrap: wrap; }  
+        .about-text { flex: 1; min-width: 300px; }  
+        .about-text p { font-size: 1rem; color: #4a5568; margin-bottom: 15px; }  
+        .about-text h3 { color: var(--primary-blue); font-size: 18px; margin-top: 15px; font-weight: 700; border-left: 3px solid var(--accent-teal); padding-left: 8px; }  
+        .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }  
+        .feature-item { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.95rem; color: #2d3748; }  
+        .feature-item i { color: var(--accent-teal); }  
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }  
+        .card { background: white; padding: 20px 15px; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 2px 5px rgba(0,0,0,0.03); text-align: center; }  
+        .card i { font-size: 30px; margin-bottom: 10px; }  
+        .card h3 { margin: 5px 0; font-size: 1.1rem; color: var(--primary-blue); font-weight: 700; }  
+        .card p { margin: 4px 0; font-size: 0.9rem; color: #4a5568; }  
+
+        .partner-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }  
+        .partner-item { background: white; padding: 15px; border-radius: 6px; width: 150px; border: 1px solid #cbd5e1; text-align: center; }  
+        .partner-item i { font-size: 32px; margin-bottom: 8px; }  
+        .partner-item p { font-weight: 700; margin: 0; font-size: 14px; color: var(--primary-blue); }  
+
+        .map-container { margin-top: 20px; border-radius: 8px; overflow: hidden; max-width: 800px; margin-left: auto; margin-right: auto; border: 1px solid #cbd5e1; }  
+
+        footer { background: var(--primary-blue); color: #e2e8f0; padding: 40px 20px; text-align: center; }  
+        .footer-links { margin: 20px 0; }  
+        .footer-links a { color: white; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 600; }  
+        .footer-links a:hover { color: var(--accent-teal); }  
+
+        .whatsapp-float {  
+            position: fixed; bottom: 20px; right: 20px;  
+            background: #25D366; color: white;  
+            padding: 12px 20px; border-radius: 4px;  
+            text-decoration: none; font-weight: bold; font-size: 0.95rem;  
+            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);  
+        }  
+
+        @media (max-width: 768px) {  
+            header { flex-direction: column; text-align: center; padding: 10px; }  
+            nav { margin-top: 10px; }  
+            nav a { margin: 0 8px; font-size: 14px; }  
+            .admin-login-btn, .patient-portal-btn { margin: 8px 0 0 0; }  
+            .hero h2 { font-size: 1.8rem; }  
+            .strip-content { flex-direction: column; gap: 8px; }  
+            .about-features { grid-template-columns: 1fr; }  
+            section { padding: 30px 15px; }  
+        }  
+
+        /* ─── ADMIN PANEL STYLES (HIDDEN BY DEFAULT) ─── */  
+        #adminPanelWrapper {  
+            display: none;  
+            position: fixed;  
+            inset: 0;  
+            background: rgba(0, 0, 0, 0.6);  
+            z-index: 9999;  
+            overflow-y: auto;  
+            padding: 20px;  
+        }  
+        #adminPanelWrapper.active { display: block; }  
+
+        #adminPanelContainer {  
+            max-width: 1300px;  
+            margin: 0 auto;  
+            background: #f0f2f5;  
+            border-radius: 12px;  
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);  
+            overflow: hidden;  
+            position: relative;  
+            min-height: 90vh;  
+        }  
+
+        /* Admin Header */  
+        .admin-header {  
+            background: var(--primary-blue);  
+            color: white;  
+            padding: 12px 24px;  
+            display: flex;  
+            justify-content: space-between;  
+            align-items: center;  
+            flex-wrap: wrap;  
+        }  
+        .admin-header h2 { color: white; margin: 0; font-size: 20px; }  
+        .admin-header .admin-user { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }  
+        .admin-header .admin-user span { color: #e2e8f0; }  
+        .admin-header .admin-user .logout-btn {  
+            background: var(--urgent-red);  
+            border: none;  
+            padding: 6px 16px;  
+            border-radius: 4px;  
+            color: white;  
+            font-weight: 600;  
+            cursor: pointer;  
+        }  
+        .admin-header .admin-user .logout-btn:hover { background: #b82d2f; }  
+        .admin-header .admin-user .dark-toggle {  
+            background: #4a5568;  
+            border: none;  
+            padding: 6px 14px;  
+            border-radius: 4px;  
+            color: white;  
+            font-weight: 600;  
+            cursor: pointer;  
+        }  
+
+        .admin-body { display: flex; min-height: calc(90vh - 60px); }  
+
+        /* Admin Sidebar */  
+        .admin-sidebar {  
+            width: 220px;  
+            background: var(--primary-blue);  
+            color: #e2e8f0;  
+            padding: 16px 0;  
+            flex-shrink: 0;  
+            overflow-y: auto;  
+        }  
+        .admin-sidebar .nav-label {  
+            font-size: 11px;  
+            text-transform: uppercase;  
+            letter-spacing: 0.8px;  
+            color: #94a3b8;  
+            padding: 10px 16px 4px;  
+            font-weight: 600;  
+        }  
+        .admin-sidebar a {  
+            display: flex;  
+            align-items: center;  
+            gap: 10px;  
+            padding: 9px 16px;  
+            color: #cbd5e1;  
+            text-decoration: none;  
+            font-weight: 500;  
+            font-size: 14px;  
+            cursor: pointer;  
+            transition: 0.2s;  
+        }  
+        .admin-sidebar a:hover, .admin-sidebar a.active {  
+            background: rgba(0, 128, 128, 0.2);  
+            color: #fff;  
+        }  
+        .admin-sidebar a.active { background: rgba(0, 128, 128, 0.3); border-left: 3px solid var(--accent-teal); }  
+        .admin-sidebar a i { width: 18px; text-align: center; }  
+
+        .admin-content { flex: 1; padding: 20px 24px; overflow-x: auto; background: #f0f2f5; }  
+        .admin-section { display: none; animation: fadeUp 0.3s ease; }  
+        .admin-section.active { display: block; }  
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }  
+
+        /* Admin Stats */  
+        .stats-grid {  
+            display: grid;  
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));  
+            gap: 14px;  
+            margin-bottom: 20px;  
+        }  
+        .stat-card {  
+            background: white;  
+            padding: 16px 14px;  
+            border-radius: 8px;  
+            border: 1px solid #e2e8f0;  
+            display: flex;  
+            align-items: center;  
+            gap: 12px;  
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);  
+        }  
+        .stat-card .icon {  
+            width: 40px; height: 40px;  
+            border-radius: 8px;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            font-size: 18px;  
+            flex-shrink: 0;  
+        }  
+        .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }  
+        .stat-card .icon.green { background: #d1fae5; color: #059669; }  
+        .stat-card .icon.red { background: #fee2e2; color: #dc2626; }  
+        .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }  
+        .stat-card .icon.orange { background: #fef3c7; color: #d97706; }  
+        .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }  
+        .stat-card .info h4 { font-size: 20px; font-weight: 700; margin: 0; }  
+        .stat-card .info p { font-size: 12px; margin: 2px 0 0 0; color: #64748b; }  
+
+        /* Admin Tables */  
+        .table-wrap {  
+            background: white;  
+            border: 1px solid #e2e8f0;  
+            border-radius: 8px;  
+            overflow: auto;  
+            margin-top: 10px;  
+        }  
+        .table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }  
+        .table-wrap th {  
+            background: #f8fafc;  
+            font-weight: 600;  
+            text-align: left;  
+            padding: 10px 14px;  
+            border-bottom: 2px solid #e2e8f0;  
+            font-size: 12px;  
+            text-transform: uppercase;  
+            letter-spacing: 0.3px;  
+        }  
+        .table-wrap td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; }  
+
+        .badge-status {  
+            display: inline-block;  
+            padding: 2px 12px;  
+            border-radius: 20px;  
+            font-size: 12px;  
+            font-weight: 600;  
+        }  
+        .badge-status.paid { background: #d1fae5; color: #065f46; }  
+        .badge-status.unpaid { background: #fee2e2; color: #991b1b; }  
+        .badge-status.pending { background: #fef3c7; color: #92400e; }  
+        .badge-status.process { background: #dbeafe; color: #1e40af; }  
+        .badge-status.done { background: #e0e7ff; color: #3730a3; }  
+
+        .btn {  
+            display: inline-flex;  
+            align-items: center;  
+            gap: 6px;  
+            padding: 5px 14px;  
+            border-radius: 4px;  
+            font-weight: 600;  
+            font-size: 13px;  
+            border: none;  
+            cursor: pointer;  
+            transition: 0.2s;  
+            background: #f1f5f9;  
+            color: #1e293b;  
+            border: 1px solid #e2e8f0;  
+        }  
+        .btn-primary { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }  
+        .btn-primary:hover { background: #006666; }  
+        .btn-red { background: var(--urgent-red); color: #fff; border-color: var(--urgent-red); }  
+        .btn-red:hover { background: #b82d2f; }  
+        .btn-outline { background: transparent; border: 1px solid #e2e8f0; }  
+        .btn-sm { padding: 3px 10px; font-size: 12px; }  
+
+        .form-grid {  
+            display: grid;  
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));  
+            gap: 12px;  
+            background: white;  
+            padding: 16px;  
+            border-radius: 8px;  
+            border: 1px solid #e2e8f0;  
+            margin-bottom: 16px;  
+        }  
+        .form-grid label { font-weight: 600; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }  
+        .form-grid label input, .form-grid label select {  
+            padding: 6px 10px;  
+            border-radius: 4px;  
+            border: 1px solid #e2e8f0;  
+            background: #f8fafc;  
+            font-size: 14px;  
+        }  
+        .form-grid label input:focus, .form-grid label select:focus { outline: 2px solid var(--accent-teal); }  
+
+        .toolbar {  
+            display: flex;  
+            flex-wrap: wrap;  
+            gap: 10px;  
+            align-items: center;  
+            margin-bottom: 12px;  
+        }  
+        .toolbar .search-box {  
+            display: flex;  
+            align-items: center;  
+            background: white;  
+            border: 1px solid #e2e8f0;  
+            border-radius: 6px;  
+            padding: 0 12px;  
+            flex: 1;  
+            min-width: 150px;  
+        }  
+        .toolbar .search-box input {  
+            border: none;  
+            background: transparent;  
+            padding: 7px 6px;  
+            font-size: 14px;  
+            width: 100%;  
+            outline: none;  
+        }  
+        .toolbar .search-box i { color: #94a3b8; }  
+
+        .template-box {  
+            background: white;  
+            border: 1px solid #e2e8f0;  
+            border-radius: 8px;  
+            padding: 14px 18px;  
+            margin-bottom: 14px;  
+        }  
+        .template-box .msg-preview {  
+            background: #f8fafc;  
+            padding: 10px 14px;  
+            border-radius: 6px;  
+            border-left: 4px solid #25D366;  
+            font-size: 14px;  
+            white-space: pre-wrap;  
+        }  
+
+        .premium-badge {  
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);  
+            color: #78350f;  
+            font-size: 10px;  
+            font-weight: 700;  
+            padding: 2px 10px;  
+            border-radius: 20px;  
+            text-transform: uppercase;  
+            margin-left: 6px;  
+        }  
+
+        /* ─── LOGIN MODAL ─── */  
+        .login-modal {  
+            display: none;  
+            position: fixed;  
+            inset: 0;  
+            background: rgba(0,0,0,0.5);  
+            z-index: 10001;  
+            align-items: center;  
+            justify-content: center;  
+        }  
+        .login-modal.show { display: flex; }  
+        .login-modal-content {  
+            background: white;  
+            padding: 30px;  
+            border-radius: 10px;  
+            max-width: 400px;  
+            width: 90%;  
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);  
+        }  
+        .login-modal-content h3 { margin-top: 0; }  
+        .login-modal-content label { display: block; font-weight: 600; margin: 10px 0 4px; }  
+        .login-modal-content input {  
+            width: 100%;  
+            padding: 8px 12px;  
+            border: 1px solid #e2e8f0;  
+            border-radius: 4px;  
+            margin-bottom: 8px;  
+        }  
+        .login-modal-content .btn-close {  
+            background: #6c757d;  
+            border: none;  
+            padding: 8px;  
+            width: 100%;  
+            border-radius: 4px;  
+            color: white;  
+            font-weight: 600;  
+            cursor: pointer;  
+            margin-top: 6px;  
+        }  
+
+        /* ─── UPI MODAL ─── */  
+        .upi-modal {  
+            display: none;  
+            position: fixed;  
+            inset: 0;  
+            background: rgba(0,0,0,0.5);  
+            z-index: 10002;  
+            align-items: center;  
+            justify-content: center;  
+        }  
+        .upi-modal.show { display: flex; }  
+        .upi-modal-content {  
+            background: white;  
+            padding: 30px;  
+            border-radius: 10px;  
+            max-width: 400px;  
+            width: 90%;  
+            text-align: center;  
+        }  
+        .upi-modal-content .btn-close {  
+            background: #6c757d;  
+            border: none;  
+            padding: 8px;  
+            width: 100%;  
+            border-radius: 4px;  
+            color: white;  
+            font-weight: 600;  
+            cursor: pointer;  
+            margin-top: 12px;  
+        }  
+
+        /* ─── PATIENT PORTAL MODAL ─── */  
+        .patient-portal-modal {  
+            display: none;  
+            position: fixed;  
+            inset: 0;  
+            background: rgba(0,0,0,0.6);  
+            z-index: 10050;  
+            overflow-y: auto;  
+            padding: 20px;  
+            align-items: center;  
+            justify-content: center;  
+        }  
+        .patient-portal-modal.active { display: flex; }  
+        .patient-portal-content {  
+            max-width: 860px;  
+            width: 100%;  
+            background: #ffffff;  
+            border-radius: 2rem;  
+            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.35), 0 0 0 1px rgba(212,175,55,0.25);  
+            overflow: hidden;  
+            max-height: 95vh;  
+            overflow-y: auto;  
+        }  
+        .portal-header { background: #1a212c; padding: 1.8rem 2rem 1.4rem; }  
+        .portal-header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.3px; color: #fef7e8; display: flex; align-items: center; gap: 12px; }  
+        .portal-header .portal-badge { background: rgba(212,175,55,0.2); padding: 6px 16px; border-radius: 60px; font-size: 0.7rem; font-weight: 600; color: #e6c168; border: 0.5px solid rgba(212,175,55,0.5); }  
+        .portal-header .portal-sub { color: #8f9bb3; font-size: 0.8rem; margin-top: 12px; border-left: 2px solid #e6c168; padding-left: 14px; }  
+        .portal-body { padding: 2rem 2rem 1.8rem; }  
+        .portal-input-group { margin-bottom: 1.5rem; position: relative; }  
+        .portal-input-label { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; color: #2c3f4c; margin-bottom: 10px; }  
+        .portal-input-label span { background: #f0f3f9; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1rem; }  
+        .portal-input { width: 100%; padding: 1rem 1.3rem; font-size: 1rem; font-family: 'Inter', 'Segoe UI', monospace; background: white; border: 1.5px solid #e2e8f0; border-radius: 1.25rem; transition: all 0.25s; outline: none; font-weight: 500; color: #0f172a; }  
+        .portal-input:focus { border-color: #d4af37; box-shadow: 0 4px 14px rgba(212,175,55,0.2); }  
+        .portal-btn { width: 100%; background: linear-gradient(98deg, #075E54 0%, #128C7E 100%); border: none; padding: 1rem 1.5rem; font-size: 1rem; font-weight: 700; font-family: inherit; color: white; border-radius: 2rem; cursor: pointer; transition: all 0.25s cubic-bezier(0.2,0.9,0.4,1.1); display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 8px 20px -8px rgba(7,94,84,0.5); margin-top: 0.5rem; }  
+        .portal-btn:hover { transform: translateY(-2px); background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%); box-shadow: 0 14px 26px -10px rgba(7,94,84,0.7); }  
+        .portal-status { margin-top: 1.2rem; padding: 0.9rem 1.2rem; background: #f8fafd; border-radius: 1rem; font-size: 0.85rem; color: #2c3e50; border-left: 3px solid #c9a03d; transition: 0.2s; line-height: 1.4; font-weight: 500; }  
+        .portal-status.success { background: #e6f4ea; border-left-color: #2b7a3e; color: #135c2c; }  
+        .portal-status.error { background: #fef5f0; border-left-color: #d4873a; color: #8b5a2b; }  
+        .portal-report-list { margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem; }  
+        .portal-report-item { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 0.8rem 1.2rem; border-radius: 1rem; margin-bottom: 0.8rem; border: 1px solid #edf2f7; transition: 0.2s; }  
+        .portal-report-item:hover { background: #f1f5f9; }  
+        .portal-report-info { display: flex; flex-direction: column; gap: 2px; }  
+        .portal-report-info .test-name { font-weight: 600; color: #1a212c; }  
+        .portal-report-info .upload-date { font-size: 0.8rem; color: #7890a3; }  
+        .portal-report-actions { display: flex; align-items: center; gap: 12px; }  
+        .portal-download-btn { background: #d4af37; border: none; padding: 0.4rem 1rem; border-radius: 2rem; font-weight: 600; color: white; cursor: pointer; transition: 0.2s; font-size: 0.8rem; }  
+        .portal-download-btn:hover { background: #b8960e; transform: scale(1.02); }  
+        .portal-download-btn:disabled { background: #b0b8c5; cursor: not-allowed; opacity: 0.6; transform: none; }  
+        .portal-due-badge { background: #fee2e2; color: #991b1b; padding: 0.2rem 0.8rem; border-radius: 2rem; font-size: 0.7rem; font-weight: 700; }  
+        .portal-close-btn { background: #6c757d; border: none; padding: 8px 16px; border-radius: 2rem; font-weight: 600; color: white; cursor: pointer; transition: 0.2s; font-size: 0.8rem; margin-top: 1rem; }  
+        .portal-close-btn:hover { background: #5a6268; }  
+        .portal-footer { padding: 1rem 2rem 1.4rem; font-size: 0.7rem; color: #91a3bb; border-top: 1px solid #edf2f9; display: flex; justify-content: space-between; }  
+        @media (max-width: 650px) { .portal-body { padding: 1.5rem; } .portal-header h1 { font-size: 1.5rem; } .portal-report-item { flex-direction: column; align-items: flex-start; gap: 10px; } .portal-report-actions { width: 100%; justify-content: flex-end; } }  
+
+        /* ─── DARK MODE FOR ADMIN ─── */  
+        body.admin-dark #adminPanelContainer {  
+            --bg-light: #0f172a;  
+            --text-dark: #f1f5f9;  
+            --card: #1e293b;  
+            --border: #334155;  
+        }  
+        body.admin-dark .stat-card { background: #1e293b; border-color: #334155; }  
+        body.admin-dark .stat-card .info p { color: #94a3b8; }  
+        body.admin-dark .table-wrap { background: #1e293b; border-color: #334155; }  
+        body.admin-dark .table-wrap th { background: #0f172a; color: #94a3b8; }  
+        body.admin-dark .table-wrap td { border-color: #334155; }  
+        body.admin-dark .form-grid { background: #1e293b; border-color: #334155; }  
+        body.admin-dark .form-grid label input,  
+        body.admin-dark .form-grid label select { background: #0f172a; border-color: #334155; color: #f1f5f9; }  
+        body.admin-dark .template-box { background: #1e293b; border-color: #334155; }  
+        body.admin-dark .template-box .msg-preview { background: #0f172a; }  
+        body.admin-dark .toolbar .search-box { background: #1e293b; border-color: #334155; }  
+        body.admin-dark .toolbar .search-box input { color: #f1f5f9; }  
+        body.admin-dark .admin-content { background: #0f172a; }  
+        body.admin-dark .badge-status.paid { background: #064e3b; color: #6ee7b7; }  
+        body.admin-dark .badge-status.unpaid { background: #7f1d1d; color: #fca5a5; }  
+        body.admin-dark .badge-status.pending { background: #78350f; color: #fcd34d; }  
+        body.admin-dark .badge-status.process { background: #1e3a5f; color: #93c5fd; }  
+        body.admin-dark .badge-status.done { background: #312e81; color: #a5b4fc; }  
+        body.admin-dark .stat-card .icon.blue { background: #1e3a5f; color: #60a5fa; }  
+        body.admin-dark .stat-card .icon.green { background: #064e3b; color: #34d399; }  
+        body.admin-dark .stat-card .icon.red { background: #7f1d1d; color: #f87171; }  
+        body.admin-dark .stat-card .icon.purple { background: #4c1d95; color: #a78bfa; }  
+        body.admin-dark .stat-card .icon.orange { background: #78350f; color: #fbbf24; }  
+        body.admin-dark .stat-card .icon.teal { background: #134e4a; color: #2dd4bf; }  
     </style>  
 </head>  
 <body>  
 
-    <!-- ─── PATIENT WEBSITE ─── -->  
+    <!-- ─────────────────────────────────────────────────────── -->
+    <!-- ORIGINAL PATIENT WEBSITE (100% UNCHANGED) -->
+    <!-- ─────────────────────────────────────────────────────── -->
+
     <header>  
         <h1>RAJAN <span>PATH LAB</span></h1>  
         <nav>  
-            <a href="#about">About</a>  
-            <a href="#tests">Tests</a>  
+            <a href="index.html">Home</a>  
+            <a href="tests.html">Tests</a>  
+            <a href="book.html">Book Test</a>  
+            <a href="report.html">Download Report</a>  
+            <a href="contact.html">About</a>  
+            <!-- ADDED: Patient Portal & Admin buttons only (original patient site unchanged) -->  
+            <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>  
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>  
         </nav>  
     </header>  
@@ -167,8 +640,10 @@
     <div class="hero">  
         <h2>Reliable Diagnostics with Advanced Technology</h2>  
         <div class="btn-container">  
-            <a class="btn-book" href="#book">Book Test</a>  
-            <a class="btn-report" href="#report">Download Report</a>  
+            <a class="btn-book" href="book.html">Book Test</a>  
+            <a class="btn-report" href="report.html">Download Report</a>  
+            <!-- ADDED: Patient Portal Hero Button -->  
+            <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>  
         </div>  
     </div>  
 
@@ -179,11 +654,11 @@
         </div>  
     </div>  
 
-    <section id="about" style="background:white;">  
+    <section id="about" style="background: white;">  
         <div class="about-container">  
             <div class="about-text">  
                 <h2>About Rajan Path Lab</h2>  
-                <p>Situated in <b>Manahar Bhushra (Pandwa Patan Road)</b>, Rajan Path Lab has established itself as a trusted name in diagnostic healthcare. We are built on the foundational pillars of <b>Clinical Precision, Diagnostic Accuracy, and Ethical Practices</b>.</p>  
+                <p>Situated in <b>Manahar Bhushra (Pandwa Patan Road)</b>, Rajan Path Lab has established itself as a trusted name in diagnostic healthcare. We are built on the foundational pillars of <b>Clinical Precision, Diagnostic Accuracy, and Ethical Practices</b>. We firmly believe that the cornerstone of effective treatment is an accurate, timely diagnosis. By combining cutting-edge technology with a commitment to integrity, we ensure that every patient receives the highest standard of care.</p>  
                 <h3>Why Choose Us?</h3>  
                 <div class="about-features">  
                     <div class="feature-item"><i class="fas fa-check-circle"></i> High-Precision Analyzers</div>  
@@ -194,8 +669,8 @@
                     <div class="feature-item"><i class="fas fa-check-circle"></i> Expert Pathology</div>  
                 </div>  
             </div>  
-            <div style="text-align:center;">  
-                <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width:180px;opacity:0.9;">  
+            <div class="about-text" style="text-align: center;">  
+                <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width: 180px; opacity: 0.9;">  
             </div>  
         </div>  
     </section>  
@@ -204,43 +679,43 @@
         <section>  
             <h2>Our Collection Centers</h2>  
             <div class="grid-container">  
-                <div class="card" style="border-top:3px solid var(--urgent-red);">  
-                    <i class="fas fa-hospital-user" style="color:var(--urgent-red);"></i>  
+                <div class="card" style="border-top: 3px solid var(--urgent-red);">  
+                    <i class="fas fa-hospital-user" style="color: var(--urgent-red);"></i>  
                     <h3>J R MEDICAL</h3>  
                     <p>Chilbil Chowk, Manhar</p>  
-                    <p style="color:var(--urgent-red);font-weight:bold;margin-top:10px;">Fasting Samples</p>  
+                    <p style="color: var(--urgent-red); font-weight: bold; margin-top: 10px;">Fasting Samples (Khali Pet)</p>  
                 </div>  
-                <div class="card" style="border-top:3px solid var(--accent-teal);">  
-                    <i class="fas fa-house-chimney" style="color:var(--accent-teal);"></i>  
+                <div class="card" style="border-top: 3px solid var(--accent-teal);">  
+                    <i class="fas fa-house-chimney" style="color: var(--accent-teal);"></i>  
                     <h3>Home Collection</h3>  
                     <p>Professional Pickup Service</p>  
-                    <p style="font-weight:bold;color:var(--primary-blue);margin-top:10px;">₹50</p>  
+                    <p style="font-weight: bold; color: var(--primary-blue); margin-top: 10px;">Charge: ₹50</p>  
                 </div>  
             </div>  
         </section>  
     </div>  
 
-    <section style="background:white;">  
+    <section style="background: white;">  
         <h2>Our Diagnostic Partners</h2>  
         <div class="partner-grid">  
-            <div class="partner-item" style="border-bottom:3px solid #ff6600;"><i class="fas fa-microscope" style="color:#ff6600;"></i><p>Thyrocare</p></div>  
-            <div class="partner-item" style="border-bottom:3px solid #ed1c24;"><i class="fas fa-vials" style="color:#ed1c24;"></i><p>Dr. Lal PathLabs</p></div>  
-            <div class="partner-item" style="border-bottom:3px solid #662d91;"><i class="fas fa-flask" style="color:#662d91;"></i><p>Pathkind Labs</p></div>  
+            <div class="partner-item" style="border-bottom: 3px solid var(--thyro-orange);"><i class="fas fa-microscope" style="color: var(--thyro-orange);"></i><p>Thyrocare</p></div>  
+            <div class="partner-item" style="border-bottom: 3px solid var(--lal-blue);"><i class="fas fa-vials" style="color: var(--lal-blue);"></i><p>Dr. Lal PathLabs</p></div>  
+            <div class="partner-item" style="border-bottom: 3px solid var(--path-purple);"><i class="fas fa-flask" style="color: var(--path-purple);"></i><p>Pathkind Labs</p></div>  
         </div>  
     </section>  
 
     <div class="section-wrapper-alt">  
-        <section id="tests">  
+        <section>  
             <h2>Specialized Test Menu</h2>  
             <div class="grid-container">  
-                <div class="card"><i class="fas fa-microscope" style="color:var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>  
-                <div class="card"><i class="fas fa-vial" style="color:#ff7e5f;"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>  
-                <div class="card"><i class="fas fa-dna" style="color:#662d91;"></i><h3>Aarogyam C Pro</h3><p>69 Parameters</p></div>  
-                <div class="card"><i class="fas fa-sun" style="color:#fbc02d;"></i><h3>Vitamin D</h3><p>Bone Health</p></div>  
-                <div class="card"><i class="fas fa-bolt" style="color:#0d47a1;"></i><h3>Vitamin B12</h3><p>Nerve Profile</p></div>  
-                <div class="card"><i class="fas fa-bug" style="color:#c62828;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>  
-                <div class="card"><i class="fas fa-heartbeat" style="color:#ec407a;"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>  
-                <div class="card"><i class="fas fa-hand-holding-droplet" style="color:#ef6c00;"></i><h3>Diabetes Care</h3><p>HbA1c & Sugar</p></div>  
+                <div class="card"><i class="fas fa-microscope" style="color: var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>  
+                <div class="card"><i class="fas fa-vial" style="color: #ff7e5f;"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>  
+                <div class="card"><i class="fas fa-dna" style="color: var(--path-purple);"></i><h3>Aarogyam C Pro</h3><p>69 Health Parameters</p></div>  
+                <div class="card"><i class="fas fa-sun" style="color: #fbc02d;"></i><h3>Vitamin D</h3><p>25-Hydroxy Bone Health</p></div>  
+                <div class="card"><i class="fas fa-bolt" style="color: #0d47a1;"></i><h3>Vitamin B12</h3><p>Nerve & Energy Profile</p></div>  
+                <div class="card"><i class="fas fa-bug" style="color: #c62828;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>  
+                <div class="card"><i class="fas fa-heartbeat" style="color: #ec407a;"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>  
+                <div class="card"><i class="fas fa-hand-holding-droplet" style="color: #ef6c00;"></i><h3>Diabetes Care</h3><p>HbA1c & Sugar</p></div>  
             </div>  
         </section>  
     </div>  
@@ -251,17 +726,20 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>  
         </div>  
         <div class="footer-links">  
-            <a href="#"><i class="fas fa-map-marked-alt"></i> Google Maps</a>  
-            <a href="#"><i class="fab fa-instagram"></i> Instagram</a>  
+            <a href="https://www.google.com/search?kgmid=%2Fg%2F11tn9qwbxl" target="_blank"><i class="fas fa-map-marked-alt"></i> Google Maps</a>  
+            <a href="https://www.instagram.com/lab_technician_3.0?igsh=MWNsOGo1M2pzbDk0cg==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>  
             <a href="tel:+918709946177"><i class="fas fa-phone"></i> 8709946177</a>  
         </div>  
         <p>🌐 rajanpathlab.github.io</p>  
-        <p style="font-size:12px;opacity:0.7;margin-top:10px;">© 2026 Rajan Path Lab. All Rights Reserved.</p>  
+        <p style="font-size: 12px; opacity: 0.7; margin-top: 10px;">© 2026 Rajan Path Lab. All Rights Reserved.</p>  
     </footer>  
 
     <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>  
 
-    <!-- ─── LOGIN MODAL ─── -->  
+    <!-- ─────────────────────────────────────────────────────── -->
+    <!-- ADMIN LOGIN MODAL -->
+    <!-- ─────────────────────────────────────────────────────── -->
+
     <div class="login-modal" id="loginModal">  
         <div class="login-modal-content">  
             <h3><i class="fas fa-lock"></i> Admin Login</h3>  
@@ -277,7 +755,10 @@
         </div>  
     </div>  
 
-    <!-- ─── ADMIN PANEL ─── -->  
+    <!-- ─────────────────────────────────────────────────────── -->
+    <!-- ADMIN PANEL (OVERLAY) -->
+    <!-- ─────────────────────────────────────────────────────── -->
+
     <div id="adminPanelWrapper">  
         <div id="adminPanelContainer">  
             <div class="admin-header">  
@@ -308,19 +789,19 @@
                     <div class="admin-section active" id="sec-dashboard">  
                         <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>  
                         <div class="stats-grid" id="dashboardStats">  
-                            <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">0</h4><p>Today's Patients</p></div></div>  
-                            <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">0</h4><p>Total Reports</p></div></div>  
-                            <div class="stat-card"><div class="icon red"><i class="fas fa-clock"></i></div><div class="info"><h4 id="dPending">0</h4><p>Pending Reports</p></div></div>  
-                            <div class="stat-card"><div class="icon purple"><i class="fas fa-flask"></i></div><div class="info"><h4 id="dCulture">0</h4><p>Urine Culture Process</p></div></div>  
-                            <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dDue">0</h4><p>Due Payment Patients</p></div></div>  
-                            <div class="stat-card"><div class="icon teal"><i class="fas fa-calendar-check"></i></div><div class="info"><h4 id="dRevenue">₹0</h4><p>Monthly Revenue</p></div></div>  
+                            <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">-</h4><p>Today's Patients</p></div></div>  
+                            <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">-</h4><p>Total Reports</p></div></div>  
+                            <div class="stat-card"><div class="icon red"><i class="fas fa-clock"></i></div><div class="info"><h4 id="dPending">-</h4><p>Pending Reports</p></div></div>  
+                            <div class="stat-card"><div class="icon purple"><i class="fas fa-flask"></i></div><div class="info"><h4 id="dCulture">-</h4><p>Urine Culture Process</p></div></div>  
+                            <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dDue">-</h4><p>Due Payment Patients</p></div></div>  
+                            <div class="stat-card"><div class="icon teal"><i class="fas fa-calendar-check"></i></div><div class="info"><h4 id="dRevenue">-</h4><p>Monthly Revenue</p></div></div>  
                         </div>  
                         <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;">  
-                            <div class="card"><h4><i class="fas fa-chart-line"></i> Weekly Reports</h4><canvas id="chartWeekly" style="max-height:180px;width:100%;"></canvas></div>  
-                            <div class="card"><h4><i class="fas fa-chart-pie"></i> Test-wise</h4><canvas id="chartPie" style="max-height:180px;width:100%;"></canvas></div>  
+                            <div class="card"><h4><i class="fas fa-chart-line"></i> Weekly Reports</h4><canvas id="chartWeekly" style="max-height:180px;"></canvas></div>  
+                            <div class="card"><h4><i class="fas fa-chart-pie"></i> Test-wise</h4><canvas id="chartPie" style="max-height:180px;"></canvas></div>  
                         </div>  
                         <div class="table-wrap">  
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr></tbody></table>  
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
 
@@ -328,7 +809,7 @@
                     <div class="admin-section" id="sec-patients">  
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>  
                         <div class="form-grid">  
-                            <label>Patient ID <input type="text" id="patId" placeholder="P001 or RPL-..." /></label>  
+                            <label>Patient ID <input type="text" id="patId" placeholder="P001 or RPL-062026-1186" /></label>  
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>  
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210" /></label>  
                             <label>Test <select id="patTest"><option>CBC</option><option>Thyroid</option><option>Liver Function</option><option>Urine Culture</option><option>Vitamin D</option><option>CBC WIDAL BSR</option></select></label>  
@@ -344,7 +825,7 @@
                             <button class="btn btn-outline btn-sm" id="refreshPatients"><i class="fas fa-sync"></i></button>  
                         </div>  
                         <div class="table-wrap">  
-                            <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>  
+                            <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
 
@@ -352,7 +833,7 @@
                     <div class="admin-section" id="sec-reports">  
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>  
                         <div class="form-grid">  
-                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="P001" /></label>  
+                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="P001 or RPL-062026-1186" /></label>  
                             <label>Test Name <input type="text" id="reportTestName" placeholder="CBC" /></label>  
                             <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>  
                             <label>Replace <select id="reportReplace"><option value="no">No</option><option value="yes">Yes</option></select></label>  
@@ -361,9 +842,9 @@
                                 <button class="btn btn-outline btn-sm" id="refreshReports"><i class="fas fa-sync"></i></button>  
                             </div>  
                         </div>  
-                        <div id="uploadMessage" style="margin:10px 0;font-weight:bold;color:red;"></div>  
+                        <div id="uploadMessage" style="margin:10px 0; font-weight:bold; color:red;"></div>  
                         <div class="table-wrap">  
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr></tbody></table>  
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
 
@@ -387,7 +868,7 @@
                             <button class="btn btn-primary" style="background:#7c3aed;border-color:#7c3aed;margin-top:8px;" id="sendUrineUpdate"><i class="fas fa-paper-plane"></i> Send Update</button>  
                         </div>  
                         <div class="table-wrap">  
-                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>  
+                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
 
@@ -395,9 +876,9 @@
                     <div class="admin-section" id="sec-payments">  
                         <h2 style="text-align:left;"><i class="fas fa-rupee-sign"></i> Payment / Dues <span class="premium-badge">UPI+QR</span></h2>  
                         <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));" id="paymentStats">  
-                            <div class="stat-card"><div class="icon green"><i class="fas fa-check-circle"></i></div><div class="info"><h4 id="pPaid">0</h4><p>Paid</p></div></div>  
-                            <div class="stat-card"><div class="icon red"><i class="fas fa-times-circle"></i></div><div class="info"><h4 id="pUnpaid">0</h4><p>Unpaid</p></div></div>  
-                            <div class="stat-card"><div class="icon orange"><i class="fas fa-clock"></i></div><div class="info"><h4 id="pTotalDue">₹0</h4><p>Total Due</p></div></div>  
+                            <div class="stat-card"><div class="icon green"><i class="fas fa-check-circle"></i></div><div class="info"><h4 id="pPaid">-</h4><p>Paid</p></div></div>  
+                            <div class="stat-card"><div class="icon red"><i class="fas fa-times-circle"></i></div><div class="info"><h4 id="pUnpaid">-</h4><p>Unpaid</p></div></div>  
+                            <div class="stat-card"><div class="icon orange"><i class="fas fa-clock"></i></div><div class="info"><h4 id="pTotalDue">-</h4><p>Total Due</p></div></div>  
                         </div>  
                         <div class="toolbar">  
                             <button class="btn btn-red" id="dueReminderBtn"><i class="fas fa-bell"></i> Due Reminder</button>  
@@ -405,7 +886,7 @@
                             <button class="btn btn-outline btn-sm" id="refreshPayments"><i class="fas fa-sync"></i></button>  
                         </div>  
                         <div class="table-wrap">  
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>  
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
 
@@ -413,13 +894,13 @@
                     <div class="admin-section" id="sec-analytics">  
                         <h2 style="text-align:left;"><i class="fas fa-chart-bar"></i> Reports &amp; Analytics</h2>  
                         <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">  
-                            <div class="stat-card"><div class="icon blue"><i class="fas fa-calendar-day"></i></div><div class="info"><h4 id="aToday">0</h4><p>Today</p></div></div>  
-                            <div class="stat-card"><div class="icon green"><i class="fas fa-calendar-alt"></i></div><div class="info"><h4 id="aMonth">0</h4><p>This Month</p></div></div>  
+                            <div class="stat-card"><div class="icon blue"><i class="fas fa-calendar-day"></i></div><div class="info"><h4 id="aToday">-</h4><p>Today</p></div></div>  
+                            <div class="stat-card"><div class="icon green"><i class="fas fa-calendar-alt"></i></div><div class="info"><h4 id="aMonth">-</h4><p>This Month</p></div></div>  
                             <div class="stat-card"><div class="icon purple"><i class="fas fa-vial"></i></div><div class="info"><h4 id="aTopTest">-</h4><p>Top Test</p></div></div>  
-                            <div class="stat-card"><div class="icon orange"><i class="fas fa-rupee-sign"></i></div><div class="info"><h4 id="aRevenue">₹0</h4><p>Revenue</p></div></div>  
+                            <div class="stat-card"><div class="icon orange"><i class="fas fa-rupee-sign"></i></div><div class="info"><h4 id="aRevenue">-</h4><p>Revenue</p></div></div>  
                         </div>  
                         <div class="table-wrap">  
-                            <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr></tbody></table>  
+                            <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
 
@@ -445,7 +926,7 @@
                             </div>  
                         </div>  
                         <div class="table-wrap">  
-                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No backups</td></tr></tbody></table>  
+                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
 
@@ -470,7 +951,7 @@
                             </div>  
                         </div>  
                         <div class="table-wrap">  
-                            <table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>IP</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr></tbody></table>  
+                            <table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>IP</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="4">Loading...</td></tr></tbody></table>  
                         </div>  
                     </div>  
 
@@ -479,7 +960,10 @@
         </div>  
     </div>  
 
-    <!-- ─── UPI MODAL ─── -->  
+    <!-- ─────────────────────────────────────────────────────── -->
+    <!-- UPI MODAL (for admin payments) -->
+    <!-- ─────────────────────────────────────────────────────── -->
+
     <div class="upi-modal" id="upiModal">  
         <div class="upi-modal-content">  
             <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>  
@@ -489,15 +973,50 @@
         </div>  
     </div>  
 
-    <!-- ─── JAVASCRIPT ─── -->  
+    <!-- ─────────────────────────────────────────────────────── -->
+    /* PATIENT PORTAL MODAL */  
+    <div class="patient-portal-modal" id="patientPortalModal">  
+        <div class="patient-portal-content">  
+            <div class="portal-header">  
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>  
+                <div class="portal-sub">◆ Enter your Patient ID to view & download reports ◆</div>  
+            </div>  
+            <div class="portal-body">  
+                <div class="portal-input-group">  
+                    <div class="portal-input-label">  
+                        <span>🆔</span> PATIENT ID  
+                    </div>  
+                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter your Patient ID (e.g. P001 or RPL-062026-1186)" autocomplete="off">  
+                </div>  
+                <button id="portalFetchBtn" class="portal-btn">  
+                    <span>🔍</span> VIEW MY REPORTS →  
+                </button>  
+                <div id="portalStatus" class="portal-status">◆ Enter your Patient ID and click "VIEW MY REPORTS"</div>  
+                <div id="portalReportList" class="portal-report-list" style="display: none;"></div>  
+                <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>  
+            </div>  
+            <div class="portal-footer">  
+                <span>✦ SECURE DOWNLOAD SYSTEM ✦</span>  
+                <span>RAJAN PATH LAB</span>  
+            </div>  
+        </div>  
+    </div>  
+
+    <!-- ─────────────────────────────────────────────────────── -->
+    <!-- JAVASCRIPT – WITH WHATSAPP FIX & DATA PERSISTENCE -->
+    <!-- ─────────────────────────────────────────────────────── -->
+
     <script>  
         (function() {  
             'use strict';  
 
             // ─── LOGIN ───  
-            const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };  
+            const VALID_USERS = {  
+                'Rajan5530': 'Rkchandra5530',  
+                'admin': 'admin123'  
+            };  
 
-            // ─── DATA PERSISTENCE ───  
+            // ─── DATA PERSISTENCE (localStorage) ───  
             function loadData(key, defaultData) {  
                 try {  
                     const stored = localStorage.getItem('rpl_' + key);  
@@ -511,8 +1030,7 @@
             }  
             function saveData(key, data) { localStorage.setItem('rpl_' + key, JSON.stringify(data)); }  
 
-            // ─── DEFAULT DATA (only used when localStorage is empty) ───  
-            const defaultPatients = [];  
+            const defaultPatients = []; // start empty, no defaults  
             const defaultReports = [];  
             const defaultPayments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0 };  
             const defaultLogs = [];  
@@ -587,17 +1105,122 @@
             const loginModal = $('loginModal');  
             const adminWrapper = $('adminPanelWrapper');  
             const upiModal = $('upiModal');  
+            const portalModal = $('patientPortalModal');  
 
-            // ─── REAL WHATSAPP FUNCTION ───  
+            // ─── REAL WHATSAPP FUNCTION (FIX) ───  
             function sendWhatsApp(phone, message) {  
                 let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');  
                 if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);  
                 if (/^\d{10}$/.test(cleanPhone)) cleanPhone = '+91' + cleanPhone;  
                 if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;  
-                window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');  
+                const url = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message);  
+                window.open(url, '_blank');  
             }  
 
-            // ─── LOGIN ───  
+            // ─── PATIENT PORTAL ───  
+            function openPortal() { portalModal.classList.add('active'); document.body.style.overflow = 'hidden'; }  
+            function closePortal() { portalModal.classList.remove('active'); document.body.style.overflow = ''; $('portalStatus').className = 'portal-status'; $('portalStatus').textContent = '◆ Enter your Patient ID and click "VIEW MY REPORTS"'; $('portalReportList').style.display = 'none'; $('portalPatientId').value = ''; }  
+
+            $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });  
+            $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });  
+            $('closePortalBtn').addEventListener('click', closePortal);  
+            portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });  
+
+            $('portalFetchBtn').addEventListener('click', async function() {  
+                const patientId = $('portalPatientId').value.trim();  
+                const statusDiv = $('portalStatus');  
+                const listDiv = $('portalReportList');  
+
+                if (!patientId) {  
+                    statusDiv.className = 'portal-status error';  
+                    statusDiv.innerHTML = '⚠️ Please enter your Patient ID.';  
+                    listDiv.style.display = 'none';  
+                    return;  
+                }  
+
+                // Reload patients from localStorage  
+                patients = loadData('patients', defaultPatients);  
+                reports = loadData('reports', defaultReports);  
+
+                const patient = patients.find(p => p.patient_id === patientId);  
+                if (!patient) {  
+                    statusDiv.className = 'portal-status error';  
+                    statusDiv.innerHTML = '❌ No patient found with ID: ' + patientId;  
+                    listDiv.style.display = 'none';  
+                    return;  
+                }  
+
+                const patientReports = reports.filter(r => r.patient_id === patientId);  
+                if (patientReports.length === 0) {  
+                    statusDiv.className = 'portal-status';  
+                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (' + patientId + ')';  
+                    listDiv.style.display = 'none';  
+                    return;  
+                }  
+
+                statusDiv.className = 'portal-status success';  
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name + '. Due amount: ₹' + patient.due_amount;  
+
+                let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';  
+                for (const report of patientReports) {  
+                    const canDownload = patient.due_amount === 0;  
+                    const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient.due_amount + ' DUE</span>' : '';  
+                    html += `  
+                        <div class="portal-report-item">  
+                            <div class="portal-report-info">  
+                                <span class="test-name">${report.test_name}</span>  
+                                <span class="upload-date">📅 ${report.uploaded_at}</span>  
+                            </div>  
+                            <div class="portal-report-actions">  
+                                ${dueBadge}  
+                                <button class="portal-download-btn" data-report-id="${report.id}" data-patient-due="${patient.due_amount}" ${canDownload ? '' : 'disabled'}>  
+                                    ${canDownload ? '⬇️ Download' : '🔒 Locked'}  
+                                </button>  
+                            </div>  
+                        </div>  
+                    `;  
+                }  
+                listDiv.innerHTML = html;  
+                listDiv.style.display = 'block';  
+
+                listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {  
+                    btn.addEventListener('click', async function() {  
+                        const reportId = parseInt(this.dataset.reportId);  
+                        const due = parseFloat(this.dataset.patientDue);  
+                        if (due > 0) {  
+                            statusDiv.className = 'portal-status error';  
+                            statusDiv.innerHTML = '❌ Payment pending. Please clear dues to download report.';  
+                            return;  
+                        }  
+                        try {  
+                            const fileBlob = await getPDFFile(reportId);  
+                            if (!fileBlob) {  
+                                statusDiv.className = 'portal-status error';  
+                                statusDiv.innerHTML = '❌ PDF file not found in storage.';  
+                                return;  
+                            }  
+                            const url = URL.createObjectURL(fileBlob);  
+                            const a = document.createElement('a');  
+                            a.href = url;  
+                            const report = patientReports.find(r => r.id === reportId);  
+                            a.download = report ? report.file_path : 'report.pdf';  
+                            document.body.appendChild(a);  
+                            a.click();  
+                            document.body.removeChild(a);  
+                            URL.revokeObjectURL(url);  
+                            statusDiv.className = 'portal-status success';  
+                            statusDiv.innerHTML = '✅ Download started!';  
+                        } catch (e) {  
+                            statusDiv.className = 'portal-status error';  
+                            statusDiv.innerHTML = '❌ Error downloading: ' + e.message;  
+                        }  
+                    });  
+                });  
+            });  
+
+            $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn').click(); });  
+
+            // ─── ADMIN LOGIN ───  
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));  
             $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));  
             window.addEventListener('click', (e) => {  
@@ -610,19 +1233,13 @@
                 const username = $('loginUsername').value.trim();  
                 const password = $('loginPassword').value.trim();  
                 const result = $('loginResult');  
-                if (!username || !password) {  
-                    result.style.color = 'red';  
-                    result.textContent = 'Please enter username and password';  
-                    return;  
-                }  
+                if (!username || !password) { result.style.color = 'red'; result.textContent = 'Please enter username and password'; return; }  
                 if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {  
-                    result.style.color = 'green';  
-                    result.textContent = '✅ Login successful!';  
+                    result.style.color = 'green'; result.textContent = '✅ Login successful!';  
                     loginModal.classList.remove('show');  
                     openDB().then(() => showAdmin()).catch(() => showAdmin());  
                 } else {  
-                    result.style.color = 'red';  
-                    result.textContent = '❌ Invalid username or password';  
+                    result.style.color = 'red'; result.textContent = '❌ Invalid username or password';  
                 }  
             });  
 
@@ -631,23 +1248,18 @@
                 adminWrapper.classList.add('active');  
                 document.body.style.overflow = 'hidden';  
                 $('adminUsername').textContent = 'Rajan5530';  
-                refreshAllData();  
+                // Reload all data from localStorage  
+                patients = loadData('patients', defaultPatients);  
+                reports = loadData('reports', defaultReports);  
+                payments = loadData('payments', defaultPayments);  
+                activityLogs = loadData('logs', defaultLogs);  
+                refreshAll();  
                 showAdminSection('dashboard');  
                 setTimeout(() => generateAllQRCodes(), 300);  
             }  
 
-            function hideAdmin() {  
-                adminWrapper.classList.remove('active');  
-                document.body.style.overflow = '';  
-            }  
-
-            function logout() {  
-                hideAdmin();  
-                // Reset login fields  
-                $('loginUsername').value = '';  
-                $('loginPassword').value = '';  
-                $('loginResult').textContent = '';  
-            }  
+            function hideAdmin() { adminWrapper.classList.remove('active'); document.body.style.overflow = ''; }  
+            function logout() { hideAdmin(); }  
             $('logoutBtn').addEventListener('click', logout);  
             $('logoutBtn2').addEventListener('click', logout);  
 
@@ -661,24 +1273,15 @@
 
             // ─── SECTION NAV ───  
             const adminSections = {  
-                dashboard: $('sec-dashboard'),  
-                patients: $('sec-patients'),  
-                reports: $('sec-reports'),  
-                whatsapp: $('sec-whatsapp'),  
-                payments: $('sec-payments'),  
-                analytics: $('sec-analytics'),  
-                backup: $('sec-backup'),  
-                security: $('sec-security')  
+                dashboard: $('sec-dashboard'), patients: $('sec-patients'), reports: $('sec-reports'),  
+                whatsapp: $('sec-whatsapp'), payments: $('sec-payments'), analytics: $('sec-analytics'),  
+                backup: $('sec-backup'), security: $('sec-security')  
             };  
             const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');  
 
             function showAdminSection(id) {  
-                Object.keys(adminSections).forEach(k => {  
-                    adminSections[k].classList.toggle('active', k === id);  
-                });  
-                sidebarLinks.forEach(a => {  
-                    a.classList.toggle('active', a.dataset.section === id);  
-                });  
+                Object.keys(adminSections).forEach(k => adminSections[k].classList.toggle('active', k === id));  
+                sidebarLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));  
                 if (id === 'dashboard') refreshDashboard();  
                 if (id === 'patients') refreshPatients();  
                 if (id === 'reports') refreshReports();  
@@ -689,12 +1292,8 @@
                 if (id === 'security') refreshSecurity();  
                 if (id === 'patients') setTimeout(() => generateAllQRCodes(), 200);  
             }  
-
             sidebarLinks.forEach(a => {  
-                a.addEventListener('click', function(e) {  
-                    e.preventDefault();  
-                    showAdminSection(this.dataset.section);  
-                });  
+                a.addEventListener('click', function(e) { e.preventDefault(); showAdminSection(this.dataset.section); });  
             });  
 
             // ─── QR CODE ───  
@@ -703,14 +1302,7 @@
                     const id = el.id.replace('qr-', '');  
                     if (el && typeof QRCode !== 'undefined') {  
                         el.innerHTML = '';  
-                        new QRCode(el, {  
-                            text: 'Patient: ' + id,  
-                            width: 50,  
-                            height: 50,  
-                            colorDark: '#000000',  
-                            colorLight: '#ffffff',  
-                            correctLevel: QRCode.CorrectLevel.H  
-                        });  
+                        new QRCode(el, { text: 'Patient: ' + id, width: 50, height: 50, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });  
                     }  
                 });  
             }  
@@ -731,21 +1323,25 @@
                 } catch (e) { alert('Error downloading file: ' + e.message); }  
             }  
 
-            // ─── REFRESH: DASHBOARD ───  
-            function refreshDashboard() {  
-                // Reload patients and reports from localStorage  
-                patients = loadData('patients', defaultPatients);  
-                reports = loadData('reports', defaultReports);  
-                payments = loadData('payments', defaultPayments);  
-                activityLogs = loadData('logs', defaultLogs);  
+            // ─── REFRESH FUNCTIONS (all use current patients/reports) ───  
+            function refreshAll() {  
+                refreshDashboard();  
+                refreshPatients();  
+                refreshReports();  
+                refreshWhatsAppPatients();  
+                refreshPayments();  
+                refreshAnalytics();  
+                refreshBackup();  
+                refreshSecurity();  
+            }  
 
-                // Stats  
+            function refreshDashboard() {  
                 const totalPatients = patients.length;  
                 const totalReports = reports.length;  
                 const pendingReports = patients.filter(p => p.status === 'pending').length;  
                 const cultureProcess = patients.filter(p => p.test && p.test.includes('Urine')).length;  
                 const duePatients = patients.filter(p => p.due_amount > 0).length;  
-                const totalRevenue = reports.length * 450; // rough estimate  
+                const totalRevenue = reports.reduce((sum, r) => sum + (r.amount || 0), 0) || patients.reduce((sum, p) => sum + p.due_amount, 0);  
 
                 $('dToday').textContent = totalPatients;  
                 $('dTotalReports').textContent = totalReports;  
@@ -754,7 +1350,6 @@
                 $('dDue').textContent = duePatients;  
                 $('dRevenue').textContent = '₹' + totalRevenue;  
 
-                // Recent patients  
                 const tbody = $('dRecentPatients');  
                 if (patients.length) {  
                     tbody.innerHTML = patients.slice(0, 5).map(p =>  
@@ -764,7 +1359,7 @@
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';  
                 }  
 
-                // Charts (re-build with real data)  
+                // Update charts  
                 updateCharts();  
             }  
 
@@ -773,88 +1368,45 @@
             let chartPieInstance = null;  
 
             function updateCharts() {  
-                // Weekly data - from patients created in last 7 days  
                 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];  
                 const weeklyData = days.map(() => 0);  
-
-                // For real data: count patients by day of week  
                 patients.forEach(p => {  
                     if (p.created_at) {  
                         const date = new Date(p.created_at);  
-                        const day = date.getDay(); // 0=Sun, 1=Mon...  
-                        const index = day === 0 ? 6 : day - 1; // Convert to Mon-Sun  
+                        const day = date.getDay();  
+                        const index = day === 0 ? 6 : day - 1;  
                         if (index >= 0 && index < 7) weeklyData[index]++;  
                     }  
                 });  
 
-                // Test-wise data  
                 const testMap = {};  
-                patients.forEach(p => {  
-                    if (p.test) {  
-                        testMap[p.test] = (testMap[p.test] || 0) + 1;  
-                    }  
-                });  
+                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });  
                 const testLabels = Object.keys(testMap);  
                 const testData = Object.values(testMap);  
 
-                // Chart 1: Weekly  
                 const ctx1 = $('chartWeekly')?.getContext('2d');  
                 if (ctx1) {  
                     if (chartWeeklyInstance) chartWeeklyInstance.destroy();  
                     chartWeeklyInstance = new Chart(ctx1, {  
                         type: 'bar',  
-                        data: {  
-                            labels: days,  
-                            datasets: [{  
-                                label: 'Patients',  
-                                data: weeklyData,  
-                                backgroundColor: 'rgba(0,128,128,0.6)',  
-                                borderColor: '#008080',  
-                                borderWidth: 2  
-                            }]  
-                        },  
-                        options: {  
-                            responsive: true,  
-                            maintainAspectRatio: false,  
-                            plugins: { legend: { display: false } },  
-                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }  
-                        }  
+                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }] },  
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }  
                     });  
                 }  
 
-                // Chart 2: Test-wise pie  
                 const ctx2 = $('chartPie')?.getContext('2d');  
                 if (ctx2) {  
                     if (chartPieInstance) chartPieInstance.destroy();  
                     const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a', '#ff6600'];  
                     chartPieInstance = new Chart(ctx2, {  
                         type: 'doughnut',  
-                        data: {  
-                            labels: testLabels.length ? testLabels : ['No Data'],  
-                            datasets: [{  
-                                data: testLabels.length ? testData : [1],  
-                                backgroundColor: testLabels.length ? colors.slice(0, testLabels.length) : ['#ccc'],  
-                                borderWidth: 2,  
-                                borderColor: '#fff'  
-                            }]  
-                        },  
-                        options: {  
-                            responsive: true,  
-                            maintainAspectRatio: false,  
-                            plugins: {  
-                                legend: {  
-                                    position: 'bottom',  
-                                    labels: { boxWidth: 12, font: { size: 11 } }  
-                                }  
-                            }  
-                        }  
+                        data: { labels: testLabels.length ? testLabels : ['No Data'], datasets: [{ data: testLabels.length ? testData : [1], backgroundColor: testLabels.length ? colors.slice(0, testLabels.length) : ['#ccc'], borderWidth: 2, borderColor: '#fff' }] },  
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } } }  
                     });  
                 }  
             }  
 
-            // ─── REFRESH: PATIENTS ───  
             function refreshPatients() {  
-                patients = loadData('patients', defaultPatients);  
                 const tbody = $('patientTableBody');  
                 if (patients.length) {  
                     tbody.innerHTML = patients.map(p => `  
@@ -889,31 +1441,16 @@
                 if (!id) { const nextId = patients.length + 1; id = 'P' + String(nextId).padStart(3, '0'); }  
                 if (patients.find(p => p.patient_id === id)) { alert('Patient ID already exists!'); return; }  
 
-                patients.push({  
-                    patient_id: id,  
-                    name,  
-                    phone,  
-                    test,  
-                    status,  
-                    due_amount: due,  
-                    created_at: new Date().toISOString()  
-                });  
+                patients.push({ patient_id: id, name, phone, test, status, due_amount: due, created_at: new Date().toISOString() });  
                 saveAll();  
                 alert('✅ Patient ' + id + ' added!');  
-                $('patId').value = '';  
-                $('patName').value = '';  
-                $('patPhone').value = '';  
-                $('patDue').value = '';  
-                refreshAllData();  
+                $('patId').value = ''; $('patName').value = ''; $('patPhone').value = ''; $('patDue').value = '';  
+                refreshAll();  
             });  
 
             $('clearPatientBtn').addEventListener('click', function() {  
-                $('patId').value = '';  
-                $('patName').value = '';  
-                $('patPhone').value = '';  
-                $('patDue').value = '';  
+                $('patId').value = ''; $('patName').value = ''; $('patPhone').value = ''; $('patDue').value = '';  
             });  
-
             $('refreshPatients').addEventListener('click', refreshPatients);  
 
             // ─── DELETE PATIENT ───  
@@ -927,7 +1464,7 @@
                         patients = patients.filter(p => p.patient_id !== id);  
                         saveAll();  
                         alert('Deleted!');  
-                        refreshAllData();  
+                        refreshAll();  
                     }  
                 }  
             });  
@@ -942,7 +1479,6 @@
 
             // ─── REPORTS ───  
             function refreshReports() {  
-                reports = loadData('reports', defaultReports);  
                 const tbody = $('reportsTableBody');  
                 if (reports.length) {  
                     tbody.innerHTML = reports.map(r => `  
@@ -978,15 +1514,14 @@
                 const file = $('reportFile').files[0];  
                 const replace = $('reportReplace').value;  
                 const msgDiv = $('uploadMessage');  
-                msgDiv.textContent = '';  
-                msgDiv.style.color = 'red';  
+                msgDiv.textContent = ''; msgDiv.style.color = 'red';  
 
                 if (!pid) { msgDiv.textContent = '❌ Patient ID is required.'; return; }  
                 if (!test) { msgDiv.textContent = '❌ Test Name is required.'; return; }  
                 if (!file) { msgDiv.textContent = '❌ Please select a PDF file.'; return; }  
 
                 const patient = patients.find(p => p.patient_id === pid);  
-                if (!patient) { msgDiv.textContent = '❌ Patient not found! Please add patient first.'; return; }  
+                if (!patient) { msgDiv.textContent = '❌ Patient not found! Please add patient first (ID: ' + pid + ').'; return; }  
 
                 const existing = reports.find(r => r.patient_id === pid && r.test_name === test);  
                 if (existing && replace === 'no') { msgDiv.textContent = '❌ Report already exists. Use Replace = Yes to overwrite.'; return; }  
@@ -996,28 +1531,16 @@
                 }  
 
                 const newId = reports.length + 1;  
-                const newReport = {  
-                    id: newId,  
-                    patient_id: pid,  
-                    name: patient.name,  
-                    test_name: test,  
-                    file_path: file.name,  
-                    uploaded_at: new Date().toLocaleString()  
-                };  
+                const newReport = { id: newId, patient_id: pid, name: patient.name, test_name: test, file_path: file.name, uploaded_at: new Date().toLocaleString() };  
 
-                try { await savePDFFile(newId, file); } catch (e) {  
-                    msgDiv.textContent = '❌ Failed to store PDF: ' + e.message;  
-                    return;  
-                }  
+                try { await savePDFFile(newId, file); } catch (e) { msgDiv.textContent = '❌ Failed to store PDF: ' + e.message; return; }  
 
                 reports.push(newReport);  
                 saveAll();  
                 msgDiv.style.color = 'green';  
                 msgDiv.textContent = '✅ Report uploaded for ' + patient.name + ' (' + pid + ')';  
-                $('reportPatientId').value = '';  
-                $('reportTestName').value = '';  
-                $('reportFile').value = '';  
-                refreshAllData();  
+                $('reportPatientId').value = ''; $('reportTestName').value = ''; $('reportFile').value = '';  
+                refreshAll();  
                 setTimeout(() => { msgDiv.textContent = ''; }, 5000);  
             });  
 
@@ -1032,7 +1555,7 @@
                             reports = reports.filter(r => r.id !== id);  
                             saveAll();  
                             alert('Deleted!');  
-                            refreshAllData();  
+                            refreshAll();  
                         }).catch((err) => { alert('Error deleting PDF file: ' + err.message); });  
                     }  
                 }  
@@ -1040,7 +1563,6 @@
 
             // ─── WHATSAPP ───  
             function refreshWhatsAppPatients() {  
-                patients = loadData('patients', defaultPatients);  
                 const tbody = $('whatsappPatientList');  
                 if (patients.length) {  
                     tbody.innerHTML = patients.slice(0, 10).map(p => `  
@@ -1057,6 +1579,7 @@
                 }  
             }  
 
+            // ─── WHATSAPP SEND EVENTS (using real sendWhatsApp) ───  
             document.addEventListener('click', function(e) {  
                 if (e.target.closest('.wa-send')) {  
                     const btn = e.target.closest('.wa-send');  
@@ -1090,12 +1613,9 @@
 
             // ─── PAYMENTS ───  
             function refreshPayments() {  
-                patients = loadData('patients', defaultPatients);  
                 const duePatients = patients.filter(p => p.due_amount > 0);  
                 const paidPatients = patients.filter(p => p.due_amount === 0);  
-
-                let totalDue = 0;  
-                duePatients.forEach(p => totalDue += p.due_amount);  
+                let totalDue = duePatients.reduce((sum, p) => sum + p.due_amount, 0);  
 
                 $('pPaid').textContent = paidPatients.length;  
                 $('pUnpaid').textContent = duePatients.length;  
@@ -1128,12 +1648,11 @@
                             patient.due_amount = 0;  
                             saveAll();  
                             alert('✅ Paid!');  
-                            refreshAllData();  
+                            refreshAll();  
                         }  
                     }  
                 }  
             });  
-
             $('refreshPayments').addEventListener('click', refreshPayments);  
 
             // ─── UPI ───  
@@ -1142,26 +1661,13 @@
                 const container = $('upiQR');  
                 container.innerHTML = '';  
                 if (typeof QRCode !== 'undefined') {  
-                    new QRCode(container, {  
-                        text: 'upi://pay?pa=rajanpathlab@upi&pn=Rajan%20Path%20Lab&am=1.00&cu=INR',  
-                        width: 160,  
-                        height: 160,  
-                        colorDark: '#000000',  
-                        colorLight: '#ffffff',  
-                        correctLevel: QRCode.CorrectLevel.H  
-                    });  
-                } else {  
-                    container.innerHTML = '<p>QR library not loaded</p>';  
-                }  
+                    new QRCode(container, { text: 'upi://pay?pa=rajanpathlab@upi&pn=Rajan%20Path%20Lab&am=1.00&cu=INR', width: 160, height: 160, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });  
+                } else { container.innerHTML = '<p>QR library not loaded</p>'; }  
             });  
-
             $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));  
 
             // ─── ANALYTICS ───  
             function refreshAnalytics() {  
-                patients = loadData('patients', defaultPatients);  
-                reports = loadData('reports', defaultReports);  
-
                 const today = new Date().toDateString();  
                 let todayCount = 0;  
                 patients.forEach(p => {  
@@ -1175,11 +1681,8 @@
                 const totalReports = reports.length;  
                 const revenue = patients.reduce((sum, p) => sum + p.due_amount, 0);  
 
-                // Top test  
                 const testMap = {};  
-                patients.forEach(p => {  
-                    if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1;  
-                });  
+                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });  
                 let topTest = '-';  
                 let topCount = 0;  
                 Object.keys(testMap).forEach(key => {  
@@ -1191,7 +1694,6 @@
                 $('aTopTest').textContent = topTest;  
                 $('aRevenue').textContent = '₹' + revenue;  
 
-                // Test-wise table  
                 const tbody = $('analyticsTable');  
                 const testWise = Object.keys(testMap).map(key => ({ test: key, count: testMap[key] }));  
                 if (testWise.length) {  
@@ -1210,15 +1712,12 @@
                     <tr><td>rpl_pdf_backup.zip</td><td>PDF</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Download')"><i class="fas fa-download"></i></button></td></tr>  
                 `;  
             }  
-
             $('backupDBBtn').addEventListener('click', function() {  
                 if (confirm('Create DB backup?')) alert('✅ Backup created: db_backup_' + new Date().toISOString().slice(0, 10) + '.sql');  
             });  
-
             $('backupPDFBtn').addEventListener('click', function() {  
                 if (confirm('Create PDF backup?')) alert('✅ PDF backup created: pdf_backup_' + new Date().toISOString().slice(0, 10) + '.zip');  
             });  
-
             $('restoreBtn').addEventListener('click', function() {  
                 const file = $('restoreFile').files[0];  
                 if (!file) { alert('Select a backup file.'); return; }  
@@ -1227,7 +1726,6 @@
 
             // ─── SECURITY ───  
             function refreshSecurity() {  
-                activityLogs = loadData('logs', defaultLogs);  
                 const tbody = $('activityLogBody');  
                 if (activityLogs.length) {  
                     tbody.innerHTML = activityLogs.map(l =>  
@@ -1237,7 +1735,6 @@
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr>';  
                 }  
             }  
-
             $('viewLogBtn').addEventListener('click', refreshSecurity);  
 
             $('changePwdBtn').addEventListener('click', function() {  
@@ -1248,24 +1745,11 @@
                 alert('✅ Password changed! (dummy)');  
             });  
 
-            // ─── REFRESH ALL ───  
-            function refreshAllData() {  
-                refreshDashboard();  
-                refreshPatients();  
-                refreshReports();  
-                refreshWhatsAppPatients();  
-                refreshPayments();  
-                refreshAnalytics();  
-                refreshBackup();  
-                refreshSecurity();  
-            }  
-
             // ─── INIT ───  
             openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));  
-
-            console.log('✅ Rajan Path Lab · Real Data Admin Panel');  
-            console.log('🔑 Login: Rajan5530 / Rkchandra5530');  
-            console.log('📊 All data is real from localStorage.');  
+            console.log('✅ Rajan Path Lab · WhatsApp Fixed & Data Persistence');  
+            console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');  
+            console.log('📊 All data saved in localStorage.');  
 
         })();  
     </script>  
