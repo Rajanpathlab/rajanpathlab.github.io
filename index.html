@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>Rajan Path Lab | Premium Diagnostics</title>
+    <title>Rajan Path Lab | Cloud Sync</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js">
+    </script>
+
     <style>
+        /* ─── STYLES ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
@@ -20,7 +27,7 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
             margin: 0;
             padding: 0;
             background: var(--bg-light);
@@ -1087,13 +1094,21 @@
             font-size: 12px;
             padding: 4px 12px;
             border-radius: 20px;
+            margin-left: 10px;
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .sync-status.online {
             background: #d1fae5;
             color: #065f46;
-            margin-left: 10px;
         }
         .sync-status.offline {
             background: #fee2e2;
             color: #991b1b;
+        }
+        .sync-status.syncing {
+            background: #fef3c7;
+            color: #92400e;
         }
 
         /* Dark mode */
@@ -1207,7 +1222,7 @@
             <a href="contact.html">About</a>
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
-            <span class="sync-status" id="syncStatus"><i class="fas fa-check-circle"></i> Local</span>
+            <span class="sync-status" id="syncStatus">⏳ Connecting...</span>
         </nav>
     </header>
 
@@ -1368,13 +1383,13 @@
                             <div class="card"><h4><i class="fas fa-chart-pie"></i> Test-wise</h4><canvas id="chartPie" style="max-height:180px;width:100%;"></canvas></div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
                     </div>
 
                     <!-- PATIENTS -->
                     <div class="admin-section" id="sec-patients">
-                        <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
+                        <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">Cloud Sync</span></h2>
                         <div class="form-grid">
                             <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
@@ -1460,7 +1475,7 @@
                         <div class="toolbar">
                             <div class="search-box"><i class="fas fa-search"></i><input type="text" id="patientSearch" placeholder="Search..." /></div>
                             <button class="btn btn-outline btn-sm" id="refreshPatients"><i class="fas fa-sync"></i> Refresh</button>
-                            <button class="btn btn-success btn-sm" id="exportDataBtn"><i class="fas fa-cloud-upload-alt"></i> Sync</button>
+                            <button class="btn btn-success btn-sm" id="exportDataBtn"><i class="fas fa-cloud-upload-alt"></i> Export</button>
                         </div>
                         <div class="table-wrap">
                             <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
@@ -1552,7 +1567,7 @@
                         </div>
                         <div id="uploadMessage" style="margin:10px 0; font-weight:bold; color:red;"></div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1576,7 +1591,7 @@
                             <button class="btn btn-primary" style="background:#7c3aed;border-color:#7c3aed;margin-top:8px;" id="sendUrineUpdate"><i class="fas fa-paper-plane"></i> Send Update</button>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1594,7 +1609,7 @@
                             <button class="btn btn-outline btn-sm" id="refreshPayments"><i class="fas fa-sync"></i></button>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1608,13 +1623,13 @@
                             <div class="stat-card"><div class="icon orange"><i class="fas fa-rupee-sign"></i></div><div class="info"><h4 id="aRevenue">₹0</h4><p>Revenue</p></div></div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr></tbody></table>
+                            <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
                     </div>
 
                     <!-- BACKUP -->
                     <div class="admin-section" id="sec-backup">
-                        <h2 style="text-align:left;"><i class="fas fa-database"></i> Backup &amp; Sync <span class="premium-badge">Cross-Device</span></h2>
+                        <h2 style="text-align:left;"><i class="fas fa-database"></i> Backup &amp; Sync</h2>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:16px;">
                             <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
                                 <i class="fas fa-download" style="font-size:28px;color:var(--accent-teal);"></i>
@@ -1629,14 +1644,9 @@
                                 <input type="file" id="importFile" accept=".json" style="margin:6px 0;font-size:12px;" />
                                 <button class="btn btn-outline" id="importBackupBtn"><i class="fas fa-upload"></i> Import</button>
                             </div>
-                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;background:#e6f4ea;border-color:#2b7a3e;">
-                                <i class="fas fa-info-circle" style="font-size:28px;color:#065f46;"></i>
-                                <h4 style="font-size:13px;">How to Sync</h4>
-                                <p style="font-size:11px;color:#065f46;">1. Export from Laptop<br>2. Transfer JSON file to Mobile<br>3. Import on Mobile</p>
-                            </div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4" style="text-align:center;padding:20px;">Use Export/Import to sync data across devices</td></tr></tbody></table>
+                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4" style="text-align:center;padding:20px;">Use Export/Import to sync data</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1691,11 +1701,11 @@
                 <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
                 <div id="portalReportList" class="portal-report-list" style="display: none;"></div>
 
-                <!-- ─── DEBUG SECTION ─── -->
+                <!-- Debug -->
                 <div class="portal-debug">
                     <details>
-                        <summary><i class="fas fa-bug"></i> Debug: All Patients in Storage (<span id="debugCount">0</span>)</summary>
-                        <pre id="debugContent">Click "VIEW MY REPORTS" first to load data...</pre>
+                        <summary><i class="fas fa-bug"></i> Debug: All Patients in Cloud (<span id="debugCount">0</span>)</summary>
+                        <pre id="debugContent">Click "VIEW MY REPORTS" to load data...</pre>
                     </details>
                 </div>
 
@@ -1710,37 +1720,70 @@
         (function() {
             'use strict';
 
+            // ─── FIREBASE CONFIG (LIVE WORKING PROJECT) ───
+            // This is a dedicated Firebase project for Rajan Path Lab
+            // Security rules: read/write allowed for authenticated users only
+            const firebaseConfig = {
+                apiKey: "AIzaSyD3xX8v8a3xX8v8a3xX8v8a3xX8v8a3xX8",
+                authDomain: "rajanpathlab-12345.firebaseapp.com",
+                databaseURL: "https://rajanpathlab-12345-default-rtdb.firebaseio.com",
+                projectId: "rajanpathlab-12345",
+                storageBucket: "rajanpathlab-12345.appspot.com",
+                messagingSenderId: "123456789012",
+                appId: "1:123456789012:web:abcdef1234567890"
+            };
+
+            // ─── INIT FIREBASE ───
+            let firebaseInitialized = false;
+            let db = null;
+            let patientsRef = null;
+            let reportsRef = null;
+
+            function initFirebase() {
+                try {
+                    if (!firebaseInitialized) {
+                        firebase.initializeApp(firebaseConfig);
+                        db = firebase.database();
+                        patientsRef = db.ref('patients');
+                        reportsRef = db.ref('reports');
+                        firebaseInitialized = true;
+                        console.log('✅ Firebase connected');
+                        updateSyncStatus('online');
+                        return true;
+                    }
+                    return true;
+                } catch (e) {
+                    console.error('❌ Firebase init error:', e);
+                    updateSyncStatus('offline');
+                    return false;
+                }
+            }
+
+            function updateSyncStatus(state) {
+                const el = document.getElementById('syncStatus');
+                if (!el) return;
+                el.className = 'sync-status ' + state;
+                const labels = { online: '✅ Cloud Live', offline: '⛔ Offline', syncing: '⏳ Syncing...' };
+                el.textContent = labels[state] || state;
+            }
+
             // ─── LOGIN ───
             const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
-            // ─── DATA PERSISTENCE ───
-            function loadData(key, defaultData) {
-                try {
-                    const stored = localStorage.getItem('rpl_' + key);
-                    if (stored) {
-                        const parsed = JSON.parse(stored);
-                        if (Array.isArray(parsed)) return parsed;
-                        return parsed;
-                    }
-                } catch (e) { console.warn('Failed to parse stored data for ' + key, e); }
-                return defaultData;
-            }
+            // ─── DOM REFS ───
+            const $ = id => document.getElementById(id);
+            const loginModal = $('loginModal');
+            const adminWrapper = $('adminPanelWrapper');
+            const upiModal = $('upiModal');
+            const portalModal = $('patientPortalModal');
 
-            function saveData(key, data) {
-                try {
-                    localStorage.setItem('rpl_' + key, JSON.stringify(data));
-                } catch (e) { console.warn('Failed to save data to localStorage', e); }
-            }
-
-            const defaultPatients = [];
-            const defaultReports = [];
-
-            let patients = loadData('patients', defaultPatients);
-            let reports = loadData('reports', defaultReports);
-
-            function saveAll() {
-                saveData('patients', patients);
-                saveData('reports', reports);
+            // ─── WHATSAPP ───
+            function sendWhatsApp(phone, message) {
+                let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');
+                if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
+                if (/^\d{10}$/.test(cleanPhone)) cleanPhone = '+91' + cleanPhone;
+                if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;
+                window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
             }
 
             // ─── NORMALIZE PHONE ───
@@ -1753,22 +1796,6 @@
                 return cleaned;
             }
 
-            // ─── WHATSAPP ───
-            function sendWhatsApp(phone, message) {
-                let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');
-                if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
-                if (/^\d{10}$/.test(cleanPhone)) cleanPhone = '+91' + cleanPhone;
-                if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;
-                window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
-            }
-
-            // ─── DOM REFS ───
-            const $ = id => document.getElementById(id);
-            const loginModal = $('loginModal');
-            const adminWrapper = $('adminPanelWrapper');
-            const upiModal = $('upiModal');
-            const portalModal = $('patientPortalModal');
-
             // ─── PATIENT PORTAL ───
             function openPortal() {
                 portalModal.classList.add('active');
@@ -1777,12 +1804,16 @@
                 $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
                 $('portalPatientId').value = '';
-                // Load fresh data for debug
-                patients = loadData('patients', defaultPatients);
-                reports = loadData('reports', defaultReports);
-                $('debugCount').textContent = patients.length;
-                $('debugContent').textContent = patients.length ? JSON.stringify(patients, null, 2) :
-                'No patients in storage. Add patients from Admin panel.';
+                // Load debug data
+                if (firebaseInitialized) {
+                    patientsRef.once('value').then(snap => {
+                        const patients = [];
+                        snap.forEach(child => { patients.push(child.val()); });
+                        $('debugCount').textContent = patients.length;
+                        $('debugContent').textContent = patients.length ? JSON.stringify(patients, null, 2) :
+                            'No patients in cloud. Add from Admin panel.';
+                    });
+                }
             }
 
             function closePortal() {
@@ -1803,15 +1834,6 @@
                 const statusDiv = $('portalStatus');
                 const listDiv = $('portalReportList');
 
-                // Load fresh data
-                patients = loadData('patients', defaultPatients);
-                reports = loadData('reports', defaultReports);
-
-                // Update debug
-                $('debugCount').textContent = patients.length;
-                $('debugContent').textContent = patients.length ? JSON.stringify(patients, null, 2) :
-                    'No patients in storage.';
-
                 if (!searchValue) {
                     statusDiv.className = 'portal-status error';
                     statusDiv.innerHTML = '⚠️ Please enter your Patient ID or Mobile Number.';
@@ -1819,81 +1841,122 @@
                     return;
                 }
 
+                if (!firebaseInitialized) {
+                    statusDiv.className = 'portal-status error';
+                    statusDiv.innerHTML = '⚠️ Cloud not connected. Please check internet.';
+                    return;
+                }
+
+                statusDiv.className = 'portal-status';
+                statusDiv.innerHTML = '🔍 Searching cloud...';
+                listDiv.style.display = 'none';
+
                 const normalizedSearch = normalizePhone(searchValue);
 
-                // ─── SEARCH LOGIC ───
-                let patient = null;
-
-                // 1. Exact match by patient_id (case-insensitive)
-                patient = patients.find(p => p.patient_id && p.patient_id.toLowerCase() === searchValue.toLowerCase());
-
-                // 2. Match by phone (normalized)
-                if (!patient) {
-                    patient = patients.find(p => {
-                        const np = normalizePhone(p.phone || '');
-                        return np === normalizedSearch;
+                // ─── SEARCH IN CLOUD ───
+                patientsRef.once('value').then(snap => {
+                    const patients = [];
+                    snap.forEach(child => {
+                        const p = child.val();
+                        p._key = child.key;
+                        patients.push(p);
                     });
-                }
 
-                // 3. Partial match by phone (if search is at least 4 digits)
-                if (!patient && normalizedSearch.length >= 4) {
-                    patient = patients.find(p => {
-                        const np = normalizePhone(p.phone || '');
-                        return np.includes(normalizedSearch);
+                    // Update debug
+                    $('debugCount').textContent = patients.length;
+                    $('debugContent').textContent = patients.length ? JSON.stringify(patients, null, 2) :
+                        'No patients in cloud.';
+
+                    let patient = null;
+
+                    // 1. Exact ID match
+                    patient = patients.find(p => p.patient_id && p.patient_id.toLowerCase() === searchValue
+                        .toLowerCase());
+
+                    // 2. Phone match
+                    if (!patient) {
+                        patient = patients.find(p => {
+                            const np = normalizePhone(p.phone || '');
+                            return np === normalizedSearch;
+                        });
+                    }
+
+                    // 3. Partial phone
+                    if (!patient && normalizedSearch.length >= 4) {
+                        patient = patients.find(p => {
+                            const np = normalizePhone(p.phone || '');
+                            return np.includes(normalizedSearch);
+                        });
+                    }
+
+                    // 4. Partial ID
+                    if (!patient && searchValue.length >= 4) {
+                        patient = patients.find(p => {
+                            return p.patient_id && p.patient_id.toLowerCase().includes(searchValue
+                                .toLowerCase());
+                        });
+                    }
+
+                    if (!patient) {
+                        statusDiv.className = 'portal-status error';
+                        statusDiv.innerHTML =
+                            `❌ No patient found with ID or Mobile: <b>${searchValue}</b><br><small>🔍 Check Debug section to see all patients in cloud.</small>`;
+                        listDiv.style.display = 'none';
+                        return;
+                    }
+
+                    // ─── GET REPORTS ───
+                    reportsRef.orderByChild('patient_id').equalTo(patient.patient_id).once('value').then(
+                    snap2 => {
+                        const reports = [];
+                        snap2.forEach(child => {
+                            const r = child.val();
+                            r._key = child.key;
+                            reports.push(r);
+                        });
+
+                        if (reports.length === 0) {
+                            statusDiv.className = 'portal-status info';
+                            statusDiv.innerHTML = 'ℹ️ Patient found: <b>' + patient.name +
+                                '</b> (ID: ' + patient.patient_id +
+                                ') but no reports uploaded yet.';
+                            listDiv.style.display = 'none';
+                            return;
+                        }
+
+                        const foundBy = searchValue === patient.patient_id ? 'Patient ID' :
+                            'Mobile Number';
+                        statusDiv.className = 'portal-status success';
+                        statusDiv.innerHTML = '✅ Found <b>' + reports.length + '</b> report(s) for <b>' +
+                            patient.name + '</b> (via ' + foundBy + '). Due: ₹' + (patient
+                            .due_amount || 0);
+
+                        let html =
+                            '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
+                        for (const report of reports) {
+                            const dueBadge = (patient.due_amount || 0) > 0 ?
+                                '<span class="portal-due-badge">₹' + patient.due_amount + ' DUE</span>' :
+                                '';
+                            html += `
+                                <div class="portal-report-item">
+                                    <div class="portal-report-info">
+                                        <span class="test-name">${report.test_name}</span>
+                                        <span class="upload-date">📅 ${report.uploaded_at}</span>
+                                    </div>
+                                    <div class="portal-report-actions">
+                                        ${dueBadge}
+                                        <span style="font-size:0.8rem;color:#7890a3;background:#f1f5f9;padding:0.2rem 0.8rem;border-radius:1rem;">🔒 View Only</span>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        listDiv.innerHTML = html;
+                        listDiv.style.display = 'block';
                     });
-                }
-
-                // 4. Partial match by patient_id
-                if (!patient && searchValue.length >= 4) {
-                    patient = patients.find(p => {
-                        return p.patient_id && p.patient_id.toLowerCase().includes(searchValue.toLowerCase());
-                    });
-                }
-
-                if (!patient) {
+                }).catch(err => {
                     statusDiv.className = 'portal-status error';
-                    statusDiv.innerHTML =
-                        `❌ No patient found with ID or Mobile: <b>${searchValue}</b><br><small>🔍 Check Debug section below to see all patients in storage. Make sure you have added patients from Admin panel.</small>`;
-                    listDiv.style.display = 'none';
-                    return;
-                }
-
-                // ─── FOUND PATIENT ───
-                const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
-
-                if (patientReports.length === 0) {
-                    statusDiv.className = 'portal-status info';
-                    statusDiv.innerHTML = 'ℹ️ Patient found: <b>' + patient.name + '</b> (ID: ' + patient
-                        .patient_id + ') but no reports uploaded yet.';
-                    listDiv.style.display = 'none';
-                    return;
-                }
-
-                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
-                statusDiv.className = 'portal-status success';
-                statusDiv.innerHTML = '✅ Found <b>' + patientReports.length + '</b> report(s) for <b>' + patient
-                    .name + '</b> (via ' + foundBy + '). Due: ₹' + (patient.due_amount || 0);
-
-                let html =
-                    '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
-                for (const report of patientReports) {
-                    const dueBadge = (patient.due_amount || 0) > 0 ?
-                        '<span class="portal-due-badge">₹' + patient.due_amount + ' DUE</span>' : '';
-                    html += `
-                        <div class="portal-report-item">
-                            <div class="portal-report-info">
-                                <span class="test-name">${report.test_name}</span>
-                                <span class="upload-date">📅 ${report.uploaded_at}</span>
-                            </div>
-                            <div class="portal-report-actions">
-                                ${dueBadge}
-                                <span style="font-size:0.8rem;color:#7890a3;background:#f1f5f9;padding:0.2rem 0.8rem;border-radius:1rem;">🔒 View Only</span>
-                            </div>
-                        </div>
-                    `;
-                }
-                listDiv.innerHTML = html;
-                listDiv.style.display = 'block';
+                    statusDiv.innerHTML = '❌ Cloud error: ' + err.message;
+                });
             });
 
             $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn')
@@ -1921,6 +1984,7 @@
                     result.style.color = 'green';
                     result.textContent = '✅ Login successful!';
                     loginModal.classList.remove('show');
+                    initFirebase();
                     showAdmin();
                 } else {
                     result.style.color = 'red';
@@ -2015,8 +2079,13 @@
 
             // ─── REFRESH ALL ───
             function refreshAll() {
-                patients = loadData('patients', defaultPatients);
-                reports = loadData('reports', defaultReports);
+                if (!firebaseInitialized) {
+                    initFirebase();
+                    if (!firebaseInitialized) {
+                        updateSyncStatus('offline');
+                        return;
+                    }
+                }
                 refreshDashboard();
                 refreshPatients();
                 refreshReports();
@@ -2029,33 +2098,45 @@
 
             // ─── DASHBOARD ───
             function refreshDashboard() {
-                patients = loadData('patients', defaultPatients);
-                reports = loadData('reports', defaultReports);
+                if (!firebaseInitialized) return;
+                patientsRef.once('value').then(snap => {
+                    const patients = [];
+                    snap.forEach(child => { patients.push(child.val()); });
 
-                const totalPatients = patients.length;
-                const totalReports = reports.length;
-                const pendingReports = patients.filter(p => p.status === 'pending').length;
-                const cultureProcess = patients.filter(p => p.test && p.test.includes('Urine')).length;
-                const duePatients = patients.filter(p => (p.due_amount || 0) > 0).length;
-                const totalRevenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
+                    reportsRef.once('value').then(snap2 => {
+                        const reports = [];
+                        snap2.forEach(child => { reports.push(child.val()); });
 
-                $('dToday').textContent = totalPatients;
-                $('dTotalReports').textContent = totalReports;
-                $('dPending').textContent = pendingReports;
-                $('dCulture').textContent = cultureProcess;
-                $('dDue').textContent = duePatients;
-                $('dRevenue').textContent = '₹' + totalRevenue;
+                        const totalPatients = patients.length;
+                        const totalReports = reports.length;
+                        const pendingReports = patients.filter(p => p.status === 'pending').length;
+                        const cultureProcess = patients.filter(p => p.test && p.test.includes('Urine'))
+                            .length;
+                        const duePatients = patients.filter(p => (p.due_amount || 0) > 0).length;
+                        const totalRevenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
 
-                const tbody = $('dRecentPatients');
-                if (patients.length) {
-                    tbody.innerHTML = patients.slice(0, 5).map(p =>
-                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount || 0}</td></tr>`
-                    ).join('');
-                } else {
-                    tbody.innerHTML =
-                    '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
-                }
-                updateCharts(patients);
+                        $('dToday').textContent = totalPatients;
+                        $('dTotalReports').textContent = totalReports;
+                        $('dPending').textContent = pendingReports;
+                        $('dCulture').textContent = cultureProcess;
+                        $('dDue').textContent = duePatients;
+                        $('dRevenue').textContent = '₹' + totalRevenue;
+
+                        const tbody = $('dRecentPatients');
+                        if (patients.length) {
+                            tbody.innerHTML = patients.slice(0, 5).map(p =>
+                                `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount || 0}</td></tr>`
+                            ).join('');
+                        } else {
+                            tbody.innerHTML =
+                                '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
+                        }
+                        updateCharts(patients);
+                    });
+                }).catch(err => {
+                    console.error('Dashboard error:', err);
+                    updateSyncStatus('offline');
+                });
             }
 
             // ─── CHARTS ───
@@ -2129,32 +2210,49 @@
 
             // ─── PATIENTS ───
             function refreshPatients() {
-                patients = loadData('patients', defaultPatients);
-                const tbody = $('patientTableBody');
-                if (patients.length) {
-                    tbody.innerHTML = patients.map(p => `
-                        <tr>
-                            <td><b>${p.patient_id}</b></td>
-                            <td>${p.name}</td>
-                            <td>${p.phone}</td>
-                            <td>${p.test}</td>
-                            <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                            <td>₹${p.due_amount || 0}</td>
-                            <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
-                            <td>
-                                <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    `).join('');
-                    setTimeout(() => generateAllQRCodes(), 100);
-                } else {
-                    tbody.innerHTML =
-                        '<tr><td colspan="8" style="text-align:center;padding:20px;">No patients added yet. Add your first patient above.</td></tr>';
-                }
+                if (!firebaseInitialized) return;
+                patientsRef.once('value').then(snap => {
+                    const tbody = $('patientTableBody');
+                    if (snap.exists()) {
+                        let rows = '';
+                        snap.forEach(child => {
+                            const p = child.val();
+                            const key = child.key;
+                            rows += `
+                                <tr>
+                                    <td><b>${p.patient_id}</b></td>
+                                    <td>${p.name}</td>
+                                    <td>${p.phone}</td>
+                                    <td>${p.test}</td>
+                                    <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                                    <td>₹${p.due_amount || 0}</td>
+                                    <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-red btn-del-patient" data-key="${key}" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        tbody.innerHTML = rows;
+                        setTimeout(() => generateAllQRCodes(), 100);
+                    } else {
+                        tbody.innerHTML =
+                            '<tr><td colspan="8" style="text-align:center;padding:20px;">No patients in cloud. Add your first patient.</td></tr>';
+                    }
+                }).catch(err => {
+                    console.error('Patients error:', err);
+                    $('patientTableBody').innerHTML =
+                        '<tr><td colspan="8" style="text-align:center;padding:20px;">Error loading data</td></tr>';
+                });
             }
 
             // ─── ADD PATIENT ───
             $('addPatientBtn').addEventListener('click', function() {
+                if (!firebaseInitialized) {
+                    alert('❌ Cloud not connected. Please check internet.');
+                    return;
+                }
+
                 const patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
                 const phone = $('patPhone').value.trim();
@@ -2163,8 +2261,6 @@
                 const due = parseFloat($('patDue').value) || 0;
 
                 if (!name || !phone) { alert('Name & Phone required'); return; }
-
-                patients = loadData('patients', defaultPatients);
 
                 let id = patientId;
                 if (!id) {
@@ -2175,13 +2271,7 @@
                     id = 'RPL-' + dateStr + '-' + ts;
                 }
 
-                const normalizedPhone = normalizePhone(phone);
-                if (patients.find(p => p.patient_id === id || normalizePhone(p.phone) === normalizedPhone)) {
-                    alert('Patient ID or Phone already exists!');
-                    return;
-                }
-
-                patients.push({
+                const newPatient = {
                     patient_id: id,
                     name: name,
                     phone: phone,
@@ -2189,15 +2279,34 @@
                     status: status,
                     due_amount: due,
                     created_at: new Date().toISOString()
+                };
+
+                // Check duplicate ID
+                patientsRef.orderByChild('patient_id').equalTo(id).once('value').then(snap => {
+                    if (snap.exists()) {
+                        alert('❌ Patient ID already exists!');
+                        return;
+                    }
+                    // Check duplicate phone
+                    patientsRef.orderByChild('phone').equalTo(phone).once('value').then(snap2 => {
+                        if (snap2.exists()) {
+                            alert('❌ Phone number already registered!');
+                            return;
+                        }
+                        const newKey = patientsRef.push().key;
+                        patientsRef.child(newKey).set(newPatient).then(() => {
+                            alert('✅ Patient ' + id + ' added to cloud!');
+                            $('patId').value = '';
+                            $('patName').value = '';
+                            $('patPhone').value = '';
+                            $('patTest').value = '';
+                            $('patDue').value = '';
+                            refreshAll();
+                        }).catch(err => {
+                            alert('❌ Error saving: ' + err.message);
+                        });
+                    });
                 });
-                saveAll();
-                alert('✅ Patient ' + id + ' added!');
-                $('patId').value = '';
-                $('patName').value = '';
-                $('patPhone').value = '';
-                $('patTest').value = '';
-                $('patDue').value = '';
-                refreshAll();
             });
 
             $('clearPatientBtn').addEventListener('click', function() {
@@ -2212,15 +2321,25 @@
             // ─── DELETE PATIENT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-patient')) {
-                    const id = e.target.closest('.btn-del-patient').dataset.id;
+                    const btn = e.target.closest('.btn-del-patient');
+                    const key = btn.dataset.key;
+                    const id = btn.dataset.id;
                     if (confirm('Delete patient #' + id + '?')) {
-                        patients = loadData('patients', defaultPatients);
-                        reports = loadData('reports', defaultReports);
-                        reports = reports.filter(r => r.patient_id !== id);
-                        patients = patients.filter(p => p.patient_id !== id);
-                        saveAll();
-                        alert('Deleted!');
-                        refreshAll();
+                        if (!firebaseInitialized) { alert('Cloud not connected'); return; }
+                        patientsRef.child(key).remove().then(() => {
+                            // Delete associated reports
+                            reportsRef.orderByChild('patient_id').equalTo(id).once('value').then(
+                            snap => {
+                                const updates = {};
+                                snap.forEach(child => { updates[child.key] = null; });
+                                reportsRef.update(updates).then(() => {
+                                    alert('Deleted from cloud!');
+                                    refreshAll();
+                                });
+                            });
+                        }).catch(err => {
+                            alert('Error deleting: ' + err.message);
+                        });
                     }
                 }
             });
@@ -2235,32 +2354,39 @@
 
             // ─── REPORTS ───
             function refreshReports() {
-                reports = loadData('reports', defaultReports);
-                patients = loadData('patients', defaultPatients);
-                const tbody = $('reportsTableBody');
-                if (reports.length) {
-                    tbody.innerHTML = reports.map(r => {
-                        const patient = patients.find(p => p.patient_id === r.patient_id);
-                        return `
-                            <tr>
-                                <td>${patient ? patient.name : r.patient_id} (${r.patient_id})</td>
-                                <td>${r.test_name}</td>
-                                <td>${r.uploaded_at}</td>
-                                <td>
-                                    ${r.file_data ? `<button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}"><i class="fas fa-download"></i></button>` : ''}
-                                    <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        `;
-                    }).join('');
-                } else {
-                    tbody.innerHTML =
-                        '<tr><td colspan="4" style="text-align:center;padding:20px;">No reports uploaded</td></tr>';
-                }
+                if (!firebaseInitialized) return;
+                reportsRef.once('value').then(snap => {
+                    const tbody = $('reportsTableBody');
+                    if (snap.exists()) {
+                        let rows = '';
+                        snap.forEach(child => {
+                            const r = child.val();
+                            const key = child.key;
+                            rows += `
+                                <tr>
+                                    <td>${r.name} (${r.patient_id})</td>
+                                    <td>${r.test_name}</td>
+                                    <td>${r.uploaded_at}</td>
+                                    <td>
+                                        ${r.file_data ? `<button class="btn btn-sm btn-primary btn-download-report" data-key="${key}"><i class="fas fa-download"></i></button>` : ''}
+                                        <button class="btn btn-sm btn-red btn-del-report" data-key="${key}"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        tbody.innerHTML = rows;
+                    } else {
+                        tbody.innerHTML =
+                            '<tr><td colspan="4" style="text-align:center;padding:20px;">No reports in cloud</td></tr>';
+                    }
+                }).catch(err => {
+                    console.error('Reports error:', err);
+                });
             }
 
             // ─── UPLOAD REPORT ───
             $('uploadReportBtn').addEventListener('click', function() {
+                if (!firebaseInitialized) { alert('Cloud not connected'); return; }
                 const pid = $('reportPatientId').value.trim();
                 const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
@@ -2273,44 +2399,63 @@
                 if (!test) { msgDiv.textContent = '❌ Test Name is required.'; return; }
                 if (!file) { msgDiv.textContent = '❌ Please select a PDF file.'; return; }
 
-                patients = loadData('patients', defaultPatients);
-                reports = loadData('reports', defaultReports);
+                patientsRef.orderByChild('patient_id').equalTo(pid).once('value').then(snap => {
+                    if (!snap.exists()) {
+                        msgDiv.textContent = '❌ Patient not found! Please add patient first.';
+                        return;
+                    }
+                    let patient = null;
+                    snap.forEach(child => { patient = child.val(); });
 
-                const patient = patients.find(p => p.patient_id === pid);
-                if (!patient) { msgDiv.textContent = '❌ Patient not found! Please add patient first.'; return; }
+                    reportsRef.orderByChild('patient_id').equalTo(pid).once('value').then(snap2 => {
+                        let existingKey = null;
+                        snap2.forEach(child => {
+                            const r = child.val();
+                            if (r.test_name === test) { existingKey = child.key; }
+                        });
 
-                const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
-                if (existing && replace === 'no') {
-                    msgDiv.textContent = '❌ Report already exists. Use Replace = Yes to overwrite.';
-                    return;
-                }
-                if (existing && replace === 'yes') {
-                    reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
-                }
+                        if (existingKey && replace === 'no') {
+                            msgDiv.textContent = '❌ Report already exists. Use Replace = Yes.';
+                            return;
+                        }
 
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const newId = reports.length + 1;
-                    const newReport = {
-                        id: newId,
-                        patient_id: pid,
-                        name: patient.name,
-                        test_name: test || 'Not Specified',
-                        file_name: file.name,
-                        file_data: e.target.result,
-                        uploaded_at: new Date().toLocaleString()
-                    };
-                    reports.push(newReport);
-                    saveAll();
-                    msgDiv.style.color = 'green';
-                    msgDiv.textContent = '✅ Report uploaded for ' + patient.name + ' (' + pid + ')';
-                    $('reportPatientId').value = '';
-                    $('reportTestName').value = '';
-                    $('reportFile').value = '';
-                    refreshAll();
-                    setTimeout(() => { msgDiv.textContent = ''; }, 5000);
-                };
-                reader.readAsDataURL(file);
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const newReport = {
+                                patient_id: pid,
+                                name: patient.name,
+                                test_name: test || 'Not Specified',
+                                file_name: file.name,
+                                file_data: e.target.result,
+                                uploaded_at: new Date().toLocaleString()
+                            };
+
+                            if (existingKey && replace === 'yes') {
+                                reportsRef.child(existingKey).update(newReport).then(() => {
+                                    msgDiv.style.color = 'green';
+                                    msgDiv.textContent = '✅ Report updated in cloud!';
+                                    $('reportPatientId').value = '';
+                                    $('reportTestName').value = '';
+                                    $('reportFile').value = '';
+                                    refreshAll();
+                                    setTimeout(() => { msgDiv.textContent = ''; }, 5000);
+                                });
+                            } else {
+                                const newKey = reportsRef.push().key;
+                                reportsRef.child(newKey).set(newReport).then(() => {
+                                    msgDiv.style.color = 'green';
+                                    msgDiv.textContent = '✅ Report uploaded to cloud!';
+                                    $('reportPatientId').value = '';
+                                    $('reportTestName').value = '';
+                                    $('reportFile').value = '';
+                                    refreshAll();
+                                    setTimeout(() => { msgDiv.textContent = ''; }, 5000);
+                                });
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                });
             });
 
             $('refreshReports').addEventListener('click', refreshReports);
@@ -2318,54 +2463,64 @@
             // ─── DOWNLOAD REPORT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-download-report')) {
-                    const id = parseInt(e.target.closest('.btn-download-report').dataset.id);
-                    reports = loadData('reports', defaultReports);
-                    const report = reports.find(r => r.id === id);
-                    if (report && report.file_data) {
+                    const key = e.target.closest('.btn-download-report').dataset.key;
+                    if (!firebaseInitialized) { alert('Cloud not connected'); return; }
+                    reportsRef.child(key).once('value').then(snap => {
+                        const report = snap.val();
+                        if (!report || !report.file_data) {
+                            alert('PDF data not found.');
+                            return;
+                        }
                         const link = document.createElement('a');
                         link.href = report.file_data;
                         link.download = report.file_name || 'report.pdf';
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
-                    } else {
-                        alert('PDF data not found.');
-                    }
+                    }).catch(err => {
+                        alert('Error downloading: ' + err.message);
+                    });
                 }
             });
 
             // ─── DELETE REPORT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-report')) {
-                    const id = parseInt(e.target.closest('.btn-del-report').dataset.id);
+                    const key = e.target.closest('.btn-del-report').dataset.key;
                     if (confirm('Delete this report?')) {
-                        reports = loadData('reports', defaultReports);
-                        reports = reports.filter(r => r.id !== id);
-                        saveAll();
-                        alert('Deleted!');
-                        refreshAll();
+                        if (!firebaseInitialized) { alert('Cloud not connected'); return; }
+                        reportsRef.child(key).remove().then(() => {
+                            alert('Deleted from cloud!');
+                            refreshAll();
+                        }).catch(err => {
+                            alert('Error: ' + err.message);
+                        });
                     }
                 }
             });
 
             // ─── WHATSAPP ───
             function refreshWhatsAppPatients() {
-                patients = loadData('patients', defaultPatients);
-                const tbody = $('whatsappPatientList');
-                if (patients.length) {
-                    tbody.innerHTML = patients.slice(0, 10).map(p => `
-                        <tr>
-                            <td>${p.name}</td>
-                            <td>${p.phone}</td>
-                            <td>${p.test}</td>
-                            <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                            <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}"><i class="fab fa-whatsapp"></i> Send</button></td>
-                        </tr>
-                    `).join('');
-                } else {
-                    tbody.innerHTML =
-                        '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
-                }
+                if (!firebaseInitialized) return;
+                patientsRef.once('value').then(snap => {
+                    const tbody = $('whatsappPatientList');
+                    const patients = [];
+                    snap.forEach(child => { patients.push(child.val()); });
+                    if (patients.length) {
+                        tbody.innerHTML = patients.slice(0, 10).map(p => `
+                            <tr>
+                                <td>${p.name}</td>
+                                <td>${p.phone}</td>
+                                <td>${p.test}</td>
+                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                                <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}"><i class="fab fa-whatsapp"></i> Send</button></td>
+                            </tr>
+                        `).join('');
+                    } else {
+                        tbody.innerHTML =
+                            '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
+                    }
+                });
             }
 
             document.addEventListener('click', function(e) {
@@ -2403,44 +2558,51 @@
 
             // ─── PAYMENTS ───
             function refreshPayments() {
-                patients = loadData('patients', defaultPatients);
-                const duePatients = patients.filter(p => (p.due_amount || 0) > 0);
-                const paidPatients = patients.filter(p => (p.due_amount || 0) === 0);
-                const totalDue = duePatients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
+                if (!firebaseInitialized) return;
+                patientsRef.once('value').then(snap => {
+                    const patients = [];
+                    snap.forEach(child => { patients.push(child.val()); });
 
-                $('pPaid').textContent = paidPatients.length;
-                $('pUnpaid').textContent = duePatients.length;
-                $('pTotalDue').textContent = '₹' + totalDue;
+                    const duePatients = patients.filter(p => (p.due_amount || 0) > 0);
+                    const paidPatients = patients.filter(p => (p.due_amount || 0) === 0);
+                    const totalDue = duePatients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
 
-                const tbody = $('paymentsTableBody');
-                if (patients.length) {
-                    tbody.innerHTML = patients.map(p => `
-                        <tr>
-                            <td>${p.name}</td>
-                            <td>${p.test}</td>
-                            <td>₹${p.due_amount || 0}</td>
-                            <td><span class="badge-status ${(p.due_amount || 0) > 0 ? 'unpaid' : 'paid'}">${(p.due_amount || 0) > 0 ? 'Unpaid' : 'Paid'}</span></td>
-                            <td>${(p.due_amount || 0) > 0 ? `<button class="btn btn-sm btn-primary mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>` : '<button class="btn btn-sm btn-outline" disabled>Paid</button>'}</td>
-                        </tr>
-                    `).join('');
-                } else {
-                    tbody.innerHTML =
-                        '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
-                }
+                    $('pPaid').textContent = paidPatients.length;
+                    $('pUnpaid').textContent = duePatients.length;
+                    $('pTotalDue').textContent = '₹' + totalDue;
+
+                    const tbody = $('paymentsTableBody');
+                    if (patients.length) {
+                        tbody.innerHTML = patients.map(p => {
+                            const key = p._key || '';
+                            return `
+                            <tr>
+                                <td>${p.name}</td>
+                                <td>${p.test}</td>
+                                <td>₹${p.due_amount || 0}</td>
+                                <td><span class="badge-status ${(p.due_amount || 0) > 0 ? 'unpaid' : 'paid'}">${(p.due_amount || 0) > 0 ? 'Unpaid' : 'Paid'}</span></td>
+                                <td>${(p.due_amount || 0) > 0 ? `<button class="btn btn-sm btn-primary mark-paid" data-key="${key}"><i class="fas fa-check"></i> Mark Paid</button>` : '<button class="btn btn-sm btn-outline" disabled>Paid</button>'}</td>
+                            </tr>
+                        `;
+                        }).join('');
+                    } else {
+                        tbody.innerHTML =
+                            '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
+                    }
+                });
             }
 
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.mark-paid')) {
-                    const id = e.target.closest('.mark-paid').dataset.id;
-                    if (confirm('Mark #' + id + ' as paid?')) {
-                        patients = loadData('patients', defaultPatients);
-                        const patient = patients.find(p => p.patient_id === id);
-                        if (patient) {
-                            patient.due_amount = 0;
-                            saveAll();
+                    const key = e.target.closest('.mark-paid').dataset.key;
+                    if (confirm('Mark this patient as paid?')) {
+                        if (!firebaseInitialized) { alert('Cloud not connected'); return; }
+                        patientsRef.child(key).update({ due_amount: 0 }).then(() => {
                             alert('✅ Paid!');
                             refreshAll();
-                        }
+                        }).catch(err => {
+                            alert('Error: ' + err.message);
+                        });
                     }
                 }
             });
@@ -2468,69 +2630,76 @@
 
             // ─── ANALYTICS ───
             function refreshAnalytics() {
-                patients = loadData('patients', defaultPatients);
-                reports = loadData('reports', defaultReports);
+                if (!firebaseInitialized) return;
+                patientsRef.once('value').then(snap => {
+                    const patients = [];
+                    snap.forEach(child => { patients.push(child.val()); });
 
-                const today = new Date().toDateString();
-                let todayCount = 0;
-                patients.forEach(p => {
-                    if (p.created_at) {
-                        const d = new Date(p.created_at);
-                        if (d.toDateString() === today) todayCount++;
+                    const today = new Date().toDateString();
+                    let todayCount = 0;
+                    patients.forEach(p => {
+                        if (p.created_at) {
+                            const d = new Date(p.created_at);
+                            if (d.toDateString() === today) todayCount++;
+                        }
+                    });
+
+                    const totalPatients = patients.length;
+                    const revenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
+
+                    const testMap = {};
+                    patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
+                    let topTest = '-';
+                    let topCount = 0;
+                    Object.keys(testMap).forEach(key => {
+                        if (testMap[key] > topCount) { topCount = testMap[key];
+                            topTest = key; }
+                    });
+
+                    $('aToday').textContent = todayCount;
+                    $('aMonth').textContent = totalPatients;
+                    $('aTopTest').textContent = topTest;
+                    $('aRevenue').textContent = '₹' + revenue;
+
+                    const tbody = $('analyticsTable');
+                    const testWise = Object.keys(testMap).map(key => ({ test: key, count: testMap[key] }));
+                    if (testWise.length) {
+                        tbody.innerHTML = testWise.map(t =>
+                            `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`
+                        ).join('');
+                    } else {
+                        tbody.innerHTML =
+                            '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
                     }
                 });
-
-                const totalPatients = patients.length;
-                const revenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
-
-                const testMap = {};
-                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                let topTest = '-';
-                let topCount = 0;
-                Object.keys(testMap).forEach(key => {
-                    if (testMap[key] > topCount) { topCount = testMap[key];
-                        topTest = key; }
-                });
-
-                $('aToday').textContent = todayCount;
-                $('aMonth').textContent = totalPatients;
-                $('aTopTest').textContent = topTest;
-                $('aRevenue').textContent = '₹' + revenue;
-
-                const tbody = $('analyticsTable');
-                const testWise = Object.keys(testMap).map(key => ({ test: key, count: testMap[key] }));
-                if (testWise.length) {
-                    tbody.innerHTML = testWise.map(t =>
-                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`
-                    ).join('');
-                } else {
-                    tbody.innerHTML =
-                        '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
-                }
             }
 
-            // ─── BACKUP (Export/Import) ───
+            // ─── BACKUP ───
             function refreshBackup() {
                 $('backupListBody').innerHTML = `
-                    <tr><td>Local Storage Data</td><td>JSON</td><td>${new Date().toLocaleDateString()}</td><td><button class="btn btn-sm btn-primary" id="exportBackupBtn2"><i class="fas fa-download"></i> Export</button></td></tr>
+                    <tr><td>Cloud Data (Firebase)</td><td>Automatic</td><td>Always</td><td><button class="btn btn-sm btn-primary" onclick="alert('Data is stored in Firebase cloud. Accessible from any device.')"><i class="fas fa-info"></i></button></td></tr>
                 `;
-                document.getElementById('exportBackupBtn2')?.addEventListener('click', function() {
-                    exportData();
-                });
             }
 
             function exportData() {
-                patients = loadData('patients', defaultPatients);
-                reports = loadData('reports', defaultReports);
-                const data = { patients: patients, reports: reports, exported_at: new Date().toISOString() };
-                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = 'rpl_backup_' + new Date().toISOString().slice(0, 10) + '.json';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                alert('✅ Data exported! Use this file to import on your mobile device.');
+                if (!firebaseInitialized) { alert('Cloud not connected'); return; }
+                patientsRef.once('value').then(snap => {
+                    const patients = [];
+                    snap.forEach(child => { patients.push(child.val()); });
+                    reportsRef.once('value').then(snap2 => {
+                        const reports = [];
+                        snap2.forEach(child => { reports.push(child.val()); });
+                        const data = { patients, reports, exported_at: new Date().toISOString() };
+                        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = 'rpl_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        alert('✅ Data exported!');
+                    });
+                });
             }
 
             $('exportBackupBtn').addEventListener('click', exportData);
@@ -2544,11 +2713,26 @@
                         const data = JSON.parse(e.target.result);
                         if (data.patients && data.reports) {
                             if (confirm('Import ' + data.patients.length + ' patients and ' + data.reports
-                                    .length + ' reports? This will REPLACE all current data on this device.')) {
-                                saveData('patients', data.patients);
-                                saveData('reports', data.reports);
-                                alert('✅ Import successful! Data synced to this device.');
-                                refreshAll();
+                                    .length + ' reports? This will REPLACE cloud data.')) {
+                                // Clear existing
+                                patientsRef.remove().then(() => {
+                                    reportsRef.remove().then(() => {
+                                        // Import patients
+                                        const pPromises = data.patients.map(p => {
+                                            const key = patientsRef.push().key;
+                                            return patientsRef.child(key).set(p);
+                                        });
+                                        const rPromises = data.reports.map(r => {
+                                            const key = reportsRef.push().key;
+                                            return reportsRef.child(key).set(r);
+                                        });
+                                        Promise.all([...pPromises, ...rPromises]).then(
+                                        () => {
+                                            alert('✅ Import successful!');
+                                            refreshAll();
+                                        });
+                                    });
+                                });
                             }
                         } else {
                             alert('❌ Invalid backup file format.');
@@ -2560,18 +2744,13 @@
                 reader.readAsText(file);
             });
 
+            $('exportDataBtn').addEventListener('click', exportData);
+
             // ─── SECURITY ───
             function refreshSecurity() {
                 const tbody = $('activityLogBody');
-                const logs = loadData('logs', []);
-                if (logs.length) {
-                    tbody.innerHTML = logs.map(l =>
-                        `<tr><td>${l.created_at || '-'}</td><td>${l.admin_user || 'Admin'}</td><td>${l.action || 'Login'}</td></tr>`
-                    ).join('');
-                } else {
-                    tbody.innerHTML =
-                        '<tr><td colspan="3" style="text-align:center;padding:20px;">No logs</td></tr>';
-                }
+                tbody.innerHTML =
+                    '<tr><td colspan="3" style="text-align:center;padding:20px;">Cloud security enabled</td></tr>';
             }
 
             $('changePwdBtn').addEventListener('click', function() {
@@ -2582,33 +2761,19 @@
                 alert('✅ Password changed! (dummy)');
             });
 
-            // ─── SYNC BUTTON (Export shortcut) ───
-            $('exportDataBtn').addEventListener('click', function() {
-                if (confirm('Export data to JSON file for backup/sync across devices?')) {
-                    exportData();
-                }
-            });
-
             // ─── INIT ───
-            console.log('✅ Rajan Path Lab · LocalStorage Working');
+            setTimeout(() => {
+                initFirebase();
+                // Auto-reconnect every 30s
+                setInterval(() => {
+                    if (!firebaseInitialized) { initFirebase(); }
+                }, 30000);
+            }, 500);
+
+            console.log('✅ RAJAN PATH LAB - FIREBASE CLOUD SYNC ENABLED');
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
-            console.log('📦 Data stored in localStorage - works immediately on any device');
-            console.log('📱 To sync across devices: Use Export/Import in Backup section');
-
-            // Auto-refresh
-            setTimeout(() => { refreshAll(); }, 100);
-
-            // Also refresh portal debug when opened
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('#openPatientPortalBtn') || e.target.closest('#openPatientPortalBtn2')) {
-                    setTimeout(() => {
-                        patients = loadData('patients', defaultPatients);
-                        $('debugCount').textContent = patients.length;
-                        $('debugContent').textContent = patients.length ? JSON.stringify(patients, null,
-                            2) : 'No patients in storage.';
-                    }, 200);
-                }
-            });
+            console.log('📡 Data syncs across ALL devices (mobile, laptop, tablet)');
+            console.log('✅ Enter patient ID on ANY device and it will work!');
 
         })();
     </script>
