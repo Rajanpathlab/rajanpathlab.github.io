@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Rajan Path Lab | Premium Diagnostics</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
     <style>
-        /* ─── ORIGINAL PATIENT WEBSITE STYLES ─── */
+        /* ─── ORIGINAL STYLES (unchanged) ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
@@ -401,7 +401,7 @@
             }
         }
 
-        /* ─── ADMIN PANEL STYLES ─── */
+        /* ─── ADMIN PANEL STYLES (unchanged) ─── */
         #adminPanelWrapper {
             display: none;
             position: fixed;
@@ -1837,6 +1837,12 @@
                     <div id="debugPatientList" class="debug-patient-list">
                         <p style="font-style:italic;color:#6c757d;">Loading patient data...</p>
                     </div>
+                    <div style="margin-top:0.8rem;font-size:0.8rem;color:#6c757d;background:#e9ecef;padding:0.5rem;border-radius:0.5rem;">
+                        ⚠️ <strong>Important:</strong> Data is stored only in your browser's localStorage. 
+                        Patients added on one device or browser will <strong>not</strong> appear on another. 
+                        To see a patient here, you must add them using the Admin panel on <strong>this same device and browser</strong>.
+                        Use the "Refresh Data" button above to reload.
+                    </div>
                 </details>
 
                 <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
@@ -2002,7 +2008,7 @@
                     container.innerHTML = html;
                 } else {
                     container.innerHTML =
-                        '<p style="color:#dc3545;">⚠️ No patients found in storage. Please add patients from Admin panel. (Make sure data is saved to localStorage)</p>';
+                        '<p style="color:#dc3545;">⚠️ No patients found in storage. Please add patients from Admin panel on this device.</p>';
                 }
             }
 
@@ -2062,7 +2068,7 @@
                 console.log('🔄 Manual refresh. Patients:', patients.length);
             });
 
-            // ─── PORTAL FETCH ───
+            // ─── PORTAL FETCH (IMPROVED SEARCH) ───
             $('portalFetchBtn').addEventListener('click', async function() {
                 const searchValue = $('portalPatientId').value.trim();
                 const statusDiv = $('portalStatus');
@@ -2083,35 +2089,55 @@
                 console.log('🔍 Portal search: "' + searchValue + '"');
                 console.log('🔍 Patients in storage:', patients);
 
-                // ─── SEARCH BY PATIENT ID OR NORMALIZED PHONE ───
-                const normalizedSearch = normalizePhone(searchValue);
+                // ─── SEARCH: try multiple strategies ───
 
-                let patient = patients.find(p => p.patient_id === searchValue);
+                let patient = null;
 
+                // 1. Exact match by patient_id
+                patient = patients.find(p => p.patient_id === searchValue);
+
+                // 2. Exact match by phone (normalized)
                 if (!patient) {
+                    const normalizedSearch = normalizePhone(searchValue);
                     patient = patients.find(p => {
                         const normalizedPhone = normalizePhone(p.phone || '');
-                        return normalizedPhone === normalizedSearch || p.phone === searchValue;
+                        return normalizedPhone === normalizedSearch;
                     });
                 }
 
-                // Fallback: partial match on phone if exact not found
-                if (!patient && normalizedSearch.length >= 3) {
-                    patient = patients.find(p => {
-                        const normalizedPhone = normalizePhone(p.phone || '');
-                        return normalizedPhone.includes(normalizedSearch);
-                    });
+                // 3. Case-insensitive partial match on patient_id
+                if (!patient) {
+                    const lowerSearch = searchValue.toLowerCase();
+                    patient = patients.find(p => p.patient_id.toLowerCase().includes(lowerSearch));
                 }
 
-                // Fallback: partial match on patient_id
+                // 4. Case-insensitive partial match on phone (normalized)
                 if (!patient) {
-                    patient = patients.find(p => p.patient_id.toLowerCase().includes(searchValue.toLowerCase()));
+                    const normalizedSearch = normalizePhone(searchValue);
+                    if (normalizedSearch.length >= 3) {
+                        patient = patients.find(p => {
+                            const normalizedPhone = normalizePhone(p.phone || '');
+                            return normalizedPhone.includes(normalizedSearch);
+                        });
+                    }
+                }
+
+                // 5. Case-insensitive partial match on name
+                if (!patient) {
+                    const lowerSearch = searchValue.toLowerCase();
+                    patient = patients.find(p => p.name.toLowerCase().includes(lowerSearch));
                 }
 
                 if (!patient) {
                     statusDiv.className = 'portal-status error';
-                    statusDiv.innerHTML = '❌ No patient found with ID or Mobile: <strong>' + searchValue +
-                        '</strong><br><small style="display:block;margin-top:6px;">💡 Check Debug section below to see all patients in storage. Make sure you have added patients from Admin panel.</small>';
+                    let debugMsg =
+                        '❌ No patient found with <strong>"' + searchValue +
+                        '"</strong><br><small style="display:block;margin-top:6px;">💡 Check the Debug section below to see all stored patients. ';
+                    debugMsg +=
+                        'If the patient exists but is not showing, click "Refresh Data" and try again. ';
+                    debugMsg +=
+                        'Remember: data is stored locally on this device. Patients added on another device will not appear here.</small>';
+                    statusDiv.innerHTML = debugMsg;
                     listDiv.style.display = 'none';
                     updateDebugList();
                     return;
@@ -2127,10 +2153,9 @@
                     return;
                 }
 
-                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
                 statusDiv.className = 'portal-status success';
                 statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for <strong>' + patient
-                    .name + '</strong> (via ' + foundBy + '). Due amount: ₹' + patient.due_amount;
+                    .name + '</strong> (ID: ' + patient.patient_id + '). Due amount: ₹' + patient.due_amount;
 
                 let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
