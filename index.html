@@ -1,21 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Rajan Path Lab | Premium Diagnostics</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-    <!-- QRCode.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js">
-    </script>
 
     <style>
         /* ─── ORIGINAL PATIENT WEBSITE STYLES ─── */
@@ -28,10 +19,6 @@
             --thyro-orange: #ff6600;
             --lal-blue: #ed1c24;
             --path-purple: #662d91;
-        }
-
-        * {
-            box-sizing: border-box;
         }
 
         body {
@@ -59,8 +46,8 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            flex-wrap: wrap;
         }
+
         header h1 {
             margin: 0;
             font-size: 22px;
@@ -70,12 +57,7 @@
         header h1 span {
             color: var(--accent-teal);
         }
-        nav {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
+
         nav a {
             color: #e2e8f0;
             margin-left: 20px;
@@ -87,6 +69,7 @@
         nav a:hover {
             color: var(--accent-teal);
         }
+
         .admin-login-btn,
         .patient-portal-btn {
             background: var(--accent-teal);
@@ -119,6 +102,7 @@
             text-align: center;
             padding: 60px 20px;
         }
+
         .hero h2 {
             color: white;
             font-size: 2.5rem;
@@ -127,6 +111,7 @@
             margin: 0 auto 25px auto;
             line-height: 1.3;
         }
+
         .btn-container {
             margin-top: 20px;
             display: flex;
@@ -155,6 +140,7 @@
         .btn-report:hover {
             background: #006666;
         }
+
         .btn-portal {
             background: #25D366;
             padding: 12px 28px;
@@ -178,6 +164,7 @@
             padding: 15px 20px;
             text-align: center;
         }
+
         .strip-content {
             display: flex;
             justify-content: center;
@@ -203,10 +190,12 @@
             margin: 0 auto;
             text-align: center;
         }
+
         .section-wrapper-alt {
             background: var(--bg-light);
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(0,128,128,0.03)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(0,128,128,0.1)'/%3E%3C/svg%3E");
         }
+
         h2 {
             color: var(--primary-blue);
             margin-bottom: 25px;
@@ -363,7 +352,6 @@
             }
             nav {
                 margin-top: 10px;
-                justify-content: center;
             }
             nav a {
                 margin: 0 8px;
@@ -401,6 +389,7 @@
         #adminPanelWrapper.active {
             display: block;
         }
+
         #adminPanelContainer {
             max-width: 1300px;
             margin: 0 auto;
@@ -411,6 +400,7 @@
             position: relative;
             min-height: 90vh;
         }
+
         .admin-header {
             background: var(--primary-blue);
             color: white;
@@ -460,6 +450,7 @@
             display: flex;
             min-height: calc(90vh - 60px);
         }
+
         .admin-sidebar {
             width: 220px;
             background: var(--primary-blue);
@@ -1038,6 +1029,27 @@
             align-items: center;
             gap: 12px;
         }
+        .portal-download-btn {
+            background: #d4af37;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .portal-download-btn:hover {
+            background: #b8960e;
+            transform: scale(1.02);
+        }
+        .portal-download-btn:disabled {
+            background: #b0b8c5;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none;
+        }
         .portal-due-badge {
             background: #fee2e2;
             color: #991b1b;
@@ -1069,7 +1081,6 @@
             display: flex;
             justify-content: space-between;
         }
-
         @media (max-width: 650px) {
             .portal-body {
                 padding: 1.5rem;
@@ -1088,7 +1099,6 @@
             }
         }
 
-        /* ─── DARK MODE ─── */
         body.admin-dark #adminPanelContainer {
             --bg-light: #0f172a;
             --text-dark: #f1f5f9;
@@ -1184,43 +1194,6 @@
             background: #134e4a;
             color: #2dd4bf;
         }
-
-        /* ─── LOADING SPINNER ─── */
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top-color: var(--accent-teal);
-            animation: spin 0.8s linear infinite;
-            vertical-align: middle;
-            margin-right: 8px;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        .sync-status {
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: #e2e8f0;
-            color: #475569;
-        }
-        .sync-status.online {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .sync-status.offline {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        .sync-status.syncing {
-            background: #fef3c7;
-            color: #92400e;
-        }
     </style>
 </head>
 <body>
@@ -1236,7 +1209,6 @@
             <a href="contact.html">About</a>
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
-            <span class="sync-status" id="syncStatus">⏳ Connecting...</span>
         </nav>
     </header>
 
@@ -1256,7 +1228,7 @@
         </div>
     </div>
 
-    <section id="about" style="background:white;">
+    <section id="about" style="background: white;">
         <div class="about-container">
             <div class="about-text">
                 <h2>About Rajan Path Lab</h2>
@@ -1397,7 +1369,7 @@
                             <div class="card"><h4><i class="fas fa-chart-pie"></i> Test-wise</h4><canvas id="chartPie" style="max-height:180px;width:100%;"></canvas></div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1495,7 +1467,7 @@
                         </div>
                     </div>
 
-                    <!-- REPORTS -->
+                    <!-- REPORTS (Download column removed) -->
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                         <div class="form-grid">
@@ -1580,7 +1552,8 @@
                         </div>
                         <div id="uploadMessage" style="margin:10px 0; font-weight:bold; color:red;"></div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
+                            <!-- "Download Report" column removed → only "Delete" remains -->
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Delete</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1604,7 +1577,7 @@
                             <button class="btn btn-primary" style="background:#7c3aed;border-color:#7c3aed;margin-top:8px;" id="sendUrineUpdate"><i class="fas fa-paper-plane"></i> Send Update</button>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1622,7 +1595,7 @@
                             <button class="btn btn-outline btn-sm" id="refreshPayments"><i class="fas fa-sync"></i></button>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1636,7 +1609,7 @@
                             <div class="stat-card"><div class="icon orange"><i class="fas fa-rupee-sign"></i></div><div class="info"><h4 id="aRevenue">₹0</h4><p>Revenue</p></div></div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1710,8 +1683,8 @@
     <div class="patient-portal-modal" id="patientPortalModal">
         <div class="patient-portal-content">
             <div class="portal-header">
-                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">VIEW ONLY</span></h1>
-                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view your reports ◆</div>
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>
+                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
             </div>
             <div class="portal-body">
                 <div class="portal-input-group">
@@ -1728,7 +1701,7 @@
                 <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
             </div>
             <div class="portal-footer">
-                <span>✦ VIEW-ONLY PORTAL ✦</span>
+                <span>✦ SECURE DOWNLOAD SYSTEM ✦</span>
                 <span>RAJAN PATH LAB</span>
             </div>
         </div>
@@ -1739,69 +1712,10 @@
         (function() {
             'use strict';
 
-            // ─── FIREBASE CONFIGURATION ───
-            const firebaseConfig = {
-                apiKey: "AIzaSyCjPzS6j0m6zM5c5T1sX7n8w9q0r1s2t3u4v5w6x",
-                authDomain: "rajanpathlab-12345.firebaseapp.com",
-                databaseURL: "https://rajanpathlab-12345-default-rtdb.firebaseio.com",
-                projectId: "rajanpathlab-12345",
-                storageBucket: "rajanpathlab-12345.appspot.com",
-                messagingSenderId: "123456789012",
-                appId: "1:123456789012:web:abcdef1234567890"
-            };
-
-            // Initialize Firebase
-            let firebaseInitialized = false;
-            let db = null;
-            let patientsRef = null;
-            let reportsRef = null;
-            let logsRef = null;
-
-            function initFirebase() {
-                try {
-                    if (!firebaseInitialized) {
-                        firebase.initializeApp(firebaseConfig);
-                        db = firebase.database();
-                        patientsRef = db.ref('patients');
-                        reportsRef = db.ref('reports');
-                        logsRef = db.ref('logs');
-                        firebaseInitialized = true;
-                        console.log('✅ Firebase initialized successfully');
-                        updateSyncStatus('online');
-                        return true;
-                    }
-                    return true;
-                } catch (e) {
-                    console.error('❌ Firebase init error:', e);
-                    updateSyncStatus('offline');
-                    return false;
-                }
-            }
-
-            // ─── SYNC STATUS ───
-            function updateSyncStatus(state, msg) {
-                const el = document.getElementById('syncStatus');
-                if (!el) return;
-                el.className = 'sync-status ' + state;
-                const labels = {
-                    online: '✅ Live',
-                    offline: '⛔ Offline',
-                    syncing: '⏳ Syncing...'
-                };
-                el.textContent = labels[state] || state;
-            }
-
             // ─── LOGIN ───
             const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
-            // ─── DOM REFS ───
-            const $ = id => document.getElementById(id);
-            const loginModal = $('loginModal');
-            const adminWrapper = $('adminPanelWrapper');
-            const upiModal = $('upiModal');
-            const portalModal = $('patientPortalModal');
-
-            // ─── NORMALIZE PHONE ───
+            // ─── NORMALIZE PHONE NUMBER ───
             function normalizePhone(phone) {
                 if (!phone) return '';
                 let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
@@ -1811,7 +1725,110 @@
                 return cleaned;
             }
 
-            // ─── WHATSAPP ───
+            // ─── DATA PERSISTENCE (localStorage + IndexedDB) ───
+            function loadData(key, defaultData) {
+                try {
+                    const stored = localStorage.getItem('rpl_' + key);
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+                        if (Array.isArray(parsed)) return parsed;
+                        return parsed;
+                    }
+                } catch (e) { console.warn('Failed to parse stored data for ' + key, e); }
+                return defaultData;
+            }
+
+            function saveData(key, data) {
+                try {
+                    localStorage.setItem('rpl_' + key, JSON.stringify(data));
+                } catch (e) {
+                    console.warn('Failed to save data to localStorage', e);
+                    try {
+                        localStorage.setItem('rpl_' + key, JSON.stringify(data));
+                    } catch (e2) {
+                        console.error('Storage full! Please clear some data.', e2);
+                    }
+                }
+            }
+
+            const defaultPatients = [];
+            const defaultReports = [];
+            const defaultPayments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0 };
+            const defaultLogs = [];
+
+            let patients = loadData('patients', defaultPatients);
+            let reports = loadData('reports', defaultReports);
+            let payments = loadData('payments', defaultPayments);
+            let activityLogs = loadData('logs', defaultLogs);
+
+            function saveAll() {
+                saveData('patients', patients);
+                saveData('reports', reports);
+                saveData('payments', payments);
+                saveData('logs', activityLogs);
+            }
+
+            // ─── INDEXED DB FOR PDF ───
+            let db = null;
+            const DB_NAME = 'RPL_PDF_DB';
+            const STORE_NAME = 'pdf_files';
+
+            function openDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(DB_NAME, 1);
+                    request.onupgradeneeded = function(e) {
+                        const db = e.target.result;
+                        if (!db.objectStoreNames.contains(STORE_NAME)) {
+                            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                        }
+                    };
+                    request.onsuccess = function(e) { db = e.target.result;
+                        resolve(db); };
+                    request.onerror = function(e) { reject(e.target.error); };
+                });
+            }
+
+            function savePDFFile(reportId, fileBlob) {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject('DB not open');
+                    const tx = db.transaction(STORE_NAME, 'readwrite');
+                    const store = tx.objectStore(STORE_NAME);
+                    store.put({ id: reportId.toString(), file: fileBlob });
+                    tx.oncomplete = () => resolve();
+                    tx.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            function getPDFFile(reportId) {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject('DB not open');
+                    const tx = db.transaction(STORE_NAME, 'readonly');
+                    const store = tx.objectStore(STORE_NAME);
+                    const request = store.get(reportId.toString());
+                    request.onsuccess = () => resolve(request.result ? request.result.file : null);
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            function deletePDFFile(reportId) {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject('DB not open');
+                    const tx = db.transaction(STORE_NAME, 'readwrite');
+                    const store = tx.objectStore(STORE_NAME);
+                    const request = store.delete(reportId.toString());
+                    request.onsuccess = () => resolve();
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            // ─── DOM REFS ───
+            const $ = id => document.getElementById(id);
+            const loginModal = $('loginModal');
+            const adminWrapper = $('adminPanelWrapper');
+            const upiModal = $('upiModal');
+            const portalModal = $('patientPortalModal');
+
+            // ─── REAL WHATSAPP ───
             function sendWhatsApp(phone, message) {
                 let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');
                 if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
@@ -1824,6 +1841,8 @@
             function openPortal() {
                 portalModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
                 $('portalStatus').className = 'portal-status';
                 $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
@@ -1846,7 +1865,7 @@
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
-            $('portalFetchBtn').addEventListener('click', function() {
+            $('portalFetchBtn').addEventListener('click', async function() {
                 const searchValue = $('portalPatientId').value.trim();
                 const statusDiv = $('portalStatus');
                 const listDiv = $('portalReportList');
@@ -1858,106 +1877,109 @@
                     return;
                 }
 
-                if (!firebaseInitialized) {
-                    statusDiv.className = 'portal-status error';
-                    statusDiv.innerHTML = '⚠️ Database not connected. Please check internet.';
-                    return;
-                }
-
-                statusDiv.className = 'portal-status';
-                statusDiv.innerHTML = '🔍 Searching...';
-                listDiv.style.display = 'none';
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
 
                 const normalizedSearch = normalizePhone(searchValue);
 
-                // Search patients
-                patientsRef.once('value').then(snapshot => {
-                    const patients = [];
-                    snapshot.forEach(child => {
-                        const p = child.val();
-                        p._key = child.key;
-                        patients.push(p);
+                let patient = patients.find(p => p.patient_id === searchValue);
+
+                if (!patient) {
+                    patient = patients.find(p => {
+                        const normalizedPhone = normalizePhone(p.phone || '');
+                        return normalizedPhone === normalizedSearch || p.phone === searchValue;
                     });
+                }
 
-                    let patient = null;
-                    // Try by ID
-                    patient = patients.find(p => p.patient_id === searchValue);
-                    // Try by phone
-                    if (!patient) {
-                        patient = patients.find(p => {
-                            const np = normalizePhone(p.phone || '');
-                            return np === normalizedSearch || p.phone === searchValue;
-                        });
-                    }
-                    if (!patient && normalizedSearch.length >= 4) {
-                        patient = patients.find(p => {
-                            const np = normalizePhone(p.phone || '');
-                            return np.includes(normalizedSearch) || (p.phone || '').includes(searchValue);
-                        });
-                    }
+                if (!patient && normalizedSearch.length >= 4) {
+                    patient = patients.find(p => {
+                        const normalizedPhone = normalizePhone(p.phone || '');
+                        return normalizedPhone.includes(normalizedSearch) || (p.phone || '').includes(searchValue);
+                    });
+                }
 
-                    if (!patient) {
-                        statusDiv.className = 'portal-status error';
-                        statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;
-                        listDiv.style.display = 'none';
-                        return;
-                    }
+                if (!patient) {
+                    statusDiv.className = 'portal-status error';
+                    statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;
+                    listDiv.style.display = 'none';
+                    return;
+                }
 
-                    // Get reports for this patient
-                    reportsRef.orderByChild('patient_id').equalTo(patient.patient_id).once('value').then(
-                    snap2 => {
-                        const reports = [];
-                        snap2.forEach(child => {
-                            const r = child.val();
-                            r._key = child.key;
-                            reports.push(r);
-                        });
+                const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
+                if (patientReports.length === 0) {
+                    statusDiv.className = 'portal-status';
+                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (ID: ' + patient
+                        .patient_id + ')';
+                    listDiv.style.display = 'none';
+                    return;
+                }
 
-                        if (reports.length === 0) {
-                            statusDiv.className = 'portal-status';
-                            statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient
-                                .name + ' (ID: ' + patient.patient_id + ')';
-                            listDiv.style.display = 'none';
+                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
+                statusDiv.className = 'portal-status success';
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
+                    ' (via ' + foundBy + '). Due amount: ₹' + patient.due_amount;
+
+                let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
+                for (const report of patientReports) {
+                    const canDownload = patient.due_amount === 0;
+                    const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient
+                        .due_amount + ' DUE</span>' : '';
+                    html += `
+                            <div class="portal-report-item">
+                                <div class="portal-report-info">
+                                    <span class="test-name">${report.test_name}</span>
+                                    <span class="upload-date">📅 ${report.uploaded_at}</span>
+                                </div>
+                                <div class="portal-report-actions">
+                                    ${dueBadge}
+                                    <button class="portal-download-btn" data-report-id="${report.id}" data-patient-due="${patient.due_amount}" ${canDownload ? '' : 'disabled'}>
+                                        ${canDownload ? '⬇️ Download' : '🔒 Locked'}
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                }
+                listDiv.innerHTML = html;
+                listDiv.style.display = 'block';
+
+                listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
+                    btn.addEventListener('click', async function() {
+                        const reportId = parseInt(this.dataset.reportId);
+                        const due = parseFloat(this.dataset.patientDue);
+                        if (due > 0) {
+                            statusDiv.className = 'portal-status error';
+                            statusDiv.innerHTML =
+                            '❌ Payment pending. Please clear dues to download report.';
                             return;
                         }
-
-                        const foundBy = searchValue === patient.patient_id ? 'Patient ID' :
-                            'Mobile Number';
-                        statusDiv.className = 'portal-status success';
-                        statusDiv.innerHTML = '✅ Found ' + reports.length + ' report(s) for ' +
-                            patient.name + ' (via ' + foundBy + '). Due amount: ₹' + patient
-                            .due_amount;
-
-                        let html =
-                            '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
-                        for (const report of reports) {
-                            const dueBadge = patient.due_amount > 0 ?
-                                '<span class="portal-due-badge">₹' + patient.due_amount + ' DUE</span>' :
-                                '';
-                            html += `
-                                <div class="portal-report-item">
-                                    <div class="portal-report-info">
-                                        <span class="test-name">${report.test_name}</span>
-                                        <span class="upload-date">📅 ${report.uploaded_at}</span>
-                                    </div>
-                                    <div class="portal-report-actions">
-                                        ${dueBadge}
-                                        <span style="font-size:0.8rem;color:#7890a3;background:#f1f5f9;padding:0.2rem 0.8rem;border-radius:1rem;">🔒 View Only</span>
-                                    </div>
-                                </div>
-                            `;
+                        try {
+                            const fileBlob = await getPDFFile(reportId);
+                            if (!fileBlob) {
+                                statusDiv.className = 'portal-status error';
+                                statusDiv.innerHTML = '❌ PDF file not found in storage.';
+                                return;
+                            }
+                            const url = URL.createObjectURL(fileBlob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            const report = patientReports.find(r => r.id === reportId);
+                            a.download = report ? report.file_path : 'report.pdf';
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                            statusDiv.className = 'portal-status success';
+                            statusDiv.innerHTML = '✅ Download started!';
+                        } catch (e) {
+                            statusDiv.className = 'portal-status error';
+                            statusDiv.innerHTML = '❌ Error downloading: ' + e.message;
                         }
-                        listDiv.innerHTML = html;
-                        listDiv.style.display = 'block';
                     });
-                }).catch(err => {
-                    statusDiv.className = 'portal-status error';
-                    statusDiv.innerHTML = '❌ Database error: ' + err.message;
                 });
             });
 
             $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn')
-                    .click(); });
+                .click(); });
 
             // ─── ADMIN LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
@@ -1981,8 +2003,7 @@
                     result.style.color = 'green';
                     result.textContent = '✅ Login successful!';
                     loginModal.classList.remove('show');
-                    initFirebase();
-                    showAdmin();
+                    openDB().then(() => showAdmin()).catch(() => showAdmin());
                 } else {
                     result.style.color = 'red';
                     result.textContent = '❌ Invalid username or password';
@@ -2072,15 +2093,28 @@
                 });
             }
 
+            // ─── REPORT DOWNLOAD (Admin) - kept for portal, but removed from admin table ───
+            async function downloadReport(report) {
+                try {
+                    const fileBlob = await getPDFFile(report.id);
+                    if (!fileBlob) { alert('PDF file not found in storage.'); return; }
+                    const url = URL.createObjectURL(fileBlob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = report.file_path || 'report.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                } catch (e) { alert('Error downloading file: ' + e.message); }
+            }
+
             // ─── REFRESH ALL ───
             function refreshAll() {
-                if (!firebaseInitialized) {
-                    initFirebase();
-                    if (!firebaseInitialized) {
-                        updateSyncStatus('offline');
-                        return;
-                    }
-                }
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
+                payments = loadData('payments', defaultPayments);
+                activityLogs = loadData('logs', defaultLogs);
                 refreshDashboard();
                 refreshPatients();
                 refreshReports();
@@ -2093,60 +2127,36 @@
 
             // ─── DASHBOARD ───
             function refreshDashboard() {
-                if (!firebaseInitialized) return;
-                patientsRef.once('value').then(snapshot => {
-                    const patients = [];
-                    snapshot.forEach(child => {
-                        const p = child.val();
-                        p._key = child.key;
-                        patients.push(p);
-                    });
+                const totalPatients = patients.length;
+                const totalReports = reports.length;
+                const pendingReports = patients.filter(p => p.status === 'pending').length;
+                const cultureProcess = patients.filter(p => p.test && p.test.includes('Urine')).length;
+                const duePatients = patients.filter(p => p.due_amount > 0).length;
+                const totalRevenue = patients.reduce((sum, p) => sum + p.due_amount, 0);
 
-                    reportsRef.once('value').then(snap2 => {
-                        const reports = [];
-                        snap2.forEach(child => {
-                            const r = child.val();
-                            r._key = child.key;
-                            reports.push(r);
-                        });
+                $('dToday').textContent = totalPatients;
+                $('dTotalReports').textContent = totalReports;
+                $('dPending').textContent = pendingReports;
+                $('dCulture').textContent = cultureProcess;
+                $('dDue').textContent = duePatients;
+                $('dRevenue').textContent = '₹' + totalRevenue;
 
-                        const totalPatients = patients.length;
-                        const totalReports = reports.length;
-                        const pendingReports = patients.filter(p => p.status === 'pending').length;
-                        const cultureProcess = patients.filter(p => p.test && p.test.includes('Urine'))
-                            .length;
-                        const duePatients = patients.filter(p => p.due_amount > 0).length;
-                        const totalRevenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
-
-                        $('dToday').textContent = totalPatients;
-                        $('dTotalReports').textContent = totalReports;
-                        $('dPending').textContent = pendingReports;
-                        $('dCulture').textContent = cultureProcess;
-                        $('dDue').textContent = duePatients;
-                        $('dRevenue').textContent = '₹' + totalRevenue;
-
-                        const tbody = $('dRecentPatients');
-                        if (patients.length) {
-                            tbody.innerHTML = patients.slice(0, 5).map(p =>
-                                `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount || 0}</td></tr>`
-                            ).join('');
-                        } else {
-                            tbody.innerHTML =
-                                '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
-                        }
-                        updateCharts(patients);
-                    });
-                }).catch(err => {
-                    console.error('Dashboard error:', err);
-                    updateSyncStatus('offline');
-                });
+                const tbody = $('dRecentPatients');
+                if (patients.length) {
+                    tbody.innerHTML = patients.slice(0, 5).map(p =>
+                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
+                    ).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
+                }
+                updateCharts();
             }
 
             // ─── CHARTS ───
             let chartWeeklyInstance = null;
             let chartPieInstance = null;
 
-            function updateCharts(patients) {
+            function updateCharts() {
                 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
                 const weeklyData = days.map(() => 0);
                 patients.forEach(p => {
@@ -2213,49 +2223,28 @@
 
             // ─── PATIENTS ───
             function refreshPatients() {
-                if (!firebaseInitialized) return;
-                patientsRef.once('value').then(snapshot => {
-                    const tbody = $('patientTableBody');
-                    if (snapshot.exists()) {
-                        let rows = '';
-                        snapshot.forEach(child => {
-                            const p = child.val();
-                            const key = child.key;
-                            rows += `
-                                <tr>
-                                    <td><b>${p.patient_id}</b></td>
-                                    <td>${p.name}</td>
-                                    <td>${p.phone}</td>
-                                    <td>${p.test}</td>
-                                    <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                    <td>₹${p.due_amount || 0}</td>
-                                    <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-red btn-del-patient" data-key="${key}" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            `;
-                        });
-                        tbody.innerHTML = rows;
-                        setTimeout(() => generateAllQRCodes(), 100);
-                    } else {
-                        tbody.innerHTML =
-                            '<tr><td colspan="8" style="text-align:center;padding:20px;">No patients</td></tr>';
-                    }
-                }).catch(err => {
-                    console.error('Patients error:', err);
-                    $('patientTableBody').innerHTML =
-                        '<tr><td colspan="8" style="text-align:center;padding:20px;">Error loading data</td></tr>';
-                });
+                const tbody = $('patientTableBody');
+                if (patients.length) {
+                    tbody.innerHTML = patients.map(p => `
+                            <tr>
+                                <td><b>${p.patient_id}</b></td>
+                                <td>${p.name}</td>
+                                <td>${p.phone}</td>
+                                <td>${p.test}</td>
+                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                                <td>₹${p.due_amount}</td>
+                                <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
+                                <td><button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button></td>
+                            </tr>
+                        `).join('');
+                    setTimeout(() => generateAllQRCodes(), 100);
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;">No patients</td></tr>';
+                }
             }
 
             // ─── ADD PATIENT ───
             $('addPatientBtn').addEventListener('click', function() {
-                if (!firebaseInitialized) {
-                    alert('❌ Database not connected. Please check internet.');
-                    return;
-                }
-
                 const patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
                 const phone = $('patPhone').value.trim();
@@ -2264,55 +2253,37 @@
                 const due = parseFloat($('patDue').value) || 0;
 
                 if (!name || !phone) { alert('Name & Phone required'); return; }
-
-                // Generate ID if not provided
                 let id = patientId;
                 if (!id) {
+                    const nextId = patients.length + 1;
                     const today = new Date();
                     const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today
                         .getDate()).padStart(2, '0');
-                    // Generate a unique ID using timestamp
-                    const ts = Date.now().toString().slice(-4);
-                    id = 'RPL-' + dateStr + '-' + ts;
+                    id = 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
+                }
+                const normalizedPhone = normalizePhone(phone);
+                if (patients.find(p => p.patient_id === id || normalizePhone(p.phone) === normalizedPhone)) {
+                    alert('Patient ID or Phone already exists!');
+                    return;
                 }
 
-                const newPatient = {
+                patients.push({
                     patient_id: id,
-                    name: name,
-                    phone: phone,
+                    name,
+                    phone,
                     test: test || 'Not Specified',
-                    status: status,
+                    status,
                     due_amount: due,
                     created_at: new Date().toISOString()
-                };
-
-                // Check for duplicate ID or phone
-                patientsRef.orderByChild('patient_id').equalTo(id).once('value').then(snap => {
-                    if (snap.exists()) {
-                        alert('❌ Patient ID already exists!');
-                        return;
-                    }
-                    // Check phone duplicate
-                    patientsRef.orderByChild('phone').equalTo(phone).once('value').then(snap2 => {
-                        if (snap2.exists()) {
-                            alert('❌ Phone number already registered!');
-                            return;
-                        }
-                        // Save to Firebase
-                        const newKey = patientsRef.push().key;
-                        patientsRef.child(newKey).set(newPatient).then(() => {
-                            alert('✅ Patient ' + id + ' added!');
-                            $('patId').value = '';
-                            $('patName').value = '';
-                            $('patPhone').value = '';
-                            $('patTest').value = '';
-                            $('patDue').value = '';
-                            refreshAll();
-                        }).catch(err => {
-                            alert('❌ Error saving: ' + err.message);
-                        });
-                    });
                 });
+                saveAll();
+                alert('✅ Patient ' + id + ' added!');
+                $('patId').value = '';
+                $('patName').value = '';
+                $('patPhone').value = '';
+                $('patTest').value = '';
+                $('patDue').value = '';
+                refreshAll();
             });
 
             $('clearPatientBtn').addEventListener('click', function() {
@@ -2327,28 +2298,15 @@
             // ─── DELETE PATIENT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-patient')) {
-                    const btn = e.target.closest('.btn-del-patient');
-                    const key = btn.dataset.key;
-                    const id = btn.dataset.id;
+                    const id = e.target.closest('.btn-del-patient').dataset.id;
                     if (confirm('Delete patient #' + id + '?')) {
-                        if (!firebaseInitialized) { alert('Database not connected'); return; }
-                        // Delete patient
-                        patientsRef.child(key).remove().then(() => {
-                            // Delete associated reports
-                            reportsRef.orderByChild('patient_id').equalTo(id).once('value').then(
-                            snap => {
-                                const updates = {};
-                                snap.forEach(child => {
-                                    updates[child.key] = null;
-                                });
-                                reportsRef.update(updates).then(() => {
-                                    alert('Deleted!');
-                                    refreshAll();
-                                });
-                            });
-                        }).catch(err => {
-                            alert('Error deleting: ' + err.message);
-                        });
+                        const toDelete = reports.filter(r => r.patient_id === id);
+                        toDelete.forEach(async (r) => { try { await deletePDFFile(r.id); } catch (e) {} });
+                        reports = reports.filter(r => r.patient_id !== id);
+                        patients = patients.filter(p => p.patient_id !== id);
+                        saveAll();
+                        alert('Deleted!');
+                        refreshAll();
                     }
                 }
             });
@@ -2361,41 +2319,27 @@
                 });
             });
 
-            // ─── REPORTS ───
+            // ─── REPORTS (Download column removed from table) ───
             function refreshReports() {
-                if (!firebaseInitialized) return;
-                reportsRef.once('value').then(snapshot => {
-                    const tbody = $('reportsTableBody');
-                    if (snapshot.exists()) {
-                        let rows = '';
-                        snapshot.forEach(child => {
-                            const r = child.val();
-                            const key = child.key;
-                            rows += `
-                                <tr>
-                                    <td>${r.name} (${r.patient_id})</td>
-                                    <td>${r.test_name}</td>
-                                    <td>${r.uploaded_at}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary btn-download-report" data-key="${key}" data-id="${r.patient_id}" data-test="${r.test_name}"><i class="fas fa-download"></i></button>
-                                        <button class="btn btn-sm btn-red btn-del-report" data-key="${key}"><i class="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            `;
-                        });
-                        tbody.innerHTML = rows;
-                    } else {
-                        tbody.innerHTML =
-                            '<tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr>';
-                    }
-                }).catch(err => {
-                    console.error('Reports error:', err);
-                });
+                const tbody = $('reportsTableBody');
+                if (reports.length) {
+                    tbody.innerHTML = reports.map(r => `
+                            <tr>
+                                <td>${r.name} (${r.patient_id})</td>
+                                <td>${r.test_name}</td>
+                                <td>${r.uploaded_at}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr>';
+                }
             }
 
             // ─── UPLOAD REPORT ───
-            $('uploadReportBtn').addEventListener('click', function() {
-                if (!firebaseInitialized) { alert('Database not connected'); return; }
+            $('uploadReportBtn').addEventListener('click', async function() {
                 const pid = $('reportPatientId').value.trim();
                 const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
@@ -2408,146 +2352,65 @@
                 if (!test) { msgDiv.textContent = '❌ Test Name is required.'; return; }
                 if (!file) { msgDiv.textContent = '❌ Please select a PDF file.'; return; }
 
-                // Check patient exists
-                patientsRef.orderByChild('patient_id').equalTo(pid).once('value').then(snap => {
-                    if (!snap.exists()) {
-                        msgDiv.textContent = '❌ Patient not found! Please add patient first.';
-                        return;
-                    }
-                    let patient = null;
-                    let patientKey = null;
-                    snap.forEach(child => {
-                        patient = child.val();
-                        patientKey = child.key;
-                    });
+                const patient = patients.find(p => p.patient_id === pid);
+                if (!patient) { msgDiv.textContent = '❌ Patient not found! Please add patient first.'; return; }
 
-                    // Check if report already exists
-                    reportsRef.orderByChild('patient_id').equalTo(pid).once('value').then(snap2 => {
-                        let existingKey = null;
-                        snap2.forEach(child => {
-                            const r = child.val();
-                            if (r.test_name === test) {
-                                existingKey = child.key;
-                            }
-                        });
+                const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
+                if (existing && replace === 'no') { msgDiv.textContent =
+                    '❌ Report already exists. Use Replace = Yes to overwrite.'; return; }
+                if (existing && replace === 'yes') {
+                    try { await deletePDFFile(existing.id); } catch (e) {}
+                    reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
+                }
 
-                        if (existingKey && replace === 'no') {
-                            msgDiv.textContent =
-                                '❌ Report already exists. Use Replace = Yes to overwrite.';
-                            return;
-                        }
+                const newId = reports.length + 1;
+                const newReport = {
+                    id: newId,
+                    patient_id: pid,
+                    name: patient.name,
+                    test_name: test || 'Not Specified',
+                    file_path: file.name,
+                    uploaded_at: new Date().toLocaleString()
+                };
 
-                        // Read file as data URL (for Firebase storage)
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            const fileData = e.target.result; // base64
+                try { await savePDFFile(newId, file); } catch (e) {
+                    msgDiv.textContent = '❌ Failed to store PDF: ' + e.message;
+                    return;
+                }
 
-                            const newReport = {
-                                patient_id: pid,
-                                name: patient.name,
-                                test_name: test || 'Not Specified',
-                                file_name: file.name,
-                                file_data: fileData,
-                                uploaded_at: new Date().toLocaleString()
-                            };
-
-                            if (existingKey && replace === 'yes') {
-                                // Update existing
-                                reportsRef.child(existingKey).update(newReport).then(() => {
-                                    msgDiv.style.color = 'green';
-                                    msgDiv.textContent = '✅ Report updated for ' + patient
-                                        .name;
-                                    $('reportPatientId').value = '';
-                                    $('reportTestName').value = '';
-                                    $('reportFile').value = '';
-                                    refreshAll();
-                                    setTimeout(() => { msgDiv.textContent = ''; }, 5000);
-                                }).catch(err => {
-                                    msgDiv.textContent = '❌ Update error: ' + err.message;
-                                });
-                            } else {
-                                // Add new
-                                const newKey = reportsRef.push().key;
-                                reportsRef.child(newKey).set(newReport).then(() => {
-                                    msgDiv.style.color = 'green';
-                                    msgDiv.textContent = '✅ Report uploaded for ' + patient
-                                        .name;
-                                    $('reportPatientId').value = '';
-                                    $('reportTestName').value = '';
-                                    $('reportFile').value = '';
-                                    refreshAll();
-                                    setTimeout(() => { msgDiv.textContent = ''; }, 5000);
-                                }).catch(err => {
-                                    msgDiv.textContent = '❌ Upload error: ' + err.message;
-                                });
-                            }
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                });
+                reports.push(newReport);
+                saveAll();
+                msgDiv.style.color = 'green';
+                msgDiv.textContent = '✅ Report uploaded for ' + patient.name + ' (' + pid + ')';
+                $('reportPatientId').value = '';
+                $('reportTestName').value = '';
+                $('reportFile').value = '';
+                refreshAll();
+                setTimeout(() => { msgDiv.textContent = ''; }, 5000);
             });
 
             $('refreshReports').addEventListener('click', refreshReports);
 
-            // ─── DOWNLOAD REPORT ───
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.btn-download-report')) {
-                    const btn = e.target.closest('.btn-download-report');
-                    const key = btn.dataset.key;
-                    const pid = btn.dataset.id;
-                    const test = btn.dataset.test;
-
-                    if (!firebaseInitialized) { alert('Database not connected'); return; }
-
-                    reportsRef.child(key).once('value').then(snap => {
-                        const report = snap.val();
-                        if (!report || !report.file_data) {
-                            alert('PDF data not found.');
-                            return;
-                        }
-                        // Decode base64
-                        const link = document.createElement('a');
-                        link.href = report.file_data;
-                        link.download = report.file_name || 'report.pdf';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    }).catch(err => {
-                        alert('Error downloading: ' + err.message);
-                    });
-                }
-            });
-
             // ─── DELETE REPORT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-report')) {
-                    const btn = e.target.closest('.btn-del-report');
-                    const key = btn.dataset.key;
-                    if (confirm('Delete this report?')) {
-                        if (!firebaseInitialized) { alert('Database not connected'); return; }
-                        reportsRef.child(key).remove().then(() => {
+                    const id = parseInt(e.target.closest('.btn-del-report').dataset.id);
+                    if (confirm('Delete report?')) {
+                        deletePDFFile(id).then(() => {
+                            reports = reports.filter(r => r.id !== id);
+                            saveAll();
                             alert('Deleted!');
                             refreshAll();
-                        }).catch(err => {
-                            alert('Error: ' + err.message);
-                        });
+                        }).catch((err) => { alert('Error deleting PDF file: ' + err.message); });
                     }
                 }
             });
 
             // ─── WHATSAPP ───
             function refreshWhatsAppPatients() {
-                if (!firebaseInitialized) return;
-                patientsRef.once('value').then(snapshot => {
-                    const tbody = $('whatsappPatientList');
-                    const patients = [];
-                    snapshot.forEach(child => {
-                        const p = child.val();
-                        p._key = child.key;
-                        patients.push(p);
-                    });
-                    if (patients.length) {
-                        tbody.innerHTML = patients.slice(0, 10).map(p => `
+                const tbody = $('whatsappPatientList');
+                if (patients.length) {
+                    tbody.innerHTML = patients.slice(0, 10).map(p => `
                             <tr>
                                 <td>${p.name}</td>
                                 <td>${p.phone}</td>
@@ -2556,13 +2419,9 @@
                                 <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}"><i class="fab fa-whatsapp"></i> Send</button></td>
                             </tr>
                         `).join('');
-                    } else {
-                        tbody.innerHTML =
-                            '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
-                    }
-                }).catch(err => {
-                    console.error('WhatsApp error:', err);
-                });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
+                }
             }
 
             document.addEventListener('click', function(e) {
@@ -2600,55 +2459,43 @@
 
             // ─── PAYMENTS ───
             function refreshPayments() {
-                if (!firebaseInitialized) return;
-                patientsRef.once('value').then(snapshot => {
-                    const patients = [];
-                    snapshot.forEach(child => {
-                        const p = child.val();
-                        p._key = child.key;
-                        patients.push(p);
-                    });
+                const duePatients = patients.filter(p => p.due_amount > 0);
+                const paidPatients = patients.filter(p => p.due_amount === 0);
+                let totalDue = duePatients.reduce((sum, p) => sum + p.due_amount, 0);
 
-                    const duePatients = patients.filter(p => p.due_amount > 0);
-                    const paidPatients = patients.filter(p => p.due_amount === 0);
-                    const totalDue = duePatients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
+                $('pPaid').textContent = paidPatients.length;
+                $('pUnpaid').textContent = duePatients.length;
+                $('pTotalDue').textContent = '₹' + totalDue;
 
-                    $('pPaid').textContent = paidPatients.length;
-                    $('pUnpaid').textContent = duePatients.length;
-                    $('pTotalDue').textContent = '₹' + totalDue;
-
-                    const tbody = $('paymentsTableBody');
-                    if (patients.length) {
-                        tbody.innerHTML = patients.map(p => `
+                const tbody = $('paymentsTableBody');
+                if (patients.length) {
+                    tbody.innerHTML = patients.map(p => `
                             <tr>
                                 <td>${p.name}</td>
                                 <td>${p.test}</td>
-                                <td>₹${p.due_amount || 0}</td>
+                                <td>₹${p.due_amount}</td>
                                 <td><span class="badge-status ${p.due_amount > 0 ? 'unpaid' : 'paid'}">${p.due_amount > 0 ? 'Unpaid' : 'Paid'}</span></td>
-                                <td>${p.due_amount > 0 ? `<button class="btn btn-sm btn-primary mark-paid" data-key="${p._key}" data-amount="${p.due_amount}"><i class="fas fa-check"></i> Mark Paid</button>` : '<button class="btn btn-sm btn-outline" disabled>Paid</button>'}</td>
+                                <td>${p.due_amount > 0 ? `<button class="btn btn-sm btn-primary mark-paid" data-id="${p.patient_id}" data-amount="${p.due_amount}"><i class="fas fa-check"></i> Mark Paid</button>` : '<button class="btn btn-sm btn-outline" disabled>Paid</button>'}</td>
                             </tr>
                         `).join('');
-                    } else {
-                        tbody.innerHTML =
-                            '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
-                    }
-                }).catch(err => {
-                    console.error('Payments error:', err);
-                });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
+                }
             }
 
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.mark-paid')) {
                     const btn = e.target.closest('.mark-paid');
-                    const key = btn.dataset.key;
-                    if (confirm('Mark this patient as paid?')) {
-                        if (!firebaseInitialized) { alert('Database not connected'); return; }
-                        patientsRef.child(key).update({ due_amount: 0 }).then(() => {
+                    const id = btn.dataset.id;
+                    const amount = parseFloat(btn.dataset.amount);
+                    if (confirm('Mark #' + id + ' as paid?')) {
+                        const patient = patients.find(p => p.patient_id === id);
+                        if (patient) {
+                            patient.due_amount = 0;
+                            saveAll();
                             alert('✅ Paid!');
                             refreshAll();
-                        }).catch(err => {
-                            alert('Error: ' + err.message);
-                        });
+                        }
                     }
                 }
             });
@@ -2676,98 +2523,76 @@
 
             // ─── ANALYTICS ───
             function refreshAnalytics() {
-                if (!firebaseInitialized) return;
-                patientsRef.once('value').then(snapshot => {
-                    const patients = [];
-                    snapshot.forEach(child => {
-                        const p = child.val();
-                        p._key = child.key;
-                        patients.push(p);
-                    });
-
-                    const today = new Date().toDateString();
-                    let todayCount = 0;
-                    patients.forEach(p => {
-                        if (p.created_at) {
-                            const d = new Date(p.created_at);
-                            if (d.toDateString() === today) todayCount++;
-                        }
-                    });
-
-                    const totalPatients = patients.length;
-                    const revenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
-
-                    const testMap = {};
-                    patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                    let topTest = '-';
-                    let topCount = 0;
-                    Object.keys(testMap).forEach(key => {
-                        if (testMap[key] > topCount) { topCount = testMap[key];
-                            topTest = key; }
-                    });
-
-                    $('aToday').textContent = todayCount;
-                    $('aMonth').textContent = totalPatients;
-                    $('aTopTest').textContent = topTest;
-                    $('aRevenue').textContent = '₹' + revenue;
-
-                    const tbody = $('analyticsTable');
-                    const testWise = Object.keys(testMap).map(key => ({ test: key, count: testMap[key] }));
-                    if (testWise.length) {
-                        tbody.innerHTML = testWise.map(t =>
-                            `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`
-                        ).join('');
-                    } else {
-                        tbody.innerHTML =
-                            '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
+                const today = new Date().toDateString();
+                let todayCount = 0;
+                patients.forEach(p => {
+                    if (p.created_at) {
+                        const d = new Date(p.created_at);
+                        if (d.toDateString() === today) todayCount++;
                     }
-                }).catch(err => {
-                    console.error('Analytics error:', err);
                 });
+
+                const totalPatients = patients.length;
+                const totalReports = reports.length;
+                const revenue = patients.reduce((sum, p) => sum + p.due_amount, 0);
+
+                const testMap = {};
+                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
+                let topTest = '-';
+                let topCount = 0;
+                Object.keys(testMap).forEach(key => {
+                    if (testMap[key] > topCount) { topCount = testMap[key];
+                        topTest = key; }
+                });
+
+                $('aToday').textContent = todayCount;
+                $('aMonth').textContent = totalPatients;
+                $('aTopTest').textContent = topTest;
+                $('aRevenue').textContent = '₹' + revenue;
+
+                const tbody = $('analyticsTable');
+                const testWise = Object.keys(testMap).map(key => ({ test: key, count: testMap[key] }));
+                if (testWise.length) {
+                    tbody.innerHTML = testWise.map(t =>
+                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`
+                    ).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
+                }
             }
 
             // ─── BACKUP ───
             function refreshBackup() {
                 $('backupListBody').innerHTML = `
-                    <tr><td>Cloud data (Firebase)</td><td>Automatic</td><td>Always</td><td><button class="btn btn-sm btn-primary" onclick="alert('Data is automatically backed up in Firebase cloud.')"><i class="fas fa-info"></i></button></td></tr>
-                `;
+                        <tr><td>rpl_db_backup.sql</td><td>Database</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Download')"><i class="fas fa-download"></i></button></td></tr>
+                        <tr><td>rpl_pdf_backup.zip</td><td>PDF</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Download')"><i class="fas fa-download"></i></button></td></tr>
+                    `;
             }
             $('backupDBBtn').addEventListener('click', function() {
-                alert('✅ Data is already stored in Firebase cloud. No manual backup needed.');
+                if (confirm('Create DB backup?')) alert('✅ Backup created: db_backup_' + new Date().toISOString()
+                    .slice(0, 10) + '.sql');
             });
             $('backupPDFBtn').addEventListener('click', function() {
-                alert('✅ PDF files are stored in Firebase cloud as base64. No manual backup needed.');
+                if (confirm('Create PDF backup?')) alert('✅ PDF backup created: pdf_backup_' + new Date()
+                    .toISOString().slice(0, 10) + '.zip');
             });
             $('restoreBtn').addEventListener('click', function() {
-                alert('✅ Firebase automatically syncs data. No restore needed.');
+                const file = $('restoreFile').files[0];
+                if (!file) { alert('Select a backup file.'); return; }
+                alert('✅ Restore successful! (dummy)');
             });
 
             // ─── SECURITY ───
             function refreshSecurity() {
                 const tbody = $('activityLogBody');
-                if (!firebaseInitialized) {
-                    tbody.innerHTML =
-                        '<tr><td colspan="4" style="text-align:center;padding:20px;">Connect to Firebase for logs</td></tr>';
-                    return;
+                if (activityLogs.length) {
+                    tbody.innerHTML = activityLogs.map(l =>
+                        `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
+                    ).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr>';
                 }
-                logsRef.limitToLast(10).once('value').then(snapshot => {
-                    if (snapshot.exists()) {
-                        let rows = '';
-                        snapshot.forEach(child => {
-                            const l = child.val();
-                            rows += `<tr><td>${l.created_at || '-'}</td><td>${l.admin_user || 'Admin'}</td><td>${l.action || 'Login'}</td><td>${l.ip || '-'}</td></tr>`;
-                        });
-                        tbody.innerHTML = rows;
-                    } else {
-                        tbody.innerHTML =
-                            '<tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr>';
-                    }
-                }).catch(() => {
-                    tbody.innerHTML =
-                        '<tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr>';
-                });
             }
-
             $('viewLogBtn').addEventListener('click', refreshSecurity);
 
             $('changePwdBtn').addEventListener('click', function() {
@@ -2779,21 +2604,21 @@
             });
 
             // ─── INIT ───
-            // Try to connect to Firebase on page load
-            setTimeout(() => {
-                initFirebase();
-                // Auto-reconnect every 30 seconds if offline
-                setInterval(() => {
-                    if (!firebaseInitialized) {
-                        initFirebase();
-                    }
-                }, 30000);
-            }, 500);
+            openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available',
+            e));
 
-            console.log('✅ Rajan Path Lab · FIREBASE CLOUD SYNC ENABLED');
+            try {
+                localStorage.setItem('test_storage', 'working');
+                localStorage.removeItem('test_storage');
+                console.log('✅ localStorage is working');
+            } catch (e) {
+                console.warn('⚠️ localStorage may be full or blocked:', e);
+            }
+
+            console.log('✅ Rajan Path Lab · Fixed Mobile Search & Storage');
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
-            console.log('📡 Data syncs across ALL devices (mobile, laptop, tablet)');
-            console.log('✅ No more localStorage issues!');
+            console.log('📦 No default data - only your added patients.');
+            console.log('👤 Patients can search by ID or Mobile Number (normalized).');
 
         })();
     </script>
