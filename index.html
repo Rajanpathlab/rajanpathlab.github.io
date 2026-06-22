@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Rajan Path Lab | Premium Diagnostics</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
     <style>
-        /* ─── ORIGINAL PATIENT WEBSITE STYLES ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
             --bg-light: #f4f7f9;
             --urgent-red: #d9383a;
             --text-dark: #2d3748;
-            --thyro-orange: #ff6600;
-            --lal-blue: #ed1c24;
-            --path-purple: #662d91;
         }
-
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -29,12 +27,6 @@
             color: var(--text-dark);
             line-height: 1.5;
         }
-
-        b,
-        strong {
-            font-weight: 700;
-        }
-
         header {
             background: var(--primary-blue);
             color: white;
@@ -46,30 +38,32 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
         }
-
         header h1 {
             margin: 0;
             font-size: 22px;
-            letter-spacing: 0.5px;
             font-weight: 700;
         }
         header h1 span {
             color: var(--accent-teal);
         }
-
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
         nav a {
             color: #e2e8f0;
             margin-left: 20px;
             text-decoration: none;
             font-weight: 600;
             font-size: 15px;
-            transition: 0.2s;
         }
         nav a:hover {
             color: var(--accent-teal);
         }
-
         .admin-login-btn,
         .patient-portal-btn {
             background: var(--accent-teal);
@@ -80,7 +74,6 @@
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
-            transition: 0.2s;
             margin-left: 15px;
         }
         .admin-login-btn:hover,
@@ -96,13 +89,10 @@
 
         .hero {
             background: #0d3359;
-            background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,70 L30,80 L70,80 L70,70 M40,70 L40,40 M40,45 L45,45 M50,40 C50,30 60,30 60,40 L60,65 M55,65 L65,65' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
             color: white;
             text-align: center;
             padding: 60px 20px;
         }
-
         .hero h2 {
             color: white;
             font-size: 2.5rem;
@@ -111,7 +101,6 @@
             margin: 0 auto 25px auto;
             line-height: 1.3;
         }
-
         .btn-container {
             margin-top: 20px;
             display: flex;
@@ -128,7 +117,6 @@
             border-radius: 4px;
             font-weight: bold;
             font-size: 1rem;
-            transition: 0.2s;
             display: inline-block;
         }
         .btn-report {
@@ -140,7 +128,6 @@
         .btn-report:hover {
             background: #006666;
         }
-
         .btn-portal {
             background: #25D366;
             padding: 12px 28px;
@@ -149,8 +136,6 @@
             border-radius: 4px;
             font-weight: bold;
             font-size: 1rem;
-            transition: 0.2s;
-            display: inline-block;
             border: none;
             cursor: pointer;
         }
@@ -164,7 +149,6 @@
             padding: 15px 20px;
             text-align: center;
         }
-
         .strip-content {
             display: flex;
             justify-content: center;
@@ -190,12 +174,9 @@
             margin: 0 auto;
             text-align: center;
         }
-
         .section-wrapper-alt {
             background: var(--bg-light);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(0,128,128,0.03)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(0,128,128,0.1)'/%3E%3C/svg%3E");
         }
-
         h2 {
             color: var(--primary-blue);
             margin-bottom: 25px;
@@ -255,7 +236,6 @@
             padding: 20px 15px;
             border-radius: 6px;
             border: 1px solid #cbd5e1;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
             text-align: center;
         }
         .card i {
@@ -352,6 +332,7 @@
             }
             nav {
                 margin-top: 10px;
+                justify-content: center;
             }
             nav a {
                 margin: 0 8px;
@@ -376,7 +357,7 @@
             }
         }
 
-        /* ─── ADMIN PANEL STYLES ─── */
+        /* Admin Panel */
         #adminPanelWrapper {
             display: none;
             position: fixed;
@@ -389,7 +370,6 @@
         #adminPanelWrapper.active {
             display: block;
         }
-
         #adminPanelContainer {
             max-width: 1300px;
             margin: 0 auto;
@@ -400,7 +380,6 @@
             position: relative;
             min-height: 90vh;
         }
-
         .admin-header {
             background: var(--primary-blue);
             color: white;
@@ -450,7 +429,6 @@
             display: flex;
             min-height: calc(90vh - 60px);
         }
-
         .admin-sidebar {
             width: 220px;
             background: var(--primary-blue);
@@ -643,7 +621,6 @@
             font-size: 13px;
             border: none;
             cursor: pointer;
-            transition: 0.2s;
             background: #f1f5f9;
             color: #1e293b;
             border: 1px solid #e2e8f0;
@@ -709,9 +686,6 @@
             background: #f8fafc;
             font-size: 14px;
             width: 100%;
-        }
-        .form-grid label input[list]:focus {
-            outline: 2px solid var(--accent-teal);
         }
 
         .toolbar {
@@ -868,7 +842,7 @@
             width: 100%;
             background: #ffffff;
             border-radius: 2rem;
-            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.25);
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35);
             overflow: hidden;
             max-height: 95vh;
             overflow-y: auto;
@@ -880,7 +854,6 @@
         .portal-header h1 {
             font-size: 1.9rem;
             font-weight: 700;
-            letter-spacing: -0.3px;
             color: #fef7e8;
             display: flex;
             align-items: center;
@@ -907,7 +880,6 @@
         }
         .portal-input-group {
             margin-bottom: 1.5rem;
-            position: relative;
         }
         .portal-input-label {
             display: flex;
@@ -934,11 +906,9 @@
             width: 100%;
             padding: 1rem 1.3rem;
             font-size: 1rem;
-            font-family: 'Inter', 'Segoe UI', monospace;
             background: white;
             border: 1.5px solid #e2e8f0;
             border-radius: 1.25rem;
-            transition: all 0.25s;
             outline: none;
             font-weight: 500;
             color: #0f172a;
@@ -954,11 +924,9 @@
             padding: 1rem 1.5rem;
             font-size: 1rem;
             font-weight: 700;
-            font-family: inherit;
             color: white;
             border-radius: 2rem;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -978,7 +946,6 @@
             font-size: 0.85rem;
             color: #2c3e50;
             border-left: 3px solid #c9a03d;
-            transition: 0.2s;
             line-height: 1.4;
             font-weight: 500;
         }
@@ -1006,7 +973,6 @@
             border-radius: 1rem;
             margin-bottom: 0.8rem;
             border: 1px solid #edf2f7;
-            transition: 0.2s;
         }
         .portal-report-item:hover {
             background: #f1f5f9;
@@ -1029,27 +995,6 @@
             align-items: center;
             gap: 12px;
         }
-        .portal-download-btn {
-            background: #d4af37;
-            border: none;
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.8rem;
-        }
-        .portal-download-btn:hover {
-            background: #b8960e;
-            transform: scale(1.02);
-        }
-        .portal-download-btn:disabled {
-            background: #b0b8c5;
-            cursor: not-allowed;
-            opacity: 0.6;
-            transform: none;
-        }
         .portal-due-badge {
             background: #fee2e2;
             color: #991b1b;
@@ -1066,7 +1011,6 @@
             font-weight: 600;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
             font-size: 0.8rem;
             margin-top: 1rem;
         }
@@ -1081,6 +1025,7 @@
             display: flex;
             justify-content: space-between;
         }
+
         @media (max-width: 650px) {
             .portal-body {
                 padding: 1.5rem;
@@ -1097,6 +1042,19 @@
                 width: 100%;
                 justify-content: flex-end;
             }
+        }
+
+        .sync-status {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: #d1fae5;
+            color: #065f46;
+            margin-left: 10px;
+        }
+        .sync-status.offline {
+            background: #fee2e2;
+            color: #991b1b;
         }
 
         body.admin-dark #adminPanelContainer {
@@ -1198,7 +1156,7 @@
 </head>
 <body>
 
-    <!-- ─── ORIGINAL PATIENT WEBSITE ─── -->
+    <!-- ─── PATIENT WEBSITE ─── -->
     <header>
         <h1>RAJAN <span>PATH LAB</span></h1>
         <nav>
@@ -1209,6 +1167,7 @@
             <a href="contact.html">About</a>
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
+            <span class="sync-status" id="syncStatus"><i class="fas fa-check-circle"></i> Local</span>
         </nav>
     </header>
 
@@ -1228,7 +1187,7 @@
         </div>
     </div>
 
-    <section id="about" style="background: white;">
+    <section id="about" style="background:white;">
         <div class="about-container">
             <div class="about-text">
                 <h2>About Rajan Path Lab</h2>
@@ -1356,13 +1315,13 @@
                     <!-- DASHBOARD -->
                     <div class="admin-section active" id="sec-dashboard">
                         <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
-                        <div class="stats-grid" id="dashboardStats">
+                        <div class="stats-grid">
                             <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">0</h4><p>Today's Patients</p></div></div>
                             <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">0</h4><p>Total Reports</p></div></div>
                             <div class="stat-card"><div class="icon red"><i class="fas fa-clock"></i></div><div class="info"><h4 id="dPending">0</h4><p>Pending Reports</p></div></div>
                             <div class="stat-card"><div class="icon purple"><i class="fas fa-flask"></i></div><div class="info"><h4 id="dCulture">0</h4><p>Urine Culture Process</p></div></div>
                             <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dDue">0</h4><p>Due Payment Patients</p></div></div>
-                            <div class="stat-card"><div class="icon teal"><i class="fas fa-calendar-check"></i></div><div class="info"><h4 id="dRevenue">₹0</h4><p>Monthly Revenue</p></div></div>
+                            <div class="stat-card"><div class="icon teal"><i class="fas fa-calendar-check"></i></div><div class="info"><h4 id="dRevenue">₹0</h4><p>Total Revenue</p></div></div>
                         </div>
                         <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;">
                             <div class="card"><h4><i class="fas fa-chart-line"></i> Weekly Reports</h4><canvas id="chartWeekly" style="max-height:180px;width:100%;"></canvas></div>
@@ -1461,13 +1420,14 @@
                         <div class="toolbar">
                             <div class="search-box"><i class="fas fa-search"></i><input type="text" id="patientSearch" placeholder="Search..." /></div>
                             <button class="btn btn-outline btn-sm" id="refreshPatients"><i class="fas fa-sync"></i></button>
+                            <button class="btn btn-outline btn-sm" id="exportDataBtn" style="background:#25D366;color:white;border-color:#25D366;"><i class="fas fa-cloud-upload-alt"></i> Sync</button>
                         </div>
                         <div class="table-wrap">
                             <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
                     </div>
 
-                    <!-- REPORTS (Download column removed) -->
+                    <!-- REPORTS -->
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                         <div class="form-grid">
@@ -1552,8 +1512,7 @@
                         </div>
                         <div id="uploadMessage" style="margin:10px 0; font-weight:bold; color:red;"></div>
                         <div class="table-wrap">
-                            <!-- "Download Report" column removed → only "Delete" remains -->
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Delete</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1584,7 +1543,7 @@
                     <!-- PAYMENTS -->
                     <div class="admin-section" id="sec-payments">
                         <h2 style="text-align:left;"><i class="fas fa-rupee-sign"></i> Payment / Dues <span class="premium-badge">UPI+QR</span></h2>
-                        <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));" id="paymentStats">
+                        <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
                             <div class="stat-card"><div class="icon green"><i class="fas fa-check-circle"></i></div><div class="info"><h4 id="pPaid">0</h4><p>Paid</p></div></div>
                             <div class="stat-card"><div class="icon red"><i class="fas fa-times-circle"></i></div><div class="info"><h4 id="pUnpaid">0</h4><p>Unpaid</p></div></div>
                             <div class="stat-card"><div class="icon orange"><i class="fas fa-clock"></i></div><div class="info"><h4 id="pTotalDue">₹0</h4><p>Total Due</p></div></div>
@@ -1619,19 +1578,14 @@
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px;">
                             <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
                                 <i class="fas fa-database" style="font-size:28px;color:var(--accent-teal);"></i>
-                                <h4>DB Backup</h4>
-                                <button class="btn btn-primary" id="backupDBBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button>
-                            </div>
-                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-file-pdf" style="font-size:28px;color:var(--urgent-red);"></i>
-                                <h4>PDF Backup</h4>
-                                <button class="btn btn-primary" id="backupPDFBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button>
+                                <h4>Export Data</h4>
+                                <button class="btn btn-primary" id="exportBackupBtn"><i class="fas fa-download"></i> Export</button>
                             </div>
                             <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
                                 <i class="fas fa-undo-alt" style="font-size:28px;color:#f59e0b;"></i>
-                                <h4>Restore</h4>
-                                <input type="file" id="restoreFile" style="margin:6px 0;" />
-                                <button class="btn btn-outline" id="restoreBtn"><i class="fas fa-upload"></i> Restore</button>
+                                <h4>Import Data</h4>
+                                <input type="file" id="importFile" accept=".json" style="margin:6px 0;" />
+                                <button class="btn btn-outline" id="importBackupBtn"><i class="fas fa-upload"></i> Import</button>
                             </div>
                         </div>
                         <div class="table-wrap">
@@ -1653,14 +1607,9 @@
                                 <h4>Change Password</h4>
                                 <button class="btn btn-primary" id="changePwdBtn"><i class="fas fa-edit"></i> Change</button>
                             </div>
-                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-clipboard-list" style="font-size:28px;color:#7c3aed;"></i>
-                                <h4>Activity Log</h4>
-                                <button class="btn btn-outline" id="viewLogBtn"><i class="fas fa-eye"></i> View</button>
-                            </div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>IP</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr></tbody></table>
+                            <table><thead><tr><th>Time</th><th>User</th><th>Action</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="3" style="text-align:center;padding:20px;">No logs</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1683,27 +1632,20 @@
     <div class="patient-portal-modal" id="patientPortalModal">
         <div class="patient-portal-content">
             <div class="portal-header">
-                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>
-                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">VIEW ONLY</span></h1>
+                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view your reports ◆</div>
             </div>
             <div class="portal-body">
                 <div class="portal-input-group">
-                    <div class="portal-input-label">
-                        <span>🔍</span> PATIENT ID OR MOBILE
-                    </div>
-                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number (e.g. P001, RPL-062026-1186, or 9876543210)" autocomplete="off">
+                    <div class="portal-input-label"><span>🔍</span> PATIENT ID OR MOBILE</div>
+                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number" autocomplete="off">
                 </div>
-                <button id="portalFetchBtn" class="portal-btn">
-                    <span>🔍</span> VIEW MY REPORTS →
-                </button>
+                <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
                 <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
                 <div id="portalReportList" class="portal-report-list" style="display: none;"></div>
                 <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
             </div>
-            <div class="portal-footer">
-                <span>✦ SECURE DOWNLOAD SYSTEM ✦</span>
-                <span>RAJAN PATH LAB</span>
-            </div>
+            <div class="portal-footer"><span>✦ VIEW-ONLY PORTAL ✦</span><span>RAJAN PATH LAB</span></div>
         </div>
     </div>
 
@@ -1715,17 +1657,7 @@
             // ─── LOGIN ───
             const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
-            // ─── NORMALIZE PHONE NUMBER ───
-            function normalizePhone(phone) {
-                if (!phone) return '';
-                let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
-                if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
-                if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
-                if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
-                return cleaned;
-            }
-
-            // ─── DATA PERSISTENCE (localStorage + IndexedDB) ───
+            // ─── DATA PERSISTENCE (localStorage) ───
             function loadData(key, defaultData) {
                 try {
                     const stored = localStorage.getItem('rpl_' + key);
@@ -1743,82 +1675,38 @@
                     localStorage.setItem('rpl_' + key, JSON.stringify(data));
                 } catch (e) {
                     console.warn('Failed to save data to localStorage', e);
-                    try {
-                        localStorage.setItem('rpl_' + key, JSON.stringify(data));
-                    } catch (e2) {
-                        console.error('Storage full! Please clear some data.', e2);
-                    }
                 }
             }
 
+            // ─── DEFAULT DATA ───
             const defaultPatients = [];
             const defaultReports = [];
-            const defaultPayments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0 };
-            const defaultLogs = [];
 
             let patients = loadData('patients', defaultPatients);
             let reports = loadData('reports', defaultReports);
-            let payments = loadData('payments', defaultPayments);
-            let activityLogs = loadData('logs', defaultLogs);
 
             function saveAll() {
                 saveData('patients', patients);
                 saveData('reports', reports);
-                saveData('payments', payments);
-                saveData('logs', activityLogs);
             }
 
-            // ─── INDEXED DB FOR PDF ───
-            let db = null;
-            const DB_NAME = 'RPL_PDF_DB';
-            const STORE_NAME = 'pdf_files';
-
-            function openDB() {
-                return new Promise((resolve, reject) => {
-                    const request = indexedDB.open(DB_NAME, 1);
-                    request.onupgradeneeded = function(e) {
-                        const db = e.target.result;
-                        if (!db.objectStoreNames.contains(STORE_NAME)) {
-                            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-                        }
-                    };
-                    request.onsuccess = function(e) { db = e.target.result;
-                        resolve(db); };
-                    request.onerror = function(e) { reject(e.target.error); };
-                });
+            // ─── NORMALIZE PHONE ───
+            function normalizePhone(phone) {
+                if (!phone) return '';
+                let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
+                if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
+                if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
+                if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
+                return cleaned;
             }
 
-            function savePDFFile(reportId, fileBlob) {
-                return new Promise((resolve, reject) => {
-                    if (!db) return reject('DB not open');
-                    const tx = db.transaction(STORE_NAME, 'readwrite');
-                    const store = tx.objectStore(STORE_NAME);
-                    store.put({ id: reportId.toString(), file: fileBlob });
-                    tx.oncomplete = () => resolve();
-                    tx.onerror = (e) => reject(e.target.error);
-                });
-            }
-
-            function getPDFFile(reportId) {
-                return new Promise((resolve, reject) => {
-                    if (!db) return reject('DB not open');
-                    const tx = db.transaction(STORE_NAME, 'readonly');
-                    const store = tx.objectStore(STORE_NAME);
-                    const request = store.get(reportId.toString());
-                    request.onsuccess = () => resolve(request.result ? request.result.file : null);
-                    request.onerror = (e) => reject(e.target.error);
-                });
-            }
-
-            function deletePDFFile(reportId) {
-                return new Promise((resolve, reject) => {
-                    if (!db) return reject('DB not open');
-                    const tx = db.transaction(STORE_NAME, 'readwrite');
-                    const store = tx.objectStore(STORE_NAME);
-                    const request = store.delete(reportId.toString());
-                    request.onsuccess = () => resolve();
-                    request.onerror = (e) => reject(e.target.error);
-                });
+            // ─── WHATSAPP ───
+            function sendWhatsApp(phone, message) {
+                let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');
+                if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
+                if (/^\d{10}$/.test(cleanPhone)) cleanPhone = '+91' + cleanPhone;
+                if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;
+                window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
             }
 
             // ─── DOM REFS ───
@@ -1828,21 +1716,10 @@
             const upiModal = $('upiModal');
             const portalModal = $('patientPortalModal');
 
-            // ─── REAL WHATSAPP ───
-            function sendWhatsApp(phone, message) {
-                let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');
-                if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
-                if (/^\d{10}$/.test(cleanPhone)) cleanPhone = '+91' + cleanPhone;
-                if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;
-                window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
-            }
-
             // ─── PATIENT PORTAL ───
             function openPortal() {
                 portalModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                patients = loadData('patients', defaultPatients);
-                reports = loadData('reports', defaultReports);
                 $('portalStatus').className = 'portal-status';
                 $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
@@ -1865,7 +1742,7 @@
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
-            $('portalFetchBtn').addEventListener('click', async function() {
+            $('portalFetchBtn').addEventListener('click', function() {
                 const searchValue = $('portalPatientId').value.trim();
                 const statusDiv = $('portalStatus');
                 const listDiv = $('portalReportList');
@@ -1883,18 +1760,16 @@
                 const normalizedSearch = normalizePhone(searchValue);
 
                 let patient = patients.find(p => p.patient_id === searchValue);
-
                 if (!patient) {
                     patient = patients.find(p => {
-                        const normalizedPhone = normalizePhone(p.phone || '');
-                        return normalizedPhone === normalizedSearch || p.phone === searchValue;
+                        const np = normalizePhone(p.phone || '');
+                        return np === normalizedSearch || p.phone === searchValue;
                     });
                 }
-
                 if (!patient && normalizedSearch.length >= 4) {
                     patient = patients.find(p => {
-                        const normalizedPhone = normalizePhone(p.phone || '');
-                        return normalizedPhone.includes(normalizedSearch) || (p.phone || '').includes(searchValue);
+                        const np = normalizePhone(p.phone || '');
+                        return np.includes(normalizedSearch) || (p.phone || '').includes(searchValue);
                     });
                 }
 
@@ -1917,69 +1792,32 @@
                 const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
                 statusDiv.className = 'portal-status success';
                 statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
-                    ' (via ' + foundBy + '). Due amount: ₹' + patient.due_amount;
+                    ' (via ' + foundBy + '). Due: ₹' + (patient.due_amount || 0);
 
-                let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
+                let html =
+                    '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
-                    const canDownload = patient.due_amount === 0;
-                    const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient
-                        .due_amount + ' DUE</span>' : '';
+                    const dueBadge = (patient.due_amount || 0) > 0 ?
+                        '<span class="portal-due-badge">₹' + patient.due_amount + ' DUE</span>' : '';
                     html += `
-                            <div class="portal-report-item">
-                                <div class="portal-report-info">
-                                    <span class="test-name">${report.test_name}</span>
-                                    <span class="upload-date">📅 ${report.uploaded_at}</span>
-                                </div>
-                                <div class="portal-report-actions">
-                                    ${dueBadge}
-                                    <button class="portal-download-btn" data-report-id="${report.id}" data-patient-due="${patient.due_amount}" ${canDownload ? '' : 'disabled'}>
-                                        ${canDownload ? '⬇️ Download' : '🔒 Locked'}
-                                    </button>
-                                </div>
+                        <div class="portal-report-item">
+                            <div class="portal-report-info">
+                                <span class="test-name">${report.test_name}</span>
+                                <span class="upload-date">📅 ${report.uploaded_at}</span>
                             </div>
-                        `;
+                            <div class="portal-report-actions">
+                                ${dueBadge}
+                                <span style="font-size:0.8rem;color:#7890a3;background:#f1f5f9;padding:0.2rem 0.8rem;border-radius:1rem;">🔒 View Only</span>
+                            </div>
+                        </div>
+                    `;
                 }
                 listDiv.innerHTML = html;
                 listDiv.style.display = 'block';
-
-                listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
-                    btn.addEventListener('click', async function() {
-                        const reportId = parseInt(this.dataset.reportId);
-                        const due = parseFloat(this.dataset.patientDue);
-                        if (due > 0) {
-                            statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML =
-                            '❌ Payment pending. Please clear dues to download report.';
-                            return;
-                        }
-                        try {
-                            const fileBlob = await getPDFFile(reportId);
-                            if (!fileBlob) {
-                                statusDiv.className = 'portal-status error';
-                                statusDiv.innerHTML = '❌ PDF file not found in storage.';
-                                return;
-                            }
-                            const url = URL.createObjectURL(fileBlob);
-                            const a = document.createElement('a');
-                            a.href = url;
-                            const report = patientReports.find(r => r.id === reportId);
-                            a.download = report ? report.file_path : 'report.pdf';
-                            document.body.appendChild(a);
-                            a.click();
-                            document.body.removeChild(a);
-                            URL.revokeObjectURL(url);
-                            statusDiv.className = 'portal-status success';
-                            statusDiv.innerHTML = '✅ Download started!';
-                        } catch (e) {
-                            statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML = '❌ Error downloading: ' + e.message;
-                        }
-                    });
-                });
             });
 
             $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn')
-                .click(); });
+                    .click(); });
 
             // ─── ADMIN LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
@@ -2003,7 +1841,7 @@
                     result.style.color = 'green';
                     result.textContent = '✅ Login successful!';
                     loginModal.classList.remove('show');
-                    openDB().then(() => showAdmin()).catch(() => showAdmin());
+                    showAdmin();
                 } else {
                     result.style.color = 'red';
                     result.textContent = '❌ Invalid username or password';
@@ -2081,40 +1919,24 @@
                     const id = el.id.replace('qr-', '');
                     if (el && typeof QRCode !== 'undefined') {
                         el.innerHTML = '';
-                        new QRCode(el, {
-                            text: 'Patient: ' + id,
-                            width: 50,
-                            height: 50,
-                            colorDark: '#000000',
-                            colorLight: '#ffffff',
-                            correctLevel: QRCode.CorrectLevel.H
-                        });
+                        try {
+                            new QRCode(el, {
+                                text: 'Patient: ' + id,
+                                width: 50,
+                                height: 50,
+                                colorDark: '#000000',
+                                colorLight: '#ffffff',
+                                correctLevel: QRCode.CorrectLevel.H
+                            });
+                        } catch (e) { el.innerHTML = 'QR'; }
                     }
                 });
-            }
-
-            // ─── REPORT DOWNLOAD (Admin) - kept for portal, but removed from admin table ───
-            async function downloadReport(report) {
-                try {
-                    const fileBlob = await getPDFFile(report.id);
-                    if (!fileBlob) { alert('PDF file not found in storage.'); return; }
-                    const url = URL.createObjectURL(fileBlob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = report.file_path || 'report.pdf';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                } catch (e) { alert('Error downloading file: ' + e.message); }
             }
 
             // ─── REFRESH ALL ───
             function refreshAll() {
                 patients = loadData('patients', defaultPatients);
                 reports = loadData('reports', defaultReports);
-                payments = loadData('payments', defaultPayments);
-                activityLogs = loadData('logs', defaultLogs);
                 refreshDashboard();
                 refreshPatients();
                 refreshReports();
@@ -2127,12 +1949,15 @@
 
             // ─── DASHBOARD ───
             function refreshDashboard() {
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
+
                 const totalPatients = patients.length;
                 const totalReports = reports.length;
                 const pendingReports = patients.filter(p => p.status === 'pending').length;
                 const cultureProcess = patients.filter(p => p.test && p.test.includes('Urine')).length;
-                const duePatients = patients.filter(p => p.due_amount > 0).length;
-                const totalRevenue = patients.reduce((sum, p) => sum + p.due_amount, 0);
+                const duePatients = patients.filter(p => (p.due_amount || 0) > 0).length;
+                const totalRevenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
 
                 $('dToday').textContent = totalPatients;
                 $('dTotalReports').textContent = totalReports;
@@ -2144,19 +1969,20 @@
                 const tbody = $('dRecentPatients');
                 if (patients.length) {
                     tbody.innerHTML = patients.slice(0, 5).map(p =>
-                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
+                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount || 0}</td></tr>`
                     ).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
+                    tbody.innerHTML =
+                    '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
                 }
-                updateCharts();
+                updateCharts(patients);
             }
 
             // ─── CHARTS ───
             let chartWeeklyInstance = null;
             let chartPieInstance = null;
 
-            function updateCharts() {
+            function updateCharts(patients) {
                 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
                 const weeklyData = days.map(() => 0);
                 patients.forEach(p => {
@@ -2223,23 +2049,27 @@
 
             // ─── PATIENTS ───
             function refreshPatients() {
+                patients = loadData('patients', defaultPatients);
                 const tbody = $('patientTableBody');
                 if (patients.length) {
                     tbody.innerHTML = patients.map(p => `
-                            <tr>
-                                <td><b>${p.patient_id}</b></td>
-                                <td>${p.name}</td>
-                                <td>${p.phone}</td>
-                                <td>${p.test}</td>
-                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                <td>₹${p.due_amount}</td>
-                                <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
-                                <td><button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button></td>
-                            </tr>
-                        `).join('');
+                        <tr>
+                            <td><b>${p.patient_id}</b></td>
+                            <td>${p.name}</td>
+                            <td>${p.phone}</td>
+                            <td>${p.test}</td>
+                            <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                            <td>₹${p.due_amount || 0}</td>
+                            <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
+                            <td>
+                                <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `).join('');
                     setTimeout(() => generateAllQRCodes(), 100);
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;">No patients</td></tr>';
+                    tbody.innerHTML =
+                        '<tr><td colspan="8" style="text-align:center;padding:20px;">No patients added yet. Add your first patient above.</td></tr>';
                 }
             }
 
@@ -2253,14 +2083,18 @@
                 const due = parseFloat($('patDue').value) || 0;
 
                 if (!name || !phone) { alert('Name & Phone required'); return; }
+
+                patients = loadData('patients', defaultPatients);
+
                 let id = patientId;
                 if (!id) {
-                    const nextId = patients.length + 1;
                     const today = new Date();
                     const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today
                         .getDate()).padStart(2, '0');
-                    id = 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
+                    const ts = Date.now().toString().slice(-4);
+                    id = 'RPL-' + dateStr + '-' + ts;
                 }
+
                 const normalizedPhone = normalizePhone(phone);
                 if (patients.find(p => p.patient_id === id || normalizePhone(p.phone) === normalizedPhone)) {
                     alert('Patient ID or Phone already exists!');
@@ -2269,10 +2103,10 @@
 
                 patients.push({
                     patient_id: id,
-                    name,
-                    phone,
+                    name: name,
+                    phone: phone,
                     test: test || 'Not Specified',
-                    status,
+                    status: status,
                     due_amount: due,
                     created_at: new Date().toISOString()
                 });
@@ -2300,8 +2134,8 @@
                 if (e.target.closest('.btn-del-patient')) {
                     const id = e.target.closest('.btn-del-patient').dataset.id;
                     if (confirm('Delete patient #' + id + '?')) {
-                        const toDelete = reports.filter(r => r.patient_id === id);
-                        toDelete.forEach(async (r) => { try { await deletePDFFile(r.id); } catch (e) {} });
+                        patients = loadData('patients', defaultPatients);
+                        reports = loadData('reports', defaultReports);
                         reports = reports.filter(r => r.patient_id !== id);
                         patients = patients.filter(p => p.patient_id !== id);
                         saveAll();
@@ -2319,27 +2153,34 @@
                 });
             });
 
-            // ─── REPORTS (Download column removed from table) ───
+            // ─── REPORTS ───
             function refreshReports() {
+                reports = loadData('reports', defaultReports);
+                patients = loadData('patients', defaultPatients);
                 const tbody = $('reportsTableBody');
                 if (reports.length) {
-                    tbody.innerHTML = reports.map(r => `
+                    tbody.innerHTML = reports.map(r => {
+                        const patient = patients.find(p => p.patient_id === r.patient_id);
+                        return `
                             <tr>
-                                <td>${r.name} (${r.patient_id})</td>
+                                <td>${patient ? patient.name : r.patient_id} (${r.patient_id})</td>
                                 <td>${r.test_name}</td>
                                 <td>${r.uploaded_at}</td>
                                 <td>
+                                    ${r.file_data ? `<button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}"><i class="fas fa-download"></i></button>` : ''}
                                     <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
-                        `).join('');
+                        `;
+                    }).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr>';
+                    tbody.innerHTML =
+                        '<tr><td colspan="4" style="text-align:center;padding:20px;">No reports uploaded</td></tr>';
                 }
             }
 
             // ─── UPLOAD REPORT ───
-            $('uploadReportBtn').addEventListener('click', async function() {
+            $('uploadReportBtn').addEventListener('click', function() {
                 const pid = $('reportPatientId').value.trim();
                 const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
@@ -2352,75 +2193,98 @@
                 if (!test) { msgDiv.textContent = '❌ Test Name is required.'; return; }
                 if (!file) { msgDiv.textContent = '❌ Please select a PDF file.'; return; }
 
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
+
                 const patient = patients.find(p => p.patient_id === pid);
                 if (!patient) { msgDiv.textContent = '❌ Patient not found! Please add patient first.'; return; }
 
                 const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
-                if (existing && replace === 'no') { msgDiv.textContent =
-                    '❌ Report already exists. Use Replace = Yes to overwrite.'; return; }
+                if (existing && replace === 'no') {
+                    msgDiv.textContent = '❌ Report already exists. Use Replace = Yes to overwrite.';
+                    return;
+                }
                 if (existing && replace === 'yes') {
-                    try { await deletePDFFile(existing.id); } catch (e) {}
                     reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
                 }
 
-                const newId = reports.length + 1;
-                const newReport = {
-                    id: newId,
-                    patient_id: pid,
-                    name: patient.name,
-                    test_name: test || 'Not Specified',
-                    file_path: file.name,
-                    uploaded_at: new Date().toLocaleString()
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newId = reports.length + 1;
+                    const newReport = {
+                        id: newId,
+                        patient_id: pid,
+                        name: patient.name,
+                        test_name: test || 'Not Specified',
+                        file_name: file.name,
+                        file_data: e.target.result,
+                        uploaded_at: new Date().toLocaleString()
+                    };
+                    reports.push(newReport);
+                    saveAll();
+                    msgDiv.style.color = 'green';
+                    msgDiv.textContent = '✅ Report uploaded for ' + patient.name + ' (' + pid + ')';
+                    $('reportPatientId').value = '';
+                    $('reportTestName').value = '';
+                    $('reportFile').value = '';
+                    refreshAll();
+                    setTimeout(() => { msgDiv.textContent = ''; }, 5000);
                 };
-
-                try { await savePDFFile(newId, file); } catch (e) {
-                    msgDiv.textContent = '❌ Failed to store PDF: ' + e.message;
-                    return;
-                }
-
-                reports.push(newReport);
-                saveAll();
-                msgDiv.style.color = 'green';
-                msgDiv.textContent = '✅ Report uploaded for ' + patient.name + ' (' + pid + ')';
-                $('reportPatientId').value = '';
-                $('reportTestName').value = '';
-                $('reportFile').value = '';
-                refreshAll();
-                setTimeout(() => { msgDiv.textContent = ''; }, 5000);
+                reader.readAsDataURL(file);
             });
 
             $('refreshReports').addEventListener('click', refreshReports);
+
+            // ─── DOWNLOAD REPORT ───
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-download-report')) {
+                    const id = parseInt(e.target.closest('.btn-download-report').dataset.id);
+                    reports = loadData('reports', defaultReports);
+                    const report = reports.find(r => r.id === id);
+                    if (report && report.file_data) {
+                        const link = document.createElement('a');
+                        link.href = report.file_data;
+                        link.download = report.file_name || 'report.pdf';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    } else {
+                        alert('PDF data not found.');
+                    }
+                }
+            });
 
             // ─── DELETE REPORT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-report')) {
                     const id = parseInt(e.target.closest('.btn-del-report').dataset.id);
-                    if (confirm('Delete report?')) {
-                        deletePDFFile(id).then(() => {
-                            reports = reports.filter(r => r.id !== id);
-                            saveAll();
-                            alert('Deleted!');
-                            refreshAll();
-                        }).catch((err) => { alert('Error deleting PDF file: ' + err.message); });
+                    if (confirm('Delete this report?')) {
+                        reports = loadData('reports', defaultReports);
+                        reports = reports.filter(r => r.id !== id);
+                        saveAll();
+                        alert('Deleted!');
+                        refreshAll();
                     }
                 }
             });
 
             // ─── WHATSAPP ───
             function refreshWhatsAppPatients() {
+                patients = loadData('patients', defaultPatients);
                 const tbody = $('whatsappPatientList');
                 if (patients.length) {
                     tbody.innerHTML = patients.slice(0, 10).map(p => `
-                            <tr>
-                                <td>${p.name}</td>
-                                <td>${p.phone}</td>
-                                <td>${p.test}</td>
-                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}"><i class="fab fa-whatsapp"></i> Send</button></td>
-                            </tr>
-                        `).join('');
+                        <tr>
+                            <td>${p.name}</td>
+                            <td>${p.phone}</td>
+                            <td>${p.test}</td>
+                            <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                            <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}"><i class="fab fa-whatsapp"></i> Send</button></td>
+                        </tr>
+                    `).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
+                    tbody.innerHTML =
+                        '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
                 }
             }
 
@@ -2434,7 +2298,7 @@
             });
 
             $('sendWAPatient').addEventListener('click', function() {
-                const phone = prompt('Enter patient phone (e.g. 9876543210):');
+                const phone = prompt('Enter patient phone:');
                 if (phone) {
                     const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g,
                         'Report');
@@ -2459,9 +2323,10 @@
 
             // ─── PAYMENTS ───
             function refreshPayments() {
-                const duePatients = patients.filter(p => p.due_amount > 0);
-                const paidPatients = patients.filter(p => p.due_amount === 0);
-                let totalDue = duePatients.reduce((sum, p) => sum + p.due_amount, 0);
+                patients = loadData('patients', defaultPatients);
+                const duePatients = patients.filter(p => (p.due_amount || 0) > 0);
+                const paidPatients = patients.filter(p => (p.due_amount || 0) === 0);
+                const totalDue = duePatients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
 
                 $('pPaid').textContent = paidPatients.length;
                 $('pUnpaid').textContent = duePatients.length;
@@ -2470,25 +2335,25 @@
                 const tbody = $('paymentsTableBody');
                 if (patients.length) {
                     tbody.innerHTML = patients.map(p => `
-                            <tr>
-                                <td>${p.name}</td>
-                                <td>${p.test}</td>
-                                <td>₹${p.due_amount}</td>
-                                <td><span class="badge-status ${p.due_amount > 0 ? 'unpaid' : 'paid'}">${p.due_amount > 0 ? 'Unpaid' : 'Paid'}</span></td>
-                                <td>${p.due_amount > 0 ? `<button class="btn btn-sm btn-primary mark-paid" data-id="${p.patient_id}" data-amount="${p.due_amount}"><i class="fas fa-check"></i> Mark Paid</button>` : '<button class="btn btn-sm btn-outline" disabled>Paid</button>'}</td>
-                            </tr>
-                        `).join('');
+                        <tr>
+                            <td>${p.name}</td>
+                            <td>${p.test}</td>
+                            <td>₹${p.due_amount || 0}</td>
+                            <td><span class="badge-status ${(p.due_amount || 0) > 0 ? 'unpaid' : 'paid'}">${(p.due_amount || 0) > 0 ? 'Unpaid' : 'Paid'}</span></td>
+                            <td>${(p.due_amount || 0) > 0 ? `<button class="btn btn-sm btn-primary mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>` : '<button class="btn btn-sm btn-outline" disabled>Paid</button>'}</td>
+                        </tr>
+                    `).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
+                    tbody.innerHTML =
+                        '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
                 }
             }
 
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.mark-paid')) {
-                    const btn = e.target.closest('.mark-paid');
-                    const id = btn.dataset.id;
-                    const amount = parseFloat(btn.dataset.amount);
+                    const id = e.target.closest('.mark-paid').dataset.id;
                     if (confirm('Mark #' + id + ' as paid?')) {
+                        patients = loadData('patients', defaultPatients);
                         const patient = patients.find(p => p.patient_id === id);
                         if (patient) {
                             patient.due_amount = 0;
@@ -2523,6 +2388,9 @@
 
             // ─── ANALYTICS ───
             function refreshAnalytics() {
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
+
                 const today = new Date().toDateString();
                 let todayCount = 0;
                 patients.forEach(p => {
@@ -2533,8 +2401,7 @@
                 });
 
                 const totalPatients = patients.length;
-                const totalReports = reports.length;
-                const revenue = patients.reduce((sum, p) => sum + p.due_amount, 0);
+                const revenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
 
                 const testMap = {};
                 patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
@@ -2557,43 +2424,78 @@
                         `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`
                     ).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
+                    tbody.innerHTML =
+                        '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
                 }
             }
 
-            // ─── BACKUP ───
+            // ─── BACKUP (Export/Import) ───
             function refreshBackup() {
                 $('backupListBody').innerHTML = `
-                        <tr><td>rpl_db_backup.sql</td><td>Database</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Download')"><i class="fas fa-download"></i></button></td></tr>
-                        <tr><td>rpl_pdf_backup.zip</td><td>PDF</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Download')"><i class="fas fa-download"></i></button></td></tr>
-                    `;
+                    <tr><td>Local Storage Data</td><td>JSON</td><td>${new Date().toLocaleDateString()}</td><td><button class="btn btn-sm btn-primary" id="exportBackupBtn2"><i class="fas fa-download"></i> Export</button></td></tr>
+                `;
+                // Re-bind export button
+                document.getElementById('exportBackupBtn2')?.addEventListener('click', function() {
+                    exportData();
+                });
             }
-            $('backupDBBtn').addEventListener('click', function() {
-                if (confirm('Create DB backup?')) alert('✅ Backup created: db_backup_' + new Date().toISOString()
-                    .slice(0, 10) + '.sql');
-            });
-            $('backupPDFBtn').addEventListener('click', function() {
-                if (confirm('Create PDF backup?')) alert('✅ PDF backup created: pdf_backup_' + new Date()
-                    .toISOString().slice(0, 10) + '.zip');
-            });
-            $('restoreBtn').addEventListener('click', function() {
-                const file = $('restoreFile').files[0];
-                if (!file) { alert('Select a backup file.'); return; }
-                alert('✅ Restore successful! (dummy)');
+
+            function exportData() {
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
+                const data = { patients: patients, reports: reports, exported_at: new Date().toISOString() };
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'rpl_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                alert('✅ Data exported successfully!');
+            }
+
+            $('exportBackupBtn').addEventListener('click', exportData);
+
+            $('importBackupBtn').addEventListener('click', function() {
+                const file = $('importFile').files[0];
+                if (!file) { alert('Select a JSON backup file.'); return; }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (data.patients && data.reports) {
+                            if (confirm('Import ' + data.patients.length + ' patients and ' + data.reports
+                                    .length + ' reports? This will REPLACE all current data.')) {
+                                saveData('patients', data.patients);
+                                saveData('reports', data.reports);
+                                alert('✅ Import successful!');
+                                refreshAll();
+                            }
+                        } else {
+                            alert('❌ Invalid backup file format.');
+                        }
+                    } catch (err) {
+                        alert('❌ Error reading file: ' + err.message);
+                    }
+                };
+                reader.readAsText(file);
             });
 
             // ─── SECURITY ───
             function refreshSecurity() {
                 const tbody = $('activityLogBody');
-                if (activityLogs.length) {
-                    tbody.innerHTML = activityLogs.map(l =>
-                        `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
+                const logs = loadData('logs', []);
+                if (logs.length) {
+                    tbody.innerHTML = logs.map(l =>
+                        `<tr><td>${l.created_at || '-'}</td><td>${l.admin_user || 'Admin'}</td><td>${l.action || 'Login'}</td></tr>`
                     ).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr>';
+                    tbody.innerHTML =
+                        '<tr><td colspan="3" style="text-align:center;padding:20px;">No logs</td></tr>';
                 }
             }
-            $('viewLogBtn').addEventListener('click', refreshSecurity);
+
+            $('viewLogBtn')?.addEventListener('click', refreshSecurity);
 
             $('changePwdBtn').addEventListener('click', function() {
                 const old = prompt('Enter old password:');
@@ -2603,22 +2505,23 @@
                 alert('✅ Password changed! (dummy)');
             });
 
+            // ─── SYNC BUTTON (Export + Import instructions) ───
+            $('exportDataBtn').addEventListener('click', function() {
+                if (confirm('Export data to JSON file for backup/sync across devices?')) {
+                    exportData();
+                }
+            });
+
             // ─── INIT ───
-            openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available',
-            e));
-
-            try {
-                localStorage.setItem('test_storage', 'working');
-                localStorage.removeItem('test_storage');
-                console.log('✅ localStorage is working');
-            } catch (e) {
-                console.warn('⚠️ localStorage may be full or blocked:', e);
-            }
-
-            console.log('✅ Rajan Path Lab · Fixed Mobile Search & Storage');
+            console.log('✅ Rajan Path Lab · LocalStorage Working');
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
-            console.log('📦 No default data - only your added patients.');
-            console.log('👤 Patients can search by ID or Mobile Number (normalized).');
+            console.log('📦 Data stored in localStorage - works immediately');
+            console.log('📱 To sync across devices: Use Export/Import in Backup section');
+
+            // Auto-refresh patients on load
+            setTimeout(() => {
+                refreshAll();
+            }, 100);
 
         })();
     </script>
