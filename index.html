@@ -8,13 +8,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
-    <!-- 🔥 FIREBASE SDK (compat) -->
+    <!-- 🔥 FIREBASE SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
     <style>
-        /* ─── ALL ORIGINAL STYLES (unchanged) ─── */
+        /* ─── ALL STYLES (unchanged) ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
@@ -25,9 +25,7 @@
             --lal-blue: #ed1c24;
             --path-purple: #662d91;
         }
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -36,10 +34,7 @@
             color: var(--text-dark);
             line-height: 1.5;
         }
-        b,
-        strong {
-            font-weight: 700;
-        }
+        b, strong { font-weight: 700; }
         header {
             background: var(--primary-blue);
             color: white;
@@ -50,7 +45,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             flex-wrap: wrap;
             gap: 8px;
         }
@@ -60,9 +55,7 @@
             letter-spacing: 0.5px;
             font-weight: 700;
         }
-        header h1 span {
-            color: var(--accent-teal);
-        }
+        header h1 span { color: var(--accent-teal); }
         nav {
             display: flex;
             align-items: center;
@@ -77,11 +70,8 @@
             font-size: 15px;
             transition: 0.2s;
         }
-        nav a:hover {
-            color: var(--accent-teal);
-        }
-        .admin-login-btn,
-        .patient-portal-btn {
+        nav a:hover { color: var(--accent-teal); }
+        .admin-login-btn, .patient-portal-btn {
             background: var(--accent-teal);
             color: white;
             border: none;
@@ -94,19 +84,12 @@
             margin-left: 10px;
             white-space: nowrap;
         }
-        .admin-login-btn:hover,
-        .patient-portal-btn:hover {
-            background: #006666;
-        }
-        .patient-portal-btn {
-            background: #25D366;
-        }
-        .patient-portal-btn:hover {
-            background: #1a8d4a;
-        }
+        .admin-login-btn:hover, .patient-portal-btn:hover { background: #006666; }
+        .patient-portal-btn { background: #25D366; }
+        .patient-portal-btn:hover { background: #1a8d4a; }
         .hero {
             background: #0d3359;
-            background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%),
+            background-image: radial-gradient(circle at 80% 20%, rgba(0,128,128,0.15) 0%, transparent 50%),
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,70 L30,80 L70,80 L70,70 M40,70 L40,40 M40,45 L45,45 M50,40 C50,30 60,30 60,40 L60,65 M55,65 L65,65' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
             color: white;
             text-align: center;
@@ -127,8 +110,7 @@
             gap: 15px;
             flex-wrap: wrap;
         }
-        .btn-book,
-        .btn-report {
+        .btn-book, .btn-report {
             background: var(--urgent-red);
             padding: 12px 28px;
             color: white;
@@ -141,15 +123,9 @@
             border: none;
             cursor: pointer;
         }
-        .btn-report {
-            background: var(--accent-teal);
-        }
-        .btn-book:hover {
-            background: #b82d2f;
-        }
-        .btn-report:hover {
-            background: #006666;
-        }
+        .btn-report { background: var(--accent-teal); }
+        .btn-book:hover { background: #b82d2f; }
+        .btn-report:hover { background: #006666; }
         .btn-portal {
             background: #25D366;
             padding: 12px 28px;
@@ -163,9 +139,7 @@
             border: none;
             cursor: pointer;
         }
-        .btn-portal:hover {
-            background: #1a8d4a;
-        }
+        .btn-portal:hover { background: #1a8d4a; }
         .strip {
             background: #ffffff;
             border-bottom: 1px solid #e2e8f0;
@@ -244,9 +218,7 @@
             font-size: 0.95rem;
             color: #2d3748;
         }
-        .feature-item i {
-            color: var(--accent-teal);
-        }
+        .feature-item i { color: var(--accent-teal); }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -257,7 +229,7 @@
             padding: 20px 15px;
             border-radius: 6px;
             border: 1px solid #cbd5e1;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
             text-align: center;
         }
         .card i {
@@ -324,9 +296,7 @@
             font-size: 14px;
             font-weight: 600;
         }
-        .footer-links a:hover {
-            color: var(--accent-teal);
-        }
+        .footer-links a:hover { color: var(--accent-teal); }
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -339,69 +309,38 @@
             font-weight: bold;
             font-size: 0.95rem;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                text-align: center;
-                padding: 10px;
-            }
-            nav {
-                margin-top: 10px;
-                justify-content: center;
-            }
-            nav a {
-                margin: 0 6px;
-                font-size: 13px;
-            }
-            .admin-login-btn,
-            .patient-portal-btn {
-                margin: 6px 4px 0 4px;
-                font-size: 12px;
-                padding: 5px 12px;
-            }
-            .hero h2 {
-                font-size: 1.8rem;
-            }
-            .strip-content {
-                flex-direction: column;
-                gap: 8px;
-            }
-            .about-features {
-                grid-template-columns: 1fr;
-            }
-            section {
-                padding: 30px 15px;
-            }
-            .partner-grid {
-                gap: 12px;
-            }
-            .partner-item {
-                width: 120px;
-                padding: 10px;
-            }
+            header { flex-direction: column; text-align: center; padding: 10px; }
+            nav { margin-top: 10px; justify-content: center; }
+            nav a { margin: 0 6px; font-size: 13px; }
+            .admin-login-btn, .patient-portal-btn { margin: 6px 4px 0 4px; font-size: 12px; padding: 5px 12px; }
+            .hero h2 { font-size: 1.8rem; }
+            .strip-content { flex-direction: column; gap: 8px; }
+            .about-features { grid-template-columns: 1fr; }
+            section { padding: 30px 15px; }
+            .partner-grid { gap: 12px; }
+            .partner-item { width: 120px; padding: 10px; }
         }
 
-        /* ─── ADMIN PANEL STYLES ─── */
+        /* ─── ADMIN PANEL ─── */
         #adminPanelWrapper {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.6);
             z-index: 9999;
             overflow-y: auto;
             padding: 20px;
         }
-        #adminPanelWrapper.active {
-            display: block;
-        }
+        #adminPanelWrapper.active { display: block; }
         #adminPanelContainer {
             max-width: 1300px;
             margin: 0 auto;
             background: #f0f2f5;
             border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
             overflow: hidden;
             position: relative;
             min-height: 90vh;
@@ -427,9 +366,7 @@
             gap: 12px;
             flex-wrap: wrap;
         }
-        .admin-header .admin-user span {
-            color: #e2e8f0;
-        }
+        .admin-header .admin-user span { color: #e2e8f0; }
         .admin-header .admin-user .logout-btn {
             background: var(--urgent-red);
             border: none;
@@ -439,9 +376,7 @@
             font-weight: 600;
             cursor: pointer;
         }
-        .admin-header .admin-user .logout-btn:hover {
-            background: #b82d2f;
-        }
+        .admin-header .admin-user .logout-btn:hover { background: #b82d2f; }
         .admin-header .admin-user .dark-toggle {
             background: #4a5568;
             border: none;
@@ -483,19 +418,15 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .admin-sidebar a:hover,
-        .admin-sidebar a.active {
-            background: rgba(0, 128, 128, 0.2);
+        .admin-sidebar a:hover, .admin-sidebar a.active {
+            background: rgba(0,128,128,0.2);
             color: #fff;
         }
         .admin-sidebar a.active {
-            background: rgba(0, 128, 128, 0.3);
+            background: rgba(0,128,128,0.3);
             border-left: 3px solid var(--accent-teal);
         }
-        .admin-sidebar a i {
-            width: 18px;
-            text-align: center;
-        }
+        .admin-sidebar a i { width: 18px; text-align: center; }
         .admin-content {
             flex: 1;
             padding: 20px 24px;
@@ -506,18 +437,10 @@
             display: none;
             animation: fadeUp 0.3s ease;
         }
-        .admin-section.active {
-            display: block;
-        }
+        .admin-section.active { display: block; }
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .stats-grid {
             display: grid;
@@ -533,7 +456,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         }
         .stat-card .icon {
             width: 40px;
@@ -545,40 +468,14 @@
             font-size: 18px;
             flex-shrink: 0;
         }
-        .stat-card .icon.blue {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-        .stat-card .icon.green {
-            background: #d1fae5;
-            color: #059669;
-        }
-        .stat-card .icon.red {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-        .stat-card .icon.purple {
-            background: #ede9fe;
-            color: #7c3aed;
-        }
-        .stat-card .icon.orange {
-            background: #fef3c7;
-            color: #d97706;
-        }
-        .stat-card .icon.teal {
-            background: #ccfbf1;
-            color: #0d9488;
-        }
-        .stat-card .info h4 {
-            font-size: 20px;
-            font-weight: 700;
-            margin: 0;
-        }
-        .stat-card .info p {
-            font-size: 12px;
-            margin: 2px 0 0 0;
-            color: #64748b;
-        }
+        .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
+        .stat-card .icon.green { background: #d1fae5; color: #059669; }
+        .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
+        .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }
+        .stat-card .icon.orange { background: #fef3c7; color: #d97706; }
+        .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
+        .stat-card .info h4 { font-size: 20px; font-weight: 700; margin: 0; }
+        .stat-card .info p { font-size: 12px; margin: 2px 0 0 0; color: #64748b; }
         .table-wrap {
             background: white;
             border: 1px solid #e2e8f0;
@@ -586,11 +483,7 @@
             overflow: auto;
             margin-top: 10px;
         }
-        .table-wrap table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
+        .table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
         .table-wrap th {
             background: #f8fafc;
             font-weight: 600;
@@ -612,26 +505,11 @@
             font-size: 12px;
             font-weight: 600;
         }
-        .badge-status.paid {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .badge-status.unpaid {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        .badge-status.pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        .badge-status.process {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-        .badge-status.done {
-            background: #e0e7ff;
-            color: #3730a3;
-        }
+        .badge-status.paid { background: #d1fae5; color: #065f46; }
+        .badge-status.unpaid { background: #fee2e2; color: #991b1b; }
+        .badge-status.pending { background: #fef3c7; color: #92400e; }
+        .badge-status.process { background: #dbeafe; color: #1e40af; }
+        .badge-status.done { background: #e0e7ff; color: #3730a3; }
         .btn {
             display: inline-flex;
             align-items: center;
@@ -647,30 +525,12 @@
             color: #1e293b;
             border: 1px solid #e2e8f0;
         }
-        .btn-primary {
-            background: var(--accent-teal);
-            color: #fff;
-            border-color: var(--accent-teal);
-        }
-        .btn-primary:hover {
-            background: #006666;
-        }
-        .btn-red {
-            background: var(--urgent-red);
-            color: #fff;
-            border-color: var(--urgent-red);
-        }
-        .btn-red:hover {
-            background: #b82d2f;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #e2e8f0;
-        }
-        .btn-sm {
-            padding: 3px 10px;
-            font-size: 12px;
-        }
+        .btn-primary { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
+        .btn-primary:hover { background: #006666; }
+        .btn-red { background: var(--urgent-red); color: #fff; border-color: var(--urgent-red); }
+        .btn-red:hover { background: #b82d2f; }
+        .btn-outline { background: transparent; border: 1px solid #e2e8f0; }
+        .btn-sm { padding: 3px 10px; font-size: 12px; }
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -688,8 +548,7 @@
             flex-direction: column;
             gap: 4px;
         }
-        .form-grid label input,
-        .form-grid label select {
+        .form-grid label input, .form-grid label select {
             padding: 6px 10px;
             border-radius: 4px;
             border: 1px solid #e2e8f0;
@@ -729,9 +588,7 @@
             width: 100%;
             outline: none;
         }
-        .toolbar .search-box i {
-            color: #94a3b8;
-        }
+        .toolbar .search-box i { color: #94a3b8; }
         .template-box {
             background: white;
             border: 1px solid #e2e8f0;
@@ -761,30 +618,22 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             z-index: 10001;
             align-items: center;
             justify-content: center;
         }
-        .login-modal.show {
-            display: flex;
-        }
+        .login-modal.show { display: flex; }
         .login-modal-content {
             background: white;
             padding: 30px;
             border-radius: 10px;
             max-width: 400px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        .login-modal-content h3 {
-            margin-top: 0;
-        }
-        .login-modal-content label {
-            display: block;
-            font-weight: 600;
-            margin: 10px 0 4px;
-        }
+        .login-modal-content h3 { margin-top: 0; }
+        .login-modal-content label { display: block; font-weight: 600; margin: 10px 0 4px; }
         .login-modal-content input {
             width: 100%;
             padding: 8px 12px;
@@ -807,14 +656,12 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             z-index: 10002;
             align-items: center;
             justify-content: center;
         }
-        .upi-modal.show {
-            display: flex;
-        }
+        .upi-modal.show { display: flex; }
         .upi-modal-content {
             background: white;
             padding: 30px;
@@ -835,27 +682,25 @@
             margin-top: 12px;
         }
 
-        /* ─── PATIENT PORTAL MODAL ─── */
+        /* ─── PATIENT PORTAL ─── */
         .patient-portal-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.6);
             z-index: 10050;
             overflow-y: auto;
             padding: 20px;
             align-items: center;
             justify-content: center;
         }
-        .patient-portal-modal.active {
-            display: flex;
-        }
+        .patient-portal-modal.active { display: flex; }
         .patient-portal-content {
             max-width: 860px;
             width: 100%;
             background: #ffffff;
             border-radius: 2rem;
-            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.25);
+            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.35), 0 0 0 1px rgba(212,175,55,0.25);
             overflow: hidden;
             max-height: 95vh;
             overflow-y: auto;
@@ -875,13 +720,13 @@
             flex-wrap: wrap;
         }
         .portal-header .portal-badge {
-            background: rgba(212, 175, 55, 0.2);
+            background: rgba(212,175,55,0.2);
             padding: 6px 16px;
             border-radius: 60px;
             font-size: 0.7rem;
             font-weight: 600;
             color: #e6c168;
-            border: 0.5px solid rgba(212, 175, 55, 0.5);
+            border: 0.5px solid rgba(212,175,55,0.5);
         }
         .portal-header .portal-sub {
             color: #8f9bb3;
@@ -934,7 +779,7 @@
         }
         .portal-input:focus {
             border-color: #d4af37;
-            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 4px 14px rgba(212,175,55,0.2);
         }
         .portal-btn {
             width: 100%;
@@ -947,12 +792,12 @@
             color: white;
             border-radius: 2rem;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.25s cubic-bezier(0.2,0.9,0.4,1.1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5);
+            box-shadow: 0 8px 20px -8px rgba(7,94,84,0.5);
             margin-top: 0.5rem;
             -webkit-tap-highlight-color: transparent;
         }
@@ -960,9 +805,7 @@
             transform: translateY(-2px);
             background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%);
         }
-        .portal-btn:active {
-            transform: scale(0.97);
-        }
+        .portal-btn:active { transform: scale(0.97); }
         .portal-status {
             margin-top: 1.2rem;
             padding: 0.9rem 1.2rem;
@@ -1009,9 +852,7 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .portal-report-item:hover {
-            background: #f1f5f9;
-        }
+        .portal-report-item:hover { background: #f1f5f9; }
         .portal-report-info {
             display: flex;
             flex-direction: column;
@@ -1019,14 +860,8 @@
             flex: 1;
             min-width: 120px;
         }
-        .portal-report-info .test-name {
-            font-weight: 600;
-            color: #1a212c;
-        }
-        .portal-report-info .upload-date {
-            font-size: 0.8rem;
-            color: #7890a3;
-        }
+        .portal-report-info .test-name { font-weight: 600; color: #1a212c; }
+        .portal-report-info .upload-date { font-size: 0.8rem; color: #7890a3; }
         .portal-report-actions {
             display: flex;
             align-items: center;
@@ -1076,9 +911,7 @@
             margin-top: 1rem;
             -webkit-tap-highlight-color: transparent;
         }
-        .portal-close-btn:hover {
-            background: #5a6268;
-        }
+        .portal-close-btn:hover { background: #5a6268; }
         .portal-footer {
             padding: 1rem 2rem 1.4rem;
             font-size: 0.7rem;
@@ -1140,147 +973,56 @@
             transition: 0.2s;
             -webkit-tap-highlight-color: transparent;
         }
-        .portal-refresh-btn:hover {
-            background: #cbd5e1;
-        }
-        .portal-refresh-btn i {
-            margin-right: 6px;
-        }
+        .portal-refresh-btn:hover { background: #cbd5e1; }
+        .portal-refresh-btn i { margin-right: 6px; }
         @media (max-width: 650px) {
-            .portal-body {
-                padding: 1.5rem;
-            }
-            .portal-header h1 {
-                font-size: 1.5rem;
-            }
-            .portal-report-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .portal-report-actions {
-                width: 100%;
-                justify-content: flex-end;
-            }
-            .portal-header {
-                padding: 1.2rem 1.2rem 1rem;
-            }
-            .portal-footer {
-                flex-direction: column;
-                text-align: center;
-                padding: 0.8rem 1.2rem;
-            }
-            .portal-input {
-                font-size: 0.95rem;
-                padding: 0.8rem 1rem;
-            }
-            .portal-btn {
-                font-size: 0.95rem;
-                padding: 0.8rem 1rem;
-            }
-            .debug-section {
-                padding: 0.8rem;
-            }
+            .portal-body { padding: 1.5rem; }
+            .portal-header h1 { font-size: 1.5rem; }
+            .portal-report-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .portal-report-actions { width: 100%; justify-content: flex-end; }
+            .portal-header { padding: 1.2rem 1.2rem 1rem; }
+            .portal-footer { flex-direction: column; text-align: center; padding: 0.8rem 1.2rem; }
+            .portal-input { font-size: 0.95rem; padding: 0.8rem 1rem; }
+            .portal-btn { font-size: 0.95rem; padding: 0.8rem 1rem; }
+            .debug-section { padding: 0.8rem; }
         }
 
-        /* ─── ADMIN DARK MODE ─── */
+        /* ─── DARK MODE ─── */
         body.admin-dark #adminPanelContainer {
             --bg-light: #0f172a;
             --text-dark: #f1f5f9;
             --card: #1e293b;
             --border: #334155;
         }
-        body.admin-dark .stat-card {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        body.admin-dark .stat-card .info p {
-            color: #94a3b8;
-        }
-        body.admin-dark .table-wrap {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        body.admin-dark .table-wrap th {
-            background: #0f172a;
-            color: #94a3b8;
-        }
-        body.admin-dark .table-wrap td {
-            border-color: #334155;
-        }
-        body.admin-dark .form-grid {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        body.admin-dark .form-grid label input,
-        body.admin-dark .form-grid label select {
+        body.admin-dark .stat-card { background: #1e293b; border-color: #334155; }
+        body.admin-dark .stat-card .info p { color: #94a3b8; }
+        body.admin-dark .table-wrap { background: #1e293b; border-color: #334155; }
+        body.admin-dark .table-wrap th { background: #0f172a; color: #94a3b8; }
+        body.admin-dark .table-wrap td { border-color: #334155; }
+        body.admin-dark .form-grid { background: #1e293b; border-color: #334155; }
+        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select {
             background: #0f172a;
             border-color: #334155;
             color: #f1f5f9;
         }
-        body.admin-dark .template-box {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        body.admin-dark .template-box .msg-preview {
-            background: #0f172a;
-        }
-        body.admin-dark .toolbar .search-box {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        body.admin-dark .toolbar .search-box input {
-            color: #f1f5f9;
-        }
-        body.admin-dark .admin-content {
-            background: #0f172a;
-        }
-        body.admin-dark .badge-status.paid {
-            background: #064e3b;
-            color: #6ee7b7;
-        }
-        body.admin-dark .badge-status.unpaid {
-            background: #7f1d1d;
-            color: #fca5a5;
-        }
-        body.admin-dark .badge-status.pending {
-            background: #78350f;
-            color: #fcd34d;
-        }
-        body.admin-dark .badge-status.process {
-            background: #1e3a5f;
-            color: #93c5fd;
-        }
-        body.admin-dark .badge-status.done {
-            background: #312e81;
-            color: #a5b4fc;
-        }
-        body.admin-dark .stat-card .icon.blue {
-            background: #1e3a5f;
-            color: #60a5fa;
-        }
-        body.admin-dark .stat-card .icon.green {
-            background: #064e3b;
-            color: #34d399;
-        }
-        body.admin-dark .stat-card .icon.red {
-            background: #7f1d1d;
-            color: #f87171;
-        }
-        body.admin-dark .stat-card .icon.purple {
-            background: #4c1d95;
-            color: #a78bfa;
-        }
-        body.admin-dark .stat-card .icon.orange {
-            background: #78350f;
-            color: #fbbf24;
-        }
-        body.admin-dark .stat-card .icon.teal {
-            background: #134e4a;
-            color: #2dd4bf;
-        }
+        body.admin-dark .template-box { background: #1e293b; border-color: #334155; }
+        body.admin-dark .template-box .msg-preview { background: #0f172a; }
+        body.admin-dark .toolbar .search-box { background: #1e293b; border-color: #334155; }
+        body.admin-dark .toolbar .search-box input { color: #f1f5f9; }
+        body.admin-dark .admin-content { background: #0f172a; }
+        body.admin-dark .badge-status.paid { background: #064e3b; color: #6ee7b7; }
+        body.admin-dark .badge-status.unpaid { background: #7f1d1d; color: #fca5a5; }
+        body.admin-dark .badge-status.pending { background: #78350f; color: #fcd34d; }
+        body.admin-dark .badge-status.process { background: #1e3a5f; color: #93c5fd; }
+        body.admin-dark .badge-status.done { background: #312e81; color: #a5b4fc; }
+        body.admin-dark .stat-card .icon.blue { background: #1e3a5f; color: #60a5fa; }
+        body.admin-dark .stat-card .icon.green { background: #064e3b; color: #34d399; }
+        body.admin-dark .stat-card .icon.red { background: #7f1d1d; color: #f87171; }
+        body.admin-dark .stat-card .icon.purple { background: #4c1d95; color: #a78bfa; }
+        body.admin-dark .stat-card .icon.orange { background: #78350f; color: #fbbf24; }
+        body.admin-dark .stat-card .icon.teal { background: #134e4a; color: #2dd4bf; }
 
-        /* ─── FIREBASE STATUS BADGE ─── */
+        /* ─── FIREBASE STATUS ─── */
         .firebase-status {
             background: #1a8d4a;
             color: white;
@@ -1293,26 +1035,22 @@
             gap: 6px;
             margin-left: 8px;
         }
-        .firebase-status.offline {
-            background: #dc3545;
-        }
-        .firebase-status i {
-            font-size: 12px;
-        }
+        .firebase-status.offline { background: #dc3545; }
+        .firebase-status i { font-size: 12px; }
         .cloud-badge {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255,255,255,0.15);
             padding: 2px 10px;
             border-radius: 12px;
             font-size: 10px;
             color: #93c5fd;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.1);
             margin-left: 6px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ─── ORIGINAL PATIENT WEBSITE ─── -->
+    <!-- ─── HEADER & HERO (same as before) ─── -->
     <header>
         <h1>RAJAN <span>PATH LAB</span></h1>
         <nav>
@@ -1343,6 +1081,7 @@
         </div>
     </div>
 
+    <!-- ─── ABOUT, PARTNERS, TESTS (unchanged) ─── -->
     <section id="about" style="background: white;">
         <div class="about-container">
             <div class="about-text">
@@ -1425,7 +1164,7 @@
 
     <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
 
-    <!-- ─── ADMIN LOGIN MODAL ─── -->
+    <!-- ─── LOGIN MODAL ─── -->
     <div class="login-modal" id="loginModal">
         <div class="login-modal-content">
             <h3><i class="fas fa-lock"></i> Admin Login</h3>
@@ -1793,7 +1532,7 @@
         </div>
     </div>
 
-    <!-- ─── PATIENT PORTAL MODAL ─── -->
+    <!-- ─── PATIENT PORTAL ─── -->
     <div class="patient-portal-modal" id="patientPortalModal">
         <div class="patient-portal-content">
             <div class="portal-header">
@@ -1816,7 +1555,6 @@
                 <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
                 <div id="portalReportList" class="portal-report-list" style="display: none;"></div>
 
-                <!-- ─── DEBUG SECTION ─── -->
                 <details class="debug-section" open>
                     <summary>🔧 Debug: All Patients in Cloud</summary>
                     <div id="debugPatientList" class="debug-patient-list">
@@ -1825,7 +1563,6 @@
                     <div style="margin-top:0.8rem;font-size:0.8rem;color:#0f172a;background:#dbeafe;padding:0.5rem;border-radius:0.5rem;border-left:3px solid #2563eb;">
                         ✅ <strong>Cloud Sync Active:</strong> Data is stored in Firebase. 
                         Patients added on <strong>any device</strong> will appear here instantly.
-                        Make sure Firebase is configured correctly.
                     </div>
                 </details>
 
@@ -1841,15 +1578,16 @@
     <!-- ─── JAVASCRIPT ─── -->
     <script>
         // ================================================================
-        // 🔥 FIREBASE CONFIG – REPLACE WITH YOUR OWN PROJECT DETAILS
+        // 🔥 FIREBASE CONFIG – YOUR OWN PROJECT DETAILS (inserted)
         // ================================================================
         const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyReplaceWithYourOwn",
-            authDomain: "your-project.firebaseapp.com",
-            projectId: "your-project-id",
-            storageBucket: "your-project.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef123456"
+            apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
+            authDomain: "rajanpathlab5530.firebaseapp.com",
+            projectId: "rajanpathlab5530",
+            storageBucket: "rajanpathlab5530.firebasestorage.app",
+            messagingSenderId: "883585447034",
+            appId: "1:883585447034:web:225d807b2cc83095f9b7c3",
+            measurementId: "G-7WMF1M8CG9"
         };
 
         // ─── INIT FIREBASE ───
@@ -1860,7 +1598,6 @@
             firebase.initializeApp(firebaseConfig);
             db = firebase.firestore();
             storage = firebase.storage();
-            // Enable offline persistence
             db.enablePersistence({ synchronizeTabs: true })
                 .catch(err => console.warn('Firebase persistence:', err));
 
@@ -1893,8 +1630,7 @@
         function generatePatientId() {
             const nextId = Math.floor(Math.random() * 9999) + 1;
             const today = new Date();
-            const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate())
-                .padStart(2, '0');
+            const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
             return 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
         }
 
@@ -2053,7 +1789,7 @@
                 snapshot.forEach(doc => patients.push({ id: doc.id, ...doc.data() }));
 
                 const totalPatients = patients.length;
-                const totalReports = 0; // will be updated from reports
+                const totalReports = 0;
                 const pendingReports = patients.filter(p => p.status === 'pending').length;
                 const cultureProcess = patients.filter(p => p.test && p.test.includes('Urine')).length;
                 const duePatients = patients.filter(p => (p.due_amount || 0) > 0).length;
@@ -2066,7 +1802,6 @@
                 $('dDue').textContent = duePatients;
                 $('dRevenue').textContent = '₹' + totalRevenue;
 
-                // Recent patients
                 const tbody = $('dRecentPatients');
                 if (patients.length) {
                     tbody.innerHTML = patients.slice(0, 5).map(p =>
@@ -2076,18 +1811,15 @@
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
                 }
 
-                // Get total reports count
                 reportsCol.get().then(repSnap => {
                     $('dTotalReports').textContent = repSnap.size;
                 });
 
-                // Charts
                 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
                 const weeklyData = days.map(() => 0);
                 patients.forEach(p => {
                     if (p.created_at) {
-                        const date = new Date(p.created_at.seconds ? p.created_at.seconds * 1000 : p
-                        .created_at);
+                        const date = new Date(p.created_at.seconds ? p.created_at.seconds * 1000 : p.created_at);
                         if (!isNaN(date)) {
                             const day = date.getDay();
                             const index = day === 0 ? 6 : day - 1;
@@ -2108,9 +1840,7 @@
                         type: 'bar',
                         data: {
                             labels: days,
-                            datasets: [{ label: 'Patients', data: weeklyData,
-                                backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
-                                borderWidth: 2 }]
+                            datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }]
                         },
                         options: {
                             responsive: true,
@@ -2124,17 +1854,14 @@
                 const ctx2 = $('chartPie')?.getContext('2d');
                 if (ctx2) {
                     if (chartPieInstance) chartPieInstance.destroy();
-                    const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a',
-                        '#ff6600'
-                    ];
+                    const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a', '#ff6600'];
                     chartPieInstance = new Chart(ctx2, {
                         type: 'doughnut',
                         data: {
                             labels: testLabels.length ? testLabels : ['No Data'],
                             datasets: [{
                                 data: testLabels.length ? testData : [1],
-                                backgroundColor: testLabels.length ? colors.slice(0, testLabels
-                                    .length) : ['#ccc'],
+                                backgroundColor: testLabels.length ? colors.slice(0, testLabels.length) : ['#ccc'],
                                 borderWidth: 2,
                                 borderColor: '#fff'
                             }]
@@ -2142,8 +1869,7 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,
-                                    font: { size: 11 } } } }
+                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
                         }
                     });
                 }
@@ -2176,9 +1902,7 @@
                 }
             }).catch(err => {
                 console.error('Patients error:', err);
-                $('patientTableBody').innerHTML =
-                    '<tr><td colspan="8" style="text-align:center;padding:20px;color:red;">❌ Error loading: ' +
-                    err.message + '</td></tr>';
+                $('patientTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:red;">❌ Error loading: ' + err.message + '</td></tr>';
             });
         }
 
@@ -2194,7 +1918,6 @@
             if (!name || !phone) { alert('Name & Phone required'); return; }
             const patientId = generatePatientId();
 
-            // Check if phone already exists
             patientsCol.where('phone', '==', phone).get().then(snap => {
                 if (!snap.empty) {
                     alert('Phone number already exists!');
@@ -2236,7 +1959,6 @@
                 const id = e.target.closest('.btn-del-patient').dataset.id;
                 if (confirm('Delete this patient from cloud?')) {
                     patientsCol.doc(id).delete().then(() => {
-                        // Also delete associated reports
                         reportsCol.where('patient_id', '==', id).get().then(snap => {
                             snap.forEach(doc => doc.ref.delete());
                         });
@@ -2282,9 +2004,7 @@
                 }
             }).catch(err => {
                 console.error('Reports error:', err);
-                $('reportsTableBody').innerHTML =
-                    '<tr><td colspan="4" style="text-align:center;padding:20px;color:red;">❌ Error: ' + err
-                    .message + '</td></tr>';
+                $('reportsTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:red;">❌ Error: ' + err.message + '</td></tr>';
             });
         }
 
@@ -2317,7 +2037,6 @@
             if (!test) { msgDiv.textContent = '❌ Test Name is required.'; return; }
             if (!file) { msgDiv.textContent = '❌ Please select a PDF file.'; return; }
 
-            // Check patient exists
             patientsCol.where('patient_id', '==', pid).get().then(snap => {
                 if (snap.empty) {
                     msgDiv.textContent = '❌ Patient not found! Please add patient first.';
@@ -2326,34 +2045,27 @@
                 const patientData = snap.docs[0].data();
                 const patientId = snap.docs[0].id;
 
-                // Check if report exists
-                reportsCol.where('patient_id', '==', pid).where('test_name', '==', test).get().then(
-                repSnap => {
+                reportsCol.where('patient_id', '==', pid).where('test_name', '==', test).get().then(repSnap => {
                     if (!repSnap.empty && replace === 'no') {
                         msgDiv.textContent = '❌ Report exists. Use Replace=Yes to overwrite.';
                         return;
                     }
-                    // Delete old if replacing
                     const deletePromises = [];
                     repSnap.forEach(doc => {
                         const oldPath = doc.data().file_path;
                         if (oldPath) {
-                            deletePromises.push(storage.ref('reports/' + oldPath).delete()
-                                .catch(() => {}));
+                            deletePromises.push(storage.ref('reports/' + oldPath).delete().catch(() => {}));
                         }
                         deletePromises.push(doc.ref.delete());
                     });
                     Promise.all(deletePromises).then(() => {
-                        // Upload new file
-                        const filename = pid + '_' + test.replace(/[^a-zA-Z0-9]/g, '_') + '_' +
-                            Date.now() + '.pdf';
+                        const filename = pid + '_' + test.replace(/[^a-zA-Z0-9]/g, '_') + '_' + Date.now() + '.pdf';
                         const uploadRef = storage.ref('reports/' + filename);
                         const uploadTask = uploadRef.put(file);
                         uploadTask.on('state_changed', null, (err) => {
                             msgDiv.textContent = '❌ Upload error: ' + err.message;
                             msgDiv.style.color = 'red';
                         }, () => {
-                            // Success
                             uploadRef.getDownloadURL().then(url => {
                                 const reportData = {
                                     patient_id: pid,
@@ -2361,8 +2073,7 @@
                                     test_name: test,
                                     file_path: filename,
                                     file_url: url,
-                                    uploaded_at: firebase.firestore
-                                        .FieldValue.serverTimestamp()
+                                    uploaded_at: firebase.firestore.FieldValue.serverTimestamp()
                                 };
                                 reportsCol.add(reportData).then(() => {
                                     msgDiv.style.color = 'green';
@@ -2371,8 +2082,7 @@
                                     $('reportTestName').value = '';
                                     $('reportFile').value = '';
                                     refreshAll();
-                                    setTimeout(() => { msgDiv
-                                        .textContent = ''; }, 5000);
+                                    setTimeout(() => { msgDiv.textContent = ''; }, 5000);
                                 });
                             });
                         });
@@ -2430,8 +2140,7 @@
         document.addEventListener('click', function(e) {
             if (e.target.closest('.wa-send')) {
                 const btn = e.target.closest('.wa-send');
-                const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(
-                    /{test}/g, btn.dataset.test);
+                const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn.dataset.test);
                 sendWhatsApp(btn.dataset.phone, msg);
             }
         });
@@ -2439,8 +2148,7 @@
         $('sendWAPatient').addEventListener('click', function() {
             const phone = prompt('Enter patient phone:');
             if (phone) {
-                const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g,
-                    'Report');
+                const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report');
                 sendWhatsApp(phone, msg);
             }
         });
@@ -2535,8 +2243,7 @@
                 let todayCount = 0;
                 patients.forEach(p => {
                     if (p.created_at) {
-                        const d = new Date(p.created_at.seconds ? p.created_at.seconds * 1000 : p
-                            .created_at);
+                        const d = new Date(p.created_at.seconds ? p.created_at.seconds * 1000 : p.created_at);
                         if (!isNaN(d) && d.toDateString() === today) todayCount++;
                     }
                 });
@@ -2544,11 +2251,9 @@
                 const revenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
                 const testMap = {};
                 patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                let topTest = '-',
-                    topCount = 0;
+                let topTest = '-', topCount = 0;
                 Object.keys(testMap).forEach(key => {
-                    if (testMap[key] > topCount) { topCount = testMap[key];
-                        topTest = key; }
+                    if (testMap[key] > topCount) { topCount = testMap[key]; topTest = key; }
                 });
 
                 $('aToday').textContent = todayCount;
@@ -2559,9 +2264,7 @@
                 const tbody = $('analyticsTable');
                 const testWise = Object.keys(testMap).map(key => ({ test: key, count: testMap[key] }));
                 if (testWise.length) {
-                    tbody.innerHTML = testWise.map(t =>
-                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`
-                    ).join('');
+                    tbody.innerHTML = testWise.map(t => `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`).join('');
                 } else {
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
                 }
@@ -2627,10 +2330,8 @@
             document.body.style.overflow = '';
         }
 
-        $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault();
-            openPortal(); });
-        $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault();
-            openPortal(); });
+        $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
+        $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
         $('closePortalBtn').addEventListener('click', closePortal);
         portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
@@ -2642,7 +2343,7 @@
             $('portalReportList').style.display = 'none';
         });
 
-        // ─── UPDATE DEBUG LIST (from cloud) ───
+        // ─── UPDATE DEBUG LIST ───
         function updateDebugList() {
             const container = $('debugPatientList');
             if (!container) return;
@@ -2654,8 +2355,7 @@
                 const patients = [];
                 snapshot.forEach(doc => patients.push({ id: doc.id, ...doc.data() }));
                 if (patients.length) {
-                    let html = '<p style="font-weight:600;margin-bottom:0.5rem;color:#0f172a;">📋 Total Patients: ' +
-                        patients.length + ' (cloud)</p>';
+                    let html = '<p style="font-weight:600;margin-bottom:0.5rem;color:#0f172a;">📋 Total Patients: ' + patients.length + ' (cloud)</p>';
                     html += '<ul style="list-style:none;padding:0;margin:0;">';
                     patients.forEach(p => {
                         html += `<li style="padding:4px 0;border-bottom:1px solid #eee;font-size:0.8rem;display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
@@ -2669,12 +2369,10 @@
                     html += '</ul>';
                     container.innerHTML = html;
                 } else {
-                    container.innerHTML =
-                        '<p style="color:#dc3545;">⚠️ No patients found in cloud. Add patients from Admin panel.</p>';
+                    container.innerHTML = '<p style="color:#dc3545;">⚠️ No patients found in cloud. Add patients from Admin panel.</p>';
                 }
             }).catch(err => {
-                container.innerHTML = '<p style="color:#dc3545;">❌ Error loading from cloud: ' + err.message +
-                    '</p>';
+                container.innerHTML = '<p style="color:#dc3545;">❌ Error loading from cloud: ' + err.message + '</p>';
             });
         }
 
@@ -2698,27 +2396,21 @@
             }
 
             try {
-                // Search patients
-                let query = patientsCol;
                 let found = false;
                 let patientDoc = null;
                 let patientData = null;
 
-                // Try by patient_id
+                // 1. Exact patient_id
                 const snap1 = await patientsCol.where('patient_id', '==', searchValue).get();
-                if (!snap1.empty) { patientDoc = snap1.docs[0];
-                    patientData = patientDoc.data();
-                    found = true; }
+                if (!snap1.empty) { patientDoc = snap1.docs[0]; patientData = patientDoc.data(); found = true; }
 
-                // Try by phone
+                // 2. Exact phone
                 if (!found) {
                     const snap2 = await patientsCol.where('phone', '==', searchValue).get();
-                    if (!snap2.empty) { patientDoc = snap2.docs[0];
-                        patientData = patientDoc.data();
-                        found = true; }
+                    if (!snap2.empty) { patientDoc = snap2.docs[0]; patientData = patientDoc.data(); found = true; }
                 }
 
-                // Try by normalized phone
+                // 3. Normalized phone
                 if (!found) {
                     const normalized = normalizePhone(searchValue);
                     const snap3 = await patientsCol.get();
@@ -2732,7 +2424,7 @@
                     });
                 }
 
-                // Partial match
+                // 4. Partial match
                 if (!found) {
                     const lower = searchValue.toLowerCase();
                     const snap4 = await patientsCol.get();
@@ -2741,18 +2433,14 @@
                         if ((data.patient_id && data.patient_id.toLowerCase().includes(lower)) ||
                             (data.name && data.name.toLowerCase().includes(lower)) ||
                             (data.phone && data.phone.includes(searchValue))) {
-                            if (!found) { patientDoc = doc;
-                                patientData = data;
-                                found = true; }
+                            if (!found) { patientDoc = doc; patientData = data; found = true; }
                         }
                     });
                 }
 
                 if (!found || !patientData) {
                     statusDiv.className = 'portal-status error';
-                    statusDiv.innerHTML =
-                        '❌ No patient found with <strong>"' + searchValue +
-                        '"</strong><br><small>Check Debug section to see all patients in cloud.</small>';
+                    statusDiv.innerHTML = '❌ No patient found with <strong>"' + searchValue + '"</strong><br><small>Check Debug section to see all patients in cloud.</small>';
                     listDiv.style.display = 'none';
                     updateDebugList();
                     return;
@@ -2771,14 +2459,12 @@
                 }
 
                 statusDiv.className = 'portal-status success';
-                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for <strong>' + (patientData
-                    .name || 'Patient') + '</strong>. Due: ₹' + (patientData.due_amount || 0);
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for <strong>' + (patientData.name || 'Patient') + '</strong>. Due: ₹' + (patientData.due_amount || 0);
 
                 let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
                     const canDownload = (patientData.due_amount || 0) === 0;
-                    const dueBadge = (patientData.due_amount || 0) > 0 ? '<span class="portal-due-badge">₹' +
-                        patientData.due_amount + ' DUE</span>' : '';
+                    const dueBadge = (patientData.due_amount || 0) > 0 ? '<span class="portal-due-badge">₹' + patientData.due_amount + ' DUE</span>' : '';
                     html += `
                         <div class="portal-report-item">
                             <div class="portal-report-info">
@@ -2797,7 +2483,6 @@
                 listDiv.innerHTML = html;
                 listDiv.style.display = 'block';
 
-                // Download handler
                 listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const filePath = this.dataset.file;
@@ -2823,18 +2508,9 @@
         console.log('✅ Rajan Path Lab · Firebase Cloud Sync Enabled');
         console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
         console.log('☁️ Data is stored in Firebase - accessible from any device');
-        console.log('📌 Replace firebaseConfig with your project details');
+        console.log('📌 Firebase config loaded successfully.');
 
-        // Auto-refresh if portal is open
         if (portalModal.classList.contains('active')) updateDebugList();
     </script>
 </body>
 </html>
-const firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "rajanpathlab8709.firebaseapp.com",
-  projectId: "rajanpathlab8709",
-  storageBucket: "rajanpathlab8709.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef..."
-};
