@@ -34,11 +34,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
             position: sticky;
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            flex-wrap: wrap;
         }
         header h1 {
             margin: 0;
@@ -357,7 +357,7 @@
             }
         }
 
-        /* Admin Panel */
+        /* ─── ADMIN PANEL ─── */
         #adminPanelWrapper {
             display: none;
             position: fixed;
@@ -649,6 +649,14 @@
             padding: 3px 10px;
             font-size: 12px;
         }
+        .btn-success {
+            background: #25D366;
+            color: #fff;
+            border-color: #25D366;
+        }
+        .btn-success:hover {
+            background: #1a8d4a;
+        }
 
         .form-grid {
             display: grid;
@@ -823,6 +831,7 @@
             margin-top: 12px;
         }
 
+        /* ─── PATIENT PORTAL ─── */
         .patient-portal-modal {
             display: none;
             position: fixed;
@@ -959,6 +968,11 @@
             border-left-color: #d4873a;
             color: #8b5a2b;
         }
+        .portal-status.info {
+            background: #e0f2fe;
+            border-left-color: #0284c7;
+            color: #075985;
+        }
         .portal-report-list {
             margin-top: 1.5rem;
             border-top: 1px solid #e2e8f0;
@@ -1025,6 +1039,31 @@
             display: flex;
             justify-content: space-between;
         }
+        .portal-debug {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f1f5f9;
+            border-radius: 0.75rem;
+            font-size: 0.8rem;
+            border: 1px dashed #94a3b8;
+            overflow-x: auto;
+        }
+        .portal-debug summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .portal-debug pre {
+            margin: 8px 0 0 0;
+            font-size: 0.7rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #fff;
+            padding: 8px;
+            border-radius: 4px;
+        }
 
         @media (max-width: 650px) {
             .portal-body {
@@ -1057,6 +1096,7 @@
             color: #991b1b;
         }
 
+        /* Dark mode */
         body.admin-dark #adminPanelContainer {
             --bg-light: #0f172a;
             --text-dark: #f1f5f9;
@@ -1269,7 +1309,7 @@
 
     <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
 
-    <!-- ─── ADMIN LOGIN MODAL ─── -->
+    <!-- ─── ADMIN LOGIN ─── -->
     <div class="login-modal" id="loginModal">
         <div class="login-modal-content">
             <h3><i class="fas fa-lock"></i> Admin Login</h3>
@@ -1419,8 +1459,8 @@
                         </div>
                         <div class="toolbar">
                             <div class="search-box"><i class="fas fa-search"></i><input type="text" id="patientSearch" placeholder="Search..." /></div>
-                            <button class="btn btn-outline btn-sm" id="refreshPatients"><i class="fas fa-sync"></i></button>
-                            <button class="btn btn-outline btn-sm" id="exportDataBtn" style="background:#25D366;color:white;border-color:#25D366;"><i class="fas fa-cloud-upload-alt"></i> Sync</button>
+                            <button class="btn btn-outline btn-sm" id="refreshPatients"><i class="fas fa-sync"></i> Refresh</button>
+                            <button class="btn btn-success btn-sm" id="exportDataBtn"><i class="fas fa-cloud-upload-alt"></i> Sync</button>
                         </div>
                         <div class="table-wrap">
                             <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
@@ -1574,22 +1614,29 @@
 
                     <!-- BACKUP -->
                     <div class="admin-section" id="sec-backup">
-                        <h2 style="text-align:left;"><i class="fas fa-database"></i> Backup &amp; Restore</h2>
-                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px;">
+                        <h2 style="text-align:left;"><i class="fas fa-database"></i> Backup &amp; Sync <span class="premium-badge">Cross-Device</span></h2>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:16px;">
                             <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-database" style="font-size:28px;color:var(--accent-teal);"></i>
+                                <i class="fas fa-download" style="font-size:28px;color:var(--accent-teal);"></i>
                                 <h4>Export Data</h4>
+                                <p style="font-size:11px;color:#64748b;">Download JSON file</p>
                                 <button class="btn btn-primary" id="exportBackupBtn"><i class="fas fa-download"></i> Export</button>
                             </div>
                             <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-undo-alt" style="font-size:28px;color:#f59e0b;"></i>
+                                <i class="fas fa-upload" style="font-size:28px;color:#f59e0b;"></i>
                                 <h4>Import Data</h4>
-                                <input type="file" id="importFile" accept=".json" style="margin:6px 0;" />
+                                <p style="font-size:11px;color:#64748b;">Upload JSON file</p>
+                                <input type="file" id="importFile" accept=".json" style="margin:6px 0;font-size:12px;" />
                                 <button class="btn btn-outline" id="importBackupBtn"><i class="fas fa-upload"></i> Import</button>
+                            </div>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;background:#e6f4ea;border-color:#2b7a3e;">
+                                <i class="fas fa-info-circle" style="font-size:28px;color:#065f46;"></i>
+                                <h4 style="font-size:13px;">How to Sync</h4>
+                                <p style="font-size:11px;color:#065f46;">1. Export from Laptop<br>2. Transfer JSON file to Mobile<br>3. Import on Mobile</p>
                             </div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No backups</td></tr></tbody></table>
+                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4" style="text-align:center;padding:20px;">Use Export/Import to sync data across devices</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1628,7 +1675,7 @@
         </div>
     </div>
 
-    <!-- ─── PATIENT PORTAL MODAL ─── -->
+    <!-- ─── PATIENT PORTAL ─── -->
     <div class="patient-portal-modal" id="patientPortalModal">
         <div class="patient-portal-content">
             <div class="portal-header">
@@ -1643,6 +1690,15 @@
                 <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
                 <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
                 <div id="portalReportList" class="portal-report-list" style="display: none;"></div>
+
+                <!-- ─── DEBUG SECTION ─── -->
+                <div class="portal-debug">
+                    <details>
+                        <summary><i class="fas fa-bug"></i> Debug: All Patients in Storage (<span id="debugCount">0</span>)</summary>
+                        <pre id="debugContent">Click "VIEW MY REPORTS" first to load data...</pre>
+                    </details>
+                </div>
+
                 <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
             </div>
             <div class="portal-footer"><span>✦ VIEW-ONLY PORTAL ✦</span><span>RAJAN PATH LAB</span></div>
@@ -1657,7 +1713,7 @@
             // ─── LOGIN ───
             const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
-            // ─── DATA PERSISTENCE (localStorage) ───
+            // ─── DATA PERSISTENCE ───
             function loadData(key, defaultData) {
                 try {
                     const stored = localStorage.getItem('rpl_' + key);
@@ -1673,12 +1729,9 @@
             function saveData(key, data) {
                 try {
                     localStorage.setItem('rpl_' + key, JSON.stringify(data));
-                } catch (e) {
-                    console.warn('Failed to save data to localStorage', e);
-                }
+                } catch (e) { console.warn('Failed to save data to localStorage', e); }
             }
 
-            // ─── DEFAULT DATA ───
             const defaultPatients = [];
             const defaultReports = [];
 
@@ -1724,15 +1777,17 @@
                 $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
                 $('portalPatientId').value = '';
+                // Load fresh data for debug
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
+                $('debugCount').textContent = patients.length;
+                $('debugContent').textContent = patients.length ? JSON.stringify(patients, null, 2) :
+                'No patients in storage. Add patients from Admin panel.';
             }
 
             function closePortal() {
                 portalModal.classList.remove('active');
                 document.body.style.overflow = '';
-                $('portalStatus').className = 'portal-status';
-                $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
-                $('portalReportList').style.display = 'none';
-                $('portalPatientId').value = '';
             }
 
             $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault();
@@ -1742,10 +1797,20 @@
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
+            // ─── PORTAL FETCH ───
             $('portalFetchBtn').addEventListener('click', function() {
                 const searchValue = $('portalPatientId').value.trim();
                 const statusDiv = $('portalStatus');
                 const listDiv = $('portalReportList');
+
+                // Load fresh data
+                patients = loadData('patients', defaultPatients);
+                reports = loadData('reports', defaultReports);
+
+                // Update debug
+                $('debugCount').textContent = patients.length;
+                $('debugContent').textContent = patients.length ? JSON.stringify(patients, null, 2) :
+                    'No patients in storage.';
 
                 if (!searchValue) {
                     statusDiv.className = 'portal-status error';
@@ -1754,45 +1819,60 @@
                     return;
                 }
 
-                patients = loadData('patients', defaultPatients);
-                reports = loadData('reports', defaultReports);
-
                 const normalizedSearch = normalizePhone(searchValue);
 
-                let patient = patients.find(p => p.patient_id === searchValue);
+                // ─── SEARCH LOGIC ───
+                let patient = null;
+
+                // 1. Exact match by patient_id (case-insensitive)
+                patient = patients.find(p => p.patient_id && p.patient_id.toLowerCase() === searchValue.toLowerCase());
+
+                // 2. Match by phone (normalized)
                 if (!patient) {
                     patient = patients.find(p => {
                         const np = normalizePhone(p.phone || '');
-                        return np === normalizedSearch || p.phone === searchValue;
+                        return np === normalizedSearch;
                     });
                 }
+
+                // 3. Partial match by phone (if search is at least 4 digits)
                 if (!patient && normalizedSearch.length >= 4) {
                     patient = patients.find(p => {
                         const np = normalizePhone(p.phone || '');
-                        return np.includes(normalizedSearch) || (p.phone || '').includes(searchValue);
+                        return np.includes(normalizedSearch);
+                    });
+                }
+
+                // 4. Partial match by patient_id
+                if (!patient && searchValue.length >= 4) {
+                    patient = patients.find(p => {
+                        return p.patient_id && p.patient_id.toLowerCase().includes(searchValue.toLowerCase());
                     });
                 }
 
                 if (!patient) {
                     statusDiv.className = 'portal-status error';
-                    statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;
+                    statusDiv.innerHTML =
+                        `❌ No patient found with ID or Mobile: <b>${searchValue}</b><br><small>🔍 Check Debug section below to see all patients in storage. Make sure you have added patients from Admin panel.</small>`;
                     listDiv.style.display = 'none';
                     return;
                 }
 
+                // ─── FOUND PATIENT ───
                 const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
+
                 if (patientReports.length === 0) {
-                    statusDiv.className = 'portal-status';
-                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (ID: ' + patient
-                        .patient_id + ')';
+                    statusDiv.className = 'portal-status info';
+                    statusDiv.innerHTML = 'ℹ️ Patient found: <b>' + patient.name + '</b> (ID: ' + patient
+                        .patient_id + ') but no reports uploaded yet.';
                     listDiv.style.display = 'none';
                     return;
                 }
 
                 const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
                 statusDiv.className = 'portal-status success';
-                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
-                    ' (via ' + foundBy + '). Due: ₹' + (patient.due_amount || 0);
+                statusDiv.innerHTML = '✅ Found <b>' + patientReports.length + '</b> report(s) for <b>' + patient
+                    .name + '</b> (via ' + foundBy + '). Due: ₹' + (patient.due_amount || 0);
 
                 let html =
                     '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
@@ -2434,7 +2514,6 @@
                 $('backupListBody').innerHTML = `
                     <tr><td>Local Storage Data</td><td>JSON</td><td>${new Date().toLocaleDateString()}</td><td><button class="btn btn-sm btn-primary" id="exportBackupBtn2"><i class="fas fa-download"></i> Export</button></td></tr>
                 `;
-                // Re-bind export button
                 document.getElementById('exportBackupBtn2')?.addEventListener('click', function() {
                     exportData();
                 });
@@ -2451,7 +2530,7 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                alert('✅ Data exported successfully!');
+                alert('✅ Data exported! Use this file to import on your mobile device.');
             }
 
             $('exportBackupBtn').addEventListener('click', exportData);
@@ -2465,10 +2544,10 @@
                         const data = JSON.parse(e.target.result);
                         if (data.patients && data.reports) {
                             if (confirm('Import ' + data.patients.length + ' patients and ' + data.reports
-                                    .length + ' reports? This will REPLACE all current data.')) {
+                                    .length + ' reports? This will REPLACE all current data on this device.')) {
                                 saveData('patients', data.patients);
                                 saveData('reports', data.reports);
-                                alert('✅ Import successful!');
+                                alert('✅ Import successful! Data synced to this device.');
                                 refreshAll();
                             }
                         } else {
@@ -2495,8 +2574,6 @@
                 }
             }
 
-            $('viewLogBtn')?.addEventListener('click', refreshSecurity);
-
             $('changePwdBtn').addEventListener('click', function() {
                 const old = prompt('Enter old password:');
                 if (!old) return;
@@ -2505,7 +2582,7 @@
                 alert('✅ Password changed! (dummy)');
             });
 
-            // ─── SYNC BUTTON (Export + Import instructions) ───
+            // ─── SYNC BUTTON (Export shortcut) ───
             $('exportDataBtn').addEventListener('click', function() {
                 if (confirm('Export data to JSON file for backup/sync across devices?')) {
                     exportData();
@@ -2515,13 +2592,23 @@
             // ─── INIT ───
             console.log('✅ Rajan Path Lab · LocalStorage Working');
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
-            console.log('📦 Data stored in localStorage - works immediately');
+            console.log('📦 Data stored in localStorage - works immediately on any device');
             console.log('📱 To sync across devices: Use Export/Import in Backup section');
 
-            // Auto-refresh patients on load
-            setTimeout(() => {
-                refreshAll();
-            }, 100);
+            // Auto-refresh
+            setTimeout(() => { refreshAll(); }, 100);
+
+            // Also refresh portal debug when opened
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('#openPatientPortalBtn') || e.target.closest('#openPatientPortalBtn2')) {
+                    setTimeout(() => {
+                        patients = loadData('patients', defaultPatients);
+                        $('debugCount').textContent = patients.length;
+                        $('debugContent').textContent = patients.length ? JSON.stringify(patients, null,
+                            2) : 'No patients in storage.';
+                    }, 200);
+                }
+            });
 
         })();
     </script>
