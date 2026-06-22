@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Rajan Path Lab | Premium Diagnostics</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
@@ -21,6 +21,10 @@
             --path-purple: #662d91;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -30,7 +34,10 @@
             line-height: 1.5;
         }
 
-        b, strong { font-weight: 700; }
+        b,
+        strong {
+            font-weight: 700;
+        }
 
         header {
             background: var(--primary-blue);
@@ -42,12 +49,26 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
         }
 
-        header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; font-weight: 700; }
-        header h1 span { color: var(--accent-teal); }
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+        header h1 span {
+            color: var(--accent-teal);
+        }
 
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
         nav a {
             color: #e2e8f0;
             margin-left: 20px;
@@ -56,9 +77,12 @@
             font-size: 15px;
             transition: 0.2s;
         }
-        nav a:hover { color: var(--accent-teal); }
+        nav a:hover {
+            color: var(--accent-teal);
+        }
 
-        .admin-login-btn, .patient-portal-btn {
+        .admin-login-btn,
+        .patient-portal-btn {
             background: var(--accent-teal);
             color: white;
             border: none;
@@ -70,9 +94,16 @@
             transition: 0.2s;
             margin-left: 15px;
         }
-        .admin-login-btn:hover, .patient-portal-btn:hover { background: #006666; }
-        .patient-portal-btn { background: #25D366; }
-        .patient-portal-btn:hover { background: #1a8d4a; }
+        .admin-login-btn:hover,
+        .patient-portal-btn:hover {
+            background: #006666;
+        }
+        .patient-portal-btn {
+            background: #25D366;
+        }
+        .patient-portal-btn:hover {
+            background: #1a8d4a;
+        }
 
         .hero {
             background: #0d3359;
@@ -92,8 +123,15 @@
             line-height: 1.3;
         }
 
-        .btn-container { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .btn-book, .btn-report {
+        .btn-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .btn-book,
+        .btn-report {
             background: var(--urgent-red);
             padding: 12px 28px;
             color: white;
@@ -104,9 +142,15 @@
             transition: 0.2s;
             display: inline-block;
         }
-        .btn-report { background: var(--accent-teal); }
-        .btn-book:hover { background: #b82d2f; }
-        .btn-report:hover { background: #006666; }
+        .btn-report {
+            background: var(--accent-teal);
+        }
+        .btn-book:hover {
+            background: #b82d2f;
+        }
+        .btn-report:hover {
+            background: #006666;
+        }
 
         .btn-portal {
             background: #25D366;
@@ -121,7 +165,9 @@
             border: none;
             cursor: pointer;
         }
-        .btn-portal:hover { background: #1a8d4a; }
+        .btn-portal:hover {
+            background: #1a8d4a;
+        }
 
         .strip {
             background: #ffffff;
@@ -130,9 +176,24 @@
             text-align: center;
         }
 
-        .strip-content { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-        .strip-item { font-size: 1rem; font-weight: 600; display: flex; align-items: center; color: var(--primary-blue); }
-        .strip i { color: var(--accent-teal); margin-right: 10px; font-size: 1.2rem; }
+        .strip-content {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .strip-item {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            color: var(--primary-blue);
+        }
+        .strip i {
+            color: var(--accent-teal);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
 
         section {
             padding: 45px 20px;
@@ -146,54 +207,188 @@
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(0,128,128,0.03)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(0,128,128,0.1)'/%3E%3C/svg%3E");
         }
 
-        h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 26px; font-weight: 700; }
+        h2 {
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            font-size: 26px;
+            font-weight: 700;
+        }
 
-        .about-container { display: flex; align-items: center; gap: 40px; text-align: left; flex-wrap: wrap; }
-        .about-text { flex: 1; min-width: 300px; }
-        .about-text p { font-size: 1rem; color: #4a5568; margin-bottom: 15px; }
-        .about-text h3 { color: var(--primary-blue); font-size: 18px; margin-top: 15px; font-weight: 700; border-left: 3px solid var(--accent-teal); padding-left: 8px; }
-        .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .feature-item { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.95rem; color: #2d3748; }
-        .feature-item i { color: var(--accent-teal); }
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            text-align: left;
+            flex-wrap: wrap;
+        }
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        .about-text p {
+            font-size: 1rem;
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+        .about-text h3 {
+            color: var(--primary-blue);
+            font-size: 18px;
+            margin-top: 15px;
+            font-weight: 700;
+            border-left: 3px solid var(--accent-teal);
+            padding-left: 8px;
+        }
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #2d3748;
+        }
+        .feature-item i {
+            color: var(--accent-teal);
+        }
 
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .card { background: white; padding: 20px 15px; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 2px 5px rgba(0,0,0,0.03); text-align: center; }
-        .card i { font-size: 30px; margin-bottom: 10px; }
-        .card h3 { margin: 5px 0; font-size: 1.1rem; color: var(--primary-blue); font-weight: 700; }
-        .card p { margin: 4px 0; font-size: 0.9rem; color: #4a5568; }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .card {
+            background: white;
+            padding: 20px 15px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            text-align: center;
+        }
+        .card i {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .card h3 {
+            margin: 5px 0;
+            font-size: 1.1rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+        .card p {
+            margin: 4px 0;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
 
-        .partner-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .partner-item { background: white; padding: 15px; border-radius: 6px; width: 150px; border: 1px solid #cbd5e1; text-align: center; }
-        .partner-item i { font-size: 32px; margin-bottom: 8px; }
-        .partner-item p { font-weight: 700; margin: 0; font-size: 14px; color: var(--primary-blue); }
+        .partner-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .partner-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            width: 150px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+        }
+        .partner-item i {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .partner-item p {
+            font-weight: 700;
+            margin: 0;
+            font-size: 14px;
+            color: var(--primary-blue);
+        }
 
-        .map-container { margin-top: 20px; border-radius: 8px; overflow: hidden; max-width: 800px; margin-left: auto; margin-right: auto; border: 1px solid #cbd5e1; }
+        .map-container {
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #cbd5e1;
+        }
 
-        footer { background: var(--primary-blue); color: #e2e8f0; padding: 40px 20px; text-align: center; }
-        .footer-links { margin: 20px 0; }
-        .footer-links a { color: white; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 600; }
-        .footer-links a:hover { color: var(--accent-teal); }
+        footer {
+            background: var(--primary-blue);
+            color: #e2e8f0;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .footer-links {
+            margin: 20px 0;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .footer-links a:hover {
+            color: var(--accent-teal);
+        }
 
         .whatsapp-float {
-            position: fixed; bottom: 20px; right: 20px;
-            background: #25D366; color: white;
-            padding: 12px 20px; border-radius: 4px;
-            text-decoration: none; font-weight: bold; font-size: 0.95rem;
-            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         @media (max-width: 768px) {
-            header { flex-direction: column; text-align: center; padding: 10px; }
-            nav { margin-top: 10px; }
-            nav a { margin: 0 8px; font-size: 14px; }
-            .admin-login-btn, .patient-portal-btn { margin: 8px 0 0 0; }
-            .hero h2 { font-size: 1.8rem; }
-            .strip-content { flex-direction: column; gap: 8px; }
-            .about-features { grid-template-columns: 1fr; }
-            section { padding: 30px 15px; }
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+            }
+            nav {
+                margin-top: 10px;
+                justify-content: center;
+            }
+            nav a {
+                margin: 0 8px;
+                font-size: 14px;
+            }
+            .admin-login-btn,
+            .patient-portal-btn {
+                margin: 8px 0 0 0;
+            }
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            .strip-content {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+            section {
+                padding: 30px 15px;
+            }
         }
 
-        /* ─── ADMIN PANEL STYLES (SAME AS BEFORE) ─── */
+        /* ─── ADMIN PANEL STYLES ─── */
         #adminPanelWrapper {
             display: none;
             position: fixed;
@@ -203,7 +398,9 @@
             overflow-y: auto;
             padding: 20px;
         }
-        #adminPanelWrapper.active { display: block; }
+        #adminPanelWrapper.active {
+            display: block;
+        }
 
         #adminPanelContainer {
             max-width: 1300px;
@@ -225,9 +422,20 @@
             align-items: center;
             flex-wrap: wrap;
         }
-        .admin-header h2 { color: white; margin: 0; font-size: 20px; }
-        .admin-header .admin-user { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .admin-header .admin-user span { color: #e2e8f0; }
+        .admin-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 20px;
+        }
+        .admin-header .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .admin-header .admin-user span {
+            color: #e2e8f0;
+        }
         .admin-header .admin-user .logout-btn {
             background: var(--urgent-red);
             border: none;
@@ -237,7 +445,9 @@
             font-weight: 600;
             cursor: pointer;
         }
-        .admin-header .admin-user .logout-btn:hover { background: #b82d2f; }
+        .admin-header .admin-user .logout-btn:hover {
+            background: #b82d2f;
+        }
         .admin-header .admin-user .dark-toggle {
             background: #4a5568;
             border: none;
@@ -248,7 +458,10 @@
             cursor: pointer;
         }
 
-        .admin-body { display: flex; min-height: calc(90vh - 60px); }
+        .admin-body {
+            display: flex;
+            min-height: calc(90vh - 60px);
+        }
 
         .admin-sidebar {
             width: 220px;
@@ -278,17 +491,43 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .admin-sidebar a:hover, .admin-sidebar a.active {
+        .admin-sidebar a:hover,
+        .admin-sidebar a.active {
             background: rgba(0, 128, 128, 0.2);
             color: #fff;
         }
-        .admin-sidebar a.active { background: rgba(0, 128, 128, 0.3); border-left: 3px solid var(--accent-teal); }
-        .admin-sidebar a i { width: 18px; text-align: center; }
+        .admin-sidebar a.active {
+            background: rgba(0, 128, 128, 0.3);
+            border-left: 3px solid var(--accent-teal);
+        }
+        .admin-sidebar a i {
+            width: 18px;
+            text-align: center;
+        }
 
-        .admin-content { flex: 1; padding: 20px 24px; overflow-x: auto; background: #f0f2f5; }
-        .admin-section { display: none; animation: fadeUp 0.3s ease; }
-        .admin-section.active { display: block; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .admin-content {
+            flex: 1;
+            padding: 20px 24px;
+            overflow-x: auto;
+            background: #f0f2f5;
+        }
+        .admin-section {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         .stats-grid {
             display: grid;
@@ -304,10 +543,11 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
         }
         .stat-card .icon {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -315,14 +555,40 @@
             font-size: 18px;
             flex-shrink: 0;
         }
-        .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
-        .stat-card .icon.green { background: #d1fae5; color: #059669; }
-        .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
-        .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }
-        .stat-card .icon.orange { background: #fef3c7; color: #d97706; }
-        .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
-        .stat-card .info h4 { font-size: 20px; font-weight: 700; margin: 0; }
-        .stat-card .info p { font-size: 12px; margin: 2px 0 0 0; color: #64748b; }
+        .stat-card .icon.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .stat-card .icon.green {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .stat-card .icon.red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .stat-card .icon.purple {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .stat-card .icon.orange {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .stat-card .icon.teal {
+            background: #ccfbf1;
+            color: #0d9488;
+        }
+        .stat-card .info h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .stat-card .info p {
+            font-size: 12px;
+            margin: 2px 0 0 0;
+            color: #64748b;
+        }
 
         .table-wrap {
             background: white;
@@ -331,7 +597,11 @@
             overflow: auto;
             margin-top: 10px;
         }
-        .table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
         .table-wrap th {
             background: #f8fafc;
             font-weight: 600;
@@ -342,7 +612,10 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
-        .table-wrap td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; }
+        .table-wrap td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e2e8f0;
+        }
 
         .badge-status {
             display: inline-block;
@@ -351,11 +624,26 @@
             font-size: 12px;
             font-weight: 600;
         }
-        .badge-status.paid { background: #d1fae5; color: #065f46; }
-        .badge-status.unpaid { background: #fee2e2; color: #991b1b; }
-        .badge-status.pending { background: #fef3c7; color: #92400e; }
-        .badge-status.process { background: #dbeafe; color: #1e40af; }
-        .badge-status.done { background: #e0e7ff; color: #3730a3; }
+        .badge-status.paid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge-status.unpaid {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .badge-status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-status.process {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-status.done {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
 
         .btn {
             display: inline-flex;
@@ -372,12 +660,30 @@
             color: #1e293b;
             border: 1px solid #e2e8f0;
         }
-        .btn-primary { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
-        .btn-primary:hover { background: #006666; }
-        .btn-red { background: var(--urgent-red); color: #fff; border-color: var(--urgent-red); }
-        .btn-red:hover { background: #b82d2f; }
-        .btn-outline { background: transparent; border: 1px solid #e2e8f0; }
-        .btn-sm { padding: 3px 10px; font-size: 12px; }
+        .btn-primary {
+            background: var(--accent-teal);
+            color: #fff;
+            border-color: var(--accent-teal);
+        }
+        .btn-primary:hover {
+            background: #006666;
+        }
+        .btn-red {
+            background: var(--urgent-red);
+            color: #fff;
+            border-color: var(--urgent-red);
+        }
+        .btn-red:hover {
+            background: #b82d2f;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-sm {
+            padding: 3px 10px;
+            font-size: 12px;
+        }
 
         .form-grid {
             display: grid;
@@ -389,15 +695,25 @@
             border: 1px solid #e2e8f0;
             margin-bottom: 16px;
         }
-        .form-grid label { font-weight: 600; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
-        .form-grid label input, .form-grid label select {
+        .form-grid label {
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .form-grid label input,
+        .form-grid label select {
             padding: 6px 10px;
             border-radius: 4px;
             border: 1px solid #e2e8f0;
             background: #f8fafc;
             font-size: 14px;
         }
-        .form-grid label input:focus, .form-grid label select:focus { outline: 2px solid var(--accent-teal); }
+        .form-grid label input:focus,
+        .form-grid label select:focus {
+            outline: 2px solid var(--accent-teal);
+        }
         .form-grid label input[list] {
             padding: 6px 10px;
             border-radius: 4px;
@@ -435,7 +751,9 @@
             width: 100%;
             outline: none;
         }
-        .toolbar .search-box i { color: #94a3b8; }
+        .toolbar .search-box i {
+            color: #94a3b8;
+        }
 
         .template-box {
             background: white;
@@ -468,22 +786,30 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 10001;
             align-items: center;
             justify-content: center;
         }
-        .login-modal.show { display: flex; }
+        .login-modal.show {
+            display: flex;
+        }
         .login-modal-content {
             background: white;
             padding: 30px;
             border-radius: 10px;
             max-width: 400px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-        .login-modal-content h3 { margin-top: 0; }
-        .login-modal-content label { display: block; font-weight: 600; margin: 10px 0 4px; }
+        .login-modal-content h3 {
+            margin-top: 0;
+        }
+        .login-modal-content label {
+            display: block;
+            font-weight: 600;
+            margin: 10px 0 4px;
+        }
         .login-modal-content input {
             width: 100%;
             padding: 8px 12px;
@@ -507,12 +833,14 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 10002;
             align-items: center;
             justify-content: center;
         }
-        .upi-modal.show { display: flex; }
+        .upi-modal.show {
+            display: flex;
+        }
         .upi-modal-content {
             background: white;
             padding: 30px;
@@ -537,32 +865,83 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 10050;
             overflow-y: auto;
             padding: 20px;
             align-items: center;
             justify-content: center;
         }
-        .patient-portal-modal.active { display: flex; }
+        .patient-portal-modal.active {
+            display: flex;
+        }
         .patient-portal-content {
             max-width: 860px;
             width: 100%;
             background: #ffffff;
             border-radius: 2rem;
-            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.35), 0 0 0 1px rgba(212,175,55,0.25);
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.25);
             overflow: hidden;
             max-height: 95vh;
             overflow-y: auto;
         }
-        .portal-header { background: #1a212c; padding: 1.8rem 2rem 1.4rem; }
-        .portal-header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.3px; color: #fef7e8; display: flex; align-items: center; gap: 12px; }
-        .portal-header .portal-badge { background: rgba(212,175,55,0.2); padding: 6px 16px; border-radius: 60px; font-size: 0.7rem; font-weight: 600; color: #e6c168; border: 0.5px solid rgba(212,175,55,0.5); }
-        .portal-header .portal-sub { color: #8f9bb3; font-size: 0.8rem; margin-top: 12px; border-left: 2px solid #e6c168; padding-left: 14px; }
-        .portal-body { padding: 2rem 2rem 1.8rem; }
-        .portal-input-group { margin-bottom: 1.5rem; position: relative; }
-        .portal-input-label { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; color: #2c3f4c; margin-bottom: 10px; }
-        .portal-input-label span { background: #f0f3f9; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1rem; }
+        .portal-header {
+            background: #1a212c;
+            padding: 1.8rem 2rem 1.4rem;
+        }
+        .portal-header h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #fef7e8;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .portal-header .portal-badge {
+            background: rgba(212, 175, 55, 0.2);
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #e6c168;
+            border: 0.5px solid rgba(212, 175, 55, 0.5);
+        }
+        .portal-header .portal-sub {
+            color: #8f9bb3;
+            font-size: 0.8rem;
+            margin-top: 12px;
+            border-left: 2px solid #e6c168;
+            padding-left: 14px;
+        }
+        .portal-body {
+            padding: 2rem 2rem 1.8rem;
+        }
+        .portal-input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .portal-input-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #2c3f4c;
+            margin-bottom: 10px;
+        }
+        .portal-input-label span {
+            background: #f0f3f9;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
         .portal-input {
             width: 100%;
             padding: 1rem 1.3rem;
@@ -576,7 +955,10 @@
             font-weight: 500;
             color: #0f172a;
         }
-        .portal-input:focus { border-color: #d4af37; box-shadow: 0 4px 14px rgba(212,175,55,0.2); }
+        .portal-input:focus {
+            border-color: #d4af37;
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
+        }
         .portal-btn {
             width: 100%;
             background: linear-gradient(98deg, #075E54 0%, #128C7E 100%);
@@ -588,64 +970,224 @@
             color: white;
             border-radius: 2rem;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.2,0.9,0.4,1.1);
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: 0 8px 20px -8px rgba(7,94,84,0.5);
+            box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5);
             margin-top: 0.5rem;
         }
-        .portal-btn:hover { transform: translateY(-2px); background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%); }
-        .portal-status { margin-top: 1.2rem; padding: 0.9rem 1.2rem; background: #f8fafd; border-radius: 1rem; font-size: 0.85rem; color: #2c3e50; border-left: 3px solid #c9a03d; transition: 0.2s; line-height: 1.4; font-weight: 500; }
-        .portal-status.success { background: #e6f4ea; border-left-color: #2b7a3e; color: #135c2c; }
-        .portal-status.error { background: #fef5f0; border-left-color: #d4873a; color: #8b5a2b; }
-        .portal-report-list { margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem; }
-        .portal-report-item { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 0.8rem 1.2rem; border-radius: 1rem; margin-bottom: 0.8rem; border: 1px solid #edf2f7; transition: 0.2s; }
-        .portal-report-item:hover { background: #f1f5f9; }
-        .portal-report-info { display: flex; flex-direction: column; gap: 2px; }
-        .portal-report-info .test-name { font-weight: 600; color: #1a212c; }
-        .portal-report-info .upload-date { font-size: 0.8rem; color: #7890a3; }
-        .portal-report-actions { display: flex; align-items: center; gap: 12px; }
-        .portal-download-btn { background: #d4af37; border: none; padding: 0.4rem 1rem; border-radius: 2rem; font-weight: 600; color: white; cursor: pointer; transition: 0.2s; font-size: 0.8rem; }
-        .portal-download-btn:hover { background: #b8960e; transform: scale(1.02); }
-        .portal-download-btn:disabled { background: #b0b8c5; cursor: not-allowed; opacity: 0.6; transform: none; }
-        .portal-due-badge { background: #fee2e2; color: #991b1b; padding: 0.2rem 0.8rem; border-radius: 2rem; font-size: 0.7rem; font-weight: 700; }
-        .portal-close-btn { background: #6c757d; border: none; padding: 8px 16px; border-radius: 2rem; font-weight: 600; color: white; cursor: pointer; transition: 0.2s; font-size: 0.8rem; margin-top: 1rem; }
-        .portal-close-btn:hover { background: #5a6268; }
-        .portal-footer { padding: 1rem 2rem 1.4rem; font-size: 0.7rem; color: #91a3bb; border-top: 1px solid #edf2f9; display: flex; justify-content: space-between; }
-        @media (max-width: 650px) { .portal-body { padding: 1.5rem; } .portal-header h1 { font-size: 1.5rem; } .portal-report-item { flex-direction: column; align-items: flex-start; gap: 10px; } .portal-report-actions { width: 100%; justify-content: flex-end; } }
+        .portal-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%);
+        }
+        .portal-status {
+            margin-top: 1.2rem;
+            padding: 0.9rem 1.2rem;
+            background: #f8fafd;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            border-left: 3px solid #c9a03d;
+            transition: 0.2s;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        .portal-status.success {
+            background: #e6f4ea;
+            border-left-color: #2b7a3e;
+            color: #135c2c;
+        }
+        .portal-status.error {
+            background: #fef5f0;
+            border-left-color: #d4873a;
+            color: #8b5a2b;
+        }
+        .portal-report-list {
+            margin-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+        }
+        .portal-report-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 0.8rem 1.2rem;
+            border-radius: 1rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #edf2f7;
+            transition: 0.2s;
+        }
+        .portal-report-item:hover {
+            background: #f1f5f9;
+        }
+        .portal-report-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .portal-report-info .test-name {
+            font-weight: 600;
+            color: #1a212c;
+        }
+        .portal-report-info .upload-date {
+            font-size: 0.8rem;
+            color: #7890a3;
+        }
+        .portal-report-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        /* ─── DOWNLOAD BUTTON REMOVED ─── */
+        .portal-due-badge {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        .portal-close-btn {
+            background: #6c757d;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+        .portal-close-btn:hover {
+            background: #5a6268;
+        }
+        .portal-footer {
+            padding: 1rem 2rem 1.4rem;
+            font-size: 0.7rem;
+            color: #91a3bb;
+            border-top: 1px solid #edf2f9;
+            display: flex;
+            justify-content: space-between;
+        }
 
+        @media (max-width: 650px) {
+            .portal-body {
+                padding: 1.5rem;
+            }
+            .portal-header h1 {
+                font-size: 1.5rem;
+            }
+            .portal-report-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .portal-report-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        /* ─── DARK MODE OVERRIDES ─── */
         body.admin-dark #adminPanelContainer {
             --bg-light: #0f172a;
             --text-dark: #f1f5f9;
             --card: #1e293b;
             --border: #334155;
         }
-        body.admin-dark .stat-card { background: #1e293b; border-color: #334155; }
-        body.admin-dark .stat-card .info p { color: #94a3b8; }
-        body.admin-dark .table-wrap { background: #1e293b; border-color: #334155; }
-        body.admin-dark .table-wrap th { background: #0f172a; color: #94a3b8; }
-        body.admin-dark .table-wrap td { border-color: #334155; }
-        body.admin-dark .form-grid { background: #1e293b; border-color: #334155; }
+        body.admin-dark .stat-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .stat-card .info p {
+            color: #94a3b8;
+        }
+        body.admin-dark .table-wrap {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .table-wrap th {
+            background: #0f172a;
+            color: #94a3b8;
+        }
+        body.admin-dark .table-wrap td {
+            border-color: #334155;
+        }
+        body.admin-dark .form-grid {
+            background: #1e293b;
+            border-color: #334155;
+        }
         body.admin-dark .form-grid label input,
-        body.admin-dark .form-grid label select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
-        body.admin-dark .template-box { background: #1e293b; border-color: #334155; }
-        body.admin-dark .template-box .msg-preview { background: #0f172a; }
-        body.admin-dark .toolbar .search-box { background: #1e293b; border-color: #334155; }
-        body.admin-dark .toolbar .search-box input { color: #f1f5f9; }
-        body.admin-dark .admin-content { background: #0f172a; }
-        body.admin-dark .badge-status.paid { background: #064e3b; color: #6ee7b7; }
-        body.admin-dark .badge-status.unpaid { background: #7f1d1d; color: #fca5a5; }
-        body.admin-dark .badge-status.pending { background: #78350f; color: #fcd34d; }
-        body.admin-dark .badge-status.process { background: #1e3a5f; color: #93c5fd; }
-        body.admin-dark .badge-status.done { background: #312e81; color: #a5b4fc; }
-        body.admin-dark .stat-card .icon.blue { background: #1e3a5f; color: #60a5fa; }
-        body.admin-dark .stat-card .icon.green { background: #064e3b; color: #34d399; }
-        body.admin-dark .stat-card .icon.red { background: #7f1d1d; color: #f87171; }
-        body.admin-dark .stat-card .icon.purple { background: #4c1d95; color: #a78bfa; }
-        body.admin-dark .stat-card .icon.orange { background: #78350f; color: #fbbf24; }
-        body.admin-dark .stat-card .icon.teal { background: #134e4a; color: #2dd4bf; }
+        body.admin-dark .form-grid label select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+        body.admin-dark .template-box {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .template-box .msg-preview {
+            background: #0f172a;
+        }
+        body.admin-dark .toolbar .search-box {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .toolbar .search-box input {
+            color: #f1f5f9;
+        }
+        body.admin-dark .admin-content {
+            background: #0f172a;
+        }
+        body.admin-dark .badge-status.paid {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+        body.admin-dark .badge-status.unpaid {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        body.admin-dark .badge-status.pending {
+            background: #78350f;
+            color: #fcd34d;
+        }
+        body.admin-dark .badge-status.process {
+            background: #1e3a5f;
+            color: #93c5fd;
+        }
+        body.admin-dark .badge-status.done {
+            background: #312e81;
+            color: #a5b4fc;
+        }
+        body.admin-dark .stat-card .icon.blue {
+            background: #1e3a5f;
+            color: #60a5fa;
+        }
+        body.admin-dark .stat-card .icon.green {
+            background: #064e3b;
+            color: #34d399;
+        }
+        body.admin-dark .stat-card .icon.red {
+            background: #7f1d1d;
+            color: #f87171;
+        }
+        body.admin-dark .stat-card .icon.purple {
+            background: #4c1d95;
+            color: #a78bfa;
+        }
+        body.admin-dark .stat-card .icon.orange {
+            background: #78350f;
+            color: #fbbf24;
+        }
+        body.admin-dark .stat-card .icon.teal {
+            background: #134e4a;
+            color: #2dd4bf;
+        }
     </style>
 </head>
 <body>
@@ -680,7 +1222,7 @@
         </div>
     </div>
 
-    <section id="about" style="background: white;">
+    <section id="about" style="background:white;">
         <div class="about-container">
             <div class="about-text">
                 <h2>About Rajan Path Lab</h2>
@@ -1130,12 +1672,12 @@
         </div>
     </div>
 
-    <!-- ─── PATIENT PORTAL MODAL ─── -->
+    <!-- ─── PATIENT PORTAL MODAL (DOWNLOAD REMOVED) ─── -->
     <div class="patient-portal-modal" id="patientPortalModal">
         <div class="patient-portal-content">
             <div class="portal-header">
-                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>
-                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">VIEW ONLY</span></h1>
+                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view your reports ◆</div>
             </div>
             <div class="portal-body">
                 <div class="portal-input-group">
@@ -1152,7 +1694,7 @@
                 <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
             </div>
             <div class="portal-footer">
-                <span>✦ SECURE DOWNLOAD SYSTEM ✦</span>
+                <span>✦ VIEW-ONLY PORTAL ✦</span>
                 <span>RAJAN PATH LAB</span>
             </div>
         </div>
@@ -1169,17 +1711,14 @@
             // ─── NORMALIZE PHONE NUMBER ───
             function normalizePhone(phone) {
                 if (!phone) return '';
-                // Remove spaces, dashes, parentheses, dots
                 let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
-                // Remove leading +91 or 91 if present
                 if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
                 if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
-                // Remove leading zero
                 if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
                 return cleaned;
             }
 
-            // ─── DATA PERSISTENCE (localStorage + IndexedDB) ───
+            // ─── DATA PERSISTENCE ───
             function loadData(key, defaultData) {
                 try {
                     const stored = localStorage.getItem('rpl_' + key);
@@ -1197,7 +1736,6 @@
                     localStorage.setItem('rpl_' + key, JSON.stringify(data));
                 } catch (e) {
                     console.warn('Failed to save data to localStorage', e);
-                    // Fallback: try to save without non-essential data
                     try {
                         localStorage.setItem('rpl_' + key, JSON.stringify(data));
                     } catch (e2) {
@@ -1206,13 +1744,11 @@
                 }
             }
 
-            // ─── NO DEFAULT DATA ───
             const defaultPatients = [];
             const defaultReports = [];
             const defaultPayments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0 };
             const defaultLogs = [];
 
-            // ─── LOAD DATA ───
             let patients = loadData('patients', defaultPatients);
             let reports = loadData('reports', defaultReports);
             let payments = loadData('payments', defaultPayments);
@@ -1239,7 +1775,8 @@
                             db.createObjectStore(STORE_NAME, { keyPath: 'id' });
                         }
                     };
-                    request.onsuccess = function(e) { db = e.target.result; resolve(db); };
+                    request.onsuccess = function(e) { db = e.target.result;
+                        resolve(db); };
                     request.onerror = function(e) { reject(e.target.error); };
                 });
             }
@@ -1293,14 +1830,12 @@
                 window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
             }
 
-            // ─── PATIENT PORTAL ───
+            // ─── PATIENT PORTAL (DOWNLOAD REMOVED) ───
             function openPortal() {
                 portalModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                // Force reload data when portal opens
                 patients = loadData('patients', defaultPatients);
                 reports = loadData('reports', defaultReports);
-                // Reset status
                 $('portalStatus').className = 'portal-status';
                 $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
@@ -1323,7 +1858,7 @@
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
-            $('portalFetchBtn').addEventListener('click', async function() {
+            $('portalFetchBtn').addEventListener('click', function() {
                 const searchValue = $('portalPatientId').value.trim();
                 const statusDiv = $('portalStatus');
                 const listDiv = $('portalReportList');
@@ -1335,29 +1870,23 @@
                     return;
                 }
 
-                // Reload data from localStorage
                 patients = loadData('patients', defaultPatients);
                 reports = loadData('reports', defaultReports);
 
-                // ─── SEARCH BY PATIENT ID OR NORMALIZED PHONE ───
                 const normalizedSearch = normalizePhone(searchValue);
 
-                // Try to find by patient_id first
                 let patient = patients.find(p => p.patient_id === searchValue);
-
-                // If not found by ID, try by phone (normalized)
                 if (!patient) {
                     patient = patients.find(p => {
                         const normalizedPhone = normalizePhone(p.phone || '');
                         return normalizedPhone === normalizedSearch || p.phone === searchValue;
                     });
                 }
-
-                // If still not found, try partial match on phone
                 if (!patient && normalizedSearch.length >= 4) {
                     patient = patients.find(p => {
                         const normalizedPhone = normalizePhone(p.phone || '');
-                        return normalizedPhone.includes(normalizedSearch) || (p.phone || '').includes(searchValue);
+                        return normalizedPhone.includes(normalizedSearch) || (p.phone || '').includes(
+                        searchValue);
                     });
                 }
 
@@ -1384,7 +1913,6 @@
 
                 let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
-                    const canDownload = patient.due_amount === 0;
                     const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient
                         .due_amount + ' DUE</span>' : '';
                     html += `
@@ -1395,54 +1923,17 @@
                             </div>
                             <div class="portal-report-actions">
                                 ${dueBadge}
-                                <button class="portal-download-btn" data-report-id="${report.id}" data-patient-due="${patient.due_amount}" ${canDownload ? '' : 'disabled'}>
-                                    ${canDownload ? '⬇️ Download' : '🔒 Locked'}
-                                </button>
+                                <span style="font-size:0.8rem;color:#7890a3;background:#f1f5f9;padding:0.2rem 0.8rem;border-radius:1rem;">🔒 View Only</span>
                             </div>
                         </div>
                     `;
                 }
                 listDiv.innerHTML = html;
                 listDiv.style.display = 'block';
-
-                listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
-                    btn.addEventListener('click', async function() {
-                        const reportId = parseInt(this.dataset.reportId);
-                        const due = parseFloat(this.dataset.patientDue);
-                        if (due > 0) {
-                            statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML =
-                            '❌ Payment pending. Please clear dues to download report.';
-                            return;
-                        }
-                        try {
-                            const fileBlob = await getPDFFile(reportId);
-                            if (!fileBlob) {
-                                statusDiv.className = 'portal-status error';
-                                statusDiv.innerHTML = '❌ PDF file not found in storage.';
-                                return;
-                            }
-                            const url = URL.createObjectURL(fileBlob);
-                            const a = document.createElement('a');
-                            a.href = url;
-                            const report = patientReports.find(r => r.id === reportId);
-                            a.download = report ? report.file_path : 'report.pdf';
-                            document.body.appendChild(a);
-                            a.click();
-                            document.body.removeChild(a);
-                            URL.revokeObjectURL(url);
-                            statusDiv.className = 'portal-status success';
-                            statusDiv.innerHTML = '✅ Download started!';
-                        } catch (e) {
-                            statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML = '❌ Error downloading: ' + e.message;
-                        }
-                    });
-                });
             });
 
             $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn')
-                .click(); });
+                    .click(); });
 
             // ─── ADMIN LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
@@ -1556,7 +2047,7 @@
                 });
             }
 
-            // ─── REPORT DOWNLOAD (Admin) ───
+            // ─── REPORT DOWNLOAD (Admin only) ───
             async function downloadReport(report) {
                 try {
                     const fileBlob = await getPDFFile(report.id);
@@ -1724,7 +2215,6 @@
                         .getDate()).padStart(2, '0');
                     id = 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
                 }
-                // Check duplicate
                 const normalizedPhone = normalizePhone(phone);
                 if (patients.find(p => p.patient_id === id || normalizePhone(p.phone) === normalizedPhone)) {
                     alert('Patient ID or Phone already exists!');
@@ -2082,7 +2572,6 @@
             openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available',
             e));
 
-            // ─── TEST IF STORAGE IS WORKING ───
             try {
                 localStorage.setItem('test_storage', 'working');
                 localStorage.removeItem('test_storage');
