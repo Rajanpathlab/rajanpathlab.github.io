@@ -15,18 +15,17 @@
     </script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js">
     </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js">
+    </script>
 
     <style>
-        /* ─── ALL STYLES (unchanged) ─── */
+        /* ─── ALL STYLES ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
             --bg-light: #f4f7f9;
             --urgent-red: #d9383a;
             --text-dark: #2d3748;
-            --thyro-orange: #ff6600;
-            --lal-blue: #ed1c24;
-            --path-purple: #662d91;
         }
         * {
             box-sizing: border-box;
@@ -109,8 +108,6 @@
         }
         .hero {
             background: #0d3359;
-            background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,70 L30,80 L70,80 L70,70 M40,70 L40,40 M40,45 L45,45 M50,40 C50,30 60,30 60,40 L60,65 M55,65 L65,65' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
             color: white;
             text-align: center;
             padding: 60px 20px;
@@ -188,7 +185,7 @@
             align-items: center;
             color: var(--primary-blue);
         }
-        .strip i {
+        .strip-item i {
             color: var(--accent-teal);
             margin-right: 10px;
             font-size: 1.2rem;
@@ -201,7 +198,6 @@
         }
         .section-wrapper-alt {
             background: var(--bg-light);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(0,128,128,0.03)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(0,128,128,0.1)'/%3E%3C/svg%3E");
         }
         h2 {
             color: var(--primary-blue);
@@ -1351,7 +1347,6 @@
             background: #fffbeb;
             color: #92400e;
         }
-
         .upload-progress {
             display: none;
             width: 100%;
@@ -1371,6 +1366,27 @@
             border-radius: 4px;
             transition: width 0.3s;
         }
+
+        /* ─── AUTH STATUS ─── */
+        .auth-status {
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-left: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #93c5fd;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .auth-status.authenticated {
+            background: #065f46;
+            color: #6ee7b7;
+            border-color: #065f46;
+        }
+        .auth-status.error {
+            background: #7f1d1d;
+            color: #fca5a5;
+            border-color: #7f1d1d;
+        }
     </style>
 </head>
 <body>
@@ -1387,6 +1403,7 @@
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
             <span class="firebase-status" id="firebaseStatus"><i class="fas fa-cloud"></i> Cloud Sync</span>
+            <span class="auth-status" id="authStatus">🔐 Connecting...</span>
         </nav>
     </header>
 
@@ -1512,6 +1529,7 @@
                 <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin <span class="cloud-badge"><i class="fas fa-cloud"></i> Firebase</span></h2>
                 <div class="admin-user">
                     <span id="adminUsername">Admin</span>
+                    <span class="auth-status" id="adminAuthStatus" style="font-size:10px;">🔐 Connected</span>
                     <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     <button class="dark-toggle" id="adminDarkToggle"><i class="fas fa-moon"></i></button>
                 </div>
@@ -1908,7 +1926,7 @@
     <!-- ─── JAVASCRIPT ─── -->
     <script>
         // ================================================================
-        // 🔥 FIREBASE CONFIG – YOUR OWN PROJECT DETAILS
+        // 🔥 FIREBASE CONFIG
         // ================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
@@ -1921,13 +1939,18 @@
         };
 
         // ─── INIT FIREBASE ───
-        let db, storage, patientsCol, reportsCol, logsCol, paymentsCol;
+        let db, storage, auth, patientsCol, reportsCol, logsCol, paymentsCol;
         let firebaseReady = false;
+        let authReady = false;
+        let authUser = null;
 
         try {
             firebase.initializeApp(firebaseConfig);
             db = firebase.firestore();
             storage = firebase.storage();
+            auth = firebase.auth();
+
+            // Enable offline persistence
             db.enablePersistence({ synchronizeTabs: true })
                 .catch(err => console.warn('Firebase persistence:', err));
 
@@ -1940,11 +1963,65 @@
             document.getElementById('firebaseStatus').innerHTML = '<i class="fas fa-cloud"></i> Cloud Sync';
             document.getElementById('firebaseStatus').className = 'firebase-status';
             console.log('✅ Firebase initialized successfully');
+
+            // ─── ANONYMOUS AUTHENTICATION (FIX FOR UPLOAD) ───
+            const authStatusEl = document.getElementById('authStatus');
+            const adminAuthStatus = document.getElementById('adminAuthStatus');
+
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    authUser = user;
+                    authReady = true;
+                    authStatusEl.textContent = '🔓 Authenticated';
+                    authStatusEl.className = 'auth-status authenticated';
+                    if (adminAuthStatus) {
+                        adminAuthStatus.textContent = '🔓 Auth OK';
+                        adminAuthStatus.className = 'auth-status authenticated';
+                    }
+                    console.log('✅ Firebase Auth: Authenticated as', user.uid);
+                    // Refresh reports to show data
+                    if (document.getElementById('sec-reports').classList.contains('active')) {
+                        refreshReports();
+                    }
+                } else {
+                    // Not authenticated - sign in anonymously
+                    authStatusEl.textContent = '🔐 Connecting...';
+                    authStatusEl.className = 'auth-status';
+                    auth.signInAnonymously()
+                        .then(result => {
+                            authUser = result.user;
+                            authReady = true;
+                            authStatusEl.textContent = '🔓 Authenticated';
+                            authStatusEl.className = 'auth-status authenticated';
+                            if (adminAuthStatus) {
+                                adminAuthStatus.textContent = '🔓 Auth OK';
+                                adminAuthStatus.className = 'auth-status authenticated';
+                            }
+                            console.log('✅ Firebase Auth: Anonymous sign-in successful');
+                            // Refresh data after auth
+                            refreshAll();
+                        })
+                        .catch(err => {
+                            console.error('❌ Firebase Auth error:', err);
+                            authStatusEl.textContent = '⚠️ Auth Failed';
+                            authStatusEl.className = 'auth-status error';
+                            if (adminAuthStatus) {
+                                adminAuthStatus.textContent = '⚠️ Auth Failed';
+                                adminAuthStatus.className = 'auth-status error';
+                            }
+                            // Still try to work with limited access
+                            refreshAll();
+                        });
+                }
+            });
+
         } catch (e) {
             console.error('❌ Firebase init error:', e);
             document.getElementById('firebaseStatus').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Offline';
             document.getElementById('firebaseStatus').className = 'firebase-status offline';
-            alert('⚠️ Firebase not configured. Please set your Firebase config in the script.');
+            document.getElementById('authStatus').textContent = '⚠️ Init Failed';
+            document.getElementById('authStatus').className = 'auth-status error';
+            alert('⚠️ Firebase not configured. Please check your configuration.');
         }
 
         // ─── HELPERS ───
@@ -1960,8 +2037,8 @@
         function generatePatientId() {
             const nextId = Math.floor(Math.random() * 9999) + 1;
             const today = new Date();
-            const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2,
-            '0');
+            const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(
+                2, '0');
             return 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
         }
 
@@ -1981,24 +2058,43 @@
         const portalModal = $('patientPortalModal');
 
         // ─── UPLOAD MESSAGE HELPER ───
+        let uploadTimeoutId = null;
+
         function setUploadMessage(text, type = 'info') {
             const el = $('uploadMessage');
             el.textContent = text;
-            el.className = type; // 'success', 'error', 'info', 'loading'
+            el.className = type;
             el.style.display = 'block';
             console.log('[Upload]', type, text);
+
+            // Auto-hide success after 8 seconds
+            if (type === 'success') {
+                if (uploadTimeoutId) clearTimeout(uploadTimeoutId);
+                uploadTimeoutId = setTimeout(() => {
+                    if ($('uploadMessage').classList.contains('success')) {
+                        hideUploadMessage();
+                    }
+                }, 8000);
+            }
+            if (type === 'error') {
+                // Keep error visible until user dismisses or retries
+            }
         }
 
         function hideUploadMessage() {
             const el = $('uploadMessage');
             el.style.display = 'none';
             el.className = '';
+            if (uploadTimeoutId) {
+                clearTimeout(uploadTimeoutId);
+                uploadTimeoutId = null;
+            }
         }
 
         function setUploadProgress(pct) {
             const container = $('uploadProgress');
             const bar = $('uploadProgressBar');
-            if (pct === undefined || pct === null) {
+            if (pct === undefined || pct === null || pct < 0) {
                 container.classList.remove('active');
                 return;
             }
@@ -2050,6 +2146,8 @@
         function hideAdmin() {
             adminWrapper.classList.remove('active');
             document.body.style.overflow = '';
+            hideUploadMessage();
+            setUploadProgress(null);
         }
 
         function logout() { hideAdmin(); }
@@ -2094,7 +2192,10 @@
             if (id === 'security') refreshSecurity();
             if (id === 'patients') setTimeout(() => generateAllQRCodes(), 300);
             // Hide upload message when switching away from reports
-            if (id !== 'reports') hideUploadMessage();
+            if (id !== 'reports') {
+                hideUploadMessage();
+                setUploadProgress(null);
+            }
         }
 
         sidebarLinks.forEach(a => {
@@ -2374,7 +2475,6 @@
         document.addEventListener('click', function(e) {
             if (e.target.closest('.btn-download-report')) {
                 const btn = e.target.closest('.btn-download-report');
-                const id = btn.dataset.id;
                 const filePath = btn.dataset.file;
                 if (!filePath) { alert('No file path'); return; }
                 const ref = storage.ref('reports/' + filePath);
@@ -2384,7 +2484,7 @@
             }
         });
 
-        // ─── UPLOAD REPORT — FIXED ───
+        // ─── UPLOAD REPORT — FIXED WITH AUTH ───
         $('uploadReportBtn').addEventListener('click', function() {
             const btn = this;
             const msgDiv = $('uploadMessage');
@@ -2392,6 +2492,10 @@
             // --- Reset ---
             hideUploadMessage();
             setUploadProgress(0);
+            if (uploadTimeoutId) {
+                clearTimeout(uploadTimeoutId);
+                uploadTimeoutId = null;
+            }
 
             // --- 1. Firebase check ---
             if (!firebaseReady) {
@@ -2399,15 +2503,37 @@
                 return;
             }
 
-            // --- 2. Gather inputs ---
+            // --- 2. Auth check ---
+            if (!authReady) {
+                setUploadMessage('⏳ Waiting for authentication... Please wait.', 'loading');
+                // Wait for auth
+                const waitAuth = setInterval(() => {
+                    if (authReady) {
+                        clearInterval(waitAuth);
+                        // Retry upload
+                        btn.click();
+                    }
+                }, 500);
+                setTimeout(() => {
+                    clearInterval(waitAuth);
+                    if (!authReady) {
+                        setUploadMessage('❌ Authentication timeout. Please refresh the page.', 'error');
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                    }
+                }, 10000);
+                return;
+            }
+
+            // --- 3. Gather inputs ---
             const pid = $('reportPatientId').value.trim();
             const test = $('reportTestName').value.trim();
             const file = $('reportFile').files[0];
             const replace = $('reportReplace').value;
 
-            console.log('[Upload] Starting:', { pid, test, fileName: file?.name, replace });
+            console.log('[Upload] Starting:', { pid, test, fileName: file?.name, replace, authUser: authUser?.uid });
 
-            // --- 3. Validation ---
+            // --- 4. Validation ---
             if (!pid) {
                 setUploadMessage('❌ Patient ID is required. Enter the Patient ID (e.g. RPL-20260625-0625).', 'error');
                 return;
@@ -2429,16 +2555,18 @@
                 return;
             }
 
-            // --- 4. Disable button during upload ---
+            // --- 5. Disable button during upload ---
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
             setUploadMessage('⏳ Looking up patient...', 'loading');
+            setUploadProgress(5);
 
-            // --- 5. Lookup patient ---
+            // --- 6. Lookup patient ---
             patientsCol.where('patient_id', '==', pid).get()
                 .then(snap => {
                     if (snap.empty) {
-                        setUploadMessage('❌ Patient not found! Add the patient first or check the Patient ID.', 'error');
+                        setUploadMessage('❌ Patient not found! Add the patient first or check the Patient ID.',
+                            'error');
                         btn.disabled = false;
                         btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
                         setUploadProgress(null);
@@ -2450,8 +2578,10 @@
                     const patientId = patientDoc.id;
 
                     console.log('[Upload] Patient found:', patientData.name);
+                    setUploadMessage('⏳ Patient found. Checking for existing report...', 'loading');
+                    setUploadProgress(15);
 
-                    // --- 6. Check existing report ---
+                    // --- 7. Check existing report ---
                     return reportsCol.where('patient_id', '==', pid)
                         .where('test_name', '==', test)
                         .get()
@@ -2467,7 +2597,10 @@
                                 return Promise.reject('REPORT_EXISTS');
                             }
 
-                            // --- 7. Delete old reports (if replace=yes) ---
+                            setUploadMessage('⏳ Preparing upload...', 'loading');
+                            setUploadProgress(20);
+
+                            // --- 8. Delete old reports (if replace=yes) ---
                             const deletePromises = [];
                             repSnap.forEach(doc => {
                                 const oldPath = doc.data().file_path;
@@ -2476,6 +2609,7 @@
                                     deletePromises.push(
                                         storage.ref('reports/' + oldPath).delete().catch(err => {
                                             console.warn('[Upload] Old file delete warn:', err);
+                                            // Continue even if delete fails
                                         })
                                     );
                                 }
@@ -2483,13 +2617,13 @@
                             });
 
                             return Promise.all(deletePromises).then(() => {
-                                // --- 8. Build filename and upload ---
+                                // --- 9. Build filename and upload ---
                                 const safeTest = test.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 30);
                                 const filename = pid + '_' + safeTest + '_' + Date.now() + '.pdf';
                                 const uploadRef = storage.ref('reports/' + filename);
 
                                 setUploadMessage('⏳ Uploading to Firebase Storage...', 'loading');
-                                setUploadProgress(0);
+                                setUploadProgress(25);
 
                                 const uploadTask = uploadRef.put(file);
 
@@ -2498,16 +2632,28 @@
                                     (snapshot) => {
                                         const pct = (snapshot.bytesTransferred / snapshot.totalBytes) *
                                             100;
-                                        setUploadProgress(pct);
+                                        const totalPct = 25 + (pct * 0.6); // 25% to 85%
+                                        setUploadProgress(totalPct);
                                         if (pct < 100) {
-                                            setUploadMessage('⏳ Uploading... ' + Math.round(pct) + '%',
-                                                'loading');
+                                            setUploadMessage('⏳ Uploading... ' + Math.round(pct) +
+                                                '%', 'loading');
+                                        } else {
+                                            setUploadMessage('⏳ Finalizing...', 'loading');
                                         }
                                     },
                                     (err) => {
                                         // Upload error
                                         console.error('[Upload] Storage error:', err);
-                                        setUploadMessage('❌ Storage upload failed: ' + err.message,
+                                        let errMsg = err.message || 'Unknown error';
+                                        if (err.code === 'storage/unauthorized') {
+                                            errMsg =
+                                                'Permission denied! Check Firebase Storage rules. Enable read/write access.';
+                                        } else if (err.code === 'storage/canceled') {
+                                            errMsg = 'Upload was cancelled.';
+                                        } else if (err.code === 'storage/retry-limit-exceeded') {
+                                            errMsg = 'Network error. Please check your connection and try again.';
+                                        }
+                                        setUploadMessage('❌ Storage upload failed: ' + errMsg,
                                             'error');
                                         btn.disabled = false;
                                         btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
@@ -2516,10 +2662,10 @@
                                     () => {
                                         // Upload complete — get download URL
                                         setUploadMessage('⏳ Finalizing...', 'loading');
-                                        setUploadProgress(100);
+                                        setUploadProgress(90);
 
                                         uploadRef.getDownloadURL().then(url => {
-                                            // --- 9. Save report to Firestore ---
+                                            // --- 10. Save report to Firestore ---
                                             const reportData = {
                                                 patient_id: pid,
                                                 name: patientData.name || 'N/A',
@@ -2531,15 +2677,17 @@
                                             };
 
                                             return reportsCol.add(reportData).then(() => {
-                                                console.log('[Upload] ✅ Report saved to Firestore');
+                                                console.log(
+                                                    '[Upload] ✅ Report saved to Firestore'
+                                                    );
+                                                setUploadProgress(100);
                                                 setUploadMessage(
                                                     '✅ Report uploaded successfully! Patient: ' +
                                                     patientData.name + ' | Test: ' + test,
                                                     'success');
-                                                setUploadProgress(null);
                                                 btn.disabled = false;
                                                 btn.innerHTML =
-                                                '<i class="fas fa-upload"></i> Upload';
+                                                    '<i class="fas fa-upload"></i> Upload';
 
                                                 // Clear fields
                                                 $('reportPatientId').value = '';
@@ -2548,14 +2696,16 @@
 
                                                 // Refresh list
                                                 refreshReports();
+                                                refreshDashboard();
 
-                                                // Auto-hide success after 6s
+                                                // Auto-hide success after 8s
                                                 setTimeout(() => {
                                                     if ($('uploadMessage').classList
                                                         .contains('success')) {
                                                         hideUploadMessage();
                                                     }
-                                                }, 6000);
+                                                    setUploadProgress(null);
+                                                }, 8000);
                                             });
                                         }).catch(err => {
                                             console.error('[Upload] URL fetch error:', err);
@@ -2577,7 +2727,11 @@
                         return;
                     }
                     console.error('[Upload] Unexpected error:', err);
-                    setUploadMessage('❌ Error: ' + err.message, 'error');
+                    let errMsg = err.message || 'Unknown error';
+                    if (errMsg.includes('permission') || errMsg.includes('unauthorized')) {
+                        errMsg = 'Permission denied! Check Firebase Storage rules.';
+                    }
+                    setUploadMessage('❌ Error: ' + errMsg, 'error');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
                     setUploadProgress(null);
@@ -3016,11 +3170,13 @@
         });
 
         // ─── INIT ───
-        console.log('✅ Rajan Path Lab · Firebase Cloud Sync Enabled');
+        console.log('✅ Rajan Path Lab · Firebase Cloud Sync Enabled with Anonymous Auth');
         console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
         console.log('☁️ Data is stored in Firebase - accessible from any device');
         console.log('📌 Firebase config loaded successfully.');
+        console.log('🔐 Anonymous auth will auto-sign in for storage access.');
 
+        // Update debug list if portal is open
         if (portalModal.classList.contains('active')) updateDebugList();
 
         // ─── AUTO-HIDE UPLOAD MESSAGE ON TAB SWITCH ───
