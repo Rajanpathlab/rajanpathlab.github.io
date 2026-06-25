@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>Rajan Path Lab | Premium Diagnostics</title>
+    <title>Rajan Path Lab | Report Upload</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
     <!-- 🔥 FIREBASE SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js">
+    </script>
 
     <style>
         /* ─── ALL STYLES (unchanged) ─── */
@@ -25,7 +28,9 @@
             --lal-blue: #ed1c24;
             --path-purple: #662d91;
         }
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -34,7 +39,10 @@
             color: var(--text-dark);
             line-height: 1.5;
         }
-        b, strong { font-weight: 700; }
+        b,
+        strong {
+            font-weight: 700;
+        }
         header {
             background: var(--primary-blue);
             color: white;
@@ -45,7 +53,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             flex-wrap: wrap;
             gap: 8px;
         }
@@ -55,7 +63,9 @@
             letter-spacing: 0.5px;
             font-weight: 700;
         }
-        header h1 span { color: var(--accent-teal); }
+        header h1 span {
+            color: var(--accent-teal);
+        }
         nav {
             display: flex;
             align-items: center;
@@ -70,8 +80,11 @@
             font-size: 15px;
             transition: 0.2s;
         }
-        nav a:hover { color: var(--accent-teal); }
-        .admin-login-btn, .patient-portal-btn {
+        nav a:hover {
+            color: var(--accent-teal);
+        }
+        .admin-login-btn,
+        .patient-portal-btn {
             background: var(--accent-teal);
             color: white;
             border: none;
@@ -84,12 +97,19 @@
             margin-left: 10px;
             white-space: nowrap;
         }
-        .admin-login-btn:hover, .patient-portal-btn:hover { background: #006666; }
-        .patient-portal-btn { background: #25D366; }
-        .patient-portal-btn:hover { background: #1a8d4a; }
+        .admin-login-btn:hover,
+        .patient-portal-btn:hover {
+            background: #006666;
+        }
+        .patient-portal-btn {
+            background: #25D366;
+        }
+        .patient-portal-btn:hover {
+            background: #1a8d4a;
+        }
         .hero {
             background: #0d3359;
-            background-image: radial-gradient(circle at 80% 20%, rgba(0,128,128,0.15) 0%, transparent 50%),
+            background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%),
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,70 L30,80 L70,80 L70,70 M40,70 L40,40 M40,45 L45,45 M50,40 C50,30 60,30 60,40 L60,65 M55,65 L65,65' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
             color: white;
             text-align: center;
@@ -110,7 +130,8 @@
             gap: 15px;
             flex-wrap: wrap;
         }
-        .btn-book, .btn-report {
+        .btn-book,
+        .btn-report {
             background: var(--urgent-red);
             padding: 12px 28px;
             color: white;
@@ -123,9 +144,15 @@
             border: none;
             cursor: pointer;
         }
-        .btn-report { background: var(--accent-teal); }
-        .btn-book:hover { background: #b82d2f; }
-        .btn-report:hover { background: #006666; }
+        .btn-report {
+            background: var(--accent-teal);
+        }
+        .btn-book:hover {
+            background: #b82d2f;
+        }
+        .btn-report:hover {
+            background: #006666;
+        }
         .btn-portal {
             background: #25D366;
             padding: 12px 28px;
@@ -139,7 +166,9 @@
             border: none;
             cursor: pointer;
         }
-        .btn-portal:hover { background: #1a8d4a; }
+        .btn-portal:hover {
+            background: #1a8d4a;
+        }
         .strip {
             background: #ffffff;
             border-bottom: 1px solid #e2e8f0;
@@ -218,7 +247,9 @@
             font-size: 0.95rem;
             color: #2d3748;
         }
-        .feature-item i { color: var(--accent-teal); }
+        .feature-item i {
+            color: var(--accent-teal);
+        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -229,7 +260,7 @@
             padding: 20px 15px;
             border-radius: 6px;
             border: 1px solid #cbd5e1;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
             text-align: center;
         }
         .card i {
@@ -296,7 +327,9 @@
             font-size: 14px;
             font-weight: 600;
         }
-        .footer-links a:hover { color: var(--accent-teal); }
+        .footer-links a:hover {
+            color: var(--accent-teal);
+        }
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -309,19 +342,48 @@
             font-weight: bold;
             font-size: 0.95rem;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         @media (max-width: 768px) {
-            header { flex-direction: column; text-align: center; padding: 10px; }
-            nav { margin-top: 10px; justify-content: center; }
-            nav a { margin: 0 6px; font-size: 13px; }
-            .admin-login-btn, .patient-portal-btn { margin: 6px 4px 0 4px; font-size: 12px; padding: 5px 12px; }
-            .hero h2 { font-size: 1.8rem; }
-            .strip-content { flex-direction: column; gap: 8px; }
-            .about-features { grid-template-columns: 1fr; }
-            section { padding: 30px 15px; }
-            .partner-grid { gap: 12px; }
-            .partner-item { width: 120px; padding: 10px; }
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+            }
+            nav {
+                margin-top: 10px;
+                justify-content: center;
+            }
+            nav a {
+                margin: 0 6px;
+                font-size: 13px;
+            }
+            .admin-login-btn,
+            .patient-portal-btn {
+                margin: 6px 4px 0 4px;
+                font-size: 12px;
+                padding: 5px 12px;
+            }
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            .strip-content {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+            section {
+                padding: 30px 15px;
+            }
+            .partner-grid {
+                gap: 12px;
+            }
+            .partner-item {
+                width: 120px;
+                padding: 10px;
+            }
         }
 
         /* ─── ADMIN PANEL ─── */
@@ -329,18 +391,20 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 9999;
             overflow-y: auto;
             padding: 20px;
         }
-        #adminPanelWrapper.active { display: block; }
+        #adminPanelWrapper.active {
+            display: block;
+        }
         #adminPanelContainer {
             max-width: 1300px;
             margin: 0 auto;
             background: #f0f2f5;
             border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             overflow: hidden;
             position: relative;
             min-height: 90vh;
@@ -366,7 +430,9 @@
             gap: 12px;
             flex-wrap: wrap;
         }
-        .admin-header .admin-user span { color: #e2e8f0; }
+        .admin-header .admin-user span {
+            color: #e2e8f0;
+        }
         .admin-header .admin-user .logout-btn {
             background: var(--urgent-red);
             border: none;
@@ -376,7 +442,9 @@
             font-weight: 600;
             cursor: pointer;
         }
-        .admin-header .admin-user .logout-btn:hover { background: #b82d2f; }
+        .admin-header .admin-user .logout-btn:hover {
+            background: #b82d2f;
+        }
         .admin-header .admin-user .dark-toggle {
             background: #4a5568;
             border: none;
@@ -418,15 +486,19 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .admin-sidebar a:hover, .admin-sidebar a.active {
-            background: rgba(0,128,128,0.2);
+        .admin-sidebar a:hover,
+        .admin-sidebar a.active {
+            background: rgba(0, 128, 128, 0.2);
             color: #fff;
         }
         .admin-sidebar a.active {
-            background: rgba(0,128,128,0.3);
+            background: rgba(0, 128, 128, 0.3);
             border-left: 3px solid var(--accent-teal);
         }
-        .admin-sidebar a i { width: 18px; text-align: center; }
+        .admin-sidebar a i {
+            width: 18px;
+            text-align: center;
+        }
         .admin-content {
             flex: 1;
             padding: 20px 24px;
@@ -437,10 +509,18 @@
             display: none;
             animation: fadeUp 0.3s ease;
         }
-        .admin-section.active { display: block; }
+        .admin-section.active {
+            display: block;
+        }
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .stats-grid {
             display: grid;
@@ -456,7 +536,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
         }
         .stat-card .icon {
             width: 40px;
@@ -468,14 +548,40 @@
             font-size: 18px;
             flex-shrink: 0;
         }
-        .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
-        .stat-card .icon.green { background: #d1fae5; color: #059669; }
-        .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
-        .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }
-        .stat-card .icon.orange { background: #fef3c7; color: #d97706; }
-        .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
-        .stat-card .info h4 { font-size: 20px; font-weight: 700; margin: 0; }
-        .stat-card .info p { font-size: 12px; margin: 2px 0 0 0; color: #64748b; }
+        .stat-card .icon.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .stat-card .icon.green {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .stat-card .icon.red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .stat-card .icon.purple {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .stat-card .icon.orange {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .stat-card .icon.teal {
+            background: #ccfbf1;
+            color: #0d9488;
+        }
+        .stat-card .info h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .stat-card .info p {
+            font-size: 12px;
+            margin: 2px 0 0 0;
+            color: #64748b;
+        }
         .table-wrap {
             background: white;
             border: 1px solid #e2e8f0;
@@ -483,7 +589,11 @@
             overflow: auto;
             margin-top: 10px;
         }
-        .table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
         .table-wrap th {
             background: #f8fafc;
             font-weight: 600;
@@ -505,11 +615,26 @@
             font-size: 12px;
             font-weight: 600;
         }
-        .badge-status.paid { background: #d1fae5; color: #065f46; }
-        .badge-status.unpaid { background: #fee2e2; color: #991b1b; }
-        .badge-status.pending { background: #fef3c7; color: #92400e; }
-        .badge-status.process { background: #dbeafe; color: #1e40af; }
-        .badge-status.done { background: #e0e7ff; color: #3730a3; }
+        .badge-status.paid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge-status.unpaid {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .badge-status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-status.process {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-status.done {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
         .btn {
             display: inline-flex;
             align-items: center;
@@ -525,12 +650,35 @@
             color: #1e293b;
             border: 1px solid #e2e8f0;
         }
-        .btn-primary { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
-        .btn-primary:hover { background: #006666; }
-        .btn-red { background: var(--urgent-red); color: #fff; border-color: var(--urgent-red); }
-        .btn-red:hover { background: #b82d2f; }
-        .btn-outline { background: transparent; border: 1px solid #e2e8f0; }
-        .btn-sm { padding: 3px 10px; font-size: 12px; }
+        .btn-primary {
+            background: var(--accent-teal);
+            color: #fff;
+            border-color: var(--accent-teal);
+        }
+        .btn-primary:hover {
+            background: #006666;
+        }
+        .btn-red {
+            background: var(--urgent-red);
+            color: #fff;
+            border-color: var(--urgent-red);
+        }
+        .btn-red:hover {
+            background: #b82d2f;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-sm {
+            padding: 3px 10px;
+            font-size: 12px;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -548,7 +696,8 @@
             flex-direction: column;
             gap: 4px;
         }
-        .form-grid label input, .form-grid label select {
+        .form-grid label input,
+        .form-grid label select {
             padding: 6px 10px;
             border-radius: 4px;
             border: 1px solid #e2e8f0;
@@ -588,7 +737,9 @@
             width: 100%;
             outline: none;
         }
-        .toolbar .search-box i { color: #94a3b8; }
+        .toolbar .search-box i {
+            color: #94a3b8;
+        }
         .template-box {
             background: white;
             border: 1px solid #e2e8f0;
@@ -618,22 +769,30 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 10001;
             align-items: center;
             justify-content: center;
         }
-        .login-modal.show { display: flex; }
+        .login-modal.show {
+            display: flex;
+        }
         .login-modal-content {
             background: white;
             padding: 30px;
             border-radius: 10px;
             max-width: 400px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-        .login-modal-content h3 { margin-top: 0; }
-        .login-modal-content label { display: block; font-weight: 600; margin: 10px 0 4px; }
+        .login-modal-content h3 {
+            margin-top: 0;
+        }
+        .login-modal-content label {
+            display: block;
+            font-weight: 600;
+            margin: 10px 0 4px;
+        }
         .login-modal-content input {
             width: 100%;
             padding: 8px 12px;
@@ -656,12 +815,14 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 10002;
             align-items: center;
             justify-content: center;
         }
-        .upi-modal.show { display: flex; }
+        .upi-modal.show {
+            display: flex;
+        }
         .upi-modal-content {
             background: white;
             padding: 30px;
@@ -687,20 +848,22 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 10050;
             overflow-y: auto;
             padding: 20px;
             align-items: center;
             justify-content: center;
         }
-        .patient-portal-modal.active { display: flex; }
+        .patient-portal-modal.active {
+            display: flex;
+        }
         .patient-portal-content {
             max-width: 860px;
             width: 100%;
             background: #ffffff;
             border-radius: 2rem;
-            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.35), 0 0 0 1px rgba(212,175,55,0.25);
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.25);
             overflow: hidden;
             max-height: 95vh;
             overflow-y: auto;
@@ -720,13 +883,13 @@
             flex-wrap: wrap;
         }
         .portal-header .portal-badge {
-            background: rgba(212,175,55,0.2);
+            background: rgba(212, 175, 55, 0.2);
             padding: 6px 16px;
             border-radius: 60px;
             font-size: 0.7rem;
             font-weight: 600;
             color: #e6c168;
-            border: 0.5px solid rgba(212,175,55,0.5);
+            border: 0.5px solid rgba(212, 175, 55, 0.5);
         }
         .portal-header .portal-sub {
             color: #8f9bb3;
@@ -779,7 +942,7 @@
         }
         .portal-input:focus {
             border-color: #d4af37;
-            box-shadow: 0 4px 14px rgba(212,175,55,0.2);
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
         }
         .portal-btn {
             width: 100%;
@@ -792,12 +955,12 @@
             color: white;
             border-radius: 2rem;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.2,0.9,0.4,1.1);
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: 0 8px 20px -8px rgba(7,94,84,0.5);
+            box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5);
             margin-top: 0.5rem;
             -webkit-tap-highlight-color: transparent;
         }
@@ -805,7 +968,9 @@
             transform: translateY(-2px);
             background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%);
         }
-        .portal-btn:active { transform: scale(0.97); }
+        .portal-btn:active {
+            transform: scale(0.97);
+        }
         .portal-status {
             margin-top: 1.2rem;
             padding: 0.9rem 1.2rem;
@@ -852,7 +1017,9 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .portal-report-item:hover { background: #f1f5f9; }
+        .portal-report-item:hover {
+            background: #f1f5f9;
+        }
         .portal-report-info {
             display: flex;
             flex-direction: column;
@@ -860,8 +1027,14 @@
             flex: 1;
             min-width: 120px;
         }
-        .portal-report-info .test-name { font-weight: 600; color: #1a212c; }
-        .portal-report-info .upload-date { font-size: 0.8rem; color: #7890a3; }
+        .portal-report-info .test-name {
+            font-weight: 600;
+            color: #1a212c;
+        }
+        .portal-report-info .upload-date {
+            font-size: 0.8rem;
+            color: #7890a3;
+        }
         .portal-report-actions {
             display: flex;
             align-items: center;
@@ -911,7 +1084,9 @@
             margin-top: 1rem;
             -webkit-tap-highlight-color: transparent;
         }
-        .portal-close-btn:hover { background: #5a6268; }
+        .portal-close-btn:hover {
+            background: #5a6268;
+        }
         .portal-footer {
             padding: 1rem 2rem 1.4rem;
             font-size: 0.7rem;
@@ -973,18 +1148,47 @@
             transition: 0.2s;
             -webkit-tap-highlight-color: transparent;
         }
-        .portal-refresh-btn:hover { background: #cbd5e1; }
-        .portal-refresh-btn i { margin-right: 6px; }
+        .portal-refresh-btn:hover {
+            background: #cbd5e1;
+        }
+        .portal-refresh-btn i {
+            margin-right: 6px;
+        }
         @media (max-width: 650px) {
-            .portal-body { padding: 1.5rem; }
-            .portal-header h1 { font-size: 1.5rem; }
-            .portal-report-item { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .portal-report-actions { width: 100%; justify-content: flex-end; }
-            .portal-header { padding: 1.2rem 1.2rem 1rem; }
-            .portal-footer { flex-direction: column; text-align: center; padding: 0.8rem 1.2rem; }
-            .portal-input { font-size: 0.95rem; padding: 0.8rem 1rem; }
-            .portal-btn { font-size: 0.95rem; padding: 0.8rem 1rem; }
-            .debug-section { padding: 0.8rem; }
+            .portal-body {
+                padding: 1.5rem;
+            }
+            .portal-header h1 {
+                font-size: 1.5rem;
+            }
+            .portal-report-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .portal-report-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .portal-header {
+                padding: 1.2rem 1.2rem 1rem;
+            }
+            .portal-footer {
+                flex-direction: column;
+                text-align: center;
+                padding: 0.8rem 1.2rem;
+            }
+            .portal-input {
+                font-size: 0.95rem;
+                padding: 0.8rem 1rem;
+            }
+            .portal-btn {
+                font-size: 0.95rem;
+                padding: 0.8rem 1rem;
+            }
+            .debug-section {
+                padding: 0.8rem;
+            }
         }
 
         /* ─── DARK MODE ─── */
@@ -994,33 +1198,95 @@
             --card: #1e293b;
             --border: #334155;
         }
-        body.admin-dark .stat-card { background: #1e293b; border-color: #334155; }
-        body.admin-dark .stat-card .info p { color: #94a3b8; }
-        body.admin-dark .table-wrap { background: #1e293b; border-color: #334155; }
-        body.admin-dark .table-wrap th { background: #0f172a; color: #94a3b8; }
-        body.admin-dark .table-wrap td { border-color: #334155; }
-        body.admin-dark .form-grid { background: #1e293b; border-color: #334155; }
-        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select {
+        body.admin-dark .stat-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .stat-card .info p {
+            color: #94a3b8;
+        }
+        body.admin-dark .table-wrap {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .table-wrap th {
+            background: #0f172a;
+            color: #94a3b8;
+        }
+        body.admin-dark .table-wrap td {
+            border-color: #334155;
+        }
+        body.admin-dark .form-grid {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .form-grid label input,
+        body.admin-dark .form-grid label select {
             background: #0f172a;
             border-color: #334155;
             color: #f1f5f9;
         }
-        body.admin-dark .template-box { background: #1e293b; border-color: #334155; }
-        body.admin-dark .template-box .msg-preview { background: #0f172a; }
-        body.admin-dark .toolbar .search-box { background: #1e293b; border-color: #334155; }
-        body.admin-dark .toolbar .search-box input { color: #f1f5f9; }
-        body.admin-dark .admin-content { background: #0f172a; }
-        body.admin-dark .badge-status.paid { background: #064e3b; color: #6ee7b7; }
-        body.admin-dark .badge-status.unpaid { background: #7f1d1d; color: #fca5a5; }
-        body.admin-dark .badge-status.pending { background: #78350f; color: #fcd34d; }
-        body.admin-dark .badge-status.process { background: #1e3a5f; color: #93c5fd; }
-        body.admin-dark .badge-status.done { background: #312e81; color: #a5b4fc; }
-        body.admin-dark .stat-card .icon.blue { background: #1e3a5f; color: #60a5fa; }
-        body.admin-dark .stat-card .icon.green { background: #064e3b; color: #34d399; }
-        body.admin-dark .stat-card .icon.red { background: #7f1d1d; color: #f87171; }
-        body.admin-dark .stat-card .icon.purple { background: #4c1d95; color: #a78bfa; }
-        body.admin-dark .stat-card .icon.orange { background: #78350f; color: #fbbf24; }
-        body.admin-dark .stat-card .icon.teal { background: #134e4a; color: #2dd4bf; }
+        body.admin-dark .template-box {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .template-box .msg-preview {
+            background: #0f172a;
+        }
+        body.admin-dark .toolbar .search-box {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .toolbar .search-box input {
+            color: #f1f5f9;
+        }
+        body.admin-dark .admin-content {
+            background: #0f172a;
+        }
+        body.admin-dark .badge-status.paid {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+        body.admin-dark .badge-status.unpaid {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        body.admin-dark .badge-status.pending {
+            background: #78350f;
+            color: #fcd34d;
+        }
+        body.admin-dark .badge-status.process {
+            background: #1e3a5f;
+            color: #93c5fd;
+        }
+        body.admin-dark .badge-status.done {
+            background: #312e81;
+            color: #a5b4fc;
+        }
+        body.admin-dark .stat-card .icon.blue {
+            background: #1e3a5f;
+            color: #60a5fa;
+        }
+        body.admin-dark .stat-card .icon.green {
+            background: #064e3b;
+            color: #34d399;
+        }
+        body.admin-dark .stat-card .icon.red {
+            background: #7f1d1d;
+            color: #f87171;
+        }
+        body.admin-dark .stat-card .icon.purple {
+            background: #4c1d95;
+            color: #a78bfa;
+        }
+        body.admin-dark .stat-card .icon.orange {
+            background: #78350f;
+            color: #fbbf24;
+        }
+        body.admin-dark .stat-card .icon.teal {
+            background: #134e4a;
+            color: #2dd4bf;
+        }
 
         /* ─── FIREBASE STATUS ─── */
         .firebase-status {
@@ -1035,22 +1301,81 @@
             gap: 6px;
             margin-left: 8px;
         }
-        .firebase-status.offline { background: #dc3545; }
-        .firebase-status i { font-size: 12px; }
+        .firebase-status.offline {
+            background: #dc3545;
+        }
+        .firebase-status i {
+            font-size: 12px;
+        }
         .cloud-badge {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.15);
             padding: 2px 10px;
             border-radius: 12px;
             font-size: 10px;
             color: #93c5fd;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             margin-left: 6px;
+        }
+
+        /* ─── UPLOAD MESSAGE ─── */
+        #uploadMessage {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-weight: 600;
+            display: none;
+            border-left: 4px solid #008080;
+            background: #f8fafc;
+        }
+        #uploadMessage.success {
+            display: block;
+            border-left-color: #059669;
+            background: #ecfdf5;
+            color: #065f46;
+        }
+        #uploadMessage.error {
+            display: block;
+            border-left-color: #dc2626;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+        #uploadMessage.info {
+            display: block;
+            border-left-color: #2563eb;
+            background: #eff6ff;
+            color: #1e40af;
+        }
+        #uploadMessage.loading {
+            display: block;
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+            color: #92400e;
+        }
+
+        .upload-progress {
+            display: none;
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+        .upload-progress.active {
+            display: block;
+        }
+        .upload-progress .bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #008080, #20b2aa);
+            border-radius: 4px;
+            transition: width 0.3s;
         }
     </style>
 </head>
 <body>
 
-    <!-- ─── HEADER & HERO (same as before) ─── -->
+    <!-- ─── HEADER & HERO ─── -->
     <header>
         <h1>RAJAN <span>PATH LAB</span></h1>
         <nav>
@@ -1081,7 +1406,7 @@
         </div>
     </div>
 
-    <!-- ─── ABOUT, PARTNERS, TESTS (unchanged) ─── -->
+    <!-- ─── ABOUT, PARTNERS, TESTS ─── -->
     <section id="about" style="background: white;">
         <div class="about-container">
             <div class="about-text">
@@ -1324,8 +1649,13 @@
                     <!-- REPORTS -->
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management <span class="cloud-badge"><i class="fas fa-cloud-upload-alt"></i> Firebase Storage</span></h2>
+
+                        <!-- UPLOAD MESSAGE -->
+                        <div id="uploadMessage"></div>
+                        <div class="upload-progress" id="uploadProgress"><div class="bar" id="uploadProgressBar"></div></div>
+
                         <div class="form-grid">
-                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-062026-1186" /></label>
+                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="e.g. RPL-20260625-0625" /></label>
                             <label>Test Name
                                 <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" />
                                 <datalist id="testList2">
@@ -1401,10 +1731,10 @@
                             <label>Replace <select id="reportReplace"><option value="no">No</option><option value="yes">Yes</option></select></label>
                             <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
                                 <button class="btn btn-primary" id="uploadReportBtn"><i class="fas fa-upload"></i> Upload</button>
-                                <button class="btn btn-outline btn-sm" id="refreshReports"><i class="fas fa-sync"></i></button>
+                                <button class="btn btn-outline btn-sm" id="refreshReports"><i class="fas fa-sync"></i> Refresh</button>
                             </div>
                         </div>
-                        <div id="uploadMessage" style="margin:10px 0; font-weight:bold; color:red;"></div>
+
                         <div class="table-wrap">
                             <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
@@ -1561,7 +1891,7 @@
                         <p style="font-style:italic;color:#6c757d;">Loading from Firebase...</p>
                     </div>
                     <div style="margin-top:0.8rem;font-size:0.8rem;color:#0f172a;background:#dbeafe;padding:0.5rem;border-radius:0.5rem;border-left:3px solid #2563eb;">
-                        ✅ <strong>Cloud Sync Active:</strong> Data is stored in Firebase. 
+                        ✅ <strong>Cloud Sync Active:</strong> Data is stored in Firebase.
                         Patients added on <strong>any device</strong> will appear here instantly.
                     </div>
                 </details>
@@ -1578,7 +1908,7 @@
     <!-- ─── JAVASCRIPT ─── -->
     <script>
         // ================================================================
-        // 🔥 FIREBASE CONFIG – YOUR OWN PROJECT DETAILS (inserted)
+        // 🔥 FIREBASE CONFIG – YOUR OWN PROJECT DETAILS
         // ================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
@@ -1630,7 +1960,8 @@
         function generatePatientId() {
             const nextId = Math.floor(Math.random() * 9999) + 1;
             const today = new Date();
-            const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
+            const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2,
+            '0');
             return 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
         }
 
@@ -1648,6 +1979,32 @@
         const adminWrapper = $('adminPanelWrapper');
         const upiModal = $('upiModal');
         const portalModal = $('patientPortalModal');
+
+        // ─── UPLOAD MESSAGE HELPER ───
+        function setUploadMessage(text, type = 'info') {
+            const el = $('uploadMessage');
+            el.textContent = text;
+            el.className = type; // 'success', 'error', 'info', 'loading'
+            el.style.display = 'block';
+            console.log('[Upload]', type, text);
+        }
+
+        function hideUploadMessage() {
+            const el = $('uploadMessage');
+            el.style.display = 'none';
+            el.className = '';
+        }
+
+        function setUploadProgress(pct) {
+            const container = $('uploadProgress');
+            const bar = $('uploadProgressBar');
+            if (pct === undefined || pct === null) {
+                container.classList.remove('active');
+                return;
+            }
+            container.classList.add('active');
+            bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+        }
 
         // ─── LOGIN ───
         const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
@@ -1736,6 +2093,8 @@
             if (id === 'backup') refreshBackup();
             if (id === 'security') refreshSecurity();
             if (id === 'patients') setTimeout(() => generateAllQRCodes(), 300);
+            // Hide upload message when switching away from reports
+            if (id !== 'reports') hideUploadMessage();
         }
 
         sidebarLinks.forEach(a => {
@@ -1840,7 +2199,8 @@
                         type: 'bar',
                         data: {
                             labels: days,
-                            datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }]
+                            datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)',
+                                borderColor: '#008080', borderWidth: 2 }]
                         },
                         options: {
                             responsive: true,
@@ -1902,7 +2262,8 @@
                 }
             }).catch(err => {
                 console.error('Patients error:', err);
-                $('patientTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:red;">❌ Error loading: ' + err.message + '</td></tr>';
+                $('patientTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:red;">❌ Error loading: ' +
+                    err.message + '</td></tr>';
             });
         }
 
@@ -2004,7 +2365,8 @@
                 }
             }).catch(err => {
                 console.error('Reports error:', err);
-                $('reportsTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:red;">❌ Error: ' + err.message + '</td></tr>';
+                $('reportsTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:red;">❌ Error: ' +
+                    err.message + '</td></tr>';
             });
         }
 
@@ -2022,75 +2384,204 @@
             }
         });
 
-        // ─── UPLOAD REPORT ───
+        // ─── UPLOAD REPORT — FIXED ───
         $('uploadReportBtn').addEventListener('click', function() {
-            if (!firebaseReady) { alert('Firebase not ready'); return; }
+            const btn = this;
+            const msgDiv = $('uploadMessage');
+
+            // --- Reset ---
+            hideUploadMessage();
+            setUploadProgress(0);
+
+            // --- 1. Firebase check ---
+            if (!firebaseReady) {
+                setUploadMessage('❌ Firebase not ready. Please check configuration.', 'error');
+                return;
+            }
+
+            // --- 2. Gather inputs ---
             const pid = $('reportPatientId').value.trim();
             const test = $('reportTestName').value.trim();
             const file = $('reportFile').files[0];
             const replace = $('reportReplace').value;
-            const msgDiv = $('uploadMessage');
-            msgDiv.textContent = '';
-            msgDiv.style.color = 'red';
 
-            if (!pid) { msgDiv.textContent = '❌ Patient ID is required.'; return; }
-            if (!test) { msgDiv.textContent = '❌ Test Name is required.'; return; }
-            if (!file) { msgDiv.textContent = '❌ Please select a PDF file.'; return; }
+            console.log('[Upload] Starting:', { pid, test, fileName: file?.name, replace });
 
-            patientsCol.where('patient_id', '==', pid).get().then(snap => {
-                if (snap.empty) {
-                    msgDiv.textContent = '❌ Patient not found! Please add patient first.';
-                    return;
-                }
-                const patientData = snap.docs[0].data();
-                const patientId = snap.docs[0].id;
+            // --- 3. Validation ---
+            if (!pid) {
+                setUploadMessage('❌ Patient ID is required. Enter the Patient ID (e.g. RPL-20260625-0625).', 'error');
+                return;
+            }
+            if (!test) {
+                setUploadMessage('❌ Test Name is required. Select or type a test name.', 'error');
+                return;
+            }
+            if (!file) {
+                setUploadMessage('❌ Please select a PDF file to upload.', 'error');
+                return;
+            }
+            if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+                setUploadMessage('❌ Only PDF files are allowed. Please select a valid PDF.', 'error');
+                return;
+            }
+            if (file.size > 10 * 1024 * 1024) {
+                setUploadMessage('❌ File size exceeds 10 MB. Please compress or choose a smaller file.', 'error');
+                return;
+            }
 
-                reportsCol.where('patient_id', '==', pid).where('test_name', '==', test).get().then(repSnap => {
-                    if (!repSnap.empty && replace === 'no') {
-                        msgDiv.textContent = '❌ Report exists. Use Replace=Yes to overwrite.';
-                        return;
+            // --- 4. Disable button during upload ---
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+            setUploadMessage('⏳ Looking up patient...', 'loading');
+
+            // --- 5. Lookup patient ---
+            patientsCol.where('patient_id', '==', pid).get()
+                .then(snap => {
+                    if (snap.empty) {
+                        setUploadMessage('❌ Patient not found! Add the patient first or check the Patient ID.', 'error');
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                        setUploadProgress(null);
+                        return Promise.reject('PATIENT_NOT_FOUND');
                     }
-                    const deletePromises = [];
-                    repSnap.forEach(doc => {
-                        const oldPath = doc.data().file_path;
-                        if (oldPath) {
-                            deletePromises.push(storage.ref('reports/' + oldPath).delete().catch(() => {}));
-                        }
-                        deletePromises.push(doc.ref.delete());
-                    });
-                    Promise.all(deletePromises).then(() => {
-                        const filename = pid + '_' + test.replace(/[^a-zA-Z0-9]/g, '_') + '_' + Date.now() + '.pdf';
-                        const uploadRef = storage.ref('reports/' + filename);
-                        const uploadTask = uploadRef.put(file);
-                        uploadTask.on('state_changed', null, (err) => {
-                            msgDiv.textContent = '❌ Upload error: ' + err.message;
-                            msgDiv.style.color = 'red';
-                        }, () => {
-                            uploadRef.getDownloadURL().then(url => {
-                                const reportData = {
-                                    patient_id: pid,
-                                    name: patientData.name || 'N/A',
-                                    test_name: test,
-                                    file_path: filename,
-                                    file_url: url,
-                                    uploaded_at: firebase.firestore.FieldValue.serverTimestamp()
-                                };
-                                reportsCol.add(reportData).then(() => {
-                                    msgDiv.style.color = 'green';
-                                    msgDiv.textContent = '✅ Report uploaded!';
-                                    $('reportPatientId').value = '';
-                                    $('reportTestName').value = '';
-                                    $('reportFile').value = '';
-                                    refreshAll();
-                                    setTimeout(() => { msgDiv.textContent = ''; }, 5000);
-                                });
+
+                    const patientDoc = snap.docs[0];
+                    const patientData = patientDoc.data();
+                    const patientId = patientDoc.id;
+
+                    console.log('[Upload] Patient found:', patientData.name);
+
+                    // --- 6. Check existing report ---
+                    return reportsCol.where('patient_id', '==', pid)
+                        .where('test_name', '==', test)
+                        .get()
+                        .then(repSnap => {
+                            // If report exists and replace is "no", abort
+                            if (!repSnap.empty && replace === 'no') {
+                                setUploadMessage(
+                                    '⚠️ Report already exists for this patient and test. Use Replace=Yes to overwrite.',
+                                    'error');
+                                btn.disabled = false;
+                                btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                                setUploadProgress(null);
+                                return Promise.reject('REPORT_EXISTS');
+                            }
+
+                            // --- 7. Delete old reports (if replace=yes) ---
+                            const deletePromises = [];
+                            repSnap.forEach(doc => {
+                                const oldPath = doc.data().file_path;
+                                if (oldPath) {
+                                    console.log('[Upload] Deleting old file:', oldPath);
+                                    deletePromises.push(
+                                        storage.ref('reports/' + oldPath).delete().catch(err => {
+                                            console.warn('[Upload] Old file delete warn:', err);
+                                        })
+                                    );
+                                }
+                                deletePromises.push(doc.ref.delete());
+                            });
+
+                            return Promise.all(deletePromises).then(() => {
+                                // --- 8. Build filename and upload ---
+                                const safeTest = test.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 30);
+                                const filename = pid + '_' + safeTest + '_' + Date.now() + '.pdf';
+                                const uploadRef = storage.ref('reports/' + filename);
+
+                                setUploadMessage('⏳ Uploading to Firebase Storage...', 'loading');
+                                setUploadProgress(0);
+
+                                const uploadTask = uploadRef.put(file);
+
+                                // Track progress
+                                uploadTask.on('state_changed',
+                                    (snapshot) => {
+                                        const pct = (snapshot.bytesTransferred / snapshot.totalBytes) *
+                                            100;
+                                        setUploadProgress(pct);
+                                        if (pct < 100) {
+                                            setUploadMessage('⏳ Uploading... ' + Math.round(pct) + '%',
+                                                'loading');
+                                        }
+                                    },
+                                    (err) => {
+                                        // Upload error
+                                        console.error('[Upload] Storage error:', err);
+                                        setUploadMessage('❌ Storage upload failed: ' + err.message,
+                                            'error');
+                                        btn.disabled = false;
+                                        btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                                        setUploadProgress(null);
+                                    },
+                                    () => {
+                                        // Upload complete — get download URL
+                                        setUploadMessage('⏳ Finalizing...', 'loading');
+                                        setUploadProgress(100);
+
+                                        uploadRef.getDownloadURL().then(url => {
+                                            // --- 9. Save report to Firestore ---
+                                            const reportData = {
+                                                patient_id: pid,
+                                                name: patientData.name || 'N/A',
+                                                test_name: test,
+                                                file_path: filename,
+                                                file_url: url,
+                                                uploaded_at: firebase.firestore
+                                                    .FieldValue.serverTimestamp()
+                                            };
+
+                                            return reportsCol.add(reportData).then(() => {
+                                                console.log('[Upload] ✅ Report saved to Firestore');
+                                                setUploadMessage(
+                                                    '✅ Report uploaded successfully! Patient: ' +
+                                                    patientData.name + ' | Test: ' + test,
+                                                    'success');
+                                                setUploadProgress(null);
+                                                btn.disabled = false;
+                                                btn.innerHTML =
+                                                '<i class="fas fa-upload"></i> Upload';
+
+                                                // Clear fields
+                                                $('reportPatientId').value = '';
+                                                $('reportTestName').value = '';
+                                                $('reportFile').value = '';
+
+                                                // Refresh list
+                                                refreshReports();
+
+                                                // Auto-hide success after 6s
+                                                setTimeout(() => {
+                                                    if ($('uploadMessage').classList
+                                                        .contains('success')) {
+                                                        hideUploadMessage();
+                                                    }
+                                                }, 6000);
+                                            });
+                                        }).catch(err => {
+                                            console.error('[Upload] URL fetch error:', err);
+                                            setUploadMessage('❌ Failed to get download URL: ' +
+                                                err.message, 'error');
+                                            btn.disabled = false;
+                                            btn.innerHTML =
+                                                '<i class="fas fa-upload"></i> Upload';
+                                            setUploadProgress(null);
+                                        });
+                                    }
+                                );
                             });
                         });
-                    });
+                })
+                .catch(err => {
+                    if (err === 'PATIENT_NOT_FOUND' || err === 'REPORT_EXISTS') {
+                        // Already handled
+                        return;
+                    }
+                    console.error('[Upload] Unexpected error:', err);
+                    setUploadMessage('❌ Error: ' + err.message, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                    setUploadProgress(null);
                 });
-            }).catch(err => {
-                msgDiv.textContent = '❌ Error: ' + err.message;
-            });
         });
 
         $('refreshReports').addEventListener('click', refreshReports);
@@ -2140,7 +2631,8 @@
         document.addEventListener('click', function(e) {
             if (e.target.closest('.wa-send')) {
                 const btn = e.target.closest('.wa-send');
-                const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn.dataset.test);
+                const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn
+                    .dataset.test);
                 sendWhatsApp(btn.dataset.phone, msg);
             }
         });
@@ -2251,9 +2743,11 @@
                 const revenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
                 const testMap = {};
                 patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                let topTest = '-', topCount = 0;
+                let topTest = '-',
+                    topCount = 0;
                 Object.keys(testMap).forEach(key => {
-                    if (testMap[key] > topCount) { topCount = testMap[key]; topTest = key; }
+                    if (testMap[key] > topCount) { topCount = testMap[key];
+                        topTest = key; }
                 });
 
                 $('aToday').textContent = todayCount;
@@ -2264,7 +2758,9 @@
                 const tbody = $('analyticsTable');
                 const testWise = Object.keys(testMap).map(key => ({ test: key, count: testMap[key] }));
                 if (testWise.length) {
-                    tbody.innerHTML = testWise.map(t => `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`).join('');
+                    tbody.innerHTML = testWise.map(t =>
+                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`).join(
+                        '');
                 } else {
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
                 }
@@ -2330,8 +2826,10 @@
             document.body.style.overflow = '';
         }
 
-        $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
-        $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
+        $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault();
+            openPortal(); });
+        $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault();
+            openPortal(); });
         $('closePortalBtn').addEventListener('click', closePortal);
         portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
@@ -2355,10 +2853,12 @@
                 const patients = [];
                 snapshot.forEach(doc => patients.push({ id: doc.id, ...doc.data() }));
                 if (patients.length) {
-                    let html = '<p style="font-weight:600;margin-bottom:0.5rem;color:#0f172a;">📋 Total Patients: ' + patients.length + ' (cloud)</p>';
+                    let html = '<p style="font-weight:600;margin-bottom:0.5rem;color:#0f172a;">📋 Total Patients: ' +
+                        patients.length + ' (cloud)</p>';
                     html += '<ul style="list-style:none;padding:0;margin:0;">';
                     patients.forEach(p => {
-                        html += `<li style="padding:4px 0;border-bottom:1px solid #eee;font-size:0.8rem;display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+                        html +=
+                            `<li style="padding:4px 0;border-bottom:1px solid #eee;font-size:0.8rem;display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
                             <strong>${p.patient_id || p.id}</strong> 
                             <span>${p.name || 'N/A'}</span>
                             <span style="color:#6c757d;">(${p.phone || 'N/A'})</span>
@@ -2369,10 +2869,12 @@
                     html += '</ul>';
                     container.innerHTML = html;
                 } else {
-                    container.innerHTML = '<p style="color:#dc3545;">⚠️ No patients found in cloud. Add patients from Admin panel.</p>';
+                    container.innerHTML =
+                        '<p style="color:#dc3545;">⚠️ No patients found in cloud. Add patients from Admin panel.</p>';
                 }
             }).catch(err => {
-                container.innerHTML = '<p style="color:#dc3545;">❌ Error loading from cloud: ' + err.message + '</p>';
+                container.innerHTML = '<p style="color:#dc3545;">❌ Error loading from cloud: ' + err.message +
+                '</p>';
             });
         }
 
@@ -2402,12 +2904,16 @@
 
                 // 1. Exact patient_id
                 const snap1 = await patientsCol.where('patient_id', '==', searchValue).get();
-                if (!snap1.empty) { patientDoc = snap1.docs[0]; patientData = patientDoc.data(); found = true; }
+                if (!snap1.empty) { patientDoc = snap1.docs[0];
+                    patientData = patientDoc.data();
+                    found = true; }
 
                 // 2. Exact phone
                 if (!found) {
                     const snap2 = await patientsCol.where('phone', '==', searchValue).get();
-                    if (!snap2.empty) { patientDoc = snap2.docs[0]; patientData = patientDoc.data(); found = true; }
+                    if (!snap2.empty) { patientDoc = snap2.docs[0];
+                        patientData = patientDoc.data();
+                        found = true; }
                 }
 
                 // 3. Normalized phone
@@ -2433,14 +2939,17 @@
                         if ((data.patient_id && data.patient_id.toLowerCase().includes(lower)) ||
                             (data.name && data.name.toLowerCase().includes(lower)) ||
                             (data.phone && data.phone.includes(searchValue))) {
-                            if (!found) { patientDoc = doc; patientData = data; found = true; }
+                            if (!found) { patientDoc = doc;
+                                patientData = data;
+                                found = true; }
                         }
                     });
                 }
 
                 if (!found || !patientData) {
                     statusDiv.className = 'portal-status error';
-                    statusDiv.innerHTML = '❌ No patient found with <strong>"' + searchValue + '"</strong><br><small>Check Debug section to see all patients in cloud.</small>';
+                    statusDiv.innerHTML = '❌ No patient found with <strong>"' + searchValue +
+                        '"</strong><br><small>Check Debug section to see all patients in cloud.</small>';
                     listDiv.style.display = 'none';
                     updateDebugList();
                     return;
@@ -2459,12 +2968,14 @@
                 }
 
                 statusDiv.className = 'portal-status success';
-                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for <strong>' + (patientData.name || 'Patient') + '</strong>. Due: ₹' + (patientData.due_amount || 0);
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for <strong>' + (patientData.name ||
+                    'Patient') + '</strong>. Due: ₹' + (patientData.due_amount || 0);
 
                 let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
                     const canDownload = (patientData.due_amount || 0) === 0;
-                    const dueBadge = (patientData.due_amount || 0) > 0 ? '<span class="portal-due-badge">₹' + patientData.due_amount + ' DUE</span>' : '';
+                    const dueBadge = (patientData.due_amount || 0) > 0 ? '<span class="portal-due-badge">₹' + patientData
+                        .due_amount + ' DUE</span>' : '';
                     html += `
                         <div class="portal-report-item">
                             <div class="portal-report-info">
@@ -2511,6 +3022,16 @@
         console.log('📌 Firebase config loaded successfully.');
 
         if (portalModal.classList.contains('active')) updateDebugList();
+
+        // ─── AUTO-HIDE UPLOAD MESSAGE ON TAB SWITCH ───
+        document.querySelectorAll('#adminSidebar a[data-section]').forEach(link => {
+            link.addEventListener('click', function() {
+                if (this.dataset.section !== 'reports') {
+                    hideUploadMessage();
+                    setUploadProgress(null);
+                }
+            });
+        });
     </script>
 </body>
 </html>
