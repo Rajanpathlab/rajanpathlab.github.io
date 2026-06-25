@@ -3,23 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>Rajan Path Lab | Report Upload</title>
+    <title>Rajan Path Lab | Admin Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
-    <!-- 🔥 FIREBASE SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js">
-    </script>
+    <!-- 🔥 SUPABASE SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- 🔥 CLOUDINARY UPLOAD WIDGET (optional, but we'll use direct upload) -->
     <style>
-        /* ─── ALL STYLES ─── */
+        /* ─── ALL STYLES (same as before) ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
@@ -1284,8 +1278,8 @@
             color: #2dd4bf;
         }
 
-        /* ─── FIREBASE STATUS ─── */
-        .firebase-status {
+        /* ─── CONNECTION STATUS ─── */
+        .connection-status {
             background: #1a8d4a;
             color: white;
             padding: 4px 12px;
@@ -1297,10 +1291,10 @@
             gap: 6px;
             margin-left: 8px;
         }
-        .firebase-status.offline {
+        .connection-status.offline {
             background: #dc3545;
         }
-        .firebase-status i {
+        .connection-status i {
             font-size: 12px;
         }
         .cloud-badge {
@@ -1402,7 +1396,7 @@
             <a href="contact.html">About</a>
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
-            <span class="firebase-status" id="firebaseStatus"><i class="fas fa-cloud"></i> Cloud Sync</span>
+            <span class="connection-status" id="connStatus"><i class="fas fa-cloud"></i> Supabase</span>
             <span class="auth-status" id="authStatus">🔐 Connecting...</span>
         </nav>
     </header>
@@ -1511,8 +1505,8 @@
         <div class="login-modal-content">
             <h3><i class="fas fa-lock"></i> Admin Login</h3>
             <form id="loginForm">
-                <label>Username</label>
-                <input type="text" id="loginUsername" placeholder="Enter username" />
+                <label>Email</label>
+                <input type="email" id="loginEmail" placeholder="admin@rajanpathlab.com" />
                 <label>Password</label>
                 <input type="password" id="loginPassword" placeholder="Enter password" />
                 <button type="submit" class="btn-book" style="width:100%;background:var(--accent-teal);border:none;padding:10px;"><i class="fas fa-sign-in-alt"></i> Login</button>
@@ -1526,7 +1520,7 @@
     <div id="adminPanelWrapper">
         <div id="adminPanelContainer">
             <div class="admin-header">
-                <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin <span class="cloud-badge"><i class="fas fa-cloud"></i> Firebase</span></h2>
+                <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin <span class="cloud-badge"><i class="fas fa-database"></i> Supabase</span> <span class="cloud-badge" style="background:rgba(255,255,255,0.08);"><i class="fas fa-cloud-upload-alt"></i> Cloudinary</span></h2>
                 <div class="admin-user">
                     <span id="adminUsername">Admin</span>
                     <span class="auth-status" id="adminAuthStatus" style="font-size:10px;">🔐 Connected</span>
@@ -1572,7 +1566,7 @@
 
                     <!-- PATIENTS -->
                     <div class="admin-section" id="sec-patients">
-                        <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span> <span class="cloud-badge"><i class="fas fa-sync"></i> Cloud Sync</span></h2>
+                        <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span> <span class="cloud-badge"><i class="fas fa-sync"></i> Supabase</span></h2>
                         <div class="form-grid">
                             <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
@@ -1666,9 +1660,8 @@
 
                     <!-- REPORTS -->
                     <div class="admin-section" id="sec-reports">
-                        <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management <span class="cloud-badge"><i class="fas fa-cloud-upload-alt"></i> Firebase Storage</span></h2>
+                        <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management <span class="cloud-badge"><i class="fas fa-cloud-upload-alt"></i> Cloudinary</span></h2>
 
-                        <!-- UPLOAD MESSAGE -->
                         <div id="uploadMessage"></div>
                         <div class="upload-progress" id="uploadProgress"><div class="bar" id="uploadProgressBar"></div></div>
 
@@ -1906,10 +1899,10 @@
                 <details class="debug-section" open>
                     <summary>🔧 Debug: All Patients in Cloud</summary>
                     <div id="debugPatientList" class="debug-patient-list">
-                        <p style="font-style:italic;color:#6c757d;">Loading from Firebase...</p>
+                        <p style="font-style:italic;color:#6c757d;">Loading from Supabase...</p>
                     </div>
                     <div style="margin-top:0.8rem;font-size:0.8rem;color:#0f172a;background:#dbeafe;padding:0.5rem;border-radius:0.5rem;border-left:3px solid #2563eb;">
-                        ✅ <strong>Cloud Sync Active:</strong> Data is stored in Firebase.
+                        ✅ <strong>Cloud Sync Active:</strong> Data is stored in Supabase + Cloudinary.
                         Patients added on <strong>any device</strong> will appear here instantly.
                     </div>
                 </details>
@@ -1926,103 +1919,117 @@
     <!-- ─── JAVASCRIPT ─── -->
     <script>
         // ================================================================
-        // 🔥 FIREBASE CONFIG
+        // 🔥 SUPABASE + CLOUDINARY CONFIG
         // ================================================================
-        const firebaseConfig = {
-            apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
-            authDomain: "rajanpathlab5530.firebaseapp.com",
-            projectId: "rajanpathlab5530",
-            storageBucket: "rajanpathlab5530.firebasestorage.app",
-            messagingSenderId: "883585447034",
-            appId: "1:883585447034:web:225d807b2cc83095f9b7c3",
-            measurementId: "G-7WMF1M8CG9"
-        };
 
-        // ─── INIT FIREBASE ───
-        let db, storage, auth, patientsCol, reportsCol, logsCol, paymentsCol;
-        let firebaseReady = false;
-        let authReady = false;
+        // --- CONFIGURE THESE ---
+        const SUPABASE_URL = 'https://your-project.supabase.co';
+        const SUPABASE_ANON_KEY = 'your-anon-key';
+        const CLOUDINARY_CLOUD_NAME = 'your-cloud-name';
+        const CLOUDINARY_UPLOAD_PRESET = 'lab_reports'; // unsigned preset
+
+        // --- INIT SUPABASE ---
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+            }
+        });
+
+        let supabase = supabaseClient;
+        let isAuthenticated = false;
         let authUser = null;
 
-        try {
-            firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-            storage = firebase.storage();
-            auth = firebase.auth();
+        // --- DOM REFS ---
+        const $ = id => document.getElementById(id);
+        const loginModal = $('loginModal');
+        const adminWrapper = $('adminPanelWrapper');
+        const upiModal = $('upiModal');
+        const portalModal = $('patientPortalModal');
 
-            // Enable offline persistence
-            db.enablePersistence({ synchronizeTabs: true })
-                .catch(err => console.warn('Firebase persistence:', err));
+        // --- CONNECTION STATUS ---
+        const connStatus = $('connStatus');
+        const authStatusEl = $('authStatus');
+        const adminAuthStatus = $('adminAuthStatus');
 
-            patientsCol = db.collection('patients');
-            reportsCol = db.collection('reports');
-            logsCol = db.collection('activity_logs');
-            paymentsCol = db.collection('payments');
-
-            firebaseReady = true;
-            document.getElementById('firebaseStatus').innerHTML = '<i class="fas fa-cloud"></i> Cloud Sync';
-            document.getElementById('firebaseStatus').className = 'firebase-status';
-            console.log('✅ Firebase initialized successfully');
-
-            // ─── ANONYMOUS AUTHENTICATION (FIX FOR UPLOAD) ───
-            const authStatusEl = document.getElementById('authStatus');
-            const adminAuthStatus = document.getElementById('adminAuthStatus');
-
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    authUser = user;
-                    authReady = true;
-                    authStatusEl.textContent = '🔓 Authenticated';
-                    authStatusEl.className = 'auth-status authenticated';
-                    if (adminAuthStatus) {
-                        adminAuthStatus.textContent = '🔓 Auth OK';
-                        adminAuthStatus.className = 'auth-status authenticated';
-                    }
-                    console.log('✅ Firebase Auth: Authenticated as', user.uid);
-                    // Refresh reports to show data
-                    if (document.getElementById('sec-reports').classList.contains('active')) {
-                        refreshReports();
-                    }
-                } else {
-                    // Not authenticated - sign in anonymously
-                    authStatusEl.textContent = '🔐 Connecting...';
-                    authStatusEl.className = 'auth-status';
-                    auth.signInAnonymously()
-                        .then(result => {
-                            authUser = result.user;
-                            authReady = true;
-                            authStatusEl.textContent = '🔓 Authenticated';
-                            authStatusEl.className = 'auth-status authenticated';
-                            if (adminAuthStatus) {
-                                adminAuthStatus.textContent = '🔓 Auth OK';
-                                adminAuthStatus.className = 'auth-status authenticated';
-                            }
-                            console.log('✅ Firebase Auth: Anonymous sign-in successful');
-                            // Refresh data after auth
-                            refreshAll();
-                        })
-                        .catch(err => {
-                            console.error('❌ Firebase Auth error:', err);
-                            authStatusEl.textContent = '⚠️ Auth Failed';
-                            authStatusEl.className = 'auth-status error';
-                            if (adminAuthStatus) {
-                                adminAuthStatus.textContent = '⚠️ Auth Failed';
-                                adminAuthStatus.className = 'auth-status error';
-                            }
-                            // Still try to work with limited access
-                            refreshAll();
-                        });
-                }
-            });
-
-        } catch (e) {
-            console.error('❌ Firebase init error:', e);
-            document.getElementById('firebaseStatus').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Offline';
-            document.getElementById('firebaseStatus').className = 'firebase-status offline';
-            document.getElementById('authStatus').textContent = '⚠️ Init Failed';
-            document.getElementById('authStatus').className = 'auth-status error';
-            alert('⚠️ Firebase not configured. Please check your configuration.');
+        // --- CHECK SUPABASE CONNECTION ---
+        async function checkConnection() {
+            try {
+                const { data, error } = await supabase.from('patients').select('count', { count: 'exact', head: true });
+                if (error) throw error;
+                connStatus.innerHTML = '<i class="fas fa-cloud"></i> Supabase ✓';
+                connStatus.className = 'connection-status';
+                return true;
+            } catch (e) {
+                console.warn('Supabase connection check:', e);
+                connStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Offline';
+                connStatus.className = 'connection-status offline';
+                return false;
+            }
         }
+
+        // --- AUTH STATE ---
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                isAuthenticated = true;
+                authUser = session.user;
+                authStatusEl.textContent = '🔓 Authenticated';
+                authStatusEl.className = 'auth-status authenticated';
+                if (adminAuthStatus) {
+                    adminAuthStatus.textContent = '🔓 Auth OK';
+                    adminAuthStatus.className = 'auth-status authenticated';
+                }
+                console.log('✅ Supabase Auth: Authenticated as', session.user.email);
+                // If admin panel is open, refresh data
+                if (adminWrapper.classList.contains('active')) {
+                    refreshAll();
+                }
+            } else {
+                isAuthenticated = false;
+                authUser = null;
+                authStatusEl.textContent = '🔐 Not logged in';
+                authStatusEl.className = 'auth-status';
+                if (adminAuthStatus) {
+                    adminAuthStatus.textContent = '🔐 Not logged in';
+                    adminAuthStatus.className = 'auth-status';
+                }
+                // Try auto login for admin if session exists
+                supabase.auth.getSession().then(({ data, error }) => {
+                    if (data.session) {
+                        // Session exists but event didn't fire? Re-trigger
+                        supabase.auth.onAuthStateChange(() => {});
+                    }
+                });
+            }
+        });
+
+        // --- INIT ---
+        async function init() {
+            await checkConnection();
+            // Check for existing session
+            const { data, error } = await supabase.auth.getSession();
+            if (data.session) {
+                isAuthenticated = true;
+                authUser = data.session.user;
+                authStatusEl.textContent = '🔓 Authenticated';
+                authStatusEl.className = 'auth-status authenticated';
+                if (adminAuthStatus) {
+                    adminAuthStatus.textContent = '🔓 Auth OK';
+                    adminAuthStatus.className = 'auth-status authenticated';
+                }
+                console.log('✅ Supabase Auth: Session restored for', data.session.user.email);
+            } else {
+                // Try to sign in anonymously for read access (if enabled)
+                try {
+                    // For lab use, we'll use email/password login only
+                    // No anonymous sign-in to keep it secure
+                } catch (e) { /* ignore */ }
+            }
+            refreshAll();
+        }
+
+        init();
 
         // ─── HELPERS ───
         function normalizePhone(phone) {
@@ -2050,13 +2057,6 @@
             window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
         }
 
-        // ─── DOM REFS ───
-        const $ = id => document.getElementById(id);
-        const loginModal = $('loginModal');
-        const adminWrapper = $('adminPanelWrapper');
-        const upiModal = $('upiModal');
-        const portalModal = $('patientPortalModal');
-
         // ─── UPLOAD MESSAGE HELPER ───
         let uploadTimeoutId = null;
 
@@ -2066,8 +2066,6 @@
             el.className = type;
             el.style.display = 'block';
             console.log('[Upload]', type, text);
-
-            // Auto-hide success after 8 seconds
             if (type === 'success') {
                 if (uploadTimeoutId) clearTimeout(uploadTimeoutId);
                 uploadTimeoutId = setTimeout(() => {
@@ -2075,9 +2073,6 @@
                         hideUploadMessage();
                     }
                 }, 8000);
-            }
-            if (type === 'error') {
-                // Keep error visible until user dismisses or retries
             }
         }
 
@@ -2103,8 +2098,6 @@
         }
 
         // ─── LOGIN ───
-        const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
-
         $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
         $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));
         window.addEventListener('click', (e) => {
@@ -2112,24 +2105,26 @@
             if (e.target === upiModal) upiModal.classList.remove('show');
         });
 
-        $('loginForm').addEventListener('submit', function(e) {
+        $('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const username = $('loginUsername').value.trim();
+            const email = $('loginEmail').value.trim();
             const password = $('loginPassword').value.trim();
             const result = $('loginResult');
-            if (!username || !password) {
+            if (!email || !password) {
                 result.style.color = 'red';
-                result.textContent = 'Please enter username and password';
+                result.textContent = 'Please enter email and password';
                 return;
             }
-            if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
                 result.style.color = 'green';
                 result.textContent = '✅ Login successful!';
                 loginModal.classList.remove('show');
                 showAdmin();
-            } else {
+            } catch (err) {
                 result.style.color = 'red';
-                result.textContent = '❌ Invalid username or password';
+                result.textContent = '❌ ' + err.message;
             }
         });
 
@@ -2137,7 +2132,7 @@
         function showAdmin() {
             adminWrapper.classList.add('active');
             document.body.style.overflow = 'hidden';
-            $('adminUsername').textContent = 'Rajan5530';
+            $('adminUsername').textContent = authUser?.email || 'Admin';
             refreshAll();
             showAdminSection('dashboard');
             setTimeout(() => generateAllQRCodes(), 500);
@@ -2150,7 +2145,10 @@
             setUploadProgress(null);
         }
 
-        function logout() { hideAdmin(); }
+        async function logout() {
+            await supabase.auth.signOut();
+            hideAdmin();
+        }
         $('logoutBtn').addEventListener('click', logout);
         $('logoutBtn2').addEventListener('click', logout);
 
@@ -2191,7 +2189,6 @@
             if (id === 'backup') refreshBackup();
             if (id === 'security') refreshSecurity();
             if (id === 'patients') setTimeout(() => generateAllQRCodes(), 300);
-            // Hide upload message when switching away from reports
             if (id !== 'reports') {
                 hideUploadMessage();
                 setUploadProgress(null);
@@ -2227,7 +2224,6 @@
 
         // ─── REFRESH ALL ───
         function refreshAll() {
-            if (!firebaseReady) return;
             refreshDashboard();
             refreshPatients();
             refreshReports();
@@ -2242,28 +2238,37 @@
         let chartWeeklyInstance = null;
         let chartPieInstance = null;
 
-        function refreshDashboard() {
-            if (!firebaseReady) return;
-            patientsCol.get().then(snapshot => {
-                const patients = [];
-                snapshot.forEach(doc => patients.push({ id: doc.id, ...doc.data() }));
+        async function refreshDashboard() {
+            try {
+                // Get patients
+                const { data: patients, error: pErr } = await supabase
+                    .from('patients')
+                    .select('*')
+                    .order('created_at', { ascending: false });
 
-                const totalPatients = patients.length;
-                const totalReports = 0;
-                const pendingReports = patients.filter(p => p.status === 'pending').length;
-                const cultureProcess = patients.filter(p => p.test && p.test.includes('Urine')).length;
-                const duePatients = patients.filter(p => (p.due_amount || 0) > 0).length;
-                const totalRevenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
+                if (pErr) throw pErr;
+
+                const totalPatients = patients?.length || 0;
+                const pendingReports = patients?.filter(p => p.status === 'pending').length || 0;
+                const cultureProcess = patients?.filter(p => p.test && p.test.includes('Urine')).length || 0;
+                const duePatients = patients?.filter(p => (p.due_amount || 0) > 0).length || 0;
+                const totalRevenue = patients?.reduce((sum, p) => sum + (p.due_amount || 0), 0) || 0;
 
                 $('dToday').textContent = totalPatients;
-                $('dTotalReports').textContent = '...';
                 $('dPending').textContent = pendingReports;
                 $('dCulture').textContent = cultureProcess;
                 $('dDue').textContent = duePatients;
                 $('dRevenue').textContent = '₹' + totalRevenue;
 
+                // Get reports count
+                const { count: totalReports, error: rErr } = await supabase
+                    .from('reports')
+                    .select('*', { count: 'exact', head: true });
+                $('dTotalReports').textContent = totalReports || 0;
+
+                // Recent patients
                 const tbody = $('dRecentPatients');
-                if (patients.length) {
+                if (patients && patients.length) {
                     tbody.innerHTML = patients.slice(0, 5).map(p =>
                         `<tr><td><b>${p.name || 'N/A'}</b></td><td>${p.test || 'N/A'}</td><td><span class="badge-status ${p.status || 'pending'}">${p.status || 'pending'}</span></td><td>₹${p.due_amount || 0}</td></tr>`
                     ).join('');
@@ -2271,15 +2276,12 @@
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
                 }
 
-                reportsCol.get().then(repSnap => {
-                    $('dTotalReports').textContent = repSnap.size;
-                });
-
+                // Weekly chart data
                 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
                 const weeklyData = days.map(() => 0);
-                patients.forEach(p => {
+                patients?.forEach(p => {
                     if (p.created_at) {
-                        const date = new Date(p.created_at.seconds ? p.created_at.seconds * 1000 : p.created_at);
+                        const date = new Date(p.created_at);
                         if (!isNaN(date)) {
                             const day = date.getDay();
                             const index = day === 0 ? 6 : day - 1;
@@ -2289,7 +2291,7 @@
                 });
 
                 const testMap = {};
-                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
+                patients?.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
                 const testLabels = Object.keys(testMap);
                 const testData = Object.values(testMap);
 
@@ -2334,17 +2336,23 @@
                         }
                     });
                 }
-            }).catch(err => console.error('Dashboard error:', err));
+            } catch (err) {
+                console.error('Dashboard error:', err);
+            }
         }
 
         // ─── PATIENTS ───
-        function refreshPatients() {
-            if (!firebaseReady) return;
-            patientsCol.orderBy('created_at', 'desc').get().then(snapshot => {
-                const patients = [];
-                snapshot.forEach(doc => patients.push({ id: doc.id, ...doc.data() }));
+        async function refreshPatients() {
+            try {
+                const { data: patients, error } = await supabase
+                    .from('patients')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
                 const tbody = $('patientTableBody');
-                if (patients.length) {
+                if (patients && patients.length) {
                     tbody.innerHTML = patients.map(p => `
                         <tr>
                             <td><b>${p.patient_id || p.id}</b></td>
@@ -2361,16 +2369,15 @@
                 } else {
                     tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;">No patients found in cloud</td></tr>';
                 }
-            }).catch(err => {
+            } catch (err) {
                 console.error('Patients error:', err);
                 $('patientTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:red;">❌ Error loading: ' +
                     err.message + '</td></tr>';
-            });
+            }
         }
 
         // ─── ADD PATIENT ───
-        $('addPatientBtn').addEventListener('click', function() {
-            if (!firebaseReady) { alert('Firebase not ready'); return; }
+        $('addPatientBtn').addEventListener('click', async function() {
             const name = $('patName').value.trim();
             const phone = $('patPhone').value.trim();
             const test = $('patTest').value.trim();
@@ -2380,30 +2387,43 @@
             if (!name || !phone) { alert('Name & Phone required'); return; }
             const patientId = generatePatientId();
 
-            patientsCol.where('phone', '==', phone).get().then(snap => {
-                if (!snap.empty) {
+            try {
+                // Check if phone exists
+                const { data: existing, error: checkErr } = await supabase
+                    .from('patients')
+                    .select('id')
+                    .eq('phone', phone)
+                    .single();
+
+                if (existing) {
                     alert('Phone number already exists!');
                     return;
                 }
-                const newPatient = {
-                    patient_id: patientId,
-                    name,
-                    phone,
-                    test: test || 'Not Specified',
-                    status,
-                    due_amount: due,
-                    created_at: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                patientsCol.add(newPatient).then(() => {
-                    alert('✅ Patient ' + patientId + ' added to cloud!');
-                    $('patName').value = '';
-                    $('patPhone').value = '';
-                    $('patTest').value = '';
-                    $('patDue').value = '';
-                    refreshAll();
-                    if (portalModal.classList.contains('active')) updateDebugList();
-                }).catch(err => alert('❌ Error: ' + err.message));
-            }).catch(err => alert('❌ Error: ' + err.message));
+
+                const { error } = await supabase
+                    .from('patients')
+                    .insert({
+                        patient_id: patientId,
+                        name,
+                        phone,
+                        test: test || 'Not Specified',
+                        status,
+                        due_amount: due,
+                        created_at: new Date().toISOString()
+                    });
+
+                if (error) throw error;
+
+                alert('✅ Patient ' + patientId + ' added to cloud!');
+                $('patName').value = '';
+                $('patPhone').value = '';
+                $('patTest').value = '';
+                $('patDue').value = '';
+                refreshAll();
+                if (portalModal.classList.contains('active')) updateDebugList();
+            } catch (err) {
+                alert('❌ Error: ' + err.message);
+            }
         });
 
         $('clearPatientBtn').addEventListener('click', function() {
@@ -2416,18 +2436,21 @@
         $('refreshPatients').addEventListener('click', refreshPatients);
 
         // ─── DELETE PATIENT ───
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', async function(e) {
             if (e.target.closest('.btn-del-patient')) {
                 const id = e.target.closest('.btn-del-patient').dataset.id;
                 if (confirm('Delete this patient from cloud?')) {
-                    patientsCol.doc(id).delete().then(() => {
-                        reportsCol.where('patient_id', '==', id).get().then(snap => {
-                            snap.forEach(doc => doc.ref.delete());
-                        });
+                    try {
+                        const { error } = await supabase.from('patients').delete().eq('id', id);
+                        if (error) throw error;
+                        // Also delete related reports
+                        await supabase.from('reports').delete().eq('patient_id', id);
                         alert('Deleted!');
                         refreshAll();
                         if (portalModal.classList.contains('active')) updateDebugList();
-                    }).catch(err => alert('Error: ' + err.message));
+                    } catch (err) {
+                        alert('Error: ' + err.message);
+                    }
                 }
             }
         });
@@ -2443,20 +2466,24 @@
         });
 
         // ─── REPORTS ───
-        function refreshReports() {
-            if (!firebaseReady) return;
-            reportsCol.orderBy('uploaded_at', 'desc').get().then(snapshot => {
-                const reports = [];
-                snapshot.forEach(doc => reports.push({ id: doc.id, ...doc.data() }));
+        async function refreshReports() {
+            try {
+                const { data: reports, error } = await supabase
+                    .from('reports')
+                    .select('*')
+                    .order('uploaded_at', { ascending: false });
+
+                if (error) throw error;
+
                 const tbody = $('reportsTableBody');
-                if (reports.length) {
+                if (reports && reports.length) {
                     tbody.innerHTML = reports.map(r => `
                         <tr>
                             <td>${r.name || 'N/A'} (${r.patient_id || 'N/A'})</td>
                             <td>${r.test_name || 'N/A'}</td>
-                            <td>${r.uploaded_at ? new Date(r.uploaded_at.seconds * 1000).toLocaleString() : 'N/A'}</td>
+                            <td>${r.uploaded_at ? new Date(r.uploaded_at).toLocaleString() : 'N/A'}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}" data-file="${r.file_path || ''}"><i class="fas fa-download"></i></button>
+                                <button class="btn btn-sm btn-primary btn-download-report" data-url="${r.cloudinary_url || ''}"><i class="fas fa-download"></i></button>
                                 <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
@@ -2464,32 +2491,29 @@
                 } else {
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No reports in cloud</td></tr>';
                 }
-            }).catch(err => {
+            } catch (err) {
                 console.error('Reports error:', err);
                 $('reportsTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:red;">❌ Error: ' +
                     err.message + '</td></tr>';
-            });
+            }
         }
 
         // ─── DOWNLOAD REPORT ───
         document.addEventListener('click', function(e) {
             if (e.target.closest('.btn-download-report')) {
                 const btn = e.target.closest('.btn-download-report');
-                const filePath = btn.dataset.file;
-                if (!filePath) { alert('No file path'); return; }
-                const ref = storage.ref('reports/' + filePath);
-                ref.getDownloadURL().then(url => {
-                    window.open(url, '_blank');
-                }).catch(err => alert('Download error: ' + err.message));
+                const url = btn.dataset.url;
+                if (!url) { alert('No file URL'); return; }
+                window.open(url, '_blank');
             }
         });
 
-        // ─── UPLOAD REPORT — FIXED WITH AUTH ───
+        // ─── UPLOAD REPORT TO CLOUDINARY ───
         $('uploadReportBtn').addEventListener('click', function() {
             const btn = this;
             const msgDiv = $('uploadMessage');
 
-            // --- Reset ---
+            // Reset
             hideUploadMessage();
             setUploadProgress(0);
             if (uploadTimeoutId) {
@@ -2497,241 +2521,177 @@
                 uploadTimeoutId = null;
             }
 
-            // --- 1. Firebase check ---
-            if (!firebaseReady) {
-                setUploadMessage('❌ Firebase not ready. Please check configuration.', 'error');
-                return;
-            }
-
-            // --- 2. Auth check ---
-            if (!authReady) {
-                setUploadMessage('⏳ Waiting for authentication... Please wait.', 'loading');
-                // Wait for auth
-                const waitAuth = setInterval(() => {
-                    if (authReady) {
-                        clearInterval(waitAuth);
-                        // Retry upload
-                        btn.click();
-                    }
-                }, 500);
-                setTimeout(() => {
-                    clearInterval(waitAuth);
-                    if (!authReady) {
-                        setUploadMessage('❌ Authentication timeout. Please refresh the page.', 'error');
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
-                    }
-                }, 10000);
-                return;
-            }
-
-            // --- 3. Gather inputs ---
+            // 1. Gather inputs
             const pid = $('reportPatientId').value.trim();
             const test = $('reportTestName').value.trim();
             const file = $('reportFile').files[0];
             const replace = $('reportReplace').value;
 
-            console.log('[Upload] Starting:', { pid, test, fileName: file?.name, replace, authUser: authUser?.uid });
-
-            // --- 4. Validation ---
+            // 2. Validate
             if (!pid) {
-                setUploadMessage('❌ Patient ID is required. Enter the Patient ID (e.g. RPL-20260625-0625).', 'error');
+                setUploadMessage('❌ Patient ID is required.', 'error');
                 return;
             }
             if (!test) {
-                setUploadMessage('❌ Test Name is required. Select or type a test name.', 'error');
+                setUploadMessage('❌ Test Name is required.', 'error');
                 return;
             }
             if (!file) {
-                setUploadMessage('❌ Please select a PDF file to upload.', 'error');
+                setUploadMessage('❌ Please select a PDF file.', 'error');
                 return;
             }
             if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
-                setUploadMessage('❌ Only PDF files are allowed. Please select a valid PDF.', 'error');
+                setUploadMessage('❌ Only PDF files are allowed.', 'error');
                 return;
             }
             if (file.size > 10 * 1024 * 1024) {
-                setUploadMessage('❌ File size exceeds 10 MB. Please compress or choose a smaller file.', 'error');
+                setUploadMessage('❌ File size exceeds 10 MB.', 'error');
                 return;
             }
 
-            // --- 5. Disable button during upload ---
+            // 3. Disable button
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
             setUploadMessage('⏳ Looking up patient...', 'loading');
             setUploadProgress(5);
 
-            // --- 6. Lookup patient ---
-            patientsCol.where('patient_id', '==', pid).get()
-                .then(snap => {
-                    if (snap.empty) {
-                        setUploadMessage('❌ Patient not found! Add the patient first or check the Patient ID.',
-                            'error');
+            // 4. Check patient exists
+            supabase
+                .from('patients')
+                .select('*')
+                .eq('patient_id', pid)
+                .single()
+                .then(({ data: patient, error: pErr }) => {
+                    if (pErr || !patient) {
+                        setUploadMessage('❌ Patient not found! Check the Patient ID.', 'error');
                         btn.disabled = false;
                         btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
                         setUploadProgress(null);
                         return Promise.reject('PATIENT_NOT_FOUND');
                     }
 
-                    const patientDoc = snap.docs[0];
-                    const patientData = patientDoc.data();
-                    const patientId = patientDoc.id;
-
-                    console.log('[Upload] Patient found:', patientData.name);
-                    setUploadMessage('⏳ Patient found. Checking for existing report...', 'loading');
+                    // 5. Check existing report
+                    setUploadMessage('⏳ Checking for existing report...', 'loading');
                     setUploadProgress(15);
 
-                    // --- 7. Check existing report ---
-                    return reportsCol.where('patient_id', '==', pid)
-                        .where('test_name', '==', test)
-                        .get()
-                        .then(repSnap => {
-                            // If report exists and replace is "no", abort
-                            if (!repSnap.empty && replace === 'no') {
+                    return supabase
+                        .from('reports')
+                        .select('*')
+                        .eq('patient_id', pid)
+                        .eq('test_name', test)
+                        .maybeSingle()
+                        .then(({ data: existing, error: rErr }) => {
+                            if (existing && replace === 'no') {
                                 setUploadMessage(
-                                    '⚠️ Report already exists for this patient and test. Use Replace=Yes to overwrite.',
-                                    'error');
+                                    '⚠️ Report exists. Use Replace=Yes to overwrite.', 'error');
                                 btn.disabled = false;
                                 btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
                                 setUploadProgress(null);
                                 return Promise.reject('REPORT_EXISTS');
                             }
 
-                            setUploadMessage('⏳ Preparing upload...', 'loading');
-                            setUploadProgress(20);
-
-                            // --- 8. Delete old reports (if replace=yes) ---
+                            // 6. Delete old report if replacing
                             const deletePromises = [];
-                            repSnap.forEach(doc => {
-                                const oldPath = doc.data().file_path;
-                                if (oldPath) {
-                                    console.log('[Upload] Deleting old file:', oldPath);
-                                    deletePromises.push(
-                                        storage.ref('reports/' + oldPath).delete().catch(err => {
-                                            console.warn('[Upload] Old file delete warn:', err);
-                                            // Continue even if delete fails
-                                        })
-                                    );
+                            if (existing && replace === 'yes') {
+                                // Delete from Cloudinary first (if we have public_id)
+                                if (existing.public_id) {
+                                    // Cloudinary delete is server-side only, but we can skip
+                                    // since Cloudinary doesn't support client-side delete easily
                                 }
-                                deletePromises.push(doc.ref.delete());
-                            });
+                                // Delete from Supabase
+                                deletePromises.push(
+                                    supabase.from('reports').delete().eq('id', existing.id)
+                                );
+                            }
 
                             return Promise.all(deletePromises).then(() => {
-                                // --- 9. Build filename and upload ---
-                                const safeTest = test.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 30);
-                                const filename = pid + '_' + safeTest + '_' + Date.now() + '.pdf';
-                                const uploadRef = storage.ref('reports/' + filename);
-
-                                setUploadMessage('⏳ Uploading to Firebase Storage...', 'loading');
+                                // 7. Upload to Cloudinary
+                                setUploadMessage('⏳ Uploading to Cloudinary...', 'loading');
                                 setUploadProgress(25);
 
-                                const uploadTask = uploadRef.put(file);
+                                const formData = new FormData();
+                                formData.append('file', file);
+                                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                                formData.append('folder', 'reports/' + pid);
 
-                                // Track progress
-                                uploadTask.on('state_changed',
-                                    (snapshot) => {
-                                        const pct = (snapshot.bytesTransferred / snapshot.totalBytes) *
-                                            100;
-                                        const totalPct = 25 + (pct * 0.6); // 25% to 85%
-                                        setUploadProgress(totalPct);
-                                        if (pct < 100) {
-                                            setUploadMessage('⏳ Uploading... ' + Math.round(pct) +
+                                const xhr = new XMLHttpRequest();
+                                const uploadPromise = new Promise((resolve, reject) => {
+                                    xhr.open('POST',
+                                        'https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD_NAME +
+                                        '/upload'
+                                    );
+                                    xhr.upload.addEventListener('progress', (e) => {
+                                        if (e.lengthComputable) {
+                                            const pct = Math.round((e.loaded / e.total) *
+                                            100);
+                                            const totalPct = 25 + (pct * 0.6);
+                                            setUploadProgress(totalPct);
+                                            setUploadMessage('⏳ Uploading... ' + pct +
                                                 '%', 'loading');
+                                        }
+                                    });
+                                    xhr.onload = () => {
+                                        if (xhr.status === 200) {
+                                            resolve(JSON.parse(xhr.responseText));
                                         } else {
-                                            setUploadMessage('⏳ Finalizing...', 'loading');
+                                            reject(new Error('Cloudinary error: ' + xhr
+                                                .status));
                                         }
-                                    },
-                                    (err) => {
-                                        // Upload error
-                                        console.error('[Upload] Storage error:', err);
-                                        let errMsg = err.message || 'Unknown error';
-                                        if (err.code === 'storage/unauthorized') {
-                                            errMsg =
-                                                'Permission denied! Check Firebase Storage rules. Enable read/write access.';
-                                        } else if (err.code === 'storage/canceled') {
-                                            errMsg = 'Upload was cancelled.';
-                                        } else if (err.code === 'storage/retry-limit-exceeded') {
-                                            errMsg = 'Network error. Please check your connection and try again.';
-                                        }
-                                        setUploadMessage('❌ Storage upload failed: ' + errMsg,
-                                            'error');
-                                        btn.disabled = false;
-                                        btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
-                                        setUploadProgress(null);
-                                    },
-                                    () => {
-                                        // Upload complete — get download URL
-                                        setUploadMessage('⏳ Finalizing...', 'loading');
-                                        setUploadProgress(90);
+                                    };
+                                    xhr.onerror = () => reject(new Error('Network error'));
+                                    xhr.send(formData);
+                                });
 
-                                        uploadRef.getDownloadURL().then(url => {
-                                            // --- 10. Save report to Firestore ---
-                                            const reportData = {
-                                                patient_id: pid,
-                                                name: patientData.name || 'N/A',
-                                                test_name: test,
-                                                file_path: filename,
-                                                file_url: url,
-                                                uploaded_at: firebase.firestore
-                                                    .FieldValue.serverTimestamp()
-                                            };
+                                return uploadPromise.then((result) => {
+                                    setUploadMessage('⏳ Saving to database...', 'loading');
+                                    setUploadProgress(90);
 
-                                            return reportsCol.add(reportData).then(() => {
-                                                console.log(
-                                                    '[Upload] ✅ Report saved to Firestore'
-                                                    );
-                                                setUploadProgress(100);
-                                                setUploadMessage(
-                                                    '✅ Report uploaded successfully! Patient: ' +
-                                                    patientData.name + ' | Test: ' + test,
-                                                    'success');
-                                                btn.disabled = false;
-                                                btn.innerHTML =
-                                                    '<i class="fas fa-upload"></i> Upload';
+                                    // 8. Save to Supabase
+                                    return supabase
+                                        .from('reports')
+                                        .insert({
+                                            patient_id: pid,
+                                            name: patient.name || 'N/A',
+                                            test_name: test,
+                                            cloudinary_url: result.secure_url,
+                                            public_id: result.public_id,
+                                            uploaded_at: new Date().toISOString()
+                                        })
+                                        .then(({ error: insertErr }) => {
+                                            if (insertErr) throw insertErr;
 
-                                                // Clear fields
-                                                $('reportPatientId').value = '';
-                                                $('reportTestName').value = '';
-                                                $('reportFile').value = '';
-
-                                                // Refresh list
-                                                refreshReports();
-                                                refreshDashboard();
-
-                                                // Auto-hide success after 8s
-                                                setTimeout(() => {
-                                                    if ($('uploadMessage').classList
-                                                        .contains('success')) {
-                                                        hideUploadMessage();
-                                                    }
-                                                    setUploadProgress(null);
-                                                }, 8000);
-                                            });
-                                        }).catch(err => {
-                                            console.error('[Upload] URL fetch error:', err);
-                                            setUploadMessage('❌ Failed to get download URL: ' +
-                                                err.message, 'error');
+                                            setUploadProgress(100);
+                                            setUploadMessage(
+                                                '✅ Report uploaded successfully! Patient: ' +
+                                                patient.name + ' | Test: ' + test,
+                                                'success');
                                             btn.disabled = false;
                                             btn.innerHTML =
-                                                '<i class="fas fa-upload"></i> Upload';
-                                            setUploadProgress(null);
+                                            '<i class="fas fa-upload"></i> Upload';
+
+                                            $('reportPatientId').value = '';
+                                            $('reportTestName').value = '';
+                                            $('reportFile').value = '';
+
+                                            refreshReports();
+                                            refreshDashboard();
+
+                                            setTimeout(() => {
+                                                if ($('uploadMessage').classList
+                                                    .contains('success')) {
+                                                    hideUploadMessage();
+                                                }
+                                                setUploadProgress(null);
+                                            }, 8000);
                                         });
-                                    }
-                                );
+                                });
                             });
                         });
                 })
                 .catch(err => {
-                    if (err === 'PATIENT_NOT_FOUND' || err === 'REPORT_EXISTS') {
-                        // Already handled
-                        return;
-                    }
-                    console.error('[Upload] Unexpected error:', err);
-                    let errMsg = err.message || 'Unknown error';
-                    if (errMsg.includes('permission') || errMsg.includes('unauthorized')) {
-                        errMsg = 'Permission denied! Check Firebase Storage rules.';
-                    }
-                    setUploadMessage('❌ Error: ' + errMsg, 'error');
+                    if (err === 'PATIENT_NOT_FOUND' || err === 'REPORT_EXISTS') return;
+                    console.error('[Upload] Error:', err);
+                    setUploadMessage('❌ Error: ' + (err.message || 'Unknown error'), 'error');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
                     setUploadProgress(null);
@@ -2741,32 +2701,49 @@
         $('refreshReports').addEventListener('click', refreshReports);
 
         // ─── DELETE REPORT ───
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', async function(e) {
             if (e.target.closest('.btn-del-report')) {
                 const id = e.target.closest('.btn-del-report').dataset.id;
                 if (confirm('Delete report from cloud?')) {
-                    reportsCol.doc(id).get().then(doc => {
-                        const data = doc.data();
-                        if (data && data.file_path) {
-                            storage.ref('reports/' + data.file_path).delete().catch(() => {});
-                        }
-                        doc.ref.delete().then(() => {
-                            alert('Deleted!');
-                            refreshAll();
-                        });
-                    }).catch(err => alert('Error: ' + err.message));
+                    try {
+                        // Get the report first to get public_id
+                        const { data: report, error: getErr } = await supabase
+                            .from('reports')
+                            .select('*')
+                            .eq('id', id)
+                            .single();
+
+                        if (getErr) throw getErr;
+
+                        // Delete from Supabase
+                        const { error } = await supabase.from('reports').delete().eq('id', id);
+                        if (error) throw error;
+
+                        // Note: Cloudinary deletion requires server-side, so we skip here
+                        // but the file remains on Cloudinary (can be cleaned manually)
+
+                        alert('Deleted!');
+                        refreshAll();
+                    } catch (err) {
+                        alert('Error: ' + err.message);
+                    }
                 }
             }
         });
 
         // ─── WHATSAPP ───
-        function refreshWhatsAppPatients() {
-            if (!firebaseReady) return;
-            patientsCol.limit(10).get().then(snapshot => {
-                const patients = [];
-                snapshot.forEach(doc => patients.push({ id: doc.id, ...doc.data() }));
+        async function refreshWhatsAppPatients() {
+            try {
+                const { data: patients, error } = await supabase
+                    .from('patients')
+                    .select('*')
+                    .limit(10)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
                 const tbody = $('whatsappPatientList');
-                if (patients.length) {
+                if (patients && patients.length) {
                     tbody.innerHTML = patients.map(p => `
                         <tr>
                             <td>${p.name || 'N/A'}</td>
@@ -2779,7 +2756,9 @@
                 } else {
                     tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
                 }
-            }).catch(() => {});
+            } catch (err) {
+                console.error('WhatsApp patients error:', err);
+            }
         }
 
         document.addEventListener('click', function(e) {
@@ -2812,13 +2791,17 @@
         });
 
         // ─── PAYMENTS ───
-        function refreshPayments() {
-            if (!firebaseReady) return;
-            patientsCol.get().then(snapshot => {
-                const patients = [];
-                snapshot.forEach(doc => patients.push({ id: doc.id, ...doc.data() }));
-                const duePatients = patients.filter(p => (p.due_amount || 0) > 0);
-                const paidPatients = patients.filter(p => (p.due_amount || 0) === 0);
+        async function refreshPayments() {
+            try {
+                const { data: patients, error } = await supabase
+                    .from('patients')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                const duePatients = patients?.filter(p => (p.due_amount || 0) > 0) || [];
+                const paidPatients = patients?.filter(p => (p.due_amount || 0) === 0) || [];
                 const totalDue = duePatients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
 
                 $('pPaid').textContent = paidPatients.length;
@@ -2826,7 +2809,7 @@
                 $('pTotalDue').textContent = '₹' + totalDue;
 
                 const tbody = $('paymentsTableBody');
-                if (patients.length) {
+                if (patients && patients.length) {
                     tbody.innerHTML = patients.map(p => `
                         <tr>
                             <td>${p.name || 'N/A'}</td>
@@ -2839,19 +2822,28 @@
                 } else {
                     tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
                 }
-            }).catch(() => {});
+            } catch (err) {
+                console.error('Payments error:', err);
+            }
         }
 
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', async function(e) {
             if (e.target.closest('.mark-paid')) {
                 const btn = e.target.closest('.mark-paid');
                 const id = btn.dataset.id;
                 if (confirm('Mark as paid?')) {
-                    patientsCol.doc(id).update({ due_amount: 0 }).then(() => {
+                    try {
+                        const { error } = await supabase
+                            .from('patients')
+                            .update({ due_amount: 0 })
+                            .eq('id', id);
+                        if (error) throw error;
                         alert('✅ Paid!');
                         refreshAll();
                         if (portalModal.classList.contains('active')) updateDebugList();
-                    }).catch(err => alert('Error: ' + err.message));
+                    } catch (err) {
+                        alert('Error: ' + err.message);
+                    }
                 }
             }
         });
@@ -2880,23 +2872,26 @@
         $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));
 
         // ─── ANALYTICS ───
-        function refreshAnalytics() {
-            if (!firebaseReady) return;
-            patientsCol.get().then(snapshot => {
-                const patients = [];
-                snapshot.forEach(doc => patients.push({ id: doc.id, ...doc.data() }));
+        async function refreshAnalytics() {
+            try {
+                const { data: patients, error } = await supabase
+                    .from('patients')
+                    .select('*');
+
+                if (error) throw error;
+
                 const today = new Date().toDateString();
                 let todayCount = 0;
-                patients.forEach(p => {
+                patients?.forEach(p => {
                     if (p.created_at) {
-                        const d = new Date(p.created_at.seconds ? p.created_at.seconds * 1000 : p.created_at);
+                        const d = new Date(p.created_at);
                         if (!isNaN(d) && d.toDateString() === today) todayCount++;
                     }
                 });
-                const totalPatients = patients.length;
-                const revenue = patients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
+                const totalPatients = patients?.length || 0;
+                const revenue = patients?.reduce((sum, p) => sum + (p.due_amount || 0), 0) || 0;
                 const testMap = {};
-                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
+                patients?.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
                 let topTest = '-',
                     topCount = 0;
                 Object.keys(testMap).forEach(key => {
@@ -2918,49 +2913,56 @@
                 } else {
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
                 }
-            }).catch(() => {});
+            } catch (err) {
+                console.error('Analytics error:', err);
+            }
         }
 
         // ─── BACKUP ───
         function refreshBackup() {
             $('backupListBody').innerHTML = `
-                <tr><td>cloud_db_backup.json</td><td>Firestore</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Export from Firebase Console')"><i class="fas fa-download"></i></button></td></tr>
-                <tr><td>cloud_pdf_backup.zip</td><td>Storage</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Export from Firebase Console')"><i class="fas fa-download"></i></button></td></tr>
+                <tr><td>db_export.json</td><td>Supabase</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Export from Supabase Dashboard → SQL Editor → Export')"><i class="fas fa-download"></i></button></td></tr>
+                <tr><td>pdf_reports</td><td>Cloudinary</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Manage from Cloudinary Dashboard → Media Library')"><i class="fas fa-download"></i></button></td></tr>
             `;
         }
         $('backupDBBtn').addEventListener('click', function() {
-            alert('✅ Cloud backup: Data is already in Firebase Firestore. Export from Firebase Console.');
+            alert('✅ Supabase backup: Export from Supabase Dashboard → SQL Editor → Export.');
         });
         $('backupPDFBtn').addEventListener('click', function() {
-            alert('✅ Cloud backup: PDFs are in Firebase Storage. Export from Firebase Console.');
+            alert('✅ Cloudinary backup: Download from Cloudinary Dashboard → Media Library.');
         });
         $('restoreBtn').addEventListener('click', function() {
-            alert('✅ Restore: Import data via Firebase Console or use the backup file.');
+            alert('✅ Restore: Use Supabase Dashboard → SQL Editor → Import.');
         });
 
         // ─── SECURITY ───
-        function refreshSecurity() {
-            if (!firebaseReady) return;
-            logsCol.orderBy('created_at', 'desc').limit(50).get().then(snapshot => {
-                const logs = [];
-                snapshot.forEach(doc => logs.push({ id: doc.id, ...doc.data() }));
+        async function refreshSecurity() {
+            try {
+                const { data: logs, error } = await supabase
+                    .from('activity_logs')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(50);
+
+                if (error) throw error;
+
                 const tbody = $('activityLogBody');
-                if (logs.length) {
+                if (logs && logs.length) {
                     tbody.innerHTML = logs.map(l =>
-                        `<tr><td>${l.created_at ? new Date(l.created_at.seconds * 1000).toLocaleString() : 'N/A'}</td><td>${l.admin_user || 'admin'}</td><td>${l.action || 'N/A'}</td><td>${l.ip || 'N/A'}</td></tr>`
+                        `<tr><td>${l.created_at ? new Date(l.created_at).toLocaleString() : 'N/A'}</td><td>${l.admin_user || 'admin'}</td><td>${l.action || 'N/A'}</td><td>${l.ip || 'N/A'}</td></tr>`
                     ).join('');
                 } else {
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr>';
                 }
-            }).catch(() => {});
+            } catch (err) {
+                console.error('Security logs error:', err);
+            }
         }
         $('viewLogBtn').addEventListener('click', refreshSecurity);
         $('changePwdBtn').addEventListener('click', function() {
-            const old = prompt('Enter old password:');
-            if (!old) return;
             const newPwd = prompt('Enter new password (min 6 chars):');
             if (!newPwd || newPwd.length < 6) { alert('Min 6 characters'); return; }
-            alert('✅ Password changed! (dummy)');
+            alert('✅ Password changed! (Update in Supabase Auth → Users)');
         });
 
         // ─── PATIENT PORTAL ───
@@ -2996,19 +2998,20 @@
         });
 
         // ─── UPDATE DEBUG LIST ───
-        function updateDebugList() {
+        async function updateDebugList() {
             const container = $('debugPatientList');
             if (!container) return;
-            if (!firebaseReady) {
-                container.innerHTML = '<p style="color:#dc3545;">⚠️ Firebase not configured. Please set up Firebase.</p>';
-                return;
-            }
-            patientsCol.get().then(snapshot => {
-                const patients = [];
-                snapshot.forEach(doc => patients.push({ id: doc.id, ...doc.data() }));
-                if (patients.length) {
+            try {
+                const { data: patients, error } = await supabase
+                    .from('patients')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (patients && patients.length) {
                     let html = '<p style="font-weight:600;margin-bottom:0.5rem;color:#0f172a;">📋 Total Patients: ' +
-                        patients.length + ' (cloud)</p>';
+                        patients.length + ' (Supabase)</p>';
                     html += '<ul style="list-style:none;padding:0;margin:0;">';
                     patients.forEach(p => {
                         html +=
@@ -3026,10 +3029,9 @@
                     container.innerHTML =
                         '<p style="color:#dc3545;">⚠️ No patients found in cloud. Add patients from Admin panel.</p>';
                 }
-            }).catch(err => {
-                container.innerHTML = '<p style="color:#dc3545;">❌ Error loading from cloud: ' + err.message +
-                '</p>';
-            });
+            } catch (err) {
+                container.innerHTML = '<p style="color:#dc3545;">❌ Error loading from cloud: ' + err.message + '</p>';
+            }
         }
 
         // ─── PORTAL FETCH ───
@@ -3045,59 +3047,40 @@
                 return;
             }
 
-            if (!firebaseReady) {
-                statusDiv.className = 'portal-status error';
-                statusDiv.innerHTML = '❌ Firebase not ready. Please check configuration.';
-                return;
-            }
-
             try {
                 let found = false;
-                let patientDoc = null;
                 let patientData = null;
 
-                // 1. Exact patient_id
-                const snap1 = await patientsCol.where('patient_id', '==', searchValue).get();
-                if (!snap1.empty) { patientDoc = snap1.docs[0];
-                    patientData = patientDoc.data();
-                    found = true; }
+                // Search by patient_id or phone
+                const { data: patients, error } = await supabase
+                    .from('patients')
+                    .select('*')
+                    .or(`patient_id.eq.${searchValue},phone.eq.${searchValue}`);
 
-                // 2. Exact phone
-                if (!found) {
-                    const snap2 = await patientsCol.where('phone', '==', searchValue).get();
-                    if (!snap2.empty) { patientDoc = snap2.docs[0];
-                        patientData = patientDoc.data();
-                        found = true; }
+                if (error) throw error;
+
+                if (patients && patients.length > 0) {
+                    patientData = patients[0];
+                    found = true;
                 }
 
-                // 3. Normalized phone
                 if (!found) {
-                    const normalized = normalizePhone(searchValue);
-                    const snap3 = await patientsCol.get();
-                    snap3.forEach(doc => {
-                        const data = doc.data();
-                        if (normalizePhone(data.phone || '') === normalized) {
-                            patientDoc = doc;
-                            patientData = data;
+                    // Try partial match
+                    const { data: partials } = await supabase
+                        .from('patients')
+                        .select('*');
+                    if (partials) {
+                        const lower = searchValue.toLowerCase();
+                        const match = partials.find(p =>
+                            (p.patient_id && p.patient_id.toLowerCase().includes(lower)) ||
+                            (p.name && p.name.toLowerCase().includes(lower)) ||
+                            (p.phone && p.phone.includes(searchValue))
+                        );
+                        if (match) {
+                            patientData = match;
                             found = true;
                         }
-                    });
-                }
-
-                // 4. Partial match
-                if (!found) {
-                    const lower = searchValue.toLowerCase();
-                    const snap4 = await patientsCol.get();
-                    snap4.forEach(doc => {
-                        const data = doc.data();
-                        if ((data.patient_id && data.patient_id.toLowerCase().includes(lower)) ||
-                            (data.name && data.name.toLowerCase().includes(lower)) ||
-                            (data.phone && data.phone.includes(searchValue))) {
-                            if (!found) { patientDoc = doc;
-                                patientData = data;
-                                found = true; }
-                        }
-                    });
+                    }
                 }
 
                 if (!found || !patientData) {
@@ -3109,12 +3092,15 @@
                     return;
                 }
 
-                const pid = patientDoc.id;
-                const repSnap = await reportsCol.where('patient_id', '==', patientData.patient_id || pid).get();
-                const patientReports = [];
-                repSnap.forEach(doc => patientReports.push({ id: doc.id, ...doc.data() }));
+                const pid = patientData.patient_id;
+                const { data: reports, error: rErr } = await supabase
+                    .from('reports')
+                    .select('*')
+                    .eq('patient_id', pid);
 
-                if (patientReports.length === 0) {
+                if (rErr) throw rErr;
+
+                if (!reports || reports.length === 0) {
                     statusDiv.className = 'portal-status warning';
                     statusDiv.innerHTML = 'ℹ️ No reports found for ' + (patientData.name || 'patient');
                     listDiv.style.display = 'none';
@@ -3122,11 +3108,11 @@
                 }
 
                 statusDiv.className = 'portal-status success';
-                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for <strong>' + (patientData.name ||
+                statusDiv.innerHTML = '✅ Found ' + reports.length + ' report(s) for <strong>' + (patientData.name ||
                     'Patient') + '</strong>. Due: ₹' + (patientData.due_amount || 0);
 
                 let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
-                for (const report of patientReports) {
+                for (const report of reports) {
                     const canDownload = (patientData.due_amount || 0) === 0;
                     const dueBadge = (patientData.due_amount || 0) > 0 ? '<span class="portal-due-badge">₹' + patientData
                         .due_amount + ' DUE</span>' : '';
@@ -3134,11 +3120,11 @@
                         <div class="portal-report-item">
                             <div class="portal-report-info">
                                 <span class="test-name">${report.test_name || 'N/A'}</span>
-                                <span class="upload-date">📅 ${report.uploaded_at ? new Date(report.uploaded_at.seconds * 1000).toLocaleString() : 'N/A'}</span>
+                                <span class="upload-date">📅 ${report.uploaded_at ? new Date(report.uploaded_at).toLocaleString() : 'N/A'}</span>
                             </div>
                             <div class="portal-report-actions">
                                 ${dueBadge}
-                                <button class="portal-download-btn" data-file="${report.file_path || ''}" ${canDownload ? '' : 'disabled'}>
+                                <button class="portal-download-btn" data-url="${report.cloudinary_url || ''}" ${canDownload ? '' : 'disabled'}>
                                     ${canDownload ? '⬇️ Download' : '🔒 Locked'}
                                 </button>
                             </div>
@@ -3150,12 +3136,9 @@
 
                 listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const filePath = this.dataset.file;
-                        if (!filePath) { alert('No file'); return; }
-                        const ref = storage.ref('reports/' + filePath);
-                        ref.getDownloadURL().then(url => {
-                            window.open(url, '_blank');
-                        }).catch(err => alert('Download error: ' + err.message));
+                        const url = this.dataset.url;
+                        if (!url) { alert('No file'); return; }
+                        window.open(url, '_blank');
                     });
                 });
 
@@ -3170,16 +3153,17 @@
         });
 
         // ─── INIT ───
-        console.log('✅ Rajan Path Lab · Firebase Cloud Sync Enabled with Anonymous Auth');
-        console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
-        console.log('☁️ Data is stored in Firebase - accessible from any device');
-        console.log('📌 Firebase config loaded successfully.');
-        console.log('🔐 Anonymous auth will auto-sign in for storage access.');
+        console.log('✅ Rajan Path Lab · Supabase + Cloudinary');
+        console.log('🔑 Admin Login: Use Supabase Auth (email/password)');
+        console.log('☁️ Data stored in Supabase, PDFs in Cloudinary');
+        console.log('📌 Setup:');
+        console.log('   1. Create Supabase project');
+        console.log('   2. Create tables: patients, reports, activity_logs');
+        console.log('   3. Enable RLS policies');
+        console.log('   4. Create Cloudinary unsigned upload preset');
+        console.log('   5. Update SUPABASE_URL, SUPABASE_ANON_KEY, CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET');
 
-        // Update debug list if portal is open
-        if (portalModal.classList.contains('active')) updateDebugList();
-
-        // ─── AUTO-HIDE UPLOAD MESSAGE ON TAB SWITCH ───
+        // ─── AUTO-HIDE UPLOAD MESSAGE ───
         document.querySelectorAll('#adminSidebar a[data-section]').forEach(link => {
             link.addEventListener('click', function() {
                 if (this.dataset.section !== 'reports') {
@@ -3188,6 +3172,11 @@
                 }
             });
         });
+
+        // ─── EXPOSE FOR DEBUG ───
+        window.__supabase = supabase;
+        window.__refreshAll = refreshAll;
     </script>
+
 </body>
 </html>
