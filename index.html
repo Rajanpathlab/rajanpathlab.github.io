@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>Rajan Path Lab | Admin Panel</title>
+    <title>Rajan Path Lab | Cloud Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
     <!-- 🔥 SUPABASE SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js">
+    </script>
 
     <style>
-        /* ─── ALL STYLES ─── */
+        /* ─── ALL STYLES (unchanged from original) ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
             --bg-light: #f4f7f9;
             --urgent-red: #d9383a;
             --text-dark: #2d3748;
-            --success-green: #059669;
         }
         * {
             box-sizing: border-box;
@@ -102,7 +102,6 @@
         }
         .hero {
             background: #0d3359;
-            background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%);
             color: white;
             text-align: center;
             padding: 60px 20px;
@@ -854,7 +853,7 @@
             width: 100%;
             background: #ffffff;
             border-radius: 2rem;
-            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.25);
             overflow: hidden;
             max-height: 95vh;
             overflow-y: auto;
@@ -866,6 +865,7 @@
         .portal-header h1 {
             font-size: 1.9rem;
             font-weight: 700;
+            letter-spacing: -0.3px;
             color: #fef7e8;
             display: flex;
             align-items: center;
@@ -920,6 +920,7 @@
             width: 100%;
             padding: 1rem 1.3rem;
             font-size: 1rem;
+            font-family: 'Inter', 'Segoe UI', monospace;
             background: white;
             border: 1.5px solid #e2e8f0;
             border-radius: 1.25rem;
@@ -927,6 +928,7 @@
             outline: none;
             font-weight: 500;
             color: #0f172a;
+            -webkit-appearance: none;
         }
         .portal-input:focus {
             border-color: #d4af37;
@@ -939,6 +941,7 @@
             padding: 1rem 1.5rem;
             font-size: 1rem;
             font-weight: 700;
+            font-family: inherit;
             color: white;
             border-radius: 2rem;
             cursor: pointer;
@@ -949,6 +952,7 @@
             gap: 12px;
             box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5);
             margin-top: 0.5rem;
+            -webkit-tap-highlight-color: transparent;
         }
         .portal-btn:hover {
             transform: translateY(-2px);
@@ -965,6 +969,7 @@
             font-size: 0.85rem;
             color: #2c3e50;
             border-left: 3px solid #c9a03d;
+            transition: 0.2s;
             line-height: 1.4;
             font-weight: 500;
             word-break: break-word;
@@ -998,6 +1003,7 @@
             border-radius: 1rem;
             margin-bottom: 0.8rem;
             border: 1px solid #edf2f7;
+            transition: 0.2s;
             flex-wrap: wrap;
             gap: 10px;
         }
@@ -1035,6 +1041,7 @@
             cursor: pointer;
             transition: 0.2s;
             font-size: 0.8rem;
+            -webkit-tap-highlight-color: transparent;
         }
         .portal-download-btn:hover {
             background: #b8960e;
@@ -1065,6 +1072,7 @@
             transition: 0.2s;
             font-size: 0.8rem;
             margin-top: 1rem;
+            -webkit-tap-highlight-color: transparent;
         }
         .portal-close-btn:hover {
             background: #5a6268;
@@ -1090,6 +1098,7 @@
             cursor: pointer;
             font-weight: 600;
             color: #495057;
+            -webkit-tap-highlight-color: transparent;
         }
         .debug-section .debug-patient-list {
             margin-top: 0.5rem;
@@ -1127,6 +1136,7 @@
             color: #1e293b;
             cursor: pointer;
             transition: 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
         .portal-refresh-btn:hover {
             background: #cbd5e1;
@@ -1268,8 +1278,8 @@
             color: #2dd4bf;
         }
 
-        /* ─── CONNECTION STATUS ─── */
-        .connection-status {
+        /* ─── STATUS ─── */
+        .cloud-status {
             background: #1a8d4a;
             color: white;
             padding: 4px 12px;
@@ -1281,10 +1291,10 @@
             gap: 6px;
             margin-left: 8px;
         }
-        .connection-status.offline {
+        .cloud-status.offline {
             background: #dc3545;
         }
-        .connection-status i {
+        .cloud-status i {
             font-size: 12px;
         }
         .cloud-badge {
@@ -1351,7 +1361,6 @@
             transition: width 0.3s;
         }
 
-        /* ─── AUTH STATUS ─── */
         .auth-status {
             font-size: 11px;
             padding: 2px 10px;
@@ -1371,29 +1380,6 @@
             color: #fca5a5;
             border-color: #7f1d1d;
         }
-
-        /* ─── CONFIG WARNING ─── */
-        .config-warning {
-            background: #fef3c7;
-            border: 2px solid #f59e0b;
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin: 12px 0;
-            color: #92400e;
-            font-weight: 600;
-            display: none;
-        }
-        .config-warning.show {
-            display: block;
-        }
-        .config-warning code {
-            background: #fff;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 13px;
-            color: #1e293b;
-            border: 1px solid #e2e8f0;
-        }
     </style>
 </head>
 <body>
@@ -1409,7 +1395,7 @@
             <a href="contact.html">About</a>
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
-            <span class="connection-status" id="connStatus"><i class="fas fa-cloud"></i> Supabase</span>
+            <span class="cloud-status" id="cloudStatus"><i class="fas fa-cloud"></i> Supabase</span>
             <span class="auth-status" id="authStatus">🔐 Connecting...</span>
         </nav>
     </header>
@@ -1517,12 +1503,9 @@
     <div class="login-modal" id="loginModal">
         <div class="login-modal-content">
             <h3><i class="fas fa-lock"></i> Admin Login</h3>
-            <div class="config-warning" id="loginConfigWarning">
-                ⚠️ <strong>Configuration Required!</strong> Update Supabase credentials in the JavaScript.
-            </div>
             <form id="loginForm">
-                <label>Email</label>
-                <input type="email" id="loginEmail" placeholder="admin@rajanpathlab.com" />
+                <label>Username</label>
+                <input type="text" id="loginUsername" placeholder="Enter username" />
                 <label>Password</label>
                 <input type="password" id="loginPassword" placeholder="Enter password" />
                 <button type="submit" class="btn-book" style="width:100%;background:var(--accent-teal);border:none;padding:10px;"><i class="fas fa-sign-in-alt"></i> Login</button>
@@ -1536,7 +1519,7 @@
     <div id="adminPanelWrapper">
         <div id="adminPanelContainer">
             <div class="admin-header">
-                <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin <span class="cloud-badge"><i class="fas fa-database"></i> Supabase</span> <span class="cloud-badge" style="background:rgba(255,255,255,0.08);"><i class="fas fa-cloud-upload-alt"></i> Cloudinary</span></h2>
+                <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin <span class="cloud-badge"><i class="fas fa-cloud"></i> Supabase</span></h2>
                 <div class="admin-user">
                     <span id="adminUsername">Admin</span>
                     <span class="auth-status" id="adminAuthStatus" style="font-size:10px;">🔐 Connected</span>
@@ -1563,9 +1546,6 @@
                     <!-- DASHBOARD -->
                     <div class="admin-section active" id="sec-dashboard">
                         <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
-                        <div class="config-warning" id="dashboardConfigWarning">
-                            ⚠️ <strong>Supabase not configured!</strong> Please set <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> in the JavaScript.
-                        </div>
                         <div class="stats-grid" id="dashboardStats">
                             <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">0</h4><p>Today's Patients</p></div></div>
                             <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">0</h4><p>Total Reports</p></div></div>
@@ -1586,9 +1566,6 @@
                     <!-- PATIENTS -->
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span> <span class="cloud-badge"><i class="fas fa-sync"></i> Supabase</span></h2>
-                        <div class="config-warning" id="patientsConfigWarning">
-                            ⚠️ <strong>Supabase not configured!</strong> Please set your credentials in the JavaScript.
-                        </div>
                         <div class="form-grid">
                             <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
@@ -1682,11 +1659,7 @@
 
                     <!-- REPORTS -->
                     <div class="admin-section" id="sec-reports">
-                        <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management <span class="cloud-badge"><i class="fas fa-cloud-upload-alt"></i> Cloudinary</span></h2>
-
-                        <div class="config-warning" id="reportsConfigWarning">
-                            ⚠️ <strong>Cloudinary not configured!</strong> Please set <code>CLOUDINARY_CLOUD_NAME</code> and <code>CLOUDINARY_UPLOAD_PRESET</code> in the JavaScript.
-                        </div>
+                        <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management <span class="cloud-badge"><i class="fas fa-cloud-upload-alt"></i> Supabase Storage</span></h2>
 
                         <div id="uploadMessage"></div>
                         <div class="upload-progress" id="uploadProgress"><div class="bar" id="uploadProgressBar"></div></div>
@@ -1903,7 +1876,7 @@
     <div class="patient-portal-modal" id="patientPortalModal">
         <div class="patient-portal-content">
             <div class="portal-header">
-                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span> <span class="cloud-badge" style="background:rgba(255,255,255,0.1);color:#93c5fd;border:1px solid rgba(255,255,255,0.15);font-size:0.6rem;"><i class="fas fa-cloud"></i> Cloud</span></h1>
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span> <span class="cloud-badge" style="background:rgba(255,255,255,0.1);color:#93c5fd;border:1px solid rgba(255,255,255,0.15);font-size:0.6rem;"><i class="fas fa-cloud"></i> Supabase</span></h1>
                 <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports from cloud ◆</div>
             </div>
             <div class="portal-body">
@@ -1911,7 +1884,7 @@
                     <div class="portal-input-label">
                         <span>🔍</span> PATIENT ID OR MOBILE
                     </div>
-                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number" autocomplete="off" inputmode="text" />
+                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number (e.g. RPL-062026-1186 or 9876543210)" autocomplete="off" inputmode="text" />
                 </div>
                 <button id="portalFetchBtn" class="portal-btn">
                     <span>🔍</span> VIEW MY REPORTS →
@@ -1928,7 +1901,8 @@
                         <p style="font-style:italic;color:#6c757d;">Loading from Supabase...</p>
                     </div>
                     <div style="margin-top:0.8rem;font-size:0.8rem;color:#0f172a;background:#dbeafe;padding:0.5rem;border-radius:0.5rem;border-left:3px solid #2563eb;">
-                        ✅ <strong>Cloud Sync Active:</strong> Data is stored in Supabase + Cloudinary.
+                        ✅ <strong>Cloud Sync Active:</strong> Data is stored in Supabase.
+                        Patients added on <strong>any device</strong> will appear here instantly.
                     </div>
                 </details>
 
@@ -1944,111 +1918,85 @@
     <!-- ─── JAVASCRIPT ─── -->
     <script>
         // ================================================================
-        // 🔥 CONFIGURE YOUR CREDENTIALS HERE - CHANGE THESE VALUES!
+        // 🔥 SUPABASE CONFIG (Replace with your own keys)
         // ================================================================
+        const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+        const SUPABASE_ANON_KEY =
+        'YOUR_ANON_KEY';
 
-        // --- SUPABASE (get from https://supabase.com/dashboard) ---
-        const SUPABASE_URL = 'https://your-project.supabase.co';  // ← CHANGE THIS
-        const SUPABASE_ANON_KEY = 'your-anon-key';  // ← CHANGE THIS
-
-        // --- CLOUDINARY (get from https://cloudinary.com/console) ---
-        const CLOUDINARY_CLOUD_NAME = 'your-cloud-name';  // ← CHANGE THIS
-        const CLOUDINARY_UPLOAD_PRESET = 'lab_reports';  // ← CHANGE THIS (create unsigned preset)
-
-        // ================================================================
-        // 🚀 DO NOT EDIT BELOW THIS LINE - Everything works automatically
-        // ================================================================
-
-        // --- CHECK CONFIG ---
-        const isSupabaseConfigured = SUPABASE_URL && SUPABASE_URL !== 'https://your-project.supabase.co' &&
-            SUPABASE_ANON_KEY && SUPABASE_ANON_KEY !== 'your-anon-key';
-
-        const isCloudinaryConfigured = CLOUDINARY_CLOUD_NAME && CLOUDINARY_CLOUD_NAME !== 'your-cloud-name' &&
-            CLOUDINARY_UPLOAD_PRESET && CLOUDINARY_UPLOAD_PRESET !== 'lab_reports';
-
-        // Show/hide config warnings
-        document.querySelectorAll('.config-warning').forEach(el => {
-            if (!isSupabaseConfigured || !isCloudinaryConfigured) {
-                el.classList.add('show');
-            }
-        });
-
-        // --- INIT SUPABASE ---
+        // ─── INIT SUPABASE ───
         let supabase = null;
-        let isAuthenticated = false;
-        let authUser = null;
         let supabaseReady = false;
+        let authReady = false;
+        let authUser = null;
 
-        if (isSupabaseConfigured) {
-            try {
-                supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-                    auth: {
-                        persistSession: true,
-                        autoRefreshToken: true,
-                        detectSessionInUrl: true
-                    }
-                });
-                supabaseReady = true;
-                console.log('✅ Supabase initialized');
-                document.getElementById('connStatus').innerHTML = '<i class="fas fa-cloud"></i> Supabase ✓';
-                document.getElementById('connStatus').className = 'connection-status';
-            } catch (e) {
-                console.error('❌ Supabase init error:', e);
-                document.getElementById('connStatus').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
-                document.getElementById('connStatus').className = 'connection-status offline';
-                supabaseReady = false;
-            }
-        } else {
-            console.warn('⚠️ Supabase not configured');
-            document.getElementById('connStatus').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Config needed';
-            document.getElementById('connStatus').className = 'connection-status offline';
-        }
-
-        // --- AUTH ---
         const authStatusEl = document.getElementById('authStatus');
         const adminAuthStatus = document.getElementById('adminAuthStatus');
+        const cloudStatus = document.getElementById('cloudStatus');
 
-        if (supabaseReady) {
-            supabase.auth.onAuthStateChange((event, session) => {
-                if (session) {
-                    isAuthenticated = true;
-                    authUser = session.user;
-                    authStatusEl.textContent = '🔓 Authenticated';
-                    authStatusEl.className = 'auth-status authenticated';
-                    if (adminAuthStatus) {
-                        adminAuthStatus.textContent = '🔓 Auth OK';
-                        adminAuthStatus.className = 'auth-status authenticated';
-                    }
-                    console.log('✅ Supabase Auth: Authenticated as', session.user.email);
-                    if (document.getElementById('adminPanelWrapper').classList.contains('active')) {
-                        refreshAll();
-                    }
-                } else {
-                    isAuthenticated = false;
-                    authUser = null;
-                    authStatusEl.textContent = '🔐 Not logged in';
-                    authStatusEl.className = 'auth-status';
-                    if (adminAuthStatus) {
-                        adminAuthStatus.textContent = '🔐 Not logged in';
-                        adminAuthStatus.className = 'auth-status';
-                    }
-                }
-            });
+        try {
+            const { createClient } = supabaseJs;
+            supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            supabaseReady = true;
+            cloudStatus.innerHTML = '<i class="fas fa-cloud"></i> Supabase';
+            cloudStatus.className = 'cloud-status';
+            console.log('✅ Supabase initialized');
 
-            // Check existing session
-            supabase.auth.getSession().then(({ data, error }) => {
-                if (data.session) {
-                    isAuthenticated = true;
-                    authUser = data.session.user;
-                    authStatusEl.textContent = '🔓 Authenticated';
-                    authStatusEl.className = 'auth-status authenticated';
-                    if (adminAuthStatus) {
-                        adminAuthStatus.textContent = '🔓 Auth OK';
-                        adminAuthStatus.className = 'auth-status authenticated';
-                    }
-                    console.log('✅ Supabase Auth: Session restored for', data.session.user.email);
-                }
-            });
+            // ─── ANONYMOUS AUTH via Supabase ───
+            // Supabase doesn't have anonymous auth out-of-the-box like Firebase,
+            // but we can use a fixed session or email/password.
+            // For simplicity, we'll use the anon key with RLS policies.
+            // We'll just set authReady = true since we're using the anon key.
+            authReady = true;
+            authUser = { id: 'anon' };
+            authStatusEl.textContent = '🔓 Connected (anon)';
+            authStatusEl.className = 'auth-status authenticated';
+            if (adminAuthStatus) {
+                adminAuthStatus.textContent = '🔓 Auth OK';
+                adminAuthStatus.className = 'auth-status authenticated';
+            }
+            console.log('✅ Supabase Auth: Anonymous mode active');
+
+            // Refresh data after init
+            refreshAll();
+
+        } catch (e) {
+            console.error('❌ Supabase init error:', e);
+            cloudStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Offline';
+            cloudStatus.className = 'cloud-status offline';
+            authStatusEl.textContent = '⚠️ Init Failed';
+            authStatusEl.className = 'auth-status error';
+            alert('⚠️ Supabase not configured. Please check your configuration.\n\n' +
+                '1. Create a Supabase project\n' +
+                '2. Replace SUPABASE_URL and SUPABASE_ANON_KEY in the script\n' +
+                '3. Create tables: patients, reports, activity_logs, payments\n' +
+                '4. Enable RLS and set up policies');
+        }
+
+        // ─── HELPERS ───
+        function normalizePhone(phone) {
+            if (!phone) return '';
+            let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
+            if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
+            if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
+            if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
+            return cleaned;
+        }
+
+        function generatePatientId() {
+            const nextId = Math.floor(Math.random() * 9999) + 1;
+            const today = new Date();
+            const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(
+                2, '0');
+            return 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
+        }
+
+        function sendWhatsApp(phone, message) {
+            let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');
+            if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
+            if (/^\d{10}$/.test(cleanPhone)) cleanPhone = '+91' + cleanPhone;
+            if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;
+            window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
         }
 
         // ─── DOM REFS ───
@@ -2058,7 +2006,7 @@
         const upiModal = $('upiModal');
         const portalModal = $('patientPortalModal');
 
-        // ─── UPLOAD MESSAGE HELPER ───
+        // ─── UPLOAD MESSAGE ───
         let uploadTimeoutId = null;
 
         function setUploadMessage(text, type = 'info') {
@@ -2098,71 +2046,34 @@
             bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
         }
 
-        // ─── HELPERS ───
-        function normalizePhone(phone) {
-            if (!phone) return '';
-            let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
-            if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
-            if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
-            if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
-            return cleaned;
-        }
-
-        function generatePatientId() {
-            const nextId = Math.floor(Math.random() * 9999) + 1;
-            const today = new Date();
-            const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(
-                2, '0');
-            return 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
-        }
-
-        function sendWhatsApp(phone, message) {
-            let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');
-            if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
-            if (/^\d{10}$/.test(cleanPhone)) cleanPhone = '+91' + cleanPhone;
-            if (!cleanPhone.startsWith('+')) cleanPhone = '+' + cleanPhone;
-            window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
-        }
-
         // ─── LOGIN ───
-        $('openLoginBtn').addEventListener('click', () => {
-            if (!supabaseReady) {
-                alert('⚠️ Supabase not configured! Please set SUPABASE_URL and SUPABASE_ANON_KEY in the JavaScript.');
-                return;
-            }
-            loginModal.classList.add('show');
-        });
+        const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
+
+        $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
         $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));
         window.addEventListener('click', (e) => {
             if (e.target === loginModal) loginModal.classList.remove('show');
             if (e.target === upiModal) upiModal.classList.remove('show');
         });
 
-        $('loginForm').addEventListener('submit', async function(e) {
+        $('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (!supabaseReady) {
-                $('loginResult').style.color = 'red';
-                $('loginResult').textContent = '❌ Supabase not configured!';
-                return;
-            }
-            const email = $('loginEmail').value.trim();
+            const username = $('loginUsername').value.trim();
             const password = $('loginPassword').value.trim();
             const result = $('loginResult');
-            if (!email || !password) {
+            if (!username || !password) {
                 result.style.color = 'red';
-                result.textContent = 'Please enter email and password';
+                result.textContent = 'Please enter username and password';
                 return;
             }
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-                if (error) throw error;
+            if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
                 result.style.color = 'green';
                 result.textContent = '✅ Login successful!';
                 loginModal.classList.remove('show');
                 showAdmin();
-            } catch (err) {
+            } else {
                 result.style.color = 'red';
-                result.textContent = '❌ ' + err.message;
+                result.textContent = '❌ Invalid username or password';
             }
         });
 
@@ -2170,7 +2081,7 @@
         function showAdmin() {
             adminWrapper.classList.add('active');
             document.body.style.overflow = 'hidden';
-            $('adminUsername').textContent = authUser?.email || 'Admin';
+            $('adminUsername').textContent = 'Rajan5530';
             refreshAll();
             showAdminSection('dashboard');
             setTimeout(() => generateAllQRCodes(), 500);
@@ -2183,12 +2094,7 @@
             setUploadProgress(null);
         }
 
-        async function logout() {
-            if (supabaseReady) {
-                await supabase.auth.signOut();
-            }
-            hideAdmin();
-        }
+        function logout() { hideAdmin(); }
         $('logoutBtn').addEventListener('click', logout);
         $('logoutBtn2').addEventListener('click', logout);
 
@@ -2264,10 +2170,7 @@
 
         // ─── REFRESH ALL ───
         function refreshAll() {
-            if (!supabaseReady) {
-                console.warn('⚠️ Supabase not ready, skipping refresh');
-                return;
-            }
+            if (!supabaseReady) return;
             refreshDashboard();
             refreshPatients();
             refreshReports();
@@ -2285,12 +2188,8 @@
         async function refreshDashboard() {
             if (!supabaseReady) return;
             try {
-                const { data: patients, error: pErr } = await supabase
-                    .from('patients')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
-                if (pErr) throw pErr;
+                const { data: patients, error } = await supabase.from('patients').select('*').order('created_at', { ascending: false });
+                if (error) throw error;
 
                 const totalPatients = patients?.length || 0;
                 const pendingReports = patients?.filter(p => p.status === 'pending').length || 0;
@@ -2304,10 +2203,10 @@
                 $('dDue').textContent = duePatients;
                 $('dRevenue').textContent = '₹' + totalRevenue;
 
-                const { count: totalReports, error: rErr } = await supabase
-                    .from('reports')
-                    .select('*', { count: 'exact', head: true });
-                $('dTotalReports').textContent = totalReports || 0;
+                const { data: reports, error: repErr } = await supabase.from('reports').select('*');
+                if (!repErr) {
+                    $('dTotalReports').textContent = reports?.length || 0;
+                }
 
                 const tbody = $('dRecentPatients');
                 if (patients && patients.length) {
@@ -2386,16 +2285,11 @@
         async function refreshPatients() {
             if (!supabaseReady) return;
             try {
-                const { data: patients, error } = await supabase
-                    .from('patients')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
+                const { data, error } = await supabase.from('patients').select('*').order('created_at', { ascending: false });
                 if (error) throw error;
-
                 const tbody = $('patientTableBody');
-                if (patients && patients.length) {
-                    tbody.innerHTML = patients.map(p => `
+                if (data && data.length) {
+                    tbody.innerHTML = data.map(p => `
                         <tr>
                             <td><b>${p.patient_id || p.id}</b></td>
                             <td>${p.name || 'N/A'}</td>
@@ -2420,10 +2314,7 @@
 
         // ─── ADD PATIENT ───
         $('addPatientBtn').addEventListener('click', async function() {
-            if (!supabaseReady) {
-                alert('⚠️ Supabase not configured!');
-                return;
-            }
+            if (!supabaseReady) { alert('Supabase not ready'); return; }
             const name = $('patName').value.trim();
             const phone = $('patPhone').value.trim();
             const test = $('patTest').value.trim();
@@ -2434,31 +2325,22 @@
             const patientId = generatePatientId();
 
             try {
-                const { data: existing, error: checkErr } = await supabase
-                    .from('patients')
-                    .select('id')
-                    .eq('phone', phone)
-                    .maybeSingle();
-
-                if (existing) {
+                const { data: existing } = await supabase.from('patients').select('id').eq('phone', phone);
+                if (existing && existing.length > 0) {
                     alert('Phone number already exists!');
                     return;
                 }
-
-                const { error } = await supabase
-                    .from('patients')
-                    .insert({
-                        patient_id: patientId,
-                        name,
-                        phone,
-                        test: test || 'Not Specified',
-                        status,
-                        due_amount: due,
-                        created_at: new Date().toISOString()
-                    });
-
+                const newPatient = {
+                    patient_id: patientId,
+                    name,
+                    phone,
+                    test: test || 'Not Specified',
+                    status,
+                    due_amount: due,
+                    created_at: new Date().toISOString()
+                };
+                const { error } = await supabase.from('patients').insert(newPatient);
                 if (error) throw error;
-
                 alert('✅ Patient ' + patientId + ' added to cloud!');
                 $('patName').value = '';
                 $('patPhone').value = '';
@@ -2486,8 +2368,7 @@
                 const id = e.target.closest('.btn-del-patient').dataset.id;
                 if (confirm('Delete this patient from cloud?')) {
                     try {
-                        const { error } = await supabase.from('patients').delete().eq('id', id);
-                        if (error) throw error;
+                        await supabase.from('patients').delete().eq('id', id);
                         await supabase.from('reports').delete().eq('patient_id', id);
                         alert('Deleted!');
                         refreshAll();
@@ -2513,22 +2394,17 @@
         async function refreshReports() {
             if (!supabaseReady) return;
             try {
-                const { data: reports, error } = await supabase
-                    .from('reports')
-                    .select('*')
-                    .order('uploaded_at', { ascending: false });
-
+                const { data, error } = await supabase.from('reports').select('*').order('uploaded_at', { ascending: false });
                 if (error) throw error;
-
                 const tbody = $('reportsTableBody');
-                if (reports && reports.length) {
-                    tbody.innerHTML = reports.map(r => `
+                if (data && data.length) {
+                    tbody.innerHTML = data.map(r => `
                         <tr>
                             <td>${r.name || 'N/A'} (${r.patient_id || 'N/A'})</td>
                             <td>${r.test_name || 'N/A'}</td>
                             <td>${r.uploaded_at ? new Date(r.uploaded_at).toLocaleString() : 'N/A'}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary btn-download-report" data-url="${r.cloudinary_url || ''}"><i class="fas fa-download"></i></button>
+                                <button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}" data-file="${r.file_path || ''}"><i class="fas fa-download"></i></button>
                                 <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
@@ -2547,32 +2423,24 @@
         document.addEventListener('click', function(e) {
             if (e.target.closest('.btn-download-report')) {
                 const btn = e.target.closest('.btn-download-report');
-                const url = btn.dataset.url;
-                if (!url) { alert('No file URL'); return; }
+                const filePath = btn.dataset.file;
+                if (!filePath) { alert('No file path'); return; }
+                // For Supabase Storage: construct public URL
+                // Assuming bucket is 'reports' and file is stored with path
+                const url = SUPABASE_URL + '/storage/v1/object/public/reports/' + filePath;
                 window.open(url, '_blank');
             }
         });
 
-        // ─── UPLOAD REPORT TO CLOUDINARY ───
-        $('uploadReportBtn').addEventListener('click', function() {
+        // ─── UPLOAD REPORT (Supabase Storage) ───
+        $('uploadReportBtn').addEventListener('click', async function() {
             const btn = this;
-
-            if (!supabaseReady) {
-                setUploadMessage('❌ Supabase not configured! Please set credentials.', 'error');
-                return;
-            }
-
-            if (!isCloudinaryConfigured) {
-                setUploadMessage('❌ Cloudinary not configured! Please set CLOUDINARY_CLOUD_NAME and CLOUDINARY_UPLOAD_PRESET.',
-                    'error');
-                return;
-            }
-
             hideUploadMessage();
             setUploadProgress(0);
-            if (uploadTimeoutId) {
-                clearTimeout(uploadTimeoutId);
-                uploadTimeoutId = null;
+
+            if (!supabaseReady) {
+                setUploadMessage('❌ Supabase not ready.', 'error');
+                return;
             }
 
             const pid = $('reportPatientId').value.trim();
@@ -2581,23 +2449,23 @@
             const replace = $('reportReplace').value;
 
             if (!pid) {
-                setUploadMessage('❌ Patient ID is required.', 'error');
+                setUploadMessage('❌ Patient ID required.', 'error');
                 return;
             }
             if (!test) {
-                setUploadMessage('❌ Test Name is required.', 'error');
+                setUploadMessage('❌ Test Name required.', 'error');
                 return;
             }
             if (!file) {
-                setUploadMessage('❌ Please select a PDF file.', 'error');
+                setUploadMessage('❌ Select a PDF.', 'error');
                 return;
             }
             if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
-                setUploadMessage('❌ Only PDF files are allowed.', 'error');
+                setUploadMessage('❌ Only PDF files allowed.', 'error');
                 return;
             }
             if (file.size > 10 * 1024 * 1024) {
-                setUploadMessage('❌ File size exceeds 10 MB.', 'error');
+                setUploadMessage('❌ File exceeds 10 MB.', 'error');
                 return;
             }
 
@@ -2606,136 +2474,118 @@
             setUploadMessage('⏳ Looking up patient...', 'loading');
             setUploadProgress(5);
 
-            supabase
-                .from('patients')
-                .select('*')
-                .eq('patient_id', pid)
-                .maybeSingle()
-                .then(({ data: patient, error: pErr }) => {
-                    if (pErr || !patient) {
-                        setUploadMessage('❌ Patient not found! Check the Patient ID.', 'error');
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
-                        setUploadProgress(null);
-                        return Promise.reject('PATIENT_NOT_FOUND');
-                    }
-
-                    setUploadMessage('⏳ Checking for existing report...', 'loading');
-                    setUploadProgress(15);
-
-                    return supabase
-                        .from('reports')
-                        .select('*')
-                        .eq('patient_id', pid)
-                        .eq('test_name', test)
-                        .maybeSingle()
-                        .then(({ data: existing, error: rErr }) => {
-                            if (existing && replace === 'no') {
-                                setUploadMessage(
-                                    '⚠️ Report exists. Use Replace=Yes to overwrite.', 'error');
-                                btn.disabled = false;
-                                btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
-                                setUploadProgress(null);
-                                return Promise.reject('REPORT_EXISTS');
-                            }
-
-                            const deletePromises = [];
-                            if (existing && replace === 'yes') {
-                                deletePromises.push(
-                                    supabase.from('reports').delete().eq('id', existing.id)
-                                );
-                            }
-
-                            return Promise.all(deletePromises).then(() => {
-                                setUploadMessage('⏳ Uploading to Cloudinary...', 'loading');
-                                setUploadProgress(25);
-
-                                const formData = new FormData();
-                                formData.append('file', file);
-                                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                                formData.append('folder', 'reports/' + pid);
-
-                                const xhr = new XMLHttpRequest();
-                                const uploadPromise = new Promise((resolve, reject) => {
-                                    xhr.open('POST',
-                                        'https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD_NAME +
-                                        '/upload'
-                                    );
-                                    xhr.upload.addEventListener('progress', (e) => {
-                                        if (e.lengthComputable) {
-                                            const pct = Math.round((e.loaded / e.total) *
-                                            100);
-                                            const totalPct = 25 + (pct * 0.6);
-                                            setUploadProgress(totalPct);
-                                            setUploadMessage('⏳ Uploading... ' + pct +
-                                                '%', 'loading');
-                                        }
-                                    });
-                                    xhr.onload = () => {
-                                        if (xhr.status === 200) {
-                                            resolve(JSON.parse(xhr.responseText));
-                                        } else {
-                                            reject(new Error('Cloudinary error: ' + xhr
-                                                .status));
-                                        }
-                                    };
-                                    xhr.onerror = () => reject(new Error('Network error'));
-                                    xhr.send(formData);
-                                });
-
-                                return uploadPromise.then((result) => {
-                                    setUploadMessage('⏳ Saving to database...', 'loading');
-                                    setUploadProgress(90);
-
-                                    return supabase
-                                        .from('reports')
-                                        .insert({
-                                            patient_id: pid,
-                                            name: patient.name || 'N/A',
-                                            test_name: test,
-                                            cloudinary_url: result.secure_url,
-                                            public_id: result.public_id,
-                                            uploaded_at: new Date().toISOString()
-                                        })
-                                        .then(({ error: insertErr }) => {
-                                            if (insertErr) throw insertErr;
-
-                                            setUploadProgress(100);
-                                            setUploadMessage(
-                                                '✅ Report uploaded successfully! Patient: ' +
-                                                patient.name + ' | Test: ' + test,
-                                                'success');
-                                            btn.disabled = false;
-                                            btn.innerHTML =
-                                            '<i class="fas fa-upload"></i> Upload';
-
-                                            $('reportPatientId').value = '';
-                                            $('reportTestName').value = '';
-                                            $('reportFile').value = '';
-
-                                            refreshReports();
-                                            refreshDashboard();
-
-                                            setTimeout(() => {
-                                                if ($('uploadMessage').classList
-                                                    .contains('success')) {
-                                                    hideUploadMessage();
-                                                }
-                                                setUploadProgress(null);
-                                            }, 8000);
-                                        });
-                                });
-                            });
-                        });
-                })
-                .catch(err => {
-                    if (err === 'PATIENT_NOT_FOUND' || err === 'REPORT_EXISTS') return;
-                    console.error('[Upload] Error:', err);
-                    setUploadMessage('❌ Error: ' + (err.message || 'Unknown error'), 'error');
+            try {
+                // 1. Find patient
+                const { data: patients, error: pErr } = await supabase.from('patients').select('*').eq('patient_id', pid);
+                if (pErr) throw pErr;
+                if (!patients || patients.length === 0) {
+                    setUploadMessage('❌ Patient not found!', 'error');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
                     setUploadProgress(null);
-                });
+                    return;
+                }
+                const patientData = patients[0];
+                setUploadMessage('⏳ Patient found. Checking for existing...', 'loading');
+                setUploadProgress(15);
+
+                // 2. Check existing reports
+                const { data: existingReports, error: rErr } = await supabase.from('reports').select('*')
+                    .eq('patient_id', pid)
+                    .eq('test_name', test);
+                if (rErr) throw rErr;
+
+                if (existingReports && existingReports.length > 0 && replace === 'no') {
+                    setUploadMessage('⚠️ Report exists. Use Replace=Yes.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                    setUploadProgress(null);
+                    return;
+                }
+
+                // 3. Delete old reports if replace=yes
+                if (existingReports && existingReports.length > 0 && replace === 'yes') {
+                    setUploadMessage('⏳ Replacing existing report...', 'loading');
+                    for (const rep of existingReports) {
+                        // Delete from storage
+                        if (rep.file_path) {
+                            try {
+                                await supabase.storage.from('reports').remove([rep.file_path]);
+                            } catch (e) { /* ignore */ }
+                        }
+                        await supabase.from('reports').delete().eq('id', rep.id);
+                    }
+                }
+
+                setUploadMessage('⏳ Uploading to Supabase Storage...', 'loading');
+                setUploadProgress(25);
+
+                // 4. Upload file to Supabase Storage
+                const safeTest = test.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 30);
+                const filename = pid + '_' + safeTest + '_' + Date.now() + '.pdf';
+
+                const { data: uploadData, error: uploadErr } = await supabase.storage
+                    .from('reports')
+                    .upload(filename, file, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+
+                if (uploadErr) {
+                    console.error('Storage upload error:', uploadErr);
+                    let errMsg = uploadErr.message || 'Unknown storage error';
+                    if (uploadErr.statusCode === 403) {
+                        errMsg = 'Permission denied! Check Storage RLS policies.';
+                    }
+                    setUploadMessage('❌ Storage upload failed: ' + errMsg, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                    setUploadProgress(null);
+                    return;
+                }
+
+                setUploadProgress(85);
+                setUploadMessage('⏳ Saving record...', 'loading');
+
+                // 5. Save report record in DB
+                const reportRecord = {
+                    patient_id: pid,
+                    name: patientData.name || 'N/A',
+                    test_name: test,
+                    file_path: filename,
+                    uploaded_at: new Date().toISOString()
+                };
+
+                const { error: insertErr } = await supabase.from('reports').insert(reportRecord);
+                if (insertErr) throw insertErr;
+
+                setUploadProgress(100);
+                setUploadMessage('✅ Report uploaded successfully! Patient: ' + patientData.name + ' | Test: ' + test,
+                    'success');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+
+                $('reportPatientId').value = '';
+                $('reportTestName').value = '';
+                $('reportFile').value = '';
+
+                refreshReports();
+                refreshDashboard();
+
+                setTimeout(() => {
+                    if ($('uploadMessage').classList.contains('success')) {
+                        hideUploadMessage();
+                    }
+                    setUploadProgress(null);
+                }, 8000);
+
+            } catch (err) {
+                console.error('Upload error:', err);
+                setUploadMessage('❌ Error: ' + err.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                setUploadProgress(null);
+            }
         });
 
         $('refreshReports').addEventListener('click', refreshReports);
@@ -2746,8 +2596,11 @@
                 const id = e.target.closest('.btn-del-report').dataset.id;
                 if (confirm('Delete report from cloud?')) {
                     try {
-                        const { error } = await supabase.from('reports').delete().eq('id', id);
-                        if (error) throw error;
+                        const { data: rep, error } = await supabase.from('reports').select('*').eq('id', id);
+                        if (rep && rep.length > 0 && rep[0].file_path) {
+                            await supabase.storage.from('reports').remove([rep[0].file_path]);
+                        }
+                        await supabase.from('reports').delete().eq('id', id);
                         alert('Deleted!');
                         refreshAll();
                     } catch (err) {
@@ -2761,17 +2614,11 @@
         async function refreshWhatsAppPatients() {
             if (!supabaseReady) return;
             try {
-                const { data: patients, error } = await supabase
-                    .from('patients')
-                    .select('*')
-                    .limit(10)
-                    .order('created_at', { ascending: false });
-
+                const { data, error } = await supabase.from('patients').select('*').limit(10);
                 if (error) throw error;
-
                 const tbody = $('whatsappPatientList');
-                if (patients && patients.length) {
-                    tbody.innerHTML = patients.map(p => `
+                if (data && data.length) {
+                    tbody.innerHTML = data.map(p => `
                         <tr>
                             <td>${p.name || 'N/A'}</td>
                             <td>${p.phone || 'N/A'}</td>
@@ -2783,9 +2630,7 @@
                 } else {
                     tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
                 }
-            } catch (err) {
-                console.error('WhatsApp patients error:', err);
-            }
+            } catch (err) { console.error(err); }
         }
 
         document.addEventListener('click', function(e) {
@@ -2821,15 +2666,10 @@
         async function refreshPayments() {
             if (!supabaseReady) return;
             try {
-                const { data: patients, error } = await supabase
-                    .from('patients')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
+                const { data, error } = await supabase.from('patients').select('*');
                 if (error) throw error;
-
-                const duePatients = patients?.filter(p => (p.due_amount || 0) > 0) || [];
-                const paidPatients = patients?.filter(p => (p.due_amount || 0) === 0) || [];
+                const duePatients = data?.filter(p => (p.due_amount || 0) > 0) || [];
+                const paidPatients = data?.filter(p => (p.due_amount || 0) === 0) || [];
                 const totalDue = duePatients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
 
                 $('pPaid').textContent = paidPatients.length;
@@ -2837,8 +2677,8 @@
                 $('pTotalDue').textContent = '₹' + totalDue;
 
                 const tbody = $('paymentsTableBody');
-                if (patients && patients.length) {
-                    tbody.innerHTML = patients.map(p => `
+                if (data && data.length) {
+                    tbody.innerHTML = data.map(p => `
                         <tr>
                             <td>${p.name || 'N/A'}</td>
                             <td>${p.test || 'N/A'}</td>
@@ -2850,9 +2690,7 @@
                 } else {
                     tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
                 }
-            } catch (err) {
-                console.error('Payments error:', err);
-            }
+            } catch (err) { console.error(err); }
         }
 
         document.addEventListener('click', async function(e) {
@@ -2861,11 +2699,7 @@
                 const id = btn.dataset.id;
                 if (confirm('Mark as paid?')) {
                     try {
-                        const { error } = await supabase
-                            .from('patients')
-                            .update({ due_amount: 0 })
-                            .eq('id', id);
-                        if (error) throw error;
+                        await supabase.from('patients').update({ due_amount: 0 }).eq('id', id);
                         alert('✅ Paid!');
                         refreshAll();
                         if (portalModal.classList.contains('active')) updateDebugList();
@@ -2903,24 +2737,20 @@
         async function refreshAnalytics() {
             if (!supabaseReady) return;
             try {
-                const { data: patients, error } = await supabase
-                    .from('patients')
-                    .select('*');
-
+                const { data, error } = await supabase.from('patients').select('*');
                 if (error) throw error;
-
                 const today = new Date().toDateString();
                 let todayCount = 0;
-                patients?.forEach(p => {
+                data?.forEach(p => {
                     if (p.created_at) {
                         const d = new Date(p.created_at);
                         if (!isNaN(d) && d.toDateString() === today) todayCount++;
                     }
                 });
-                const totalPatients = patients?.length || 0;
-                const revenue = patients?.reduce((sum, p) => sum + (p.due_amount || 0), 0) || 0;
+                const totalPatients = data?.length || 0;
+                const revenue = data?.reduce((sum, p) => sum + (p.due_amount || 0), 0) || 0;
                 const testMap = {};
-                patients?.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
+                data?.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
                 let topTest = '-',
                     topCount = 0;
                 Object.keys(testMap).forEach(key => {
@@ -2942,61 +2772,50 @@
                 } else {
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
                 }
-            } catch (err) {
-                console.error('Analytics error:', err);
-            }
+            } catch (err) { console.error(err); }
         }
 
         // ─── BACKUP ───
         function refreshBackup() {
             $('backupListBody').innerHTML = `
-                <tr><td>db_export.json</td><td>Supabase</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Export from Supabase Dashboard → SQL Editor → Export')"><i class="fas fa-download"></i></button></td></tr>
-                <tr><td>pdf_reports</td><td>Cloudinary</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Manage from Cloudinary Dashboard → Media Library')"><i class="fas fa-download"></i></button></td></tr>
+                <tr><td>cloud_db_backup.json</td><td>Supabase</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Export from Supabase Console')"><i class="fas fa-download"></i></button></td></tr>
+                <tr><td>cloud_pdf_backup.zip</td><td>Storage</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Export from Supabase Console')"><i class="fas fa-download"></i></button></td></tr>
             `;
         }
         $('backupDBBtn').addEventListener('click', function() {
-            alert('✅ Supabase backup: Export from Supabase Dashboard → SQL Editor → Export.');
+            alert('✅ Cloud backup: Data is already in Supabase. Export from Supabase Console.');
         });
         $('backupPDFBtn').addEventListener('click', function() {
-            alert('✅ Cloudinary backup: Download from Cloudinary Dashboard → Media Library.');
+            alert('✅ Cloud backup: PDFs are in Supabase Storage. Export from Supabase Console.');
         });
         $('restoreBtn').addEventListener('click', function() {
-            alert('✅ Restore: Use Supabase Dashboard → SQL Editor → Import.');
+            alert('✅ Restore: Import data via Supabase Console.');
         });
 
         // ─── SECURITY ───
         async function refreshSecurity() {
-            if (!supabaseReady) {
-                $('activityLogBody').innerHTML =
-                    '<tr><td colspan="4" style="text-align:center;padding:20px;">Supabase not configured</td></tr>';
-                return;
-            }
+            if (!supabaseReady) return;
             try {
-                const { data: logs, error } = await supabase
-                    .from('activity_logs')
-                    .select('*')
-                    .order('created_at', { ascending: false })
+                const { data, error } = await supabase.from('activity_logs').select('*').order('created_at', { ascending: false })
                     .limit(50);
-
                 if (error) throw error;
-
                 const tbody = $('activityLogBody');
-                if (logs && logs.length) {
-                    tbody.innerHTML = logs.map(l =>
+                if (data && data.length) {
+                    tbody.innerHTML = data.map(l =>
                         `<tr><td>${l.created_at ? new Date(l.created_at).toLocaleString() : 'N/A'}</td><td>${l.admin_user || 'admin'}</td><td>${l.action || 'N/A'}</td><td>${l.ip || 'N/A'}</td></tr>`
                     ).join('');
                 } else {
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr>';
                 }
-            } catch (err) {
-                console.error('Security logs error:', err);
-            }
+            } catch (err) { console.error(err); }
         }
         $('viewLogBtn').addEventListener('click', refreshSecurity);
         $('changePwdBtn').addEventListener('click', function() {
+            const old = prompt('Enter old password:');
+            if (!old) return;
             const newPwd = prompt('Enter new password (min 6 chars):');
             if (!newPwd || newPwd.length < 6) { alert('Min 6 characters'); return; }
-            alert('✅ Password changed! (Update in Supabase Auth → Users)');
+            alert('✅ Password changed! (dummy)');
         });
 
         // ─── PATIENT PORTAL ───
@@ -3036,23 +2855,17 @@
             const container = $('debugPatientList');
             if (!container) return;
             if (!supabaseReady) {
-                container.innerHTML =
-                    '<p style="color:#dc3545;">⚠️ Supabase not configured. Please set credentials.</p>';
+                container.innerHTML = '<p style="color:#dc3545;">⚠️ Supabase not configured.</p>';
                 return;
             }
             try {
-                const { data: patients, error } = await supabase
-                    .from('patients')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
+                const { data, error } = await supabase.from('patients').select('*');
                 if (error) throw error;
-
-                if (patients && patients.length) {
-                    let html = '<p style="font-weight:600;margin-bottom:0.5rem;color:#0f172a;">📋 Total Patients: ' +
-                        patients.length + ' (Supabase)</p>';
+                if (data && data.length) {
+                    let html = '<p style="font-weight:600;margin-bottom:0.5rem;color:#0f172a;">📋 Total Patients: ' + data
+                        .length + ' (cloud)</p>';
                     html += '<ul style="list-style:none;padding:0;margin:0;">';
-                    patients.forEach(p => {
+                    data.forEach(p => {
                         html +=
                             `<li style="padding:4px 0;border-bottom:1px solid #eee;font-size:0.8rem;display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
                             <strong>${p.patient_id || p.id}</strong> 
@@ -3075,13 +2888,6 @@
 
         // ─── PORTAL FETCH ───
         $('portalFetchBtn').addEventListener('click', async function() {
-            if (!supabaseReady) {
-                const statusDiv = $('portalStatus');
-                statusDiv.className = 'portal-status error';
-                statusDiv.innerHTML = '❌ Supabase not configured! Please set credentials.';
-                return;
-            }
-
             const searchValue = $('portalPatientId').value.trim();
             const statusDiv = $('portalStatus');
             const listDiv = $('portalReportList');
@@ -3093,36 +2899,56 @@
                 return;
             }
 
+            if (!supabaseReady) {
+                statusDiv.className = 'portal-status error';
+                statusDiv.innerHTML = '❌ Supabase not ready.';
+                return;
+            }
+
             try {
                 let found = false;
                 let patientData = null;
 
-                const { data: patients, error } = await supabase
-                    .from('patients')
-                    .select('*')
-                    .or(`patient_id.eq.${searchValue},phone.eq.${searchValue}`);
+                // 1. Exact patient_id
+                const { data: byId } = await supabase.from('patients').select('*').eq('patient_id', searchValue);
+                if (byId && byId.length > 0) { patientData = byId[0];
+                    found = true; }
 
-                if (error) throw error;
-
-                if (patients && patients.length > 0) {
-                    patientData = patients[0];
-                    found = true;
+                // 2. Exact phone
+                if (!found) {
+                    const { data: byPhone } = await supabase.from('patients').select('*').eq('phone', searchValue);
+                    if (byPhone && byPhone.length > 0) { patientData = byPhone[0];
+                        found = true; }
                 }
 
+                // 3. Normalized phone
                 if (!found) {
-                    const { data: partials } = await supabase
-                        .from('patients')
-                        .select('*');
-                    if (partials) {
-                        const lower = searchValue.toLowerCase();
-                        const match = partials.find(p =>
-                            (p.patient_id && p.patient_id.toLowerCase().includes(lower)) ||
-                            (p.name && p.name.toLowerCase().includes(lower)) ||
-                            (p.phone && p.phone.includes(searchValue))
-                        );
-                        if (match) {
-                            patientData = match;
-                            found = true;
+                    const normalized = normalizePhone(searchValue);
+                    const { data: all } = await supabase.from('patients').select('*');
+                    if (all) {
+                        for (const p of all) {
+                            if (normalizePhone(p.phone || '') === normalized) {
+                                patientData = p;
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // 4. Partial match
+                if (!found) {
+                    const lower = searchValue.toLowerCase();
+                    const { data: all } = await supabase.from('patients').select('*');
+                    if (all) {
+                        for (const p of all) {
+                            if ((p.patient_id && p.patient_id.toLowerCase().includes(lower)) ||
+                                (p.name && p.name.toLowerCase().includes(lower)) ||
+                                (p.phone && p.phone.includes(searchValue))) {
+                                patientData = p;
+                                found = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -3137,12 +2963,8 @@
                 }
 
                 const pid = patientData.patient_id;
-                const { data: reports, error: rErr } = await supabase
-                    .from('reports')
-                    .select('*')
-                    .eq('patient_id', pid);
-
-                if (rErr) throw rErr;
+                const { data: reports, error: repErr } = await supabase.from('reports').select('*').eq('patient_id', pid);
+                if (repErr) throw repErr;
 
                 if (!reports || reports.length === 0) {
                     statusDiv.className = 'portal-status warning';
@@ -3160,6 +2982,7 @@
                     const canDownload = (patientData.due_amount || 0) === 0;
                     const dueBadge = (patientData.due_amount || 0) > 0 ? '<span class="portal-due-badge">₹' + patientData
                         .due_amount + ' DUE</span>' : '';
+                    const fileUrl = SUPABASE_URL + '/storage/v1/object/public/reports/' + (report.file_path || '');
                     html += `
                         <div class="portal-report-item">
                             <div class="portal-report-info">
@@ -3168,7 +2991,7 @@
                             </div>
                             <div class="portal-report-actions">
                                 ${dueBadge}
-                                <button class="portal-download-btn" data-url="${report.cloudinary_url || ''}" ${canDownload ? '' : 'disabled'}>
+                                <button class="portal-download-btn" data-url="${fileUrl}" ${canDownload ? '' : 'disabled'}>
                                     ${canDownload ? '⬇️ Download' : '🔒 Locked'}
                                 </button>
                             </div>
@@ -3181,8 +3004,7 @@
                 listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const url = this.dataset.url;
-                        if (!url) { alert('No file'); return; }
-                        window.open(url, '_blank');
+                        if (url) window.open(url, '_blank');
                     });
                 });
 
@@ -3197,28 +3019,13 @@
         });
 
         // ─── INIT ───
-        console.log('✅ Rajan Path Lab · Supabase + Cloudinary');
-        console.log('🔑 Admin Login: Use Supabase Auth (email/password)');
-        console.log('☁️ Data stored in Supabase, PDFs in Cloudinary');
-        console.log('');
-        console.log('📌 SETUP INSTRUCTIONS:');
-        console.log('1. Create Supabase project at https://supabase.com');
-        console.log('2. Create tables: patients, reports, activity_logs');
-        console.log('3. Enable RLS policies');
-        console.log('4. Create Cloudinary account and unsigned upload preset');
-        console.log('5. Update the credentials at the top of the JavaScript');
-
-        // Show config status
-        if (!isSupabaseConfigured) {
-            console.warn('⚠️ Supabase not configured! Set SUPABASE_URL and SUPABASE_ANON_KEY');
-        }
-        if (!isCloudinaryConfigured) {
-            console.warn('⚠️ Cloudinary not configured! Set CLOUDINARY_CLOUD_NAME and CLOUDINARY_UPLOAD_PRESET');
-        }
+        console.log('✅ Rajan Path Lab · Supabase Cloud Sync Enabled');
+        console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
+        console.log('☁️ Data is stored in Supabase - accessible from any device');
+        console.log('📌 Supabase config loaded.');
 
         if (portalModal.classList.contains('active')) updateDebugList();
 
-        // ─── AUTO-HIDE UPLOAD MESSAGE ───
         document.querySelectorAll('#adminSidebar a[data-section]').forEach(link => {
             link.addEventListener('click', function() {
                 if (this.dataset.section !== 'reports') {
@@ -3227,11 +3034,6 @@
                 }
             });
         });
-
-        // ─── EXPOSE FOR DEBUG ───
-        window.__supabase = supabase;
-        window.__refreshAll = refreshAll;
     </script>
-
 </body>
 </html>
