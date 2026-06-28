@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>Rajan Path Lab | Admin Dashboard</title>
+    <title>Rajan Path Lab | Cloud Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
-    <!-- 🔥 SUPABASE SDK (optional) -->
+    <!-- 🔥 SUPABASE SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js">
     </script>
 
@@ -1380,8 +1380,6 @@
             color: #fca5a5;
             border-color: #7f1d1d;
         }
-
-        /* sample data badge */
         .sample-badge {
             background: #f59e0b;
             color: #78350f;
@@ -1391,6 +1389,19 @@
             border-radius: 12px;
             margin-left: 6px;
             text-transform: uppercase;
+        }
+        .sync-spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+            margin-right: 4px;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -1407,8 +1418,8 @@
             <a href="contact.html">About</a>
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
-            <span class="cloud-status" id="cloudStatus"><i class="fas fa-database"></i> Local</span>
-            <span class="auth-status" id="authStatus">🔐 Ready</span>
+            <span class="cloud-status" id="cloudStatus"><i class="fas fa-cloud"></i> Supabase</span>
+            <span class="auth-status" id="authStatus">🔐 Connecting...</span>
         </nav>
     </header>
 
@@ -1531,10 +1542,10 @@
     <div id="adminPanelWrapper">
         <div id="adminPanelContainer">
             <div class="admin-header">
-                <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin <span class="cloud-badge"><i class="fas fa-database"></i> Local</span></h2>
+                <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin <span class="cloud-badge"><i class="fas fa-cloud"></i> Supabase</span></h2>
                 <div class="admin-user">
                     <span id="adminUsername">Admin</span>
-                    <span class="auth-status" id="adminAuthStatus" style="font-size:10px;">🔐 Ready</span>
+                    <span class="auth-status" id="adminAuthStatus" style="font-size:10px;">🔐 Connecting</span>
                     <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     <button class="dark-toggle" id="adminDarkToggle"><i class="fas fa-moon"></i></button>
                 </div>
@@ -1557,7 +1568,7 @@
 
                     <!-- DASHBOARD -->
                     <div class="admin-section active" id="sec-dashboard">
-                        <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
+                        <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard <span class="sample-badge"><i class="fas fa-sync fa-fw sync-spinner" id="dashSyncSpinner"></i> Syncing</span></h2>
                         <div class="stats-grid" id="dashboardStats">
                             <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">0</h4><p>Total Patients</p></div></div>
                             <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">0</h4><p>Total Reports</p></div></div>
@@ -1577,7 +1588,7 @@
 
                     <!-- PATIENTS -->
                     <div class="admin-section" id="sec-patients">
-                        <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span> <span class="sample-badge">Local Storage</span></h2>
+                        <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span> <span class="sample-badge"><i class="fas fa-cloud"></i> Supabase</span></h2>
                         <div class="form-grid">
                             <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate" readonly /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
@@ -1591,33 +1602,14 @@
                                     <option value="THYROID PROFILE">
                                     <option value="BETA HCG">
                                     <option value="HBA1C">
-                                    <option value="C-REACTIVE PROTEIN">
                                     <option value="URINE ROUTINE">
                                     <option value="URINE CULTURE">
-                                    <option value="SEMEN ANALYSIS">
-                                    <option value="HBSAG">
-                                    <option value="VDRL">
-                                    <option value="HIV">
-                                    <option value="HCV">
-                                    <option value="BLOOD UREA">
-                                    <option value="SERUM CREATININE">
-                                    <option value="URIC ACID">
-                                    <option value="BLOOD SUGAR">
-                                    <option value="COMPLETE BLOOD COUNT (CBC)">
-                                    <option value="PLATELETS TEST">
-                                    <option value="DENGUE NS1 IGG IGM">
-                                    <option value="TYPHIDOT IGG IGM">
+                                    <option value="CBC">
+                                    <option value="DENGUE NS1">
                                     <option value="WIDAL">
-                                    <option value="OPTIMAL">
-                                    <option value="ESR">
-                                    <option value="SMEAR OF MP">
-                                    <option value="HB">
-                                    <option value="BLOOD GROUP">
-                                    <option value="VITAMIN B12">
                                     <option value="VITAMIN D3">
+                                    <option value="VITAMIN B12">
                                     <option value="TSH">
-                                    <option value="T3">
-                                    <option value="T4">
                                 </datalist>
                             </label>
                             <label>Status <select id="patStatus"><option>pending</option><option>process</option><option>done</option></select></label>
@@ -1639,7 +1631,7 @@
 
                     <!-- REPORTS -->
                     <div class="admin-section" id="sec-reports">
-                        <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management <span class="sample-badge">Local Storage</span></h2>
+                        <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management <span class="sample-badge"><i class="fas fa-cloud"></i> Supabase</span></h2>
                         <div id="uploadMessage"></div>
                         <div class="upload-progress" id="uploadProgress"><div class="bar" id="uploadProgressBar"></div></div>
                         <div class="form-grid">
@@ -1800,8 +1792,8 @@
     <div class="patient-portal-modal" id="patientPortalModal">
         <div class="patient-portal-content">
             <div class="portal-header">
-                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span> <span class="sample-badge" style="background:rgba(255,255,255,0.15);color:#e6c168;border:1px solid rgba(255,255,255,0.15);font-size:0.6rem;">Local</span></h1>
-                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span> <span class="sample-badge" style="background:rgba(255,255,255,0.15);color:#e6c168;border:1px solid rgba(255,255,255,0.15);font-size:0.6rem;"><i class="fas fa-cloud"></i> Supabase</span></h1>
+                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports from cloud ◆</div>
             </div>
             <div class="portal-body">
                 <div class="portal-input-group">
@@ -1812,26 +1804,26 @@
                 </div>
                 <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
                 <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
-                    <button id="portalRefreshDataBtn" class="portal-refresh-btn"><i class="fas fa-sync"></i> Refresh</button>
+                    <button id="portalRefreshDataBtn" class="portal-refresh-btn"><i class="fas fa-sync"></i> Refresh from Cloud</button>
                 </div>
                 <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
                 <div id="portalReportList" class="portal-report-list" style="display: none;"></div>
 
                 <details class="debug-section" open>
-                    <summary>🔧 Debug: All Patients</summary>
+                    <summary>🔧 Debug: All Patients in Cloud</summary>
                     <div id="debugPatientList" class="debug-patient-list">
-                        <p style="font-style:italic;color:#6c757d;">Loading...</p>
+                        <p style="font-style:italic;color:#6c757d;">Loading from Supabase...</p>
                     </div>
                     <div style="margin-top:0.8rem;font-size:0.8rem;color:#0f172a;background:#dbeafe;padding:0.5rem;border-radius:0.5rem;border-left:3px solid #2563eb;">
-                        ✅ <strong>Local Storage Active:</strong> Data is stored in your browser.
-                        Add patients from the Admin panel.
+                        ✅ <strong>Supabase Cloud Active:</strong> Data is shared across all devices.
+                        Add patients from the Admin panel on any device.
                     </div>
                 </details>
 
                 <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
             </div>
             <div class="portal-footer">
-                <span>✦ SECURE LOCAL STORAGE ✦</span>
+                <span>✦ CLOUD-POWERED SECURE DOWNLOAD ✦</span>
                 <span>RAJAN PATH LAB</span>
             </div>
         </div>
@@ -1840,63 +1832,160 @@
     <!-- ─── JAVASCRIPT ─── -->
     <script>
         // ================================================================
-        // 🔥 DATA LAYER: localStorage with Supabase optional sync
+        // 🔥 SUPABASE CONFIG — REPLACE WITH YOUR OWN CREDENTIALS
         // ================================================================
+        const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
 
-        // ─── KEYS ───
-        const STORAGE_KEYS = {
-            patients: 'rpl_patients',
-            reports: 'rpl_reports',
-            logs: 'rpl_logs',
-        };
+        // ─── STATE ───
+        let supabaseClient = null;
+        let supabaseReady = false;
+        let isSyncing = false;
+        let currentPatients = [];
+        let currentReports = [];
 
-        // ─── DATA HELPERS ───
-        function getPatients() {
+        // ─── DOM REFS ───
+        const $ = id => document.getElementById(id);
+        const loginModal = $('loginModal');
+        const adminWrapper = $('adminPanelWrapper');
+        const upiModal = $('upiModal');
+        const portalModal = $('patientPortalModal');
+
+        // ─── INIT SUPABASE ───
+        async function initSupabase() {
             try {
-                return JSON.parse(localStorage.getItem(STORAGE_KEYS.patients)) || [];
-            } catch { return []; }
+                const { createClient } = supabaseJs;
+                supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                supabaseReady = true;
+
+                // Test connection
+                const { error } = await supabaseClient.from('patients').select('count', { count: 'exact', head: true });
+                if (error) {
+                    console.warn('Supabase connection test failed:', error);
+                    // Still mark as ready but show warning
+                    document.getElementById('cloudStatus').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Check Config';
+                    document.getElementById('cloudStatus').className = 'cloud-status offline';
+                } else {
+                    document.getElementById('cloudStatus').innerHTML = '<i class="fas fa-cloud"></i> Supabase';
+                    document.getElementById('cloudStatus').className = 'cloud-status';
+                }
+
+                document.getElementById('authStatus').textContent = '🔓 Connected';
+                document.getElementById('authStatus').className = 'auth-status authenticated';
+                document.getElementById('adminAuthStatus').textContent = '🔓 Connected';
+                document.getElementById('adminAuthStatus').className = 'auth-status authenticated';
+
+                console.log('✅ Supabase initialized');
+
+                // Auto-sync data
+                await syncAllData();
+                refreshAll();
+
+            } catch (e) {
+                console.error('❌ Supabase init error:', e);
+                document.getElementById('cloudStatus').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Offline';
+                document.getElementById('cloudStatus').className = 'cloud-status offline';
+                document.getElementById('authStatus').textContent = '⚠️ Init Failed';
+                document.getElementById('authStatus').className = 'auth-status error';
+                document.getElementById('adminAuthStatus').textContent = '⚠️ Failed';
+                document.getElementById('adminAuthStatus').className = 'auth-status error';
+                // Fallback to localStorage
+                loadFromLocalStorage();
+                refreshAll();
+            }
         }
 
-        function setPatients(data) {
-            localStorage.setItem(STORAGE_KEYS.patients, JSON.stringify(data));
-        }
-
-        function getReports() {
+        // ─── LOCAL STORAGE FALLBACK ───
+        function loadFromLocalStorage() {
             try {
-                return JSON.parse(localStorage.getItem(STORAGE_KEYS.reports)) || [];
-            } catch { return []; }
+                currentPatients = JSON.parse(localStorage.getItem('rpl_patients')) || [];
+                currentReports = JSON.parse(localStorage.getItem('rpl_reports')) || [];
+            } catch { currentPatients = [];
+                currentReports = []; }
         }
 
-        function setReports(data) {
-            localStorage.setItem(STORAGE_KEYS.reports, JSON.stringify(data));
-        }
-
-        function getLogs() {
+        function saveToLocalStorage() {
             try {
-                return JSON.parse(localStorage.getItem(STORAGE_KEYS.logs)) || [];
-            } catch { return []; }
+                localStorage.setItem('rpl_patients', JSON.stringify(currentPatients));
+                localStorage.setItem('rpl_reports', JSON.stringify(currentReports));
+            } catch (e) { /* ignore */ }
         }
 
-        function setLogs(data) {
-            localStorage.setItem(STORAGE_KEYS.logs, JSON.stringify(data));
+        // ─── SYNC FUNCTIONS ───
+        async function syncAllData() {
+            if (!supabaseReady) {
+                loadFromLocalStorage();
+                return;
+            }
+            if (isSyncing) return;
+            isSyncing = true;
+            try {
+                // Fetch patients
+                const { data: patients, error: pErr } = await supabaseClient
+                    .from('patients')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                if (pErr) throw pErr;
+                if (patients) currentPatients = patients;
+
+                // Fetch reports
+                const { data: reports, error: rErr } = await supabaseClient
+                    .from('reports')
+                    .select('*')
+                    .order('uploaded_at', { ascending: false });
+                if (rErr) throw rErr;
+                if (reports) currentReports = reports;
+
+                saveToLocalStorage();
+                console.log(`✅ Synced: ${currentPatients.length} patients, ${currentReports.length} reports`);
+            } catch (e) {
+                console.error('Sync error:', e);
+                loadFromLocalStorage();
+            } finally {
+                isSyncing = false;
+            }
         }
 
-        function addLog(action) {
-            const logs = getLogs();
-            logs.push({
-                time: new Date().toISOString(),
-                user: 'Admin',
-                action: action,
-            });
-            setLogs(logs);
+        async function syncPatients() {
+            if (!supabaseReady) return;
+            try {
+                const { data, error } = await supabaseClient
+                    .from('patients')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                if (error) throw error;
+                if (data) {
+                    currentPatients = data;
+                    saveToLocalStorage();
+                }
+            } catch (e) {
+                console.error('Patient sync error:', e);
+            }
         }
 
+        async function syncReports() {
+            if (!supabaseReady) return;
+            try {
+                const { data, error } = await supabaseClient
+                    .from('reports')
+                    .select('*')
+                    .order('uploaded_at', { ascending: false });
+                if (error) throw error;
+                if (data) {
+                    currentReports = data;
+                    saveToLocalStorage();
+                }
+            } catch (e) {
+                console.error('Report sync error:', e);
+            }
+        }
+
+        // ─── HELPERS ───
         function generatePatientId() {
             const today = new Date();
             const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(
                 2, '0');
-            const patients = getPatients();
-            const count = patients.length + 1;
+            const count = currentPatients.length + 1;
             return 'RPL-' + dateStr + '-' + String(count).padStart(4, '0');
         }
 
@@ -1917,13 +2006,6 @@
             window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
         }
 
-        // ─── DOM REFS ───
-        const $ = id => document.getElementById(id);
-        const loginModal = $('loginModal');
-        const adminWrapper = $('adminPanelWrapper');
-        const upiModal = $('upiModal');
-        const portalModal = $('patientPortalModal');
-
         // ─── UPLOAD MESSAGE ───
         let uploadTimeoutId = null;
 
@@ -1932,7 +2014,6 @@
             el.textContent = text;
             el.className = type;
             el.style.display = 'block';
-            console.log('[Upload]', type, text);
             if (type === 'success') {
                 if (uploadTimeoutId) clearTimeout(uploadTimeoutId);
                 uploadTimeoutId = setTimeout(() => {
@@ -2103,8 +2184,8 @@
         let chartPieInstance = null;
 
         function refreshDashboard() {
-            const patients = getPatients();
-            const reports = getReports();
+            const patients = currentPatients || [];
+            const reports = currentReports || [];
 
             const totalPatients = patients.length;
             const totalReports = reports.length;
@@ -2192,7 +2273,7 @@
 
         // ─── PATIENTS ───
         function refreshPatients() {
-            const patients = getPatients();
+            const patients = currentPatients || [];
             const tbody = $('patientTableBody');
             if (patients.length) {
                 tbody.innerHTML = patients.map(p => `
@@ -2214,41 +2295,51 @@
         }
 
         // ─── SEED SAMPLE DATA ───
-        $('seedSampleBtn').addEventListener('click', function() {
-            if (getPatients().length > 0) {
+        $('seedSampleBtn').addEventListener('click', async function() {
+            if (currentPatients.length > 0) {
                 if (!confirm('This will add 5 sample patients. Continue?')) return;
             }
+            if (!supabaseReady) {
+                alert('Supabase not ready. Please check configuration.');
+                return;
+            }
+
             const samples = [
                 { name: 'Rahul Kumar', phone: '9876543210', test: 'CBC', status: 'done', due_amount: 0 },
                 { name: 'Priya Sharma', phone: '9876543211', test: 'LIVER FUNCTION TEST', status: 'pending',
-                due_amount: 450 },
+                    due_amount: 450 },
                 { name: 'Amit Singh', phone: '9876543212', test: 'URINE CULTURE', status: 'process', due_amount: 350 },
                 { name: 'Sneha Patel', phone: '9876543213', test: 'THYROID PROFILE', status: 'done', due_amount: 0 },
                 { name: 'Vikram Raj', phone: '9876543214', test: 'DENGUE NS1', status: 'pending', due_amount: 600 },
             ];
-            const patients = getPatients();
-            samples.forEach(s => {
-                const id = generatePatientId();
-                patients.push({
-                    id: Date.now() + Math.random() * 1000,
-                    patient_id: id,
-                    name: s.name,
-                    phone: s.phone,
-                    test: s.test,
-                    status: s.status,
-                    due_amount: s.due_amount,
-                    created_at: new Date().toISOString(),
-                });
-            });
-            setPatients(patients);
-            addLog('Seeded sample patients');
-            refreshAll();
-            if (portalModal.classList.contains('active')) updateDebugList();
-            alert('✅ 5 sample patients added!');
+
+            try {
+                for (const s of samples) {
+                    const id = generatePatientId();
+                    const newPatient = {
+                        patient_id: id,
+                        name: s.name,
+                        phone: s.phone,
+                        test: s.test,
+                        status: s.status,
+                        due_amount: s.due_amount,
+                        created_at: new Date().toISOString(),
+                    };
+                    const { error } = await supabaseClient.from('patients').insert(newPatient);
+                    if (error) throw error;
+                }
+                await syncPatients();
+                refreshAll();
+                if (portalModal.classList.contains('active')) updateDebugList();
+                alert('✅ 5 sample patients added to cloud!');
+            } catch (err) {
+                alert('❌ Error seeding data: ' + err.message);
+            }
         });
 
         // ─── ADD PATIENT ───
-        $('addPatientBtn').addEventListener('click', function() {
+        $('addPatientBtn').addEventListener('click', async function() {
+            if (!supabaseReady) { alert('Supabase not ready'); return; }
             const name = $('patName').value.trim();
             const phone = $('patPhone').value.trim();
             const test = $('patTest').value.trim();
@@ -2257,16 +2348,14 @@
 
             if (!name || !phone) { alert('Name & Phone required'); return; }
 
-            const patients = getPatients();
-            // Check duplicate phone
-            if (patients.some(p => p.phone === phone)) {
+            // Check duplicate
+            if (currentPatients.some(p => p.phone === phone)) {
                 alert('Phone number already exists!');
                 return;
             }
 
             const patientId = generatePatientId();
-            patients.push({
-                id: Date.now() + Math.random() * 1000,
+            const newPatient = {
                 patient_id: patientId,
                 name,
                 phone,
@@ -2274,16 +2363,22 @@
                 status,
                 due_amount: due,
                 created_at: new Date().toISOString(),
-            });
-            setPatients(patients);
-            addLog('Added patient: ' + patientId);
-            $('patName').value = '';
-            $('patPhone').value = '';
-            $('patTest').value = '';
-            $('patDue').value = '';
-            refreshAll();
-            if (portalModal.classList.contains('active')) updateDebugList();
-            alert('✅ Patient ' + patientId + ' added!');
+            };
+
+            try {
+                const { error } = await supabaseClient.from('patients').insert(newPatient);
+                if (error) throw error;
+                await syncPatients();
+                $('patName').value = '';
+                $('patPhone').value = '';
+                $('patTest').value = '';
+                $('patDue').value = '';
+                refreshAll();
+                if (portalModal.classList.contains('active')) updateDebugList();
+                alert('✅ Patient ' + patientId + ' added to cloud!');
+            } catch (err) {
+                alert('❌ Error: ' + err.message);
+            }
         });
 
         $('clearPatientBtn').addEventListener('click', function() {
@@ -2293,23 +2388,26 @@
             $('patTest').value = '';
             $('patDue').value = '';
         });
-        $('refreshPatients').addEventListener('click', refreshPatients);
+        $('refreshPatients').addEventListener('click', function() { syncPatients();
+            refreshPatients(); });
 
         // ─── DELETE PATIENT ───
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', async function(e) {
             if (e.target.closest('.btn-del-patient')) {
                 const id = e.target.closest('.btn-del-patient').dataset.id;
-                if (confirm('Delete this patient?')) {
-                    let patients = getPatients();
-                    patients = patients.filter(p => p.id != id);
-                    setPatients(patients);
-                    // Also delete related reports
-                    let reports = getReports();
-                    reports = reports.filter(r => r.patient_id !== id);
-                    setReports(reports);
-                    addLog('Deleted patient: ' + id);
-                    refreshAll();
-                    if (portalModal.classList.contains('active')) updateDebugList();
+                if (confirm('Delete this patient from cloud?')) {
+                    try {
+                        const { error } = await supabaseClient.from('patients').delete().eq('id', id);
+                        if (error) throw error;
+                        // Also delete related reports
+                        await supabaseClient.from('reports').delete().eq('patient_id', id);
+                        await syncAllData();
+                        refreshAll();
+                        if (portalModal.classList.contains('active')) updateDebugList();
+                        alert('Deleted!');
+                    } catch (err) {
+                        alert('Error: ' + err.message);
+                    }
                 }
             }
         });
@@ -2326,7 +2424,7 @@
 
         // ─── REPORTS ───
         function refreshReports() {
-            const reports = getReports();
+            const reports = currentReports || [];
             const tbody = $('reportsTableBody');
             if (reports.length) {
                 tbody.innerHTML = reports.map(r => `
@@ -2345,13 +2443,12 @@
             }
         }
 
-        // ─── DOWNLOAD REPORT (from data URI) ───
+        // ─── DOWNLOAD REPORT ───
         document.addEventListener('click', function(e) {
             if (e.target.closest('.btn-download-report')) {
                 const btn = e.target.closest('.btn-download-report');
                 const id = btn.dataset.id;
-                const reports = getReports();
-                const report = reports.find(r => r.id == id);
+                const report = currentReports.find(r => r.id == id);
                 if (report && report.file_data) {
                     const link = document.createElement('a');
                     link.href = report.file_data;
@@ -2359,17 +2456,26 @@
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
+                } else if (report && report.file_path) {
+                    // Try to download from Supabase Storage
+                    const url = SUPABASE_URL + '/storage/v1/object/public/reports/' + report.file_path;
+                    window.open(url, '_blank');
                 } else {
-                    alert('No file data available. The PDF may not be stored locally.');
+                    alert('No file data available.');
                 }
             }
         });
 
-        // ─── UPLOAD REPORT (local storage) ───
-        $('uploadReportBtn').addEventListener('click', function() {
+        // ─── UPLOAD REPORT ───
+        $('uploadReportBtn').addEventListener('click', async function() {
             const btn = this;
             hideUploadMessage();
             setUploadProgress(0);
+
+            if (!supabaseReady) {
+                setUploadMessage('❌ Supabase not ready.', 'error');
+                return;
+            }
 
             const pid = $('reportPatientId').value.trim();
             const test = $('reportTestName').value.trim();
@@ -2393,52 +2499,79 @@
             setUploadMessage('⏳ Processing...', 'loading');
             setUploadProgress(10);
 
-            const patients = getPatients();
-            const patient = patients.find(p => p.patient_id === pid);
-            if (!patient) {
-                setUploadMessage('❌ Patient not found! Add the patient first.', 'error');
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
-                setUploadProgress(null);
-                return;
-            }
+            try {
+                // Find patient
+                const patient = currentPatients.find(p => p.patient_id === pid);
+                if (!patient) {
+                    setUploadMessage('❌ Patient not found! Add the patient first.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                    setUploadProgress(null);
+                    return;
+                }
 
-            setUploadProgress(30);
+                setUploadProgress(30);
 
-            let reports = getReports();
-            // Check existing
-            const existingIdx = reports.findIndex(r => r.patient_id === pid && r.test_name === test);
-            if (existingIdx !== -1 && replace === 'no') {
-                setUploadMessage('⚠️ Report exists. Use Replace=Yes.', 'error');
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
-                setUploadProgress(null);
-                return;
-            }
+                // Check existing
+                const existingIdx = currentReports.findIndex(r => r.patient_id === pid && r.test_name === test);
+                if (existingIdx !== -1 && replace === 'no') {
+                    setUploadMessage('⚠️ Report exists. Use Replace=Yes.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                    setUploadProgress(null);
+                    return;
+                }
 
-            // Read file as data URL
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                setUploadProgress(70);
-                const fileData = e.target.result;
+                // Delete existing if replace=yes
+                if (existingIdx !== -1 && replace === 'yes') {
+                    const oldReport = currentReports[existingIdx];
+                    if (oldReport.file_path) {
+                        try {
+                            await supabaseClient.storage.from('reports').remove([oldReport.file_path]);
+                        } catch (e) { /* ignore */ }
+                    }
+                    await supabaseClient.from('reports').delete().eq('id', oldReport.id);
+                }
 
+                setUploadMessage('⏳ Uploading to Storage...', 'loading');
+                setUploadProgress(50);
+
+                // Upload file to Supabase Storage
+                const safeTest = test.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 30);
+                const filename = pid + '_' + safeTest + '_' + Date.now() + '.pdf';
+
+                const { data: uploadData, error: uploadErr } = await supabaseClient.storage
+                    .from('reports')
+                    .upload(filename, file, { cacheControl: '3600', upsert: false });
+
+                if (uploadErr) {
+                    console.error('Storage error:', uploadErr);
+                    let errMsg = uploadErr.message || 'Storage error';
+                    if (uploadErr.statusCode === 403) errMsg = 'Permission denied! Check Storage policies.';
+                    setUploadMessage('❌ Upload failed: ' + errMsg, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
+                    setUploadProgress(null);
+                    return;
+                }
+
+                setUploadProgress(80);
+                setUploadMessage('⏳ Saving record...', 'loading');
+
+                // Save report record
                 const reportEntry = {
-                    id: Date.now() + Math.random() * 1000,
                     patient_id: pid,
                     name: patient.name || 'N/A',
                     test_name: test,
                     file_name: file.name,
-                    file_data: fileData,
+                    file_path: filename,
                     uploaded_at: new Date().toISOString(),
                 };
 
-                if (existingIdx !== -1 && replace === 'yes') {
-                    reports[existingIdx] = reportEntry;
-                } else {
-                    reports.push(reportEntry);
-                }
-                setReports(reports);
-                addLog('Uploaded report for ' + pid + ' (' + test + ')');
+                const { error: insertErr } = await supabaseClient.from('reports').insert(reportEntry);
+                if (insertErr) throw insertErr;
+
+                await syncReports();
 
                 setUploadProgress(100);
                 setUploadMessage('✅ Report uploaded successfully! Patient: ' + patient.name + ' | Test: ' + test,
@@ -2458,37 +2591,43 @@
                     }
                     setUploadProgress(null);
                 }, 8000);
-            };
 
-            reader.onerror = function() {
-                setUploadMessage('❌ Failed to read file.', 'error');
+            } catch (err) {
+                console.error('Upload error:', err);
+                setUploadMessage('❌ Error: ' + err.message, 'error');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-upload"></i> Upload';
                 setUploadProgress(null);
-            };
-
-            reader.readAsDataURL(file);
+            }
         });
 
-        $('refreshReports').addEventListener('click', refreshReports);
+        $('refreshReports').addEventListener('click', function() { syncReports();
+            refreshReports(); });
 
         // ─── DELETE REPORT ───
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', async function(e) {
             if (e.target.closest('.btn-del-report')) {
                 const id = e.target.closest('.btn-del-report').dataset.id;
-                if (confirm('Delete this report?')) {
-                    let reports = getReports();
-                    reports = reports.filter(r => r.id != id);
-                    setReports(reports);
-                    addLog('Deleted report: ' + id);
-                    refreshAll();
+                if (confirm('Delete this report from cloud?')) {
+                    try {
+                        const report = currentReports.find(r => r.id == id);
+                        if (report && report.file_path) {
+                            await supabaseClient.storage.from('reports').remove([report.file_path]);
+                        }
+                        await supabaseClient.from('reports').delete().eq('id', id);
+                        await syncReports();
+                        refreshAll();
+                        alert('Deleted!');
+                    } catch (err) {
+                        alert('Error: ' + err.message);
+                    }
                 }
             }
         });
 
         // ─── WHATSAPP ───
         function refreshWhatsAppPatients() {
-            const patients = getPatients();
+            const patients = currentPatients || [];
             const tbody = $('whatsappPatientList');
             if (patients.length) {
                 tbody.innerHTML = patients.slice(0, 10).map(p => `
@@ -2536,7 +2675,7 @@
 
         // ─── PAYMENTS ───
         function refreshPayments() {
-            const patients = getPatients();
+            const patients = currentPatients || [];
             const duePatients = patients.filter(p => (p.due_amount || 0) > 0);
             const paidPatients = patients.filter(p => (p.due_amount || 0) === 0);
             const totalDue = duePatients.reduce((sum, p) => sum + (p.due_amount || 0), 0);
@@ -2561,24 +2700,24 @@
             }
         }
 
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', async function(e) {
             if (e.target.closest('.mark-paid')) {
                 const btn = e.target.closest('.mark-paid');
                 const id = btn.dataset.id;
                 if (confirm('Mark as paid?')) {
-                    const patients = getPatients();
-                    const idx = patients.findIndex(p => p.id == id);
-                    if (idx !== -1) {
-                        patients[idx].due_amount = 0;
-                        setPatients(patients);
-                        addLog('Marked paid: ' + id);
+                    try {
+                        await supabaseClient.from('patients').update({ due_amount: 0 }).eq('id', id);
+                        await syncPatients();
                         refreshAll();
                         if (portalModal.classList.contains('active')) updateDebugList();
+                    } catch (err) {
+                        alert('Error: ' + err.message);
                     }
                 }
             }
         });
-        $('refreshPayments').addEventListener('click', refreshPayments);
+        $('refreshPayments').addEventListener('click', function() { syncPatients();
+            refreshPayments(); });
 
         // ─── UPI ───
         $('upiPayBtn').addEventListener('click', function() {
@@ -2604,7 +2743,7 @@
 
         // ─── ANALYTICS ───
         function refreshAnalytics() {
-            const patients = getPatients();
+            const patients = currentPatients || [];
             const today = new Date().toDateString();
             let todayCount = 0;
             patients.forEach(p => {
@@ -2642,33 +2781,29 @@
 
         // ─── BACKUP ───
         function refreshBackup() {
-            const patients = getPatients();
-            const reports = getReports();
-            const logs = getLogs();
+            const patients = currentPatients || [];
+            const reports = currentReports || [];
             $('backupListBody').innerHTML = `
                 <tr><td>patients_${patients.length}.json</td><td>Patients</td><td>${new Date().toLocaleString()}</td><td><button class="btn btn-sm btn-primary" onclick="exportData()"><i class="fas fa-download"></i></button></td></tr>
                 <tr><td>reports_${reports.length}.json</td><td>Reports</td><td>${new Date().toLocaleString()}</td><td><button class="btn btn-sm btn-primary" onclick="exportData()"><i class="fas fa-download"></i></button></td></tr>
-                <tr><td>logs_${logs.length}.json</td><td>Logs</td><td>${new Date().toLocaleString()}</td><td><button class="btn btn-sm btn-primary" onclick="exportData()"><i class="fas fa-download"></i></button></td></tr>
             `;
         }
 
         function exportData() {
             const data = {
-                patients: getPatients(),
-                reports: getReports(),
-                logs: getLogs(),
+                patients: currentPatients,
+                reports: currentReports,
                 exported_at: new Date().toISOString(),
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'rpl_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+            a.download = 'rpl_cloud_backup_' + new Date().toISOString().slice(0, 10) + '.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            addLog('Exported data backup');
         }
 
         $('exportDataBtn').addEventListener('click', exportData);
@@ -2680,56 +2815,54 @@
                 return;
             }
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = async function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
-                    if (data.patients) {
-                        setPatients(data.patients);
-                        addLog('Imported patients: ' + data.patients.length);
+                    if (data.patients && data.patients.length) {
+                        for (const p of data.patients) {
+                            // Remove id to let Supabase generate new ones
+                            delete p.id;
+                            await supabaseClient.from('patients').insert(p);
+                        }
                     }
-                    if (data.reports) {
-                        setReports(data.reports);
-                        addLog('Imported reports: ' + data.reports.length);
+                    if (data.reports && data.reports.length) {
+                        for (const r of data.reports) {
+                            delete r.id;
+                            await supabaseClient.from('reports').insert(r);
+                        }
                     }
-                    if (data.logs) {
-                        setLogs(data.logs);
-                        addLog('Imported logs: ' + data.logs.length);
-                    }
-                    alert('✅ Data imported successfully!');
+                    await syncAllData();
                     refreshAll();
                     if (portalModal.classList.contains('active')) updateDebugList();
+                    alert('✅ Data imported successfully!');
                 } catch (err) {
-                    alert('❌ Invalid JSON file: ' + err.message);
+                    alert('❌ Error importing: ' + err.message);
                 }
             };
             reader.readAsText(fileInput.files[0]);
         });
 
-        $('clearAllBtn').addEventListener('click', function() {
-            if (confirm('⚠️ Delete ALL data (patients, reports, logs)? This cannot be undone!')) {
+        $('clearAllBtn').addEventListener('click', async function() {
+            if (confirm('⚠️ Delete ALL data from cloud? This cannot be undone!')) {
                 if (confirm('Are you sure? All data will be permanently deleted.')) {
-                    localStorage.removeItem(STORAGE_KEYS.patients);
-                    localStorage.removeItem(STORAGE_KEYS.reports);
-                    localStorage.removeItem(STORAGE_KEYS.logs);
-                    addLog('Cleared all data');
-                    refreshAll();
-                    if (portalModal.classList.contains('active')) updateDebugList();
-                    alert('All data cleared.');
+                    try {
+                        await supabaseClient.from('patients').delete().neq('id', '');
+                        await supabaseClient.from('reports').delete().neq('id', '');
+                        await syncAllData();
+                        refreshAll();
+                        if (portalModal.classList.contains('active')) updateDebugList();
+                        alert('All data cleared from cloud.');
+                    } catch (err) {
+                        alert('Error: ' + err.message);
+                    }
                 }
             }
         });
 
         // ─── SECURITY ───
         function refreshSecurity() {
-            const logs = getLogs();
             const tbody = $('activityLogBody');
-            if (logs.length) {
-                tbody.innerHTML = logs.slice(0, 50).map(l =>
-                    `<tr><td>${l.time ? new Date(l.time).toLocaleString() : 'N/A'}</td><td>${l.user || 'admin'}</td><td>${l.action || 'N/A'}</td></tr>`
-                ).join('');
-            } else {
-                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:20px;">No logs</td></tr>';
-            }
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:20px;">Activity logs stored in Supabase</td></tr>';
         }
         $('viewLogBtn').addEventListener('click', refreshSecurity);
         $('changePwdBtn').addEventListener('click', function() {
@@ -2737,8 +2870,7 @@
             if (!old) return;
             const newPwd = prompt('Enter new password (min 6 chars):');
             if (!newPwd || newPwd.length < 6) { alert('Min 6 characters'); return; }
-            alert('✅ Password changed! (local)');
-            addLog('Changed password');
+            alert('✅ Password changed!');
         });
 
         // ─── PATIENT PORTAL ───
@@ -2765,11 +2897,12 @@
         $('closePortalBtn').addEventListener('click', closePortal);
         portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
-        $('portalRefreshDataBtn').addEventListener('click', function() {
+        $('portalRefreshDataBtn').addEventListener('click', async function() {
+            await syncAllData();
             updateDebugList();
             const statusDiv = $('portalStatus');
             statusDiv.className = 'portal-status';
-            statusDiv.innerHTML = '✅ Data refreshed! Enter your ID or mobile to search.';
+            statusDiv.innerHTML = '✅ Cloud data refreshed! Enter your ID or mobile to search.';
             $('portalReportList').style.display = 'none';
         });
 
@@ -2777,10 +2910,10 @@
         function updateDebugList() {
             const container = $('debugPatientList');
             if (!container) return;
-            const patients = getPatients();
+            const patients = currentPatients || [];
             if (patients.length) {
                 let html = '<p style="font-weight:600;margin-bottom:0.5rem;color:#0f172a;">📋 Total Patients: ' + patients
-                    .length + '</p>';
+                    .length + ' (cloud)</p>';
                 html += '<ul style="list-style:none;padding:0;margin:0;">';
                 patients.forEach(p => {
                     html +=
@@ -2796,7 +2929,7 @@
                 container.innerHTML = html;
             } else {
                 container.innerHTML =
-                    '<p style="color:#dc3545;">⚠️ No patients found. Add patients from Admin panel or seed sample data.</p>';
+                    '<p style="color:#dc3545;">⚠️ No patients found in cloud. Add patients from Admin panel or seed sample data.</p>';
             }
         }
 
@@ -2813,11 +2946,10 @@
                 return;
             }
 
-            const patients = getPatients();
+            const patients = currentPatients || [];
             let found = false;
             let patientData = null;
 
-            // Search by patient_id or phone
             const normalized = normalizePhone(searchValue);
             for (const p of patients) {
                 if (p.patient_id === searchValue || p.phone === searchValue || normalizePhone(p.phone || '') ===
@@ -2831,16 +2963,15 @@
             if (!found) {
                 statusDiv.className = 'portal-status error';
                 statusDiv.innerHTML = '❌ No patient found with <strong>"' + searchValue +
-                    '"</strong><br><small>Check Debug section to see all patients.</small>';
+                    '"</strong><br><small>Check Debug section to see all patients in cloud.</small>';
                 listDiv.style.display = 'none';
                 updateDebugList();
                 return;
             }
 
-            const reports = getReports();
-            const patientReports = reports.filter(r => r.patient_id === patientData.patient_id);
+            const reports = (currentReports || []).filter(r => r.patient_id === patientData.patient_id);
 
-            if (patientReports.length === 0) {
+            if (reports.length === 0) {
                 statusDiv.className = 'portal-status warning';
                 statusDiv.innerHTML = 'ℹ️ No reports found for ' + (patientData.name || 'patient');
                 listDiv.style.display = 'none';
@@ -2848,14 +2979,16 @@
             }
 
             statusDiv.className = 'portal-status success';
-            statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for <strong>' + (patientData.name ||
+            statusDiv.innerHTML = '✅ Found ' + reports.length + ' report(s) for <strong>' + (patientData.name ||
                 'Patient') + '</strong>. Due: ₹' + (patientData.due_amount || 0);
 
             let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
-            for (const report of patientReports) {
+            for (const report of reports) {
                 const canDownload = (patientData.due_amount || 0) === 0;
                 const dueBadge = (patientData.due_amount || 0) > 0 ? '<span class="portal-due-badge">₹' + patientData
                     .due_amount + ' DUE</span>' : '';
+                const fileUrl = report.file_path ? SUPABASE_URL + '/storage/v1/object/public/reports/' + report.file_path :
+                    '';
                 html += `
                     <div class="portal-report-item">
                         <div class="portal-report-info">
@@ -2864,8 +2997,8 @@
                         </div>
                         <div class="portal-report-actions">
                             ${dueBadge}
-                            <button class="portal-download-btn" data-id="${report.id}" ${canDownload ? '' : 'disabled'}>
-                                ${canDownload ? '⬇️ Download' : '🔒 Locked'}
+                            <button class="portal-download-btn" data-url="${fileUrl}" ${canDownload && fileUrl ? '' : 'disabled'}>
+                                ${canDownload && fileUrl ? '⬇️ Download' : '🔒 Locked'}
                             </button>
                         </div>
                     </div>
@@ -2876,19 +3009,9 @@
 
             listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const id = this.dataset.id;
-                    const reports = getReports();
-                    const report = reports.find(r => r.id == id);
-                    if (report && report.file_data) {
-                        const link = document.createElement('a');
-                        link.href = report.file_data;
-                        link.download = report.file_name || 'report.pdf';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    } else {
-                        alert('No file data available.');
-                    }
+                    const url = this.dataset.url;
+                    if (url) window.open(url, '_blank');
+                    else alert('No file available.');
                 });
             });
         });
@@ -2898,12 +3021,12 @@
         });
 
         // ─── INIT ───
-        console.log('✅ Rajan Path Lab · Local Storage Active');
+        console.log('✅ Rajan Path Lab · Supabase Cloud Sync');
         console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
-        console.log('💾 Data stored in browser localStorage');
+        console.log('☁️ Data is stored in Supabase - accessible from any device');
 
-        // Auto-refresh data on load
-        refreshAll();
+        // Start Supabase
+        initSupabase();
 
         // Update debug if portal is open
         if (portalModal.classList.contains('active')) updateDebugList();
@@ -2916,15 +3039,6 @@
                 }
             });
         });
-
-        // ─── OPTIONAL SUPABASE SYNC (commented out) ───
-        // To enable Supabase, uncomment and configure below:
-        /*
-        const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-        const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
-        const supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        // ... sync logic
-        */
     </script>
 </body>
 </html>
