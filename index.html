@@ -16,6 +16,7 @@
             --bg-light: #f4f7f9;
             --urgent-red: #d9383a;
             --text-dark: #2d3748;
+            --gold: #f59e0b;
         }
 
         body {
@@ -41,6 +42,25 @@
             z-index: -1;
             display: block;
         }
+
+        /* 🌟 PROMOTIONAL BANNER STYLES ON FRONTEND */
+        #promo-banner-container {
+            display: none;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border-bottom: 3px solid #fff;
+            position: relative;
+            z-index: 900;
+            animation: slideDown 0.5s ease-in-out;
+        }
+        #promo-banner-container .promo-title { font-size: 1.1rem; margin-right: 10px; background: #fff; color: #d9383a; padding: 2px 12px; border-radius: 20px; }
+        #promo-banner-container .promo-msg { font-size: 1rem; }
+        #promo-banner-container .promo-date { font-size: 0.85rem; background: rgba(0,0,0,0.2); padding: 2px 10px; border-radius: 12px; margin-left: 10px; }
+        @keyframes slideDown { 0% { transform: translateY(-100%); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
 
         header {
             background: var(--primary-blue);
@@ -208,6 +228,8 @@
             .strip-content { flex-direction: column; gap: 8px; }
             .about-features { grid-template-columns: 1fr; }
             section { padding: 30px 15px; }
+            #promo-banner-container { font-size: 0.9rem; padding: 8px; display: flex; flex-direction: column; gap: 4px; }
+            #promo-banner-container .promo-title, #promo-banner-container .promo-date { display: inline-block; }
         }
 
         #adminPanelWrapper {
@@ -372,6 +394,9 @@
         .badge-status.process { background: #dbeafe; color: #1e40af; }
         .badge-status.done { background: #e0e7ff; color: #3730a3; }
         .badge-status.critical { background: #fee2e2; color: #dc2626; border: 1px solid #dc2626; }
+        .badge-status.active { background: #d1fae5; color: #065f46; }
+        .badge-status.inactive { background: #e2e8f0; color: #64748b; }
+        .badge-status.expired { background: #fee2e2; color: #dc2626; }
 
         .btn {
             display: inline-flex;
@@ -651,6 +676,9 @@
         body.admin-dark .badge-status.process { background: #1e3a5f; color: #93c5fd; }
         body.admin-dark .badge-status.done { background: #312e81; color: #a5b4fc; }
         body.admin-dark .badge-status.critical { background: #7f1d1d; color: #fca5a5; border: 1px solid #fca5a5; }
+        body.admin-dark .badge-status.active { background: #064e3b; color: #6ee7b7; }
+        body.admin-dark .badge-status.inactive { background: #334155; color: #94a3b8; }
+        body.admin-dark .badge-status.expired { background: #7f1d1d; color: #fca5a5; }
         body.admin-dark .stat-card .icon.blue { background: #1e3a5f; color: #60a5fa; }
         body.admin-dark .stat-card .icon.green { background: #064e3b; color: #34d399; }
         body.admin-dark .stat-card .icon.red { background: #7f1d1d; color: #f87171; }
@@ -675,6 +703,9 @@
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
         </nav>
     </header>
+
+    <!-- 🌟 AUTO PROMOTION / OFFER BANNER (Frontend Output) -->
+    <div id="promo-banner-container"></div>
 
     <div class="hero">
         <h2>Reliable Diagnostics with Advanced Technology</h2>
@@ -807,9 +838,10 @@
                     <a data-section="reports"><i class="fas fa-file-pdf"></i> Reports</a>
                     <a data-section="whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     <a data-section="payments"><i class="fas fa-rupee-sign"></i> Payments</a>
-                    <div class="nav-label" style="margin-top:8px;">Analytics & Ops</div>
+                    <div class="nav-label" style="margin-top:8px;">Marketing & Ops</div>
+                    <a data-section="promotions"><i class="fas fa-tags"></i> Promotions</a> <!-- 🌟 NEW -->
                     <a data-section="analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
-                    <a data-section="inventory"><i class="fas fa-boxes"></i> Inventory</a> <!-- NEW -->
+                    <a data-section="inventory"><i class="fas fa-boxes"></i> Inventory</a>
                     <div class="nav-label" style="margin-top:8px;">System</div>
                     <a data-section="backup"><i class="fas fa-database"></i> Backup</a>
                     <a data-section="security"><i class="fas fa-shield-alt"></i> Security</a>
@@ -819,24 +851,14 @@
                     <!-- DASHBOARD -->
                     <div class="admin-section active" id="sec-dashboard">
                         <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
-                        
-                        <!-- Branch Filter (New) -->
                         <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
                             <label style="font-weight:600;font-size:14px;">Filter by Branch:</label>
-                            <select id="dashboardBranchFilter" style="padding:6px 12px;border-radius:4px;border:1px solid #e2e8f0;">
-                                <option value="All">All Branches</option>
-                                <option value="Main Lab">Main Lab</option>
-                                <option value="J R Medical">J R Medical</option>
-                                <option value="Home Collection">Home Collection</option>
-                            </select>
+                            <select id="dashboardBranchFilter" style="padding:6px 12px;border-radius:4px;border:1px solid #e2e8f0;"><option value="All">All Branches</option><option value="Main Lab">Main Lab</option><option value="J R Medical">J R Medical</option><option value="Home Collection">Home Collection</option></select>
                         </div>
-
-                        <!-- Critical Alerts Section (New) -->
                         <div id="criticalAlertContainer" style="display:none;background:#fee2e2;border:1px solid #dc2626;border-radius:8px;padding:12px 16px;margin-bottom:16px;color:#991b1b;font-weight:600;">
-                            🚨 <span style="font-size:16px;">CRITICAL ALERTS!</span> The following patients need immediate attention:
+                            🚨 <span style="font-size:16px;">CRITICAL ALERTS!</span> Immediate attention needed:
                             <ul id="criticalPatientList" style="margin-top:8px;font-weight:normal;padding-left:20px;"></ul>
                         </div>
-
                         <div class="stats-grid" id="dashboardStats">
                             <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">0</h4><p>Today's Patients</p></div></div>
                             <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">0</h4><p>Total Reports</p></div></div>
@@ -854,7 +876,7 @@
                         </div>
                     </div>
 
-                    <!-- PATIENTS (Updated with New Fields) -->
+                    <!-- PATIENTS -->
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
@@ -931,6 +953,24 @@
                         </div>
                     </div>
 
+                    <!-- 🌟 NEW SECTION: PROMOTIONS / OFFERS -->
+                    <div class="admin-section" id="sec-promotions">
+                        <h2 style="text-align:left;"><i class="fas fa-tags"></i> Promotions & Offers</h2>
+                        <p style="text-align:left;color:#64748b;font-size:14px;">Add offers here and they will automatically show up on the main website banner. <b>Auto-expires</b> when the date passes.</p>
+                        <div class="form-grid" style="grid-template-columns: 2fr 2fr 1fr 1fr auto;">
+                            <label>Offer Title <input type="text" id="promoTitle" placeholder="e.g. Monsoon Special" /></label>
+                            <label>Message <input type="text" id="promoMsg" placeholder="e.g. Flat 20% on all tests" /></label>
+                            <label>Expiry Date <input type="date" id="promoDate" /></label>
+                            <label>Active <select id="promoActive"><option value="true">Yes</option><option value="false">No</option></select></label>
+                            <div style="display:flex;align-items:flex-end;gap:8px;">
+                                <button class="btn btn-primary" id="addPromoBtn"><i class="fas fa-plus"></i> Add</button>
+                            </div>
+                        </div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>Title</th><th>Message</th><th>Expiry</th><th>Status</th><th>Action</th></tr></thead><tbody id="promotionsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No offers added</td></tr></tbody></table>
+                        </div>
+                    </div>
+
                     <!-- ANALYTICS -->
                     <div class="admin-section" id="sec-analytics">
                         <h2 style="text-align:left;"><i class="fas fa-chart-bar"></i> Reports &amp; Analytics</h2>
@@ -945,7 +985,7 @@
                         </div>
                     </div>
 
-                    <!-- ⭐ NEW SECTION: INVENTORY / STOCK MANAGEMENT -->
+                    <!-- INVENTORY -->
                     <div class="admin-section" id="sec-inventory">
                         <h2 style="text-align:left;"><i class="fas fa-boxes"></i> Lab Inventory / Stock Management</h2>
                         <div class="form-grid" style="grid-template-columns:2fr 1fr 1fr auto;">
@@ -1004,8 +1044,7 @@
                 <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
             </div>
             <div class="portal-body">
-                <div class="portal-input-group">
-                    <div class="portal-input-label"><span>🔍</span> PATIENT ID OR MOBILE</div>
+                <div class="portal-input-group"><div class="portal-input-label"><span>🔍</span> PATIENT ID OR MOBILE</div>
                     <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter ID or Mobile Number" autocomplete="off">
                 </div>
                 <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
@@ -1052,13 +1091,15 @@
             const defaultReports = [];
             const defaultPayments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0 };
             const defaultLogs = [];
-            const defaultInventory = []; // NEW INVENTORY STORAGE
+            const defaultInventory = [];
+            const defaultPromotions = []; // 🌟 NEW PROMOTIONS
 
             let patients = loadData('patients', defaultPatients);
             let reports = loadData('reports', defaultReports);
             let payments = loadData('payments', defaultPayments);
             let activityLogs = loadData('logs', defaultLogs);
-            let inventory = loadData('inventory', defaultInventory); // NEW
+            let inventory = loadData('inventory', defaultInventory);
+            let promotions = loadData('promotions', defaultPromotions); // 🌟 NEW
 
             function saveAll() {
                 saveData('patients', patients);
@@ -1066,8 +1107,39 @@
                 saveData('payments', payments);
                 saveData('logs', activityLogs);
                 saveData('inventory', inventory);
+                saveData('promotions', promotions);
             }
 
+            // ⭐ RENDER PROMOTIONS ON MAIN FRONTEND
+            function renderFrontendPromotions() {
+                const container = document.getElementById('promo-banner-container');
+                const now = new Date();
+                let activePromo = null;
+                
+                for (let p of promotions) {
+                    if (p.active === true) {
+                        const expiryDate = new Date(p.expiry);
+                        if (expiryDate >= now) { // Valid and not expired
+                            activePromo = p;
+                            break; // Show the first valid active promo
+                        }
+                    }
+                }
+
+                if (activePromo) {
+                    const formattedDate = new Date(activePromo.expiry).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+                    container.style.display = 'block';
+                    container.innerHTML = `
+                        <span class="promo-title">🎉 ${activePromo.title}</span>
+                        <span class="promo-msg">${activePromo.message}</span>
+                        <span class="promo-date">⏳ Valid till: ${formattedDate}</span>
+                    `;
+                } else {
+                    container.style.display = 'none';
+                }
+            }
+
+            // ─── INDEXED DB ───
             let db = null;
             const DB_NAME = 'RPL_PDF_DB';
             const STORE_NAME = 'pdf_files';
@@ -1284,7 +1356,7 @@
 
             const adminSections = {
                 dashboard: $('sec-dashboard'), patients: $('sec-patients'), reports: $('sec-reports'), whatsapp: $('sec-whatsapp'),
-                payments: $('sec-payments'), analytics: $('sec-analytics'), inventory: $('sec-inventory'), backup: $('sec-backup'), security: $('sec-security')
+                payments: $('sec-payments'), promotions: $('sec-promotions'), analytics: $('sec-analytics'), inventory: $('sec-inventory'), backup: $('sec-backup'), security: $('sec-security')
             };
             const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');
 
@@ -1296,6 +1368,7 @@
                 if (id === 'reports') refreshReports();
                 if (id === 'whatsapp') refreshWhatsAppPatients();
                 if (id === 'payments') refreshPayments();
+                if (id === 'promotions') refreshPromotions();
                 if (id === 'analytics') refreshAnalytics();
                 if (id === 'inventory') refreshInventory();
                 if (id === 'backup') refreshBackup();
@@ -1337,7 +1410,11 @@
                 payments = loadData('payments', defaultPayments);
                 activityLogs = loadData('logs', defaultLogs);
                 inventory = loadData('inventory', defaultInventory);
-                refreshDashboard(); refreshPatients(); refreshReports(); refreshWhatsAppPatients(); refreshPayments(); refreshAnalytics(); refreshInventory(); refreshBackup(); refreshSecurity();
+                promotions = loadData('promotions', defaultPromotions);
+                
+                refreshDashboard(); refreshPatients(); refreshReports(); refreshWhatsAppPatients(); refreshPayments(); refreshPromotions(); refreshAnalytics(); refreshInventory(); refreshBackup(); refreshSecurity();
+                
+                renderFrontendPromotions(); // 🌟 Refresh frontend banner immediately
             }
 
             function refreshDashboard() {
@@ -1357,7 +1434,6 @@
                 $('dDue').textContent = duePatients;
                 $('dRevenue').textContent = '₹' + totalRevenue;
 
-                // Critical Alerts and Low Stock (New)
                 const criticalPatients = patients.filter(p => p.is_critical === true);
                 const criticalContainer = $('criticalAlertContainer');
                 const criticalList = $('criticalPatientList');
@@ -1424,7 +1500,62 @@
                 }
             }
 
-            // INVENTORY (NEW)
+            // 🌟 PROMOTIONS LOGIC
+            function refreshPromotions() {
+                const tbody = $('promotionsTableBody');
+                if (promotions.length) {
+                    tbody.innerHTML = promotions.map(p => {
+                        const now = new Date();
+                        const exp = new Date(p.expiry);
+                        let statusClass = 'active';
+                        let statusText = 'Active';
+                        if (!p.active) { statusClass = 'inactive'; statusText = 'Inactive'; }
+                        else if (exp < now) { statusClass = 'expired'; statusText = 'Expired'; }
+                        return `<tr>
+                            <td><b>${p.title}</b></td>
+                            <td>${p.message}</td>
+                            <td>${p.expiry}</td>
+                            <td><span class="badge-status ${statusClass}">${statusText}</span></td>
+                            <td><button class="btn btn-sm btn-red del-promo" data-id="${p.id}"><i class="fas fa-trash"></i></button></td>
+                        </tr>`;
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No offers added</td></tr>';
+                }
+            }
+
+            $('addPromoBtn').addEventListener('click', function() {
+                const title = $('promoTitle').value.trim();
+                const msg = $('promoMsg').value.trim();
+                const date = $('promoDate').value;
+                const active = $('promoActive').value === 'true';
+
+                if (!title || !msg || !date) { alert('Please fill all fields (Title, Message, and Date)'); return; }
+                
+                promotions.push({
+                    id: Date.now().toString(),
+                    title: title,
+                    message: msg,
+                    expiry: date,
+                    active: active
+                });
+                saveAll();
+                alert('✅ Offer added to website!');
+                $('promoTitle').value = ''; $('promoMsg').value = ''; $('promoDate').value = '';
+                refreshAll();
+            });
+
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.del-promo')) {
+                    const id = e.target.closest('.del-promo').dataset.id;
+                    if(confirm('Delete this promotion?')) {
+                        promotions = promotions.filter(p => p.id !== id);
+                        saveAll(); refreshAll();
+                    }
+                }
+            });
+
+            // INVENTORY
             function refreshInventory() {
                 const tbody = $('inventoryTableBody');
                 if (inventory.length) {
@@ -1437,7 +1568,6 @@
                 }
             }
 
-            // ADD INVENTORY
             $('addInvBtn').addEventListener('click', function() {
                 const name = $('invName').value.trim();
                 const qty = parseInt($('invQty').value) || 0;
@@ -1729,8 +1859,11 @@
             openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));
             try { localStorage.setItem('test_storage', 'working'); localStorage.removeItem('test_storage'); } catch (e) { console.warn('⚠️ localStorage may be full', e); }
 
-            console.log('✅ Rajan Path Lab · Version 3.0 (Enhanced with Inventory, Branches, Alerts & Instructions)');
+            console.log('✅ Rajan Path Lab · Version 4.0 (Enhanced with Auto Promotions & Offers)');
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
+            
+            // Render promotions at startup
+            renderFrontendPromotions();
         })();
     </script>
 </body>
