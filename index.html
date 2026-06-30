@@ -10,7 +10,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 
     <style>
-        /* ─── ORIGINAL PATIENT WEBSITE STYLES ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
@@ -211,7 +210,6 @@
             section { padding: 30px 15px; }
         }
 
-        /* ─── ADMIN PANEL STYLES ─── */
         #adminPanelWrapper {
             display: none;
             position: fixed;
@@ -332,6 +330,12 @@
             font-size: 18px;
             flex-shrink: 0;
         }
+        .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
+        .stat-card .icon.green { background: #d1fae5; color: #059669; }
+        .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
+        .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }
+        .stat-card .icon.orange { background: #fef3c7; color: #d97706; }
+        .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
         .stat-card .info h4 { font-size: 20px; font-weight: 700; margin: 0; }
         .stat-card .info p { font-size: 12px; margin: 2px 0 0 0; color: #64748b; }
 
@@ -367,6 +371,7 @@
         .badge-status.pending { background: #fef3c7; color: #92400e; }
         .badge-status.process { background: #dbeafe; color: #1e40af; }
         .badge-status.done { background: #e0e7ff; color: #3730a3; }
+        .badge-status.critical { background: #fee2e2; color: #dc2626; border: 1px solid #dc2626; }
 
         .btn {
             display: inline-flex;
@@ -401,13 +406,16 @@
             margin-bottom: 16px;
         }
         .form-grid label { font-weight: 600; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
-        .form-grid label input, .form-grid label select {
+        .form-grid label input, .form-grid label select, .form-grid label textarea {
             padding: 6px 10px;
             border-radius: 4px;
             border: 1px solid #e2e8f0;
             background: #f8fafc;
             font-size: 14px;
+            width: 100%;
+            font-family: inherit;
         }
+        .form-grid label textarea { resize: vertical; min-height: 50px; }
         .form-grid label input:focus, .form-grid label select:focus { outline: 2px solid var(--accent-teal); }
         .form-grid label input[list] { padding: 6px 10px; border-radius: 4px; border: 1px solid #e2e8f0; background: #f8fafc; font-size: 14px; width: 100%; }
         .form-grid label input[list]:focus { outline: 2px solid var(--accent-teal); }
@@ -631,7 +639,7 @@
         body.admin-dark .table-wrap th { background: #0f172a; color: #94a3b8; }
         body.admin-dark .table-wrap td { border-color: #334155; }
         body.admin-dark .form-grid { background: #1e293b; border-color: #334155; }
-        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
+        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select, body.admin-dark .form-grid label textarea { background: #0f172a; border-color: #334155; color: #f1f5f9; }
         body.admin-dark .template-box { background: #1e293b; border-color: #334155; }
         body.admin-dark .template-box .msg-preview { background: #0f172a; }
         body.admin-dark .toolbar .search-box { background: #1e293b; border-color: #334155; }
@@ -642,6 +650,7 @@
         body.admin-dark .badge-status.pending { background: #78350f; color: #fcd34d; }
         body.admin-dark .badge-status.process { background: #1e3a5f; color: #93c5fd; }
         body.admin-dark .badge-status.done { background: #312e81; color: #a5b4fc; }
+        body.admin-dark .badge-status.critical { background: #7f1d1d; color: #fca5a5; border: 1px solid #fca5a5; }
         body.admin-dark .stat-card .icon.blue { background: #1e3a5f; color: #60a5fa; }
         body.admin-dark .stat-card .icon.green { background: #064e3b; color: #34d399; }
         body.admin-dark .stat-card .icon.red { background: #7f1d1d; color: #f87171; }
@@ -652,10 +661,8 @@
 </head>
 <body>
 
-    <!-- ✅ Background Watermark Main Logo -->
     <img src="logo.png" class="watermark-logo" alt="Watermark Logo">
 
-    <!-- ─── ORIGINAL PATIENT WEBSITE ─── -->
     <header>
         <h1><img src="logo.png" class="header-logo" alt="RPL"> RAJAN <span>PATH LAB</span></h1>
         <nav>
@@ -754,7 +761,6 @@
     <footer>
         <h2>RAJAN PATH LAB (RPL)</h2>
         <div class="map-container">
-            <!-- ✅ Updated to show exact location in Manahar Bhushra -->
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
         <div class="footer-links">
@@ -768,7 +774,6 @@
 
     <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
 
-    <!-- ─── ADMIN LOGIN MODAL ─── -->
     <div class="login-modal" id="loginModal">
         <div class="login-modal-content">
             <h3><i class="fas fa-lock"></i> Admin Login</h3>
@@ -784,7 +789,6 @@
         </div>
     </div>
 
-    <!-- ─── ADMIN PANEL ─── -->
     <div id="adminPanelWrapper">
         <div id="adminPanelContainer">
             <div class="admin-header">
@@ -803,10 +807,11 @@
                     <a data-section="reports"><i class="fas fa-file-pdf"></i> Reports</a>
                     <a data-section="whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     <a data-section="payments"><i class="fas fa-rupee-sign"></i> Payments</a>
-                    <div class="nav-label" style="margin-top:8px;">Analytics</div>
+                    <div class="nav-label" style="margin-top:8px;">Analytics & Ops</div>
                     <a data-section="analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
-                    <a data-section="backup"><i class="fas fa-database"></i> Backup</a>
+                    <a data-section="inventory"><i class="fas fa-boxes"></i> Inventory</a> <!-- NEW -->
                     <div class="nav-label" style="margin-top:8px;">System</div>
+                    <a data-section="backup"><i class="fas fa-database"></i> Backup</a>
                     <a data-section="security"><i class="fas fa-shield-alt"></i> Security</a>
                 </div>
                 <div class="admin-content">
@@ -814,103 +819,54 @@
                     <!-- DASHBOARD -->
                     <div class="admin-section active" id="sec-dashboard">
                         <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
+                        
+                        <!-- Branch Filter (New) -->
+                        <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
+                            <label style="font-weight:600;font-size:14px;">Filter by Branch:</label>
+                            <select id="dashboardBranchFilter" style="padding:6px 12px;border-radius:4px;border:1px solid #e2e8f0;">
+                                <option value="All">All Branches</option>
+                                <option value="Main Lab">Main Lab</option>
+                                <option value="J R Medical">J R Medical</option>
+                                <option value="Home Collection">Home Collection</option>
+                            </select>
+                        </div>
+
+                        <!-- Critical Alerts Section (New) -->
+                        <div id="criticalAlertContainer" style="display:none;background:#fee2e2;border:1px solid #dc2626;border-radius:8px;padding:12px 16px;margin-bottom:16px;color:#991b1b;font-weight:600;">
+                            🚨 <span style="font-size:16px;">CRITICAL ALERTS!</span> The following patients need immediate attention:
+                            <ul id="criticalPatientList" style="margin-top:8px;font-weight:normal;padding-left:20px;"></ul>
+                        </div>
+
                         <div class="stats-grid" id="dashboardStats">
                             <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">0</h4><p>Today's Patients</p></div></div>
                             <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">0</h4><p>Total Reports</p></div></div>
                             <div class="stat-card"><div class="icon red"><i class="fas fa-clock"></i></div><div class="info"><h4 id="dPending">0</h4><p>Pending Reports</p></div></div>
-                            <div class="stat-card"><div class="icon purple"><i class="fas fa-flask"></i></div><div class="info"><h4 id="dCulture">0</h4><p>Urine Culture Process</p></div></div>
                             <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dDue">0</h4><p>Due Payment Patients</p></div></div>
                             <div class="stat-card"><div class="icon teal"><i class="fas fa-calendar-check"></i></div><div class="info"><h4 id="dRevenue">₹0</h4><p>Monthly Revenue</p></div></div>
+                            <div class="stat-card" id="inventoryAlertCard" style="border: 2px solid #f59e0b;"><div class="icon red"><i class="fas fa-exclamation-triangle"></i></div><div class="info"><h4 id="dLowStock">0</h4><p>Low Stock Items</p></div></div>
                         </div>
                         <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;">
                             <div class="card"><h4><i class="fas fa-chart-line"></i> Weekly Reports</h4><canvas id="chartWeekly" style="max-height:180px;width:100%;"></canvas></div>
                             <div class="card"><h4><i class="fas fa-chart-pie"></i> Test-wise</h4><canvas id="chartPie" style="max-height:180px;width:100%;"></canvas></div>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Branch</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients yet</td></tr></tbody></table>
                         </div>
                     </div>
 
-                    <!-- PATIENTS -->
+                    <!-- PATIENTS (Updated with New Fields) -->
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
-                            <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" /></label>
+                            <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210" /></label>
-                            <label>Test
-                                <input type="text" id="patTest" list="testList" placeholder="Type or select test" autocomplete="off" />
-                                <datalist id="testList">
-                                    <option value="LIVER FUNCTION TEST">
-                                    <option value="KIDNEY FUNCTION TEST (Fasting)">
-                                    <option value="LIPID PROFILE (Fasting)">
-                                    <option value="THYROID PROFILE">
-                                    <option value="BETA HCG">
-                                    <option value="HBA1C (3 Month Sugar)">
-                                    <option value="C-REACTIVE PROTEIN (CRP)">
-                                    <option value="ANTISTREPTOLYSIN O (ASO)">
-                                    <option value="R A FACTOR">
-                                    <option value="HCG PREGNANCY TEST">
-                                    <option value="URINE ROUTINE">
-                                    <option value="URINE CULTURE">
-                                    <option value="SEMEN ANALYSIS">
-                                    <option value="MANTOUX TEST">
-                                    <option value="HBSAG">
-                                    <option value="VDRL">
-                                    <option value="HIV">
-                                    <option value="HCV">
-                                    <option value="BLOOD UREA">
-                                    <option value="SERUM CREATININE">
-                                    <option value="URIC ACID (Fasting)">
-                                    <option value="BLOOD SUGAR">
-                                    <option value="COMPLETE BLOOD COUNT (CBC)">
-                                    <option value="PLATELETS TEST">
-                                    <option value="DENGUE NS1 IGG IGM">
-                                    <option value="TYPHIDOT IGG IGM">
-                                    <option value="WIDAL">
-                                    <option value="OPTIMAL">
-                                    <option value="TC DC">
-                                    <option value="BT CT">
-                                    <option value="ESR">
-                                    <option value="SMEAR OF MP">
-                                    <option value="HB">
-                                    <option value="BLOOD GROUP">
-                                    <option value="TOTAL PARASITE">
-                                    <option value="SMEAR OF MP (Repeat)">
-                                    <option value="BILIRUBIN TEST">
-                                    <option value="MP WIDAL HB">
-                                    <option value="OPTIMAL WIDAL HB">
-                                    <option value="CBC MP WIDAL">
-                                    <option value="CBC WIDAL">
-                                    <option value="HB WIDAL">
-                                    <option value="MP WIDAL">
-                                    <option value="OPTIMAL WIDAL">
-                                    <option value="SODIUM">
-                                    <option value="POTASSIUM">
-                                    <option value="CBC + WIDAL + OPTIMAL">
-                                    <option value="URINE CULTURE (Advanced)">
-                                    <option value="PLATELET COUNT">
-                                    <option value="KIDNEY COMPLETE (KFT + Electrolytes)">
-                                    <option value="PREGNANCY COMBO (HCG + CBC + Urine)">
-                                    <option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)">
-                                    <option value="HS-CRP (High Sensitivity CRP)">
-                                    <option value="VITAMIN B12">
-                                    <option value="VITAMIN D3 (25-Hydroxy)">
-                                    <option value="TSH (Thyroid Stimulating Hormone)">
-                                    <option value="T3 (Triiodothyronine)">
-                                    <option value="T4 (Thyroxine)">
-                                    <option value="FREE T3">
-                                    <option value="FREE T4">
-                                    <option value="PROLACTIN">
-                                    <option value="LH (Luteinizing Hormone)">
-                                    <option value="FSH (Follicle Stimulating Hormone)">
-                                    <option value="TESTOSTERONE (Total)">
-                                    <option value="IRON STUDIES (Iron/TIBC/Ferritin)">
-                                    <option value="CBC WIDAL BSR">
-                                </datalist>
-                            </label>
+                            <label>Select Branch <select id="patBranch"><option>Main Lab</option><option>J R Medical</option><option>Home Collection</option></select></label>
+                            <label>Test <input type="text" id="patTest" list="testList" placeholder="Type or select test" autocomplete="off" /></label>
                             <label>Status <select id="patStatus"><option>pending</option><option>process</option><option>done</option></select></label>
-                            <label>Due <input type="number" id="patDue" placeholder="0" /></label>
+                            <label>Due Amount <input type="number" id="patDue" placeholder="0" /></label>
+                            <label style="grid-column: span 2;">Pre-Test Instructions <textarea id="patInstructions" placeholder="e.g. Please come fasting for 8 hours before the test."></textarea></label>
+                            <label style="display:flex;flex-direction:row;align-items:center;gap:10px;font-weight:normal;font-size:14px;"><input type="checkbox" id="patCritical" /> Mark as Critical Alert</label>
                             <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
                                 <button class="btn btn-primary" id="addPatientBtn"><i class="fas fa-plus"></i> Add</button>
                                 <button class="btn btn-outline" id="clearPatientBtn"><i class="fas fa-undo"></i> Clear</button>
@@ -921,7 +877,7 @@
                             <button class="btn btn-outline btn-sm" id="refreshPatients"><i class="fas fa-sync"></i></button>
                         </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
+                            <table><thead><tr><th>ID</th><th>Name</th><th>Branch</th><th>Test</th><th>Status</th><th>Critical</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="7" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -929,78 +885,8 @@
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                         <div class="form-grid">
-                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-062026-1186" /></label>
-                            <label>Test Name
-                                <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" />
-                                <datalist id="testList2">
-                                    <option value="LIVER FUNCTION TEST">
-                                    <option value="KIDNEY FUNCTION TEST (Fasting)">
-                                    <option value="LIPID PROFILE (Fasting)">
-                                    <option value="THYROID PROFILE">
-                                    <option value="BETA HCG">
-                                    <option value="HBA1C (3 Month Sugar)">
-                                    <option value="C-REACTIVE PROTEIN (CRP)">
-                                    <option value="ANTISTREPTOLYSIN O (ASO)">
-                                    <option value="R A FACTOR">
-                                    <option value="HCG PREGNANCY TEST">
-                                    <option value="URINE ROUTINE">
-                                    <option value="URINE CULTURE">
-                                    <option value="SEMEN ANALYSIS">
-                                    <option value="MANTOUX TEST">
-                                    <option value="HBSAG">
-                                    <option value="VDRL">
-                                    <option value="HIV">
-                                    <option value="HCV">
-                                    <option value="BLOOD UREA">
-                                    <option value="SERUM CREATININE">
-                                    <option value="URIC ACID (Fasting)">
-                                    <option value="BLOOD SUGAR">
-                                    <option value="COMPLETE BLOOD COUNT (CBC)">
-                                    <option value="PLATELETS TEST">
-                                    <option value="DENGUE NS1 IGG IGM">
-                                    <option value="TYPHIDOT IGG IGM">
-                                    <option value="WIDAL">
-                                    <option value="OPTIMAL">
-                                    <option value="TC DC">
-                                    <option value="BT CT">
-                                    <option value="ESR">
-                                    <option value="SMEAR OF MP">
-                                    <option value="HB">
-                                    <option value="BLOOD GROUP">
-                                    <option value="TOTAL PARASITE">
-                                    <option value="SMEAR OF MP (Repeat)">
-                                    <option value="BILIRUBIN TEST">
-                                    <option value="MP WIDAL HB">
-                                    <option value="OPTIMAL WIDAL HB">
-                                    <option value="CBC MP WIDAL">
-                                    <option value="CBC WIDAL">
-                                    <option value="HB WIDAL">
-                                    <option value="MP WIDAL">
-                                    <option value="OPTIMAL WIDAL">
-                                    <option value="SODIUM">
-                                    <option value="POTASSIUM">
-                                    <option value="CBC + WIDAL + OPTIMAL">
-                                    <option value="URINE CULTURE (Advanced)">
-                                    <option value="PLATELET COUNT">
-                                    <option value="KIDNEY COMPLETE (KFT + Electrolytes)">
-                                    <option value="PREGNANCY COMBO (HCG + CBC + Urine)">
-                                    <option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)">
-                                    <option value="HS-CRP (High Sensitivity CRP)">
-                                    <option value="VITAMIN B12">
-                                    <option value="VITAMIN D3 (25-Hydroxy)">
-                                    <option value="TSH (Thyroid Stimulating Hormone)">
-                                    <option value="T3 (Triiodothyronine)">
-                                    <option value="T4 (Thyroxine)">
-                                    <option value="FREE T3">
-                                    <option value="FREE T4">
-                                    <option value="PROLACTIN">
-                                    <option value="LH (Luteinizing Hormone)">
-                                    <option value="FSH (Follicle Stimulating Hormone)">
-                                    <option value="TESTOSTERONE (Total)">
-                                    <option value="IRON STUDIES (Iron/TIBC/Ferritin)">
-                                    <option value="CBC WIDAL BSR">
-                                </datalist>
-                            </label>
+                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-..." /></label>
+                            <label>Test Name <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" /></label>
                             <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>
                             <label>Replace <select id="reportReplace"><option value="no">No</option><option value="yes">Yes</option></select></label>
                             <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
@@ -1014,31 +900,21 @@
                         </div>
                     </div>
 
-                    <!-- WHATSAPP (UPDATED with Premium Format) -->
+                    <!-- WHATSAPP -->
                     <div class="admin-section" id="sec-whatsapp">
                         <h2 style="text-align:left;"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp System</h2>
                         <div class="template-box">
-                            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                                <span><i class="fas fa-pen"></i> <strong>Custom Template</strong></span>
-                                <span class="badge-status paid"><i class="fas fa-bolt"></i> Premium Format</span>
-                            </div>
                             <div class="msg-preview" id="whatsappPreview">*👋 नमस्ते {patient}!*  
 आपकी *{test}* की रिपोर्ट तैयार हो गई है।  
+📋 *निर्देश (Instructions):* {instructions}  
 ⚕️ धन्यवाद, Rajan Path Lab</div>
                             <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
                                 <button class="btn btn-primary" style="background:#25D366;border-color:#25D366;" id="sendWAPatient"><i class="fab fa-whatsapp"></i> To Patient</button>
                                 <button class="btn btn-primary" id="sendWADoctor"><i class="fas fa-user-md"></i> To Doctor</button>
                             </div>
                         </div>
-                        <div class="template-box">
-                            <h4><i class="fas fa-flask"></i> Urine Culture Under Process</h4>
-                            <div class="msg-preview" style="border-left-color:#7c3aed;">*👋 नमस्ते {patient}!*  
-आपकी *Urine Culture* रिपोर्ट प्रक्रिया में है।  
-⏱️ परिणाम 48 घंटे में उपलब्ध होंगे। धन्यवाद।</div>
-                            <button class="btn btn-primary" style="background:#7c3aed;border-color:#7c3aed;margin-top:8px;" id="sendUrineUpdate"><i class="fas fa-paper-plane"></i> Send Update</button>
-                        </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Branch</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1050,13 +926,8 @@
                             <div class="stat-card"><div class="icon red"><i class="fas fa-times-circle"></i></div><div class="info"><h4 id="pUnpaid">0</h4><p>Unpaid</p></div></div>
                             <div class="stat-card"><div class="icon orange"><i class="fas fa-clock"></i></div><div class="info"><h4 id="pTotalDue">₹0</h4><p>Total Due</p></div></div>
                         </div>
-                        <div class="toolbar">
-                            <button class="btn btn-red" id="dueReminderBtn"><i class="fas fa-bell"></i> Due Reminder</button>
-                            <button class="btn btn-primary" id="upiPayBtn"><i class="fas fa-qrcode"></i> UPI Payment</button>
-                            <button class="btn btn-outline btn-sm" id="refreshPayments"><i class="fas fa-sync"></i></button>
-                        </div>
                         <div class="table-wrap">
-                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Branch</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="6" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -1074,29 +945,29 @@
                         </div>
                     </div>
 
+                    <!-- ⭐ NEW SECTION: INVENTORY / STOCK MANAGEMENT -->
+                    <div class="admin-section" id="sec-inventory">
+                        <h2 style="text-align:left;"><i class="fas fa-boxes"></i> Lab Inventory / Stock Management</h2>
+                        <div class="form-grid" style="grid-template-columns:2fr 1fr 1fr auto;">
+                            <label>Item Name <input type="text" id="invName" placeholder="e.g. CBC Kits, Vials" /></label>
+                            <label>Quantity <input type="number" id="invQty" placeholder="0" /></label>
+                            <label>Alert Threshold <input type="number" id="invThreshold" placeholder="e.g. 5" /></label>
+                            <div style="display:flex;align-items:flex-end;gap:8px;">
+                                <button class="btn btn-primary" id="addInvBtn"><i class="fas fa-plus"></i> Add</button>
+                            </div>
+                        </div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>Item Name</th><th>Current Qty</th><th>Threshold</th><th>Status</th><th>Action</th></tr></thead><tbody id="inventoryTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No items in inventory</td></tr></tbody></table>
+                        </div>
+                    </div>
+
                     <!-- BACKUP -->
                     <div class="admin-section" id="sec-backup">
                         <h2 style="text-align:left;"><i class="fas fa-database"></i> Backup &amp; Restore</h2>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px;">
-                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-database" style="font-size:28px;color:var(--accent-teal);"></i>
-                                <h4>DB Backup</h4>
-                                <button class="btn btn-primary" id="backupDBBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button>
-                            </div>
-                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-file-pdf" style="font-size:28px;color:var(--urgent-red);"></i>
-                                <h4>PDF Backup</h4>
-                                <button class="btn btn-primary" id="backupPDFBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button>
-                            </div>
-                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-undo-alt" style="font-size:28px;color:#f59e0b;"></i>
-                                <h4>Restore</h4>
-                                <input type="file" id="restoreFile" style="margin:6px 0;" />
-                                <button class="btn btn-outline" id="restoreBtn"><i class="fas fa-upload"></i> Restore</button>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No backups</td></tr></tbody></table>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;"><i class="fas fa-database" style="font-size:28px;color:var(--accent-teal);"></i><h4>DB Backup</h4><button class="btn btn-primary" id="backupDBBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button></div>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;"><i class="fas fa-file-pdf" style="font-size:28px;color:var(--urgent-red);"></i><h4>PDF Backup</h4><button class="btn btn-primary" id="backupPDFBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button></div>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;"><i class="fas fa-undo-alt" style="font-size:28px;color:#f59e0b;"></i><h4>Restore</h4><input type="file" id="restoreFile" style="margin:6px 0;" /><button class="btn btn-outline" id="restoreBtn"><i class="fas fa-upload"></i> Restore</button></div>
                         </div>
                     </div>
 
@@ -1104,21 +975,8 @@
                     <div class="admin-section" id="sec-security">
                         <h2 style="text-align:left;"><i class="fas fa-shield-alt"></i> Security</h2>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px;">
-                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-lock" style="font-size:28px;color:var(--accent-teal);"></i>
-                                <h4>Login</h4>
-                                <button class="btn btn-outline" id="logoutBtn2"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                            </div>
-                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-key" style="font-size:28px;color:#f59e0b;"></i>
-                                <h4>Change Password</h4>
-                                <button class="btn btn-primary" id="changePwdBtn"><i class="fas fa-edit"></i> Change</button>
-                            </div>
-                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                                <i class="fas fa-clipboard-list" style="font-size:28px;color:#7c3aed;"></i>
-                                <h4>Activity Log</h4>
-                                <button class="btn btn-outline" id="viewLogBtn"><i class="fas fa-eye"></i> View</button>
-                            </div>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;"><i class="fas fa-lock" style="font-size:28px;color:var(--accent-teal);"></i><h4>Login</h4><button class="btn btn-outline" id="logoutBtn2"><i class="fas fa-sign-out-alt"></i> Logout</button></div>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;"><i class="fas fa-key" style="font-size:28px;color:#f59e0b;"></i><h4>Change Password</h4><button class="btn btn-primary" id="changePwdBtn"><i class="fas fa-edit"></i> Change</button></div>
                         </div>
                         <div class="table-wrap">
                             <table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>IP</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr></tbody></table>
@@ -1130,7 +988,6 @@
         </div>
     </div>
 
-    <!-- ─── UPI MODAL ─── -->
     <div class="upi-modal" id="upiModal">
         <div class="upi-modal-content">
             <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>
@@ -1140,7 +997,6 @@
         </div>
     </div>
 
-    <!-- ─── PATIENT PORTAL MODAL ─── -->
     <div class="patient-portal-modal" id="patientPortalModal">
         <div class="patient-portal-content">
             <div class="portal-header">
@@ -1149,34 +1005,24 @@
             </div>
             <div class="portal-body">
                 <div class="portal-input-group">
-                    <div class="portal-input-label">
-                        <span>🔍</span> PATIENT ID OR MOBILE
-                    </div>
-                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number (e.g. P001, RPL-062026-1186, or 9876543210)" autocomplete="off">
+                    <div class="portal-input-label"><span>🔍</span> PATIENT ID OR MOBILE</div>
+                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter ID or Mobile Number" autocomplete="off">
                 </div>
-                <button id="portalFetchBtn" class="portal-btn">
-                    <span>🔍</span> VIEW MY REPORTS →
-                </button>
+                <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
                 <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
                 <div id="portalReportList" class="portal-report-list" style="display: none;"></div>
                 <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
             </div>
-            <div class="portal-footer">
-                <span>✦ SECURE DOWNLOAD SYSTEM ✦</span>
-                <span>RAJAN PATH LAB</span>
-            </div>
+            <div class="portal-footer"><span>✦ SECURE DOWNLOAD SYSTEM ✦</span><span>RAJAN PATH LAB</span></div>
         </div>
     </div>
 
-    <!-- ─── JAVASCRIPT ─── -->
     <script>
         (function() {
             'use strict';
 
-            // ─── LOGIN ───
             const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
-            // ─── NORMALIZE PHONE NUMBER ───
             function normalizePhone(phone) {
                 if (!phone) return '';
                 let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
@@ -1186,7 +1032,6 @@
                 return cleaned;
             }
 
-            // ─── DATA PERSISTENCE (localStorage + IndexedDB) ───
             function loadData(key, defaultData) {
                 try {
                     const stored = localStorage.getItem('rpl_' + key);
@@ -1200,42 +1045,32 @@
             }
 
             function saveData(key, data) {
-                try {
-                    localStorage.setItem('rpl_' + key, JSON.stringify(data));
-                } catch (e) {
-                    console.warn('Failed to save data to localStorage', e);
-                    try {
-                        localStorage.setItem('rpl_' + key, JSON.stringify(data));
-                    } catch (e2) {
-                        console.error('Storage full! Please clear some data.', e2);
-                    }
-                }
+                try { localStorage.setItem('rpl_' + key, JSON.stringify(data)); } catch (e) { console.warn('Failed to save', e); }
             }
 
-            // ─── NO DEFAULT DATA ───
             const defaultPatients = [];
             const defaultReports = [];
             const defaultPayments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0 };
             const defaultLogs = [];
+            const defaultInventory = []; // NEW INVENTORY STORAGE
 
-            // ─── LOAD DATA ───
             let patients = loadData('patients', defaultPatients);
             let reports = loadData('reports', defaultReports);
             let payments = loadData('payments', defaultPayments);
             let activityLogs = loadData('logs', defaultLogs);
+            let inventory = loadData('inventory', defaultInventory); // NEW
 
             function saveAll() {
                 saveData('patients', patients);
                 saveData('reports', reports);
                 saveData('payments', payments);
                 saveData('logs', activityLogs);
+                saveData('inventory', inventory);
             }
 
-            // ─── INDEXED DB FOR PDF ───
             let db = null;
             const DB_NAME = 'RPL_PDF_DB';
             const STORE_NAME = 'pdf_files';
-
             function openDB() {
                 return new Promise((resolve, reject) => {
                     const request = indexedDB.open(DB_NAME, 1);
@@ -1249,7 +1084,6 @@
                     request.onerror = function(e) { reject(e.target.error); };
                 });
             }
-
             function savePDFFile(reportId, fileBlob) {
                 return new Promise((resolve, reject) => {
                     if (!db) return reject('DB not open');
@@ -1260,7 +1094,6 @@
                     tx.onerror = (e) => reject(e.target.error);
                 });
             }
-
             function getPDFFile(reportId) {
                 return new Promise((resolve, reject) => {
                     if (!db) return reject('DB not open');
@@ -1271,7 +1104,6 @@
                     request.onerror = (e) => reject(e.target.error);
                 });
             }
-
             function deletePDFFile(reportId) {
                 return new Promise((resolve, reject) => {
                     if (!db) return reject('DB not open');
@@ -1283,14 +1115,12 @@
                 });
             }
 
-            // ─── DOM REFS ───
             const $ = id => document.getElementById(id);
             const loginModal = $('loginModal');
             const adminWrapper = $('adminPanelWrapper');
             const upiModal = $('upiModal');
             const portalModal = $('patientPortalModal');
 
-            // ─── REAL WHATSAPP ───
             function sendWhatsApp(phone, message) {
                 let cleanPhone = phone.replace(/\s/g, '').replace(/-/g, '').replace(/\(/g, '').replace(/\)/g, '');
                 if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
@@ -1299,7 +1129,6 @@
                 window.open('https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(message), '_blank');
             }
 
-            // ─── PATIENT PORTAL ───
             function openPortal() {
                 portalModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -1310,7 +1139,6 @@
                 $('portalReportList').style.display = 'none';
                 $('portalPatientId').value = '';
             }
-
             function closePortal() {
                 portalModal.classList.remove('active');
                 document.body.style.overflow = '';
@@ -1319,7 +1147,6 @@
                 $('portalReportList').style.display = 'none';
                 $('portalPatientId').value = '';
             }
-
             $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
             $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
             $('closePortalBtn').addEventListener('click', closePortal);
@@ -1329,39 +1156,28 @@
                 const searchValue = $('portalPatientId').value.trim();
                 const statusDiv = $('portalStatus');
                 const listDiv = $('portalReportList');
-
                 if (!searchValue) {
                     statusDiv.className = 'portal-status error';
                     statusDiv.innerHTML = '⚠️ Please enter your Patient ID or Mobile Number.';
                     listDiv.style.display = 'none';
                     return;
                 }
-
                 patients = loadData('patients', defaultPatients);
                 reports = loadData('reports', defaultReports);
-
                 const normalizedSearch = normalizePhone(searchValue);
                 let patient = patients.find(p => p.patient_id === searchValue);
                 if (!patient) {
-                    patient = patients.find(p => {
-                        const normalizedPhone = normalizePhone(p.phone || '');
-                        return normalizedPhone === normalizedSearch || p.phone === searchValue;
-                    });
+                    patient = patients.find(p => { const normalizedPhone = normalizePhone(p.phone || ''); return normalizedPhone === normalizedSearch || p.phone === searchValue; });
                 }
                 if (!patient && normalizedSearch.length >= 4) {
-                    patient = patients.find(p => {
-                        const normalizedPhone = normalizePhone(p.phone || '');
-                        return normalizedPhone.includes(normalizedSearch) || (p.phone || '').includes(searchValue);
-                    });
+                    patient = patients.find(p => { const normalizedPhone = normalizePhone(p.phone || ''); return normalizedPhone.includes(normalizedSearch) || (p.phone || '').includes(searchValue); });
                 }
-
                 if (!patient) {
                     statusDiv.className = 'portal-status error';
                     statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;
                     listDiv.style.display = 'none';
                     return;
                 }
-
                 const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
                 if (patientReports.length === 0) {
                     statusDiv.className = 'portal-status';
@@ -1369,33 +1185,16 @@
                     listDiv.style.display = 'none';
                     return;
                 }
-
-                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
                 statusDiv.className = 'portal-status success';
-                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name + ' (via ' + foundBy + '). Due amount: ₹' + patient.due_amount;
-
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name + '. Due amount: ₹' + patient.due_amount;
                 let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
                     const canDownload = patient.due_amount === 0;
                     const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient.due_amount + ' DUE</span>' : '';
-                    html += `
-                        <div class="portal-report-item">
-                            <div class="portal-report-info">
-                                <span class="test-name">${report.test_name}</span>
-                                <span class="upload-date">📅 ${report.uploaded_at}</span>
-                            </div>
-                            <div class="portal-report-actions">
-                                ${dueBadge}
-                                <button class="portal-download-btn" data-report-id="${report.id}" data-patient-due="${patient.due_amount}" ${canDownload ? '' : 'disabled'}>
-                                    ${canDownload ? '⬇️ Download' : '🔒 Locked'}
-                                </button>
-                            </div>
-                        </div>
-                    `;
+                    html += `<div class="portal-report-item"><div class="portal-report-info"><span class="test-name">${report.test_name}</span><span class="upload-date">📅 ${report.uploaded_at}</span></div><div class="portal-report-actions">${dueBadge}<button class="portal-download-btn" data-report-id="${report.id}" data-patient-due="${patient.due_amount}" ${canDownload ? '' : 'disabled'}>${canDownload ? '⬇️ Download' : '🔒 Locked'}</button></div></div>`;
                 }
                 listDiv.innerHTML = html;
                 listDiv.style.display = 'block';
-
                 listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
                     btn.addEventListener('click', async function() {
                         const reportId = parseInt(this.dataset.reportId);
@@ -1430,10 +1229,8 @@
                     });
                 });
             });
-
             $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn').click(); });
 
-            // ─── ADMIN LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
             $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));
             window.addEventListener('click', (e) => {
@@ -1462,7 +1259,6 @@
                 }
             });
 
-            // ─── SHOW ADMIN ───
             function showAdmin() {
                 adminWrapper.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -1471,17 +1267,14 @@
                 showAdminSection('dashboard');
                 setTimeout(() => generateAllQRCodes(), 300);
             }
-
             function hideAdmin() {
                 adminWrapper.classList.remove('active');
                 document.body.style.overflow = '';
             }
-
             function logout() { hideAdmin(); }
             $('logoutBtn').addEventListener('click', logout);
             $('logoutBtn2').addEventListener('click', logout);
 
-            // ─── DARK MODE ───
             let adminDark = false;
             $('adminDarkToggle').addEventListener('click', function() {
                 adminDark = !adminDark;
@@ -1489,63 +1282,40 @@
                 this.innerHTML = adminDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             });
 
-            // ─── SECTION NAV ───
             const adminSections = {
-                dashboard: $('sec-dashboard'),
-                patients: $('sec-patients'),
-                reports: $('sec-reports'),
-                whatsapp: $('sec-whatsapp'),
-                payments: $('sec-payments'),
-                analytics: $('sec-analytics'),
-                backup: $('sec-backup'),
-                security: $('sec-security')
+                dashboard: $('sec-dashboard'), patients: $('sec-patients'), reports: $('sec-reports'), whatsapp: $('sec-whatsapp'),
+                payments: $('sec-payments'), analytics: $('sec-analytics'), inventory: $('sec-inventory'), backup: $('sec-backup'), security: $('sec-security')
             };
             const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');
 
             function showAdminSection(id) {
-                Object.keys(adminSections).forEach(k => {
-                    adminSections[k].classList.toggle('active', k === id);
-                });
-                sidebarLinks.forEach(a => {
-                    a.classList.toggle('active', a.dataset.section === id);
-                });
+                Object.keys(adminSections).forEach(k => { adminSections[k].classList.toggle('active', k === id); });
+                sidebarLinks.forEach(a => { a.classList.toggle('active', a.dataset.section === id); });
                 if (id === 'dashboard') refreshDashboard();
                 if (id === 'patients') refreshPatients();
                 if (id === 'reports') refreshReports();
                 if (id === 'whatsapp') refreshWhatsAppPatients();
                 if (id === 'payments') refreshPayments();
                 if (id === 'analytics') refreshAnalytics();
+                if (id === 'inventory') refreshInventory();
                 if (id === 'backup') refreshBackup();
                 if (id === 'security') refreshSecurity();
                 if (id === 'patients') setTimeout(() => generateAllQRCodes(), 200);
             }
-
             sidebarLinks.forEach(a => {
-                a.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    showAdminSection(this.dataset.section);
-                });
+                a.addEventListener('click', function(e) { e.preventDefault(); showAdminSection(this.dataset.section); });
             });
 
-            // ─── QR CODE ───
             function generateAllQRCodes() {
                 document.querySelectorAll('[id^="qr-"]').forEach(el => {
                     const id = el.id.replace('qr-', '');
                     if (el && typeof QRCode !== 'undefined') {
                         el.innerHTML = '';
-                        new QRCode(el, {
-                            text: 'Patient: ' + id,
-                            width: 50,
-                            height: 50,
-                            colorDark: '#000000',
-                            colorLight: '#ffffff',
-                            correctLevel: QRCode.CorrectLevel.H
-                        });
+                        new QRCode(el, { text: 'Patient: ' + id, width: 50, height: 50, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
                     }
                 });
             }
 
-            // ─── REPORT DOWNLOAD (Admin) ───
             async function downloadReport(report) {
                 try {
                     const fileBlob = await getPDFFile(report.id);
@@ -1561,53 +1331,57 @@
                 } catch (e) { alert('Error downloading file: ' + e.message); }
             }
 
-            // ─── REFRESH ALL ───
             function refreshAll() {
                 patients = loadData('patients', defaultPatients);
                 reports = loadData('reports', defaultReports);
                 payments = loadData('payments', defaultPayments);
                 activityLogs = loadData('logs', defaultLogs);
-                refreshDashboard();
-                refreshPatients();
-                refreshReports();
-                refreshWhatsAppPatients();
-                refreshPayments();
-                refreshAnalytics();
-                refreshBackup();
-                refreshSecurity();
+                inventory = loadData('inventory', defaultInventory);
+                refreshDashboard(); refreshPatients(); refreshReports(); refreshWhatsAppPatients(); refreshPayments(); refreshAnalytics(); refreshInventory(); refreshBackup(); refreshSecurity();
             }
 
-            // ─── DASHBOARD ───
             function refreshDashboard() {
-                const totalPatients = patients.length;
-                const totalReports = reports.length;
-                const pendingReports = patients.filter(p => p.status === 'pending').length;
-                const cultureProcess = patients.filter(p => p.test && p.test.includes('Urine')).length;
-                const duePatients = patients.filter(p => p.due_amount > 0).length;
-                const totalRevenue = patients.reduce((sum, p) => sum + p.due_amount, 0);
+                const selectedBranch = $('dashboardBranchFilter').value;
+                let filteredPatients = patients;
+                if(selectedBranch !== 'All') { filteredPatients = patients.filter(p => p.branch === selectedBranch); }
+
+                const totalPatients = filteredPatients.length;
+                const totalReports = reports.filter(r => filteredPatients.some(p => p.patient_id === r.patient_id)).length;
+                const pendingReports = filteredPatients.filter(p => p.status === 'pending').length;
+                const duePatients = filteredPatients.filter(p => p.due_amount > 0).length;
+                const totalRevenue = filteredPatients.reduce((sum, p) => sum + p.due_amount, 0);
 
                 $('dToday').textContent = totalPatients;
                 $('dTotalReports').textContent = totalReports;
                 $('dPending').textContent = pendingReports;
-                $('dCulture').textContent = cultureProcess;
                 $('dDue').textContent = duePatients;
                 $('dRevenue').textContent = '₹' + totalRevenue;
 
+                // Critical Alerts and Low Stock (New)
+                const criticalPatients = patients.filter(p => p.is_critical === true);
+                const criticalContainer = $('criticalAlertContainer');
+                const criticalList = $('criticalPatientList');
+                if(criticalPatients.length > 0) {
+                    criticalContainer.style.display = 'block';
+                    criticalList.innerHTML = criticalPatients.map(p => `<li><b>${p.name}</b> (ID: ${p.patient_id}) - ${p.test}</li>`).join('');
+                } else { criticalContainer.style.display = 'none'; }
+
+                const lowStockItems = inventory.filter(item => item.quantity <= item.threshold);
+                $('dLowStock').textContent = lowStockItems.length;
+
                 const tbody = $('dRecentPatients');
-                if (patients.length) {
-                    tbody.innerHTML = patients.slice(0, 5).map(p =>
-                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
+                if (filteredPatients.length) {
+                    tbody.innerHTML = filteredPatients.slice(0, 5).map(p => 
+                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td>${p.branch || 'N/A'}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
                     ).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients yet</td></tr>';
                 }
                 updateCharts();
             }
 
-            // ─── CHARTS ───
             let chartWeeklyInstance = null;
             let chartPieInstance = null;
-
             function updateCharts() {
                 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
                 const weeklyData = days.map(() => 0);
@@ -1630,13 +1404,8 @@
                     if (chartWeeklyInstance) chartWeeklyInstance.destroy();
                     chartWeeklyInstance = new Chart(ctx1, {
                         type: 'bar',
-                        data: {
-                            labels: days,
-                            datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }]
-                        },
-                        options: {
-                            responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-                        }
+                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }] },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
                     });
                 }
 
@@ -1648,20 +1417,60 @@
                         type: 'doughnut',
                         data: {
                             labels: testLabels.length ? testLabels : ['No Data'],
-                            datasets: [{
-                                data: testLabels.length ? testData : [1],
-                                backgroundColor: testLabels.length ? colors.slice(0, testLabels.length) : ['#ccc'],
-                                borderWidth: 2, borderColor: '#fff'
-                            }]
+                            datasets: [{ data: testLabels.length ? testData : [1], backgroundColor: testLabels.length ? colors.slice(0, testLabels.length) : ['#ccc'], borderWidth: 2, borderColor: '#fff' }]
                         },
-                        options: {
-                            responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
-                        }
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } } }
                     });
                 }
             }
 
-            // ─── PATIENTS ───
+            // INVENTORY (NEW)
+            function refreshInventory() {
+                const tbody = $('inventoryTableBody');
+                if (inventory.length) {
+                    tbody.innerHTML = inventory.map(item => {
+                        const status = item.quantity <= item.threshold ? '<span class="badge-status unpaid">Low Stock</span>' : '<span class="badge-status paid">OK</span>';
+                        return `<tr><td><b>${item.name}</b></td><td>${item.quantity}</td><td>${item.threshold}</td><td>${status}</td><td><button class="btn btn-sm btn-primary edit-inv" data-id="${item.id}"><i class="fas fa-edit"></i></button> <button class="btn btn-sm btn-red del-inv" data-id="${item.id}"><i class="fas fa-trash"></i></button></td></tr>`;
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No items in inventory</td></tr>';
+                }
+            }
+
+            // ADD INVENTORY
+            $('addInvBtn').addEventListener('click', function() {
+                const name = $('invName').value.trim();
+                const qty = parseInt($('invQty').value) || 0;
+                const threshold = parseInt($('invThreshold').value) || 5;
+                if(!name) { alert('Please enter item name'); return; }
+                inventory.push({ id: Date.now().toString(), name, quantity: qty, threshold });
+                saveAll();
+                alert('✅ Item added to inventory!');
+                $('invName').value = ''; $('invQty').value = ''; $('invThreshold').value = '';
+                refreshAll();
+            });
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.del-inv')) {
+                    const id = e.target.closest('.del-inv').dataset.id;
+                    if(confirm('Delete inventory item?')) {
+                        inventory = inventory.filter(i => i.id !== id);
+                        saveAll(); refreshAll();
+                    }
+                }
+                if (e.target.closest('.edit-inv')) {
+                    const id = e.target.closest('.edit-inv').dataset.id;
+                    const item = inventory.find(i => i.id === id);
+                    if(item) {
+                        const newQty = prompt('Update quantity for ' + item.name + ':', item.quantity);
+                        if(newQty !== null && !isNaN(parseInt(newQty))) {
+                            item.quantity = parseInt(newQty);
+                            saveAll(); refreshAll();
+                        }
+                    }
+                }
+            });
+
+            // PATIENTS
             function refreshPatients() {
                 const tbody = $('patientTableBody');
                 if (patients.length) {
@@ -1669,28 +1478,29 @@
                         <tr>
                             <td><b>${p.patient_id}</b></td>
                             <td>${p.name}</td>
-                            <td>${p.phone}</td>
+                            <td>${p.branch || 'Main Lab'}</td>
                             <td>${p.test}</td>
                             <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                            <td>₹${p.due_amount}</td>
-                            <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
+                            <td>${p.is_critical ? '<span class="badge-status critical">⚠️ Critical</span>' : '-'}</td>
                             <td><button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button></td>
                         </tr>
                     `).join('');
                     setTimeout(() => generateAllQRCodes(), 100);
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;">No patients</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No patients</td></tr>';
                 }
             }
 
-            // ─── ADD PATIENT ───
             $('addPatientBtn').addEventListener('click', function() {
                 const patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
                 const phone = $('patPhone').value.trim();
+                const branch = $('patBranch').value;
                 const test = $('patTest').value.trim();
                 const status = $('patStatus').value;
                 const due = parseFloat($('patDue').value) || 0;
+                const instructions = $('patInstructions').value.trim();
+                const isCritical = $('patCritical').checked;
 
                 if (!name || !phone) { alert('Name & Phone required'); return; }
                 let id = patientId;
@@ -1700,27 +1510,25 @@
                     const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
                     id = 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
                 }
-                const normalizedPhone = normalizePhone(phone);
-                if (patients.find(p => p.patient_id === id || normalizePhone(p.phone) === normalizedPhone)) {
+                if (patients.find(p => p.patient_id === id || normalizePhone(p.phone) === normalizePhone(phone))) {
                     alert('Patient ID or Phone already exists!');
                     return;
                 }
 
                 patients.push({
-                    patient_id: id, name, phone, test: test || 'Not Specified', status, due_amount: due, created_at: new Date().toISOString()
+                    patient_id: id, name, phone, branch, test: test || 'Not Specified', status, due_amount: due,
+                    instructions: instructions || 'No special instructions', is_critical: isCritical,
+                    created_at: new Date().toISOString()
                 });
                 saveAll();
                 alert('✅ Patient ' + id + ' added!');
-                $('patId').value = ''; $('patName').value = ''; $('patPhone').value = ''; $('patTest').value = ''; $('patDue').value = '';
+                $('patId').value = ''; $('patName').value = ''; $('patPhone').value = ''; $('patTest').value = ''; $('patDue').value = ''; $('patInstructions').value = ''; $('patCritical').checked = false;
                 refreshAll();
             });
 
-            $('clearPatientBtn').addEventListener('click', function() {
-                $('patId').value = ''; $('patName').value = ''; $('patPhone').value = ''; $('patTest').value = ''; $('patDue').value = '';
-            });
+            $('clearPatientBtn').addEventListener('click', function() { $('patId').value = ''; $('patName').value = ''; $('patPhone').value = ''; $('patTest').value = ''; $('patDue').value = ''; $('patInstructions').value = ''; $('patCritical').checked = false; });
             $('refreshPatients').addEventListener('click', refreshPatients);
 
-            // ─── DELETE PATIENT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-patient')) {
                     const id = e.target.closest('.btn-del-patient').dataset.id;
@@ -1729,14 +1537,11 @@
                         toDelete.forEach(async (r) => { try { await deletePDFFile(r.id); } catch (e) {} });
                         reports = reports.filter(r => r.patient_id !== id);
                         patients = patients.filter(p => p.patient_id !== id);
-                        saveAll();
-                        alert('Deleted!');
-                        refreshAll();
+                        saveAll(); alert('Deleted!'); refreshAll();
                     }
                 }
             });
 
-            // ─── SEARCH ───
             $('patientSearch').addEventListener('input', function() {
                 const q = this.value.toLowerCase();
                 document.querySelectorAll('#patientTableBody tr').forEach(row => {
@@ -1744,97 +1549,60 @@
                 });
             });
 
-            // ─── REPORTS ───
             function refreshReports() {
                 const tbody = $('reportsTableBody');
                 if (reports.length) {
-                    tbody.innerHTML = reports.map(r => `
-                        <tr>
-                            <td>${r.name} (${r.patient_id})</td>
-                            <td>${r.test_name}</td>
-                            <td>${r.uploaded_at}</td>
-                            <td>
-                                <button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}"><i class="fas fa-download"></i></button>
-                                <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    `).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr>';
-                }
+                    tbody.innerHTML = reports.map(r => `<tr><td>${r.name} (${r.patient_id})</td><td>${r.test_name}</td><td>${r.uploaded_at}</td><td><button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}"><i class="fas fa-download"></i></button> <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+                } else { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr>'; }
             }
-
-            // ─── DOWNLOAD REPORT (Admin event) ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-download-report')) {
                     const id = parseInt(e.target.closest('.btn-download-report').dataset.id);
                     const report = reports.find(r => r.id === id);
-                    if (report) downloadReport(report);
-                    else alert('Report not found');
+                    if (report) downloadReport(report); else alert('Report not found');
                 }
             });
 
-            // ─── UPLOAD REPORT ───
             $('uploadReportBtn').addEventListener('click', async function() {
                 const pid = $('reportPatientId').value.trim();
                 const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
                 const replace = $('reportReplace').value;
                 const msgDiv = $('uploadMessage');
-                msgDiv.textContent = '';
-                msgDiv.style.color = 'red';
-
+                msgDiv.textContent = ''; msgDiv.style.color = 'red';
                 if (!pid) { msgDiv.textContent = '❌ Patient ID is required.'; return; }
                 if (!test) { msgDiv.textContent = '❌ Test Name is required.'; return; }
                 if (!file) { msgDiv.textContent = '❌ Please select a PDF file.'; return; }
-
                 const patient = patients.find(p => p.patient_id === pid);
                 if (!patient) { msgDiv.textContent = '❌ Patient not found! Please add patient first.'; return; }
-
                 const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
                 if (existing && replace === 'no') { msgDiv.textContent = '❌ Report already exists. Use Replace = Yes to overwrite.'; return; }
                 if (existing && replace === 'yes') {
                     try { await deletePDFFile(existing.id); } catch (e) {}
                     reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
                 }
-
                 const newId = reports.length + 1;
-                const newReport = {
-                    id: newId, patient_id: pid, name: patient.name, test_name: test || 'Not Specified', file_path: file.name, uploaded_at: new Date().toLocaleString()
-                };
-
-                try { await savePDFFile(newId, file); } catch (e) {
-                    msgDiv.textContent = '❌ Failed to store PDF: ' + e.message;
-                    return;
-                }
-
-                reports.push(newReport);
-                saveAll();
+                const newReport = { id: newId, patient_id: pid, name: patient.name, test_name: test || 'Not Specified', file_path: file.name, uploaded_at: new Date().toLocaleString() };
+                try { await savePDFFile(newId, file); } catch (e) { msgDiv.textContent = '❌ Failed to store PDF: ' + e.message; return; }
+                reports.push(newReport); saveAll();
                 msgDiv.style.color = 'green';
                 msgDiv.textContent = '✅ Report uploaded for ' + patient.name + ' (' + pid + ')';
                 $('reportPatientId').value = ''; $('reportTestName').value = ''; $('reportFile').value = '';
-                refreshAll();
-                setTimeout(() => { msgDiv.textContent = ''; }, 5000);
+                refreshAll(); setTimeout(() => { msgDiv.textContent = ''; }, 5000);
             });
-
             $('refreshReports').addEventListener('click', refreshReports);
 
-            // ─── DELETE REPORT ───
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-del-report')) {
                     const id = parseInt(e.target.closest('.btn-del-report').dataset.id);
                     if (confirm('Delete report?')) {
                         deletePDFFile(id).then(() => {
-                            reports = reports.filter(r => r.id !== id);
-                            saveAll();
-                            alert('Deleted!');
-                            refreshAll();
+                            reports = reports.filter(r => r.id !== id); saveAll(); alert('Deleted!'); refreshAll();
                         }).catch((err) => { alert('Error deleting PDF file: ' + err.message); });
                     }
                 }
             });
 
-            // ─── WHATSAPP ───
             function refreshWhatsAppPatients() {
                 const tbody = $('whatsappPatientList');
                 if (patients.length) {
@@ -1842,205 +1610,128 @@
                         <tr>
                             <td>${p.name}</td>
                             <td>${p.phone}</td>
-                            <td>${p.test}</td>
+                            <td>${p.branch || 'Main Lab'}</td>
                             <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                            <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}"><i class="fab fa-whatsapp"></i> Send</button></td>
+                            <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}" data-instructions="${p.instructions || 'No special instructions'}"><i class="fab fa-whatsapp"></i> Send</button></td>
                         </tr>
                     `).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
-                }
+                } else { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>'; }
             }
 
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.wa-send')) {
                     const btn = e.target.closest('.wa-send');
-                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn.dataset.test);
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn.dataset.test).replace(/{instructions}/g, btn.dataset.instructions);
                     sendWhatsApp(btn.dataset.phone, msg);
                 }
             });
-
             $('sendWAPatient').addEventListener('click', function() {
                 const phone = prompt('Enter patient phone (e.g. 9876543210):');
                 if (phone) {
-                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report');
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report').replace(/{instructions}/g, 'Please follow lab protocol.');
                     sendWhatsApp(phone, msg);
                 }
             });
-
             $('sendWADoctor').addEventListener('click', function() {
                 const phone = prompt('Enter doctor phone:');
                 if (phone) sendWhatsApp(phone, '*🩺 Doctor*: Report ready for patient.');
             });
 
-            $('sendUrineUpdate').addEventListener('click', function() {
-                const phone = prompt('Enter patient phone:');
-                if (phone) sendWhatsApp(phone, '*👋 नमस्ते*! आपकी Urine Culture रिपोर्ट प्रक्रिया में है। ⏱️ परिणाम 48 घंटे में उपलब्ध होंगे। धन्यवाद।');
-            });
-
-            $('dueReminderBtn').addEventListener('click', function() {
-                const phone = prompt('Enter patient phone for due reminder:');
-                if (phone) sendWhatsApp(phone, '🔔 *Reminder:* Your payment is due at Rajan Path Lab.');
-            });
-
-            // ─── PAYMENTS ───
             function refreshPayments() {
                 const duePatients = patients.filter(p => p.due_amount > 0);
                 const paidPatients = patients.filter(p => p.due_amount === 0);
                 let totalDue = duePatients.reduce((sum, p) => sum + p.due_amount, 0);
-
                 $('pPaid').textContent = paidPatients.length;
                 $('pUnpaid').textContent = duePatients.length;
                 $('pTotalDue').textContent = '₹' + totalDue;
-
                 const tbody = $('paymentsTableBody');
                 if (patients.length) {
                     tbody.innerHTML = patients.map(p => `
                         <tr>
                             <td>${p.name}</td>
                             <td>${p.test}</td>
+                            <td>${p.branch || 'Main Lab'}</td>
                             <td>₹${p.due_amount}</td>
                             <td><span class="badge-status ${p.due_amount > 0 ? 'unpaid' : 'paid'}">${p.due_amount > 0 ? 'Unpaid' : 'Paid'}</span></td>
                             <td>${p.due_amount > 0 ? `<button class="btn btn-sm btn-primary mark-paid" data-id="${p.patient_id}" data-amount="${p.due_amount}"><i class="fas fa-check"></i> Mark Paid</button>` : '<button class="btn btn-sm btn-outline" disabled>Paid</button>'}</td>
                         </tr>
                     `).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr>';
-                }
+                } else { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">No patients</td></tr>'; }
             }
-
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.mark-paid')) {
                     const btn = e.target.closest('.mark-paid');
                     const id = btn.dataset.id;
-                    const amount = parseFloat(btn.dataset.amount);
                     if (confirm('Mark #' + id + ' as paid?')) {
                         const patient = patients.find(p => p.patient_id === id);
-                        if (patient) {
-                            patient.due_amount = 0;
-                            saveAll();
-                            alert('✅ Paid!');
-                            refreshAll();
-                        }
+                        if (patient) { patient.due_amount = 0; saveAll(); alert('✅ Paid!'); refreshAll(); }
                     }
                 }
             });
             $('refreshPayments').addEventListener('click', refreshPayments);
 
-            // ─── UPI ───
             $('upiPayBtn').addEventListener('click', function() {
                 upiModal.classList.add('show');
                 const container = $('upiQR');
                 container.innerHTML = '';
                 if (typeof QRCode !== 'undefined') {
                     new QRCode(container, {
-                        text: 'upi://pay?pa=rajanpathlab@upi&pn=Rajan%20Path%20Lab&am=1.00&cu=INR',
-                        width: 160,
-                        height: 160,
-                        colorDark: '#000000',
-                        colorLight: '#ffffff',
-                        correctLevel: QRCode.CorrectLevel.H
+                        text: 'upi://pay?pa=rajanpathlab@upi&pn=Rajan%20Path%20Lab&am=1.00&cu=INR', width: 160, height: 160,
+                        colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H
                     });
-                } else {
-                    container.innerHTML = '<p>QR library not loaded</p>';
-                }
+                } else { container.innerHTML = '<p>QR library not loaded</p>'; }
             });
             $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));
 
-            // ─── ANALYTICS ───
             function refreshAnalytics() {
                 const today = new Date().toDateString();
                 let todayCount = 0;
-                patients.forEach(p => {
-                    if (p.created_at) {
-                        const d = new Date(p.created_at);
-                        if (d.toDateString() === today) todayCount++;
-                    }
-                });
-
+                patients.forEach(p => { if (p.created_at) { const d = new Date(p.created_at); if (d.toDateString() === today) todayCount++; } });
                 const totalPatients = patients.length;
-                const totalReports = reports.length;
                 const revenue = patients.reduce((sum, p) => sum + p.due_amount, 0);
-
                 const testMap = {};
                 patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                let topTest = '-';
-                let topCount = 0;
-                Object.keys(testMap).forEach(key => {
-                    if (testMap[key] > topCount) { topCount = testMap[key]; topTest = key; }
-                });
-
+                let topTest = '-'; let topCount = 0;
+                Object.keys(testMap).forEach(key => { if (testMap[key] > topCount) { topCount = testMap[key]; topTest = key; } });
                 $('aToday').textContent = todayCount;
                 $('aMonth').textContent = totalPatients;
                 $('aTopTest').textContent = topTest;
                 $('aRevenue').textContent = '₹' + revenue;
-
                 const tbody = $('analyticsTable');
                 const testWise = Object.keys(testMap).map(key => ({ test: key, count: testMap[key] }));
                 if (testWise.length) {
-                    tbody.innerHTML = testWise.map(t =>
-                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`
-                    ).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>';
-                }
+                    tbody.innerHTML = testWise.map(t => `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * 450}</td><td>-</td></tr>`).join('');
+                } else { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr>'; }
             }
 
-            // ─── BACKUP ───
             function refreshBackup() {
                 $('backupListBody').innerHTML = `
                     <tr><td>rpl_db_backup.sql</td><td>Database</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Download')"><i class="fas fa-download"></i></button></td></tr>
                     <tr><td>rpl_pdf_backup.zip</td><td>PDF</td><td>Today</td><td><button class="btn btn-sm btn-primary" onclick="alert('Download')"><i class="fas fa-download"></i></button></td></tr>
                 `;
             }
-            $('backupDBBtn').addEventListener('click', function() {
-                if (confirm('Create DB backup?')) alert('✅ Backup created: db_backup_' + new Date().toISOString().slice(0, 10) + '.sql');
-            });
-            $('backupPDFBtn').addEventListener('click', function() {
-                if (confirm('Create PDF backup?')) alert('✅ PDF backup created: pdf_backup_' + new Date().toISOString().slice(0, 10) + '.zip');
-            });
-            $('restoreBtn').addEventListener('click', function() {
-                const file = $('restoreFile').files[0];
-                if (!file) { alert('Select a backup file.'); return; }
-                alert('✅ Restore successful! (dummy)');
-            });
+            $('backupDBBtn').addEventListener('click', function() { if (confirm('Create DB backup?')) alert('✅ Backup created: db_backup_' + new Date().toISOString().slice(0, 10) + '.sql'); });
+            $('backupPDFBtn').addEventListener('click', function() { if (confirm('Create PDF backup?')) alert('✅ PDF backup created: pdf_backup_' + new Date().toISOString().slice(0, 10) + '.zip'); });
+            $('restoreBtn').addEventListener('click', function() { const file = $('restoreFile').files[0]; if (!file) { alert('Select a backup file.'); return; } alert('✅ Restore successful! (dummy)'); });
 
-            // ─── SECURITY ───
             function refreshSecurity() {
                 const tbody = $('activityLogBody');
                 if (activityLogs.length) {
-                    tbody.innerHTML = activityLogs.map(l =>
-                        `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
-                    ).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr>';
-                }
+                    tbody.innerHTML = activityLogs.map(l => `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`).join('');
+                } else { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr>'; }
             }
             $('viewLogBtn').addEventListener('click', refreshSecurity);
-
             $('changePwdBtn').addEventListener('click', function() {
-                const old = prompt('Enter old password:');
-                if (!old) return;
-                const newPwd = prompt('Enter new password (min 6 chars):');
-                if (!newPwd || newPwd.length < 6) { alert('Min 6 characters'); return; }
-                alert('✅ Password changed! (dummy)');
+                const old = prompt('Enter old password:'); if (!old) return;
+                const newPwd = prompt('Enter new password (min 6 chars):'); if (!newPwd || newPwd.length < 6) { alert('Min 6 characters'); return; } alert('✅ Password changed! (dummy)');
             });
 
-            // ─── INIT ───
             openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));
+            try { localStorage.setItem('test_storage', 'working'); localStorage.removeItem('test_storage'); } catch (e) { console.warn('⚠️ localStorage may be full', e); }
 
-            try {
-                localStorage.setItem('test_storage', 'working');
-                localStorage.removeItem('test_storage');
-                console.log('✅ localStorage is working');
-            } catch (e) {
-                console.warn('⚠️ localStorage may be full or blocked:', e);
-            }
-
-            console.log('✅ Rajan Path Lab · Final Premium Version');
+            console.log('✅ Rajan Path Lab · Version 3.0 (Enhanced with Inventory, Branches, Alerts & Instructions)');
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
         })();
     </script>
-
 </body>
 </html>
