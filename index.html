@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Rajan Path Lab | Premium Diagnostics</title>
-    <link rel="icon" href="logo.png" type="image/png"> <!-- ✅ Added Favicon -->
+    <link rel="icon" href="logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
@@ -17,9 +17,6 @@
             --bg-light: #f4f7f9;
             --urgent-red: #d9383a;
             --text-dark: #2d3748;
-            --thyro-orange: #ff6600;
-            --lal-blue: #ed1c24;
-            --path-purple: #662d91;
         }
 
         body {
@@ -33,7 +30,6 @@
 
         b, strong { font-weight: 700; }
 
-        /* ✅ Watermark Background Logo */
         .watermark-logo {
             position: fixed;
             top: 50%;
@@ -41,7 +37,7 @@
             transform: translate(-50%, -50%) rotate(-12deg);
             width: 70%;
             max-width: 700px;
-            opacity: 0.05; /* Very subtle background */
+            opacity: 0.05;
             pointer-events: none;
             z-index: -1;
             display: block;
@@ -60,7 +56,6 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* ✅ Header Logo */
         .header-logo {
             height: 40px;
             vertical-align: middle;
@@ -93,7 +88,6 @@
             transition: 0.2s;
             margin-left: 15px;
         }
-        .admin-login-btn:hover, .patient-portal-btn:hover { background: #006666; }
         .patient-portal-btn { background: #25D366; }
         .patient-portal-btn:hover { background: #1a8d4a; }
 
@@ -217,7 +211,7 @@
             section { padding: 30px 15px; }
         }
 
-        /* ─── ADMIN PANEL STYLES (SAME AS BEFORE) ─── */
+        /* ─── ADMIN PANEL STYLES ─── */
         #adminPanelWrapper {
             display: none;
             position: fixed;
@@ -261,7 +255,6 @@
             font-weight: 600;
             cursor: pointer;
         }
-        .admin-header .admin-user .logout-btn:hover { background: #b82d2f; }
         .admin-header .admin-user .dark-toggle {
             background: #4a5568;
             border: none;
@@ -339,12 +332,6 @@
             font-size: 18px;
             flex-shrink: 0;
         }
-        .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
-        .stat-card .icon.green { background: #d1fae5; color: #059669; }
-        .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
-        .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }
-        .stat-card .icon.orange { background: #fef3c7; color: #d97706; }
-        .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
         .stat-card .info h4 { font-size: 20px; font-weight: 700; margin: 0; }
         .stat-card .info p { font-size: 12px; margin: 2px 0 0 0; color: #64748b; }
 
@@ -422,17 +409,8 @@
             font-size: 14px;
         }
         .form-grid label input:focus, .form-grid label select:focus { outline: 2px solid var(--accent-teal); }
-        .form-grid label input[list] {
-            padding: 6px 10px;
-            border-radius: 4px;
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            font-size: 14px;
-            width: 100%;
-        }
-        .form-grid label input[list]:focus {
-            outline: 2px solid var(--accent-teal);
-        }
+        .form-grid label input[list] { padding: 6px 10px; border-radius: 4px; border: 1px solid #e2e8f0; background: #f8fafc; font-size: 14px; width: 100%; }
+        .form-grid label input[list]:focus { outline: 2px solid var(--accent-teal); }
 
         .toolbar {
             display: flex;
@@ -475,6 +453,7 @@
             border-left: 4px solid #25D366;
             font-size: 14px;
             white-space: pre-wrap;
+            line-height: 1.6;
         }
 
         .premium-badge {
@@ -652,8 +631,7 @@
         body.admin-dark .table-wrap th { background: #0f172a; color: #94a3b8; }
         body.admin-dark .table-wrap td { border-color: #334155; }
         body.admin-dark .form-grid { background: #1e293b; border-color: #334155; }
-        body.admin-dark .form-grid label input,
-        body.admin-dark .form-grid label select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
+        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
         body.admin-dark .template-box { background: #1e293b; border-color: #334155; }
         body.admin-dark .template-box .msg-preview { background: #0f172a; }
         body.admin-dark .toolbar .search-box { background: #1e293b; border-color: #334155; }
@@ -674,12 +652,11 @@
 </head>
 <body>
 
-    <!-- ✅ Background Watermark Main Logo (Requires logo.png in same folder) -->
+    <!-- ✅ Background Watermark Main Logo -->
     <img src="logo.png" class="watermark-logo" alt="Watermark Logo">
 
     <!-- ─── ORIGINAL PATIENT WEBSITE ─── -->
     <header>
-        <!-- ✅ Header Logo added next to the text -->
         <h1><img src="logo.png" class="header-logo" alt="RPL"> RAJAN <span>PATH LAB</span></h1>
         <nav>
             <a href="index.html">Home</a>
@@ -777,6 +754,7 @@
     <footer>
         <h2>RAJAN PATH LAB (RPL)</h2>
         <div class="map-container">
+            <!-- ✅ Updated to show exact location in Manahar Bhushra -->
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
         <div class="footer-links">
@@ -810,7 +788,7 @@
     <div id="adminPanelWrapper">
         <div id="adminPanelContainer">
             <div class="admin-header">
-                <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin</h2>
+                <h2><i class="fas fa-microscope"></i> <img src="logo.png" class="header-logo" style="height:32px;border-radius:50%;margin-right:8px;"> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin</h2>
                 <div class="admin-user">
                     <span id="adminUsername">Admin</span>
                     <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -1036,15 +1014,17 @@
                         </div>
                     </div>
 
-                    <!-- WHATSAPP -->
+                    <!-- WHATSAPP (UPDATED with Premium Format) -->
                     <div class="admin-section" id="sec-whatsapp">
                         <h2 style="text-align:left;"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp System</h2>
                         <div class="template-box">
                             <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
                                 <span><i class="fas fa-pen"></i> <strong>Custom Template</strong></span>
-                                <span class="badge-status paid"><i class="fas fa-bolt"></i> One-Click</span>
+                                <span class="badge-status paid"><i class="fas fa-bolt"></i> Premium Format</span>
                             </div>
-                            <div class="msg-preview" id="whatsappPreview">Dear {patient}, your report for {test} is ready. Thank you.</div>
+                            <div class="msg-preview" id="whatsappPreview">*👋 नमस्ते {patient}!*  
+आपकी *{test}* की रिपोर्ट तैयार हो गई है।  
+⚕️ धन्यवाद, Rajan Path Lab</div>
                             <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
                                 <button class="btn btn-primary" style="background:#25D366;border-color:#25D366;" id="sendWAPatient"><i class="fab fa-whatsapp"></i> To Patient</button>
                                 <button class="btn btn-primary" id="sendWADoctor"><i class="fas fa-user-md"></i> To Doctor</button>
@@ -1052,7 +1032,9 @@
                         </div>
                         <div class="template-box">
                             <h4><i class="fas fa-flask"></i> Urine Culture Under Process</h4>
-                            <div class="msg-preview" style="border-left-color:#7c3aed;">Dear {patient}, your Urine Culture is under process. Results in 48 hrs.</div>
+                            <div class="msg-preview" style="border-left-color:#7c3aed;">*👋 नमस्ते {patient}!*  
+आपकी *Urine Culture* रिपोर्ट प्रक्रिया में है।  
+⏱️ परिणाम 48 घंटे में उपलब्ध होंगे। धन्यवाद।</div>
                             <button class="btn btn-primary" style="background:#7c3aed;border-color:#7c3aed;margin-top:8px;" id="sendUrineUpdate"><i class="fas fa-paper-plane"></i> Send Update</button>
                         </div>
                         <div class="table-wrap">
@@ -1197,12 +1179,9 @@
             // ─── NORMALIZE PHONE NUMBER ───
             function normalizePhone(phone) {
                 if (!phone) return '';
-                // Remove spaces, dashes, parentheses, dots
                 let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
-                // Remove leading +91 or 91 if present
                 if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
                 if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
-                // Remove leading zero
                 if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
                 return cleaned;
             }
@@ -1225,7 +1204,6 @@
                     localStorage.setItem('rpl_' + key, JSON.stringify(data));
                 } catch (e) {
                     console.warn('Failed to save data to localStorage', e);
-                    // Fallback: try to save without non-essential data
                     try {
                         localStorage.setItem('rpl_' + key, JSON.stringify(data));
                     } catch (e2) {
@@ -1325,10 +1303,8 @@
             function openPortal() {
                 portalModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                // Force reload data when portal opens
                 patients = loadData('patients', defaultPatients);
                 reports = loadData('reports', defaultReports);
-                // Reset status
                 $('portalStatus').className = 'portal-status';
                 $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
@@ -1344,10 +1320,8 @@
                 $('portalPatientId').value = '';
             }
 
-            $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault();
-                openPortal(); });
-            $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault();
-                openPortal(); });
+            $('openPatientPortalBtn').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
+            $('openPatientPortalBtn2').addEventListener('click', function(e) { e.preventDefault(); openPortal(); });
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', function(e) { if (e.target === portalModal) closePortal(); });
 
@@ -1363,25 +1337,17 @@
                     return;
                 }
 
-                // Reload data from localStorage
                 patients = loadData('patients', defaultPatients);
                 reports = loadData('reports', defaultReports);
 
-                // ─── SEARCH BY PATIENT ID OR NORMALIZED PHONE ───
                 const normalizedSearch = normalizePhone(searchValue);
-
-                // Try to find by patient_id first
                 let patient = patients.find(p => p.patient_id === searchValue);
-
-                // If not found by ID, try by phone (normalized)
                 if (!patient) {
                     patient = patients.find(p => {
                         const normalizedPhone = normalizePhone(p.phone || '');
                         return normalizedPhone === normalizedSearch || p.phone === searchValue;
                     });
                 }
-
-                // If still not found, try partial match on phone
                 if (!patient && normalizedSearch.length >= 4) {
                     patient = patients.find(p => {
                         const normalizedPhone = normalizePhone(p.phone || '');
@@ -1399,22 +1365,19 @@
                 const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
                 if (patientReports.length === 0) {
                     statusDiv.className = 'portal-status';
-                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (ID: ' + patient
-                        .patient_id + ')';
+                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (ID: ' + patient.patient_id + ')';
                     listDiv.style.display = 'none';
                     return;
                 }
 
                 const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
                 statusDiv.className = 'portal-status success';
-                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
-                    ' (via ' + foundBy + '). Due amount: ₹' + patient.due_amount;
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name + ' (via ' + foundBy + '). Due amount: ₹' + patient.due_amount;
 
                 let html = '<h3 style="margin-bottom:1rem;font-weight:600;color:#1a212c;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
                     const canDownload = patient.due_amount === 0;
-                    const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient
-                        .due_amount + ' DUE</span>' : '';
+                    const dueBadge = patient.due_amount > 0 ? '<span class="portal-due-badge">₹' + patient.due_amount + ' DUE</span>' : '';
                     html += `
                         <div class="portal-report-item">
                             <div class="portal-report-info">
@@ -1439,8 +1402,7 @@
                         const due = parseFloat(this.dataset.patientDue);
                         if (due > 0) {
                             statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML =
-                            '❌ Payment pending. Please clear dues to download report.';
+                            statusDiv.innerHTML = '❌ Payment pending. Please clear dues to download report.';
                             return;
                         }
                         try {
@@ -1469,8 +1431,7 @@
                 });
             });
 
-            $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn')
-                .click(); });
+            $('portalPatientId').addEventListener('keypress', function(e) { if (e.key === 'Enter') $('portalFetchBtn').click(); });
 
             // ─── ADMIN LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
@@ -1671,15 +1632,10 @@
                         type: 'bar',
                         data: {
                             labels: days,
-                            datasets: [{ label: 'Patients', data: weeklyData,
-                                backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
-                                borderWidth: 2 }]
+                            datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }]
                         },
                         options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
-                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                            responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
                         }
                     });
                 }
@@ -1687,26 +1643,19 @@
                 const ctx2 = $('chartPie')?.getContext('2d');
                 if (ctx2) {
                     if (chartPieInstance) chartPieInstance.destroy();
-                    const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a',
-                        '#ff6600'
-                    ];
+                    const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a', '#ff6600'];
                     chartPieInstance = new Chart(ctx2, {
                         type: 'doughnut',
                         data: {
                             labels: testLabels.length ? testLabels : ['No Data'],
                             datasets: [{
                                 data: testLabels.length ? testData : [1],
-                                backgroundColor: testLabels.length ? colors.slice(0, testLabels
-                                    .length) : ['#ccc'],
-                                borderWidth: 2,
-                                borderColor: '#fff'
+                                backgroundColor: testLabels.length ? colors.slice(0, testLabels.length) : ['#ccc'],
+                                borderWidth: 2, borderColor: '#fff'
                             }]
                         },
                         options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,
-                                    font: { size: 11 } } } }
+                            responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
                         }
                     });
                 }
@@ -1748,11 +1697,9 @@
                 if (!id) {
                     const nextId = patients.length + 1;
                     const today = new Date();
-                    const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today
-                        .getDate()).padStart(2, '0');
+                    const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
                     id = 'RPL-' + dateStr + '-' + String(nextId).padStart(4, '0');
                 }
-                // Check duplicate
                 const normalizedPhone = normalizePhone(phone);
                 if (patients.find(p => p.patient_id === id || normalizePhone(p.phone) === normalizedPhone)) {
                     alert('Patient ID or Phone already exists!');
@@ -1760,30 +1707,16 @@
                 }
 
                 patients.push({
-                    patient_id: id,
-                    name,
-                    phone,
-                    test: test || 'Not Specified',
-                    status,
-                    due_amount: due,
-                    created_at: new Date().toISOString()
+                    patient_id: id, name, phone, test: test || 'Not Specified', status, due_amount: due, created_at: new Date().toISOString()
                 });
                 saveAll();
                 alert('✅ Patient ' + id + ' added!');
-                $('patId').value = '';
-                $('patName').value = '';
-                $('patPhone').value = '';
-                $('patTest').value = '';
-                $('patDue').value = '';
+                $('patId').value = ''; $('patName').value = ''; $('patPhone').value = ''; $('patTest').value = ''; $('patDue').value = '';
                 refreshAll();
             });
 
             $('clearPatientBtn').addEventListener('click', function() {
-                $('patId').value = '';
-                $('patName').value = '';
-                $('patPhone').value = '';
-                $('patTest').value = '';
-                $('patDue').value = '';
+                $('patId').value = ''; $('patName').value = ''; $('patPhone').value = ''; $('patTest').value = ''; $('patDue').value = '';
             });
             $('refreshPatients').addEventListener('click', refreshPatients);
 
@@ -1859,8 +1792,7 @@
                 if (!patient) { msgDiv.textContent = '❌ Patient not found! Please add patient first.'; return; }
 
                 const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
-                if (existing && replace === 'no') { msgDiv.textContent =
-                    '❌ Report already exists. Use Replace = Yes to overwrite.'; return; }
+                if (existing && replace === 'no') { msgDiv.textContent = '❌ Report already exists. Use Replace = Yes to overwrite.'; return; }
                 if (existing && replace === 'yes') {
                     try { await deletePDFFile(existing.id); } catch (e) {}
                     reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
@@ -1868,12 +1800,7 @@
 
                 const newId = reports.length + 1;
                 const newReport = {
-                    id: newId,
-                    patient_id: pid,
-                    name: patient.name,
-                    test_name: test || 'Not Specified',
-                    file_path: file.name,
-                    uploaded_at: new Date().toLocaleString()
+                    id: newId, patient_id: pid, name: patient.name, test_name: test || 'Not Specified', file_path: file.name, uploaded_at: new Date().toLocaleString()
                 };
 
                 try { await savePDFFile(newId, file); } catch (e) {
@@ -1885,9 +1812,7 @@
                 saveAll();
                 msgDiv.style.color = 'green';
                 msgDiv.textContent = '✅ Report uploaded for ' + patient.name + ' (' + pid + ')';
-                $('reportPatientId').value = '';
-                $('reportTestName').value = '';
-                $('reportFile').value = '';
+                $('reportPatientId').value = ''; $('reportTestName').value = ''; $('reportFile').value = '';
                 refreshAll();
                 setTimeout(() => { msgDiv.textContent = ''; }, 5000);
             });
@@ -1930,8 +1855,7 @@
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.wa-send')) {
                     const btn = e.target.closest('.wa-send');
-                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(
-                        /{test}/g, btn.dataset.test);
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn.dataset.test);
                     sendWhatsApp(btn.dataset.phone, msg);
                 }
             });
@@ -1939,25 +1863,24 @@
             $('sendWAPatient').addEventListener('click', function() {
                 const phone = prompt('Enter patient phone (e.g. 9876543210):');
                 if (phone) {
-                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g,
-                        'Report');
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report');
                     sendWhatsApp(phone, msg);
                 }
             });
 
             $('sendWADoctor').addEventListener('click', function() {
                 const phone = prompt('Enter doctor phone:');
-                if (phone) sendWhatsApp(phone, 'Doctor: Report ready for patient.');
+                if (phone) sendWhatsApp(phone, '*🩺 Doctor*: Report ready for patient.');
             });
 
             $('sendUrineUpdate').addEventListener('click', function() {
                 const phone = prompt('Enter patient phone:');
-                if (phone) sendWhatsApp(phone, 'Urine Culture under process. Results in 48 hrs.');
+                if (phone) sendWhatsApp(phone, '*👋 नमस्ते*! आपकी Urine Culture रिपोर्ट प्रक्रिया में है। ⏱️ परिणाम 48 घंटे में उपलब्ध होंगे। धन्यवाद।');
             });
 
             $('dueReminderBtn').addEventListener('click', function() {
                 const phone = prompt('Enter patient phone for due reminder:');
-                if (phone) sendWhatsApp(phone, 'Reminder: Your payment is due at Rajan Path Lab.');
+                if (phone) sendWhatsApp(phone, '🔔 *Reminder:* Your payment is due at Rajan Path Lab.');
             });
 
             // ─── PAYMENTS ───
@@ -2044,8 +1967,7 @@
                 let topTest = '-';
                 let topCount = 0;
                 Object.keys(testMap).forEach(key => {
-                    if (testMap[key] > topCount) { topCount = testMap[key];
-                        topTest = key; }
+                    if (testMap[key] > topCount) { topCount = testMap[key]; topTest = key; }
                 });
 
                 $('aToday').textContent = todayCount;
@@ -2072,12 +1994,10 @@
                 `;
             }
             $('backupDBBtn').addEventListener('click', function() {
-                if (confirm('Create DB backup?')) alert('✅ Backup created: db_backup_' + new Date().toISOString()
-                    .slice(0, 10) + '.sql');
+                if (confirm('Create DB backup?')) alert('✅ Backup created: db_backup_' + new Date().toISOString().slice(0, 10) + '.sql');
             });
             $('backupPDFBtn').addEventListener('click', function() {
-                if (confirm('Create PDF backup?')) alert('✅ PDF backup created: pdf_backup_' + new Date()
-                    .toISOString().slice(0, 10) + '.zip');
+                if (confirm('Create PDF backup?')) alert('✅ PDF backup created: pdf_backup_' + new Date().toISOString().slice(0, 10) + '.zip');
             });
             $('restoreBtn').addEventListener('click', function() {
                 const file = $('restoreFile').files[0];
@@ -2107,10 +2027,8 @@
             });
 
             // ─── INIT ───
-            openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available',
-            e));
+            openDB().then(() => console.log('IndexedDB ready')).catch(e => console.warn('IndexedDB not available', e));
 
-            // ─── TEST IF STORAGE IS WORKING ───
             try {
                 localStorage.setItem('test_storage', 'working');
                 localStorage.removeItem('test_storage');
@@ -2119,11 +2037,8 @@
                 console.warn('⚠️ localStorage may be full or blocked:', e);
             }
 
-            console.log('✅ Rajan Path Lab · Fixed Mobile Search & Storage');
+            console.log('✅ Rajan Path Lab · Final Premium Version');
             console.log('🔑 Admin Login: Rajan5530 / Rkchandra5530');
-            console.log('📦 No default data - only your added patients.');
-            console.log('👤 Patients can search by ID or Mobile Number (normalized).');
-
         })();
     </script>
 
