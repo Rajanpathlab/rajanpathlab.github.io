@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Rajan Path Lab | Premium Diagnostics</title>
+    <link rel="icon" href="logo.png" type="image/png"> <!-- ✅ Added Favicon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
@@ -32,6 +33,20 @@
 
         b, strong { font-weight: 700; }
 
+        /* ✅ Watermark Background Logo */
+        .watermark-logo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-12deg);
+            width: 70%;
+            max-width: 700px;
+            opacity: 0.05; /* Very subtle background */
+            pointer-events: none;
+            z-index: -1;
+            display: block;
+        }
+
         header {
             background: var(--primary-blue);
             color: white;
@@ -45,7 +60,15 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; font-weight: 700; }
+        /* ✅ Header Logo */
+        .header-logo {
+            height: 40px;
+            vertical-align: middle;
+            margin-right: 12px;
+            border-radius: 50%;
+        }
+
+        header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; font-weight: 700; display: flex; align-items: center;}
         header h1 span { color: var(--accent-teal); }
 
         nav a {
@@ -184,6 +207,7 @@
 
         @media (max-width: 768px) {
             header { flex-direction: column; text-align: center; padding: 10px; }
+            header h1 { justify-content: center; }
             nav { margin-top: 10px; }
             nav a { margin: 0 8px; font-size: 14px; }
             .admin-login-btn, .patient-portal-btn { margin: 8px 0 0 0; }
@@ -225,7 +249,7 @@
             align-items: center;
             flex-wrap: wrap;
         }
-        .admin-header h2 { color: white; margin: 0; font-size: 20px; }
+        .admin-header h2 { color: white; margin: 0; font-size: 20px; display: flex; align-items: center; }
         .admin-header .admin-user { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .admin-header .admin-user span { color: #e2e8f0; }
         .admin-header .admin-user .logout-btn {
@@ -650,9 +674,13 @@
 </head>
 <body>
 
+    <!-- ✅ Background Watermark Main Logo (Requires logo.png in same folder) -->
+    <img src="logo.png" class="watermark-logo" alt="Watermark Logo">
+
     <!-- ─── ORIGINAL PATIENT WEBSITE ─── -->
     <header>
-        <h1>RAJAN <span>PATH LAB</span></h1>
+        <!-- ✅ Header Logo added next to the text -->
+        <h1><img src="logo.png" class="header-logo" alt="RPL"> RAJAN <span>PATH LAB</span></h1>
         <nav>
             <a href="index.html">Home</a>
             <a href="tests.html">Tests</a>
