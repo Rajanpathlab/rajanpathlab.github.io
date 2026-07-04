@@ -2121,7 +2121,7 @@
                 window.open('https://wa.me/' + clean + '?text=' + encodeURIComponent(message), '_blank');
             }
 
-            // ─── पोर्टल ───
+            // ─── पोर्टल (Due check improved) ───
             function openPortal() {
                 portalModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -2160,7 +2160,7 @@
                     listDiv.style.display = 'none';
                     return;
                 }
-                await refreshAllData();
+                await refreshAllData(); // ताज़ा डेटा लोड
                 const normalizedSearch = normalizePhone(searchValue);
                 let patient = patients.find(p => p.patient_id === searchValue);
                 if (!patient) patient = patients.find(p => normalizePhone(p.phone || '') === normalizedSearch || p
@@ -2181,9 +2181,11 @@
                     listDiv.style.display = 'none';
                     return;
                 }
+                // 🔥 Due check – numeric conversion
+                const dueAmount = Number(patient.due_amount);
+                const isPaid = dueAmount === 0;
                 const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
-                const isPaid = patient.due_amount === 0;
-                const dueText = isPaid ? '✅ Paid' : '⚠️ ₹' + patient.due_amount + ' Due';
+                const dueText = isPaid ? '✅ Paid' : '⚠️ ₹' + dueAmount + ' Due';
                 statusDiv.className = 'portal-status ' + (isPaid ? 'success' : 'error');
                 statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
                     ' (via ' + foundBy + '). Status: ' + dueText +
@@ -2193,7 +2195,7 @@
                 let html = '<h3 style="margin-bottom:1rem;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
                     const canDownload = isPaid;
-                    const dueBadge = !isPaid ? '<span class="portal-due-badge">₹' + patient.due_amount +
+                    const dueBadge = !isPaid ? '<span class="portal-due-badge">₹' + dueAmount +
                         ' DUE — LOCKED</span>' : '';
                     html += `
                             <div class="portal-report-item">
@@ -2211,11 +2213,19 @@
                 }
                 listDiv.innerHTML = html;
                 listDiv.style.display = 'block';
+
+                // Download button click handler – extra safety check
                 listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
                     btn.addEventListener('click', async function() {
-                        if (!isPaid) {
+                        // Fresh due check from global patients array
+                        const patId = patient.patient_id;
+                        const freshPatient = patients.find(p => p.patient_id === patId);
+                        const freshDue = freshPatient ? Number(freshPatient.due_amount) : dueAmount;
+                        if (freshDue !== 0) {
                             statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML = '❌ Payment pending. Please clear dues.';
+                            statusDiv.innerHTML =
+                                '❌ Payment pending (₹' + freshDue +
+                                '). Please clear dues to download reports.';
                             return;
                         }
                         const reportId = parseInt(this.dataset.reportId);
@@ -2686,8 +2696,6 @@
                         '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
                 }
             }
-
-            // Re-using btn-pay-confirm handler from above (already defined)
 
             $('refreshPayments').addEventListener('click', refreshPayments);
 
