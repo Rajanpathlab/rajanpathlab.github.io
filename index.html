@@ -10,7 +10,7 @@
     <!-- Firebase SDKs (compat version) -->
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
-    <!-- ✅ 1. Supabase Storage SDK जोड़ा गया -->
+    <!-- ✅ Supabase Storage SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -895,13 +895,13 @@
             firebase.initializeApp(firebaseConfig);
             const rtdb = firebase.database();
 
-            // ✅ 2. Firebase Storage हटाया गया, अब Supabase Storage से कनेक्ट करें
+            // ✅ Supabase Storage - अब RLS हटा दिया गया है, इसलिए काम करेगा
             const supabaseUrl = 'https://fflqftbnttpgwdktagmj.supabase.co';
             const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
             const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-            const STORAGE_BUCKET = 'reports'; // यही नाम आपने Supabase में बनाया है
+            const STORAGE_BUCKET = 'reports';
 
-            // ✅ 3. Supabase Storage के नए फंक्शन (PDF के लिए)
+            // ✅ Supabase Storage PDF functions
             async function uploadPDF(file, reportId) {
                 const filePath = `${reportId}_${file.name}`;
                 const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, file);
@@ -922,7 +922,7 @@
                 window.open(data.publicUrl, '_blank');
             }
 
-            // ─── बाकी का सारा कोड (Patients, Reports, Payments, etc.) पहले जैसा ही ───
+            // ─── बाकी का सारा कोड (Patients, Reports, Payments, etc.) ───
             // ─── लॉगिन ───
             const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
@@ -1501,7 +1501,8 @@
 
             console.log('✅ Rajan Path Lab · Supabase Storage + Firebase Database');
             console.log('🔑 Login: Rajan5530 / Rkchandra5530');
-            console.log('📁 PDFs now stored in Supabase Storage (bucket: reports)');
+            console.log('📁 PDFs stored in Supabase Storage (reports bucket)');
+            console.log('⚠️ RLS on reports bucket must be DISABLED for this to work!');
         })();
     </script>
 </body>
