@@ -10,7 +10,8 @@
     <!-- Firebase SDKs (compat version) -->
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
+    <!-- ✅ 1. Supabase Storage SDK जोड़ा गया -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         /* ─── आपके पुराने सारे CSS (कोई बदलाव नहीं) ─── */
@@ -874,12 +875,12 @@
         </div>
     </div>
 
-    <!-- ═══════════ जावास्क्रिप्ट (Firebase क्लाउड के साथ) ═══════════ -->
+    <!-- ═══════════ जावास्क्रिप्ट (Supabase Storage + Firebase Database) ═══════════ -->
     <script>
         (function() {
             'use strict';
 
-            // 🔥 आपका Firebase Config (पहले से भरा हुआ) 🔥
+            // 🔥 Firebase Config (पहले जैसा ही)
             const firebaseConfig = {
                 apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
                 authDomain: "rajanpathlab5530.firebaseapp.com",
@@ -893,8 +894,35 @@
 
             firebase.initializeApp(firebaseConfig);
             const rtdb = firebase.database();
-            const storage = firebase.storage();
 
+            // ✅ 2. Firebase Storage हटाया गया, अब Supabase Storage से कनेक्ट करें
+            const supabaseUrl = 'https://fflqftbnttpgwdktagmj.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            const STORAGE_BUCKET = 'reports'; // यही नाम आपने Supabase में बनाया है
+
+            // ✅ 3. Supabase Storage के नए फंक्शन (PDF के लिए)
+            async function uploadPDF(file, reportId) {
+                const filePath = `${reportId}_${file.name}`;
+                const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, file);
+                if (error) throw new Error(error.message);
+                const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+                return data.publicUrl;
+            }
+
+            async function deletePDF(reportId, fileName) {
+                const filePath = `${reportId}_${fileName}`;
+                const { error } = await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
+                if (error) console.warn('Delete error:', error.message);
+            }
+
+            async function downloadPDF(reportId, fileName) {
+                const filePath = `${reportId}_${fileName}`;
+                const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+                window.open(data.publicUrl, '_blank');
+            }
+
+            // ─── बाकी का सारा कोड (Patients, Reports, Payments, etc.) पहले जैसा ही ───
             // ─── लॉगिन ───
             const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
@@ -928,22 +956,6 @@
                 return snap.val() || [];
             }
             async function saveLogs(arr) { await rtdb.ref('/logs').set(arr); }
-
-            // ─── Firebase Storage (PDF) ───
-            async function uploadPDF(file, reportId) {
-                const storageRef = storage.ref(`reports/${reportId}_${file.name}`);
-                await storageRef.put(file);
-                return await storageRef.getDownloadURL();
-            }
-            async function deletePDF(reportId, fileName) {
-                const storageRef = storage.ref(`reports/${reportId}_${fileName}`);
-                try { await storageRef.delete(); } catch(e) { console.warn(e); }
-            }
-            async function downloadPDF(reportId, fileName) {
-                const storageRef = storage.ref(`reports/${reportId}_${fileName}`);
-                const url = await storageRef.getDownloadURL();
-                window.open(url, '_blank');
-            }
 
             let patients = [], reports = [];
             let payments = { total_paid:0, total_due:0, paid_count:0, unpaid_count:0 };
@@ -1468,7 +1480,7 @@
                 $('backupListBody').innerHTML = '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="alert(\'Already in cloud\')"><i class="fas fa-check"></i></button></td></tr>';
             }
             $('backupDBBtn').addEventListener('click', ()=> alert('Data already in Firebase cloud.'));
-            $('backupPDFBtn').addEventListener('click', ()=> alert('PDFs are in Firebase Storage.'));
+            $('backupPDFBtn').addEventListener('click', ()=> alert('PDFs are in Supabase Storage.'));
             $('restoreBtn').addEventListener('click', ()=> alert('Restore not needed.'));
 
             // ─── सिक्योरिटी ───
@@ -1487,9 +1499,9 @@
                 alert('✅ Password changed! (dummy)');
             });
 
-            console.log('✅ Rajan Path Lab · Firebase Cloud Ready');
+            console.log('✅ Rajan Path Lab · Supabase Storage + Firebase Database');
             console.log('🔑 Login: Rajan5530 / Rkchandra5530');
-            console.log('☁️ Data shared across all devices.');
+            console.log('📁 PDFs now stored in Supabase Storage (bucket: reports)');
         })();
     </script>
 </body>
