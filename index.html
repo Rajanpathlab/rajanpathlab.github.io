@@ -7,12 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-    <!-- Firebase SDKs (compat version) -->
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js">
     </script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js">
     </script>
-    <!-- Supabase Storage SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
 
@@ -1558,7 +1556,7 @@
                         <div class="form-grid">
                             <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
-                            <label>Phone <input type="text" id="patPhone" placeholder="9876543210" /></label>
+                            <label>Phone <input type="text" id="patPhone" placeholder="9876543210 (optional)" /></label>
                             <label>Test
                                 <input type="text" id="patTest" list="testList" placeholder="Type or select test" autocomplete="off" />
                                 <datalist id="testList">
@@ -1918,6 +1916,38 @@
             const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
             const STORAGE_BUCKET = 'reports';
 
+            // ─── NEW: Force-download PDF using fetch + blob ───
+            async function downloadPDF(reportId, fileName) {
+                try {
+                    const filePath = `${reportId}_${fileName}`;
+                    const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+                    const url = data.publicUrl;
+
+                    // Fetch the PDF as a blob
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const blob = await response.blob();
+
+                    // Create a download link
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = fileName || 'report.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // Clean up the object URL
+                    setTimeout(() => URL.revokeObjectURL(link.href), 5000);
+                } catch (error) {
+                    console.warn('Download fallback to window.open due to CORS/network error:', error.message);
+                    // Fallback: open in new tab (user can then save manually)
+                    const filePath = `${reportId}_${fileName}`;
+                    const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+                    window.open(data.publicUrl, '_blank');
+                }
+            }
+
+            // ─── Upload PDF (unchanged) ───
             async function uploadPDF(file, reportId) {
                 const filePath = `${reportId}_${file.name}`;
                 const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, file);
@@ -1930,12 +1960,6 @@
                 const filePath = `${reportId}_${fileName}`;
                 const { error } = await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
                 if (error) console.warn('Delete error:', error.message);
-            }
-
-            async function downloadPDF(reportId, fileName) {
-                const filePath = `${reportId}_${fileName}`;
-                const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
-                window.open(data.publicUrl, '_blank');
             }
 
             // ─── लॉगिन ───
@@ -1992,7 +2016,6 @@
                 };
                 payments.history = payments.history || [];
                 payments.history.unshift(entry);
-                // Keep only last 200
                 if (payments.history.length > 200) payments.history = payments.history.slice(0, 200);
                 payments.paid_count = (payments.paid_count || 0) + 1;
                 payments.total_paid = (payments.total_paid || 0) + amount;
@@ -2033,7 +2056,6 @@
                 $('payConfirmTest').textContent = patient.test || 'Not Specified';
                 $('payConfirmAmount').textContent = '₹' + patient.due_amount;
                 $('payConfirmAmountDisplay').textContent = '₹' + patient.due_amount;
-                // Reset method selection
                 document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove('selected'));
                 document.querySelector('#payMethodGroup input[value="Cash"]').checked = true;
                 document.querySelector('#payMethodGroup label:has(input[value="Cash"])')?.classList.add('selected');
@@ -2052,7 +2074,6 @@
                 if (e.target === payConfirmModal) closePayConfirm();
             });
 
-            // Payment method selection highlight
             document.querySelectorAll('#payMethodGroup input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove('selected'));
@@ -2070,22 +2091,16 @@
                 const method = document.querySelector('#payMethodGroup input[type="radio"]:checked')?.value || 'Cash';
                 const adminUser = $('adminUsername').textContent || 'Admin';
 
-                // Mark as paid
                 patient.due_amount = 0;
                 await savePatients(patients);
-
-                // Add payment history
                 await addPaymentHistory(patient.patient_id, patient.name, amount, method, adminUser);
 
-                // Recalculate totals
                 const duePatients = patients.filter(p => p.due_amount > 0);
                 const paidPatients = patients.filter(p => p.due_amount === 0);
                 payments.unpaid_count = duePatients.length;
                 payments.total_due = duePatients.reduce((s, p) => s + p.due_amount, 0);
-
                 await savePayments(payments);
 
-                // Log activity
                 const log = {
                     created_at: new Date().toLocaleString(),
                     admin_user: adminUser,
@@ -2105,7 +2120,6 @@
                     closePayConfirm();
                 }, 1200);
 
-                // Send WhatsApp confirmation if phone exists
                 if (patient.phone) {
                     const msg =
                         `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you for choosing Rajan Path Lab.`;
@@ -2114,6 +2128,7 @@
             });
 
             function sendWhatsApp(phone, message) {
+                if (!phone) { alert('No phone number available for WhatsApp.'); return; }
                 let clean = phone.replace(/\s/g, '').replace(/-/g, '');
                 if (clean.startsWith('0')) clean = clean.substring(1);
                 if (/^\d{10}$/.test(clean)) clean = '+91' + clean;
@@ -2121,7 +2136,7 @@
                 window.open('https://wa.me/' + clean + '?text=' + encodeURIComponent(message), '_blank');
             }
 
-            // ─── पोर्टल (Due check improved) ───
+            // ─── पोर्टल ───
             function openPortal() {
                 portalModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -2160,7 +2175,7 @@
                     listDiv.style.display = 'none';
                     return;
                 }
-                await refreshAllData(); // ताज़ा डेटा लोड
+                await refreshAllData();
                 const normalizedSearch = normalizePhone(searchValue);
                 let patient = patients.find(p => p.patient_id === searchValue);
                 if (!patient) patient = patients.find(p => normalizePhone(p.phone || '') === normalizedSearch || p
@@ -2181,7 +2196,6 @@
                     listDiv.style.display = 'none';
                     return;
                 }
-                // 🔥 Due check – numeric conversion
                 const dueAmount = Number(patient.due_amount);
                 const isPaid = dueAmount === 0;
                 const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
@@ -2214,10 +2228,8 @@
                 listDiv.innerHTML = html;
                 listDiv.style.display = 'block';
 
-                // Download button click handler – extra safety check
                 listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
                     btn.addEventListener('click', async function() {
-                        // Fresh due check from global patients array
                         const patId = patient.patient_id;
                         const freshPatient = patients.find(p => p.patient_id === patId);
                         const freshDue = freshPatient ? Number(freshPatient.due_amount) : dueAmount;
@@ -2428,13 +2440,14 @@
                 }
             }
 
-            // ─── पेशेंट्स ───
+            // ─── पेशेंट्स (Phone optional) ───
             function refreshPatients() {
                 const tbody = $('patientTableBody');
                 if (patients.length) {
                     tbody.innerHTML = patients.map(p => `
                             <tr>
-                                <td><b>${p.patient_id}</b></td><td>${p.name}</td><td>${p.phone}</td>
+                                <td><b>${p.patient_id}</b></td><td>${p.name}</td>
+                                <td>${p.phone || '—'}</td>
                                 <td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td>
                                 <td>₹${p.due_amount}</td>
                                 <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
@@ -2447,7 +2460,6 @@
                 } else tbody.innerHTML = '<tr><td colspan="8">No patients</td></tr>';
             }
 
-            // Payment confirm button handler
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-pay-confirm')) {
                     const id = e.target.closest('.btn-pay-confirm').dataset.id;
@@ -2455,6 +2467,7 @@
                 }
             });
 
+            // ─── ADD PATIENT — Phone is NOW OPTIONAL ───
             $('addPatientBtn').addEventListener('click', async function() {
                 const patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
@@ -2462,7 +2475,10 @@
                 const test = $('patTest').value.trim();
                 const status = $('patStatus').value;
                 const due = parseFloat($('patDue').value) || 0;
-                if (!name || !phone) { alert('Name & Phone required'); return; }
+
+                // ✅ Only name is required now
+                if (!name) { alert('❌ Name is required. Phone is optional.'); return; }
+
                 let id = patientId;
                 if (!id) {
                     const nextId = patients.length + 1;
@@ -2471,15 +2487,20 @@
                     .getDate()).padStart(2, '0');
                     id = 'RPL-' + ds + '-' + String(nextId).padStart(4, '0');
                 }
+
                 const normPhone = normalizePhone(phone);
-                if (patients.find(p => p.patient_id === id || normalizePhone(p.phone) === normPhone)) {
-                    alert('Patient ID or Phone already exists!');
-                    return;
+                // Check duplicate: if phone is provided, check by phone; always check by ID
+                const duplicate = patients.find(p => p.patient_id === id);
+                if (duplicate) { alert('❌ Patient ID already exists!'); return; }
+                if (normPhone) {
+                    const phoneDup = patients.find(p => normalizePhone(p.phone) === normPhone);
+                    if (phoneDup) { alert('❌ Phone number already registered to ' + phoneDup.name); return; }
                 }
+
                 patients.push({
                     patient_id: id,
                     name,
-                    phone,
+                    phone: phone || '',
                     test: test || 'Not Specified',
                     status,
                     due_amount: due,
@@ -2488,13 +2509,14 @@
                 await savePatients(patients);
                 await refreshAllData();
                 refreshAllSections();
-                alert('✅ Patient ' + id + ' added!');
+                alert('✅ Patient ' + id + ' added successfully!');
                 $('patId').value = '';
                 $('patName').value = '';
                 $('patPhone').value = '';
                 $('patTest').value = '';
                 $('patDue').value = '';
             });
+
             $('clearPatientBtn').addEventListener('click', () => {
                 $('patId').value = '';
                 $('patName').value = '';
@@ -2541,14 +2563,21 @@
                             </tr>`).join('');
                 } else tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
             }
+
+            // ─── DOWNLOAD handler (uses new downloadPDF) ───
             document.addEventListener('click', async function(e) {
                 if (e.target.closest('.btn-download-report')) {
                     const btn = e.target.closest('.btn-download-report');
                     const id = parseInt(btn.dataset.id);
                     const fileName = btn.dataset.fileName;
-                    try { await downloadPDF(id, fileName); } catch (err) { alert('Error: ' + err.message); }
+                    try {
+                        await downloadPDF(id, fileName);
+                    } catch (err) {
+                        alert('Download error: ' + err.message);
+                    }
                 }
             });
+
             $('uploadReportBtn').addEventListener('click', async function() {
                 const pid = $('reportPatientId').value.trim();
                 const test = $('reportTestName').value.trim();
@@ -2594,6 +2623,7 @@
                 $('reportFile').value = '';
                 setTimeout(() => { msgDiv.textContent = ''; }, 5000);
             });
+
             document.addEventListener('click', async function(e) {
                 if (e.target.closest('.btn-del-report')) {
                     const btn = e.target.closest('.btn-del-report');
@@ -2617,15 +2647,17 @@
                 if (patients.length) {
                     tbody.innerHTML = patients.slice(0, 10).map(p => `
                             <tr>
-                                <td>${p.name}</td><td>${p.phone}</td><td>${p.test}</td>
+                                <td>${p.name}</td><td>${p.phone || '—'}</td><td>${p.test}</td>
                                 <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}"><i class="fab fa-whatsapp"></i> Send</button></td>
+                                <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}" ${p.phone ? '' : 'disabled'}><i class="fab fa-whatsapp"></i> Send</button></td>
                             </tr>`).join('');
                 } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
             }
+
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.wa-send')) {
                     const btn = e.target.closest('.wa-send');
+                    if (!btn.dataset.phone) { alert('No phone number for this patient.'); return; }
                     const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g,
                         btn.dataset.test);
                     sendWhatsApp(btn.dataset.phone, msg);
@@ -2649,19 +2681,16 @@
                 if (phone) sendWhatsApp(phone, 'Reminder: Payment due at Rajan Path Lab.');
             });
 
-            // ─── पेमेंट्स (with History) ───
+            // ─── पेमेंट्स ───
             function refreshPayments() {
                 const due = patients.filter(p => p.due_amount > 0);
                 const paid = patients.filter(p => p.due_amount === 0);
                 const totalDue = due.reduce((s, p) => s + p.due_amount, 0);
-
-                // Update stats
                 $('pPaid').textContent = paid.length;
                 $('pUnpaid').textContent = due.length;
                 $('pTotalDue').textContent = '₹' + totalDue;
                 $('pHistoryCount').textContent = (payments.history || []).length;
 
-                // Payment table
                 const tbody = $('paymentsTableBody');
                 if (patients.length) {
                     tbody.innerHTML = patients.map(p => `
@@ -2677,7 +2706,6 @@
                             </tr>`).join('');
                 } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
 
-                // Payment history
                 const historyBody = $('paymentHistoryBody');
                 const history = payments.history || [];
                 if (history.length) {
@@ -2696,7 +2724,6 @@
                         '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
                 }
             }
-
             $('refreshPayments').addEventListener('click', refreshPayments);
 
             // ─── UPI ───
@@ -2768,10 +2795,9 @@
                 alert('✅ Password changed! (dummy)');
             });
 
-            console.log('✅ Rajan Path Lab · Payment Confirm System + Supabase Storage');
+            console.log('✅ Rajan Path Lab · Phone optional + Force-download PDF');
             console.log('🔑 Login: Rajan5530 / Rkchandra5530');
-            console.log('💰 Payment flow: Click "Confirm Pay" → Confirm amount → Report unlocked');
-            console.log('📁 PDFs stored in Supabase Storage (reports bucket)');
+            console.log('📁 PDFs: fetch+blob → forces download to Downloads folder');
 
         })();
     </script>
