@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.9/fullcalendar.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        /* ─── PRELOADER (unchanged) ─── */
+        /* ─── PRELOADER ─── */
         #preloader { position: fixed; inset: 0; background: #0a2540; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.55s, visibility 0.55s; opacity: 1; visibility: visible; }
         #preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
         .preloader-logo { font-family: 'Segoe UI', sans-serif; font-size: 2.8rem; font-weight: 700; color: #fff; text-align: center; }
@@ -77,7 +78,6 @@
         .logo-svg-small { height: 35px; width: auto; }
         .logo-svg-invoice { height: 50px; width: auto; }
 
-        /* Header (Main Site) */
         header { background: var(--primary-blue); color: white; padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         header .logo { display: flex; align-items: center; gap: 12px; }
         header .logo-text h1 { margin: 0; font-size: 22px; font-weight: 700; }
@@ -113,16 +113,34 @@
         .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .feature-item { display: flex; align-items: center; gap: 10px; font-weight: 600; }
         .feature-item i { color: var(--accent-teal); }
-        .partner-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .partner-item { background: white; padding: 15px; border-radius: 6px; width: 150px; border: 1px solid #cbd5e1; text-align: center; }
-        .partner-item i { font-size: 32px; margin-bottom: 8px; }
-        .partner-item p { font-weight: 700; margin: 0; font-size: 14px; }
-        .map-container { margin-top: 20px; border-radius: 8px; overflow: hidden; max-width: 800px; margin-left: auto; margin-right: auto; border: 1px solid #cbd5e1; }
-        footer { background: var(--primary-blue); color: #e2e8f0; padding: 40px 20px; text-align: center; }
-        .footer-links { margin: 20px 0; }
-        .footer-links a { color: white; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 600; }
-        .footer-links a:hover { color: var(--accent-teal); }
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+
+        /* ─── MODALS ─── */
+        .login-modal, .upi-modal, .pay-confirm-modal, .invoice-modal, .patient-portal-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10001; align-items: center; justify-content: center; }
+        .login-modal.show, .upi-modal.show, .pay-confirm-modal.show, .invoice-modal.show, .patient-portal-modal.active { display: flex; }
+        .login-modal-content, .upi-modal-content, .pay-confirm-content, .invoice-modal-content, .patient-portal-content { background: white; padding: 30px; border-radius: 12px; max-width: 480px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
+        .btn-close { background: #6c757d; border: none; padding: 8px; width: 100%; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; margin-top: 6px; }
+
+        /* Payment Confirm Modal Styles */
+        .pay-detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #edf2f9; }
+        .pay-detail-row .label { font-weight: 600; color: #4a5568; }
+        .pay-detail-row .value { font-weight: 700; }
+        .pay-amount-large { text-align: center; font-size: 2.8rem; font-weight: 800; color: var(--primary-blue); padding: 16px; background: #f8fafc; border-radius: 12px; margin: 16px 0; letter-spacing: -0.5px; }
+        .pay-method-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
+        .pay-method-group label { display: flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 10px 16px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; font-weight: 600; }
+        .pay-method-group label.selected { border-color: var(--accent-teal); background: #e6fffa; color: #0d9488; }
+        .pay-btns { display: flex; gap: 12px; margin-top: 20px; }
+        .pay-btns .btn { flex: 1; padding: 10px; }
+
+        /* Invoice Modal Styles */
+        .invoice-print-area { background: white; }
+        .invoice-print-area .invoice-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent-teal); padding-bottom: 16px; margin-bottom: 16px; }
+        .invoice-print-area .invoice-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+        .invoice-print-area table { width: 100%; border-collapse: collapse; }
+        .invoice-print-area table th { background: #f8fafc; font-weight: 600; text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; }
+        .invoice-print-area table td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+        .invoice-print-area .total-row { font-weight: 800; font-size: 1.2rem; }
+
+        .badge-pay-confirmed { display: inline-block; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #d1fae5; color: #065f46; }
 
         /* ─── ADMIN PANEL ─── */
         #adminPanelWrapper { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; overflow-y: auto; padding: 20px; }
@@ -151,7 +169,6 @@
         .admin-section.active { display: block; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Cards & Stats */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 14px; margin-bottom: 20px; }
         .stat-card { background: white; padding: 16px 14px; border-radius: 10px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); transition: 0.2s; }
         .stat-card:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.06); transform: translateY(-2px); }
@@ -206,11 +223,10 @@
         .template-box .msg-preview { background: #f8fafc; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #25D366; font-size: 14px; white-space: pre-wrap; }
         .premium-badge { background: linear-gradient(135deg,#fbbf24,#f59e0b); color: #78350f; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 20px; text-transform: uppercase; margin-left: 6px; }
 
-        /* Modals (Login, UPI, Payment, Invoice, Portal) - keep existing styles */
-        .login-modal, .upi-modal, .pay-confirm-modal, .invoice-modal, .patient-portal-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10001; align-items: center; justify-content: center; }
-        .login-modal.show, .upi-modal.show, .pay-confirm-modal.show, .invoice-modal.show, .patient-portal-modal.active { display: flex; }
-        .login-modal-content, .upi-modal-content, .pay-confirm-content, .invoice-modal-content, .patient-portal-content { background: white; padding: 30px; border-radius: 12px; max-width: 480px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
-        .btn-close { background: #6c757d; border: none; padding: 8px; width: 100%; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; margin-top: 6px; }
+        /* Portal Modal Styles */
+        .portal-report-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; }
+        .portal-download-btn { background: var(--accent-teal); color: white; border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer; }
+        .portal-download-btn:disabled { background: #94a3b8; cursor: not-allowed; }
 
         /* Dark Mode */
         body.admin-dark #adminPanelContainer { background: #0f172a; }
@@ -222,13 +238,8 @@
         body.admin-dark .badge-status.paid { background: #064e3b; color: #6ee7b7; }
         body.admin-dark .badge-status.unpaid { background: #7f1d1d; color: #fca5a5; }
         body.admin-dark .pay-confirm-content, body.admin-dark .invoice-modal-content { background: #1e293b; color: #f1f5f9; }
-        body.admin-dark .pay-confirm-content .pay-detail-row { border-color: #334155; }
-        body.admin-dark .pay-confirm-content .pay-amount-large { background: #0f172a; color: #f1f5f9; }
-        body.admin-dark .pay-confirm-content .pay-method-group label { background: #0f172a; color: #e2e8f0; }
-        body.admin-dark .pay-confirm-content .pay-method-group label.selected { border-color: var(--accent-teal); background: #134e4a; }
-        body.admin-dark .invoice-print-area .invoice-header h2 { color: #f1f5f9; }
-        body.admin-dark .invoice-print-area table th { background: #0f172a; border-color: #334155; }
-        body.admin-dark .invoice-print-area table td { border-color: #334155; }
+        body.admin-dark .pay-amount-large { background: #0f172a; color: #f1f5f9; }
+        body.admin-dark .pay-method-group label { background: #0f172a; color: #e2e8f0; }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -247,13 +258,6 @@
             .logo-svg { height: 35px; }
             .logo-svg-small { height: 28px; }
         }
-
-        /* Extra for calendar and scanner */
-        #calendar { max-width: 100%; margin: 0 auto; background: white; padding: 10px; border-radius: 10px; }
-        #scanner-container { width: 100%; max-width: 400px; margin: 0 auto; }
-        #scanner-container video { width: 100%; border-radius: 10px; }
-        .normal-range { color: #22c55e; }
-        .out-of-range { color: #ef4444; }
     </style>
 </head>
 <body>
@@ -278,22 +282,14 @@
 <!-- ═══════ TOAST CONTAINER ═══════ -->
 <div id="toastContainer"></div>
 
-<!-- ═══════ MAIN SITE HEADER (WITH LOGO) ═══════ -->
+<!-- ═══════ MAIN SITE HEADER ═══════ -->
 <header>
     <div class="logo">
-        <!-- Professional SVG Logo -->
         <svg class="logo-svg" viewBox="0 0 120 45" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#008080"/>
-                    <stop offset="100%" stop-color="#20b2aa"/>
-                </linearGradient>
-            </defs>
-            <!-- DNA helix symbol -->
+            <defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#008080"/><stop offset="100%" stop-color="#20b2aa"/></linearGradient></defs>
             <circle cx="22" cy="22.5" r="18" fill="url(#logoGrad)" opacity="0.9"/>
             <path d="M22 4.5 C28 10, 28 35, 22 40.5 C16 35, 16 10, 22 4.5" stroke="white" stroke-width="2.5" fill="none"/>
             <path d="M22 12 C27 16, 27 29, 22 33 C17 29, 17 16, 22 12" stroke="#d4af37" stroke-width="1.8" fill="none"/>
-            <!-- Text -->
             <text x="45" y="18" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="13" fill="#0a2540">RAJAN</text>
             <text x="45" y="34" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="14" fill="#008080">PATH LAB</text>
             <text x="45" y="43" font-family="'Segoe UI', Arial, sans-serif" font-weight="400" font-size="7" fill="#64748b">SOLUTION OF YOUR HEALTHY LIFE</text>
@@ -304,10 +300,10 @@
         </div>
     </div>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="tests.html">Tests</a>
-        <a href="book.html">Book Test</a>
-        <a href="contact.html">About</a>
+        <a href="#">Home</a>
+        <a href="#">Tests</a>
+        <a href="#">Book Test</a>
+        <a href="#">About</a>
         <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
         <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
     </nav>
@@ -317,7 +313,7 @@
 <div class="hero">
     <h2>Reliable Diagnostics with Advanced Technology</h2>
     <div class="btn-container">
-        <a class="btn-book" href="book.html">Book Test</a>
+        <a class="btn-book" href="#">Book Test</a>
         <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>
     </div>
 </div>
@@ -329,50 +325,7 @@
     </div>
 </div>
 
-<!-- ═══════ ABOUT & SECTIONS (truncated for brevity) ═══════ -->
-<section id="about" style="background:white;">
-    <div class="about-container">
-        <div class="about-text">
-            <h2>About Rajan Path Lab</h2>
-            <p>Situated in <b>Manahar Bhushra (Pandwa Patan Road)</b>, Rajan Path Lab has established itself as a trusted name in diagnostic healthcare. We are built on the foundational pillars of <b>Clinical Precision, Diagnostic Accuracy, and Ethical Practices</b>.</p>
-            <h3>Why Choose Us?</h3>
-            <div class="about-features">
-                <div class="feature-item"><i class="fas fa-check-circle"></i> High-Precision Analyzers</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Zero-Error Protocol</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Fast Digital Reports</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Transparent Billing</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> 7 Days Open</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Expert Pathology</div>
-            </div>
-        </div>
-        <div style="text-align:center;">
-            <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width:180px;opacity:0.9;">
-        </div>
-    </div>
-</section>
-
-<div class="section-wrapper-alt"><section><h2>Our Collection Centers</h2> ... </section></div>
-<section style="background:white;"><h2>Our Diagnostic Partners</h2> ... </section>
-<div class="section-wrapper-alt"><section><h2>Specialized Test Menu</h2> ... </section></div>
-
-<footer>
-    <h2>RAJAN PATH LAB (RPL)</h2>
-    <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-    </div>
-    <div class="footer-links">
-        <a href="#"><i class="fas fa-map-marked-alt"></i> Google Maps</a>
-        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="tel:+918709946177"><i class="fas fa-phone"></i> 8709946177</a>
-    </div>
-    <p>🌐 rajanpathlab.github.io</p>
-    <p style="font-size:12px;opacity:0.7;margin-top:10px;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
-</footer>
-
-<a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
-
-<!-- ═══════ MODALS (Login, Payment, Invoice, Portal, UPI) ═══════ -->
-<!-- Login Modal -->
+<!-- ═══════ LOGIN MODAL ═══════ -->
 <div class="login-modal" id="loginModal">
     <div class="login-modal-content">
         <h3><i class="fas fa-lock"></i> Admin Login</h3>
@@ -388,7 +341,7 @@
     </div>
 </div>
 
-<!-- Payment Confirm Modal -->
+<!-- ═══════ PAYMENT CONFIRM MODAL ═══════ -->
 <div class="pay-confirm-modal" id="payConfirmModal">
     <div class="pay-confirm-content">
         <h3><i class="fas fa-check-circle"></i> Confirm Payment</h3>
@@ -407,20 +360,19 @@
             <label><input type="radio" name="payMethod" value="Other"> 🏦 Other</label>
         </div>
         <div class="pay-btns">
-            <button class="btn btn-cancel" id="payConfirmCancel">Cancel</button>
+            <button class="btn btn-outline" id="payConfirmCancel">Cancel</button>
             <button class="btn btn-primary" id="payConfirmConfirm"><i class="fas fa-check"></i> Confirm Payment</button>
         </div>
         <div id="payConfirmStatus" style="margin-top:10px;font-weight:600;text-align:center;color:var(--accent-teal);"></div>
     </div>
 </div>
 
-<!-- Invoice Modal (with Logo) -->
+<!-- ═══════ INVOICE MODAL ═══════ -->
 <div class="invoice-modal" id="invoiceModal">
     <div class="invoice-modal-content">
         <div id="invoicePrintArea" class="invoice-print-area">
             <div class="invoice-header">
                 <div style="display:flex;align-items:center;gap:12px;">
-                    <!-- Invoice Logo SVG -->
                     <svg class="logo-svg-invoice" viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg">
                         <defs><linearGradient id="invGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#008080"/><stop offset="100%" stop-color="#20b2aa"/></linearGradient></defs>
                         <circle cx="25" cy="25" r="20" fill="url(#invGrad)" opacity="0.9"/>
@@ -464,7 +416,7 @@
     </div>
 </div>
 
-<!-- UPI Modal -->
+<!-- ═══════ UPI MODAL ═══════ -->
 <div class="upi-modal" id="upiModal">
     <div class="upi-modal-content">
         <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>
@@ -474,24 +426,22 @@
     </div>
 </div>
 
-<!-- Patient Portal Modal -->
+<!-- ═══════ PATIENT PORTAL MODAL ═══════ -->
 <div class="patient-portal-modal" id="patientPortalModal">
     <div class="patient-portal-content">
-        <div class="portal-header" style="background:#1a212c;padding:1.8rem 2rem 1.4rem;color:white;">
-            <h1 style="font-size:1.9rem;font-weight:700;color:#fef7e8;display:flex;align-items:center;gap:12px;">📄 PATIENT REPORT PORTAL <span style="background:rgba(212,175,55,0.2);padding:6px 16px;border-radius:60px;font-size:0.7rem;color:#e6c168;border:0.5px solid rgba(212,175,55,0.5);">DOWNLOAD</span></h1>
-            <div style="color:#8f9bb3;font-size:0.8rem;margin-top:12px;border-left:2px solid #e6c168;padding-left:14px;">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
+        <div style="background:#1a212c;padding:1.8rem 2rem 1.4rem;color:white;">
+            <h1 style="font-size:1.9rem;font-weight:700;color:#fef7e8;display:flex;align-items:center;gap:12px;">📄 PATIENT REPORT PORTAL <span style="background:rgba(212,175,55,0.2);padding:6px 16px;border-radius:60px;font-size:0.7rem;color:#e6c168;">DOWNLOAD</span></h1>
+            <div style="color:#8f9bb3;font-size:0.8rem;margin-top:12px;">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
         </div>
         <div style="padding:2rem;">
             <div style="margin-bottom:1.5rem;">
-                <div style="display:flex;align-items:center;gap:12px;font-weight:700;font-size:0.75rem;text-transform:uppercase;color:#2c3f4c;margin-bottom:10px;"><span style="background:#f0f3f9;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;">🔍</span> PATIENT ID OR MOBILE</div>
-                <input type="text" id="portalPatientId" style="width:100%;padding:1rem 1.3rem;font-size:1rem;border:1.5px solid #e2e8f0;border-radius:1.25rem;outline:none;font-weight:500;" placeholder="Enter Patient ID or Mobile Number" autocomplete="off">
+                <input type="text" id="portalPatientId" style="width:100%;padding:1rem;font-size:1rem;border:1.5px solid #e2e8f0;border-radius:1.25rem;outline:none;font-weight:500;" placeholder="Enter Patient ID or Mobile Number">
             </div>
-            <button id="portalFetchBtn" style="width:100%;background:linear-gradient(98deg,#075E54,#128C7E);border:none;padding:1rem;font-size:1rem;font-weight:700;color:white;border-radius:2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 8px 20px -8px rgba(7,94,84,0.5);"><span>🔍</span> VIEW MY REPORTS →</button>
-            <div id="portalStatus" style="margin-top:1.2rem;padding:0.9rem 1.2rem;background:#f8fafd;border-radius:1rem;font-size:0.85rem;color:#2c3e50;border-left:3px solid #c9a03d;">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
-            <div id="portalReportList" style="margin-top:1.5rem;border-top:1px solid #e2e8f0;padding-top:1.5rem;display:none;"></div>
-            <button class="portal-close-btn" id="closePortalBtn" style="background:#6c757d;border:none;padding:8px 16px;border-radius:2rem;font-weight:600;color:white;cursor:pointer;font-size:0.8rem;margin-top:1rem;">✕ Close Portal</button>
+            <button id="portalFetchBtn" style="width:100%;background:linear-gradient(98deg,#075E54,#128C7E);border:none;padding:1rem;font-size:1rem;font-weight:700;color:white;border-radius:2rem;cursor:pointer;">🔍 VIEW MY REPORTS →</button>
+            <div id="portalStatus" style="margin-top:1.2rem;padding:0.9rem 1.2rem;background:#f8fafd;border-radius:1rem;font-size:0.85rem;color:#2c3e50;">◆ Enter your details and click "VIEW MY REPORTS"</div>
+            <div id="portalReportList" style="margin-top:1.5rem;display:none;"></div>
+            <button class="btn-close" id="closePortalBtn" style="background:#6c757d;border:none;padding:8px 16px;border-radius:2rem;font-weight:600;color:white;cursor:pointer;font-size:0.8rem;margin-top:1rem;">✕ Close Portal</button>
         </div>
-        <div style="padding:1rem 2rem;font-size:0.7rem;color:#91a3bb;border-top:1px solid #edf2f9;display:flex;justify-content:space-between;"><span>✦ SECURE DOWNLOAD SYSTEM ✦</span><span>RAJAN PATH LAB</span></div>
     </div>
 </div>
 
@@ -500,7 +450,6 @@
     <div id="adminPanelContainer">
         <div class="admin-header">
             <div class="logo-small">
-                <!-- Admin Logo SVG (small) -->
                 <svg class="logo-svg-small" viewBox="0 0 80 30" xmlns="http://www.w3.org/2000/svg">
                     <defs><linearGradient id="adminGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#008080"/><stop offset="100%" stop-color="#20b2aa"/></linearGradient></defs>
                     <circle cx="15" cy="15" r="12" fill="url(#adminGrad)" opacity="0.9"/>
@@ -532,14 +481,8 @@
                 <a data-section="inventory"><i class="fas fa-boxes"></i> Inventory</a>
                 <a data-section="users"><i class="fas fa-user-shield"></i> User Roles</a>
                 <a data-section="settings"><i class="fas fa-cog"></i> Settings</a>
-                <div class="nav-label">Analytics</div>
-                <a data-section="analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
-                <a data-section="backup"><i class="fas fa-database"></i> Backup</a>
-                <div class="nav-label">System</div>
-                <a data-section="security"><i class="fas fa-shield-alt"></i> Security</a>
             </div>
             <div class="admin-content">
-
                 <!-- DASHBOARD -->
                 <div class="admin-section active" id="sec-dashboard">
                     <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
@@ -551,18 +494,14 @@
                         <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dDue">0</h4><p>Due Payment Patients</p></div></div>
                         <div class="stat-card"><div class="icon teal"><i class="fas fa-calendar-check"></i></div><div class="info"><h4 id="dRevenue">₹0</h4><p>Monthly Revenue</p></div></div>
                     </div>
-                    <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;">
-                        <div class="card"><h4><i class="fas fa-chart-line"></i> Weekly Reports</h4><canvas id="chartWeekly" style="max-height:180px;width:100%;"></canvas></div>
-                        <div class="card"><h4><i class="fas fa-chart-pie"></i> Test-wise</h4><canvas id="chartPie" style="max-height:180px;width:100%;"></canvas></div>
-                    </div>
                     <div class="table-wrap">
-                        <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr></tbody></table>
+                        <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"></tbody></table>
                     </div>
                 </div>
 
-                <!-- PATIENTS (existing) -->
+                <!-- PATIENTS -->
                 <div class="admin-section" id="sec-patients">
-                    <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
+                    <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management</h2>
                     <div class="form-grid">
                         <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate" /></label>
                         <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
@@ -585,1747 +524,950 @@
                         <button class="btn btn-success btn-sm" id="exportExcelPatients"><i class="fas fa-file-excel"></i> Export</button>
                     </div>
                     <div class="table-wrap">
-                        <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
+                        <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>Action</th></tr></thead><tbody id="patientTableBody"></tbody></table>
                     </div>
                 </div>
 
                 <!-- APPOINTMENTS -->
                 <div class="admin-section" id="sec-appointments">
-                    <h2 style="text-align:left;"><i class="fas fa-calendar-check"></i> Appointments & Scheduling</h2>
+                    <h2 style="text-align:left;"><i class="fas fa-calendar-check"></i> Appointments</h2>
                     <div class="form-grid">
                         <label>Patient <input type="text" id="appPatient" placeholder="Patient name" /></label>
                         <label>Date <input type="date" id="appDate" /></label>
                         <label>Time <input type="time" id="appTime" /></label>
                         <label>Test <input type="text" id="appTest" placeholder="Test name" /></label>
-                        <div style="display:flex;gap:10px;align-items:flex-end;">
-                            <button class="btn btn-primary" id="addAppointmentBtn"><i class="fas fa-plus"></i> Add</button>
-                            <button class="btn btn-outline btn-sm" id="refreshAppointments"><i class="fas fa-sync"></i></button>
-                        </div>
+                        <div><button class="btn btn-primary" id="addAppointmentBtn"><i class="fas fa-plus"></i> Add</button></div>
                     </div>
                     <div id="calendar" style="background:white;padding:10px;border-radius:10px;border:1px solid #e2e8f0;"></div>
                     <div class="table-wrap" style="margin-top:20px;">
-                        <table><thead><tr><th>Patient</th><th>Date</th><th>Time</th><th>Test</th><th>Action</th></tr></thead><tbody id="appointmentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No appointments</td></tr></tbody></table>
+                        <table><thead><tr><th>Patient</th><th>Date</th><th>Time</th><th>Test</th></tr></thead><tbody id="appointmentsTableBody"></tbody></table>
                     </div>
                 </div>
 
                 <!-- SAMPLE TRACKING -->
                 <div class="admin-section" id="sec-samples">
-                    <h2 style="text-align:left;"><i class="fas fa-flask"></i> Sample / Collection Tracking <span class="premium-badge">Barcode</span></h2>
+                    <h2 style="text-align:left;"><i class="fas fa-flask"></i> Sample Tracking</h2>
                     <div class="form-grid">
                         <label>Patient ID <input type="text" id="samplePatientId" placeholder="RPL-..." /></label>
                         <label>Test <input type="text" id="sampleTest" placeholder="Test name" /></label>
-                        <label>Status <select id="sampleStatus">
-                            <option value="collected">Collected</option>
-                            <option value="transit">In Transit</option>
-                            <option value="processing">Processing</option>
-                            <option value="completed">Completed</option>
-                        </select></label>
+                        <label>Status <select id="sampleStatus"><option value="collected">Collected</option><option value="transit">In Transit</option><option value="processing">Processing</option><option value="completed">Completed</option></select></label>
                         <label>Collected By <input type="text" id="sampleCollector" placeholder="Technician name" /></label>
-                        <div style="display:flex;gap:10px;align-items:flex-end;">
-                            <button class="btn btn-primary" id="addSampleBtn"><i class="fas fa-plus"></i> Add Sample</button>
-                            <button class="btn btn-outline btn-sm" id="refreshSamples"><i class="fas fa-sync"></i></button>
-                            <button class="btn btn-outline btn-sm" id="scanBarcodeBtn"><i class="fas fa-camera"></i> Scan</button>
-                        </div>
+                        <div><button class="btn btn-primary" id="addSampleBtn"><i class="fas fa-plus"></i> Add Sample</button></div>
                     </div>
                     <div id="scanner-container" style="display:none;margin:10px 0;"></div>
                     <div class="table-wrap">
-                        <table><thead><tr><th>Sample ID</th><th>Patient</th><th>Test</th><th>Status</th><th>Collector</th><th>Action</th></tr></thead><tbody id="samplesTableBody"><tr><td colspan="6" style="text-align:center;padding:20px;">No samples</td></tr></tbody></table>
+                        <table><thead><tr><th>Sample ID</th><th>Patient</th><th>Test</th><th>Status</th><th>Collector</th></tr></thead><tbody id="samplesTableBody"></tbody></table>
                     </div>
                 </div>
 
                 <!-- DOCTOR REFERRAL -->
                 <div class="admin-section" id="sec-referrals">
-                    <h2 style="text-align:left;"><i class="fas fa-user-md"></i> Doctor Referral Management</h2>
+                    <h2 style="text-align:left;"><i class="fas fa-user-md"></i> Doctor Referral</h2>
                     <div class="form-grid">
                         <label>Doctor Name <input type="text" id="refDoctor" placeholder="Dr. Name" /></label>
-                        <label>Specialty <input type="text" id="refSpecialty" placeholder="e.g. Cardiologist" /></label>
+                        <label>Specialty <input type="text" id="refSpecialty" placeholder="Cardiologist" /></label>
                         <label>Phone <input type="text" id="refPhone" placeholder="9876543210" /></label>
                         <label>Commission % <input type="number" id="refCommission" placeholder="10" /></label>
-                        <div style="display:flex;gap:10px;align-items:flex-end;">
-                            <button class="btn btn-primary" id="addReferralBtn"><i class="fas fa-plus"></i> Add Doctor</button>
-                            <button class="btn btn-outline btn-sm" id="refreshReferrals"><i class="fas fa-sync"></i></button>
-                        </div>
+                        <div><button class="btn btn-primary" id="addReferralBtn"><i class="fas fa-plus"></i> Add Doctor</button></div>
                     </div>
                     <div class="table-wrap">
-                        <table><thead><tr><th>Doctor</th><th>Specialty</th><th>Phone</th><th>Commission</th><th>Total Referrals</th><th>Action</th></tr></thead><tbody id="referralsTableBody"><tr><td colspan="6" style="text-align:center;padding:20px;">No doctors</td></tr></tbody></table>
-                    </div>
-                    <h4 style="margin-top:20px;">Referral Records</h4>
-                    <div class="table-wrap">
-                        <table><thead><tr><th>Patient</th><th>Doctor</th><th>Test</th><th>Amount</th><th>Commission</th><th>Date</th></tr></thead><tbody id="referralRecordsBody"><tr><td colspan="6" style="text-align:center;padding:20px;">No referral records</td></tr></tbody></table>
+                        <table><thead><tr><th>Doctor</th><th>Specialty</th><th>Phone</th><th>Commission</th></tr></thead><tbody id="referralsTableBody"></tbody></table>
                     </div>
                 </div>
 
-                <!-- REPORTS (existing) -->
+                <!-- REPORTS -->
                 <div class="admin-section" id="sec-reports">
                     <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                     <div class="form-grid">
                         <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-..." /></label>
-                        <label>Test Name <input type="text" id="reportTestName" list="testList2" placeholder="Select test" />
-                            <datalist id="testList2">...</datalist>
-                        </label>
+                        <label>Test Name <input type="text" id="reportTestName" placeholder="Select test" /></label>
                         <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>
-                        <label>Replace <select id="reportReplace"><option value="no">No</option><option value="yes">Yes</option></select></label>
-                        <div style="display:flex;gap:10px;align-items:flex-end;"><button class="btn btn-primary" id="uploadReportBtn"><i class="fas fa-upload"></i> Upload</button><button class="btn btn-outline btn-sm" id="refreshReports"><i class="fas fa-sync"></i></button></div>
+                        <div><button class="btn btn-primary" id="uploadReportBtn"><i class="fas fa-upload"></i> Upload</button></div>
                     </div>
-                    <div id="uploadMessage" style="margin:10px 0;font-weight:bold;color:red;"></div>
-                    <div class="table-wrap"><table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr></tbody></table></div>
+                    <div class="table-wrap">
+                        <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"></tbody></table>
+                    </div>
                 </div>
 
-                <!-- WHATSAPP (existing) -->
+                <!-- WHATSAPP -->
                 <div class="admin-section" id="sec-whatsapp">
                     <h2 style="text-align:left;"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp System</h2>
                     <div class="template-box">
-                        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                            <span><i class="fas fa-pen"></i> <strong>Custom Template</strong></span>
-                            <span class="badge-status paid"><i class="fas fa-bolt"></i> One-Click</span>
-                        </div>
                         <div class="msg-preview" id="whatsappPreview">Dear {patient}, your report for {test} is ready. Thank you.</div>
-                        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-                            <button class="btn btn-primary" style="background:#25D366;border-color:#25D366;" id="sendWAPatient"><i class="fab fa-whatsapp"></i> To Patient</button>
-                            <button class="btn btn-primary" id="sendWADoctor"><i class="fas fa-user-md"></i> To Doctor</button>
-                        </div>
+                        <button class="btn btn-primary" style="background:#25D366;" id="sendWAPatient"><i class="fab fa-whatsapp"></i> To Patient</button>
                     </div>
-                    <div class="table-wrap"><table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table></div>
+                    <div class="table-wrap"><table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th></tr></thead><tbody id="whatsappPatientList"></tbody></table></div>
                 </div>
 
-                <!-- PAYMENTS (existing + history) -->
+                <!-- PAYMENTS -->
                 <div class="admin-section" id="sec-payments">
-                    <h2 style="text-align:left;"><i class="fas fa-rupee-sign"></i> Payment / Dues <span class="premium-badge">UPI+QR</span></h2>
-                    <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
+                    <h2 style="text-align:left;"><i class="fas fa-rupee-sign"></i> Payments</h2>
+                    <div class="stats-grid">
                         <div class="stat-card"><div class="icon green"><i class="fas fa-check-circle"></i></div><div class="info"><h4 id="pPaid">0</h4><p>Paid</p></div></div>
                         <div class="stat-card"><div class="icon red"><i class="fas fa-times-circle"></i></div><div class="info"><h4 id="pUnpaid">0</h4><p>Unpaid</p></div></div>
                         <div class="stat-card"><div class="icon orange"><i class="fas fa-clock"></i></div><div class="info"><h4 id="pTotalDue">₹0</h4><p>Total Due</p></div></div>
-                        <div class="stat-card"><div class="icon teal"><i class="fas fa-history"></i></div><div class="info"><h4 id="pHistoryCount">0</h4><p>Payments Recorded</p></div></div>
                     </div>
-                    <div class="toolbar">
-                        <button class="btn btn-red" id="dueReminderBtn"><i class="fas fa-bell"></i> Due Reminder</button>
-                        <button class="btn btn-primary" id="upiPayBtn"><i class="fas fa-qrcode"></i> UPI Payment</button>
-                        <button class="btn btn-outline btn-sm" id="refreshPayments"><i class="fas fa-sync"></i></button>
+                    <div class="table-wrap">
+                        <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"></tbody></table>
                     </div>
-                    <div class="table-wrap"><table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table></div>
-                    <h4 style="margin:24px 0 8px;"><i class="fas fa-history"></i> Payment History</h4>
-                    <div class="payment-history-wrap"><table><thead><tr><th>#</th><th>Patient</th><th>ID</th><th>Amount</th><th>Method</th><th>Confirmed By</th><th>Date</th></tr></thead><tbody id="paymentHistoryBody"><tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr></tbody></table></div>
+                    <h4 style="margin-top:20px;">Payment History</h4>
+                    <div class="table-wrap">
+                        <table><thead><tr><th>#</th><th>Patient</th><th>Amount</th><th>Method</th><th>Date</th></tr></thead><tbody id="paymentHistoryBody"></tbody></table>
+                    </div>
                 </div>
 
                 <!-- DAY BOOK -->
                 <div class="admin-section" id="sec-daybook">
-                    <h2 style="text-align:left;"><i class="fas fa-book"></i> Day Book / Cash Book</h2>
-                    <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
-                        <div class="stat-card"><div class="icon green"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dayCash">₹0</h4><p>Cash</p></div></div>
-                        <div class="stat-card"><div class="icon blue"><i class="fas fa-mobile-alt"></i></div><div class="info"><h4 id="dayUPI">₹0</h4><p>UPI</p></div></div>
-                        <div class="stat-card"><div class="icon purple"><i class="fas fa-credit-card"></i></div><div class="info"><h4 id="dayCard">₹0</h4><p>Card</p></div></div>
-                        <div class="stat-card"><div class="icon orange"><i class="fas fa-wallet"></i></div><div class="info"><h4 id="dayTotal">₹0</h4><p>Total</p></div></div>
-                    </div>
+                    <h2 style="text-align:left;"><i class="fas fa-book"></i> Day Book</h2>
                     <div class="form-grid">
-                        <label>Date <input type="date" id="dayDate" /></label>
-                        <label>Type <select id="dayType"><option value="cash">Cash</option><option value="upi">UPI</option><option value="card">Card</option></select></label>
                         <label>Amount <input type="number" id="dayAmount" placeholder="0" /></label>
+                        <label>Type <select id="dayType"><option value="cash">Cash</option><option value="upi">UPI</option><option value="card">Card</option></select></label>
                         <label>Description <input type="text" id="dayDesc" placeholder="e.g. CBC payment" /></label>
-                        <div style="display:flex;gap:10px;align-items:flex-end;">
-                            <button class="btn btn-primary" id="addDayEntryBtn"><i class="fas fa-plus"></i> Add Entry</button>
-                            <button class="btn btn-outline btn-sm" id="refreshDayBook"><i class="fas fa-sync"></i></button>
-                        </div>
+                        <div><button class="btn btn-primary" id="addDayEntryBtn"><i class="fas fa-plus"></i> Add Entry</button></div>
                     </div>
                     <div class="table-wrap">
-                        <table><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Description</th><th>Action</th></tr></thead><tbody id="dayBookBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No entries</td></tr></tbody></table>
+                        <table><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Description</th></tr></thead><tbody id="dayBookBody"></tbody></table>
                     </div>
                 </div>
 
                 <!-- INVENTORY -->
                 <div class="admin-section" id="sec-inventory">
-                    <h2 style="text-align:left;"><i class="fas fa-boxes"></i> Inventory / Stock Management</h2>
+                    <h2 style="text-align:left;"><i class="fas fa-boxes"></i> Inventory</h2>
                     <div class="form-grid">
                         <label>Item Name <input type="text" id="invItem" placeholder="e.g. CBC Kit" /></label>
                         <label>Quantity <input type="number" id="invQty" placeholder="0" /></label>
                         <label>Threshold <input type="number" id="invThreshold" placeholder="Min stock alert" /></label>
-                        <div style="display:flex;gap:10px;align-items:flex-end;">
-                            <button class="btn btn-primary" id="addInventoryBtn"><i class="fas fa-plus"></i> Add/Update</button>
-                            <button class="btn btn-outline btn-sm" id="refreshInventory"><i class="fas fa-sync"></i></button>
-                        </div>
+                        <div><button class="btn btn-primary" id="addInventoryBtn"><i class="fas fa-plus"></i> Add/Update</button></div>
                     </div>
-                    <div id="inventoryAlerts" style="margin:10px 0;padding:10px;background:#fee2e2;border-radius:6px;display:none;color:#991b1b;"></div>
                     <div class="table-wrap">
-                        <table><thead><tr><th>Item</th><th>Quantity</th><th>Threshold</th><th>Status</th><th>Action</th></tr></thead><tbody id="inventoryBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No inventory items</td></tr></tbody></table>
+                        <table><thead><tr><th>Item</th><th>Quantity</th><th>Threshold</th><th>Status</th></tr></thead><tbody id="inventoryBody"></tbody></table>
                     </div>
                 </div>
 
                 <!-- USER ROLES -->
                 <div class="admin-section" id="sec-users">
-                    <h2 style="text-align:left;"><i class="fas fa-user-shield"></i> User Roles Management</h2>
+                    <h2 style="text-align:left;"><i class="fas fa-user-shield"></i> Users</h2>
                     <div class="form-grid">
                         <label>Username <input type="text" id="userUsername" placeholder="Username" /></label>
                         <label>Password <input type="password" id="userPassword" placeholder="Password" /></label>
-                        <label>Role <select id="userRole">
-                            <option value="admin">Admin</option>
-                            <option value="lab_technician">Lab Technician</option>
-                            <option value="receptionist">Receptionist</option>
-                            <option value="accountant">Accountant</option>
-                        </select></label>
-                        <div style="display:flex;gap:10px;align-items:flex-end;">
-                            <button class="btn btn-primary" id="addUserBtn"><i class="fas fa-plus"></i> Add User</button>
-                            <button class="btn btn-outline btn-sm" id="refreshUsers"><i class="fas fa-sync"></i></button>
-                        </div>
+                        <label>Role <select id="userRole"><option value="admin">Admin</option><option value="lab_technician">Lab Technician</option><option value="receptionist">Receptionist</option></select></label>
+                        <div><button class="btn btn-primary" id="addUserBtn"><i class="fas fa-plus"></i> Add User</button></div>
                     </div>
                     <div class="table-wrap">
-                        <table><thead><tr><th>Username</th><th>Role</th><th>Action</th></tr></thead><tbody id="usersTableBody"><tr><td colspan="3" style="text-align:center;padding:20px;">No users</td></tr></tbody></table>
+                        <table><thead><tr><th>Username</th><th>Role</th></tr></thead><tbody id="usersTableBody"></tbody></table>
                     </div>
                 </div>
 
-                <!-- SETTINGS (existing) -->
+                <!-- SETTINGS -->
                 <div class="admin-section" id="sec-settings">
-                    <h2 style="text-align:left;"><i class="fas fa-cog"></i> Lab Settings</h2>
+                    <h2 style="text-align:left;"><i class="fas fa-cog"></i> Settings</h2>
                     <div class="settings-group">
-                        <label>Lab Name</label>
-                        <input type="text" id="setLabName" value="Rajan Path Lab" />
-                        <label>Address</label>
-                        <textarea id="setAddress">Manahar Bhushra, Pandwa Patan Road</textarea>
-                        <label>Phone</label>
-                        <input type="text" id="setPhone" value="8709946177 / 9931002450" />
-                        <label>GST Number</label>
-                        <input type="text" id="setGST" placeholder="GSTIN" />
-                        <label>Default Test Price</label>
-                        <input type="number" id="setDefaultPrice" value="450" />
-                        <button class="btn btn-primary" id="saveSettingsBtn" style="margin-top:16px;"><i class="fas fa-save"></i> Save Settings</button>
+                        <label>Lab Name</label><input type="text" id="setLabName" value="Rajan Path Lab" />
+                        <label>Address</label><textarea id="setAddress">Manahar Bhushra, Pandwa Patan Road</textarea>
+                        <label>Phone</label><input type="text" id="setPhone" value="8709946177 / 9931002450" />
+                        <label>GST Number</label><input type="text" id="setGST" placeholder="GSTIN" />
+                        <button class="btn btn-primary" id="saveSettingsBtn"><i class="fas fa-save"></i> Save Settings</button>
                     </div>
                 </div>
-
-                <!-- ANALYTICS (existing) -->
-                <div class="admin-section" id="sec-analytics">
-                    <h2 style="text-align:left;"><i class="fas fa-chart-bar"></i> Reports & Analytics</h2>
-                    <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
-                        <div class="stat-card"><div class="icon blue"><i class="fas fa-calendar-day"></i></div><div class="info"><h4 id="aToday">0</h4><p>Today</p></div></div>
-                        <div class="stat-card"><div class="icon green"><i class="fas fa-calendar-alt"></i></div><div class="info"><h4 id="aMonth">0</h4><p>This Month</p></div></div>
-                        <div class="stat-card"><div class="icon purple"><i class="fas fa-vial"></i></div><div class="info"><h4 id="aTopTest">-</h4><p>Top Test</p></div></div>
-                        <div class="stat-card"><div class="icon orange"><i class="fas fa-rupee-sign"></i></div><div class="info"><h4 id="aRevenue">₹0</h4><p>Revenue</p></div></div>
-                    </div>
-                    <div class="table-wrap"><table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr></tbody></table></div>
-                </div>
-
-                <!-- BACKUP (existing) -->
-                <div class="admin-section" id="sec-backup">
-                    <h2 style="text-align:left;"><i class="fas fa-database"></i> Backup & Restore</h2>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px;">
-                        <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                            <i class="fas fa-database" style="font-size:28px;color:var(--accent-teal);"></i>
-                            <h4>DB Backup</h4>
-                            <button class="btn btn-primary" id="backupDBBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button>
-                        </div>
-                        <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                            <i class="fas fa-file-pdf" style="font-size:28px;color:var(--urgent-red);"></i>
-                            <h4>PDF Backup</h4>
-                            <button class="btn btn-primary" id="backupPDFBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button>
-                        </div>
-                        <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                            <i class="fas fa-undo-alt" style="font-size:28px;color:#f59e0b;"></i>
-                            <h4>Restore</h4>
-                            <input type="file" id="restoreFile" style="margin:6px 0;" />
-                            <button class="btn btn-outline" id="restoreBtn"><i class="fas fa-upload"></i> Restore</button>
-                        </div>
-                    </div>
-                    <div class="table-wrap"><table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No backups</td></tr></tbody></table></div>
-                </div>
-
-                <!-- SECURITY (existing) -->
-                <div class="admin-section" id="sec-security">
-                    <h2 style="text-align:left;"><i class="fas fa-shield-alt"></i> Security</h2>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px;">
-                        <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                            <i class="fas fa-lock" style="font-size:28px;color:var(--accent-teal);"></i>
-                            <h4>Login</h4>
-                            <button class="btn btn-outline" id="logoutBtn2"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                        </div>
-                        <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                            <i class="fas fa-key" style="font-size:28px;color:#f59e0b;"></i>
-                            <h4>Change Password</h4>
-                            <button class="btn btn-primary" id="changePwdBtn"><i class="fas fa-edit"></i> Change</button>
-                        </div>
-                        <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
-                            <i class="fas fa-clipboard-list" style="font-size:28px;color:#7c3aed;"></i>
-                            <h4>Activity Log</h4>
-                            <button class="btn btn-outline" id="viewLogBtn"><i class="fas fa-eye"></i> View</button>
-                        </div>
-                    </div>
-                    <div class="table-wrap"><table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>IP</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr></tbody></table></div>
-                </div>
-
-            </div> <!-- admin-content -->
-        </div> <!-- admin-body -->
-    </div> <!-- adminPanelContainer -->
-</div> <!-- adminPanelWrapper -->
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- ═══════ SCRIPTS ═══════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.9/fullcalendar.min.js"></script>
 <script>
-    (function() {
-        'use strict';
+(function() {
+    'use strict';
 
-        // ─── PRELOADER ───
-        window.addEventListener('load', function() {
-            const preloader = document.getElementById('preloader');
+    // Preloader
+    window.addEventListener('load', function() {
+        const preloader = document.getElementById('preloader');
+        setTimeout(function() {
+            preloader.classList.add('hide');
             setTimeout(function() {
-                preloader.classList.add('hide');
-                setTimeout(function() {
-                    if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
-                }, 600);
-            }, 2200);
-        });
+                if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
+            }, 600);
+        }, 2200);
+    });
 
-        // ─── TOAST ───
-        function showToast(message, type = 'success', duration = 3500) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            const iconMap = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-triangle' };
-            const icon = iconMap[type] || 'fa-info-circle';
-            toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span><span class="toast-close">&times;</span>`;
-            container.appendChild(toast);
-            requestAnimationFrame(() => { toast.classList.add('show'); });
-            const close = () => {
-                toast.classList.remove('show');
-                setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 400);
-            };
-            toast.querySelector('.toast-close').addEventListener('click', close);
-            setTimeout(close, duration);
-        }
-
-        // ─── LOADING ───
-        function setLoading(btn, loading = true) {
-            if (!btn) return;
-            if (loading) {
-                btn.disabled = true;
-                btn._origHtml = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-            } else {
-                btn.disabled = false;
-                if (btn._origHtml) btn.innerHTML = btn._origHtml;
-                else btn.innerHTML = btn._origHtml || '';
-            }
-        }
-
-        // ─── FIREBASE ─── (keeping existing)
-        const firebaseConfig = {
-            apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
-            authDomain: "rajanpathlab5530.firebaseapp.com",
-            databaseURL: "https://rajanpathlab5530-default-rtdb.firebaseio.com",
-            projectId: "rajanpathlab5530",
-            storageBucket: "rajanpathlab5530.firebasestorage.app",
-            messagingSenderId: "883585447034",
-            appId: "1:883585447034:web:225d807b2cc83095f9b7c3",
-            measurementId: "G-7WMF1M8CG9"
+    // Toast
+    function showToast(message, type = 'success', duration = 3500) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        const iconMap = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-triangle' };
+        const icon = iconMap[type] || 'fa-info-circle';
+        toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span><span class="toast-close">&times;</span>`;
+        container.appendChild(toast);
+        requestAnimationFrame(() => { toast.classList.add('show'); });
+        const close = () => {
+            toast.classList.remove('show');
+            setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 400);
         };
-        firebase.initializeApp(firebaseConfig);
-        const rtdb = firebase.database();
+        toast.querySelector('.toast-close').addEventListener('click', close);
+        setTimeout(close, duration);
+    }
 
-        // ─── SUPABASE ───
-        const supabaseUrl = 'https://fflqftbnttpgwdktagmj.supabase.co';
-        const supabaseKey =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        const STORAGE_BUCKET = 'reports';
+    // Data helpers
+    function getLocalData(key, defaultVal) {
+        try { return JSON.parse(localStorage.getItem(key)) || defaultVal; } catch(e){ return defaultVal; }
+    }
+    function setLocalData(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 
-        async function downloadPDF(reportId, fileName) {
-            try {
-                const filePath = `${reportId}_${fileName}`;
-                const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
-                const url = data.publicUrl;
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Network response not ok');
-                const blob = await response.blob();
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = fileName || 'report.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                setTimeout(() => URL.revokeObjectURL(link.href), 5000);
-            } catch (error) {
-                console.warn('Download fallback:', error.message);
-                const filePath = `${reportId}_${fileName}`;
-                const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
-                window.open(data.publicUrl, '_blank');
-            }
-        }
+    // State
+    let patients = getLocalData('patients', []);
+    let reports = getLocalData('reports', []);
+    let payments = getLocalData('payments', { history: [] });
+    let appointments = getLocalData('appointments', []);
+    let samples = getLocalData('samples', []);
+    let referrals = getLocalData('referrals', []);
+    let dayBook = getLocalData('dayBook', []);
+    let inventory = getLocalData('inventory', []);
+    let users = getLocalData('users', [
+        { username: 'admin', password: 'admin123', role: 'admin' }
+    ]);
+    let settings = getLocalData('settings', {
+        lab_name: 'Rajan Path Lab',
+        address: 'Manahar Bhushra, Pandwa Patan Road',
+        phone: '8709946177 / 9931002450',
+        gst: '',
+        default_price: 450
+    });
 
-        async function uploadPDF(file, reportId) {
-            const filePath = `${reportId}_${file.name}`;
-            const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, file);
-            if (error) throw new Error(error.message);
-            const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
-            return data.publicUrl;
-        }
+    function saveAllData() {
+        setLocalData('patients', patients);
+        setLocalData('reports', reports);
+        setLocalData('payments', payments);
+        setLocalData('appointments', appointments);
+        setLocalData('samples', samples);
+        setLocalData('referrals', referrals);
+        setLocalData('dayBook', dayBook);
+        setLocalData('inventory', inventory);
+        setLocalData('users', users);
+        setLocalData('settings', settings);
+    }
 
-        async function deletePDF(reportId, fileName) {
-            const filePath = `${reportId}_${fileName}`;
-            const { error } = await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
-            if (error) console.warn('Delete error:', error.message);
-        }
+    function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
+    function getToday() { return new Date().toISOString().split('T')[0]; }
+    function formatDate(d) { return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }); }
 
-        const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
+    // Refresh all sections
+    function refreshAllSections() {
+        refreshDashboard();
+        refreshPatients();
+        refreshAppointments();
+        refreshSamples();
+        refreshReferrals();
+        refreshReports();
+        refreshWhatsAppPatients();
+        refreshPayments();
+        refreshDayBook();
+        refreshInventory();
+        refreshUsers();
+        refreshSettings();
+    }
 
-        function normalizePhone(phone) {
-            if (!phone) return '';
-            let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
-            if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
-            if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
-            if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
-            return cleaned;
-        }
-
-        // ─── DATA HELPERS (localStorage) ───
-        function getLocalData(key, defaultVal) {
-            try { return JSON.parse(localStorage.getItem(key)) || defaultVal; } catch(e){ return defaultVal; }
-        }
-        function setLocalData(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
-
-        // ─── STATE ───
-        let patients = [];
-        let reports = [];
-        let payments = { total_paid:0, total_due:0, paid_count:0, unpaid_count:0, history:[] };
-        let activityLogs = [];
-        let settings = {};
-        let appointments = [];
-        let samples = [];
-        let referrals = [];
-        let referralRecords = [];
-        let dayBook = [];
-        let inventory = [];
-        let users = [];
-
-        // ─── LOAD DATA ───
-        async function loadAllData() {
-            // From Firebase (existing patients, reports, payments, logs, settings)
-            const snapP = await rtdb.ref('/patients').once('value');
-            patients = snapP.val() || [];
-            const snapR = await rtdb.ref('/reports').once('value');
-            reports = snapR.val() || [];
-            const snapPay = await rtdb.ref('/payments').once('value');
-            payments = snapPay.val() || { total_paid:0, total_due:0, paid_count:0, unpaid_count:0, history:[] };
-            const snapLog = await rtdb.ref('/logs').once('value');
-            activityLogs = snapLog.val() || [];
-            const snapSet = await rtdb.ref('/settings').once('value');
-            settings = snapSet.val() || {};
-
-            // From localStorage (new modules)
-            appointments = getLocalData('appointments', []);
-            samples = getLocalData('samples', []);
-            referrals = getLocalData('referrals', []);
-            referralRecords = getLocalData('referralRecords', []);
-            dayBook = getLocalData('dayBook', []);
-            inventory = getLocalData('inventory', []);
-            users = getLocalData('users', []);
-            if (!users.length) {
-                users = [
-                    { username: 'admin', password: 'admin123', role: 'admin' },
-                    { username: 'lab', password: 'lab123', role: 'lab_technician' },
-                    { username: 'reception', password: 'rec123', role: 'receptionist' }
-                ];
-                setLocalData('users', users);
-            }
-            if (!payments.history) payments.history = [];
-            if (!payments.total_paid) payments.total_paid = 0;
-            if (!payments.total_due) payments.total_due = 0;
-            if (!payments.paid_count) payments.paid_count = 0;
-            if (!payments.unpaid_count) payments.unpaid_count = 0;
-        }
-
-        async function saveAllData() {
-            await rtdb.ref('/patients').set(patients);
-            await rtdb.ref('/reports').set(reports);
-            await rtdb.ref('/payments').set(payments);
-            await rtdb.ref('/logs').set(activityLogs);
-            await rtdb.ref('/settings').set(settings);
-            setLocalData('appointments', appointments);
-            setLocalData('samples', samples);
-            setLocalData('referrals', referrals);
-            setLocalData('referralRecords', referralRecords);
-            setLocalData('dayBook', dayBook);
-            setLocalData('inventory', inventory);
-            setLocalData('users', users);
-        }
-
-        // ─── HELPERS ───
-        function generateId() {
-            return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-        }
-
-        function getToday() {
-            return new Date().toISOString().split('T')[0];
-        }
-
-        function formatDate(d) {
-            return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
-        }
-
-        // ─── REFRESH ALL SECTIONS ───
-        function refreshAllSections() {
-            refreshDashboard();
-            refreshPatients();
-            refreshAppointments();
-            refreshSamples();
-            refreshReferrals();
-            refreshReports();
-            refreshWhatsAppPatients();
-            refreshPayments();
-            refreshDayBook();
-            refreshInventory();
-            refreshUsers();
-            refreshSettings();
-            refreshAnalytics();
-            refreshBackup();
-            refreshSecurity();
-        }
-
-        // ─── DASHBOARD ───
-        function refreshDashboard() {
-            const total = patients.length;
-            const totalRep = reports.length;
-            const pending = patients.filter(p => p.status === 'pending').length;
-            const culture = patients.filter(p => p.test && p.test.includes('Urine')).length;
-            const due = patients.filter(p => p.due_amount > 0).length;
-            const revenue = patients.reduce((s, p) => s + p.due_amount, 0);
-            document.getElementById('dToday').textContent = total;
-            document.getElementById('dTotalReports').textContent = totalRep;
-            document.getElementById('dPending').textContent = pending;
-            document.getElementById('dCulture').textContent = culture;
-            document.getElementById('dDue').textContent = due;
-            document.getElementById('dRevenue').textContent = '₹' + revenue;
-            const tbody = document.getElementById('dRecentPatients');
-            if (patients.length) {
-                tbody.innerHTML = patients.slice(0,5).map(p =>
-                    `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
-                ).join('');
-            } else tbody.innerHTML = '<tr><td colspan="4">No patients yet</td></tr>';
-            updateCharts();
-        }
-
-        let chartWeeklyInstance = null, chartPieInstance = null;
-        function updateCharts() {
-            const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-            const weeklyData = days.map(()=>0);
-            patients.forEach(p => {
-                if (p.created_at) {
-                    const d = new Date(p.created_at);
-                    const idx = d.getDay()===0?6:d.getDay()-1;
-                    if (idx>=0 && idx<7) weeklyData[idx]++;
-                }
-            });
-            const testMap = {};
-            patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test]||0)+1; });
-            const labels = Object.keys(testMap), data = Object.values(testMap);
-
-            const ctx1 = document.getElementById('chartWeekly')?.getContext('2d');
-            if (ctx1) {
-                if (chartWeeklyInstance) chartWeeklyInstance.destroy();
-                chartWeeklyInstance = new Chart(ctx1, {
-                    type: 'bar',
-                    data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData,
-                            backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }] },
-                    options: { responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
-                });
-            }
-            const ctx2 = document.getElementById('chartPie')?.getContext('2d');
-            if (ctx2) {
-                if (chartPieInstance) chartPieInstance.destroy();
-                const colors = ['#008080','#20b2aa','#0a2540','#d9383a','#f59e0b','#7c3aed','#ec407a','#ff6600'];
-                chartPieInstance = new Chart(ctx2, {
-                    type: 'doughnut',
-                    data: { labels: labels.length?labels:['No Data'],
-                        datasets: [{ data: labels.length?data:[1],
-                            backgroundColor: labels.length?colors.slice(0,labels.length):['#ccc'],
-                            borderWidth: 2, borderColor: '#fff' }] },
-                    options: { responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } } }
-                });
-            }
-        }
-
-        // ─── PATIENTS ───
-        function refreshPatients() {
-            const tbody = document.getElementById('patientTableBody');
-            if (patients.length) {
-                tbody.innerHTML = patients.map(p => `
-                    <tr>
-                        <td><b>${p.patient_id}</b></td><td>${p.name}</td>
-                        <td>${p.phone || '—'}</td>
-                        <td>${p.test}</td>
-                        <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                        <td>₹${p.due_amount}</td>
-                        <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
-                        <td>
-                            ${p.due_amount > 0 ? `
-                                <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
-                                <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
-                            ` : `<span class="badge-status paid">Paid</span>`}
-                            <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${p.due_amount>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
-                            <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `).join('');
-                setTimeout(() => generateAllQRCodes(), 100);
-            } else tbody.innerHTML = '<tr><td colspan="8">No patients</td></tr>';
-        }
-
-        function generateAllQRCodes() {
-            document.querySelectorAll('[id^="qr-"]').forEach(el => {
-                const id = el.id.replace('qr-','');
-                if (el && typeof QRCode !== 'undefined') {
-                    el.innerHTML = '';
-                    new QRCode(el, { text: 'Patient:'+id, width:50, height:50, colorDark:'#000', colorLight:'#fff', correctLevel: QRCode.CorrectLevel.H });
-                }
-            });
-        }
-
-        // ─── APPOINTMENTS ───
-        function refreshAppointments() {
-            const tbody = document.getElementById('appointmentsTableBody');
-            if (appointments.length) {
-                tbody.innerHTML = appointments.map((a,i) => `
-                    <tr>
-                        <td>${a.patient}</td>
-                        <td>${formatDate(a.date)}</td>
-                        <td>${a.time}</td>
-                        <td>${a.test}</td>
-                        <td><button class="btn btn-sm btn-red btn-del-appointment" data-idx="${i}"><i class="fas fa-trash"></i></button></td>
-                    </tr>
-                `).join('');
-            } else tbody.innerHTML = '<tr><td colspan="5">No appointments</td></tr>';
-            // Update calendar
-            if (window.calendar) {
-                const events = appointments.map(a => ({
-                    title: a.patient + ' - ' + a.test,
-                    start: a.date + 'T' + a.time,
-                    allDay: false
-                }));
-                window.calendar.removeAllEvents();
-                window.calendar.addEventSource(events);
-            }
-        }
-
-        // ─── SAMPLES ───
-        function refreshSamples() {
-            const tbody = document.getElementById('samplesTableBody');
-            if (samples.length) {
-                tbody.innerHTML = samples.map((s,i) => `
-                    <tr>
-                        <td><b>${s.sample_id}</b></td>
-                        <td>${s.patient_id}</td>
-                        <td>${s.test}</td>
-                        <td><span class="badge-status ${s.status}">${s.status}</span></td>
-                        <td>${s.collector}</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary btn-update-sample" data-idx="${i}"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-red btn-del-sample" data-idx="${i}"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `).join('');
-            } else tbody.innerHTML = '<tr><td colspan="6">No samples</td></tr>';
-        }
-
-        // ─── REFERRALS ───
-        function refreshReferrals() {
-            const tbody = document.getElementById('referralsTableBody');
-            if (referrals.length) {
-                tbody.innerHTML = referrals.map((r,i) => `
-                    <tr>
-                        <td>${r.name}</td>
-                        <td>${r.specialty}</td>
-                        <td>${r.phone}</td>
-                        <td>${r.commission}%</td>
-                        <td>${r.totalRef || 0}</td>
-                        <td><button class="btn btn-sm btn-red btn-del-referral" data-idx="${i}"><i class="fas fa-trash"></i></button></td>
-                    </tr>
-                `).join('');
-            } else tbody.innerHTML = '<tr><td colspan="6">No doctors</td></tr>';
-            // Referral records
-            const recBody = document.getElementById('referralRecordsBody');
-            if (referralRecords.length) {
-                recBody.innerHTML = referralRecords.map(rec => `
-                    <tr>
-                        <td>${rec.patient}</td>
-                        <td>${rec.doctor}</td>
-                        <td>${rec.test}</td>
-                        <td>₹${rec.amount}</td>
-                        <td>₹${rec.commission}</td>
-                        <td>${formatDate(rec.date)}</td>
-                    </tr>
-                `).join('');
-            } else recBody.innerHTML = '<tr><td colspan="6">No referral records</td></tr>';
-        }
-
-        // ─── REPORTS ─── (existing)
-        function refreshReports() {
-            const tbody = document.getElementById('reportsTableBody');
-            if (reports.length) {
-                tbody.innerHTML = reports.map(r => `
-                    <tr>
-                        <td>${r.name} (${r.patient_id})</td><td>${r.test_name}</td><td>${r.uploaded_at}</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-download"></i></button>
-                            <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `).join('');
-            } else tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
-        }
-
-        // ─── WHATSAPP ───
-        function refreshWhatsAppPatients() {
-            const tbody = document.getElementById('whatsappPatientList');
-            if (patients.length) {
-                tbody.innerHTML = patients.slice(0,10).map(p => `
-                    <tr>
-                        <td>${p.name}</td><td>${p.phone || '—'}</td><td>${p.test}</td>
-                        <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                        <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}" ${p.phone?'':''}><i class="fab fa-whatsapp"></i> Send</button></td>
-                    </tr>
-                `).join('');
-            } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
-        }
-
-        // ─── PAYMENTS ───
-        function refreshPayments() {
-            const due = patients.filter(p => p.due_amount > 0);
-            const paid = patients.filter(p => p.due_amount === 0);
-            const totalDue = due.reduce((s,p)=>s+p.due_amount,0);
-            document.getElementById('pPaid').textContent = paid.length;
-            document.getElementById('pUnpaid').textContent = due.length;
-            document.getElementById('pTotalDue').textContent = '₹' + totalDue;
-            document.getElementById('pHistoryCount').textContent = (payments.history||[]).length;
-
-            const tbody = document.getElementById('paymentsTableBody');
-            if (patients.length) {
-                tbody.innerHTML = patients.map(p => `
-                    <tr>
-                        <td>${p.name}</td><td>${p.test}</td><td>₹${p.due_amount}</td>
-                        <td><span class="badge-status ${p.due_amount>0?'unpaid':'paid'}">${p.due_amount>0?'Unpaid':'Paid'}</span></td>
-                        <td>
-                            ${p.due_amount>0 ? `
-                                <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
-                                <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
-                            ` : `<span class="badge-status paid"><i class="fas fa-check"></i> Cleared</span>`}
-                            <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${p.due_amount>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
-                        </td>
-                    </tr>
-                `).join('');
-            } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
-
-            const historyBody = document.getElementById('paymentHistoryBody');
-            const history = payments.history || [];
-            if (history.length) {
-                historyBody.innerHTML = history.slice(0,50).map((h, idx) => `
-                    <tr>
-                        <td>${idx+1}</td>
-                        <td>${h.patient_name || '—'}</td>
-                        <td>${h.patient_id || '—'}</td>
-                        <td><strong>₹${h.amount}</strong></td>
-                        <td><span class="badge-pay-confirmed">${h.method || 'Cash'}</span></td>
-                        <td>${h.confirmed_by || 'Admin'}</td>
-                        <td>${h.confirmed_at || h.timestamp || '—'}</td>
-                    </tr>
-                `).join('');
-            } else {
-                historyBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
-            }
-        }
-
-        // ─── DAY BOOK ───
-        function refreshDayBook() {
-            const totalCash = dayBook.filter(e=>e.type==='cash').reduce((s,e)=>s+e.amount,0);
-            const totalUPI = dayBook.filter(e=>e.type==='upi').reduce((s,e)=>s+e.amount,0);
-            const totalCard = dayBook.filter(e=>e.type==='card').reduce((s,e)=>s+e.amount,0);
-            document.getElementById('dayCash').textContent = '₹' + totalCash;
-            document.getElementById('dayUPI').textContent = '₹' + totalUPI;
-            document.getElementById('dayCard').textContent = '₹' + totalCard;
-            document.getElementById('dayTotal').textContent = '₹' + (totalCash+totalUPI+totalCard);
-
-            const tbody = document.getElementById('dayBookBody');
-            if (dayBook.length) {
-                tbody.innerHTML = dayBook.map((e,i) => `
-                    <tr>
-                        <td>${formatDate(e.date)}</td>
-                        <td><span class="badge-status ${e.type==='cash'?'paid':e.type==='upi'?'process':'pending'}">${e.type.toUpperCase()}</span></td>
-                        <td>₹${e.amount}</td>
-                        <td>${e.desc}</td>
-                        <td><button class="btn btn-sm btn-red btn-del-dayentry" data-idx="${i}"><i class="fas fa-trash"></i></button></td>
-                    </tr>
-                `).join('');
-            } else tbody.innerHTML = '<tr><td colspan="5">No entries</td></tr>';
-        }
-
-        // ─── INVENTORY ───
-        function refreshInventory() {
-            const tbody = document.getElementById('inventoryBody');
-            let alerts = [];
-            if (inventory.length) {
-                tbody.innerHTML = inventory.map((item,i) => {
-                    const status = item.qty <= item.threshold ? 'Low Stock' : 'OK';
-                    if (item.qty <= item.threshold) alerts.push(item.item);
-                    return `
-                        <tr>
-                            <td>${item.item}</td>
-                            <td>${item.qty}</td>
-                            <td>${item.threshold}</td>
-                            <td><span class="badge-status ${item.qty <= item.threshold ? 'unpaid' : 'paid'}">${status}</span></td>
-                            <td>
-                                <button class="btn btn-sm btn-primary btn-update-inv" data-idx="${i}"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-red btn-del-inv" data-idx="${i}"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    `;
-                }).join('');
-            } else tbody.innerHTML = '<tr><td colspan="5">No inventory items</td></tr>';
-            const alertDiv = document.getElementById('inventoryAlerts');
-            if (alerts.length) {
-                alertDiv.style.display = 'block';
-                alertDiv.innerHTML = '⚠️ Low Stock Alert: ' + alerts.join(', ');
-            } else {
-                alertDiv.style.display = 'none';
-            }
-        }
-
-        // ─── USERS ───
-        function refreshUsers() {
-            const tbody = document.getElementById('usersTableBody');
-            if (users.length) {
-                tbody.innerHTML = users.map((u,i) => `
-                    <tr>
-                        <td>${u.username}</td>
-                        <td><span class="badge-status ${u.role==='admin'?'paid':u.role==='lab_technician'?'process':'pending'}">${u.role}</span></td>
-                        <td><button class="btn btn-sm btn-red btn-del-user" data-idx="${i}"><i class="fas fa-trash"></i></button></td>
-                    </tr>
-                `).join('');
-            } else tbody.innerHTML = '<tr><td colspan="3">No users</td></tr>';
-        }
-
-        // ─── SETTINGS ───
-        function refreshSettings() {
-            document.getElementById('setLabName').value = settings.lab_name || 'Rajan Path Lab';
-            document.getElementById('setAddress').value = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
-            document.getElementById('setPhone').value = settings.phone || '8709946177 / 9931002450';
-            document.getElementById('setGST').value = settings.gst || '';
-            document.getElementById('setDefaultPrice').value = settings.default_price || 450;
-        }
-
-        // ─── ANALYTICS ───
-        function refreshAnalytics() {
-            const today = new Date().toDateString();
-            let todayCount = 0;
-            patients.forEach(p => { if (p.created_at && new Date(p.created_at).toDateString()===today) todayCount++; });
-            const revenue = patients.reduce((s,p)=>s+p.due_amount,0);
-            const testMap = {};
-            patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test]||0)+1; });
-            let topTest = '-', topCount=0;
-            Object.keys(testMap).forEach(k => { if (testMap[k]>topCount) { topCount=testMap[k]; topTest=k; } });
-            document.getElementById('aToday').textContent = todayCount;
-            document.getElementById('aMonth').textContent = patients.length;
-            document.getElementById('aTopTest').textContent = topTest;
-            document.getElementById('aRevenue').textContent = '₹' + revenue;
-            const tbody = document.getElementById('analyticsTable');
-            const arr = Object.keys(testMap).map(k => ({ test:k, count:testMap[k] }));
-            if (arr.length) tbody.innerHTML = arr.map(t =>
-                `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * (settings.default_price || 450)}</td><td>-</td></tr>`
+    function refreshDashboard() {
+        document.getElementById('dToday').textContent = patients.length;
+        document.getElementById('dTotalReports').textContent = reports.length;
+        document.getElementById('dPending').textContent = patients.filter(p => p.status === 'pending').length;
+        document.getElementById('dCulture').textContent = patients.filter(p => p.test && p.test.includes('Urine')).length;
+        const due = patients.filter(p => p.due_amount > 0);
+        document.getElementById('dDue').textContent = due.length;
+        document.getElementById('dRevenue').textContent = '₹' + patients.reduce((s, p) => s + p.due_amount, 0);
+        const tbody = document.getElementById('dRecentPatients');
+        if (patients.length) {
+            tbody.innerHTML = patients.slice(0,5).map(p =>
+                `<tr><td>${p.name}</td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
             ).join('');
-            else tbody.innerHTML = '<tr><td colspan="4">No data</td></tr>';
-        }
+        } else tbody.innerHTML = '<tr><td colspan="4">No patients yet</td></tr>';
+    }
 
-        // ─── BACKUP ───
-        function refreshBackup() {
-            document.getElementById('backupListBody').innerHTML = '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="showToast(\'Already in cloud\',\'success\')"><i class="fas fa-check"></i></button></td></tr>';
-        }
+    function refreshPatients() {
+        const tbody = document.getElementById('patientTableBody');
+        if (patients.length) {
+            tbody.innerHTML = patients.map(p => `
+                <tr>
+                    <td><b>${p.patient_id}</b></td>
+                    <td>${p.name}</td>
+                    <td>${p.phone || '—'}</td>
+                    <td>${p.test}</td>
+                    <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                    <td>₹${p.due_amount}</td>
+                    <td>
+                        ${p.due_amount > 0 ? `
+                            <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
+                            <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
+                        ` : `<span class="badge-status paid">Paid</span>`}
+                        <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}"><i class="fas fa-file-invoice"></i> Invoice</button>
+                        <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="7">No patients</td></tr>';
+    }
 
-        // ─── SECURITY ───
-        function refreshSecurity() {
-            const tbody = document.getElementById('activityLogBody');
-            if (activityLogs.length) {
-                tbody.innerHTML = activityLogs.map(l =>
-                    `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
-                ).join('');
-            } else tbody.innerHTML = '<tr><td colspan="4">No logs</td></tr>';
-        }
-
-        // ─── PAYMENT CONFIRM MODAL ───
-        let pendingPayPatientId = null;
-        function openPayConfirm(patientId) {
-            const patient = patients.find(p => p.patient_id === patientId);
-            if (!patient) { showToast('Patient not found','error'); return; }
-            if (patient.due_amount <= 0) { showToast('No due amount.','warning'); return; }
-            pendingPayPatientId = patientId;
-            document.getElementById('payConfirmPatient').textContent = patient.name;
-            document.getElementById('payConfirmId').textContent = patient.patient_id;
-            document.getElementById('payConfirmTest').textContent = patient.test || 'Not Specified';
-            document.getElementById('payConfirmAmount').textContent = '₹' + patient.due_amount;
-            document.getElementById('payConfirmAmountDisplay').textContent = '₹' + patient.due_amount;
-            document.querySelectorAll('#payMethodGroup label').forEach(l=>l.classList.remove('selected'));
-            document.querySelector('#payMethodGroup input[value="Cash"]').checked = true;
-            document.querySelector('#payMethodGroup label:has(input[value="Cash"])')?.classList.add('selected');
-            document.getElementById('payConfirmStatus').textContent = '';
-            document.getElementById('payConfirmModal').classList.add('show');
-        }
-
-        function closePayConfirm() {
-            document.getElementById('payConfirmModal').classList.remove('show');
-            pendingPayPatientId = null;
-        }
-
-        document.getElementById('payConfirmCancel').addEventListener('click', closePayConfirm);
-        document.getElementById('payConfirmModal').addEventListener('click', e => { if (e.target === e.currentTarget) closePayConfirm(); });
-
-        document.querySelectorAll('#payMethodGroup input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                document.querySelectorAll('#payMethodGroup label').forEach(l=>l.classList.remove('selected'));
-                this.closest('label').classList.add('selected');
-            });
-        });
-
-        document.getElementById('payConfirmConfirm').addEventListener('click', async function() {
-            const patientId = pendingPayPatientId;
-            if (!patientId) { showToast('No patient selected','error'); return; }
-            const patient = patients.find(p => p.patient_id === patientId);
-            if (!patient) { showToast('Patient not found','error'); return; }
-            const amount = patient.due_amount;
-            if (amount <= 0) { showToast('No due amount.','warning'); return; }
-            const method = document.querySelector('#payMethodGroup input[type="radio"]:checked')?.value || 'Cash';
-            const adminUser = document.getElementById('adminUsername').textContent || 'Admin';
-
-            setLoading(this, true);
-            try {
-                patient.due_amount = 0;
-                await rtdb.ref('/patients').set(patients);
-                // add payment history
-                const entry = {
-                    id: Date.now(),
-                    patient_id: patient.patient_id,
-                    patient_name: patient.name,
-                    amount: amount,
-                    method: method,
-                    confirmed_by: adminUser,
-                    confirmed_at: new Date().toLocaleString(),
-                    timestamp: new Date().toISOString()
-                };
-                payments.history = payments.history || [];
-                payments.history.unshift(entry);
-                if (payments.history.length > 200) payments.history = payments.history.slice(0,200);
-                payments.paid_count = (payments.paid_count||0) + 1;
-                payments.total_paid = (payments.total_paid||0) + amount;
-                await rtdb.ref('/payments').set(payments);
-
-                const duePatients = patients.filter(p => p.due_amount > 0);
-                payments.unpaid_count = duePatients.length;
-                payments.total_due = duePatients.reduce((s,p)=>s+p.due_amount,0);
-                await rtdb.ref('/payments').set(payments);
-
-                const log = {
-                    created_at: new Date().toLocaleString(),
-                    admin_user: adminUser,
-                    action: `Payment confirmed for ${patient.name} (${patient.patient_id}) ₹${amount} via ${method}`,
-                    ip: 'local'
-                };
-                activityLogs.unshift(log);
-                if (activityLogs.length > 100) activityLogs = activityLogs.slice(0,100);
-                await rtdb.ref('/logs').set(activityLogs);
-
-                await loadAllData();
-                refreshAllSections();
-                document.getElementById('payConfirmStatus').style.color = 'green';
-                document.getElementById('payConfirmStatus').textContent = '✅ Payment confirmed! Report unlocked.';
-                showToast(`Payment of ₹${amount} confirmed for ${patient.name}`, 'success');
-                setTimeout(() => closePayConfirm(), 1200);
-
-                if (patient.phone) {
-                    const msg = `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you for choosing Rajan Path Lab.`;
-                    sendWhatsApp(patient.phone, msg);
-                }
-            } catch (err) { showToast('Error: '+err.message, 'error'); }
-            setLoading(this, false);
-        });
-
-        // ─── MARK AS PAID (Quick) ───
-        async function markAsPaid(patientId) {
-            const patient = patients.find(p => p.patient_id === patientId);
-            if (!patient) { showToast('Patient not found','error'); return; }
-            if (patient.due_amount <= 0) { showToast('Already paid','warning'); return; }
-            const amount = patient.due_amount;
-            const adminUser = document.getElementById('adminUsername').textContent || 'Admin';
-
-            try {
-                patient.due_amount = 0;
-                await rtdb.ref('/patients').set(patients);
-                const entry = {
-                    id: Date.now(),
-                    patient_id: patient.patient_id,
-                    patient_name: patient.name,
-                    amount: amount,
-                    method: 'Cash (Quick)',
-                    confirmed_by: adminUser,
-                    confirmed_at: new Date().toLocaleString(),
-                    timestamp: new Date().toISOString()
-                };
-                payments.history = payments.history || [];
-                payments.history.unshift(entry);
-                if (payments.history.length > 200) payments.history = payments.history.slice(0,200);
-                payments.paid_count = (payments.paid_count||0) + 1;
-                payments.total_paid = (payments.total_paid||0) + amount;
-                await rtdb.ref('/payments').set(payments);
-
-                const duePatients = patients.filter(p => p.due_amount > 0);
-                payments.unpaid_count = duePatients.length;
-                payments.total_due = duePatients.reduce((s,p)=>s+p.due_amount,0);
-                await rtdb.ref('/payments').set(payments);
-
-                const log = {
-                    created_at: new Date().toLocaleString(),
-                    admin_user: adminUser,
-                    action: `Quick Mark Paid: ${patient.name} (${patient.patient_id}) ₹${amount} (Cash)`,
-                    ip: 'local'
-                };
-                activityLogs.unshift(log);
-                if (activityLogs.length > 100) activityLogs = activityLogs.slice(0,100);
-                await rtdb.ref('/logs').set(activityLogs);
-
-                await loadAllData();
-                refreshAllSections();
-                showToast(`✅ ${patient.name} marked as paid (₹${amount})`, 'success');
-
-                if (patient.phone) {
-                    const msg = `✅ Payment Confirmed (Quick)\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: Cash\nThank you.`;
-                    sendWhatsApp(patient.phone, msg);
-                }
-            } catch (err) { showToast('Error: '+err.message,'error'); }
-        }
-
-        function sendWhatsApp(phone, message) {
-            if (!phone) { showToast('No phone number','warning'); return; }
-            let clean = phone.replace(/\s/g,'').replace(/-/g,'');
-            if (clean.startsWith('0')) clean = clean.substring(1);
-            if (/^\d{10}$/.test(clean)) clean = '+91'+clean;
-            if (!clean.startsWith('+')) clean = '+'+clean;
-            window.open('https://wa.me/'+clean+'?text='+encodeURIComponent(message), '_blank');
-        }
-
-        // ─── PATIENT PORTAL ───
-        function openPortal() {
-            document.getElementById('patientPortalModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            loadAllData().then(() => {
-                document.getElementById('portalStatus').className = 'portal-status';
-                document.getElementById('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
-                document.getElementById('portalReportList').style.display = 'none';
-                document.getElementById('portalPatientId').value = '';
-            });
-        }
-        function closePortal() {
-            document.getElementById('patientPortalModal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        document.getElementById('openPatientPortalBtn').addEventListener('click', e => { e.preventDefault(); openPortal(); });
-        document.getElementById('openPatientPortalBtn2').addEventListener('click', e => { e.preventDefault(); openPortal(); });
-        document.getElementById('closePortalBtn').addEventListener('click', closePortal);
-        document.getElementById('patientPortalModal').addEventListener('click', e => { if (e.target === e.currentTarget) closePortal(); });
-
-        document.getElementById('portalFetchBtn').addEventListener('click', async function() {
-            const searchValue = document.getElementById('portalPatientId').value.trim();
-            const statusDiv = document.getElementById('portalStatus');
-            const listDiv = document.getElementById('portalReportList');
-            if (!searchValue) {
-                statusDiv.className = 'portal-status error';
-                statusDiv.innerHTML = '⚠️ Please enter your Patient ID or Mobile Number.';
-                listDiv.style.display = 'none';
-                return;
-            }
-            await loadAllData();
-            const normalizedSearch = normalizePhone(searchValue);
-            let patient = patients.find(p => p.patient_id === searchValue);
-            if (!patient) patient = patients.find(p => normalizePhone(p.phone||'') === normalizedSearch || p.phone === searchValue);
-            if (!patient && normalizedSearch.length >= 4) patient = patients.find(p => normalizePhone(p.phone||'').includes(normalizedSearch) || (p.phone||'').includes(searchValue));
-            if (!patient) {
-                statusDiv.className = 'portal-status error';
-                statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;
-                listDiv.style.display = 'none';
-                return;
-            }
-            const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
-            if (patientReports.length === 0) {
-                statusDiv.className = 'portal-status';
-                statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name;
-                listDiv.style.display = 'none';
-                return;
-            }
-            const dueAmount = Number(patient.due_amount);
-            const isPaid = dueAmount === 0;
-            const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
-            statusDiv.className = 'portal-status ' + (isPaid ? 'success' : 'error');
-            statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
-                ' (via ' + foundBy + '). Status: ' + (isPaid ? '✅ Paid' : '⚠️ ₹' + dueAmount + ' Due') +
-                (isPaid ? ' — Reports are <b>unlocked</b>.' : ' — <b>LOCKED</b> until payment is confirmed.');
-
-            let html = '<h3 style="margin-bottom:1rem;">📋 Your Reports</h3>';
-            for (const report of patientReports) {
-                const canDownload = isPaid;
-                const dueBadge = !isPaid ? '<span class="portal-due-badge">₹' + dueAmount + ' DUE — LOCKED</span>' : '';
-                html += `
-                    <div class="portal-report-item">
-                        <div class="portal-report-info">
-                            <span class="test-name">${report.test_name}</span>
-                            <span class="upload-date">📅 ${report.uploaded_at}</span>
-                        </div>
-                        <div class="portal-report-actions">
-                            ${dueBadge}
-                            <button class="portal-download-btn" data-report-id="${report.id}" data-file-name="${report.file_name}" ${canDownload ? '' : 'disabled'}>
-                                ${canDownload ? '⬇️ Download' : '🔒 Locked'}
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }
-            listDiv.innerHTML = html;
-            listDiv.style.display = 'block';
-
-            listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const patId = patient.patient_id;
-                    const freshPatient = patients.find(p => p.patient_id === patId);
-                    const freshDue = freshPatient ? Number(freshPatient.due_amount) : dueAmount;
-                    if (freshDue !== 0) {
-                        statusDiv.className = 'portal-status error';
-                        statusDiv.innerHTML = '❌ Payment pending (₹' + freshDue + '). Please clear dues.';
-                        return;
-                    }
-                    const reportId = parseInt(this.dataset.reportId);
-                    const fileName = this.dataset.fileName;
-                    try { await downloadPDF(reportId, fileName); showToast('Download started','success'); } catch (e) {
-                        statusDiv.className = 'portal-status error';
-                        statusDiv.innerHTML = '❌ Error: ' + e.message;
-                    }
-                });
-            });
-        });
-        document.getElementById('portalPatientId').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('portalFetchBtn').click(); });
-
-        // ─── LOGIN ───
-        document.getElementById('openLoginBtn').addEventListener('click', () => document.getElementById('loginModal').classList.add('show'));
-        document.getElementById('closeLoginModal').addEventListener('click', () => document.getElementById('loginModal').classList.remove('show'));
-        window.addEventListener('click', e => {
-            if (e.target === document.getElementById('loginModal')) document.getElementById('loginModal').classList.remove('show');
-            if (e.target === document.getElementById('upiModal')) document.getElementById('upiModal').classList.remove('show');
-            if (e.target === document.getElementById('payConfirmModal')) closePayConfirm();
-            if (e.target === document.getElementById('invoiceModal')) closeInvoice();
-        });
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
-            const result = document.getElementById('loginResult');
-            if (!username || !password) { result.style.color='red'; result.textContent='Please enter credentials'; return; }
-            // check users
-            const user = users.find(u => u.username === username && u.password === password);
-            if (user || (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password)) {
-                result.style.color='green'; result.textContent='✅ Login successful!';
-                document.getElementById('loginModal').classList.remove('show');
-                showAdmin();
-            } else {
-                result.style.color='red'; result.textContent='❌ Invalid username or password';
-            }
-        });
-
-        async function showAdmin() {
-            document.getElementById('adminPanelWrapper').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            document.getElementById('adminUsername').textContent = 'Rajan5530';
-            await loadAllData();
-            refreshAllSections();
-            showAdminSection('dashboard');
-            setTimeout(() => generateAllQRCodes(), 300);
-            initCalendar();
-        }
-
-        function hideAdmin() {
-            document.getElementById('adminPanelWrapper').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function logout() { hideAdmin(); showToast('Logged out','warning'); }
-        document.getElementById('logoutBtn').addEventListener('click', logout);
-        document.getElementById('logoutBtn2')?.addEventListener('click', logout);
-
-        let adminDark = false;
-        document.getElementById('adminDarkToggle').addEventListener('click', function() {
-            adminDark = !adminDark;
-            document.body.classList.toggle('admin-dark', adminDark);
-            this.innerHTML = adminDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-            showToast(adminDark ? 'Dark mode enabled' : 'Light mode enabled', 'success');
-        });
-
-        const adminSections = {
-            dashboard: document.getElementById('sec-dashboard'),
-            patients: document.getElementById('sec-patients'),
-            appointments: document.getElementById('sec-appointments'),
-            samples: document.getElementById('sec-samples'),
-            referrals: document.getElementById('sec-referrals'),
-            reports: document.getElementById('sec-reports'),
-            whatsapp: document.getElementById('sec-whatsapp'),
-            payments: document.getElementById('sec-payments'),
-            daybook: document.getElementById('sec-daybook'),
-            inventory: document.getElementById('sec-inventory'),
-            users: document.getElementById('sec-users'),
-            settings: document.getElementById('sec-settings'),
-            analytics: document.getElementById('sec-analytics'),
-            backup: document.getElementById('sec-backup'),
-            security: document.getElementById('sec-security')
-        };
-        const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');
-
-        function showAdminSection(id) {
-            Object.keys(adminSections).forEach(k => adminSections[k].classList.toggle('active', k === id));
-            sidebarLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));
-            if (id === 'dashboard') refreshDashboard();
-            if (id === 'patients') refreshPatients();
-            if (id === 'appointments') refreshAppointments();
-            if (id === 'samples') refreshSamples();
-            if (id === 'referrals') refreshReferrals();
-            if (id === 'reports') refreshReports();
-            if (id === 'whatsapp') refreshWhatsAppPatients();
-            if (id === 'payments') refreshPayments();
-            if (id === 'daybook') refreshDayBook();
-            if (id === 'inventory') refreshInventory();
-            if (id === 'users') refreshUsers();
-            if (id === 'settings') refreshSettings();
-            if (id === 'analytics') refreshAnalytics();
-            if (id === 'backup') refreshBackup();
-            if (id === 'security') refreshSecurity();
-            if (id === 'patients') setTimeout(() => generateAllQRCodes(), 200);
-        }
-        sidebarLinks.forEach(a => a.addEventListener('click', function(e) {
-            e.preventDefault();
-            showAdminSection(this.dataset.section);
-        }));
-
-        // ─── EVENT LISTENERS FOR ACTIONS ───
-
-        // Add Patient
-        document.getElementById('addPatientBtn').addEventListener('click', async function() {
-            const patientId = document.getElementById('patId').value.trim();
-            const name = document.getElementById('patName').value.trim();
-            const phone = document.getElementById('patPhone').value.trim();
-            const test = document.getElementById('patTest').value.trim();
-            const status = document.getElementById('patStatus').value;
-            const due = parseFloat(document.getElementById('patDue').value) || 0;
-
-            if (!name) { showToast('❌ Name is required.','error'); return; }
-
-            let id = patientId;
-            if (!id) {
-                const nextId = patients.length + 1;
-                const today = new Date();
-                const ds = today.getFullYear() + String(today.getMonth()+1).padStart(2,'0') + String(today.getDate()).padStart(2,'0');
-                id = 'RPL-' + ds + '-' + String(nextId).padStart(4,'0');
-            }
-
-            const normPhone = normalizePhone(phone);
-            const duplicate = patients.find(p => p.patient_id === id);
-            if (duplicate) { showToast('❌ Patient ID already exists!','error'); return; }
-            if (normPhone) {
-                const phoneDup = patients.find(p => normalizePhone(p.phone) === normPhone);
-                if (phoneDup) { showToast('❌ Phone already registered to ' + phoneDup.name,'error'); return; }
-            }
-
-            setLoading(this, true);
-            try {
-                patients.push({
-                    patient_id: id,
-                    name,
-                    phone: phone || '',
-                    test: test || 'Not Specified',
-                    status,
-                    due_amount: due,
-                    created_at: new Date().toISOString()
-                });
-                await rtdb.ref('/patients').set(patients);
-                await loadAllData();
-                refreshAllSections();
-                showToast('✅ Patient ' + id + ' added!', 'success');
-                document.getElementById('patId').value = '';
-                document.getElementById('patName').value = '';
-                document.getElementById('patPhone').value = '';
-                document.getElementById('patTest').value = '';
-                document.getElementById('patDue').value = '';
-            } catch (err) { showToast('Error: '+err.message,'error'); }
-            setLoading(this, false);
-        });
-
-        document.getElementById('clearPatientBtn').addEventListener('click', () => {
-            document.getElementById('patId').value='';
-            document.getElementById('patName').value='';
-            document.getElementById('patPhone').value='';
-            document.getElementById('patTest').value='';
-            document.getElementById('patDue').value='';
-        });
-
-        document.getElementById('refreshPatients').addEventListener('click', refreshPatients);
-
-        document.addEventListener('click', async function(e) {
-            if (e.target.closest('.btn-del-patient')) {
-                const id = e.target.closest('.btn-del-patient').dataset.id;
-                if (!confirm('Delete patient #' + id + '?')) return;
-                setLoading(e.target.closest('.btn-del-patient'), true);
-                try {
-                    const toDel = reports.filter(r => r.patient_id === id);
-                    for (let r of toDel) await deletePDF(r.id, r.file_name);
-                    reports = reports.filter(r => r.patient_id !== id);
-                    patients = patients.filter(p => p.patient_id !== id);
-                    await rtdb.ref('/patients').set(patients);
-                    await rtdb.ref('/reports').set(reports);
-                    await loadAllData();
-                    refreshAllSections();
-                    showToast('Deleted patient and reports','success');
-                } catch (err) { showToast('Error: '+err.message,'error'); }
-                setLoading(e.target.closest('.btn-del-patient'), false);
-            }
-            if (e.target.closest('.btn-pay-confirm')) {
-                const id = e.target.closest('.btn-pay-confirm').dataset.id;
-                openPayConfirm(id);
-            }
-            if (e.target.closest('.btn-mark-paid')) {
-                const id = e.target.closest('.btn-mark-paid').dataset.id;
-                if (confirm('Mark as paid?')) markAsPaid(id);
-            }
-            if (e.target.closest('.btn-invoice')) {
-                const id = e.target.closest('.btn-invoice').dataset.id;
-                generateInvoice(id);
-            }
-            if (e.target.closest('.btn-del-appointment')) {
-                const idx = parseInt(e.target.closest('.btn-del-appointment').dataset.idx);
-                appointments.splice(idx,1);
-                setLocalData('appointments', appointments);
-                refreshAppointments();
-                showToast('Appointment deleted','success');
-            }
-            if (e.target.closest('.btn-del-sample')) {
-                const idx = parseInt(e.target.closest('.btn-del-sample').dataset.idx);
-                samples.splice(idx,1);
-                setLocalData('samples', samples);
-                refreshSamples();
-                showToast('Sample deleted','success');
-            }
-            if (e.target.closest('.btn-del-referral')) {
-                const idx = parseInt(e.target.closest('.btn-del-referral').dataset.idx);
-                referrals.splice(idx,1);
-                setLocalData('referrals', referrals);
-                refreshReferrals();
-                showToast('Doctor deleted','success');
-            }
-            if (e.target.closest('.btn-del-dayentry')) {
-                const idx = parseInt(e.target.closest('.btn-del-dayentry').dataset.idx);
-                dayBook.splice(idx,1);
-                setLocalData('dayBook', dayBook);
-                refreshDayBook();
-                showToast('Entry deleted','success');
-            }
-            if (e.target.closest('.btn-del-inv')) {
-                const idx = parseInt(e.target.closest('.btn-del-inv').dataset.idx);
-                inventory.splice(idx,1);
-                setLocalData('inventory', inventory);
-                refreshInventory();
-                showToast('Item deleted','success');
-            }
-            if (e.target.closest('.btn-del-user')) {
-                const idx = parseInt(e.target.closest('.btn-del-user').dataset.idx);
-                if (users[idx].username === 'admin') { showToast('Cannot delete admin','error'); return; }
-                users.splice(idx,1);
-                setLocalData('users', users);
-                refreshUsers();
-                showToast('User deleted','success');
-            }
-        });
-
-        // ─── APPOINTMENTS ───
-        document.getElementById('addAppointmentBtn').addEventListener('click', function() {
-            const patient = document.getElementById('appPatient').value.trim();
-            const date = document.getElementById('appDate').value;
-            const time = document.getElementById('appTime').value;
-            const test = document.getElementById('appTest').value.trim();
-            if (!patient || !date || !time || !test) { showToast('All fields required','error'); return; }
-            appointments.push({ patient, date, time, test });
-            setLocalData('appointments', appointments);
-            refreshAppointments();
-            document.getElementById('appPatient').value = '';
-            document.getElementById('appDate').value = '';
-            document.getElementById('appTime').value = '';
-            document.getElementById('appTest').value = '';
-            showToast('Appointment added','success');
-        });
-        document.getElementById('refreshAppointments').addEventListener('click', refreshAppointments);
-
-        let calendarInitialized = false;
-        function initCalendar() {
-            if (calendarInitialized) return;
-            const calendarEl = document.getElementById('calendar');
-            if (!calendarEl) return;
-            calendarInitialized = true;
-            const events = appointments.map(a => ({
+    function refreshAppointments() {
+        const tbody = document.getElementById('appointmentsTableBody');
+        if (appointments.length) {
+            tbody.innerHTML = appointments.map(a => `
+                <tr><td>${a.patient}</td><td>${formatDate(a.date)}</td><td>${a.time}</td><td>${a.test}</td></tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="4">No appointments</td></tr>';
+        if (window.calendar) {
+            window.calendar.removeAllEvents();
+            window.calendar.addEventSource(appointments.map(a => ({
                 title: a.patient + ' - ' + a.test,
                 start: a.date + 'T' + a.time,
                 allDay: false
-            }));
-            window.calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: events,
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                height: 'auto',
-                eventClick: function(info) {
-                    alert('Appointment: ' + info.event.title);
+            })));
+        }
+    }
+
+    function refreshSamples() {
+        const tbody = document.getElementById('samplesTableBody');
+        if (samples.length) {
+            tbody.innerHTML = samples.map(s => `
+                <tr><td>${s.sample_id}</td><td>${s.patient_id}</td><td>${s.test}</td><td><span class="badge-status ${s.status}">${s.status}</span></td><td>${s.collector}</td></tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="5">No samples</td></tr>';
+    }
+
+    function refreshReferrals() {
+        const tbody = document.getElementById('referralsTableBody');
+        if (referrals.length) {
+            tbody.innerHTML = referrals.map(r => `
+                <tr><td>${r.name}</td><td>${r.specialty}</td><td>${r.phone}</td><td>${r.commission}%</td></tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="4">No doctors</td></tr>';
+    }
+
+    function refreshReports() {
+        const tbody = document.getElementById('reportsTableBody');
+        if (reports.length) {
+            tbody.innerHTML = reports.map(r => `
+                <tr>
+                    <td>${r.name} (${r.patient_id})</td>
+                    <td>${r.test_name}</td>
+                    <td>${r.uploaded_at}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary btn-download-report" data-file="${r.file_data}" data-name="${r.file_name}"><i class="fas fa-download"></i> Download</button>
+                        <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
+    }
+
+    function refreshWhatsAppPatients() {
+        const tbody = document.getElementById('whatsappPatientList');
+        if (patients.length) {
+            tbody.innerHTML = patients.slice(0,10).map(p => `
+                <tr><td>${p.name}</td><td>${p.phone || '—'}</td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td></tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="4">No patients</td></tr>';
+    }
+
+    function refreshPayments() {
+        const due = patients.filter(p => p.due_amount > 0);
+        const paid = patients.filter(p => p.due_amount === 0);
+        document.getElementById('pPaid').textContent = paid.length;
+        document.getElementById('pUnpaid').textContent = due.length;
+        document.getElementById('pTotalDue').textContent = '₹' + due.reduce((s,p)=>s+p.due_amount,0);
+
+        const tbody = document.getElementById('paymentsTableBody');
+        if (patients.length) {
+            tbody.innerHTML = patients.map(p => `
+                <tr>
+                    <td>${p.name}</td><td>${p.test}</td><td>₹${p.due_amount}</td>
+                    <td><span class="badge-status ${p.due_amount>0?'unpaid':'paid'}">${p.due_amount>0?'Unpaid':'Paid'}</span></td>
+                    <td>${p.due_amount>0 ? `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>` : 'Cleared'}</td>
+                </tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
+
+        const historyBody = document.getElementById('paymentHistoryBody');
+        if (payments.history.length) {
+            historyBody.innerHTML = payments.history.slice(0,20).map((h, idx) => `
+                <tr><td>${idx+1}</td><td>${h.patient_name}</td><td>₹${h.amount}</td><td>${h.method}</td><td>${h.confirmed_at}</td></tr>
+            `).join('');
+        } else historyBody.innerHTML = '<tr><td colspan="5">No payments recorded</td></tr>';
+    }
+
+    function refreshDayBook() {
+        const tbody = document.getElementById('dayBookBody');
+        if (dayBook.length) {
+            tbody.innerHTML = dayBook.map(e => `
+                <tr><td>${formatDate(e.date)}</td><td>${e.type}</td><td>₹${e.amount}</td><td>${e.desc}</td></tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="4">No entries</td></tr>';
+    }
+
+    function refreshInventory() {
+        const tbody = document.getElementById('inventoryBody');
+        if (inventory.length) {
+            tbody.innerHTML = inventory.map(i => `
+                <tr><td>${i.item}</td><td>${i.qty}</td><td>${i.threshold}</td><td><span class="badge-status ${i.qty <= i.threshold ? 'unpaid' : 'paid'}">${i.qty <= i.threshold ? 'Low Stock' : 'OK'}</span></td></tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="4">No items</td></tr>';
+    }
+
+    function refreshUsers() {
+        const tbody = document.getElementById('usersTableBody');
+        if (users.length) {
+            tbody.innerHTML = users.map(u => `
+                <tr><td>${u.username}</td><td><span class="badge-status ${u.role==='admin'?'paid':'pending'}">${u.role}</span></td></tr>
+            `).join('');
+        } else tbody.innerHTML = '<tr><td colspan="2">No users</td></tr>';
+    }
+
+    function refreshSettings() {
+        document.getElementById('setLabName').value = settings.lab_name;
+        document.getElementById('setAddress').value = settings.address;
+        document.getElementById('setPhone').value = settings.phone;
+        document.getElementById('setGST').value = settings.gst;
+    }
+
+    // Payment confirm modal
+    let pendingPayPatientId = null;
+    function openPayConfirm(patientId) {
+        const patient = patients.find(p => p.patient_id === patientId);
+        if (!patient) return showToast('Patient not found','error');
+        if (patient.due_amount <= 0) return showToast('No due amount.','warning');
+        pendingPayPatientId = patientId;
+        document.getElementById('payConfirmPatient').textContent = patient.name;
+        document.getElementById('payConfirmId').textContent = patient.patient_id;
+        document.getElementById('payConfirmTest').textContent = patient.test;
+        document.getElementById('payConfirmAmount').textContent = '₹' + patient.due_amount;
+        document.getElementById('payConfirmAmountDisplay').textContent = '₹' + patient.due_amount;
+        document.getElementById('payConfirmModal').classList.add('show');
+    }
+
+    function closePayConfirm() {
+        document.getElementById('payConfirmModal').classList.remove('show');
+        pendingPayPatientId = null;
+    }
+
+    // Invoice generation
+    function generateInvoice(patientId) {
+        const patient = patients.find(p => p.patient_id === patientId);
+        if (!patient) return;
+        document.getElementById('invPatientName').textContent = patient.name;
+        document.getElementById('invPatientId').textContent = patient.patient_id;
+        document.getElementById('invTestName').textContent = patient.test;
+        document.getElementById('invDate').textContent = new Date().toLocaleDateString();
+        document.getElementById('invTestDesc').textContent = patient.test;
+        document.getElementById('invAmount').textContent = '₹' + patient.due_amount;
+        document.getElementById('invTotal').textContent = '₹' + patient.due_amount;
+        document.getElementById('invoiceModal').classList.add('show');
+    }
+
+    function closeInvoice() { document.getElementById('invoiceModal').classList.remove('show'); }
+
+    // WhatsApp
+    function sendWhatsApp(phone, message) {
+        if (!phone) return showToast('No phone number','warning');
+        let clean = phone.replace(/\s/g,'').replace(/-/g,'');
+        if (clean.startsWith('0')) clean = clean.substring(1);
+        if (/^\d{10}$/.test(clean)) clean = '+91'+clean;
+        window.open('https://wa.me/'+clean+'?text='+encodeURIComponent(message), '_blank');
+    }
+
+    // Portal
+    function openPortal() {
+        document.getElementById('patientPortalModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number';
+        document.getElementById('portalReportList').style.display = 'none';
+        document.getElementById('portalPatientId').value = '';
+    }
+    function closePortal() {
+        document.getElementById('patientPortalModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Login
+    function showAdmin() {
+        document.getElementById('adminPanelWrapper').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        refreshAllSections();
+        showAdminSection('dashboard');
+        initCalendar();
+    }
+    function hideAdmin() {
+        document.getElementById('adminPanelWrapper').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    const adminSections = {
+        dashboard: document.getElementById('sec-dashboard'),
+        patients: document.getElementById('sec-patients'),
+        appointments: document.getElementById('sec-appointments'),
+        samples: document.getElementById('sec-samples'),
+        referrals: document.getElementById('sec-referrals'),
+        reports: document.getElementById('sec-reports'),
+        whatsapp: document.getElementById('sec-whatsapp'),
+        payments: document.getElementById('sec-payments'),
+        daybook: document.getElementById('sec-daybook'),
+        inventory: document.getElementById('sec-inventory'),
+        users: document.getElementById('sec-users'),
+        settings: document.getElementById('sec-settings')
+    };
+
+    function showAdminSection(id) {
+        Object.keys(adminSections).forEach(k => adminSections[k].classList.toggle('active', k === id));
+        document.querySelectorAll('#adminSidebar a[data-section]').forEach(a => a.classList.toggle('active', a.dataset.section === id));
+    }
+
+    // Calendar
+    let calendarInitialized = false;
+    function initCalendar() {
+        if (calendarInitialized) return;
+        const calendarEl = document.getElementById('calendar');
+        if (!calendarEl) return;
+        calendarInitialized = true;
+        window.calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: appointments.map(a => ({ title: a.patient + ' - ' + a.test, start: a.date + 'T' + a.time })),
+            headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek' },
+            height: 'auto'
+        });
+        window.calendar.render();
+    }
+
+    // Event Listeners
+    document.getElementById('openLoginBtn').addEventListener('click', () => document.getElementById('loginModal').classList.add('show'));
+    document.getElementById('closeLoginModal').addEventListener('click', () => document.getElementById('loginModal').classList.remove('show'));
+    
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value.trim();
+        const result = document.getElementById('loginResult');
+        const user = users.find(u => u.username === username && u.password === password);
+        if (user || (username === 'Rajan5530' && password === 'Rkchandra5530')) {
+            result.style.color='green'; result.textContent='✅ Login successful!';
+            document.getElementById('loginModal').classList.remove('show');
+            showAdmin();
+        } else {
+            result.style.color='red'; result.textContent='❌ Invalid credentials';
+        }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', hideAdmin);
+
+    document.getElementById('adminDarkToggle').addEventListener('click', function() {
+        document.body.classList.toggle('admin-dark');
+        this.innerHTML = document.body.classList.contains('admin-dark') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+
+    // Sidebar navigation
+    document.querySelectorAll('#adminSidebar a[data-section]').forEach(a => {
+        a.addEventListener('click', function(e) {
+            e.preventDefault();
+            showAdminSection(this.dataset.section);
+        });
+    });
+
+    // Add Patient
+    document.getElementById('addPatientBtn').addEventListener('click', function() {
+        const name = document.getElementById('patName').value.trim();
+        const phone = document.getElementById('patPhone').value.trim();
+        const test = document.getElementById('patTest').value.trim();
+        const status = document.getElementById('patStatus').value;
+        const due = parseFloat(document.getElementById('patDue').value) || 0;
+
+        if (!name) return showToast('❌ Name is required.','error');
+
+        let id = document.getElementById('patId').value.trim();
+        if (!id) {
+            const ds = new Date().toISOString().split('T')[0].replace(/-/g,'');
+            id = 'RPL-' + ds + '-' + String(patients.length + 1).padStart(4,'0');
+        }
+
+        if (patients.find(p => p.patient_id === id)) return showToast('❌ Patient ID already exists!','error');
+
+        patients.push({
+            patient_id: id,
+            name,
+            phone,
+            test: test || 'Not Specified',
+            status,
+            due_amount: due,
+            created_at: new Date().toISOString()
+        });
+        saveAllData();
+        refreshAllSections();
+        showToast('✅ Patient ' + id + ' added!', 'success');
+        document.getElementById('patName').value = '';
+        document.getElementById('patPhone').value = '';
+        document.getElementById('patTest').value = '';
+        document.getElementById('patDue').value = '';
+    });
+
+    // Clear form
+    document.getElementById('clearPatientBtn').addEventListener('click', () => {
+        document.getElementById('patId').value = '';
+        document.getElementById('patName').value = '';
+        document.getElementById('patPhone').value = '';
+        document.getElementById('patTest').value = '';
+        document.getElementById('patDue').value = '';
+    });
+
+    // Search patients
+    document.getElementById('patientSearch').addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#patientTableBody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(query) ? '' : 'none';
+        });
+    });
+
+    // Refresh buttons
+    document.getElementById('refreshPatients').addEventListener('click', refreshPatients);
+    document.getElementById('refreshReports')?.addEventListener('click', refreshReports);
+    document.getElementById('refreshPayments')?.addEventListener('click', refreshPayments);
+
+    // Export Excel
+    document.getElementById('exportExcelPatients').addEventListener('click', function() {
+        if (!patients.length) return showToast('No data to export','warning');
+        const data = patients.map(p => ({
+            ID: p.patient_id, Name: p.name, Phone: p.phone,
+            Test: p.test, Status: p.status, Due: p.due_amount
+        }));
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Patients");
+        XLSX.writeFile(wb, "Patients_"+getToday()+".xlsx");
+        showToast('Excel exported','success');
+    });
+
+    // Payment Confirm
+    document.getElementById('payConfirmCancel').addEventListener('click', closePayConfirm);
+    document.getElementById('payConfirmConfirm').addEventListener('click', function() {
+        const patientId = pendingPayPatientId;
+        if (!patientId) return;
+        const patient = patients.find(p => p.patient_id === patientId);
+        if (!patient) return;
+        const amount = patient.due_amount;
+        const method = document.querySelector('#payMethodGroup input[type="radio"]:checked')?.value || 'Cash';
+        
+        patient.due_amount = 0;
+        payments.history.unshift({
+            patient_name: patient.name,
+            patient_id: patient.patient_id,
+            amount: amount,
+            method: method,
+            confirmed_at: new Date().toLocaleString()
+        });
+        saveAllData();
+        refreshAllSections();
+        closePayConfirm();
+        showToast(`Payment of ₹${amount} confirmed for ${patient.name}`, 'success');
+
+        if (patient.phone) {
+            sendWhatsApp(patient.phone, `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you.`);
+        }
+    });
+
+    // Mark as Paid
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.btn-mark-paid')) {
+            const id = e.target.closest('.btn-mark-paid').dataset.id;
+            const patient = patients.find(p => p.patient_id === id);
+            if (patient && patient.due_amount > 0) {
+                const amount = patient.due_amount;
+                patient.due_amount = 0;
+                payments.history.unshift({
+                    patient_name: patient.name,
+                    patient_id: patient.patient_id,
+                    amount: amount,
+                    method: 'Cash (Quick)',
+                    confirmed_at: new Date().toLocaleString()
+                });
+                saveAllData();
+                refreshAllSections();
+                showToast(`✅ ${patient.name} marked as paid (₹${amount})`, 'success');
+            }
+        }
+        if (e.target.closest('.btn-pay-confirm')) {
+            openPayConfirm(e.target.closest('.btn-pay-confirm').dataset.id);
+        }
+        if (e.target.closest('.btn-invoice')) {
+            generateInvoice(e.target.closest('.btn-invoice').dataset.id);
+        }
+        if (e.target.closest('.btn-del-patient')) {
+            const id = e.target.closest('.btn-del-patient').dataset.id;
+            if (confirm('Delete patient #' + id + '?')) {
+                patients = patients.filter(p => p.patient_id !== id);
+                reports = reports.filter(r => r.patient_id !== id);
+                saveAllData();
+                refreshAllSections();
+                showToast('Patient deleted','success');
+            }
+        }
+        if (e.target.closest('.btn-download-report')) {
+            const btn = e.target.closest('.btn-download-report');
+            const fileData = btn.dataset.file;
+            const fileName = btn.dataset.name;
+            if (fileData) {
+                const link = document.createElement('a');
+                link.href = fileData;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast('Download started','success');
+            }
+        }
+    });
+
+    // Report Upload (local storage as base64)
+    document.getElementById('uploadReportBtn').addEventListener('click', function() {
+        const pid = document.getElementById('reportPatientId').value.trim();
+        const test = document.getElementById('reportTestName').value.trim();
+        const file = document.getElementById('reportFile').files[0];
+        if (!pid || !test || !file) return showToast('All fields required','error');
+        
+        const patient = patients.find(p => p.patient_id === pid);
+        if (!patient) return showToast('Patient not found','error');
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            reports.push({
+                id: reports.length + 1,
+                patient_id: pid,
+                name: patient.name,
+                test_name: test,
+                file_name: file.name,
+                file_data: e.target.result,
+                uploaded_at: new Date().toLocaleString()
+            });
+            saveAllData();
+            refreshAllSections();
+            showToast('✅ Report uploaded for ' + patient.name, 'success');
+            document.getElementById('reportPatientId').value = '';
+            document.getElementById('reportTestName').value = '';
+            document.getElementById('reportFile').value = '';
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Appointments
+    document.getElementById('addAppointmentBtn').addEventListener('click', function() {
+        const patient = document.getElementById('appPatient').value.trim();
+        const date = document.getElementById('appDate').value;
+        const time = document.getElementById('appTime').value;
+        const test = document.getElementById('appTest').value.trim();
+        if (!patient || !date || !time || !test) return showToast('All fields required','error');
+        appointments.push({ patient, date, time, test });
+        saveAllData();
+        refreshAppointments();
+        document.getElementById('appPatient').value = '';
+        document.getElementById('appDate').value = '';
+        document.getElementById('appTime').value = '';
+        document.getElementById('appTest').value = '';
+        showToast('Appointment added','success');
+    });
+
+    // Samples
+    document.getElementById('addSampleBtn').addEventListener('click', function() {
+        const pid = document.getElementById('samplePatientId').value.trim();
+        const test = document.getElementById('sampleTest').value.trim();
+        const status = document.getElementById('sampleStatus').value;
+        const collector = document.getElementById('sampleCollector').value.trim();
+        if (!pid || !test || !collector) return showToast('All fields required','error');
+        samples.push({ sample_id: 'SMP-' + generateId().toUpperCase(), patient_id: pid, test, status, collector });
+        saveAllData();
+        refreshSamples();
+        document.getElementById('samplePatientId').value = '';
+        document.getElementById('sampleTest').value = '';
+        document.getElementById('sampleCollector').value = '';
+        showToast('Sample added','success');
+    });
+
+    // Referrals
+    document.getElementById('addReferralBtn').addEventListener('click', function() {
+        const name = document.getElementById('refDoctor').value.trim();
+        const specialty = document.getElementById('refSpecialty').value.trim();
+        const phone = document.getElementById('refPhone').value.trim();
+        const commission = parseFloat(document.getElementById('refCommission').value) || 0;
+        if (!name) return showToast('Doctor name required','error');
+        referrals.push({ name, specialty, phone, commission });
+        saveAllData();
+        refreshReferrals();
+        document.getElementById('refDoctor').value = '';
+        document.getElementById('refSpecialty').value = '';
+        document.getElementById('refPhone').value = '';
+        document.getElementById('refCommission').value = '';
+        showToast('Doctor added','success');
+    });
+
+    // Day Book
+    document.getElementById('addDayEntryBtn').addEventListener('click', function() {
+        const amount = parseFloat(document.getElementById('dayAmount').value);
+        const type = document.getElementById('dayType').value;
+        const desc = document.getElementById('dayDesc').value.trim();
+        if (!amount || amount <= 0) return showToast('Enter valid amount','error');
+        dayBook.push({ date: getToday(), type, amount, desc });
+        saveAllData();
+        refreshDayBook();
+        document.getElementById('dayAmount').value = '';
+        document.getElementById('dayDesc').value = '';
+        showToast('Entry added','success');
+    });
+
+    // Inventory
+    document.getElementById('addInventoryBtn').addEventListener('click', function() {
+        const item = document.getElementById('invItem').value.trim();
+        const qty = parseFloat(document.getElementById('invQty').value);
+        const threshold = parseFloat(document.getElementById('invThreshold').value) || 5;
+        if (!item || isNaN(qty)) return showToast('Enter valid item and quantity','error');
+        const existing = inventory.find(i => i.item.toLowerCase() === item.toLowerCase());
+        if (existing) { existing.qty = qty; existing.threshold = threshold; }
+        else inventory.push({ item, qty, threshold });
+        saveAllData();
+        refreshInventory();
+        document.getElementById('invItem').value = '';
+        document.getElementById('invQty').value = '';
+        document.getElementById('invThreshold').value = '';
+        showToast('Inventory updated','success');
+    });
+
+    // Users
+    document.getElementById('addUserBtn').addEventListener('click', function() {
+        const username = document.getElementById('userUsername').value.trim();
+        const password = document.getElementById('userPassword').value.trim();
+        const role = document.getElementById('userRole').value;
+        if (!username || !password) return showToast('Username and password required','error');
+        if (users.find(u => u.username === username)) return showToast('Username already exists','error');
+        users.push({ username, password, role });
+        saveAllData();
+        refreshUsers();
+        document.getElementById('userUsername').value = '';
+        document.getElementById('userPassword').value = '';
+        showToast('User added','success');
+    });
+
+    // Settings
+    document.getElementById('saveSettingsBtn').addEventListener('click', function() {
+        settings.lab_name = document.getElementById('setLabName').value.trim();
+        settings.address = document.getElementById('setAddress').value.trim();
+        settings.phone = document.getElementById('setPhone').value.trim();
+        settings.gst = document.getElementById('setGST').value.trim();
+        saveAllData();
+        showToast('Settings saved!','success');
+    });
+
+    // Invoice close
+    document.getElementById('closeInvoiceBtn').addEventListener('click', closeInvoice);
+    document.getElementById('printInvoiceBtn').addEventListener('click', () => window.print());
+
+    // WhatsApp
+    document.getElementById('sendWAPatient').addEventListener('click', () => {
+        const phone = prompt('Enter patient phone:');
+        if (phone) sendWhatsApp(phone, document.getElementById('whatsappPreview').innerText);
+    });
+
+    // Portal
+    document.getElementById('openPatientPortalBtn').addEventListener('click', openPortal);
+    document.getElementById('openPatientPortalBtn2').addEventListener('click', openPortal);
+    document.getElementById('closePortalBtn').addEventListener('click', closePortal);
+    
+    document.getElementById('portalFetchBtn').addEventListener('click', function() {
+        const search = document.getElementById('portalPatientId').value.trim();
+        const statusDiv = document.getElementById('portalStatus');
+        const listDiv = document.getElementById('portalReportList');
+        
+        if (!search) {
+            statusDiv.innerHTML = '⚠️ Please enter Patient ID or Mobile Number.';
+            return;
+        }
+        
+        const patient = patients.find(p => p.patient_id === search || p.phone === search);
+        if (!patient) {
+            statusDiv.innerHTML = '❌ No patient found.';
+            listDiv.style.display = 'none';
+            return;
+        }
+        
+        const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
+        if (patientReports.length === 0) {
+            statusDiv.innerHTML = 'ℹ️ No reports found for ' + patient.name;
+            listDiv.style.display = 'none';
+            return;
+        }
+        
+        const isPaid = patient.due_amount === 0;
+        statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
+            (isPaid ? ' — Reports <b>unlocked</b>.' : ' — <b>LOCKED</b> (₹' + patient.due_amount + ' due).');
+        
+        let html = '<h3>📋 Your Reports</h3>';
+        patientReports.forEach(r => {
+            html += `
+                <div class="portal-report-item">
+                    <div>
+                        <strong>${r.test_name}</strong><br>
+                        <small>📅 ${r.uploaded_at}</small>
+                    </div>
+                    <button class="portal-download-btn btn-download-report" data-file="${r.file_data}" data-name="${r.file_name}" ${isPaid ? '' : 'disabled'}>
+                        ${isPaid ? '⬇️ Download' : '🔒 Locked'}
+                    </button>
+                </div>
+            `;
+        });
+        listDiv.innerHTML = html;
+        listDiv.style.display = 'block';
+        
+        listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const fileData = this.dataset.file;
+                const fileName = this.dataset.name;
+                if (fileData) {
+                    const link = document.createElement('a');
+                    link.href = fileData;
+                    link.download = fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showToast('Download started','success');
                 }
             });
-            window.calendar.render();
+        });
+    });
+
+    // UPI Modal
+    document.getElementById('upiPayBtn')?.addEventListener('click', () => {
+        document.getElementById('upiModal').classList.add('show');
+        const container = document.getElementById('upiQR');
+        container.innerHTML = '';
+        if (typeof QRCode !== 'undefined') {
+            new QRCode(container, {
+                text: 'upi://pay?pa=rajanpathlab@upi&pn=Rajan%20Path%20Lab&cu=INR',
+                width: 160,
+                height: 160
+            });
         }
+    });
+    document.getElementById('closeUpiModal')?.addEventListener('click', () => {
+        document.getElementById('upiModal').classList.remove('show');
+    });
 
-        // ─── SAMPLES ───
-        document.getElementById('addSampleBtn').addEventListener('click', function() {
-            const patient_id = document.getElementById('samplePatientId').value.trim();
-            const test = document.getElementById('sampleTest').value.trim();
-            const status = document.getElementById('sampleStatus').value;
-            const collector = document.getElementById('sampleCollector').value.trim();
-            if (!patient_id || !test || !collector) { showToast('Patient ID, Test, and Collector required','error'); return; }
-            const sample_id = 'SMP-' + Date.now().toString(36).toUpperCase();
-            samples.push({ sample_id, patient_id, test, status, collector });
-            setLocalData('samples', samples);
-            refreshSamples();
-            document.getElementById('samplePatientId').value = '';
-            document.getElementById('sampleTest').value = '';
-            document.getElementById('sampleCollector').value = '';
-            showToast('Sample added with ID: ' + sample_id, 'success');
-        });
-        document.getElementById('refreshSamples').addEventListener('click', refreshSamples);
+    // Modal close on outside click
+    window.addEventListener('click', function(e) {
+        if (e.target === document.getElementById('loginModal')) document.getElementById('loginModal').classList.remove('show');
+        if (e.target === document.getElementById('upiModal')) document.getElementById('upiModal').classList.remove('show');
+        if (e.target === document.getElementById('payConfirmModal')) closePayConfirm();
+        if (e.target === document.getElementById('invoiceModal')) closeInvoice();
+        if (e.target === document.getElementById('patientPortalModal')) closePortal();
+    });
 
-        // ─── BARCODE SCANNER ───
-        let html5QrCode = null;
-        document.getElementById('scanBarcodeBtn').addEventListener('click', function() {
-            const container = document.getElementById('scanner-container');
-            if (container.style.display === 'none') {
-                container.style.display = 'block';
-                if (!html5QrCode) {
-                    html5QrCode = new Html5Qrcode("scanner-container");
-                    html5QrCode.start(
-                        { facingMode: "environment" },
-                        { fps: 10, qrbox: { width: 250, height: 250 } },
-                        onScanSuccess,
-                        onScanError
-                    );
-                } else {
-                    html5QrCode.resume();
-                }
-            } else {
-                container.style.display = 'none';
-                if (html5QrCode) {
-                    html5QrCode.stop();
-                }
-            }
-            function onScanSuccess(decodedText, decodedResult) {
-                // decodedText is the patient ID or sample ID
-                document.getElementById('samplePatientId').value = decodedText;
-                showToast('Scanned: ' + decodedText, 'success');
-                html5QrCode.stop();
-                document.getElementById('scanner-container').style.display = 'none';
-            }
-            function onScanError(err) {
-                // ignore
-            }
-        });
-
-        // ─── REFERRALS ───
-        document.getElementById('addReferralBtn').addEventListener('click', function() {
-            const name = document.getElementById('refDoctor').value.trim();
-            const specialty = document.getElementById('refSpecialty').value.trim();
-            const phone = document.getElementById('refPhone').value.trim();
-            const commission = parseFloat(document.getElementById('refCommission').value) || 0;
-            if (!name) { showToast('Doctor name required','error'); return; }
-            referrals.push({ name, specialty, phone, commission, totalRef: 0 });
-            setLocalData('referrals', referrals);
-            refreshReferrals();
-            document.getElementById('refDoctor').value = '';
-            document.getElementById('refSpecialty').value = '';
-            document.getElementById('refPhone').value = '';
-            document.getElementById('refCommission').value = '';
-            showToast('Doctor added','success');
-        });
-        document.getElementById('refreshReferrals').addEventListener('click', refreshReferrals);
-
-        // ─── REPORTS ───
-        document.getElementById('uploadReportBtn').addEventListener('click', async function() {
-            const pid = document.getElementById('reportPatientId').value.trim();
-            const test = document.getElementById('reportTestName').value.trim();
-            const file = document.getElementById('reportFile').files[0];
-            const replace = document.getElementById('reportReplace').value;
-            const msgDiv = document.getElementById('uploadMessage');
-            msgDiv.textContent = '';
-            msgDiv.style.color = 'red';
-            if (!pid) { msgDiv.textContent = '❌ Patient ID required.'; showToast('Patient ID required','error'); return; }
-            if (!test) { msgDiv.textContent = '❌ Test Name required.'; showToast('Test Name required','error'); return; }
-            if (!file) { msgDiv.textContent = '❌ Select a PDF.'; showToast('Select a PDF','error'); return; }
-            const patient = patients.find(p => p.patient_id === pid);
-            if (!patient) { msgDiv.textContent = '❌ Patient not found!'; showToast('Patient not found','error'); return; }
-            const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
-            if (existing && replace === 'no') { msgDiv.textContent = '❌ Report exists. Use Replace.'; showToast('Report exists. Use Replace.','warning'); return; }
-            setLoading(this, true);
-            try {
-                if (existing && replace === 'yes') {
-                    await deletePDF(existing.id, existing.file_name);
-                    reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
-                }
-                const newId = reports.length + 1;
-                const url = await uploadPDF(file, newId);
-                const newReport = {
-                    id: newId,
-                    patient_id: pid,
-                    name: patient.name,
-                    test_name: test || 'Not Specified',
-                    file_name: file.name,
-                    uploaded_at: new Date().toLocaleString(),
-                    url
-                };
-                reports.push(newReport);
-                await rtdb.ref('/reports').set(reports);
-                await loadAllData();
-                refreshAllSections();
-                msgDiv.style.color = 'green';
-                msgDiv.textContent = '✅ Report uploaded for ' + patient.name;
-                showToast('✅ Report uploaded for ' + patient.name, 'success');
-                document.getElementById('reportPatientId').value = '';
-                document.getElementById('reportTestName').value = '';
-                document.getElementById('reportFile').value = '';
-                setTimeout(() => { msgDiv.textContent = ''; }, 5000);
-            } catch (err) { msgDiv.textContent = '❌ Upload failed: ' + err.message; showToast('Upload failed: '+err.message,'error'); }
-            setLoading(this, false);
-        });
-        document.getElementById('refreshReports').addEventListener('click', refreshReports);
-
-        document.addEventListener('click', async function(e) {
-            if (e.target.closest('.btn-del-report')) {
-                const btn = e.target.closest('.btn-del-report');
-                const id = parseInt(btn.dataset.id);
-                const fileName = btn.dataset.fileName;
-                if (!confirm('Delete report?')) return;
-                setLoading(btn, true);
-                try {
-                    await deletePDF(id, fileName);
-                    reports = reports.filter(r => r.id !== id);
-                    await rtdb.ref('/reports').set(reports);
-                    await loadAllData();
-                    refreshAllSections();
-                    showToast('Report deleted','success');
-                } catch (err) { showToast('Error: '+err.message,'error'); }
-                setLoading(btn, false);
-            }
-            if (e.target.closest('.btn-download-report')) {
-                const btn = e.target.closest('.btn-download-report');
-                const id = parseInt(btn.dataset.id);
-                const fileName = btn.dataset.fileName;
-                try { await downloadPDF(id, fileName); showToast('Download started','success'); } catch (err) { showToast('Error: '+err.message,'error'); }
-            }
-        });
-
-        // ─── WHATSAPP ───
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.wa-send')) {
-                const btn = e.target.closest('.wa-send');
-                if (!btn.dataset.phone) { showToast('No phone number','warning'); return; }
-                const msg = document.getElementById('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn.dataset.test);
-                sendWhatsApp(btn.dataset.phone, msg);
-            }
-        });
-        document.getElementById('sendWAPatient').addEventListener('click', () => {
-            const phone = prompt('Enter patient phone:');
-            if (phone) sendWhatsApp(phone, document.getElementById('whatsappPreview').innerText.replace(/{patient}/g,'Patient').replace(/{test}/g,'Report'));
-        });
-        document.getElementById('sendWADoctor').addEventListener('click', () => {
-            const phone = prompt('Enter doctor phone:');
-            if (phone) sendWhatsApp(phone, 'Doctor: Report ready.');
-        });
-        document.getElementById('dueReminderBtn').addEventListener('click', () => {
-            const phone = prompt('Enter patient phone:');
-            if (phone) sendWhatsApp(phone, 'Reminder: Payment due at Rajan Path Lab.');
-        });
-
-        // ─── PAYMENTS ───
-        document.getElementById('refreshPayments').addEventListener('click', refreshPayments);
-
-        document.getElementById('upiPayBtn').addEventListener('click', () => {
-            document.getElementById('upiModal').classList.add('show');
-            const container = document.getElementById('upiQR');
-            container.innerHTML = '';
-            if (typeof QRCode !== 'undefined') {
-                new QRCode(container, {
-                    text: 'upi://pay?pa=rajanpathlab@upi&pn=Rajan%20Path%20Lab&am=1.00&cu=INR',
-                    width: 160,
-                    height: 160,
-                    colorDark: '#000',
-                    colorLight: '#fff',
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-            } else container.innerHTML = '<p>QR library not loaded</p>';
-        });
-        document.getElementById('closeUpiModal').addEventListener('click', () => document.getElementById('upiModal').classList.remove('show'));
-
-        // ─── DAY BOOK ───
-        document.getElementById('addDayEntryBtn').addEventListener('click', function() {
-            const date = document.getElementById('dayDate').value || getToday();
-            const type = document.getElementById('dayType').value;
-            const amount = parseFloat(document.getElementById('dayAmount').value);
-            const desc = document.getElementById('dayDesc').value.trim();
-            if (!amount || amount <= 0) { showToast('Enter valid amount','error'); return; }
-            dayBook.push({ date, type, amount, desc });
-            setLocalData('dayBook', dayBook);
-            refreshDayBook();
-            document.getElementById('dayAmount').value = '';
-            document.getElementById('dayDesc').value = '';
-            showToast('Entry added','success');
-        });
-        document.getElementById('refreshDayBook').addEventListener('click', refreshDayBook);
-
-        // ─── INVENTORY ───
-        document.getElementById('addInventoryBtn').addEventListener('click', function() {
-            const item = document.getElementById('invItem').value.trim();
-            const qty = parseFloat(document.getElementById('invQty').value);
-            const threshold = parseFloat(document.getElementById('invThreshold').value) || 5;
-            if (!item || isNaN(qty) || qty < 0) { showToast('Enter valid item and quantity','error'); return; }
-            const existing = inventory.find(i => i.item.toLowerCase() === item.toLowerCase());
-            if (existing) {
-                existing.qty = qty;
-                existing.threshold = threshold;
-            } else {
-                inventory.push({ item, qty, threshold });
-            }
-            setLocalData('inventory', inventory);
-            refreshInventory();
-            document.getElementById('invItem').value = '';
-            document.getElementById('invQty').value = '';
-            document.getElementById('invThreshold').value = '';
-            showToast('Inventory updated','success');
-        });
-        document.getElementById('refreshInventory').addEventListener('click', refreshInventory);
-
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.btn-update-inv')) {
-                const idx = parseInt(e.target.closest('.btn-update-inv').dataset.idx);
-                const item = inventory[idx];
-                document.getElementById('invItem').value = item.item;
-                document.getElementById('invQty').value = item.qty;
-                document.getElementById('invThreshold').value = item.threshold;
-                // remove old
-                inventory.splice(idx,1);
-                setLocalData('inventory', inventory);
-                refreshInventory();
-                showToast('Edit item and add again','warning');
-            }
-        });
-
-        // ─── USERS ───
-        document.getElementById('addUserBtn').addEventListener('click', function() {
-            const username = document.getElementById('userUsername').value.trim();
-            const password = document.getElementById('userPassword').value.trim();
-            const role = document.getElementById('userRole').value;
-            if (!username || !password) { showToast('Username and password required','error'); return; }
-            if (users.find(u => u.username === username)) { showToast('Username already exists','error'); return; }
-            users.push({ username, password, role });
-            setLocalData('users', users);
-            refreshUsers();
-            document.getElementById('userUsername').value = '';
-            document.getElementById('userPassword').value = '';
-            showToast('User added','success');
-        });
-        document.getElementById('refreshUsers').addEventListener('click', refreshUsers);
-
-        // ─── SETTINGS ───
-        document.getElementById('saveSettingsBtn').addEventListener('click', async function() {
-            const lab_name = document.getElementById('setLabName').value.trim();
-            const address = document.getElementById('setAddress').value.trim();
-            const phone = document.getElementById('setPhone').value.trim();
-            const gst = document.getElementById('setGST').value.trim();
-            const default_price = parseFloat(document.getElementById('setDefaultPrice').value) || 450;
-            setLoading(this, true);
-            try {
-                settings = { lab_name, address, phone, gst, default_price };
-                await rtdb.ref('/settings').set(settings);
-                showToast('Settings saved!','success');
-            } catch (err) { showToast('Error: '+err.message,'error'); }
-            setLoading(this, false);
-        });
-
-        // ─── INVOICE ───
-        function generateInvoice(patientId) {
-            const patient = patients.find(p => p.patient_id === patientId);
-            if (!patient) { showToast('Patient not found','error'); return; }
-            const amount = patient.due_amount || 0;
-            const gst = 0;
-            const total = amount + gst;
-
-            document.getElementById('invPatientName').textContent = patient.name;
-            document.getElementById('invPatientId').textContent = patient.patient_id;
-            document.getElementById('invTestName').textContent = patient.test || 'Not Specified';
-            document.getElementById('invDate').textContent = new Date().toLocaleDateString();
-            document.getElementById('invTestDesc').textContent = patient.test || 'Test';
-            document.getElementById('invAmount').textContent = '₹' + amount;
-            document.querySelector('#invoicePrintArea table tbody tr:nth-child(2) td:nth-child(2)').textContent = '₹' + gst;
-            document.getElementById('invTotal').textContent = '₹' + total;
-
-            document.getElementById('invLabAddress').textContent = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
-            document.getElementById('invLabPhone').textContent = settings.phone || '8709946177 / 9931002450';
-            document.getElementById('invLabGST').textContent = 'GST: ' + (settings.gst || 'NA');
-
-            document.getElementById('invoiceModal').classList.add('show');
-        }
-
-        function closeInvoice() { document.getElementById('invoiceModal').classList.remove('show'); }
-        document.getElementById('closeInvoiceBtn').addEventListener('click', closeInvoice);
-        document.getElementById('invoiceModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeInvoice(); });
-        document.getElementById('printInvoiceBtn').addEventListener('click', function() { window.print(); });
-
-        // ─── BACKUP ───
-        document.getElementById('backupDBBtn').addEventListener('click', () => showToast('Data already in Firebase cloud.','success'));
-        document.getElementById('backupPDFBtn').addEventListener('click', () => showToast('PDFs are in Supabase Storage.','success'));
-        document.getElementById('restoreBtn').addEventListener('click', () => showToast('Restore not needed.','warning'));
-
-        // ─── SECURITY ───
-        document.getElementById('viewLogBtn').addEventListener('click', refreshSecurity);
-        document.getElementById('changePwdBtn').addEventListener('click', () => {
-            const old = prompt('Enter old password:');
-            if (!old) return;
-            const newPwd = prompt('Enter new password (min 6 chars):');
-            if (!newPwd || newPwd.length < 6) { showToast('Min 6 characters','warning'); return; }
-            showToast('✅ Password changed! (dummy)','success');
-        });
-
-        // ─── EXPORT EXCEL ───
-        document.getElementById('exportExcelPatients').addEventListener('click', function() {
-            if (!patients.length) { showToast('No data to export','warning'); return; }
-            const data = patients.map(p => ({
-                ID: p.patient_id,
-                Name: p.name,
-                Phone: p.phone,
-                Test: p.test,
-                Status: p.status,
-                Due: p.due_amount
-            }));
-            const ws = XLSX.utils.json_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Patients");
-            XLSX.writeFile(wb, "Patients_"+getToday()+".xlsx");
-            showToast('Excel exported','success');
-        });
-
-        // ─── INIT ───
-        loadAllData().then(() => {
-            refreshAllSections();
-            console.log('✅ Rajan Path Lab Enterprise loaded.');
-            console.log('🔑 Login: admin / admin123 or Rajan5530 / Rkchandra5530');
-        });
-
-    })();
+    // Initialize
+    console.log('✅ Rajan Path Lab Enterprise loaded.');
+    console.log('🔑 Login: admin / admin123 or Rajan5530 / Rkchandra5530');
+})();
 </script>
 </body>
 </html>
