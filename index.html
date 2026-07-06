@@ -183,6 +183,8 @@
         .btn-sm { padding: 3px 10px; font-size: 12px; }
         .btn-gold { background: #d4af37; color: #fff; border-color: #d4af37; }
         .btn-gold:hover { background: #b8960e; }
+        .btn-success { background: #22c55e; color: #fff; border-color: #22c55e; }
+        .btn-success:hover { background: #16a34a; }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; background: white; padding: 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
@@ -1087,6 +1089,46 @@
             setLoading(this, false);
         });
 
+        // ─── NEW: One‑Click Mark as Paid ───
+        async function markAsPaid(patientId) {
+            const patient = patients.find(p => p.patient_id === patientId);
+            if (!patient) { showToast('Patient not found', 'error'); return; }
+            if (patient.due_amount <= 0) { showToast('Already paid', 'warning'); return; }
+            const amount = patient.due_amount;
+            const adminUser = $('adminUsername').textContent || 'Admin';
+
+            try {
+                patient.due_amount = 0;
+                await savePatients(patients);
+                await addPaymentHistory(patient.patient_id, patient.name, amount, 'Cash (Quick)', adminUser);
+
+                const duePatients = patients.filter(p => p.due_amount > 0);
+                payments.unpaid_count = duePatients.length;
+                payments.total_due = duePatients.reduce((s, p) => s + p.due_amount, 0);
+                await savePayments(payments);
+
+                const log = {
+                    created_at: new Date().toLocaleString(),
+                    admin_user: adminUser,
+                    action: `Quick Mark Paid: ${patient.name} (${patient.patient_id}) ₹${amount} (Cash)`,
+                    ip: 'local'
+                };
+                activityLogs.unshift(log);
+                if (activityLogs.length > 100) activityLogs = activityLogs.slice(0, 100);
+                await saveLogs(activityLogs);
+
+                await refreshAllData();
+                refreshAllSections();
+                showToast(`✅ ${patient.name} marked as paid (₹${amount})`, 'success');
+
+                if (patient.phone) {
+                    const msg =
+                        `✅ Payment Confirmed (Quick)\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: Cash\nThank you for choosing Rajan Path Lab.`;
+                    sendWhatsApp(patient.phone, msg);
+                }
+            } catch (err) { showToast('Error: ' + err.message, 'error'); }
+        }
+
         function sendWhatsApp(phone, message) {
             if (!phone) { showToast('No phone number for WhatsApp.', 'warning'); return; }
             let clean = phone.replace(/\s/g, '').replace(/-/g, '');
@@ -1400,7 +1442,10 @@
                             <td>₹${p.due_amount}</td>
                             <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
                             <td>
-                                ${p.due_amount > 0 ? `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>` : `<span class="badge-status paid">Paid</span>`}
+                                ${p.due_amount > 0 ? `
+                                    <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
+                                    <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
+                                ` : `<span class="badge-status paid">Paid</span>`}
                                 <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${p.due_amount>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
                                 <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
                             </td>
@@ -1413,6 +1458,12 @@
             if (e.target.closest('.btn-pay-confirm')) {
                 const id = e.target.closest('.btn-pay-confirm').dataset.id;
                 openPayConfirm(id);
+            }
+            if (e.target.closest('.btn-mark-paid')) {
+                const id = e.target.closest('.btn-mark-paid').dataset.id;
+                if (confirm('Mark this patient as paid? This will set due to 0 and log as Cash (Quick).')) {
+                    markAsPaid(id);
+                }
             }
             if (e.target.closest('.btn-invoice')) {
                 const id = e.target.closest('.btn-invoice').dataset.id;
@@ -1658,7 +1709,10 @@
                             <td>${p.name}</td><td>${p.test}</td><td>₹${p.due_amount}</td>
                             <td><span class="badge-status ${p.due_amount>0?'unpaid':'paid'}">${p.due_amount>0?'Unpaid':'Paid'}</span></td>
                             <td>
-                                ${p.due_amount>0 ? `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>` : `<span class="badge-status paid"><i class="fas fa-check"></i> Cleared</span>`}
+                                ${p.due_amount>0 ? `
+                                    <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
+                                    <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
+                                ` : `<span class="badge-status paid"><i class="fas fa-check"></i> Cleared</span>`}
                                 <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${p.due_amount>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
                             </td>
                         </tr>`).join('');
@@ -1818,7 +1872,7 @@
             showToast('✅ Password changed! (dummy)', 'success');
         });
 
-        console.log('✅ Rajan Path Lab · Professional Admin Panel with Billing, Toast, Loading');
+        console.log('✅ Rajan Path Lab · Professional Admin Panel with Billing, Toast, Loading, Quick Mark Paid');
         console.log('🔑 Login: Rajan5530 / Rkchandra5530');
 
     })();
