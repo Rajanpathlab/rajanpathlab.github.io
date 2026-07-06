@@ -1,1238 +1,2875 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Rajan Path Lab · Admin Panel</title>
-  <!-- Font Awesome 6 (free) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-  <!-- QRCode.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    /* ─── RESET & BASE ─── */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-      background: #f4f7f9;
-      color: #1e293b;
-      line-height: 1.5;
-    }
-    a { text-decoration: none; }
-    button { cursor: pointer; font-family: inherit; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Rajan Path Lab | Premium Diagnostics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer>
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
 
-    /* ─── HEADER / TOP BAR ─── */
-    .app-header {
-      background: #0a2540;
-      color: white;
-      padding: 12px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      border-bottom: 2px solid #008080;
-    }
-    .app-header h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    .app-header h1 span { color: #008080; }
-    .app-header .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .header-actions button {
-      background: #008080;
-      border: none;
-      padding: 6px 16px;
-      border-radius: 4px;
-      color: white;
-      font-weight: 600;
-      font-size: 0.85rem;
-      transition: 0.2s;
-    }
-    .header-actions button:hover { background: #006666; }
-    .header-actions .btn-outline {
-      background: transparent;
-      border: 1px solid #e2e8f0;
-    }
-    .header-actions .btn-outline:hover { background: rgba(255,255,255,0.1); }
+    <style>
+        /* ─── प्री-लोडर (PROFESSIONAL LOADING SCREEN) ─── */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #0a2540;
+            background-image: radial-gradient(circle at 30% 40%, rgba(0, 128, 128, 0.18) 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, rgba(212, 175, 55, 0.08) 0%, transparent 55%);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            visibility: visible;
+        }
+        #preloader.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .preloader-logo {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .preloader-logo span {
+            color: #008080;
+        }
+        .preloader-tagline {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .preloader-dna-container {
+            position: relative;
+            width: 90px;
+            height: 130px;
+            margin-bottom: 1.5rem;
+        }
+        /* DNA हेलिक्स एनिमेशन */
+        .dna-strand {
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #008080 0%, #20b2aa 50%, #008080 100%);
+            left: 50%;
+            transform-origin: center center;
+            animation: dnaRotate1 2.2s ease-in-out infinite;
+        }
+        .dna-strand:nth-child(2) {
+            animation-name: dnaRotate2;
+            background: linear-gradient(180deg, #d4af37 0%, #f0d060 50%, #d4af37 100%);
+        }
+        .dna-rung {
+            position: absolute;
+            width: 36px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.55);
+            border-radius: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: rungPulse 1.6s ease-in-out infinite;
+        }
+        .dna-rung:nth-child(3) {
+            top: 18%;
+            animation-delay: 0.15s;
+        }
+        .dna-rung:nth-child(4) {
+            top: 36%;
+            animation-delay: 0.3s;
+        }
+        .dna-rung:nth-child(5) {
+            top: 54%;
+            animation-delay: 0.45s;
+        }
+        .dna-rung:nth-child(6) {
+            top: 72%;
+            animation-delay: 0.6s;
+        }
+        .dna-rung:nth-child(7) {
+            top: 88%;
+            animation-delay: 0.75s;
+        }
+        @keyframes dnaRotate1 {
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            25% {
+                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
+            }
+            50% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            75% {
+                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
+            }
+        }
+        @keyframes dnaRotate2 {
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            25% {
+                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
+            }
+            50% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            75% {
+                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
+            }
+        }
+        @keyframes rungPulse {
+            0%,
+            100% {
+                opacity: 0.45;
+                width: 36px;
+            }
+            50% {
+                opacity: 1;
+                width: 48px;
+            }
+        }
+        .preloader-dot-container {
+            display: flex;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+        .preloader-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #008080;
+            animation: dotBounce 1.5s ease-in-out infinite;
+        }
+        .preloader-dot:nth-child(2) {
+            animation-delay: 0.2s;
+            background: #20b2aa;
+        }
+        .preloader-dot:nth-child(3) {
+            animation-delay: 0.4s;
+            background: #d4af37;
+        }
+        .preloader-dot:nth-child(4) {
+            animation-delay: 0.6s;
+            background: #f0d060;
+        }
+        @keyframes dotBounce {
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-16px);
+                opacity: 1;
+            }
+        }
+        .preloader-pulse-ring {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 128, 128, 0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseRing 2s ease-out infinite;
+        }
+        .preloader-pulse-ring:nth-child(2) {
+            animation-delay: 0.7s;
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        @keyframes pulseRing {
+            0% {
+                width: 30px;
+                height: 30px;
+                opacity: 0.9;
+            }
+            100% {
+                width: 120px;
+                height: 120px;
+                opacity: 0;
+            }
+        }
 
-    /* ─── LAYOUT ─── */
-    .admin-layout {
-      display: flex;
-      max-width: 1440px;
-      margin: 0 auto;
-      background: white;
-      min-height: 90vh;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-    }
-    .sidebar {
-      width: 220px;
-      background: #0a2540;
-      color: #cbd5e1;
-      padding: 16px 0;
-      flex-shrink: 0;
-    }
-    .sidebar .nav-label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #64748b;
-      padding: 12px 20px 4px;
-      font-weight: 700;
-    }
-    .sidebar a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 20px;
-      color: #cbd5e1;
-      font-weight: 500;
-      font-size: 0.9rem;
-      border-left: 3px solid transparent;
-      transition: 0.15s;
-      cursor: pointer;
-    }
-    .sidebar a:hover { background: rgba(0,128,128,0.12); color: white; }
-    .sidebar a.active {
-      background: rgba(0,128,128,0.18);
-      border-left-color: #008080;
-      color: white;
-    }
-    .sidebar a i { width: 20px; text-align: center; }
+        /* ─── आपके पुराने सारे CSS (कोई बदलाव नहीं) ─── */
+        :root {
+            --primary-blue: #0a2540;
+            --accent-teal: #008080;
+            --bg-light: #f4f7f9;
+            --urgent-red: #d9383a;
+            --text-dark: #2d3748;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+        b,
+        strong {
+            font-weight: 700;
+        }
+        header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+        header h1 span {
+            color: var(--accent-teal);
+        }
+        nav a {
+            color: #e2e8f0;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+        nav a:hover {
+            color: var(--accent-teal);
+        }
+        .admin-login-btn,
+        .patient-portal-btn {
+            background: var(--accent-teal);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-left: 15px;
+        }
+        .admin-login-btn:hover,
+        .patient-portal-btn:hover {
+            background: #006666;
+        }
+        .patient-portal-btn {
+            background: #25D366;
+        }
+        .patient-portal-btn:hover {
+            background: #1a8d4a;
+        }
+        .hero {
+            background: #0d3359;
+            background-image: radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.15) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,70 L30,80 L70,80 L70,70 M40,70 L40,40 M40,45 L45,45 M50,40 C50,30 60,30 60,40 L60,65 M55,65 L65,65' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .hero h2 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            max-width: 800px;
+            margin: 0 auto 25px auto;
+            line-height: 1.3;
+        }
+        .btn-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .btn-book {
+            background: var(--urgent-red);
+            padding: 12px 28px;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .btn-book:hover {
+            background: #b82d2f;
+        }
+        .btn-portal {
+            background: #25D366;
+            padding: 12px 28px;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.2s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-portal:hover {
+            background: #1a8d4a;
+        }
+        .strip {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        .strip-content {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .strip-item {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            color: var(--primary-blue);
+        }
+        .strip i {
+            color: var(--accent-teal);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        section {
+            padding: 45px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .section-wrapper-alt {
+            background: var(--bg-light);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M60 0H0v60' fill='none' stroke='rgba(0,128,128,0.03)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(0,128,128,0.1)'/%3E%3C/svg%3E");
+        }
+        h2 {
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            text-align: left;
+            flex-wrap: wrap;
+        }
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        .about-text p {
+            font-size: 1rem;
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+        .about-text h3 {
+            color: var(--primary-blue);
+            font-size: 18px;
+            margin-top: 15px;
+            font-weight: 700;
+            border-left: 3px solid var(--accent-teal);
+            padding-left: 8px;
+        }
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #2d3748;
+        }
+        .feature-item i {
+            color: var(--accent-teal);
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .card {
+            background: white;
+            padding: 20px 15px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            text-align: center;
+        }
+        .card i {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .card h3 {
+            margin: 5px 0;
+            font-size: 1.1rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+        .card p {
+            margin: 4px 0;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+        .partner-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .partner-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            width: 150px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+        }
+        .partner-item i {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .partner-item p {
+            font-weight: 700;
+            margin: 0;
+            font-size: 14px;
+            color: var(--primary-blue);
+        }
+        .map-container {
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #cbd5e1;
+        }
+        footer {
+            background: var(--primary-blue);
+            color: #e2e8f0;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .footer-links {
+            margin: 20px 0;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .footer-links a:hover {
+            color: var(--accent-teal);
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+            }
+            nav {
+                margin-top: 10px;
+            }
+            nav a {
+                margin: 0 8px;
+                font-size: 14px;
+            }
+            .admin-login-btn,
+            .patient-portal-btn {
+                margin: 8px 0 0 0;
+            }
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            .strip-content {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+            section {
+                padding: 30px 15px;
+            }
+            .preloader-logo {
+                font-size: 2rem;
+            }
+            .preloader-dna-container {
+                width: 70px;
+                height: 100px;
+            }
+        }
 
-    .main-content {
-      flex: 1;
-      padding: 24px 28px;
-      background: #f8fafc;
-      overflow-y: auto;
-    }
+        /* ─── ADMIN PANEL STYLES ─── */
+        #adminPanelWrapper {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        #adminPanelWrapper.active {
+            display: block;
+        }
+        #adminPanelContainer {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #f0f2f5;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            position: relative;
+            min-height: 90vh;
+        }
+        .admin-header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .admin-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 20px;
+        }
+        .admin-header .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .admin-header .admin-user span {
+            color: #e2e8f0;
+        }
+        .admin-header .admin-user .logout-btn {
+            background: var(--urgent-red);
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .admin-header .admin-user .logout-btn:hover {
+            background: #b82d2f;
+        }
+        .admin-header .admin-user .dark-toggle {
+            background: #4a5568;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .admin-body {
+            display: flex;
+            min-height: calc(90vh - 60px);
+        }
+        .admin-sidebar {
+            width: 220px;
+            background: var(--primary-blue);
+            color: #e2e8f0;
+            padding: 16px 0;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+        .admin-sidebar .nav-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #94a3b8;
+            padding: 10px 16px 4px;
+            font-weight: 600;
+        }
+        .admin-sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 16px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .admin-sidebar a:hover,
+        .admin-sidebar a.active {
+            background: rgba(0, 128, 128, 0.2);
+            color: #fff;
+        }
+        .admin-sidebar a.active {
+            background: rgba(0, 128, 128, 0.3);
+            border-left: 3px solid var(--accent-teal);
+        }
+        .admin-sidebar a i {
+            width: 18px;
+            text-align: center;
+        }
+        .admin-content {
+            flex: 1;
+            padding: 20px 24px;
+            overflow-x: auto;
+            background: #f0f2f5;
+        }
+        .admin-section {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            padding: 16px 14px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+        .stat-card .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .stat-card .icon.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .stat-card .icon.green {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .stat-card .icon.red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .stat-card .icon.purple {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .stat-card .icon.orange {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .stat-card .icon.teal {
+            background: #ccfbf1;
+            color: #0d9488;
+        }
+        .stat-card .info h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .stat-card .info p {
+            font-size: 12px;
+            margin: 2px 0 0 0;
+            color: #64748b;
+        }
+        .table-wrap {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: auto;
+            margin-top: 10px;
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .table-wrap th {
+            background: #f8fafc;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .table-wrap td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .badge-status {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-status.paid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge-status.unpaid {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .badge-status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-status.process {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-status.done {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-primary {
+            background: var(--accent-teal);
+            color: #fff;
+            border-color: var(--accent-teal);
+        }
+        .btn-primary:hover {
+            background: #006666;
+        }
+        .btn-red {
+            background: var(--urgent-red);
+            color: #fff;
+            border-color: var(--urgent-red);
+        }
+        .btn-red:hover {
+            background: #b82d2f;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-sm {
+            padding: 3px 10px;
+            font-size: 12px;
+        }
+        .btn-gold {
+            background: #d4af37;
+            color: #fff;
+            border-color: #d4af37;
+        }
+        .btn-gold:hover {
+            background: #b8960e;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 16px;
+        }
+        .form-grid label {
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .form-grid label input,
+        .form-grid label select {
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 14px;
+        }
+        .form-grid label input:focus,
+        .form-grid label select:focus {
+            outline: 2px solid var(--accent-teal);
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .toolbar .search-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 0 12px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .toolbar .search-box input {
+            border: none;
+            background: transparent;
+            padding: 7px 6px;
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+        }
+        .toolbar .search-box i {
+            color: #94a3b8;
+        }
+        .template-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+        }
+        .template-box .msg-preview {
+            background: #f8fafc;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 4px solid #25D366;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+        .premium-badge {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #78350f;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            margin-left: 6px;
+        }
+        .login-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-modal.show {
+            display: flex;
+        }
+        .login-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .login-modal-content h3 {
+            margin-top: 0;
+        }
+        .login-modal-content label {
+            display: block;
+            font-weight: 600;
+            margin: 10px 0 4px;
+        }
+        .login-modal-content input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .login-modal-content .btn-close {
+            background: #6c757d;
+            border: none;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+        .upi-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10002;
+            align-items: center;
+            justify-content: center;
+        }
+        .upi-modal.show {
+            display: flex;
+        }
+        .upi-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .upi-modal-content .btn-close {
+            background: #6c757d;
+            border: none;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+        .patient-portal-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 10050;
+            overflow-y: auto;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+        .patient-portal-modal.active {
+            display: flex;
+        }
+        .patient-portal-content {
+            max-width: 860px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.25);
+            overflow: hidden;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+        .portal-header {
+            background: #1a212c;
+            padding: 1.8rem 2rem 1.4rem;
+        }
+        .portal-header h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #fef7e8;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .portal-header .portal-badge {
+            background: rgba(212, 175, 55, 0.2);
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #e6c168;
+            border: 0.5px solid rgba(212, 175, 55, 0.5);
+        }
+        .portal-header .portal-sub {
+            color: #8f9bb3;
+            font-size: 0.8rem;
+            margin-top: 12px;
+            border-left: 2px solid #e6c168;
+            padding-left: 14px;
+        }
+        .portal-body {
+            padding: 2rem 2rem 1.8rem;
+        }
+        .portal-input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .portal-input-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #2c3f4c;
+            margin-bottom: 10px;
+        }
+        .portal-input-label span {
+            background: #f0f3f9;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+        .portal-input {
+            width: 100%;
+            padding: 1rem 1.3rem;
+            font-size: 1rem;
+            font-family: 'Inter', 'Segoe UI', monospace;
+            background: white;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 1.25rem;
+            transition: all 0.25s;
+            outline: none;
+            font-weight: 500;
+            color: #0f172a;
+        }
+        .portal-input:focus {
+            border-color: #d4af37;
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
+        }
+        .portal-btn {
+            width: 100%;
+            background: linear-gradient(98deg, #075E54 0%, #128C7E 100%);
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            color: white;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5);
+            margin-top: 0.5rem;
+        }
+        .portal-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(98deg, #064e44 0%, #0e6b5f 100%);
+        }
+        .portal-status {
+            margin-top: 1.2rem;
+            padding: 0.9rem 1.2rem;
+            background: #f8fafd;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            border-left: 3px solid #c9a03d;
+            transition: 0.2s;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        .portal-status.success {
+            background: #e6f4ea;
+            border-left-color: #2b7a3e;
+            color: #135c2c;
+        }
+        .portal-status.error {
+            background: #fef5f0;
+            border-left-color: #d4873a;
+            color: #8b5a2b;
+        }
+        .portal-report-list {
+            margin-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+        }
+        .portal-report-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 0.8rem 1.2rem;
+            border-radius: 1rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #edf2f7;
+            transition: 0.2s;
+        }
+        .portal-report-item:hover {
+            background: #f1f5f9;
+        }
+        .portal-report-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .portal-report-info .test-name {
+            font-weight: 600;
+            color: #1a212c;
+        }
+        .portal-report-info .upload-date {
+            font-size: 0.8rem;
+            color: #7890a3;
+        }
+        .portal-report-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .portal-download-btn {
+            background: #d4af37;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .portal-download-btn:hover {
+            background: #b8960e;
+            transform: scale(1.02);
+        }
+        .portal-download-btn:disabled {
+            background: #b0b8c5;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none;
+        }
+        .portal-due-badge {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        .portal-close-btn {
+            background: #6c757d;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+        .portal-close-btn:hover {
+            background: #5a6268;
+        }
+        .portal-footer {
+            padding: 1rem 2rem 1.4rem;
+            font-size: 0.7rem;
+            color: #91a3bb;
+            border-top: 1px solid #edf2f9;
+            display: flex;
+            justify-content: space-between;
+        }
+        @media (max-width: 650px) {
+            .portal-body {
+                padding: 1.5rem;
+            }
+            .portal-header h1 {
+                font-size: 1.5rem;
+            }
+            .portal-report-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .portal-report-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
 
-    /* ─── STATS CARDS ─── */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-    .stat-card {
-      background: white;
-      padding: 14px 16px;
-      border-radius: 10px;
-      border: 1px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    }
-    .stat-card .icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-    .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
-    .stat-card .icon.green { background: #d1fae5; color: #059669; }
-    .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
-    .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }
-    .stat-card .icon.orange { background: #fef3c7; color: #d97706; }
-    .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
-    .stat-card .info h4 { font-size: 1.3rem; font-weight: 700; margin: 0; }
-    .stat-card .info p { font-size: 0.7rem; margin: 2px 0 0; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; }
+        /* ─── PAYMENT CONFIRMATION MODAL ─── */
+        .pay-confirm-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 10060;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .pay-confirm-modal.show {
+            display: flex;
+        }
+        .pay-confirm-content {
+            background: white;
+            max-width: 480px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 28px 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            animation: fadeUp 0.3s ease;
+        }
+        .pay-confirm-content h3 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pay-confirm-content h3 i {
+            color: var(--accent-teal);
+        }
+        .pay-confirm-content .pay-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+        .pay-confirm-content .pay-detail-row .label {
+            color: #64748b;
+            font-weight: 500;
+        }
+        .pay-confirm-content .pay-detail-row .value {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .pay-confirm-content .pay-amount-large {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-align: center;
+            padding: 12px 0;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin: 10px 0 14px;
+        }
+        .pay-confirm-content .pay-method-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 10px 0 14px;
+        }
+        .pay-confirm-content .pay-method-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+        }
+        .pay-confirm-content .pay-method-group label:hover {
+            background: #e2e8f0;
+        }
+        .pay-confirm-content .pay-method-group input[type="radio"] {
+            accent-color: var(--accent-teal);
+        }
+        .pay-confirm-content .pay-method-group label.selected {
+            border-color: var(--accent-teal);
+            background: #e6f7f7;
+        }
+        .pay-confirm-content .pay-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .pay-confirm-content .pay-btns .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 10px;
+            font-size: 15px;
+        }
+        .pay-confirm-content .pay-btns .btn-cancel {
+            background: #e2e8f0;
+            color: #1e293b;
+            border-color: #e2e8f0;
+        }
+        .pay-confirm-content .pay-btns .btn-cancel:hover {
+            background: #cbd5e1;
+        }
 
-    /* ─── TABLE WRAP ─── */
-    .table-wrap {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      overflow: auto;
-      margin: 12px 0 16px;
-    }
-    .table-wrap table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-      min-width: 600px;
-    }
-    .table-wrap th {
-      background: #f1f5f9;
-      font-weight: 600;
-      text-align: left;
-      padding: 10px 14px;
-      border-bottom: 2px solid #e2e8f0;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      color: #334155;
-    }
-    .table-wrap td {
-      padding: 8px 14px;
-      border-bottom: 1px solid #e2e8f0;
-      vertical-align: middle;
-    }
-    .table-wrap tr:last-child td { border-bottom: none; }
+        /* ─── PAYMENT HISTORY TABLE ─── */
+        .payment-history-wrap {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: auto;
+            margin-top: 10px;
+        }
+        .payment-history-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .payment-history-wrap th {
+            background: #f8fafc;
+            font-weight: 600;
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .payment-history-wrap td {
+            padding: 7px 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .badge-pay-confirmed {
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
 
-    /* ─── BADGES ─── */
-    .badge {
-      display: inline-block;
-      padding: 2px 12px;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    .badge.paid { background: #d1fae5; color: #065f46; }
-    .badge.unpaid { background: #fee2e2; color: #991b1b; }
-    .badge.pending { background: #fef3c7; color: #92400e; }
-    .badge.process { background: #dbeafe; color: #1e40af; }
-    .badge.done { background: #e0e7ff; color: #3730a3; }
-
-    /* ─── BUTTONS ─── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 14px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 0.75rem;
-      border: none;
-      background: #f1f5f9;
-      color: #1e293b;
-      border: 1px solid #e2e8f0;
-      transition: 0.15s;
-    }
-    .btn-sm { padding: 3px 10px; font-size: 0.7rem; }
-    .btn-primary { background: #008080; color: white; border-color: #008080; }
-    .btn-primary:hover { background: #006666; }
-    .btn-success { background: #22c55e; color: white; border-color: #22c55e; }
-    .btn-success:hover { background: #16a34a; }
-    .btn-red { background: #d9383a; color: white; border-color: #d9383a; }
-    .btn-red:hover { background: #b82d2f; }
-    .btn-gold { background: #d4af37; color: white; border-color: #d4af37; }
-    .btn-gold:hover { background: #b8960e; }
-    .btn-outline { background: transparent; border: 1px solid #cbd5e1; }
-
-    /* ─── FORM ELEMENTS ─── */
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 12px;
-      background: white;
-      padding: 16px;
-      border-radius: 10px;
-      border: 1px solid #e2e8f0;
-      margin-bottom: 16px;
-    }
-    .form-grid label {
-      font-weight: 600;
-      font-size: 0.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      color: #1e293b;
-    }
-    .form-grid label input,
-    .form-grid label select {
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: 1px solid #e2e8f0;
-      background: #f8fafc;
-      font-size: 0.9rem;
-    }
-    .form-grid label input:focus,
-    .form-grid label select:focus { outline: 2px solid #008080; }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin: 10px 0 12px;
-    }
-    .search-box {
-      display: flex;
-      align-items: center;
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      padding: 0 10px;
-      flex: 1;
-      min-width: 140px;
-    }
-    .search-box input {
-      border: none;
-      background: transparent;
-      padding: 6px 4px;
-      font-size: 0.9rem;
-      width: 100%;
-      outline: none;
-    }
-
-    /* ─── SECTION PANELS ─── */
-    .section-panel {
-      display: none;
-      animation: fadeUp 0.25s ease;
-    }
-    .section-panel.active { display: block; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* ─── TOAST ─── */
-    #toastContainer {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 99999;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-width: 360px;
-      width: 100%;
-      pointer-events: none;
-    }
-    .toast {
-      background: #1e293b;
-      color: #f1f5f9;
-      padding: 12px 18px;
-      border-radius: 10px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      pointer-events: auto;
-      transform: translateX(120%);
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-      border-left: 4px solid #008080;
-    }
-    .toast.show { transform: translateX(0); }
-    .toast.success { border-left-color: #22c55e; }
-    .toast.error { border-left-color: #d9383a; }
-    .toast i { font-size: 1.2rem; }
-    .toast .toast-close { margin-left: auto; cursor: pointer; opacity: 0.6; font-size: 1.2rem; }
-
-    /* ─── MODALS ─── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.show { display: flex; }
-    .modal-box {
-      background: white;
-      max-width: 480px;
-      width: 100%;
-      border-radius: 16px;
-      padding: 28px 30px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-    }
-    .modal-box h3 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
-    .modal-box .btn-close-modal {
-      background: #6c757d;
-      border: none;
-      padding: 6px 18px;
-      border-radius: 6px;
-      color: white;
-      font-weight: 600;
-      margin-top: 14px;
-    }
-
-    /* ─── QR CODE ─── */
-    .qr-placeholder {
-      width: 50px;
-      height: 50px;
-      background: #f1f5f9;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.6rem;
-      color: #94a3b8;
-    }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      .app-header { flex-direction: column; text-align: center; gap: 10px; }
-      .sidebar { width: 100%; display: flex; flex-wrap: nowrap; overflow-x: auto; padding: 8px 0; }
-      .sidebar a { white-space: nowrap; padding: 8px 14px; border-left: none; border-bottom: 3px solid transparent; }
-      .sidebar a.active { border-bottom-color: #008080; border-left: none; }
-      .sidebar .nav-label { display: none; }
-      .admin-layout { flex-direction: column; }
-      .main-content { padding: 16px; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    /* PRINT INVOICE */
-    @media print {
-      body * { visibility: hidden; }
-      #invoicePrintArea, #invoicePrintArea * { visibility: visible; }
-      #invoicePrintArea { position: absolute; left: 0; top: 0; width: 100%; padding: 40px; background: white; color: black; }
-      .no-print { display: none !important; }
-      .app-header, .sidebar, .main-content > *:not(#invoicePrintArea) { display: none !important; }
-    }
-  </style>
+        body.admin-dark #adminPanelContainer {
+            --bg-light: #0f172a;
+            --text-dark: #f1f5f9;
+            --card: #1e293b;
+            --border: #334155;
+        }
+        body.admin-dark .stat-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .stat-card .info p {
+            color: #94a3b8;
+        }
+        body.admin-dark .table-wrap {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .table-wrap th {
+            background: #0f172a;
+            color: #94a3b8;
+        }
+        body.admin-dark .table-wrap td {
+            border-color: #334155;
+        }
+        body.admin-dark .form-grid {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .form-grid label input,
+        body.admin-dark .form-grid label select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+        body.admin-dark .template-box {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .template-box .msg-preview {
+            background: #0f172a;
+        }
+        body.admin-dark .toolbar .search-box {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .toolbar .search-box input {
+            color: #f1f5f9;
+        }
+        body.admin-dark .admin-content {
+            background: #0f172a;
+        }
+        body.admin-dark .badge-status.paid {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+        body.admin-dark .badge-status.unpaid {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        body.admin-dark .badge-status.pending {
+            background: #78350f;
+            color: #fcd34d;
+        }
+        body.admin-dark .badge-status.process {
+            background: #1e3a5f;
+            color: #93c5fd;
+        }
+        body.admin-dark .badge-status.done {
+            background: #312e81;
+            color: #a5b4fc;
+        }
+        body.admin-dark .stat-card .icon.blue {
+            background: #1e3a5f;
+            color: #60a5fa;
+        }
+        body.admin-dark .stat-card .icon.green {
+            background: #064e3b;
+            color: #34d399;
+        }
+        body.admin-dark .stat-card .icon.red {
+            background: #7f1d1d;
+            color: #f87171;
+        }
+        body.admin-dark .stat-card .icon.purple {
+            background: #4c1d95;
+            color: #a78bfa;
+        }
+        body.admin-dark .stat-card .icon.orange {
+            background: #78350f;
+            color: #fbbf24;
+        }
+        body.admin-dark .stat-card .icon.teal {
+            background: #134e4a;
+            color: #2dd4bf;
+        }
+        body.admin-dark .pay-confirm-content {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+        body.admin-dark .pay-confirm-content .pay-detail-row {
+            border-color: #334155;
+        }
+        body.admin-dark .pay-confirm-content .pay-detail-row .label {
+            color: #94a3b8;
+        }
+        body.admin-dark .pay-confirm-content .pay-detail-row .value {
+            color: #f1f5f9;
+        }
+        body.admin-dark .pay-confirm-content .pay-amount-large {
+            background: #0f172a;
+            color: #f1f5f9;
+        }
+        body.admin-dark .pay-confirm-content .pay-method-group label {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        body.admin-dark .pay-confirm-content .pay-method-group label.selected {
+            border-color: var(--accent-teal);
+            background: #134e4a;
+        }
+        body.admin-dark .pay-confirm-content .pay-btns .btn-cancel {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        body.admin-dark .payment-history-wrap {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.admin-dark .payment-history-wrap th {
+            background: #0f172a;
+            color: #94a3b8;
+        }
+        body.admin-dark .payment-history-wrap td {
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        body.admin-dark .badge-pay-confirmed {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+    </style>
 </head>
 <body>
 
-<!-- TOAST CONTAINER -->
-<div id="toastContainer"></div>
-
-<!-- HEADER -->
-<header class="app-header">
-  <h1>RAJAN <span>PATH LAB</span> · Admin</h1>
-  <div class="header-actions">
-    <span style="font-size:0.85rem;color:#94a3b8;" id="adminUserDisplay">Admin</span>
-    <button class="btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-    <button id="darkToggleBtn"><i class="fas fa-moon"></i></button>
-  </div>
-</header>
-
-<!-- ADMIN LAYOUT -->
-<div class="admin-layout">
-  <!-- SIDEBAR -->
-  <nav class="sidebar" id="sidebarNav">
-    <div class="nav-label">Main</div>
-    <a class="active" data-section="dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
-    <a data-section="patients"><i class="fas fa-users"></i> Patients</a>
-    <a data-section="reports"><i class="fas fa-file-pdf"></i> Reports</a>
-    <a data-section="payments"><i class="fas fa-rupee-sign"></i> Payments</a>
-    <a data-section="whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-    <div class="nav-label">System</div>
-    <a data-section="settings"><i class="fas fa-cog"></i> Settings</a>
-    <a data-section="analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
-  </nav>
-
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
-
-    <!-- DASHBOARD -->
-    <section class="section-panel active" id="sec-dashboard">
-      <h2 style="display:flex;align-items:center;gap:10px;margin-top:0;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
-      <div class="stats-grid" id="dashStats">
-        <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dTotalPatients">0</h4><p>Total Patients</p></div></div>
-        <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">0</h4><p>Reports</p></div></div>
-        <div class="stat-card"><div class="icon red"><i class="fas fa-clock"></i></div><div class="info"><h4 id="dPending">0</h4><p>Pending</p></div></div>
-        <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dDueTotal">₹0</h4><p>Total Due</p></div></div>
-        <div class="stat-card"><div class="icon teal"><i class="fas fa-check-circle"></i></div><div class="info"><h4 id="dPaidCount">0</h4><p>Paid</p></div></div>
-      </div>
-      <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;">
-        <div class="table-wrap" style="border-radius:10px;overflow:hidden;background:white;padding:10px 0;">
-          <canvas id="chartWeekly" style="max-height:150px;width:100%;padding:0 10px;"></canvas>
+    <!-- ═══════════ प्रोफेशनल प्री-लोडर ═══════════ -->
+    <div id="preloader">
+        <div class="preloader-dna-container">
+            <div class="preloader-pulse-ring"></div>
+            <div class="preloader-pulse-ring"></div>
+            <div class="dna-strand"></div>
+            <div class="dna-strand"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
         </div>
-        <div class="table-wrap" style="border-radius:10px;overflow:hidden;background:white;padding:10px 0;">
-          <canvas id="chartPie" style="max-height:150px;width:100%;padding:0 10px;"></canvas>
+        <div class="preloader-logo">RAJAN <span>PATH LAB</span></div>
+        <div class="preloader-tagline">✦ Precision Diagnostics ✦</div>
+        <div class="preloader-dot-container">
+            <div class="preloader-dot"></div>
+            <div class="preloader-dot"></div>
+            <div class="preloader-dot"></div>
+            <div class="preloader-dot"></div>
         </div>
-      </div>
-      <div class="table-wrap"><table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dashRecent"><tr><td colspan="4" style="padding:16px;text-align:center;color:#94a3b8;">No recent patients</td></tr></tbody></table></div>
-    </section>
-
-    <!-- PATIENTS -->
-    <section class="section-panel" id="sec-patients">
-      <h2 style="display:flex;align-items:center;gap:10px;"><i class="fas fa-users"></i> Patient Management <span class="badge paid" style="font-size:0.6rem;">QR</span></h2>
-      <div class="form-grid">
-        <label>Patient ID <input type="text" id="patId" placeholder="Auto or custom" /></label>
-        <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
-        <label>Phone <input type="text" id="patPhone" placeholder="9876543210" /></label>
-        <label>Test <input type="text" id="patTest" list="testList" placeholder="Type or select" />
-          <datalist id="testList">
-            <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST"><option value="THYROID PROFILE"><option value="CBC"><option value="URINE CULTURE"><option value="HBA1C"><option value="DENGUE NS1"><option value="VITAMIN D"><option value="BETA HCG">
-          </datalist>
-        </label>
-        <label>Status <select id="patStatus"><option>pending</option><option>process</option><option>done</option></select></label>
-        <label>Due (₹) <input type="number" id="patDue" placeholder="0" /></label>
-        <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;">
-          <button class="btn btn-primary" id="addPatientBtn"><i class="fas fa-plus"></i> Add</button>
-          <button class="btn btn-outline" id="clearPatientBtn"><i class="fas fa-undo"></i> Clear</button>
-        </div>
-      </div>
-      <div class="toolbar">
-        <div class="search-box"><i class="fas fa-search"></i><input type="text" id="patientSearch" placeholder="Search patients..." /></div>
-        <button class="btn btn-outline btn-sm" id="refreshPatientsBtn"><i class="fas fa-sync"></i></button>
-      </div>
-      <div class="table-wrap">
-        <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="padding:24px;text-align:center;">Loading patients...</td></tr></tbody></table>
-      </div>
-    </section>
-
-    <!-- REPORTS -->
-    <section class="section-panel" id="sec-reports">
-      <h2 style="display:flex;align-items:center;gap:10px;"><i class="fas fa-file-pdf"></i> Report Management</h2>
-      <div class="form-grid">
-        <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-..." /></label>
-        <label>Test <input type="text" id="reportTestName" list="testList2" />
-          <datalist id="testList2"><option value="CBC"><option value="LFT"><option value="KFT"><option value="THYROID"><option value="URINE CULTURE"></datalist>
-        </label>
-        <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>
-        <label>Replace <select id="reportReplace"><option value="no">No</option><option value="yes">Yes</option></select></label>
-        <div style="display:flex;gap:8px;align-items:flex-end;">
-          <button class="btn btn-primary" id="uploadReportBtn"><i class="fas fa-upload"></i> Upload</button>
-          <button class="btn btn-outline btn-sm" id="refreshReportsBtn"><i class="fas fa-sync"></i></button>
-        </div>
-      </div>
-      <div id="uploadMessage" style="margin:6px 0;font-weight:600;color:#d9383a;"></div>
-      <div class="table-wrap">
-        <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="padding:20px;text-align:center;">No reports</td></tr></tbody></table>
-      </div>
-    </section>
-
-    <!-- PAYMENTS -->
-    <section class="section-panel" id="sec-payments">
-      <h2 style="display:flex;align-items:center;gap:10px;"><i class="fas fa-rupee-sign"></i> Payments & Dues <span class="badge paid" style="font-size:0.6rem;">UPI</span></h2>
-      <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(120px,1fr));">
-        <div class="stat-card"><div class="icon green"><i class="fas fa-check-circle"></i></div><div class="info"><h4 id="pPaidCount">0</h4><p>Paid</p></div></div>
-        <div class="stat-card"><div class="icon red"><i class="fas fa-times-circle"></i></div><div class="info"><h4 id="pUnpaidCount">0</h4><p>Unpaid</p></div></div>
-        <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="pTotalDue">₹0</h4><p>Total Due</p></div></div>
-        <div class="stat-card"><div class="icon purple"><i class="fas fa-history"></i></div><div class="info"><h4 id="pHistoryCount">0</h4><p>Transactions</p></div></div>
-      </div>
-      <div class="toolbar">
-        <button class="btn btn-primary" id="upiPayBtn"><i class="fas fa-qrcode"></i> UPI Payment</button>
-        <button class="btn btn-red" id="dueReminderBtn"><i class="fas fa-bell"></i> Due Reminder</button>
-        <button class="btn btn-outline btn-sm" id="refreshPaymentsBtn"><i class="fas fa-sync"></i></button>
-      </div>
-      <div class="table-wrap">
-        <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="padding:20px;text-align:center;">No patients</td></tr></tbody></table>
-      </div>
-      <h4 style="margin:24px 0 8px;"><i class="fas fa-history"></i> Payment History</h4>
-      <div class="table-wrap">
-        <table><thead><tr><th>#</th><th>Patient</th><th>ID</th><th>Amount</th><th>Method</th><th>By</th><th>Date</th></tr></thead><tbody id="paymentHistoryBody"><tr><td colspan="7" style="padding:20px;text-align:center;">No history</td></tr></tbody></table>
-      </div>
-    </section>
-
-    <!-- WHATSAPP -->
-    <section class="section-panel" id="sec-whatsapp">
-      <h2 style="display:flex;align-items:center;gap:10px;"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp</h2>
-      <div style="background:white;padding:16px;border-radius:10px;border:1px solid #e2e8f0;margin-bottom:16px;">
-        <div style="font-weight:600;margin-bottom:6px;">Template Preview</div>
-        <div style="background:#f1f5f9;padding:10px 14px;border-radius:6px;border-left:4px solid #25D366;" id="whatsappPreview">Dear {patient}, your report for {test} is ready. Thank you.</div>
-        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn" style="background:#25D366;color:white;border-color:#25D366;" id="sendWAPatient"><i class="fab fa-whatsapp"></i> To Patient</button>
-          <button class="btn btn-primary" id="sendWADoctor"><i class="fas fa-user-md"></i> To Doctor</button>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table><thead><tr><th>Patient</th><th>Phone</th><th>Test</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappTableBody"><tr><td colspan="5" style="padding:20px;text-align:center;">No patients</td></tr></tbody></table>
-      </div>
-    </section>
-
-    <!-- SETTINGS -->
-    <section class="section-panel" id="sec-settings">
-      <h2 style="display:flex;align-items:center;gap:10px;"><i class="fas fa-cog"></i> Lab Settings</h2>
-      <div style="background:white;padding:20px;border-radius:10px;border:1px solid #e2e8f0;max-width:500px;">
-        <label style="font-weight:600;display:block;margin:8px 0 4px;">Lab Name</label>
-        <input type="text" id="setLabName" value="Rajan Path Lab" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e2e8f0;" />
-        <label style="font-weight:600;display:block;margin:8px 0 4px;">Address</label>
-        <input type="text" id="setAddress" value="Manahar Bhushra, Pandwa Patan Road" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e2e8f0;" />
-        <label style="font-weight:600;display:block;margin:8px 0 4px;">Phone</label>
-        <input type="text" id="setPhone" value="8709946177 / 9931002450" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e2e8f0;" />
-        <label style="font-weight:600;display:block;margin:8px 0 4px;">GST</label>
-        <input type="text" id="setGST" placeholder="GSTIN" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e2e8f0;" />
-        <label style="font-weight:600;display:block;margin:8px 0 4px;">Default Price (₹)</label>
-        <input type="number" id="setDefaultPrice" value="450" style="width:100%;padding:8px;border-radius:6px;border:1px solid #e2e8f0;" />
-        <button class="btn btn-primary" id="saveSettingsBtn" style="margin-top:14px;"><i class="fas fa-save"></i> Save</button>
-      </div>
-    </section>
-
-    <!-- ANALYTICS -->
-    <section class="section-panel" id="sec-analytics">
-      <h2 style="display:flex;align-items:center;gap:10px;"><i class="fas fa-chart-bar"></i> Analytics</h2>
-      <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(120px,1fr));">
-        <div class="stat-card"><div class="icon blue"><i class="fas fa-calendar-day"></i></div><div class="info"><h4 id="aToday">0</h4><p>Today</p></div></div>
-        <div class="stat-card"><div class="icon green"><i class="fas fa-vial"></i></div><div class="info"><h4 id="aTopTest">-</h4><p>Top Test</p></div></div>
-        <div class="stat-card"><div class="icon orange"><i class="fas fa-rupee-sign"></i></div><div class="info"><h4 id="aRevenue">₹0</h4><p>Revenue</p></div></div>
-      </div>
-      <div class="table-wrap">
-        <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th></tr></thead><tbody id="analyticsTableBody"><tr><td colspan="3" style="padding:20px;text-align:center;">No data</td></tr></tbody></table>
-      </div>
-    </section>
-
-  </main>
-</div>
-
-<!-- ─── INVOICE PRINT AREA (hidden) ─── -->
-<div id="invoicePrintArea" style="display:none;background:white;padding:40px;max-width:700px;margin:0 auto;">
-  <div style="display:flex;justify-content:space-between;border-bottom:2px solid #0a2540;padding-bottom:12px;margin-bottom:16px;">
-    <h2 style="margin:0;color:#0a2540;">RAJAN PATH LAB</h2>
-    <div style="text-align:right;font-size:0.85rem;color:#475569;">
-      <div id="invAddress">Manahar Bhushra, Pandwa Patan Road</div>
-      <div id="invPhone">8709946177 / 9931002450</div>
-      <div id="invGST" style="font-weight:600;">GST: NA</div>
     </div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px;">
-    <div><strong>Patient:</strong> <span id="invPatient">—</span></div>
-    <div><strong>ID:</strong> <span id="invPatId">—</span></div>
-    <div><strong>Test:</strong> <span id="invTest">—</span></div>
-    <div><strong>Date:</strong> <span id="invDate">—</span></div>
-  </div>
-  <table style="width:100%;border-collapse:collapse;margin:12px 0;">
-    <thead><tr style="background:#f1f5f9;"><th style="padding:8px;border:1px solid #e2e8f0;text-align:left;">Description</th><th style="padding:8px;border:1px solid #e2e8f0;text-align:right;">Amount</th></tr></thead>
-    <tbody>
-      <tr><td style="padding:8px;border:1px solid #e2e8f0;" id="invDesc">Test</td><td style="padding:8px;border:1px solid #e2e8f0;text-align:right;" id="invAmount">₹0</td></tr>
-      <tr><td style="padding:8px;border:1px solid #e2e8f0;">GST (0%)</td><td style="padding:8px;border:1px solid #e2e8f0;text-align:right;">₹0</td></tr>
-      <tr style="font-weight:700;font-size:1.1rem;"><td style="padding:8px;border:1px solid #e2e8f0;">Total</td><td style="padding:8px;border:1px solid #e2e8f0;text-align:right;" id="invTotal">₹0</td></tr>
-    </tbody>
-  </table>
-  <div style="text-align:center;font-size:0.8rem;color:#64748b;margin-top:12px;">Thank you for choosing Rajan Path Lab</div>
-  <div class="no-print" style="margin-top:20px;display:flex;gap:12px;justify-content:flex-end;">
-    <button class="btn btn-outline" id="closeInvoiceBtn">Close</button>
-    <button class="btn btn-primary" id="printInvoiceBtn"><i class="fas fa-print"></i> Print</button>
-  </div>
-</div>
 
-<!-- ─── UPI MODAL ─── -->
-<div class="modal-overlay" id="upiModal">
-  <div class="modal-box" style="text-align:center;">
-    <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>
-    <div id="upiQRContainer" style="display:flex;justify-content:center;margin:16px 0;min-height:140px;"></div>
-    <p style="color:#1e293b;">UPI: rajanpathlab@upi</p>
-    <button class="btn-close-modal" id="closeUpiModal">Close</button>
-  </div>
-</div>
+    <!-- ═══════════ मुख्य पेज ═══════════ -->
+    <header>
+        <h1>RAJAN <span>PATH LAB</span></h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="tests.html">Tests</a>
+            <a href="book.html">Book Test</a>
+            <a href="contact.html">About</a>
+            <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
+            <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
+        </nav>
+    </header>
 
-<!-- ─── PAYMENT CONFIRM MODAL ─── -->
-<div class="modal-overlay" id="payConfirmModal">
-  <div class="modal-box">
-    <h3><i class="fas fa-check-circle" style="color:#22c55e;"></i> Confirm Payment</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:0.9rem;margin:10px 0;">
-      <span style="color:#64748b;">Patient</span><span id="payConfirmPatient" style="font-weight:600;">—</span>
-      <span style="color:#64748b;">ID</span><span id="payConfirmId" style="font-weight:600;">—</span>
-      <span style="color:#64748b;">Test</span><span id="payConfirmTest" style="font-weight:600;">—</span>
-      <span style="color:#64748b;">Amount</span><span id="payConfirmAmount" style="font-weight:700;color:#d9383a;">₹0</span>
+    <div class="hero">
+        <h2>Reliable Diagnostics with Advanced Technology</h2>
+        <div class="btn-container">
+            <a class="btn-book" href="book.html">Book Test</a>
+            <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>
+        </div>
     </div>
-    <div style="font-size:0.8rem;font-weight:600;margin:10px 0 6px;">Payment Method</div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;" id="payMethodGroup">
-      <label style="background:#f1f5f9;padding:4px 12px;border-radius:20px;border:2px solid #008080;"><input type="radio" name="payMethod" value="Cash" checked /> Cash</label>
-      <label style="background:#f1f5f9;padding:4px 12px;border-radius:20px;"><input type="radio" name="payMethod" value="UPI" /> UPI</label>
-      <label style="background:#f1f5f9;padding:4px 12px;border-radius:20px;"><input type="radio" name="payMethod" value="Card" /> Card</label>
+
+    <div class="strip">
+        <div class="strip-content">
+            <div class="strip-item"><i class="fas fa-map-marker-alt"></i> Manahar Bhushra Pandwa Patan Road</div>
+            <div class="strip-item"><i class="fas fa-phone"></i> 8709946177 / 9931002450</div>
+        </div>
     </div>
-    <div style="display:flex;gap:10px;">
-      <button class="btn btn-outline" id="payConfirmCancel" style="flex:1;justify-content:center;">Cancel</button>
-      <button class="btn btn-primary" id="payConfirmConfirm" style="flex:1;justify-content:center;"><i class="fas fa-check"></i> Confirm</button>
+
+    <section id="about" style="background: white;">
+        <div class="about-container">
+            <div class="about-text">
+                <h2>About Rajan Path Lab</h2>
+                <p>Situated in <b>Manahar Bhushra (Pandwa Patan Road)</b>, Rajan Path Lab has established itself as a trusted name in diagnostic healthcare. We are built on the foundational pillars of <b>Clinical Precision, Diagnostic Accuracy, and Ethical Practices</b>.</p>
+                <h3>Why Choose Us?</h3>
+                <div class="about-features">
+                    <div class="feature-item"><i class="fas fa-check-circle"></i> High-Precision Analyzers</div>
+                    <div class="feature-item"><i class="fas fa-check-circle"></i> Zero-Error Protocol</div>
+                    <div class="feature-item"><i class="fas fa-check-circle"></i> Fast Digital Reports</div>
+                    <div class="feature-item"><i class="fas fa-check-circle"></i> Transparent Billing</div>
+                    <div class="feature-item"><i class="fas fa-check-circle"></i> 7 Days Open</div>
+                    <div class="feature-item"><i class="fas fa-check-circle"></i> Expert Pathology</div>
+                </div>
+            </div>
+            <div style="text-align:center;">
+                <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width:180px;opacity:0.9;">
+            </div>
+        </div>
+    </section>
+
+    <div class="section-wrapper-alt">
+        <section>
+            <h2>Our Collection Centers</h2>
+            <div class="grid-container">
+                <div class="card" style="border-top:3px solid var(--urgent-red);">
+                    <i class="fas fa-hospital-user" style="color:var(--urgent-red);"></i>
+                    <h3>J R MEDICAL</h3>
+                    <p>Chilbil Chowk, Manhar</p>
+                    <p style="color:var(--urgent-red);font-weight:bold;margin-top:10px;">Fasting Samples</p>
+                </div>
+                <div class="card" style="border-top:3px solid var(--accent-teal);">
+                    <i class="fas fa-house-chimney" style="color:var(--accent-teal);"></i>
+                    <h3>Home Collection</h3>
+                    <p>Professional Pickup Service</p>
+                    <p style="font-weight:bold;color:var(--primary-blue);margin-top:10px;">₹50</p>
+                </div>
+            </div>
+        </section>
     </div>
-    <div id="payConfirmStatus" style="margin-top:10px;font-weight:600;text-align:center;"></div>
-  </div>
-</div>
 
-<!-- ─── SCRIPTS ─── -->
-<script>
-  (function() {
-    'use strict';
+    <section style="background:white;">
+        <h2>Our Diagnostic Partners</h2>
+        <div class="partner-grid">
+            <div class="partner-item" style="border-bottom:3px solid #ff6600;"><i class="fas fa-microscope" style="color:#ff6600;"></i><p>Thyrocare</p></div>
+            <div class="partner-item" style="border-bottom:3px solid #ed1c24;"><i class="fas fa-vials" style="color:#ed1c24;"></i><p>Dr. Lal PathLabs</p></div>
+            <div class="partner-item" style="border-bottom:3px solid #662d91;"><i class="fas fa-flask" style="color:#662d91;"></i><p>Pathkind Labs</p></div>
+        </div>
+    </section>
 
-    // ─── TOAST ───
-    function showToast(msg, type = 'success') {
-      const container = document.getElementById('toastContainer');
-      const t = document.createElement('div');
-      t.className = `toast ${type}`;
-      t.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':type==='error'?'fa-times-circle':'fa-exclamation-triangle'}"></i><span>${msg}</span><span class="toast-close">&times;</span>`;
-      container.appendChild(t);
-      requestAnimationFrame(() => t.classList.add('show'));
-      const close = () => { t.classList.remove('show'); setTimeout(() => { if (t.parentNode) t.parentNode.removeChild(t); }, 350); };
-      t.querySelector('.toast-close').addEventListener('click', close);
-      setTimeout(close, 3500);
-    }
+    <div class="section-wrapper-alt">
+        <section>
+            <h2>Specialized Test Menu</h2>
+            <div class="grid-container">
+                <div class="card"><i class="fas fa-microscope" style="color:var(--accent-teal);"></i><h3>CBC Test</h3><p>Complete Blood Profile</p></div>
+                <div class="card"><i class="fas fa-vial" style="color:#ff7e5f;"></i><h3>Liver Function</h3><p>Comprehensive LFT</p></div>
+                <div class="card"><i class="fas fa-dna" style="color:#662d91;"></i><h3>Aarogyam C Pro</h3><p>69 Parameters</p></div>
+                <div class="card"><i class="fas fa-sun" style="color:#fbc02d;"></i><h3>Vitamin D</h3><p>Bone Health</p></div>
+                <div class="card"><i class="fas fa-bolt" style="color:#0d47a1;"></i><h3>Vitamin B12</h3><p>Nerve Profile</p></div>
+                <div class="card"><i class="fas fa-bug" style="color:#c62828;"></i><h3>Dengue Test</h3><p>NS1, IgG & IgM</p></div>
+                <div class="card"><i class="fas fa-heartbeat" style="color:#ec407a;"></i><h3>Thyroid Profile</h3><p>T3, T4, TSH</p></div>
+                <div class="card"><i class="fas fa-hand-holding-droplet" style="color:#ef6c00;"></i><h3>Diabetes Care</h3><p>HbA1c & Sugar</p></div>
+            </div>
+        </section>
+    </div>
 
-    // ─── LOADING HELPER ───
-    function setLoading(btn, loading) {
-      if (!btn) return;
-      if (loading) { btn._orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; } else { btn.disabled = false; if (btn._orig) btn.innerHTML = btn._orig; }
-    }
+    <footer>
+        <h2>RAJAN PATH LAB (RPL)</h2>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.4217316374465!2d84.1485603!3d25.0232497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398da1c5188f6a91%3A0xc67e88383e589417!2sRajan%20Path%20Lab!5e0!3m2!1sen!2sin!4v1711234567890" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="footer-links">
+            <a href="#"><i class="fas fa-map-marked-alt"></i> Google Maps</a>
+            <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="tel:+918709946177"><i class="fas fa-phone"></i> 8709946177</a>
+        </div>
+        <p>🌐 rajanpathlab.github.io</p>
+        <p style="font-size:12px;opacity:0.7;margin-top:10px;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
+    </footer>
 
-    // ─── FIREBASE ───
-    const firebaseConfig = {
-      apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
-      authDomain: "rajanpathlab5530.firebaseapp.com",
-      databaseURL: "https://rajanpathlab5530-default-rtdb.firebaseio.com",
-      projectId: "rajanpathlab5530",
-      storageBucket: "rajanpathlab5530.firebasestorage.app",
-      messagingSenderId: "883585447034",
-      appId: "1:883585447034:web:225d807b2cc83095f9b7c3"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const rtdb = firebase.database();
+    <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
 
-    // ─── SUPABASE ───
-    const supabaseUrl = 'https://fflqftbnttpgwdktagmj.supabase.co';
-    const supabaseKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-    const STORAGE_BUCKET = 'reports';
+    <!-- ═══════════ एडमिन लॉगिन मोडल ═══════════ -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-modal-content">
+            <h3><i class="fas fa-lock"></i> Admin Login</h3>
+            <form id="loginForm">
+                <label>Username</label>
+                <input type="text" id="loginUsername" placeholder="Enter username" />
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter password" />
+                <button type="submit" class="btn-book" style="width:100%;background:var(--accent-teal);border:none;padding:10px;"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <button type="button" class="btn-close" id="closeLoginModal">Cancel</button>
+            </form>
+            <div id="loginResult" style="margin-top:10px;font-weight:bold;color:red;"></div>
+        </div>
+    </div>
 
-    async function uploadPDF(file, reportId) {
-      const path = `${reportId}_${file.name}`;
-      const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(path, file);
-      if (error) throw new Error(error.message);
-      const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
-      return data.publicUrl;
-    }
-    async function deletePDF(reportId, fileName) {
-      const path = `${reportId}_${fileName}`;
-      await supabase.storage.from(STORAGE_BUCKET).remove([path]);
-    }
-    async function downloadPDF(reportId, fileName) {
-      const path = `${reportId}_${fileName}`;
-      const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
-      window.open(data.publicUrl, '_blank');
-    }
+    <!-- ═══════════ PAYMENT CONFIRMATION MODAL ═══════════ -->
+    <div class="pay-confirm-modal" id="payConfirmModal">
+        <div class="pay-confirm-content">
+            <h3><i class="fas fa-check-circle"></i> Confirm Payment</h3>
+            <div id="payConfirmDetails">
+                <div class="pay-detail-row"><span class="label">Patient</span><span class="value" id="payConfirmPatient">—</span></div>
+                <div class="pay-detail-row"><span class="label">Patient ID</span><span class="value" id="payConfirmId">—</span></div>
+                <div class="pay-detail-row"><span class="label">Test</span><span class="value" id="payConfirmTest">—</span></div>
+                <div class="pay-detail-row"><span class="label">Due Amount</span><span class="value" id="payConfirmAmount" style="color:var(--urgent-red);">₹0</span></div>
+            </div>
+            <div class="pay-amount-large" id="payConfirmAmountDisplay">₹0</div>
+            <div style="font-size:13px;color:#64748b;text-align:center;margin-bottom:8px;">Select Payment Method</div>
+            <div class="pay-method-group" id="payMethodGroup">
+                <label class="selected"><input type="radio" name="payMethod" value="Cash" checked> 💵 Cash</label>
+                <label><input type="radio" name="payMethod" value="UPI"> 📱 UPI</label>
+                <label><input type="radio" name="payMethod" value="Card"> 💳 Card</label>
+                <label><input type="radio" name="payMethod" value="Other"> 🏦 Other</label>
+            </div>
+            <div class="pay-btns">
+                <button class="btn btn-cancel" id="payConfirmCancel">Cancel</button>
+                <button class="btn btn-primary" id="payConfirmConfirm"><i class="fas fa-check"></i> Confirm Payment</button>
+            </div>
+            <div id="payConfirmStatus" style="margin-top:10px;font-weight:600;text-align:center;color:var(--accent-teal);"></div>
+        </div>
+    </div>
 
-    // ─── DATA HELPERS ───
-    async function loadPatients() { const s = await rtdb.ref('/patients').once('value'); return s.val() || []; }
-    async function savePatients(arr) { await rtdb.ref('/patients').set(arr); }
-    async function loadReports() { const s = await rtdb.ref('/reports').once('value'); return s.val() || []; }
-    async function saveReports(arr) { await rtdb.ref('/reports').set(arr); }
-    async function loadPayments() { const s = await rtdb.ref('/payments').once('value'); return s.val() || { paid_count: 0, unpaid_count: 0, total_due: 0, history: [] }; }
-    async function savePayments(obj) { await rtdb.ref('/payments').set(obj); }
-    async function loadSettings() { const s = await rtdb.ref('/settings').once('value'); return s.val() || {}; }
-    async function saveSettings(obj) { await rtdb.ref('/settings').set(obj); }
+    <!-- ═══════════ एडमिन पैनल ═══════════ -->
+    <div id="adminPanelWrapper">
+        <div id="adminPanelContainer">
+            <div class="admin-header">
+                <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin</h2>
+                <div class="admin-user">
+                    <span id="adminUsername">Admin</span>
+                    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    <button class="dark-toggle" id="adminDarkToggle"><i class="fas fa-moon"></i></button>
+                </div>
+            </div>
+            <div class="admin-body">
+                <div class="admin-sidebar" id="adminSidebar">
+                    <div class="nav-label">Main</div>
+                    <a class="active" data-section="dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                    <a data-section="patients"><i class="fas fa-users"></i> Patients</a>
+                    <a data-section="reports"><i class="fas fa-file-pdf"></i> Reports</a>
+                    <a data-section="whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a data-section="payments"><i class="fas fa-rupee-sign"></i> Payments</a>
+                    <div class="nav-label" style="margin-top:8px;">Analytics</div>
+                    <a data-section="analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
+                    <a data-section="backup"><i class="fas fa-database"></i> Backup</a>
+                    <div class="nav-label" style="margin-top:8px;">System</div>
+                    <a data-section="security"><i class="fas fa-shield-alt"></i> Security</a>
+                </div>
+                <div class="admin-content">
 
-    let patients = [], reports = [], payments = { paid_count: 0, unpaid_count: 0, total_due: 0, history: [] };
-    let settings = {};
+                    <!-- DASHBOARD -->
+                    <div class="admin-section active" id="sec-dashboard">
+                        <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
+                        <div class="stats-grid" id="dashboardStats">
+                            <div class="stat-card"><div class="icon blue"><i class="fas fa-user-injured"></i></div><div class="info"><h4 id="dToday">0</h4><p>Today's Patients</p></div></div>
+                            <div class="stat-card"><div class="icon green"><i class="fas fa-file-alt"></i></div><div class="info"><h4 id="dTotalReports">0</h4><p>Total Reports</p></div></div>
+                            <div class="stat-card"><div class="icon red"><i class="fas fa-clock"></i></div><div class="info"><h4 id="dPending">0</h4><p>Pending Reports</p></div></div>
+                            <div class="stat-card"><div class="icon purple"><i class="fas fa-flask"></i></div><div class="info"><h4 id="dCulture">0</h4><p>Urine Culture Process</p></div></div>
+                            <div class="stat-card"><div class="icon orange"><i class="fas fa-money-bill-wave"></i></div><div class="info"><h4 id="dDue">0</h4><p>Due Payment Patients</p></div></div>
+                            <div class="stat-card"><div class="icon teal"><i class="fas fa-calendar-check"></i></div><div class="info"><h4 id="dRevenue">₹0</h4><p>Monthly Revenue</p></div></div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;">
+                            <div class="card"><h4><i class="fas fa-chart-line"></i> Weekly Reports</h4><canvas id="chartWeekly" style="max-height:180px;width:100%;"></canvas></div>
+                            <div class="card"><h4><i class="fas fa-chart-pie"></i> Test-wise</h4><canvas id="chartPie" style="max-height:180px;width:100%;"></canvas></div>
+                        </div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Status</th><th>Due</th></tr></thead><tbody id="dRecentPatients"><tr><td colspan="4" style="text-align:center;padding:20px;">No patients yet</td></tr></tbody></table>
+                        </div>
+                    </div>
 
-    async function refreshAll() {
-      patients = await loadPatients();
-      reports = await loadReports();
-      payments = await loadPayments();
-      settings = await loadSettings();
-    }
+                    <!-- PATIENTS -->
+                    <div class="admin-section" id="sec-patients">
+                        <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
+                        <div class="form-grid">
+                            <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" /></label>
+                            <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
+                            <label>Phone <input type="text" id="patPhone" placeholder="9876543210 (optional)" /></label>
+                            <label>Test
+                                <input type="text" id="patTest" list="testList" placeholder="Type or select test" autocomplete="off" />
+                                <datalist id="testList">
+                                    <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST (Fasting)"><option value="LIPID PROFILE (Fasting)"><option value="THYROID PROFILE"><option value="BETA HCG"><option value="HBA1C (3 Month Sugar)"><option value="C-REACTIVE PROTEIN (CRP)"><option value="ANTISTREPTOLYSIN O (ASO)"><option value="R A FACTOR"><option value="HCG PREGNANCY TEST"><option value="URINE ROUTINE"><option value="URINE CULTURE"><option value="SEMEN ANALYSIS"><option value="MANTOUX TEST"><option value="HBSAG"><option value="VDRL"><option value="HIV"><option value="HCV"><option value="BLOOD UREA"><option value="SERUM CREATININE"><option value="URIC ACID (Fasting)"><option value="BLOOD SUGAR"><option value="COMPLETE BLOOD COUNT (CBC)"><option value="PLATELETS TEST"><option value="DENGUE NS1 IGG IGM"><option value="TYPHIDOT IGG IGM"><option value="WIDAL"><option value="OPTIMAL"><option value="TC DC"><option value="BT CT"><option value="ESR"><option value="SMEAR OF MP"><option value="HB"><option value="BLOOD GROUP"><option value="TOTAL PARASITE"><option value="SMEAR OF MP (Repeat)"><option value="BILIRUBIN TEST"><option value="MP WIDAL HB"><option value="OPTIMAL WIDAL HB"><option value="CBC MP WIDAL"><option value="CBC WIDAL"><option value="HB WIDAL"><option value="MP WIDAL"><option value="OPTIMAL WIDAL"><option value="SODIUM"><option value="POTASSIUM"><option value="CBC + WIDAL + OPTIMAL"><option value="URINE CULTURE (Advanced)"><option value="PLATELET COUNT"><option value="KIDNEY COMPLETE (KFT + Electrolytes)"><option value="PREGNANCY COMBO (HCG + CBC + Urine)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)"><option value="HS-CRP (High Sensitivity CRP)"><option value="VITAMIN B12"><option value="VITAMIN D3 (25-Hydroxy)"><option value="TSH (Thyroid Stimulating Hormone)"><option value="T3 (Triiodothyronine)"><option value="T4 (Thyroxine)"><option value="FREE T3"><option value="FREE T4"><option value="PROLACTIN"><option value="LH (Luteinizing Hormone)"><option value="FSH (Follicle Stimulating Hormone)"><option value="TESTOSTERONE (Total)"><option value="IRON STUDIES (Iron/TIBC/Ferritin)"><option value="CBC WIDAL BSR">
+                                </datalist>
+                            </label>
+                            <label>Status <select id="patStatus"><option>pending</option><option>process</option><option>done</option></select></label>
+                            <label>Due <input type="number" id="patDue" placeholder="0" /></label>
+                            <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+                                <button class="btn btn-primary" id="addPatientBtn"><i class="fas fa-plus"></i> Add</button>
+                                <button class="btn btn-outline" id="clearPatientBtn"><i class="fas fa-undo"></i> Clear</button>
+                            </div>
+                        </div>
+                        <div class="toolbar">
+                            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="patientSearch" placeholder="Search..." /></div>
+                            <button class="btn btn-outline btn-sm" id="refreshPatients"><i class="fas fa-sync"></i></button>
+                        </div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
+                        </div>
+                    </div>
 
-    // ─── UI REFRESH ───
-    function refreshDashboard() {
-      const total = patients.length;
-      const totalRep = reports.length;
-      const pending = patients.filter(p => p.status === 'pending').length;
-      const dueTotal = patients.reduce((s, p) => s + (p.due_amount || 0), 0);
-      const paidCount = patients.filter(p => (p.due_amount || 0) === 0).length;
-      document.getElementById('dTotalPatients').textContent = total;
-      document.getElementById('dTotalReports').textContent = totalRep;
-      document.getElementById('dPending').textContent = pending;
-      document.getElementById('dDueTotal').textContent = '₹' + dueTotal;
-      document.getElementById('dPaidCount').textContent = paidCount;
+                    <!-- REPORTS -->
+                    <div class="admin-section" id="sec-reports">
+                        <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
+                        <div class="form-grid">
+                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-062026-1186" /></label>
+                            <label>Test Name
+                                <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" />
+                                <datalist id="testList2">
+                                    <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST (Fasting)"><option value="LIPID PROFILE (Fasting)"><option value="THYROID PROFILE"><option value="BETA HCG"><option value="HBA1C (3 Month Sugar)"><option value="C-REACTIVE PROTEIN (CRP)"><option value="ANTISTREPTOLYSIN O (ASO)"><option value="R A FACTOR"><option value="HCG PREGNANCY TEST"><option value="URINE ROUTINE"><option value="URINE CULTURE"><option value="SEMEN ANALYSIS"><option value="MANTOUX TEST"><option value="HBSAG"><option value="VDRL"><option value="HIV"><option value="HCV"><option value="BLOOD UREA"><option value="SERUM CREATININE"><option value="URIC ACID (Fasting)"><option value="BLOOD SUGAR"><option value="COMPLETE BLOOD COUNT (CBC)"><option value="PLATELETS TEST"><option value="DENGUE NS1 IGG IGM"><option value="TYPHIDOT IGG IGM"><option value="WIDAL"><option value="OPTIMAL"><option value="TC DC"><option value="BT CT"><option value="ESR"><option value="SMEAR OF MP"><option value="HB"><option value="BLOOD GROUP"><option value="TOTAL PARASITE"><option value="SMEAR OF MP (Repeat)"><option value="BILIRUBIN TEST"><option value="MP WIDAL HB"><option value="OPTIMAL WIDAL HB"><option value="CBC MP WIDAL"><option value="CBC WIDAL"><option value="HB WIDAL"><option value="MP WIDAL"><option value="OPTIMAL WIDAL"><option value="SODIUM"><option value="POTASSIUM"><option value="CBC + WIDAL + OPTIMAL"><option value="URINE CULTURE (Advanced)"><option value="PLATELET COUNT"><option value="KIDNEY COMPLETE (KFT + Electrolytes)"><option value="PREGNANCY COMBO (HCG + CBC + Urine)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)"><option value="HS-CRP (High Sensitivity CRP)"><option value="VITAMIN B12"><option value="VITAMIN D3 (25-Hydroxy)"><option value="TSH (Thyroid Stimulating Hormone)"><option value="T3 (Triiodothyronine)"><option value="T4 (Thyroxine)"><option value="FREE T3"><option value="FREE T4"><option value="PROLACTIN"><option value="LH (Luteinizing Hormone)"><option value="FSH (Follicle Stimulating Hormone)"><option value="TESTOSTERONE (Total)"><option value="IRON STUDIES (Iron/TIBC/Ferritin)"><option value="CBC WIDAL BSR">
+                                </datalist>
+                            </label>
+                            <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>
+                            <label>Replace <select id="reportReplace"><option value="no">No</option><option value="yes">Yes</option></select></label>
+                            <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+                                <button class="btn btn-primary" id="uploadReportBtn"><i class="fas fa-upload"></i> Upload</button>
+                                <button class="btn btn-outline btn-sm" id="refreshReports"><i class="fas fa-sync"></i></button>
+                            </div>
+                        </div>
+                        <div id="uploadMessage" style="margin:10px 0; font-weight:bold; color:red;"></div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Uploaded</th><th>Action</th></tr></thead><tbody id="reportsTableBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No reports</td></tr></tbody></table>
+                        </div>
+                    </div>
 
-      const tbody = document.getElementById('dashRecent');
-      if (patients.length) {
-        tbody.innerHTML = patients.slice(0, 5).map(p => `<tr><td>${p.name}</td><td>${p.test}</td><td><span class="badge ${p.status}">${p.status}</span></td><td>₹${p.due_amount||0}</td></tr>`).join('');
-      } else tbody.innerHTML = '<tr><td colspan="4" style="padding:16px;text-align:center;color:#94a3b8;">No patients</td></tr>';
+                    <!-- WHATSAPP -->
+                    <div class="admin-section" id="sec-whatsapp">
+                        <h2 style="text-align:left;"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp System</h2>
+                        <div class="template-box">
+                            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                                <span><i class="fas fa-pen"></i> <strong>Custom Template</strong></span>
+                                <span class="badge-status paid"><i class="fas fa-bolt"></i> One-Click</span>
+                            </div>
+                            <div class="msg-preview" id="whatsappPreview">Dear {patient}, your report for {test} is ready. Thank you.</div>
+                            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                                <button class="btn btn-primary" style="background:#25D366;border-color:#25D366;" id="sendWAPatient"><i class="fab fa-whatsapp"></i> To Patient</button>
+                                <button class="btn btn-primary" id="sendWADoctor"><i class="fas fa-user-md"></i> To Doctor</button>
+                            </div>
+                        </div>
+                        <div class="template-box">
+                            <h4><i class="fas fa-flask"></i> Urine Culture Under Process</h4>
+                            <div class="msg-preview" style="border-left-color:#7c3aed;">Dear {patient}, your Urine Culture is under process. Results in 48 hrs.</div>
+                            <button class="btn btn-primary" style="background:#7c3aed;border-color:#7c3aed;margin-top:8px;" id="sendUrineUpdate"><i class="fas fa-paper-plane"></i> Send Update</button>
+                        </div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>Patient</th><th>Phone</th><th>Report</th><th>Status</th><th>Action</th></tr></thead><tbody id="whatsappPatientList"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
+                        </div>
+                    </div>
 
-      updateCharts();
-    }
+                    <!-- PAYMENTS (with Payment History) -->
+                    <div class="admin-section" id="sec-payments">
+                        <h2 style="text-align:left;"><i class="fas fa-rupee-sign"></i> Payment / Dues <span class="premium-badge">UPI+QR</span></h2>
+                        <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));" id="paymentStats">
+                            <div class="stat-card"><div class="icon green"><i class="fas fa-check-circle"></i></div><div class="info"><h4 id="pPaid">0</h4><p>Paid</p></div></div>
+                            <div class="stat-card"><div class="icon red"><i class="fas fa-times-circle"></i></div><div class="info"><h4 id="pUnpaid">0</h4><p>Unpaid</p></div></div>
+                            <div class="stat-card"><div class="icon orange"><i class="fas fa-clock"></i></div><div class="info"><h4 id="pTotalDue">₹0</h4><p>Total Due</p></div></div>
+                            <div class="stat-card"><div class="icon teal"><i class="fas fa-history"></i></div><div class="info"><h4 id="pHistoryCount">0</h4><p>Payments Recorded</p></div></div>
+                        </div>
+                        <div class="toolbar">
+                            <button class="btn btn-red" id="dueReminderBtn"><i class="fas fa-bell"></i> Due Reminder</button>
+                            <button class="btn btn-primary" id="upiPayBtn"><i class="fas fa-qrcode"></i> UPI Payment</button>
+                            <button class="btn btn-outline btn-sm" id="refreshPayments"><i class="fas fa-sync"></i></button>
+                        </div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
+                        </div>
+                        <h4 style="margin:24px 0 8px;color:var(--primary-blue);"><i class="fas fa-history"></i> Payment History</h4>
+                        <div class="payment-history-wrap">
+                            <table><thead><tr><th>#</th><th>Patient</th><th>ID</th><th>Amount</th><th>Method</th><th>Confirmed By</th><th>Date</th></tr></thead><tbody id="paymentHistoryBody"><tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr></tbody></table>
+                        </div>
+                    </div>
 
-    let chartWeekly, chartPie;
-    function updateCharts() {
-      const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-      const data = days.map(() => 0);
-      patients.forEach(p => {
-        if (p.created_at) {
-          const d = new Date(p.created_at);
-          const idx = d.getDay() === 0 ? 6 : d.getDay() - 1;
-          if (idx >= 0 && idx < 7) data[idx]++;
-        }
-      });
-      const ctx1 = document.getElementById('chartWeekly')?.getContext('2d');
-      if (ctx1) {
-        if (chartWeekly) chartWeekly.destroy();
-        chartWeekly = new Chart(ctx1, {
-          type: 'bar',
-          data: { labels: days, datasets: [{ label: 'Patients', data, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }] },
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
-        });
-      }
-      const testMap = {};
-      patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-      const labels = Object.keys(testMap), vals = Object.values(testMap);
-      const ctx2 = document.getElementById('chartPie')?.getContext('2d');
-      if (ctx2) {
-        if (chartPie) chartPie.destroy();
-        chartPie = new Chart(ctx2, {
-          type: 'doughnut',
-          data: { labels: labels.length ? labels : ['No Data'], datasets: [{ data: labels.length ? vals : [1], backgroundColor: ['#008080','#20b2aa','#0a2540','#d9383a','#f59e0b','#7c3aed'], borderWidth: 2, borderColor: '#fff' }] },
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }
-        });
-      }
-    }
+                    <!-- ANALYTICS -->
+                    <div class="admin-section" id="sec-analytics">
+                        <h2 style="text-align:left;"><i class="fas fa-chart-bar"></i> Reports &amp; Analytics</h2>
+                        <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
+                            <div class="stat-card"><div class="icon blue"><i class="fas fa-calendar-day"></i></div><div class="info"><h4 id="aToday">0</h4><p>Today</p></div></div>
+                            <div class="stat-card"><div class="icon green"><i class="fas fa-calendar-alt"></i></div><div class="info"><h4 id="aMonth">0</h4><p>This Month</p></div></div>
+                            <div class="stat-card"><div class="icon purple"><i class="fas fa-vial"></i></div><div class="info"><h4 id="aTopTest">-</h4><p>Top Test</p></div></div>
+                            <div class="stat-card"><div class="icon orange"><i class="fas fa-rupee-sign"></i></div><div class="info"><h4 id="aRevenue">₹0</h4><p>Revenue</p></div></div>
+                        </div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>Test</th><th>Count</th><th>Revenue</th><th>Pending</th></tr></thead><tbody id="analyticsTable"><tr><td colspan="4" style="text-align:center;padding:20px;">No data</td></tr></tbody></table>
+                        </div>
+                    </div>
 
-    function refreshPatients() {
-      const tbody = document.getElementById('patientTableBody');
-      if (patients.length) {
-        tbody.innerHTML = patients.map(p => `
-          <tr>
-            <td><strong>${p.patient_id}</strong></td>
-            <td>${p.name}</td>
-            <td>${p.phone || '—'}</td>
-            <td>${p.test}</td>
-            <td><span class="badge ${p.status}">${p.status}</span></td>
-            <td>₹${p.due_amount || 0}</td>
-            <td><div class="qr-placeholder" id="qr-${p.patient_id}">QR</div></td>
-            <td>
-              ${(p.due_amount||0) > 0 ? `
-                <button class="btn btn-sm btn-gold btn-pay" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
-                <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
-              ` : `<span class="badge paid">Paid</span>`}
-              <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${(p.due_amount||0)>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
-              <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>
-        `).join('');
-        setTimeout(() => generateQRCodes(), 200);
-      } else tbody.innerHTML = '<tr><td colspan="8" style="padding:24px;text-align:center;">No patients</td></tr>';
-    }
+                    <!-- BACKUP -->
+                    <div class="admin-section" id="sec-backup">
+                        <h2 style="text-align:left;"><i class="fas fa-database"></i> Backup &amp; Restore</h2>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px;">
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
+                                <i class="fas fa-database" style="font-size:28px;color:var(--accent-teal);"></i>
+                                <h4>DB Backup</h4>
+                                <button class="btn btn-primary" id="backupDBBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button>
+                            </div>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
+                                <i class="fas fa-file-pdf" style="font-size:28px;color:var(--urgent-red);"></i>
+                                <h4>PDF Backup</h4>
+                                <button class="btn btn-primary" id="backupPDFBtn"><i class="fas fa-cloud-upload-alt"></i> Backup</button>
+                            </div>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
+                                <i class="fas fa-undo-alt" style="font-size:28px;color:#f59e0b;"></i>
+                                <h4>Restore</h4>
+                                <input type="file" id="restoreFile" style="margin:6px 0;" />
+                                <button class="btn btn-outline" id="restoreBtn"><i class="fas fa-upload"></i> Restore</button>
+                            </div>
+                        </div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>File</th><th>Type</th><th>Date</th><th>Action</th></tr></thead><tbody id="backupListBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No backups</td></tr></tbody></table>
+                        </div>
+                    </div>
 
-    function generateQRCodes() {
-      document.querySelectorAll('[id^="qr-"]').forEach(el => {
-        const id = el.id.replace('qr-', '');
-        if (typeof QRCode !== 'undefined') {
-          el.innerHTML = '';
-          new QRCode(el, { text: 'Patient:'+id, width: 50, height: 50, colorDark: '#000', colorLight: '#fff', correctLevel: QRCode.CorrectLevel.H });
-        }
-      });
-    }
+                    <!-- SECURITY -->
+                    <div class="admin-section" id="sec-security">
+                        <h2 style="text-align:left;"><i class="fas fa-shield-alt"></i> Security</h2>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px;">
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
+                                <i class="fas fa-lock" style="font-size:28px;color:var(--accent-teal);"></i>
+                                <h4>Login</h4>
+                                <button class="btn btn-outline" id="logoutBtn2"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                            </div>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
+                                <i class="fas fa-key" style="font-size:28px;color:#f59e0b;"></i>
+                                <h4>Change Password</h4>
+                                <button class="btn btn-primary" id="changePwdBtn"><i class="fas fa-edit"></i> Change</button>
+                            </div>
+                            <div class="stat-card" style="flex-direction:column;text-align:center;padding:18px;">
+                                <i class="fas fa-clipboard-list" style="font-size:28px;color:#7c3aed;"></i>
+                                <h4>Activity Log</h4>
+                                <button class="btn btn-outline" id="viewLogBtn"><i class="fas fa-eye"></i> View</button>
+                            </div>
+                        </div>
+                        <div class="table-wrap">
+                            <table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>IP</th></tr></thead><tbody id="activityLogBody"><tr><td colspan="4" style="text-align:center;padding:20px;">No logs</td></tr></tbody></table>
+                        </div>
+                    </div>
 
-    function refreshReports() {
-      const tbody = document.getElementById('reportsTableBody');
-      if (reports.length) {
-        tbody.innerHTML = reports.map(r => `
-          <tr>
-            <td>${r.name} (${r.patient_id})</td>
-            <td>${r.test_name}</td>
-            <td>${r.uploaded_at}</td>
-            <td>
-              <button class="btn btn-sm btn-primary btn-download" data-id="${r.id}" data-file="${r.file_name}"><i class="fas fa-download"></i></button>
-              <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}" data-file="${r.file_name}"><i class="fas fa-trash"></i></button>
-            </td>
-          </tr>
-        `).join('');
-      } else tbody.innerHTML = '<tr><td colspan="4" style="padding:20px;text-align:center;">No reports</td></tr>';
-    }
+                </div>
+            </div>
+        </div>
+    </div>
 
-    function refreshPayments() {
-      const due = patients.filter(p => (p.due_amount||0) > 0);
-      const paid = patients.filter(p => (p.due_amount||0) === 0);
-      const totalDue = due.reduce((s,p) => s + (p.due_amount||0), 0);
-      document.getElementById('pPaidCount').textContent = paid.length;
-      document.getElementById('pUnpaidCount').textContent = due.length;
-      document.getElementById('pTotalDue').textContent = '₹' + totalDue;
-      document.getElementById('pHistoryCount').textContent = (payments.history || []).length;
+    <!-- ═══════════ UPI मोडल ═══════════ -->
+    <div class="upi-modal" id="upiModal">
+        <div class="upi-modal-content">
+            <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>
+            <div id="upiQR" style="display:flex;justify-content:center;margin:16px 0;"></div>
+            <p style="color:var(--text-dark);">UPI: rajanpathlab@upi</p>
+            <button class="btn-close" id="closeUpiModal">Close</button>
+        </div>
+    </div>
 
-      const tbody = document.getElementById('paymentsTableBody');
-      if (patients.length) {
-        tbody.innerHTML = patients.map(p => `
-          <tr>
-            <td>${p.name}</td>
-            <td>${p.test}</td>
-            <td>₹${p.due_amount||0}</td>
-            <td><span class="badge ${(p.due_amount||0)>0?'unpaid':'paid'}">${(p.due_amount||0)>0?'Unpaid':'Paid'}</span></td>
-            <td>
-              ${(p.due_amount||0)>0 ? `
-                <button class="btn btn-sm btn-gold btn-pay" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
-                <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
-              ` : `<span class="badge paid">Cleared</span>`}
-              <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${(p.due_amount||0)>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
-            </td>
-          </tr>
-        `).join('');
-      } else tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;">No patients</td></tr>';
+    <!-- ═══════════ पेशेंट पोर्टल मोडल ═══════════ -->
+    <div class="patient-portal-modal" id="patientPortalModal">
+        <div class="patient-portal-content">
+            <div class="portal-header">
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>
+                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
+            </div>
+            <div class="portal-body">
+                <div class="portal-input-group">
+                    <div class="portal-input-label">
+                        <span>🔍</span> PATIENT ID OR MOBILE
+                    </div>
+                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number (e.g. P001, RPL-062026-1186, or 9876543210)" autocomplete="off">
+                </div>
+                <button id="portalFetchBtn" class="portal-btn">
+                    <span>🔍</span> VIEW MY REPORTS →
+                </button>
+                <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
+                <div id="portalReportList" class="portal-report-list" style="display: none;"></div>
+                <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
+            </div>
+            <div class="portal-footer">
+                <span>✦ SECURE DOWNLOAD SYSTEM ✦</span>
+                <span>RAJAN PATH LAB</span>
+            </div>
+        </div>
+    </div>
 
-      const histBody = document.getElementById('paymentHistoryBody');
-      const hist = payments.history || [];
-      if (hist.length) {
-        histBody.innerHTML = hist.slice(0, 30).map((h,i) => `
-          <tr>
-            <td>${i+1}</td>
-            <td>${h.patient_name || '—'}</td>
-            <td>${h.patient_id || '—'}</td>
-            <td><strong>₹${h.amount}</strong></td>
-            <td><span class="badge paid">${h.method || 'Cash'}</span></td>
-            <td>${h.confirmed_by || 'Admin'}</td>
-            <td>${h.confirmed_at || h.timestamp || '—'}</td>
-          </tr>
-        `).join('');
-      } else histBody.innerHTML = '<tr><td colspan="7" style="padding:20px;text-align:center;">No history</td></tr>';
-    }
+    <!-- ═══════════ जावास्क्रिप्ट ═══════════ -->
+    <script>
+        (function() {
+            'use strict';
 
-    function refreshWhatsApp() {
-      const tbody = document.getElementById('whatsappTableBody');
-      if (patients.length) {
-        tbody.innerHTML = patients.slice(0, 10).map(p => `
-          <tr>
-            <td>${p.name}</td>
-            <td>${p.phone || '—'}</td>
-            <td>${p.test}</td>
-            <td><span class="badge ${p.status}">${p.status}</span></td>
-            <td><button class="btn btn-sm wa-send" style="background:#25D366;color:white;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}" ${p.phone?'':'disabled'}><i class="fab fa-whatsapp"></i> Send</button></td>
-          </tr>
-        `).join('');
-      } else tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;">No patients</td></tr>';
-    }
+            // ─── प्री-लोडर: पेज लोड होने पर 2.2 सेकंड बाद हटाएं ───
+            window.addEventListener('load', function() {
+                const preloader = document.getElementById('preloader');
+                // Minimum 2.2 seconds show time for professional feel
+                setTimeout(function() {
+                    preloader.classList.add('hide');
+                    // Remove from DOM after fade
+                    setTimeout(function() {
+                        if (preloader && preloader.parentNode) {
+                            preloader.parentNode.removeChild(preloader);
+                        }
+                    }, 600);
+                }, 2200);
+            });
 
-    function refreshAnalytics() {
-      const today = new Date().toDateString();
-      let todayCount = 0;
-      patients.forEach(p => { if (p.created_at && new Date(p.created_at).toDateString() === today) todayCount++; });
-      const revenue = patients.reduce((s,p) => s + (p.due_amount||0), 0);
-      const testMap = {};
-      patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test]||0)+1; });
-      let topTest = '-', topCount = 0;
-      Object.keys(testMap).forEach(k => { if (testMap[k] > topCount) { topCount = testMap[k]; topTest = k; } });
-      document.getElementById('aToday').textContent = todayCount;
-      document.getElementById('aTopTest').textContent = topTest;
-      document.getElementById('aRevenue').textContent = '₹' + revenue;
-      const tbody = document.getElementById('analyticsTableBody');
-      const arr = Object.keys(testMap).map(k => ({ test: k, count: testMap[k] }));
-      if (arr.length) {
-        tbody.innerHTML = arr.map(t => `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * (settings.default_price || 450)}</td></tr>`).join('');
-      } else tbody.innerHTML = '<tr><td colspan="3" style="padding:20px;text-align:center;">No data</td></tr>';
-    }
+            // 🔥 Firebase Config
+            const firebaseConfig = {
+                apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
+                authDomain: "rajanpathlab5530.firebaseapp.com",
+                databaseURL: "https://rajanpathlab5530-default-rtdb.firebaseio.com",
+                projectId: "rajanpathlab5530",
+                storageBucket: "rajanpathlab5530.firebasestorage.app",
+                messagingSenderId: "883585447034",
+                appId: "1:883585447034:web:225d807b2cc83095f9b7c3",
+                measurementId: "G-7WMF1M8CG9"
+            };
 
-    function refreshSettingsUI() {
-      document.getElementById('setLabName').value = settings.lab_name || 'Rajan Path Lab';
-      document.getElementById('setAddress').value = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
-      document.getElementById('setPhone').value = settings.phone || '8709946177 / 9931002450';
-      document.getElementById('setGST').value = settings.gst || '';
-      document.getElementById('setDefaultPrice').value = settings.default_price || 450;
-    }
+            firebase.initializeApp(firebaseConfig);
+            const rtdb = firebase.database();
 
-    function refreshAllSections() {
-      refreshDashboard();
-      refreshPatients();
-      refreshReports();
-      refreshPayments();
-      refreshWhatsApp();
-      refreshAnalytics();
-      refreshSettingsUI();
-    }
+            // ✅ Supabase Storage
+            const supabaseUrl = 'https://fflqftbnttpgwdktagmj.supabase.co';
+            const supabaseKey =
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            const STORAGE_BUCKET = 'reports';
 
-    // ─── SIDEBAR NAV ───
-    document.querySelectorAll('#sidebarNav a[data-section]').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelectorAll('#sidebarNav a').forEach(a => a.classList.remove('active'));
-        this.classList.add('active');
-        document.querySelectorAll('.section-panel').forEach(el => el.classList.remove('active'));
-        document.getElementById('sec-' + this.dataset.section).classList.add('active');
-        if (this.dataset.section === 'patients') setTimeout(generateQRCodes, 300);
-      });
-    });
+            // ─── Force-download PDF using fetch + blob ───
+            async function downloadPDF(reportId, fileName) {
+                try {
+                    const filePath = `${reportId}_${fileName}`;
+                    const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+                    const url = data.publicUrl;
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const blob = await response.blob();
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = fileName || 'report.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    setTimeout(() => URL.revokeObjectURL(link.href), 5000);
+                } catch (error) {
+                    console.warn('Download fallback to window.open due to CORS/network error:', error.message);
+                    const filePath = `${reportId}_${fileName}`;
+                    const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+                    window.open(data.publicUrl, '_blank');
+                }
+            }
 
-    // ─── PATIENT CRUD ───
-    document.getElementById('addPatientBtn').addEventListener('click', async function() {
-      const name = document.getElementById('patName').value.trim();
-      if (!name) { showToast('Name is required', 'error'); return; }
-      const id = document.getElementById('patId').value.trim() || ('RPL-' + Date.now().toString().slice(-6));
-      const phone = document.getElementById('patPhone').value.trim();
-      const test = document.getElementById('patTest').value.trim() || 'Not Specified';
-      const status = document.getElementById('patStatus').value;
-      const due = parseFloat(document.getElementById('patDue').value) || 0;
+            async function uploadPDF(file, reportId) {
+                const filePath = `${reportId}_${file.name}`;
+                const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, file);
+                if (error) throw new Error(error.message);
+                const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+                return data.publicUrl;
+            }
 
-      setLoading(this, true);
-      try {
-        patients.push({ patient_id: id, name, phone, test, status, due_amount: due, created_at: new Date().toISOString() });
-        await savePatients(patients);
-        await refreshAll();
-        refreshAllSections();
-        showToast('Patient ' + id + ' added', 'success');
-        document.getElementById('patId').value = '';
-        document.getElementById('patName').value = '';
-        document.getElementById('patPhone').value = '';
-        document.getElementById('patTest').value = '';
-        document.getElementById('patDue').value = '';
-      } catch (e) { showToast('Error: ' + e.message, 'error'); }
-      setLoading(this, false);
-    });
-    document.getElementById('clearPatientBtn').addEventListener('click', () => {
-      ['patId','patName','patPhone','patTest','patDue'].forEach(id => document.getElementById(id).value = '');
-    });
-    document.getElementById('refreshPatientsBtn').addEventListener('click', refreshPatients);
-    document.getElementById('patientSearch').addEventListener('input', function() {
-      const q = this.value.toLowerCase();
-      document.querySelectorAll('#patientTableBody tr').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
-      });
-    });
+            async function deletePDF(reportId, fileName) {
+                const filePath = `${reportId}_${fileName}`;
+                const { error } = await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
+                if (error) console.warn('Delete error:', error.message);
+            }
 
-    // ─── DELETE PATIENT ───
-    document.addEventListener('click', async function(e) {
-      const del = e.target.closest('.btn-del-patient');
-      if (del) {
-        const id = del.dataset.id;
-        if (!confirm('Delete patient #' + id + ' and associated reports?')) return;
-        setLoading(del, true);
-        try {
-          const toDel = reports.filter(r => r.patient_id === id);
-          for (let r of toDel) await deletePDF(r.id, r.file_name);
-          reports = reports.filter(r => r.patient_id !== id);
-          patients = patients.filter(p => p.patient_id !== id);
-          await savePatients(patients); await saveReports(reports);
-          await refreshAll(); refreshAllSections();
-          showToast('Deleted patient and reports', 'success');
-        } catch (err) { showToast('Error: ' + err.message, 'error'); }
-        setLoading(del, false);
-      }
-    });
+            const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
-    // ─── PAY / MARK PAID ───
-    let pendingPayId = null;
-    document.addEventListener('click', function(e) {
-      const payBtn = e.target.closest('.btn-pay');
-      if (payBtn) {
-        const id = payBtn.dataset.id;
-        const patient = patients.find(p => p.patient_id === id);
-        if (!patient || patient.due_amount <= 0) { showToast('No due amount', 'warning'); return; }
-        pendingPayId = id;
-        document.getElementById('payConfirmPatient').textContent = patient.name;
-        document.getElementById('payConfirmId').textContent = patient.patient_id;
-        document.getElementById('payConfirmTest').textContent = patient.test;
-        document.getElementById('payConfirmAmount').textContent = '₹' + patient.due_amount;
-        document.getElementById('payConfirmStatus').textContent = '';
-        document.getElementById('payConfirmModal').classList.add('show');
-      }
-      const markBtn = e.target.closest('.btn-mark-paid');
-      if (markBtn) {
-        const id = markBtn.dataset.id;
-        if (confirm('Mark as paid (Cash)?')) markAsPaid(id);
-      }
-    });
+            function normalizePhone(phone) {
+                if (!phone) return '';
+                let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
+                if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
+                if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
+                if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
+                return cleaned;
+            }
 
-    async function markAsPaid(id) {
-      const patient = patients.find(p => p.patient_id === id);
-      if (!patient || patient.due_amount <= 0) { showToast('No due', 'warning'); return; }
-      const amount = patient.due_amount;
-      try {
-        patient.due_amount = 0;
-        await savePatients(patients);
-        payments.history = payments.history || [];
-        payments.history.unshift({ patient_id: id, patient_name: patient.name, amount, method: 'Cash (Quick)', confirmed_by: 'Admin', confirmed_at: new Date().toLocaleString(), timestamp: new Date().toISOString() });
-        payments.paid_count = patients.filter(p => p.due_amount === 0).length;
-        payments.unpaid_count = patients.filter(p => p.due_amount > 0).length;
-        payments.total_due = patients.reduce((s,p) => s + (p.due_amount||0), 0);
-        await savePayments(payments);
-        await refreshAll(); refreshAllSections();
-        showToast('✅ ' + patient.name + ' marked as paid (₹' + amount + ')', 'success');
-      } catch (e) { showToast('Error: ' + e.message, 'error'); }
-    }
+            async function loadPatients() {
+                const snap = await rtdb.ref('/patients').once('value');
+                return snap.val() || [];
+            }
+            async function savePatients(arr) { await rtdb.ref('/patients').set(arr); }
+            async function loadReports() {
+                const snap = await rtdb.ref('/reports').once('value');
+                return snap.val() || [];
+            }
+            async function saveReports(arr) { await rtdb.ref('/reports').set(arr); }
+            async function loadPayments() {
+                const snap = await rtdb.ref('/payments').once('value');
+                const val = snap.val();
+                return val || { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0, history: [] };
+            }
+            async function savePayments(obj) { await rtdb.ref('/payments').set(obj); }
+            async function loadLogs() {
+                const snap = await rtdb.ref('/logs').once('value');
+                return snap.val() || [];
+            }
+            async function saveLogs(arr) { await rtdb.ref('/logs').set(arr); }
 
-    document.getElementById('payConfirmCancel').addEventListener('click', () => { document.getElementById('payConfirmModal').classList.remove('show'); });
-    document.getElementById('payConfirmConfirm').addEventListener('click', async function() {
-      if (!pendingPayId) return;
-      const patient = patients.find(p => p.patient_id === pendingPayId);
-      if (!patient || patient.due_amount <= 0) { showToast('No due', 'warning'); return; }
-      const amount = patient.due_amount;
-      const method = document.querySelector('#payMethodGroup input[type="radio"]:checked')?.value || 'Cash';
-      setLoading(this, true);
-      try {
-        patient.due_amount = 0;
-        await savePatients(patients);
-        payments.history = payments.history || [];
-        payments.history.unshift({ patient_id: patient.patient_id, patient_name: patient.name, amount, method, confirmed_by: 'Admin', confirmed_at: new Date().toLocaleString(), timestamp: new Date().toISOString() });
-        payments.paid_count = patients.filter(p => p.due_amount === 0).length;
-        payments.unpaid_count = patients.filter(p => p.due_amount > 0).length;
-        payments.total_due = patients.reduce((s,p) => s + (p.due_amount||0), 0);
-        await savePayments(payments);
-        await refreshAll(); refreshAllSections();
-        document.getElementById('payConfirmStatus').textContent = '✅ Payment confirmed!';
-        document.getElementById('payConfirmStatus').style.color = 'green';
-        showToast('Payment of ₹' + amount + ' confirmed', 'success');
-        setTimeout(() => document.getElementById('payConfirmModal').classList.remove('show'), 800);
-        if (patient.phone) {
-          const msg = `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you.`;
-          sendWhatsApp(patient.phone, msg);
-        }
-      } catch (e) { showToast('Error: ' + e.message, 'error'); }
-      setLoading(this, false);
-    });
+            let patients = [],
+                reports = [];
+            let payments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0, history: [] };
+            let activityLogs = [];
 
-    // ─── WHATSAPP ───
-    function sendWhatsApp(phone, msg) {
-      if (!phone) { showToast('No phone', 'warning'); return; }
-      let clean = phone.replace(/\s/g,'');
-      if (clean.startsWith('0')) clean = clean.substring(1);
-      if (/^\d{10}$/.test(clean)) clean = '+91' + clean;
-      if (!clean.startsWith('+')) clean = '+' + clean;
-      window.open('https://wa.me/' + clean + '?text=' + encodeURIComponent(msg), '_blank');
-    }
-    document.addEventListener('click', function(e) {
-      const wa = e.target.closest('.wa-send');
-      if (wa) {
-        const msg = document.getElementById('whatsappPreview').innerText.replace(/{patient}/g, wa.dataset.name).replace(/{test}/g, wa.dataset.test);
-        sendWhatsApp(wa.dataset.phone, msg);
-      }
-    });
-    document.getElementById('sendWAPatient').addEventListener('click', () => {
-      const phone = prompt('Enter patient phone:');
-      if (phone) sendWhatsApp(phone, document.getElementById('whatsappPreview').innerText.replace(/{patient}/g,'Patient').replace(/{test}/g,'Report'));
-    });
-    document.getElementById('sendWADoctor').addEventListener('click', () => {
-      const phone = prompt('Enter doctor phone:');
-      if (phone) sendWhatsApp(phone, 'Doctor: Report ready.');
-    });
-    document.getElementById('dueReminderBtn').addEventListener('click', () => {
-      const phone = prompt('Enter patient phone:');
-      if (phone) sendWhatsApp(phone, 'Reminder: Payment due at Rajan Path Lab.');
-    });
+            async function addPaymentHistory(patientId, patientName, amount, method, adminUser) {
+                const entry = {
+                    id: Date.now(),
+                    patient_id: patientId,
+                    patient_name: patientName,
+                    amount: amount,
+                    method: method || 'Cash',
+                    confirmed_by: adminUser || 'Admin',
+                    confirmed_at: new Date().toLocaleString(),
+                    timestamp: new Date().toISOString()
+                };
+                payments.history = payments.history || [];
+                payments.history.unshift(entry);
+                if (payments.history.length > 200) payments.history = payments.history.slice(0, 200);
+                payments.paid_count = (payments.paid_count || 0) + 1;
+                payments.total_paid = (payments.total_paid || 0) + amount;
+                await savePayments(payments);
+            }
 
-    // ─── UPI MODAL ───
-    document.getElementById('upiPayBtn').addEventListener('click', () => {
-      document.getElementById('upiModal').classList.add('show');
-      const container = document.getElementById('upiQRContainer');
-      container.innerHTML = '';
-      if (typeof QRCode !== 'undefined') {
-        new QRCode(container, { text: 'upi://pay?pa=rajanpathlab@upi&pn=Rajan%20Path%20Lab&am=1.00&cu=INR', width: 160, height: 160 });
-      } else container.innerHTML = '<p>QR library not loaded</p>';
-    });
-    document.getElementById('closeUpiModal').addEventListener('click', () => document.getElementById('upiModal').classList.remove('show'));
+            async function refreshAllData() {
+                patients = await loadPatients();
+                reports = await loadReports();
+                payments = await loadPayments();
+                activityLogs = await loadLogs();
+                if (!payments.history) payments.history = [];
+                if (!payments.total_paid) payments.total_paid = 0;
+                if (!payments.total_due) payments.total_due = 0;
+                if (!payments.paid_count) payments.paid_count = 0;
+                if (!payments.unpaid_count) payments.unpaid_count = 0;
+            }
 
-    // ─── REPORTS UPLOAD ───
-    document.getElementById('uploadReportBtn').addEventListener('click', async function() {
-      const pid = document.getElementById('reportPatientId').value.trim();
-      const test = document.getElementById('reportTestName').value.trim();
-      const file = document.getElementById('reportFile').files[0];
-      const replace = document.getElementById('reportReplace').value;
-      const msgDiv = document.getElementById('uploadMessage');
-      if (!pid || !test || !file) { msgDiv.textContent = '❌ Patient ID, Test, and PDF required.'; showToast('Missing fields', 'error'); return; }
-      const patient = patients.find(p => p.patient_id === pid);
-      if (!patient) { msgDiv.textContent = '❌ Patient not found'; showToast('Patient not found', 'error'); return; }
-      const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
-      if (existing && replace === 'no') { msgDiv.textContent = '❌ Report exists. Use Replace.'; showToast('Report exists', 'warning'); return; }
-      setLoading(this, true);
-      try {
-        if (existing && replace === 'yes') { await deletePDF(existing.id, existing.file_name); reports = reports.filter(r => r.id !== existing.id); }
-        const newId = reports.length + 1;
-        const url = await uploadPDF(file, newId);
-        reports.push({ id: newId, patient_id: pid, name: patient.name, test_name: test, file_name: file.name, uploaded_at: new Date().toLocaleString(), url });
-        await saveReports(reports);
-        await refreshAll(); refreshReports();
-        msgDiv.style.color = 'green';
-        msgDiv.textContent = '✅ Uploaded for ' + patient.name;
-        showToast('Report uploaded', 'success');
-        document.getElementById('reportPatientId').value = '';
-        document.getElementById('reportTestName').value = '';
-        document.getElementById('reportFile').value = '';
-        setTimeout(() => msgDiv.textContent = '', 4000);
-      } catch (e) { msgDiv.textContent = '❌ ' + e.message; showToast('Upload failed', 'error'); }
-      setLoading(this, false);
-    });
-    document.getElementById('refreshReportsBtn').addEventListener('click', refreshReports);
+            const $ = id => document.getElementById(id);
+            const loginModal = $('loginModal');
+            const adminWrapper = $('adminPanelWrapper');
+            const upiModal = $('upiModal');
+            const portalModal = $('patientPortalModal');
+            const payConfirmModal = $('payConfirmModal');
 
-    document.addEventListener('click', async function(e) {
-      const del = e.target.closest('.btn-del-report');
-      if (del) {
-        const id = parseInt(del.dataset.id);
-        const file = del.dataset.file;
-        if (!confirm('Delete report?')) return;
-        setLoading(del, true);
-        try {
-          await deletePDF(id, file);
-          reports = reports.filter(r => r.id !== id);
-          await saveReports(reports);
-          await refreshAll(); refreshReports();
-          showToast('Report deleted', 'success');
-        } catch (err) { showToast('Error: ' + err.message, 'error'); }
-        setLoading(del, false);
-      }
-      const dwn = e.target.closest('.btn-download');
-      if (dwn) {
-        const id = parseInt(dwn.dataset.id);
-        const file = dwn.dataset.file;
-        try { await downloadPDF(id, file); showToast('Download started', 'success'); } catch (e) { showToast('Error: ' + e.message, 'error'); }
-      }
-    });
+            let pendingPayPatientId = null;
+            let pendingPayAmount = 0;
 
-    // ─── INVOICE ───
-    document.addEventListener('click', function(e) {
-      const inv = e.target.closest('.btn-invoice');
-      if (inv) {
-        const id = inv.dataset.id;
-        const patient = patients.find(p => p.patient_id === id);
-        if (!patient) { showToast('Patient not found', 'error'); return; }
-        const amount = patient.due_amount || 0;
-        document.getElementById('invPatient').textContent = patient.name;
-        document.getElementById('invPatId').textContent = patient.patient_id;
-        document.getElementById('invTest').textContent = patient.test;
-        document.getElementById('invDate').textContent = new Date().toLocaleDateString();
-        document.getElementById('invDesc').textContent = patient.test || 'Test';
-        document.getElementById('invAmount').textContent = '₹' + amount;
-        document.getElementById('invTotal').textContent = '₹' + amount;
-        document.getElementById('invAddress').textContent = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
-        document.getElementById('invPhone').textContent = settings.phone || '8709946177 / 9931002450';
-        document.getElementById('invGST').textContent = 'GST: ' + (settings.gst || 'NA');
-        document.getElementById('invoicePrintArea').style.display = 'block';
-        document.getElementById('invoicePrintArea').style.position = 'fixed';
-        document.getElementById('invoicePrintArea').style.top = '50%';
-        document.getElementById('invoicePrintArea').style.left = '50%';
-        document.getElementById('invoicePrintArea').style.transform = 'translate(-50%, -50%)';
-        document.getElementById('invoicePrintArea').style.zIndex = '99999';
-        document.getElementById('invoicePrintArea').style.boxShadow = '0 30px 60px rgba(0,0,0,0.4)';
-        document.getElementById('invoicePrintArea').style.borderRadius = '12px';
-        document.getElementById('invoicePrintArea').style.maxHeight = '90vh';
-        document.getElementById('invoicePrintArea').style.overflow = 'auto';
-      }
-    });
-    document.getElementById('closeInvoiceBtn').addEventListener('click', () => {
-      document.getElementById('invoicePrintArea').style.display = 'none';
-      document.getElementById('invoicePrintArea').style.position = 'static';
-    });
-    document.getElementById('printInvoiceBtn').addEventListener('click', () => window.print());
+            function openPayConfirm(patientId) {
+                const patient = patients.find(p => p.patient_id === patientId);
+                if (!patient) { alert('Patient not found'); return; }
+                if (patient.due_amount <= 0) { alert('No due amount for this patient.'); return; }
+                pendingPayPatientId = patientId;
+                pendingPayAmount = patient.due_amount;
+                $('payConfirmPatient').textContent = patient.name;
+                $('payConfirmId').textContent = patient.patient_id;
+                $('payConfirmTest').textContent = patient.test || 'Not Specified';
+                $('payConfirmAmount').textContent = '₹' + patient.due_amount;
+                $('payConfirmAmountDisplay').textContent = '₹' + patient.due_amount;
+                document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove('selected'));
+                document.querySelector('#payMethodGroup input[value="Cash"]').checked = true;
+                document.querySelector('#payMethodGroup label:has(input[value="Cash"])')?.classList.add('selected');
+                $('payConfirmStatus').textContent = '';
+                payConfirmModal.classList.add('show');
+            }
 
-    // ─── SETTINGS SAVE ───
-    document.getElementById('saveSettingsBtn').addEventListener('click', async function() {
-      setLoading(this, true);
-      try {
-        settings.lab_name = document.getElementById('setLabName').value.trim();
-        settings.address = document.getElementById('setAddress').value.trim();
-        settings.phone = document.getElementById('setPhone').value.trim();
-        settings.gst = document.getElementById('setGST').value.trim();
-        settings.default_price = parseFloat(document.getElementById('setDefaultPrice').value) || 450;
-        await saveSettings(settings);
-        showToast('Settings saved', 'success');
-      } catch (e) { showToast('Error: ' + e.message, 'error'); }
-      setLoading(this, false);
-    });
+            function closePayConfirm() {
+                payConfirmModal.classList.remove('show');
+                pendingPayPatientId = null;
+                pendingPayAmount = 0;
+            }
 
-    // ─── LOGOUT ───
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      document.querySelector('.admin-layout').style.opacity = '0.3';
-      showToast('Logged out', 'warning');
-      setTimeout(() => location.reload(), 800);
-    });
+            $('payConfirmCancel').addEventListener('click', closePayConfirm);
+            payConfirmModal.addEventListener('click', function(e) {
+                if (e.target === payConfirmModal) closePayConfirm();
+            });
 
-    // ─── DARK TOGGLE ───
-    let dark = false;
-    document.getElementById('darkToggleBtn').addEventListener('click', function() {
-      dark = !dark;
-      document.body.style.background = dark ? '#0f172a' : '#f4f7f9';
-      document.querySelector('.admin-layout').style.background = dark ? '#1e293b' : 'white';
-      document.querySelector('.main-content').style.background = dark ? '#0f172a' : '#f8fafc';
-      document.querySelectorAll('.stat-card, .table-wrap, .form-grid, [style*="background:white"]').forEach(el => {
-        if (el.style) { el.style.background = dark ? '#1e293b' : 'white'; el.style.borderColor = dark ? '#334155' : '#e2e8f0'; el.style.color = dark ? '#f1f5f9' : ''; }
-      });
-      this.innerHTML = dark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    });
+            document.querySelectorAll('#payMethodGroup input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove(
+                        'selected'));
+                    this.closest('label').classList.add('selected');
+                });
+            });
 
-    // ─── INIT ───
-    (async function init() {
-      await refreshAll();
-      refreshAllSections();
-      document.getElementById('adminUserDisplay').textContent = 'Admin';
-      showToast('Welcome, Admin', 'success');
-    })();
+            $('payConfirmConfirm').addEventListener('click', async function() {
+                const patientId = pendingPayPatientId;
+                if (!patientId) { alert('No patient selected'); return; }
+                const patient = patients.find(p => p.patient_id === patientId);
+                if (!patient) { alert('Patient not found'); return; }
+                const amount = patient.due_amount;
+                if (amount <= 0) { alert('No due amount.'); return; }
+                const method = document.querySelector('#payMethodGroup input[type="radio"]:checked')?.value || 'Cash';
+                const adminUser = $('adminUsername').textContent || 'Admin';
 
-  })();
-</script>
+                patient.due_amount = 0;
+                await savePatients(patients);
+                await addPaymentHistory(patient.patient_id, patient.name, amount, method, adminUser);
 
+                const duePatients = patients.filter(p => p.due_amount > 0);
+                payments.unpaid_count = duePatients.length;
+                payments.total_due = duePatients.reduce((s, p) => s + p.due_amount, 0);
+                await savePayments(payments);
+
+                const log = {
+                    created_at: new Date().toLocaleString(),
+                    admin_user: adminUser,
+                    action: `Payment confirmed for ${patient.name} (${patient.patient_id}) ₹${amount} via ${method}`,
+                    ip: 'local'
+                };
+                activityLogs.unshift(log);
+                if (activityLogs.length > 100) activityLogs = activityLogs.slice(0, 100);
+                await saveLogs(activityLogs);
+
+                await refreshAllData();
+                refreshAllSections();
+
+                $('payConfirmStatus').style.color = 'green';
+                $('payConfirmStatus').textContent = '✅ Payment confirmed! Report unlocked.';
+                setTimeout(() => { closePayConfirm(); }, 1200);
+
+                if (patient.phone) {
+                    const msg =
+                        `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you for choosing Rajan Path Lab.`;
+                    sendWhatsApp(patient.phone, msg);
+                }
+            });
+
+            function sendWhatsApp(phone, message) {
+                if (!phone) { alert('No phone number available for WhatsApp.'); return; }
+                let clean = phone.replace(/\s/g, '').replace(/-/g, '');
+                if (clean.startsWith('0')) clean = clean.substring(1);
+                if (/^\d{10}$/.test(clean)) clean = '+91' + clean;
+                if (!clean.startsWith('+')) clean = '+' + clean;
+                window.open('https://wa.me/' + clean + '?text=' + encodeURIComponent(message), '_blank');
+            }
+
+            function openPortal() {
+                portalModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                refreshAllData().then(() => {
+                    $('portalStatus').className = 'portal-status';
+                    $('portalStatus').textContent =
+                        '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                    $('portalReportList').style.display = 'none';
+                    $('portalPatientId').value = '';
+                });
+            }
+
+            function closePortal() {
+                portalModal.classList.remove('active');
+                document.body.style.overflow = '';
+                $('portalStatus').className = 'portal-status';
+                $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                $('portalReportList').style.display = 'none';
+                $('portalPatientId').value = '';
+            }
+            $('openPatientPortalBtn').addEventListener('click', e => { e.preventDefault();
+                openPortal(); });
+            $('openPatientPortalBtn2').addEventListener('click', e => { e.preventDefault();
+                openPortal(); });
+            $('closePortalBtn').addEventListener('click', closePortal);
+            portalModal.addEventListener('click', e => { if (e.target === portalModal) closePortal(); });
+
+            $('portalFetchBtn').addEventListener('click', async function() {
+                const searchValue = $('portalPatientId').value.trim();
+                const statusDiv = $('portalStatus');
+                const listDiv = $('portalReportList');
+                if (!searchValue) {
+                    statusDiv.className = 'portal-status error';
+                    statusDiv.innerHTML = '⚠️ Please enter your Patient ID or Mobile Number.';
+                    listDiv.style.display = 'none';
+                    return;
+                }
+                await refreshAllData();
+                const normalizedSearch = normalizePhone(searchValue);
+                let patient = patients.find(p => p.patient_id === searchValue);
+                if (!patient) patient = patients.find(p => normalizePhone(p.phone || '') === normalizedSearch || p
+                    .phone === searchValue);
+                if (!patient && normalizedSearch.length >= 4) patient = patients.find(p => normalizePhone(p.phone || '')
+                    .includes(normalizedSearch) || (p.phone || '').includes(searchValue));
+                if (!patient) {
+                    statusDiv.className = 'portal-status error';
+                    statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;
+                    listDiv.style.display = 'none';
+                    return;
+                }
+                const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
+                if (patientReports.length === 0) {
+                    statusDiv.className = 'portal-status';
+                    statusDiv.innerHTML = 'ℹ️ No reports found for patient: ' + patient.name + ' (ID: ' + patient
+                        .patient_id + ')';
+                    listDiv.style.display = 'none';
+                    return;
+                }
+                const dueAmount = Number(patient.due_amount);
+                const isPaid = dueAmount === 0;
+                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
+                const dueText = isPaid ? '✅ Paid' : '⚠️ ₹' + dueAmount + ' Due';
+                statusDiv.className = 'portal-status ' + (isPaid ? 'success' : 'error');
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
+                    ' (via ' + foundBy + '). Status: ' + dueText +
+                    (isPaid ? ' — Reports are <b>unlocked</b> for download.' :
+                        ' — <b>LOCKED</b> until payment is confirmed.');
+
+                let html = '<h3 style="margin-bottom:1rem;">📋 Your Reports</h3>';
+                for (const report of patientReports) {
+                    const canDownload = isPaid;
+                    const dueBadge = !isPaid ? '<span class="portal-due-badge">₹' + dueAmount +
+                        ' DUE — LOCKED</span>' : '';
+                    html += `
+                            <div class="portal-report-item">
+                                <div class="portal-report-info">
+                                    <span class="test-name">${report.test_name}</span>
+                                    <span class="upload-date">📅 ${report.uploaded_at}</span>
+                                </div>
+                                <div class="portal-report-actions">
+                                    ${dueBadge}
+                                    <button class="portal-download-btn" data-report-id="${report.id}" data-file-name="${report.file_name}" ${canDownload ? '' : 'disabled'}>
+                                        ${canDownload ? '⬇️ Download' : '🔒 Locked'}
+                                    </button>
+                                </div>
+                            </div>`;
+                }
+                listDiv.innerHTML = html;
+                listDiv.style.display = 'block';
+
+                listDiv.querySelectorAll('.portal-download-btn').forEach(btn => {
+                    btn.addEventListener('click', async function() {
+                        const patId = patient.patient_id;
+                        const freshPatient = patients.find(p => p.patient_id === patId);
+                        const freshDue = freshPatient ? Number(freshPatient.due_amount) : dueAmount;
+                        if (freshDue !== 0) {
+                            statusDiv.className = 'portal-status error';
+                            statusDiv.innerHTML = '❌ Payment pending (₹' + freshDue +
+                                '). Please clear dues to download reports.';
+                            return;
+                        }
+                        const reportId = parseInt(this.dataset.reportId);
+                        const fileName = this.dataset.fileName;
+                        try {
+                            await downloadPDF(reportId, fileName);
+                        } catch (e) {
+                            statusDiv.className = 'portal-status error';
+                            statusDiv.innerHTML = '❌ Error: ' + e.message;
+                        }
+                    });
+                });
+            });
+            $('portalPatientId').addEventListener('keypress', e => { if (e.key === 'Enter') $('portalFetchBtn')
+                .click(); });
+
+            $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
+            $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));
+            window.addEventListener('click', e => {
+                if (e.target === loginModal) loginModal.classList.remove('show');
+                if (e.target === upiModal) upiModal.classList.remove('show');
+                if (e.target === payConfirmModal) closePayConfirm();
+            });
+            $('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = $('loginUsername').value.trim();
+                const password = $('loginPassword').value.trim();
+                const result = $('loginResult');
+                if (!username || !password) { result.style.color = 'red';
+                    result.textContent = 'Please enter username and password'; return; }
+                if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
+                    result.style.color = 'green';
+                    result.textContent = '✅ Login successful!';
+                    loginModal.classList.remove('show');
+                    showAdmin();
+                } else {
+                    result.style.color = 'red';
+                    result.textContent = '❌ Invalid username or password';
+                }
+            });
+
+            async function showAdmin() {
+                adminWrapper.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                $('adminUsername').textContent = 'Rajan5530';
+                await refreshAllData();
+                refreshAllSections();
+                showAdminSection('dashboard');
+                setTimeout(() => generateAllQRCodes(), 300);
+            }
+
+            function hideAdmin() {
+                adminWrapper.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function logout() { hideAdmin(); }
+            $('logoutBtn').addEventListener('click', logout);
+            $('logoutBtn2')?.addEventListener('click', logout);
+
+            let adminDark = false;
+            $('adminDarkToggle').addEventListener('click', function() {
+                adminDark = !adminDark;
+                document.body.classList.toggle('admin-dark', adminDark);
+                this.innerHTML = adminDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            });
+
+            const adminSections = {
+                dashboard: $('sec-dashboard'),
+                patients: $('sec-patients'),
+                reports: $('sec-reports'),
+                whatsapp: $('sec-whatsapp'),
+                payments: $('sec-payments'),
+                analytics: $('sec-analytics'),
+                backup: $('sec-backup'),
+                security: $('sec-security')
+            };
+            const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');
+
+            function showAdminSection(id) {
+                Object.keys(adminSections).forEach(k => adminSections[k].classList.toggle('active', k === id));
+                sidebarLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));
+                if (id === 'dashboard') refreshDashboard();
+                if (id === 'patients') refreshPatients();
+                if (id === 'reports') refreshReports();
+                if (id === 'whatsapp') refreshWhatsAppPatients();
+                if (id === 'payments') refreshPayments();
+                if (id === 'analytics') refreshAnalytics();
+                if (id === 'backup') refreshBackup();
+                if (id === 'security') refreshSecurity();
+                if (id === 'patients') setTimeout(() => generateAllQRCodes(), 200);
+            }
+            sidebarLinks.forEach(a => a.addEventListener('click', function(e) {
+                e.preventDefault();
+                showAdminSection(this.dataset.section);
+            }));
+
+            function generateAllQRCodes() {
+                document.querySelectorAll('[id^="qr-"]').forEach(el => {
+                    const id = el.id.replace('qr-', '');
+                    if (el && typeof QRCode !== 'undefined') {
+                        el.innerHTML = '';
+                        new QRCode(el, {
+                            text: 'Patient:' + id,
+                            width: 50,
+                            height: 50,
+                            colorDark: '#000',
+                            colorLight: '#fff',
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+                    }
+                });
+            }
+
+            function refreshAllSections() {
+                refreshDashboard();
+                refreshPatients();
+                refreshReports();
+                refreshWhatsAppPatients();
+                refreshPayments();
+                refreshAnalytics();
+                refreshBackup();
+                refreshSecurity();
+            }
+
+            function refreshDashboard() {
+                const total = patients.length;
+                const totalRep = reports.length;
+                const pending = patients.filter(p => p.status === 'pending').length;
+                const culture = patients.filter(p => p.test && p.test.includes('Urine')).length;
+                const due = patients.filter(p => p.due_amount > 0).length;
+                const revenue = patients.reduce((s, p) => s + p.due_amount, 0);
+                $('dToday').textContent = total;
+                $('dTotalReports').textContent = totalRep;
+                $('dPending').textContent = pending;
+                $('dCulture').textContent = culture;
+                $('dDue').textContent = due;
+                $('dRevenue').textContent = '₹' + revenue;
+                const tbody = $('dRecentPatients');
+                if (patients.length) {
+                    tbody.innerHTML = patients.slice(0, 5).map(p =>
+                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
+                        ).join('');
+                } else tbody.innerHTML = '<tr><td colspan="4">No patients yet</td></tr>';
+                updateCharts();
+            }
+
+            let chartWeeklyInstance = null,
+                chartPieInstance = null;
+
+            function updateCharts() {
+                const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                const weeklyData = days.map(() => 0);
+                patients.forEach(p => {
+                    if (p.created_at) {
+                        const d = new Date(p.created_at);
+                        const idx = d.getDay() === 0 ? 6 : d.getDay() - 1;
+                        if (idx >= 0 && idx < 7) weeklyData[idx]++;
+                    }
+                });
+                const testMap = {};
+                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
+                const labels = Object.keys(testMap),
+                    data = Object.values(testMap);
+
+                const ctx1 = $('chartWeekly')?.getContext('2d');
+                if (ctx1) {
+                    if (chartWeeklyInstance) chartWeeklyInstance.destroy();
+                    chartWeeklyInstance = new Chart(ctx1, {
+                        type: 'bar',
+                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData,
+                                backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
+                                borderWidth: 2 }] },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
+                }
+                const ctx2 = $('chartPie')?.getContext('2d');
+                if (ctx2) {
+                    if (chartPieInstance) chartPieInstance.destroy();
+                    const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a',
+                        '#ff6600'
+                    ];
+                    chartPieInstance = new Chart(ctx2, {
+                        type: 'doughnut',
+                        data: { labels: labels.length ? labels : ['No Data'],
+                            datasets: [{ data: labels.length ? data : [1],
+                                backgroundColor: labels.length ? colors.slice(0, labels.length) : [
+                                    '#ccc'
+                                ],
+                                borderWidth: 2, borderColor: '#fff' }] },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,
+                                        font: { size: 11 } } } } }
+                    });
+                }
+            }
+
+            function refreshPatients() {
+                const tbody = $('patientTableBody');
+                if (patients.length) {
+                    tbody.innerHTML = patients.map(p => `
+                            <tr>
+                                <td><b>${p.patient_id}</b></td><td>${p.name}</td>
+                                <td>${p.phone || '—'}</td>
+                                <td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td>
+                                <td>₹${p.due_amount}</td>
+                                <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
+                                <td>
+                                    ${p.due_amount > 0 ? `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Confirm Pay</button>` : `<span class="badge-status paid">Paid</span>`}
+                                    <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>`).join('');
+                    setTimeout(() => generateAllQRCodes(), 100);
+                } else tbody.innerHTML = '<tr><td colspan="8">No patients</td></tr>';
+            }
+
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-pay-confirm')) {
+                    const id = e.target.closest('.btn-pay-confirm').dataset.id;
+                    openPayConfirm(id);
+                }
+            });
+
+            $('addPatientBtn').addEventListener('click', async function() {
+                const patientId = $('patId').value.trim();
+                const name = $('patName').value.trim();
+                const phone = $('patPhone').value.trim();
+                const test = $('patTest').value.trim();
+                const status = $('patStatus').value;
+                const due = parseFloat($('patDue').value) || 0;
+
+                if (!name) { alert('❌ Name is required. Phone is optional.'); return; }
+
+                let id = patientId;
+                if (!id) {
+                    const nextId = patients.length + 1;
+                    const today = new Date();
+                    const ds = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today
+                    .getDate()).padStart(2, '0');
+                    id = 'RPL-' + ds + '-' + String(nextId).padStart(4, '0');
+                }
+
+                const normPhone = normalizePhone(phone);
+                const duplicate = patients.find(p => p.patient_id === id);
+                if (duplicate) { alert('❌ Patient ID already exists!'); return; }
+                if (normPhone) {
+                    const phoneDup = patients.find(p => normalizePhone(p.phone) === normPhone);
+                    if (phoneDup) { alert('❌ Phone number already registered to ' + phoneDup.name); return; }
+                }
+
+                patients.push({
+                    patient_id: id,
+                    name,
+                    phone: phone || '',
+                    test: test || 'Not Specified',
+                    status,
+                    due_amount: due,
+                    created_at: new Date().toISOString()
+                });
+                await savePatients(patients);
+                await refreshAllData();
+                refreshAllSections();
+                alert('✅ Patient ' + id + ' added successfully!');
+                $('patId').value = '';
+                $('patName').value = '';
+                $('patPhone').value = '';
+                $('patTest').value = '';
+                $('patDue').value = '';
+            });
+
+            $('clearPatientBtn').addEventListener('click', () => {
+                $('patId').value = '';
+                $('patName').value = '';
+                $('patPhone').value = '';
+                $('patTest').value = '';
+                $('patDue').value = '';
+            });
+            $('refreshPatients').addEventListener('click', refreshPatients);
+
+            document.addEventListener('click', async function(e) {
+                if (e.target.closest('.btn-del-patient')) {
+                    const id = e.target.closest('.btn-del-patient').dataset.id;
+                    if (confirm('Delete patient #' + id + '?')) {
+                        const toDel = reports.filter(r => r.patient_id === id);
+                        for (let r of toDel) await deletePDF(r.id, r.file_name);
+                        reports = reports.filter(r => r.patient_id !== id);
+                        patients = patients.filter(p => p.patient_id !== id);
+                        await saveReports(reports);
+                        await savePatients(patients);
+                        await refreshAllData();
+                        refreshAllSections();
+                        alert('Deleted!');
+                    }
+                }
+            });
+            $('patientSearch').addEventListener('input', function() {
+                const q = this.value.toLowerCase();
+                document.querySelectorAll('#patientTableBody tr').forEach(row => {
+                    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+                });
+            });
+
+            function refreshReports() {
+                const tbody = $('reportsTableBody');
+                if (reports.length) {
+                    tbody.innerHTML = reports.map(r => `
+                            <tr>
+                                <td>${r.name} (${r.patient_id})</td><td>${r.test_name}</td><td>${r.uploaded_at}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-download"></i></button>
+                                    <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>`).join('');
+                } else tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
+            }
+
+            document.addEventListener('click', async function(e) {
+                if (e.target.closest('.btn-download-report')) {
+                    const btn = e.target.closest('.btn-download-report');
+                    const id = parseInt(btn.dataset.id);
+                    const fileName = btn.dataset.fileName;
+                    try {
+                        await downloadPDF(id, fileName);
+                    } catch (err) {
+                        alert('Download error: ' + err.message);
+                    }
+                }
+            });
+
+            $('uploadReportBtn').addEventListener('click', async function() {
+                const pid = $('reportPatientId').value.trim();
+                const test = $('reportTestName').value.trim();
+                const file = $('reportFile').files[0];
+                const replace = $('reportReplace').value;
+                const msgDiv = $('uploadMessage');
+                msgDiv.textContent = '';
+                msgDiv.style.color = 'red';
+                if (!pid) { msgDiv.textContent = '❌ Patient ID required.'; return; }
+                if (!test) { msgDiv.textContent = '❌ Test Name required.'; return; }
+                if (!file) { msgDiv.textContent = '❌ Select a PDF.'; return; }
+                const patient = patients.find(p => p.patient_id === pid);
+                if (!patient) { msgDiv.textContent = '❌ Patient not found!'; return; }
+                const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
+                if (existing && replace === 'no') { msgDiv.textContent = '❌ Report exists. Use Replace.'; return; }
+                if (existing && replace === 'yes') {
+                    await deletePDF(existing.id, existing.file_name);
+                    reports = reports.filter(r => !(r.patient_id === pid && r.test_name === test));
+                }
+                const newId = reports.length + 1;
+                let url = '';
+                try { url = await uploadPDF(file, newId); } catch (e) {
+                    msgDiv.textContent = '❌ Upload failed: ' + e.message;
+                    return;
+                }
+                const newReport = {
+                    id: newId,
+                    patient_id: pid,
+                    name: patient.name,
+                    test_name: test || 'Not Specified',
+                    file_name: file.name,
+                    uploaded_at: new Date().toLocaleString(),
+                    url
+                };
+                reports.push(newReport);
+                await saveReports(reports);
+                await refreshAllData();
+                refreshAllSections();
+                msgDiv.style.color = 'green';
+                msgDiv.textContent = '✅ Report uploaded for ' + patient.name;
+                $('reportPatientId').value = '';
+                $('reportTestName').value = '';
+                $('reportFile').value = '';
+                setTimeout(() => { msgDiv.textContent = ''; }, 5000);
+            });
+
+            document.addEventListener('click', async function(e) {
+                if (e.target.closest('.btn-del-report')) {
+                    const btn = e.target.closest('.btn-del-report');
+                    const id = parseInt(btn.dataset.id);
+                    const fileName = btn.dataset.fileName;
+                    if (confirm('Delete report?')) {
+                        await deletePDF(id, fileName);
+                        reports = reports.filter(r => r.id !== id);
+                        await saveReports(reports);
+                        await refreshAllData();
+                        refreshAllSections();
+                        alert('Deleted!');
+                    }
+                }
+            });
+            $('refreshReports').addEventListener('click', refreshReports);
+
+            function refreshWhatsAppPatients() {
+                const tbody = $('whatsappPatientList');
+                if (patients.length) {
+                    tbody.innerHTML = patients.slice(0, 10).map(p => `
+                            <tr>
+                                <td>${p.name}</td><td>${p.phone || '—'}</td><td>${p.test}</td>
+                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                                <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}" ${p.phone ? '' : 'disabled'}><i class="fab fa-whatsapp"></i> Send</button></td>
+                            </tr>`).join('');
+                } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
+            }
+
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.wa-send')) {
+                    const btn = e.target.closest('.wa-send');
+                    if (!btn.dataset.phone) { alert('No phone number for this patient.'); return; }
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g,
+                        btn.dataset.test);
+                    sendWhatsApp(btn.dataset.phone, msg);
+                }
+            });
+            $('sendWAPatient').addEventListener('click', () => {
+                const phone = prompt('Enter patient phone:');
+                if (phone) sendWhatsApp(phone, $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient')
+                    .replace(/{test}/g, 'Report'));
+            });
+            $('sendWADoctor').addEventListener('click', () => {
+                const phone = prompt('Enter doctor phone:');
+                if (phone) sendWhatsApp(phone, 'Doctor: Report ready.');
+            });
+            $('sendUrineUpdate').addEventListener('click', () => {
+                const phone = prompt('Enter patient phone:');
+                if (phone) sendWhatsApp(phone, 'Urine Culture under process. Results in 48 hrs.');
+            });
+            $('dueReminderBtn').addEventListener('click', () => {
+                const phone = prompt('Enter patient phone:');
+                if (phone) sendWhatsApp(phone, 'Reminder: Payment due at Rajan Path Lab.');
+            });
+
+            function refreshPayments() {
+                const due = patients.filter(p => p.due_amount > 0);
+                const paid = patients.filter(p => p.due_amount === 0);
+                const totalDue = due.reduce((s, p) => s + p.due_amount, 0);
+                $('pPaid').textContent = paid.length;
+                $('pUnpaid').textContent = due.length;
+                $('pTotalDue').textContent = '₹' + totalDue;
+                $('pHistoryCount').textContent = (payments.history || []).length;
+
+                const tbody = $('paymentsTableBody');
+                if (patients.length) {
+                    tbody.innerHTML = patients.map(p => `
+                            <tr>
+                                <td>${p.name}</td><td>${p.test}</td><td>₹${p.due_amount}</td>
+                                <td><span class="badge-status ${p.due_amount>0?'unpaid':'paid'}">${p.due_amount>0?'Unpaid':'Paid'}</span></td>
+                                <td>
+                                    ${p.due_amount>0 ? `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Confirm Pay</button>` : `<span class="badge-status paid"><i class="fas fa-check"></i> Cleared</span>`}
+                                </td>
+                            </tr>`).join('');
+                } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
+
+                const historyBody = $('paymentHistoryBody');
+                const history = payments.history || [];
+                if (history.length) {
+                    historyBody.innerHTML = history.slice(0, 50).map((h, idx) => `
+                            <tr>
+                                <td>${idx+1}</td>
+                                <td>${h.patient_name || '—'}</td>
+                                <td>${h.patient_id || '—'}</td>
+                                <td><strong>₹${h.amount}</strong></td>
+                                <td><span class="badge-pay-confirmed">${h.method || 'Cash'}</span></td>
+                                <td>${h.confirmed_by || 'Admin'}</td>
+                                <td>${h.confirmed_at || h.timestamp || '—'}</td>
+                            </tr>`).join('');
+                } else {
+                    historyBody.innerHTML =
+                        '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
+                }
+            }
+            $('refreshPayments').addEventListener('click', refreshPayments);
+
+            $('upiPayBtn').addEventListener('click', () => {
+                upiModal.classList.add('show');
+                const container = $('upiQR');
+                container.innerHTML = '';
+                if (typeof QRCode !== 'undefined') {
+                    new QRCode(container, {
+                        text: 'upi://pay?pa=rajanpathlab@upi&pn=Rajan%20Path%20Lab&am=1.00&cu=INR',
+                        width: 160,
+                        height: 160,
+                        colorDark: '#000',
+                        colorLight: '#fff',
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                } else container.innerHTML = '<p>QR library not loaded</p>';
+            });
+            $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));
+
+            function refreshAnalytics() {
+                const today = new Date().toDateString();
+                let todayCount = 0;
+                patients.forEach(p => { if (p.created_at && new Date(p.created_at).toDateString() === today)
+                    todayCount++; });
+                const revenue = patients.reduce((s, p) => s + p.due_amount, 0);
+                const testMap = {};
+                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
+                let topTest = '-',
+                    topCount = 0;
+                Object.keys(testMap).forEach(k => { if (testMap[k] > topCount) { topCount = testMap[k];
+                        topTest = k; } });
+                $('aToday').textContent = todayCount;
+                $('aMonth').textContent = patients.length;
+                $('aTopTest').textContent = topTest;
+                $('aRevenue').textContent = '₹' + revenue;
+                const tbody = $('analyticsTable');
+                const arr = Object.keys(testMap).map(k => ({ test: k, count: testMap[k] }));
+                if (arr.length) tbody.innerHTML = arr.map(t =>
+                    `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count*450}</td><td>-</td></tr>`).join('');
+                else tbody.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+            }
+
+            function refreshBackup() {
+                $('backupListBody').innerHTML =
+                    '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="alert(\'Already in cloud\')"><i class="fas fa-check"></i></button></td></tr>';
+            }
+            $('backupDBBtn').addEventListener('click', () => alert('Data already in Firebase cloud.'));
+            $('backupPDFBtn').addEventListener('click', () => alert('PDFs are in Supabase Storage.'));
+            $('restoreBtn').addEventListener('click', () => alert('Restore not needed.'));
+
+            function refreshSecurity() {
+                const tbody = $('activityLogBody');
+                if (activityLogs.length) {
+                    tbody.innerHTML = activityLogs.map(l =>
+                        `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
+                        ).join('');
+                } else tbody.innerHTML = '<tr><td colspan="4">No logs</td></tr>';
+            }
+            $('viewLogBtn').addEventListener('click', refreshSecurity);
+            $('changePwdBtn').addEventListener('click', () => {
+                const old = prompt('Enter old password:');
+                if (!old) return;
+                const newPwd = prompt('Enter new password (min 6 chars):');
+                if (!newPwd || newPwd.length < 6) { alert('Min 6 characters'); return; }
+                alert('✅ Password changed! (dummy)');
+            });
+
+            console.log('✅ Rajan Path Lab · Professional Preloader + Force-download PDF');
+            console.log('🔑 Login: Rajan5530 / Rkchandra5530');
+            console.log('🌀 DNA helix loading animation for premium diagnostic feel');
+
+        })();
+    </script>
 </body>
 </html>
