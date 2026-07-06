@@ -299,9 +299,9 @@
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
-            --bg-light: #f4f7f9;
+            --bg-light: #f0f6f9;
             --urgent-red: #d9383a;
-            --text-dark: #2d3748;
+            --text-dark: #0a2540;
             --sidebar-width: 240px;
             --header-height: 64px;
         }
@@ -313,6 +313,11 @@
             margin: 0;
             padding: 0;
             background: var(--bg-light);
+            /* Subtle lab plate dots & gradients */
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 128, 128, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(10, 37, 64, 0.03) 0%, transparent 50%),
+                radial-gradient(circle, #008080 1.2px, transparent 1.2px);
+            background-size: 100% 100%, 100% 100%, 28px 28px;
             color: var(--text-dark);
             line-height: 1.5;
         }
@@ -332,7 +337,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
             flex-wrap: wrap;
             gap: 10px 20px;
         }
@@ -428,19 +433,70 @@
             background: #1a8d4a;
         }
 
+        /* ─── HERO - LAB THEME ─── */
         .hero {
-            background: #0d3359;
-            color: white;
+            background: linear-gradient(135deg, #f2fbf9 0%, #cde8e3 50%, #b0ddd6 100%);
+            /* Lab grid + DNA-like radial glow */
+            background-image: radial-gradient(circle at 20% 30%, rgba(0, 128, 128, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(10, 37, 64, 0.06) 0%, transparent 40%),
+                radial-gradient(circle, #008080 1.2px, transparent 1.2px);
+            background-size: 100% 100%, 100% 100%, 26px 26px;
+            padding: 70px 20px 80px;
             text-align: center;
-            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(0, 128, 128, 0.15);
+        }
+        .hero::after {
+            content: "\f0a6";
+            /* Microscope icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 2%;
+            bottom: 0;
+            font-size: 18rem;
+            color: rgba(10, 37, 64, 0.04);
+            pointer-events: none;
+            transform: translateY(20%);
+        }
+        .hero::before {
+            content: "\f0c3";
+            /* Flask icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 2%;
+            top: 10%;
+            font-size: 12rem;
+            color: rgba(0, 128, 128, 0.04);
+            pointer-events: none;
+            transform: rotate(-15deg);
         }
         .hero h2 {
-            color: white;
-            font-size: 2.5rem;
+            color: #0a2540;
+            font-size: 2.8rem;
             font-weight: 700;
             max-width: 800px;
+            margin: 0 auto 15px;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+        .hero .hero-sub {
+            color: #1e3a5f;
+            font-size: 1.1rem;
+            font-weight: 400;
+            max-width: 550px;
             margin: 0 auto 25px;
-            line-height: 1.3;
+            opacity: 0.85;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero .hero-sub i {
+            color: #d4af37;
+            margin-right: 6px;
         }
         .btn-container {
             display: flex;
@@ -448,39 +504,50 @@
             gap: 15px;
             flex-wrap: wrap;
             margin-top: 20px;
+            position: relative;
+            z-index: 1;
         }
         .btn-book {
             background: var(--urgent-red);
-            padding: 12px 28px;
+            padding: 12px 32px;
             color: white;
-            border-radius: 4px;
-            font-weight: bold;
+            border-radius: 50px;
+            font-weight: 700;
             text-decoration: none;
             display: inline-block;
             transition: 0.2s;
+            box-shadow: 0 6px 18px rgba(217, 56, 58, 0.3);
         }
         .btn-book:hover {
             background: #b82d2f;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(217, 56, 58, 0.4);
         }
         .btn-portal {
             background: #25D366;
-            padding: 12px 28px;
+            padding: 12px 32px;
             color: white;
             border: none;
-            border-radius: 4px;
-            font-weight: bold;
+            border-radius: 50px;
+            font-weight: 700;
             cursor: pointer;
             transition: 0.2s;
+            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
         }
         .btn-portal:hover {
             background: #1a8d4a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(37, 211, 102, 0.4);
         }
 
+        /* ─── STRIP ─── */
         .strip {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
             border-bottom: 1px solid #e2e8f0;
             padding: 15px 20px;
             text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
         .strip-content {
             display: flex;
@@ -499,6 +566,7 @@
             margin-right: 10px;
         }
 
+        /* ─── SECTIONS ─── */
         section {
             padding: 45px 20px;
             max-width: 1100px;
@@ -506,13 +574,29 @@
             text-align: center;
         }
         .section-wrapper-alt {
-            background: var(--bg-light);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            border-top: 1px solid rgba(0, 128, 128, 0.08);
+            border-bottom: 1px solid rgba(0, 128, 128, 0.08);
         }
         h2 {
             color: var(--primary-blue);
             margin-bottom: 25px;
             font-size: 26px;
             font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent-teal);
+            border-radius: 4px;
         }
         .about-container {
             display: flex;
@@ -548,9 +632,16 @@
         .card {
             background: white;
             padding: 20px 15px;
-            border-radius: 6px;
-            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 128, 128, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+            transition: 0.25s;
             text-align: center;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 128, 128, 0.08);
+            border-color: rgba(0, 128, 128, 0.2);
         }
         .card i {
             font-size: 30px;
@@ -570,10 +661,15 @@
         .partner-item {
             background: white;
             padding: 15px;
-            border-radius: 6px;
+            border-radius: 12px;
             width: 150px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid rgba(0, 128, 128, 0.1);
             text-align: center;
+            transition: 0.2s;
+        }
+        .partner-item:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-teal);
         }
         .partner-item i {
             font-size: 32px;
@@ -587,18 +683,20 @@
         }
         .map-container {
             margin-top: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            border: 1px solid #cbd5e1;
+            border: 1px solid rgba(0, 128, 128, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
         }
         footer {
             background: var(--primary-blue);
             color: #e2e8f0;
             padding: 40px 20px;
             text-align: center;
+            margin-top: 20px;
         }
         .footer-links {
             margin: 20px 0;
@@ -620,14 +718,19 @@
             background: #25D366;
             color: white;
             padding: 12px 20px;
-            border-radius: 4px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+            transition: 0.2s;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5);
         }
 
-        /* ─── ADMIN PANEL ─── */
+        /* ─── ADMIN PANEL ─── (unchanged logic, only light styling tweaks) ─── */
         #adminPanelWrapper {
             display: none;
             position: fixed;
@@ -665,6 +768,9 @@
             color: white;
             margin: 0;
             font-size: 20px;
+        }
+        .admin-header h2::after {
+            display: none;
         }
         .admin-user {
             display: flex;
@@ -1663,6 +1769,13 @@
                 padding: 4px 12px;
                 margin: 2px 0;
             }
+            .hero h2 {
+                font-size: 2rem;
+            }
+            .hero::after,
+            .hero::before {
+                display: none;
+            }
             .admin-body {
                 flex-direction: column;
             }
@@ -1685,9 +1798,6 @@
             }
             .admin-sidebar .nav-label {
                 display: none;
-            }
-            .hero h2 {
-                font-size: 1.8rem;
             }
             .about-features {
                 grid-template-columns: 1fr;
@@ -1715,11 +1825,11 @@
                 letter-spacing: 0.8px;
             }
             .hero h2 {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
             }
             .btn-book,
             .btn-portal {
-                padding: 10px 18px;
+                padding: 10px 20px;
                 font-size: 14px;
             }
         }
@@ -1756,7 +1866,6 @@
 
     <!-- ═══════════ MAIN PAGE ═══════════ -->
     <header>
-        <!-- ─── LARGE LOGO ─── -->
         <a href="#" class="header-logo">
             <div class="logo-icon">R</div>
             <div class="logo-text-group">
@@ -1775,8 +1884,10 @@
         </nav>
     </header>
 
+    <!-- ─── HERO with Lab Theme ─── -->
     <div class="hero">
         <h2>Reliable Diagnostics with Advanced Technology</h2>
+        <div class="hero-sub"><i class="fas fa-microscope"></i> Precision. Accuracy. Trust. — Since 2016</div>
         <div class="btn-container">
             <a class="btn-book" href="book.html">Book Test</a>
             <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>
