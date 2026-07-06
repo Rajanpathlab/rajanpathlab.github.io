@@ -5,22 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Rajan Path Lab | Premium Diagnostics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer>
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer>
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        /* ─── ROOT VARIABLES ─── */
+        :root {
+            --primary-blue: #0a2540;
+            --accent-teal: #008080;
+            --urgent-red: #d9383a;
+            --bg-light: #f4f7f9;
+            --text-dark: #2d3748;
+            --sidebar-width: 240px;
+            --header-height: 64px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            color: var(--text-dark);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        b, strong { font-weight: 700; }
+
         /* ─── PRELOADER ─── */
         #preloader {
             position: fixed;
             inset: 0;
-            background: #0a2540;
+            background: var(--primary-blue);
             z-index: 99999;
             display: flex;
             flex-direction: column;
@@ -42,9 +62,7 @@
             color: #fff;
             text-align: center;
         }
-        .preloader-logo span {
-            color: #008080;
-        }
+        .preloader-logo span { color: #008080; }
         .preloader-tagline {
             color: #94a3b8;
             font-size: 0.85rem;
@@ -52,1676 +70,591 @@
             text-transform: uppercase;
             margin-bottom: 2rem;
         }
-        .preloader-dna-container {
-            position: relative;
-            width: 90px;
-            height: 130px;
-            margin-bottom: 1.5rem;
-        }
+        .preloader-dna-container { position: relative; width: 90px; height: 130px; margin-bottom: 1.5rem; }
         .dna-strand {
-            position: absolute;
-            width: 4px;
-            height: 100%;
-            border-radius: 2px;
+            position: absolute; width: 4px; height: 100%; border-radius: 2px;
             background: linear-gradient(180deg, #008080, #20b2aa, #008080);
-            left: 50%;
-            transform-origin: center;
-            animation: dnaRotate1 2.2s ease-in-out infinite;
+            left: 50%; transform-origin: center; animation: dnaRotate1 2.2s ease-in-out infinite;
         }
-        .dna-strand:nth-child(2) {
-            animation-name: dnaRotate2;
-            background: linear-gradient(180deg, #d4af37, #f0d060, #d4af37);
-        }
+        .dna-strand:nth-child(2) { animation-name: dnaRotate2; background: linear-gradient(180deg, #d4af37, #f0d060, #d4af37); }
         .dna-rung {
-            position: absolute;
-            width: 36px;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.55);
-            border-radius: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: rungPulse 1.6s ease-in-out infinite;
+            position: absolute; width: 36px; height: 3px; background: rgba(255, 255, 255, 0.55);
+            border-radius: 2px; left: 50%; transform: translateX(-50%); animation: rungPulse 1.6s ease-in-out infinite;
         }
-        .dna-rung:nth-child(3) {
-            top: 18%;
-            animation-delay: 0.15s;
-        }
-        .dna-rung:nth-child(4) {
-            top: 36%;
-            animation-delay: 0.3s;
-        }
-        .dna-rung:nth-child(5) {
-            top: 54%;
-            animation-delay: 0.45s;
-        }
-        .dna-rung:nth-child(6) {
-            top: 72%;
-            animation-delay: 0.6s;
-        }
-        .dna-rung:nth-child(7) {
-            top: 88%;
-            animation-delay: 0.75s;
-        }
-        @keyframes dnaRotate1 {
-            0%,
-            100% {
-                transform: translateX(-50%) rotate(0deg) scaleY(1);
-            }
-            25% {
-                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
-            }
-            50% {
-                transform: translateX(-50%) rotate(0deg) scaleY(1);
-            }
-            75% {
-                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
-            }
-        }
-        @keyframes dnaRotate2 {
-            0%,
-            100% {
-                transform: translateX(-50%) rotate(0deg) scaleY(1);
-            }
-            25% {
-                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
-            }
-            50% {
-                transform: translateX(-50%) rotate(0deg) scaleY(1);
-            }
-            75% {
-                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
-            }
-        }
-        @keyframes rungPulse {
-            0%,
-            100% {
-                opacity: 0.45;
-                width: 36px;
-            }
-            50% {
-                opacity: 1;
-                width: 48px;
-            }
-        }
-        .preloader-dot-container {
-            display: flex;
-            gap: 8px;
-            margin-top: 0.5rem;
-        }
-        .preloader-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #008080;
-            animation: dotBounce 1.5s ease-in-out infinite;
-        }
-        .preloader-dot:nth-child(2) {
-            animation-delay: 0.2s;
-            background: #20b2aa;
-        }
-        .preloader-dot:nth-child(3) {
-            animation-delay: 0.4s;
-            background: #d4af37;
-        }
-        .preloader-dot:nth-child(4) {
-            animation-delay: 0.6s;
-            background: #f0d060;
-        }
-        @keyframes dotBounce {
-            0%,
-            100% {
-                transform: translateY(0);
-                opacity: 0.5;
-            }
-            50% {
-                transform: translateY(-16px);
-                opacity: 1;
-            }
-        }
-        .preloader-pulse-ring {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 2px solid rgba(0, 128, 128, 0.5);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulseRing 2s ease-out infinite;
-        }
-        .preloader-pulse-ring:nth-child(2) {
-            animation-delay: 0.7s;
-            border-color: rgba(212, 175, 55, 0.4);
-        }
-        @keyframes pulseRing {
-            0% {
-                width: 30px;
-                height: 30px;
-                opacity: 0.9;
-            }
-            100% {
-                width: 120px;
-                height: 120px;
-                opacity: 0;
-            }
-        }
+        .dna-rung:nth-child(3) { top: 18%; animation-delay: 0.15s; }
+        .dna-rung:nth-child(4) { top: 36%; animation-delay: 0.3s; }
+        .dna-rung:nth-child(5) { top: 54%; animation-delay: 0.45s; }
+        .dna-rung:nth-child(6) { top: 72%; animation-delay: 0.6s; }
+        .dna-rung:nth-child(7) { top: 88%; animation-delay: 0.75s; }
+        @keyframes dnaRotate1 { 0%,100% { transform: translateX(-50%) rotate(0deg) scaleY(1); } 25% { transform: translateX(-50%) rotate(8deg) scaleY(1.04); } 50% { transform: translateX(-50%) rotate(0deg) scaleY(1); } 75% { transform: translateX(-50%) rotate(-8deg) scaleY(0.96); } }
+        @keyframes dnaRotate2 { 0%,100% { transform: translateX(-50%) rotate(0deg) scaleY(1); } 25% { transform: translateX(-50%) rotate(-8deg) scaleY(0.96); } 50% { transform: translateX(-50%) rotate(0deg) scaleY(1); } 75% { transform: translateX(-50%) rotate(8deg) scaleY(1.04); } }
+        @keyframes rungPulse { 0%,100% { opacity: 0.45; width: 36px; } 50% { opacity: 1; width: 48px; } }
+        .preloader-dot-container { display: flex; gap: 8px; margin-top: 0.5rem; }
+        .preloader-dot { width: 10px; height: 10px; border-radius: 50%; background: #008080; animation: dotBounce 1.5s ease-in-out infinite; }
+        .preloader-dot:nth-child(2) { animation-delay: 0.2s; background: #20b2aa; }
+        .preloader-dot:nth-child(3) { animation-delay: 0.4s; background: #d4af37; }
+        .preloader-dot:nth-child(4) { animation-delay: 0.6s; background: #f0d060; }
+        @keyframes dotBounce { 0%,100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(-16px); opacity: 1; } }
+        .preloader-pulse-ring { position: absolute; width: 70px; height: 70px; border-radius: 50%; border: 2px solid rgba(0, 128, 128, 0.5); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pulseRing 2s ease-out infinite; }
+        .preloader-pulse-ring:nth-child(2) { animation-delay: 0.7s; border-color: rgba(212, 175, 55, 0.4); }
+        @keyframes pulseRing { 0% { width: 30px; height: 30px; opacity: 0.9; } 100% { width: 120px; height: 120px; opacity: 0; } }
 
         /* ─── TOAST NOTIFICATIONS ─── */
         #toastContainer {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 380px;
-            width: 100%;
-            pointer-events: none;
+            position: fixed; top: 20px; right: 20px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; max-width: 380px; width: 100%; pointer-events: none;
         }
         .toast {
-            background: #1e293b;
-            color: #f1f5f9;
-            padding: 14px 20px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            pointer-events: auto;
-            transform: translateX(120%);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border-left: 5px solid #008080;
+            background: #1e293b; color: #f1f5f9; padding: 14px 20px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); display: flex; align-items: center; gap: 12px; pointer-events: auto; transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border-left: 5px solid #008080;
         }
-        .toast.show {
-            transform: translateX(0);
-        }
-        .toast.success {
-            border-left-color: #22c55e;
-        }
-        .toast.error {
-            border-left-color: #ef4444;
-        }
-        .toast.warning {
-            border-left-color: #f59e0b;
-        }
-        .toast i {
-            font-size: 1.4rem;
-        }
-        .toast .toast-close {
-            margin-left: auto;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: 0.2s;
-            font-size: 1.2rem;
-        }
-        .toast .toast-close:hover {
-            opacity: 1;
-        }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left-color: #22c55e; }
+        .toast.error { border-left-color: #ef4444; }
+        .toast.warning { border-left-color: #f59e0b; }
+        .toast i { font-size: 1.4rem; }
+        .toast .toast-close { margin-left: auto; cursor: pointer; opacity: 0.6; transition: 0.2s; font-size: 1.2rem; }
+        .toast .toast-close:hover { opacity: 1; }
 
-        /* ─── PRINT INVOICE STYLES ─── */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #invoicePrintArea,
-            #invoicePrintArea * {
-                visibility: visible;
-            }
-            #invoicePrintArea {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                padding: 40px;
-                background: white;
-                color: black;
-            }
-            #invoicePrintArea .no-print {
-                display: none;
-            }
-            .admin-header,
-            .admin-sidebar,
-            .admin-content>*:not(#invoicePrintArea) {
-                display: none !important;
-            }
-            #adminPanelContainer {
-                max-width: 100% !important;
-                border-radius: 0 !important;
-            }
-            #adminPanelWrapper {
-                background: white !important;
-                padding: 0 !important;
-            }
-        }
-
-        /* ─── ADMIN PANEL PROFESSIONAL UPGRADES ─── */
-        :root {
-            --primary-blue: #0a2540;
-            --accent-teal: #008080;
-            --bg-light: #f4f7f9;
-            --urgent-red: #d9383a;
-            --text-dark: #2d3748;
-            --sidebar-width: 240px;
-            --header-height: 64px;
-        }
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.5;
-        }
-        b,
-        strong {
-            font-weight: 700;
-        }
-
-        /* ─── HEADER WITH LARGE LOGO ─── */
-        header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 14px 5%;
+        /* ─── NEW PREMIUM LAB UI DESIGN ─── */
+        .top-nav {
+            background: #fff;
+            padding: 16px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             flex-wrap: wrap;
             gap: 10px 20px;
         }
         .header-logo {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            text-decoration: none;
-            color: #fff;
-        }
-        .header-logo .logo-icon {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, #008080, #20b2aa);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            font-weight: 800;
-            color: #fff;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0, 128, 128, 0.35);
-        }
-        .header-logo .logo-text-group {
-            display: flex;
             flex-direction: column;
-            line-height: 1.1;
+            text-decoration: none;
+            color: var(--primary-blue);
         }
         .header-logo .logo-main {
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: 800;
             letter-spacing: 0.5px;
-            color: #fff;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            line-height: 1;
+            color: var(--primary-blue);
         }
         .header-logo .logo-main span {
-            color: #d4af37;
+            color: var(--accent-teal);
         }
         .header-logo .logo-tagline {
             font-size: 0.75rem;
             font-weight: 400;
-            letter-spacing: 1.8px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: #94b8c9;
-            margin-top: 1px;
-            opacity: 0.9;
+            color: #64748b;
+            margin-top: 4px;
         }
         .header-logo .logo-tagline i {
             margin-right: 4px;
-            color: #d4af37;
-            font-size: 0.6rem;
+            color: var(--accent-teal);
         }
-
-        header nav {
+        .top-nav .nav-menu {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: 6px 12px;
+            gap: 8px 18px;
         }
-        header nav a {
-            color: #e2e8f0;
+        .top-nav .nav-menu a {
+            color: var(--primary-blue);
             text-decoration: none;
             font-weight: 600;
             font-size: 15px;
             transition: 0.2s;
-            padding: 4px 0;
         }
-        header nav a:hover {
+        .top-nav .nav-menu a:hover {
             color: var(--accent-teal);
         }
-        .admin-login-btn,
-        .patient-portal-btn {
+        .btn-nav-primary {
             background: var(--accent-teal);
-            color: white;
+            color: #fff !important;
             border: none;
-            padding: 6px 16px;
-            border-radius: 4px;
+            padding: 8px 20px;
+            border-radius: 6px;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
             transition: 0.2s;
-            white-space: nowrap;
         }
-        .admin-login-btn:hover,
-        .patient-portal-btn:hover {
+        .btn-nav-primary:hover {
             background: #006666;
         }
-        .patient-portal-btn {
+        .btn-nav-green {
             background: #25D366;
-        }
-        .patient-portal-btn:hover {
-            background: #1a8d4a;
-        }
-
-        .hero {
-            background: #0d3359;
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-        }
-        .hero h2 {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 700;
-            max-width: 800px;
-            margin: 0 auto 25px;
-            line-height: 1.3;
-        }
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-        .btn-book {
-            background: var(--urgent-red);
-            padding: 12px 28px;
-            color: white;
-            border-radius: 4px;
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.2s;
-        }
-        .btn-book:hover {
-            background: #b82d2f;
-        }
-        .btn-portal {
-            background: #25D366;
-            padding: 12px 28px;
-            color: white;
+            color: #fff !important;
             border: none;
-            border-radius: 4px;
-            font-weight: bold;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.2s;
         }
-        .btn-portal:hover {
+        .btn-nav-green:hover {
             background: #1a8d4a;
         }
 
-        .strip {
+        .hero-wrap {
+            position: relative;
             background: #fff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 15px 20px;
-            text-align: center;
-        }
-        .strip-content {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .strip-item {
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            color: var(--primary-blue);
-        }
-        .strip i {
-            color: var(--accent-teal);
-            margin-right: 10px;
-        }
-
-        section {
-            padding: 45px 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .section-wrapper-alt {
-            background: var(--bg-light);
-        }
-        h2 {
-            color: var(--primary-blue);
-            margin-bottom: 25px;
-            font-size: 26px;
-            font-weight: 700;
-        }
-        .about-container {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            text-align: left;
-            flex-wrap: wrap;
-        }
-        .about-text {
-            flex: 1;
-            min-width: 300px;
-        }
-        .about-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-        .feature-item i {
-            color: var(--accent-teal);
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-        }
-        .card {
-            background: white;
-            padding: 20px 15px;
-            border-radius: 6px;
-            border: 1px solid #cbd5e1;
-            text-align: center;
-        }
-        .card i {
-            font-size: 30px;
-            margin-bottom: 10px;
-        }
-        .card h3 {
-            margin: 5px 0;
-            font-size: 1.1rem;
-            color: var(--primary-blue);
-        }
-        .partner-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .partner-item {
-            background: white;
-            padding: 15px;
-            border-radius: 6px;
-            width: 150px;
-            border: 1px solid #cbd5e1;
-            text-align: center;
-        }
-        .partner-item i {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-        .partner-item p {
-            font-weight: 700;
-            margin: 0;
-            font-size: 14px;
-            color: var(--primary-blue);
-        }
-        .map-container {
-            margin-top: 20px;
-            border-radius: 8px;
             overflow: hidden;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            border: 1px solid #cbd5e1;
+            padding: 0 5% 0 0;
+            min-height: 550px;
+            display: flex;
+            align-items: center;
         }
-        footer {
-            background: var(--primary-blue);
-            color: #e2e8f0;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .footer-links {
-            margin: 20px 0;
-        }
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        .footer-links a:hover {
-            color: var(--accent-teal);
-        }
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #25D366;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* ─── ADMIN PANEL ─── */
-        #adminPanelWrapper {
-            display: none;
-            position: fixed;
+        /* Combined Background: Hex Pattern, Gradient, Lab Image */
+        .hero-bg {
+            position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 9999;
-            overflow-y: auto;
-            padding: 20px;
+            z-index: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><path d="M50 0 L100 25 L100 75 L50 100 L0 75 L0 25 Z" fill="none" stroke="%23008080" stroke-width="0.4" opacity="0.2"/><path d="M25 12.5 L25 37.5 M75 12.5 L75 37.5 M50 50 L50 75 M25 87.5 L75 87.5 M0 50 L25 50 M75 50 L100 50" stroke="%23008080" stroke-width="0.4" opacity="0.2"/></svg>'), linear-gradient(to right, #ffffff 10%, #f8fafc 60%, rgba(255,255,255,0) 90%), url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1920&q=80');
+            background-repeat: repeat, no-repeat, no-repeat;
+            background-size: 150px 150px, cover, cover;
+            background-position: 0 0, 0 0, 100% 50%;
         }
-        #adminPanelWrapper.active {
-            display: block;
-        }
-        #adminPanelContainer {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: #f0f2f5;
-            border-radius: 16px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            min-height: 90vh;
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 650px;
+            padding: 80px 0 120px;
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
         }
-        .admin-header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            flex-shrink: 0;
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1.2;
+            margin: 0 0 10px;
         }
-        .admin-header h2 {
-            color: white;
-            margin: 0;
-            font-size: 20px;
-        }
-        .admin-user {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .admin-user span {
-            color: #e2e8f0;
-        }
-        .logout-btn,
-        .dark-toggle {
-            background: var(--urgent-red);
-            border: none;
-            padding: 6px 16px;
-            border-radius: 6px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .logout-btn:hover {
-            background: #b82d2f;
-        }
-        .dark-toggle {
-            background: #4a5568;
-        }
-        .dark-toggle:hover {
-            background: #2d3748;
-        }
-
-        .admin-body {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        .admin-sidebar {
-            width: var(--sidebar-width);
-            background: var(--primary-blue);
-            color: #e2e8f0;
-            padding: 16px 0;
-            flex-shrink: 0;
-            overflow-y: auto;
-        }
-        .admin-sidebar .nav-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #94a3b8;
-            padding: 10px 16px 4px;
-            font-weight: 600;
-        }
-        .admin-sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 9px 16px;
-            color: #cbd5e1;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-            border-left: 3px solid transparent;
-        }
-        .admin-sidebar a:hover {
-            background: rgba(0, 128, 128, 0.15);
-            color: #fff;
-        }
-        .admin-sidebar a.active {
-            background: rgba(0, 128, 128, 0.2);
-            border-left-color: var(--accent-teal);
-            color: #fff;
-        }
-        .admin-sidebar a i {
-            width: 20px;
-            text-align: center;
-        }
-
-        .admin-content {
-            flex: 1;
-            padding: 24px;
-            overflow-y: auto;
-            background: #f0f2f5;
-        }
-        .admin-section {
-            display: none;
-            animation: fadeUp 0.3s ease;
-        }
-        .admin-section.active {
+        .hero-content h1 span {
+            color: var(--accent-teal);
             display: block;
         }
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #475569;
+            margin: 10px 0 30px;
         }
-
-        /* Cards & Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 14px;
-            margin-bottom: 20px;
-        }
-        .stat-card {
-            background: white;
-            padding: 16px 14px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
+        .hero-buttons {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-            transition: 0.2s;
+            gap: 20px;
         }
-        .stat-card:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-            transform: translateY(-2px);
-        }
-        .stat-card .icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-        .stat-card .icon.blue {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-        .stat-card .icon.green {
-            background: #d1fae5;
-            color: #059669;
-        }
-        .stat-card .icon.red {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-        .stat-card .icon.purple {
-            background: #ede9fe;
-            color: #7c3aed;
-        }
-        .stat-card .icon.orange {
-            background: #fef3c7;
-            color: #d97706;
-        }
-        .stat-card .icon.teal {
-            background: #ccfbf1;
-            color: #0d9488;
-        }
-        .stat-card .info h4 {
-            font-size: 22px;
+        .btn-hero-red {
+            background: var(--urgent-red);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 6px;
+            text-decoration: none;
             font-weight: 700;
-            margin: 0;
-        }
-        .stat-card .info p {
-            font-size: 12px;
-            margin: 2px 0 0;
-            color: #64748b;
-        }
-
-        .table-wrap {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            overflow: auto;
-            margin-top: 10px;
-        }
-        .table-wrap table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-        .table-wrap th {
-            background: #f8fafc;
-            font-weight: 600;
-            text-align: left;
-            padding: 10px 14px;
-            border-bottom: 2px solid #e2e8f0;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        .table-wrap td {
-            padding: 9px 14px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .badge-status {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .badge-status.paid {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .badge-status.unpaid {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        .badge-status.pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        .badge-status.process {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-        .badge-status.done {
-            background: #e0e7ff;
-            color: #3730a3;
-        }
-
-        .btn {
+            font-size: 16px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 13px;
-            border: none;
-            cursor: pointer;
+            gap: 12px;
+            box-shadow: 0 4px 10px rgba(217, 56, 58, 0.3);
             transition: 0.2s;
-            background: #f1f5f9;
-            color: #1e293b;
-            border: 1px solid #e2e8f0;
         }
-        .btn-primary {
-            background: var(--accent-teal);
-            color: #fff;
-            border-color: var(--accent-teal);
-        }
-        .btn-primary:hover {
-            background: #006666;
-        }
-        .btn-red {
-            background: var(--urgent-red);
-            color: #fff;
-            border-color: var(--urgent-red);
-        }
-        .btn-red:hover {
+        .btn-hero-red:hover {
             background: #b82d2f;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #e2e8f0;
-        }
-        .btn-sm {
-            padding: 3px 10px;
-            font-size: 12px;
-        }
-        .btn-gold {
-            background: #d4af37;
-            color: #fff;
-            border-color: #d4af37;
-        }
-        .btn-gold:hover {
-            background: #b8960e;
-        }
-        .btn-success {
-            background: #22c55e;
-            color: #fff;
-            border-color: #22c55e;
-        }
-        .btn-success:hover {
-            background: #16a34a;
-        }
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            background: white;
-            padding: 16px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 16px;
-        }
-        .form-grid label {
-            font-weight: 600;
-            font-size: 13px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .form-grid label input,
-        .form-grid label select {
-            padding: 7px 10px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            font-size: 14px;
-        }
-        .form-grid label input:focus,
-        .form-grid label select:focus {
-            outline: 2px solid var(--accent-teal);
-        }
-
-        .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .toolbar .search-box {
-            display: flex;
-            align-items: center;
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 0 12px;
-            flex: 1;
-            min-width: 150px;
-        }
-        .toolbar .search-box input {
-            border: none;
-            background: transparent;
-            padding: 7px 6px;
-            font-size: 14px;
-            width: 100%;
-            outline: none;
-        }
-        .template-box {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 14px 18px;
-            margin-bottom: 14px;
-        }
-        .template-box .msg-preview {
-            background: #f8fafc;
-            padding: 10px 14px;
-            border-radius: 6px;
-            border-left: 4px solid #25D366;
-            font-size: 14px;
-            white-space: pre-wrap;
-        }
-        .premium-badge {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: #78350f;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            margin-left: 6px;
-        }
-
-        /* Login Modal */
-        .login-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 10001;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-modal.show {
-            display: flex;
-        }
-        .login-modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-        .login-modal-content h3 {
-            margin-top: 0;
-        }
-        .login-modal-content label {
-            display: block;
-            font-weight: 600;
-            margin: 10px 0 4px;
-        }
-        .login-modal-content input {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            margin-bottom: 8px;
-        }
-        .login-modal-content .btn-close {
-            background: #6c757d;
-            border: none;
-            padding: 8px;
-            width: 100%;
-            border-radius: 4px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 6px;
-        }
-
-        /* UPI Modal */
-        .upi-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 10002;
-            align-items: center;
-            justify-content: center;
-        }
-        .upi-modal.show {
-            display: flex;
-        }
-        .upi-modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-        .upi-modal-content .btn-close {
-            background: #6c757d;
-            border: none;
-            padding: 8px;
-            width: 100%;
-            border-radius: 4px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 12px;
-        }
-
-        /* Patient Portal Modal */
-        .patient-portal-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 10050;
-            overflow-y: auto;
-            padding: 20px;
-            align-items: center;
-            justify-content: center;
-        }
-        .patient-portal-modal.active {
-            display: flex;
-        }
-        .patient-portal-content {
-            max-width: 860px;
-            width: 100%;
-            background: #fff;
-            border-radius: 2rem;
-            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35);
-            overflow: hidden;
-            max-height: 95vh;
-            overflow-y: auto;
-        }
-        .portal-header {
-            background: #1a212c;
-            padding: 1.8rem 2rem 1.4rem;
-        }
-        .portal-header h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            color: #fef7e8;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .portal-header .portal-badge {
-            background: rgba(212, 175, 55, 0.2);
-            padding: 6px 16px;
-            border-radius: 60px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #e6c168;
-            border: 0.5px solid rgba(212, 175, 55, 0.5);
-        }
-        .portal-header .portal-sub {
-            color: #8f9bb3;
-            font-size: 0.8rem;
-            margin-top: 12px;
-            border-left: 2px solid #e6c168;
-            padding-left: 14px;
-        }
-        .portal-body {
-            padding: 2rem;
-        }
-        .portal-input-group {
-            margin-bottom: 1.5rem;
-        }
-        .portal-input-label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: #2c3f4c;
-            margin-bottom: 10px;
-        }
-        .portal-input {
-            width: 100%;
-            padding: 1rem 1.3rem;
-            font-size: 1rem;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 1.25rem;
-            outline: none;
-            font-weight: 500;
-        }
-        .portal-input:focus {
-            border-color: #d4af37;
-            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
-        }
-        .portal-btn {
-            width: 100%;
-            background: linear-gradient(98deg, #075E54, #128C7E);
-            border: none;
-            padding: 1rem;
-            font-size: 1rem;
-            font-weight: 700;
-            color: white;
-            border-radius: 2rem;
-            cursor: pointer;
-            transition: 0.25s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5);
-        }
-        .portal-btn:hover {
             transform: translateY(-2px);
         }
-        .portal-status {
-            margin-top: 1.2rem;
-            padding: 0.9rem 1.2rem;
-            background: #f8fafd;
-            border-radius: 1rem;
-            font-size: 0.85rem;
-            color: #2c3e50;
-            border-left: 3px solid #c9a03d;
-        }
-        .portal-status.success {
-            background: #e6f4ea;
-            border-left-color: #2b7a3e;
-            color: #135c2c;
-        }
-        .portal-status.error {
-            background: #fef5f0;
-            border-left-color: #d4873a;
-            color: #8b5a2b;
-        }
-        .portal-report-list {
-            margin-top: 1.5rem;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 1.5rem;
-        }
-        .portal-report-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f8fafc;
-            padding: 0.8rem 1.2rem;
-            border-radius: 1rem;
-            margin-bottom: 0.8rem;
-            border: 1px solid #edf2f7;
-        }
-        .portal-report-info .test-name {
-            font-weight: 600;
-            color: #1a212c;
-        }
-        .portal-report-info .upload-date {
-            font-size: 0.8rem;
-            color: #7890a3;
-        }
-        .portal-download-btn {
-            background: #d4af37;
+        .btn-hero-green {
+            background: #25D366;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 6px;
             border: none;
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: 0.2s;
-        }
-        .portal-download-btn:hover {
-            background: #b8960e;
-        }
-        .portal-download-btn:disabled {
-            background: #b0b8c5;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-        .portal-due-badge {
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 0.2rem 0.8rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
             font-weight: 700;
-        }
-        .portal-close-btn {
-            background: #6c757d;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 2rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            font-size: 0.8rem;
-            margin-top: 1rem;
-        }
-        .portal-footer {
-            padding: 1rem 2rem;
-            font-size: 0.7rem;
-            color: #91a3bb;
-            border-top: 1px solid #edf2f9;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Payment Confirmation Modal */
-        .pay-confirm-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 10060;
+            font-size: 16px;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .pay-confirm-modal.show {
-            display: flex;
-        }
-        .pay-confirm-content {
-            background: white;
-            max-width: 480px;
-            width: 100%;
-            border-radius: 16px;
-            padding: 28px 30px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-        }
-        .pay-confirm-content h3 {
-            color: var(--primary-blue);
-            font-size: 1.3rem;
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .pay-confirm-content .pay-detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 14px;
-        }
-        .pay-confirm-content .pay-detail-row .label {
-            color: #64748b;
-            font-weight: 500;
-        }
-        .pay-confirm-content .pay-detail-row .value {
-            font-weight: 700;
-        }
-        .pay-confirm-content .pay-amount-large {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            text-align: center;
-            padding: 12px 0;
-            background: #f8fafc;
-            border-radius: 8px;
-            margin: 10px 0 14px;
-        }
-        .pay-method-group {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin: 10px 0 14px;
-        }
-        .pay-method-group label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: #f1f5f9;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: 0.2s;
-        }
-        .pay-method-group label:hover {
-            background: #e2e8f0;
-        }
-        .pay-method-group input[type="radio"] {
-            accent-color: var(--accent-teal);
-        }
-        .pay-method-group label.selected {
-            border-color: var(--accent-teal);
-            background: #e6f7f7;
-        }
-        .pay-btns {
-            display: flex;
             gap: 12px;
-            margin-top: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            transition: 0.2s;
         }
-        .pay-btns .btn {
-            flex: 1;
-            justify-content: center;
-            padding: 10px;
-            font-size: 15px;
+        .btn-hero-green:hover {
+            background: #1a8d4a;
+            transform: translateY(-2px);
         }
-        .pay-btns .btn-cancel {
-            background: #e2e8f0;
-            color: #1e293b;
-        }
-        .pay-btns .btn-cancel:hover {
-            background: #cbd5e1;
-        }
-
-        .badge-pay-confirmed {
-            background: #d1fae5;
-            color: #065f46;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 10px;
-            border-radius: 20px;
-        }
-
-        /* Invoice Modal */
-        .invoice-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 10070;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .invoice-modal.show {
-            display: flex;
-        }
-        .invoice-modal-content {
-            background: white;
-            max-width: 700px;
+        
+        /* Wave Curve */
+        .hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .invoice-modal-content h3 {
-            margin-top: 0;
-        }
-        .invoice-print-area {
-            padding: 10px;
-        }
-        .invoice-print-area .invoice-header {
+            height: 60px;
+            z-index: 1;
             display: flex;
-            justify-content: space-between;
-            border-bottom: 2px solid #0a2540;
-            padding-bottom: 12px;
-            margin-bottom: 16px;
+            align-items: flex-end;
+            pointer-events: none;
         }
-        .invoice-print-area .invoice-header h2 {
-            margin: 0;
-            color: #0a2540;
+        .hero-wave svg {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
-        .invoice-print-area .invoice-details {
+
+        .contact-strip {
+            background: #fff;
+            padding: 20px 5%;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border-bottom: 1px solid #eef2f6;
+        }
+        .contact-strip-content {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .contact-item i {
+            color: var(--accent-teal);
+            font-size: 1.2rem;
+        }
+
+        /* New About Section Layout */
+        .section-container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .about-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 50px;
+        }
+        .about-text {
+            flex: 1.2;
+        }
+        .about-text h2 {
+            font-size: 2.4rem;
+            color: var(--primary-blue);
+            margin: 0 0 8px 0;
+        }
+        .about-text .title-line {
+            width: 60px;
+            height: 4px;
+            background: var(--accent-teal);
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+        .about-text p {
+            color: #475569;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .about-text h3 {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            border-left: 4px solid var(--accent-teal);
+            padding-left: 12px;
+            margin: 30px 0 15px;
+        }
+        .about-features-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 16px;
+            gap: 12px 30px;
         }
-        .invoice-print-area table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 12px 0;
-        }
-        .invoice-print-area table th {
-            background: #f1f5f9;
-            text-align: left;
-            padding: 8px;
-            border: 1px solid #e2e8f0;
-        }
-        .invoice-print-area table td {
-            padding: 8px;
-            border: 1px solid #e2e8f0;
-        }
-        .invoice-print-area .total-row {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        .invoice-print-area .no-print {
-            margin-top: 20px;
+        .about-feature-item {
             display: flex;
+            align-items: center;
             gap: 12px;
-            justify-content: flex-end;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .about-feature-item i {
+            color: var(--accent-teal);
         }
 
-        /* Settings Section */
-        .settings-group {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 16px;
+        .about-image-wrapper {
+            flex: 0.8;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
         }
-        .settings-group label {
-            font-weight: 600;
-            display: block;
-            margin: 12px 0 4px;
-        }
-        .settings-group input,
-        .settings-group textarea {
+        .about-image-wrapper img {
             width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            font-size: 14px;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            display: block;
         }
-        .settings-group textarea {
-            resize: vertical;
-            min-height: 60px;
+        .about-badge {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            background: var(--primary-blue);
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(10,37,64,0.25);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
+        .about-badge i {
+            font-size: 2rem;
+        }
+        .about-badge-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            font-weight: 600;
+        }
+        .about-badge-text span {
+            font-size: 0.9rem;
+        }
+
+        /* ─── REMAINING EXISTING UI ELEMENTS (Preserved) ─── */
+        .section-wrapper-alt { background: var(--bg-light); }
+        h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 26px; font-weight: 700; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .card { background: white; padding: 20px 15px; border-radius: 6px; border: 1px solid #cbd5e1; text-align: center; }
+        .card i { font-size: 30px; margin-bottom: 10px; }
+        .card h3 { margin: 5px 0; font-size: 1.1rem; color: var(--primary-blue); }
+        .partner-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .partner-item { background: white; padding: 15px; border-radius: 6px; width: 150px; border: 1px solid #cbd5e1; text-align: center; }
+        .partner-item i { font-size: 32px; margin-bottom: 8px; }
+        .partner-item p { font-weight: 700; margin: 0; font-size: 14px; color: var(--primary-blue); }
+        .map-container { margin-top: 20px; border-radius: 8px; overflow: hidden; max-width: 800px; margin-left: auto; margin-right: auto; border: 1px solid #cbd5e1; }
+        footer { background: var(--primary-blue); color: #e2e8f0; padding: 40px 20px; text-align: center; }
+        .footer-links { margin: 20px 0; }
+        .footer-links a { color: white; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 600; }
+        .footer-links a:hover { color: var(--accent-teal); }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; z-index: 1000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
+
+        /* ─── ADMIN PANEL & MODALS (Preserved) ─── */
+        #adminPanelWrapper { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 9999; overflow-y: auto; padding: 20px; }
+        #adminPanelWrapper.active { display: block; }
+        #adminPanelContainer { max-width: 1400px; margin: 0 auto; background: #f0f2f5; border-radius: 16px; box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5); overflow: hidden; min-height: 90vh; display: flex; flex-direction: column; }
+        .admin-header { background: var(--primary-blue); color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; flex-shrink: 0; }
+        .admin-header h2 { color: white; margin: 0; font-size: 20px; }
+        .admin-user { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .admin-user span { color: #e2e8f0; }
+        .logout-btn, .dark-toggle { background: var(--urgent-red); border: none; padding: 6px 16px; border-radius: 6px; color: white; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .logout-btn:hover { background: #b82d2f; }
+        .dark-toggle { background: #4a5568; }
+        .dark-toggle:hover { background: #2d3748; }
+        .admin-body { display: flex; flex: 1; overflow: hidden; }
+        .admin-sidebar { width: var(--sidebar-width); background: var(--primary-blue); color: #e2e8f0; padding: 16px 0; flex-shrink: 0; overflow-y: auto; }
+        .admin-sidebar .nav-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #94a3b8; padding: 10px 16px 4px; font-weight: 600; }
+        .admin-sidebar a { display: flex; align-items: center; gap: 10px; padding: 9px 16px; color: #cbd5e1; text-decoration: none; font-weight: 500; font-size: 14px; cursor: pointer; transition: 0.2s; border-left: 3px solid transparent; }
+        .admin-sidebar a:hover { background: rgba(0, 128, 128, 0.15); color: #fff; }
+        .admin-sidebar a.active { background: rgba(0, 128, 128, 0.2); border-left-color: var(--accent-teal); color: #fff; }
+        .admin-sidebar a i { width: 20px; text-align: center; }
+        .admin-content { flex: 1; padding: 24px; overflow-y: auto; background: #f0f2f5; }
+        .admin-section { display: none; animation: fadeUp 0.3s ease; }
+        .admin-section.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
+        .stat-card { background: white; padding: 16px 14px; border-radius: 10px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03); transition: 0.2s; }
+        .stat-card:hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06); transform: translateY(-2px); }
+        .stat-card .icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
+        .stat-card .icon.green { background: #d1fae5; color: #059669; }
+        .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
+        .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }
+        .stat-card .icon.orange { background: #fef3c7; color: #d97706; }
+        .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
+        .stat-card .info h4 { font-size: 22px; font-weight: 700; margin: 0; }
+        .stat-card .info p { font-size: 12px; margin: 2px 0 0; color: #64748b; }
+        .table-wrap { background: white; border: 1px solid #e2e8f0; border-radius: 10px; overflow: auto; margin-top: 10px; }
+        .table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .table-wrap th { background: #f8fafc; font-weight: 600; text-align: left; padding: 10px 14px; border-bottom: 2px solid #e2e8f0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .table-wrap td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; }
+        .badge-status { display: inline-block; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .badge-status.paid { background: #d1fae5; color: #065f46; }
+        .badge-status.unpaid { background: #fee2e2; color: #991b1b; }
+        .badge-status.pending { background: #fef3c7; color: #92400e; }
+        .badge-status.process { background: #dbeafe; color: #1e40af; }
+        .badge-status.done { background: #e0e7ff; color: #3730a3; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; border: none; cursor: pointer; transition: 0.2s; background: #f1f5f9; color: #1e293b; border: 1px solid #e2e8f0; }
+        .btn-primary { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
+        .btn-primary:hover { background: #006666; }
+        .btn-red { background: var(--urgent-red); color: #fff; border-color: var(--urgent-red); }
+        .btn-red:hover { background: #b82d2f; }
+        .btn-outline { background: transparent; border: 1px solid #e2e8f0; }
+        .btn-sm { padding: 3px 10px; font-size: 12px; }
+        .btn-gold { background: #d4af37; color: #fff; border-color: #d4af37; }
+        .btn-gold:hover { background: #b8960e; }
+        .btn-success { background: #22c55e; color: #fff; border-color: #22c55e; }
+        .btn-success:hover { background: #16a34a; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: white; padding: 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
+        .form-grid label { font-weight: 600; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
+        .form-grid label input, .form-grid label select { padding: 7px 10px; border-radius: 6px; border: 1px solid #e2e8f0; background: #f8fafc; font-size: 14px; }
+        .form-grid label input:focus, .form-grid label select:focus { outline: 2px solid var(--accent-teal); }
+        .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+        .toolbar .search-box { display: flex; align-items: center; background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0 12px; flex: 1; min-width: 150px; }
+        .toolbar .search-box input { border: none; background: transparent; padding: 7px 6px; font-size: 14px; width: 100%; outline: none; }
+        .template-box { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
+        .template-box .msg-preview { background: #f8fafc; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #25D366; font-size: 14px; white-space: pre-wrap; }
+        .premium-badge { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #78350f; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 20px; text-transform: uppercase; margin-left: 6px; }
+        .login-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 10001; align-items: center; justify-content: center; }
+        .login-modal.show { display: flex; }
+        .login-modal-content { background: white; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+        .login-modal-content h3 { margin-top: 0; }
+        .login-modal-content label { display: block; font-weight: 600; margin: 10px 0 4px; }
+        .login-modal-content input { width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 4px; margin-bottom: 8px; }
+        .login-modal-content .btn-close { background: #6c757d; border: none; padding: 8px; width: 100%; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; margin-top: 6px; }
+        .upi-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 10002; align-items: center; justify-content: center; }
+        .upi-modal.show { display: flex; }
+        .upi-modal-content { background: white; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; }
+        .upi-modal-content .btn-close { background: #6c757d; border: none; padding: 8px; width: 100%; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; margin-top: 12px; }
+        .patient-portal-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 10050; overflow-y: auto; padding: 20px; align-items: center; justify-content: center; }
+        .patient-portal-modal.active { display: flex; }
+        .patient-portal-content { max-width: 860px; width: 100%; background: #fff; border-radius: 2rem; box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35); overflow: hidden; max-height: 95vh; overflow-y: auto; }
+        .portal-header { background: #1a212c; padding: 1.8rem 2rem 1.4rem; }
+        .portal-header h1 { font-size: 1.9rem; font-weight: 700; color: #fef7e8; display: flex; align-items: center; gap: 12px; }
+        .portal-header .portal-badge { background: rgba(212, 175, 55, 0.2); padding: 6px 16px; border-radius: 60px; font-size: 0.7rem; font-weight: 600; color: #e6c168; border: 0.5px solid rgba(212, 175, 55, 0.5); }
+        .portal-header .portal-sub { color: #8f9bb3; font-size: 0.8rem; margin-top: 12px; border-left: 2px solid #e6c168; padding-left: 14px; }
+        .portal-body { padding: 2rem; }
+        .portal-input-group { margin-bottom: 1.5rem; }
+        .portal-input-label { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: #2c3f4c; margin-bottom: 10px; }
+        .portal-input { width: 100%; padding: 1rem 1.3rem; font-size: 1rem; border: 1.5px solid #e2e8f0; border-radius: 1.25rem; outline: none; font-weight: 500; }
+        .portal-input:focus { border-color: #d4af37; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2); }
+        .portal-btn { width: 100%; background: linear-gradient(98deg, #075E54, #128C7E); border: none; padding: 1rem; font-size: 1rem; font-weight: 700; color: white; border-radius: 2rem; cursor: pointer; transition: 0.25s; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5); }
+        .portal-btn:hover { transform: translateY(-2px); }
+        .portal-status { margin-top: 1.2rem; padding: 0.9rem 1.2rem; background: #f8fafd; border-radius: 1rem; font-size: 0.85rem; color: #2c3e50; border-left: 3px solid #c9a03d; }
+        .portal-status.success { background: #e6f4ea; border-left-color: #2b7a3e; color: #135c2c; }
+        .portal-status.error { background: #fef5f0; border-left-color: #d4873a; color: #8b5a2b; }
+        .portal-report-list { margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem; }
+        .portal-report-item { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 0.8rem 1.2rem; border-radius: 1rem; margin-bottom: 0.8rem; border: 1px solid #edf2f7; }
+        .portal-report-info .test-name { font-weight: 600; color: #1a212c; }
+        .portal-report-info .upload-date { font-size: 0.8rem; color: #7890a3; }
+        .portal-download-btn { background: #d4af37; border: none; padding: 0.4rem 1rem; border-radius: 2rem; font-weight: 600; color: white; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
+        .portal-download-btn:hover { background: #b8960e; }
+        .portal-download-btn:disabled { background: #b0b8c5; cursor: not-allowed; opacity: 0.6; }
+        .portal-due-badge { background: #fee2e2; color: #991b1b; padding: 0.2rem 0.8rem; border-radius: 2rem; font-size: 0.7rem; font-weight: 700; }
+        .portal-close-btn { background: #6c757d; border: none; padding: 8px 16px; border-radius: 2rem; font-weight: 600; color: white; cursor: pointer; font-size: 0.8rem; margin-top: 1rem; }
+        .portal-footer { padding: 1rem 2rem; font-size: 0.7rem; color: #91a3bb; border-top: 1px solid #edf2f9; display: flex; justify-content: space-between; }
+        .pay-confirm-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 10060; align-items: center; justify-content: center; padding: 20px; }
+        .pay-confirm-modal.show { display: flex; }
+        .pay-confirm-content { background: white; max-width: 480px; width: 100%; border-radius: 16px; padding: 28px 30px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); }
+        .pay-confirm-content h3 { color: var(--primary-blue); font-size: 1.3rem; margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        .pay-confirm-content .pay-detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+        .pay-confirm-content .pay-detail-row .label { color: #64748b; font-weight: 500; }
+        .pay-confirm-content .pay-detail-row .value { font-weight: 700; }
+        .pay-confirm-content .pay-amount-large { font-size: 2rem; font-weight: 800; color: var(--primary-blue); text-align: center; padding: 12px 0; background: #f8fafc; border-radius: 8px; margin: 10px 0 14px; }
+        .pay-method-group { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 14px; }
+        .pay-method-group label { display: flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .pay-method-group label:hover { background: #e2e8f0; }
+        .pay-method-group input[type="radio"] { accent-color: var(--accent-teal); }
+        .pay-method-group label.selected { border-color: var(--accent-teal); background: #e6f7f7; }
+        .pay-btns { display: flex; gap: 12px; margin-top: 18px; }
+        .pay-btns .btn { flex: 1; justify-content: center; padding: 10px; font-size: 15px; }
+        .pay-btns .btn-cancel { background: #e2e8f0; color: #1e293b; }
+        .pay-btns .btn-cancel:hover { background: #cbd5e1; }
+        .badge-pay-confirmed { background: #d1fae5; color: #065f46; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 20px; }
+        .invoice-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 10070; align-items: center; justify-content: center; padding: 20px; }
+        .invoice-modal.show { display: flex; }
+        .invoice-modal-content { background: white; max-width: 700px; width: 100%; border-radius: 16px; padding: 30px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); max-height: 90vh; overflow-y: auto; }
+        .invoice-modal-content h3 { margin-top: 0; }
+        .invoice-print-area { padding: 10px; }
+        .invoice-print-area .invoice-header { display: flex; justify-content: space-between; border-bottom: 2px solid #0a2540; padding-bottom: 12px; margin-bottom: 16px; }
+        .invoice-print-area .invoice-header h2 { margin: 0; color: #0a2540; }
+        .invoice-print-area .invoice-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+        .invoice-print-area table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+        .invoice-print-area table th { background: #f1f5f9; text-align: left; padding: 8px; border: 1px solid #e2e8f0; }
+        .invoice-print-area table td { padding: 8px; border: 1px solid #e2e8f0; }
+        .invoice-print-area .total-row { font-weight: 700; font-size: 1.1rem; }
+        .invoice-print-area .no-print { margin-top: 20px; display: flex; gap: 12px; justify-content: flex-end; }
+        .settings-group { background: white; padding: 20px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
+        .settings-group label { font-weight: 600; display: block; margin: 12px 0 4px; }
+        .settings-group input, .settings-group textarea { width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; }
+        .settings-group textarea { resize: vertical; min-height: 60px; }
 
         /* Dark Mode overrides */
-        body.admin-dark #adminPanelContainer {
-            background: #0f172a;
-        }
-        body.admin-dark .admin-content {
-            background: #0f172a;
-        }
-        body.admin-dark .stat-card,
-        body.admin-dark .table-wrap,
-        body.admin-dark .form-grid,
-        body.admin-dark .template-box,
-        body.admin-dark .settings-group {
-            background: #1e293b;
-            border-color: #334155;
-            color: #f1f5f9;
-        }
-        body.admin-dark .stat-card .info p {
-            color: #94a3b8;
-        }
-        body.admin-dark .table-wrap th {
-            background: #0f172a;
-            color: #94a3b8;
-        }
-        body.admin-dark .table-wrap td {
-            border-color: #334155;
-        }
-        body.admin-dark .form-grid label input,
-        body.admin-dark .form-grid label select {
-            background: #0f172a;
-            border-color: #334155;
-            color: #f1f5f9;
-        }
-        body.admin-dark .badge-status.paid {
-            background: #064e3b;
-            color: #6ee7b7;
-        }
-        body.admin-dark .badge-status.unpaid {
-            background: #7f1d1d;
-            color: #fca5a5;
-        }
-        body.admin-dark .badge-status.pending {
-            background: #78350f;
-            color: #fcd34d;
-        }
-        body.admin-dark .badge-status.process {
-            background: #1e3a5f;
-            color: #93c5fd;
-        }
-        body.admin-dark .badge-status.done {
-            background: #312e81;
-            color: #a5b4fc;
-        }
-        body.admin-dark .stat-card .icon.blue {
-            background: #1e3a5f;
-            color: #60a5fa;
-        }
-        body.admin-dark .stat-card .icon.green {
-            background: #064e3b;
-            color: #34d399;
-        }
-        body.admin-dark .stat-card .icon.red {
-            background: #7f1d1d;
-            color: #f87171;
-        }
-        body.admin-dark .stat-card .icon.purple {
-            background: #4c1d95;
-            color: #a78bfa;
-        }
-        body.admin-dark .stat-card .icon.orange {
-            background: #78350f;
-            color: #fbbf24;
-        }
-        body.admin-dark .stat-card .icon.teal {
-            background: #134e4a;
-            color: #2dd4bf;
-        }
-        body.admin-dark .pay-confirm-content {
-            background: #1e293b;
-            color: #f1f5f9;
-        }
-        body.admin-dark .pay-confirm-content .pay-detail-row {
-            border-color: #334155;
-        }
-        body.admin-dark .pay-confirm-content .pay-detail-row .label {
-            color: #94a3b8;
-        }
-        body.admin-dark .pay-confirm-content .pay-amount-large {
-            background: #0f172a;
-            color: #f1f5f9;
-        }
-        body.admin-dark .pay-confirm-content .pay-method-group label {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        body.admin-dark .pay-confirm-content .pay-method-group label.selected {
-            border-color: var(--accent-teal);
-            background: #134e4a;
-        }
-        body.admin-dark .pay-confirm-content .pay-btns .btn-cancel {
-            background: #334155;
-            color: #e2e8f0;
-        }
-        body.admin-dark .invoice-modal-content {
-            background: #1e293b;
-            color: #f1f5f9;
-        }
-        body.admin-dark .invoice-print-area .invoice-header h2 {
-            color: #f1f5f9;
-        }
-        body.admin-dark .invoice-print-area table th {
-            background: #0f172a;
-            border-color: #334155;
-        }
-        body.admin-dark .invoice-print-area table td {
-            border-color: #334155;
-        }
+        body.admin-dark #adminPanelContainer { background: #0f172a; }
+        body.admin-dark .admin-content { background: #0f172a; }
+        body.admin-dark .stat-card, body.admin-dark .table-wrap, body.admin-dark .form-grid, body.admin-dark .template-box, body.admin-dark .settings-group { background: #1e293b; border-color: #334155; color: #f1f5f9; }
+        body.admin-dark .stat-card .info p { color: #94a3b8; }
+        body.admin-dark .table-wrap th { background: #0f172a; color: #94a3b8; }
+        body.admin-dark .table-wrap td { border-color: #334155; }
+        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
+        body.admin-dark .badge-status.paid { background: #064e3b; color: #6ee7b7; }
+        body.admin-dark .badge-status.unpaid { background: #7f1d1d; color: #fca5a5; }
+        body.admin-dark .badge-status.pending { background: #78350f; color: #fcd34d; }
+        body.admin-dark .badge-status.process { background: #1e3a5f; color: #93c5fd; }
+        body.admin-dark .badge-status.done { background: #312e81; color: #a5b4fc; }
+        body.admin-dark .stat-card .icon.blue { background: #1e3a5f; color: #60a5fa; }
+        body.admin-dark .stat-card .icon.green { background: #064e3b; color: #34d399; }
+        body.admin-dark .stat-card .icon.red { background: #7f1d1d; color: #f87171; }
+        body.admin-dark .stat-card .icon.purple { background: #4c1d95; color: #a78bfa; }
+        body.admin-dark .stat-card .icon.orange { background: #78350f; color: #fbbf24; }
+        body.admin-dark .stat-card .icon.teal { background: #134e4a; color: #2dd4bf; }
+        body.admin-dark .pay-confirm-content { background: #1e293b; color: #f1f5f9; }
+        body.admin-dark .pay-confirm-content .pay-detail-row { border-color: #334155; }
+        body.admin-dark .pay-confirm-content .pay-detail-row .label { color: #94a3b8; }
+        body.admin-dark .pay-confirm-content .pay-amount-large { background: #0f172a; color: #f1f5f9; }
+        body.admin-dark .pay-confirm-content .pay-method-group label { background: #0f172a; color: #e2e8f0; }
+        body.admin-dark .pay-confirm-content .pay-method-group label.selected { border-color: var(--accent-teal); background: #134e4a; }
+        body.admin-dark .pay-confirm-content .pay-btns .btn-cancel { background: #334155; color: #e2e8f0; }
+        body.admin-dark .invoice-modal-content { background: #1e293b; color: #f1f5f9; }
+        body.admin-dark .invoice-print-area .invoice-header h2 { color: #f1f5f9; }
+        body.admin-dark .invoice-print-area table th { background: #0f172a; border-color: #334155; }
+        body.admin-dark .invoice-print-area table td { border-color: #334155; }
 
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                text-align: center;
-                padding: 12px 16px;
-            }
-            .header-logo .logo-main {
-                font-size: 1.5rem;
-            }
-            .header-logo .logo-tagline {
-                font-size: 0.6rem;
-                letter-spacing: 1.2px;
-            }
-            .header-logo .logo-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 20px;
-            }
-            header nav {
-                justify-content: center;
-                margin-top: 6px;
-            }
-            header nav a {
-                font-size: 13px;
-                margin: 0 4px;
-            }
-            .admin-login-btn,
-            .patient-portal-btn {
-                font-size: 12px;
-                padding: 4px 12px;
-                margin: 2px 0;
-            }
-            .admin-body {
-                flex-direction: column;
-            }
-            .admin-sidebar {
-                width: 100%;
-                display: flex;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding: 8px 0;
-            }
-            .admin-sidebar a {
-                white-space: nowrap;
-                padding: 8px 14px;
-                border-left: none;
-                border-bottom: 3px solid transparent;
-            }
-            .admin-sidebar a.active {
-                border-bottom-color: var(--accent-teal);
-                border-left: none;
-            }
-            .admin-sidebar .nav-label {
-                display: none;
-            }
-            .hero h2 {
-                font-size: 1.8rem;
-            }
-            .about-features {
-                grid-template-columns: 1fr;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .pay-method-group label {
-                font-size: 12px;
-                padding: 4px 12px;
-            }
+        @media (max-width: 992px) {
+            .hero-wrap { min-height: auto; padding: 0 5%; background: #fff; }
+            .hero-bg { background-image: none; }
+            .hero-content { padding: 40px 0 60px; align-items: center; text-align: center; max-width: 100%; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content h1 span { display: inline; }
+            .hero-buttons { justify-content: center; flex-wrap: wrap; }
+            .hero-wave { height: 30px; }
+            .contact-strip-content { gap: 20px; }
+            .about-wrapper { flex-direction: column; }
+            .about-image-wrapper { width: 100%; margin-top: 30px; }
+            .about-badge { bottom: 15px; right: 15px; padding: 12px 16px; }
+            .top-nav { flex-direction: column; align-items: flex-start; gap: 15px; padding: 12px 5%; }
+            .top-nav .nav-menu { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 8px; }
+            .admin-body { flex-direction: column; }
+            .admin-sidebar { width: 100%; display: flex; flex-wrap: nowrap; overflow-x: auto; padding: 8px 0; }
+            .admin-sidebar a { white-space: nowrap; padding: 8px 14px; border-left: none; border-bottom: 3px solid transparent; }
+            .admin-sidebar a.active { border-bottom-color: var(--accent-teal); border-left: none; }
+            .admin-sidebar .nav-label { display: none; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .pay-method-group label { font-size: 12px; padding: 4px 12px; }
         }
 
         @media (max-width: 480px) {
-            .header-logo .logo-main {
-                font-size: 1.2rem;
-            }
-            .header-logo .logo-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-            }
-            .header-logo .logo-tagline {
-                font-size: 0.5rem;
-                letter-spacing: 0.8px;
-            }
-            .hero h2 {
-                font-size: 1.4rem;
-            }
-            .btn-book,
-            .btn-portal {
-                padding: 10px 18px;
-                font-size: 14px;
-            }
+            .hero-content h1 { font-size: 2rem; }
+            .hero-content p { font-size: 1rem; }
+            .btn-hero-red, .btn-hero-green { padding: 12px 20px; font-size: 14px; }
+            .about-features-grid { grid-template-columns: 1fr; }
+            .about-badge { padding: 10px; flex-direction: column; text-align: center; }
+            .about-badge i { font-size: 1.2rem; }
+        }
+
+        /* ─── PRINT INVOICE STYLES ─── */
+        @media print {
+            body * { visibility: hidden; }
+            #invoicePrintArea, #invoicePrintArea * { visibility: visible; }
+            #invoicePrintArea { position: absolute; left: 0; top: 0; width: 100%; padding: 40px; background: white; color: black; }
+            #invoicePrintArea .no-print { display: none; }
+            .admin-header, .admin-sidebar, .admin-content>*:not(#invoicePrintArea) { display: none !important; }
+            #adminPanelContainer { max-width: 100% !important; border-radius: 0 !important; }
+            #adminPanelWrapper { background: white !important; padding: 0 !important; }
         }
     </style>
 </head>
@@ -1755,58 +688,73 @@
     <div id="toastContainer"></div>
 
     <!-- ═══════════ MAIN PAGE ═══════════ -->
-    <header>
-        <!-- ─── LARGE LOGO ─── -->
+    <header class="top-nav">
         <a href="#" class="header-logo">
-            <div class="logo-icon">R</div>
-            <div class="logo-text-group">
-                <div class="logo-main">RAJAN <span>PATH LAB</span></div>
-                <div class="logo-tagline"><i class="fas fa-heartbeat"></i> SOLUTION OF YOUR HEALTHY LIFE</div>
-            </div>
+            <div class="logo-main">RAJAN <span>PATH LAB</span></div>
+            <div class="logo-tagline"><i class="fas fa-heartbeat"></i> SOLUTION OF YOUR HEALTHY LIFE</div>
         </a>
 
-        <nav>
+        <nav class="nav-menu">
             <a href="index.html">Home</a>
             <a href="tests.html">Tests</a>
             <a href="book.html">Book Test</a>
             <a href="contact.html">About</a>
-            <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
-            <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
+            <button class="btn-nav-green" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
+            <button class="btn-nav-primary" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
         </nav>
     </header>
 
-    <div class="hero">
-        <h2>Reliable Diagnostics with Advanced Technology</h2>
-        <div class="btn-container">
-            <a class="btn-book" href="book.html">Book Test</a>
-            <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>
+    <div class="hero-wrap">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1>Reliable Diagnostics with <span>Advanced Technology</span></h1>
+            <p>Accurate Results. Trusted Care.<br>Your Health is Our Priority.</p>
+            <div class="hero-buttons">
+                <a class="btn-hero-red" href="book.html"><i class="fas fa-calendar-check"></i> Book Test</a>
+                <button class="btn-hero-green" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path fill="#ffffff" fill-opacity="1" d="M0,120L80,110C160,100,320,80,480,70C640,60,800,60,960,70C1120,80,1280,100,1360,110L1440,120L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+                <path fill="#0a2540" fill-opacity="0.9" d="M0,120L80,90C160,60,320,0,480,0C640,0,800,60,960,90C1120,120,1280,120,1360,120L1440,120L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+            </svg>
         </div>
     </div>
 
-    <div class="strip">
-        <div class="strip-content">
-            <div class="strip-item"><i class="fas fa-map-marker-alt"></i> Manahar Bhushra Pandwa Patan Road</div>
-            <div class="strip-item"><i class="fas fa-phone"></i> 8709946177 / 9931002450</div>
+    <div class="contact-strip">
+        <div class="contact-strip-content">
+            <div class="contact-item"><i class="fas fa-map-marker-alt"></i> Manahar Bhushra Pandwa Patan Road</div>
+            <div class="contact-item"><i class="fas fa-phone-alt"></i> 8709946177 / 9931002450</div>
         </div>
     </div>
 
     <section id="about" style="background:white;">
-        <div class="about-container">
+        <div class="section-container about-wrapper">
             <div class="about-text">
                 <h2>About Rajan Path Lab</h2>
+                <div class="title-line"></div>
                 <p>Situated in <b>Manahar Bhushra (Pandwa Patan Road)</b>, Rajan Path Lab has established itself as a trusted name in diagnostic healthcare. We are built on the foundational pillars of <b>Clinical Precision, Diagnostic Accuracy, and Ethical Practices</b>.</p>
+                
                 <h3>Why Choose Us?</h3>
-                <div class="about-features">
-                    <div class="feature-item"><i class="fas fa-check-circle"></i> High-Precision Analyzers</div>
-                    <div class="feature-item"><i class="fas fa-check-circle"></i> Zero-Error Protocol</div>
-                    <div class="feature-item"><i class="fas fa-check-circle"></i> Fast Digital Reports</div>
-                    <div class="feature-item"><i class="fas fa-check-circle"></i> Transparent Billing</div>
-                    <div class="feature-item"><i class="fas fa-check-circle"></i> 7 Days Open</div>
-                    <div class="feature-item"><i class="fas fa-check-circle"></i> Expert Pathology</div>
+                <div class="about-features-grid">
+                    <div class="about-feature-item"><i class="fas fa-check-circle"></i> High-Precision Analyzers</div>
+                    <div class="about-feature-item"><i class="fas fa-check-circle"></i> Zero-Error Protocol</div>
+                    <div class="about-feature-item"><i class="fas fa-check-circle"></i> Timely & Accurate Reports</div>
+                    <div class="about-feature-item"><i class="fas fa-check-circle"></i> Experienced & Qualified Staff</div>
                 </div>
             </div>
-            <div style="text-align:center;">
-                <img src="https://cdn-icons-png.flaticon.com/512/3063/3063205.png" alt="Medical Icon" style="width:180px;opacity:0.9;">
+            
+            <div class="about-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=600&q=80" alt="Lab Technician">
+                <div class="about-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="about-badge-text">
+                        <span>Accurate</span>
+                        <span>Reliable</span>
+                        <span>Confidential</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2227,8 +1175,7 @@
                 setTimeout(function() {
                     preloader.classList.add('hide');
                     setTimeout(function() {
-                        if (preloader && preloader.parentNode) preloader.parentNode.removeChild(
-                        preloader);
+                        if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
                     }, 600);
                 }, 2200);
             });
@@ -2240,8 +1187,7 @@
                 toast.className = `toast ${type}`;
                 const iconMap = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-triangle' };
                 const icon = iconMap[type] || 'fa-info-circle';
-                toast.innerHTML =
-                    `<i class="fas ${icon}"></i><span>${message}</span><span class="toast-close">&times;</span>`;
+                toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span><span class="toast-close">&times;</span>`;
                 container.appendChild(toast);
                 requestAnimationFrame(() => { toast.classList.add('show'); });
                 const close = () => {
@@ -2282,8 +1228,7 @@
 
             // ─── SUPABASE ───
             const supabaseUrl = 'https://fflqftbnttpgwdktagmj.supabase.co';
-            const supabaseKey =
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
             const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
             const STORAGE_BUCKET = 'reports';
 
@@ -2337,34 +1282,24 @@
 
             // ─── DATA LOADERS ───
             async function loadPatients() { const snap = await rtdb.ref('/patients').once('value'); return snap.val() || []; }
-
             async function savePatients(arr) { await rtdb.ref('/patients').set(arr); }
-
             async function loadReports() { const snap = await rtdb.ref('/reports').once('value'); return snap.val() || []; }
-
             async function saveReports(arr) { await rtdb.ref('/reports').set(arr); }
-
             async function loadPayments() {
                 const snap = await rtdb.ref('/payments').once('value');
                 const val = snap.val();
                 return val || { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0, history: [] };
             }
-
             async function savePayments(obj) { await rtdb.ref('/payments').set(obj); }
-
             async function loadLogs() { const snap = await rtdb.ref('/logs').once('value'); return snap.val() || []; }
-
             async function saveLogs(arr) { await rtdb.ref('/logs').set(arr); }
-
             async function loadSettings() {
                 const snap = await rtdb.ref('/settings').once('value');
                 return snap.val() || {};
             }
-
             async function saveSettings(obj) { await rtdb.ref('/settings').set(obj); }
 
-            let patients = [],
-                reports = [];
+            let patients = [], reports = [];
             let payments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0, history: [] };
             let activityLogs = [];
             let settings = {};
@@ -2430,17 +1365,13 @@
                 payConfirmModal.classList.add('show');
             }
 
-            function closePayConfirm() { payConfirmModal.classList.remove('show');
-                pendingPayPatientId = null;
-                pendingPayAmount = 0; }
-
+            function closePayConfirm() { payConfirmModal.classList.remove('show'); pendingPayPatientId = null; pendingPayAmount = 0; }
             $('payConfirmCancel').addEventListener('click', closePayConfirm);
             payConfirmModal.addEventListener('click', e => { if (e.target === payConfirmModal) closePayConfirm(); });
 
             document.querySelectorAll('#payMethodGroup input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
-                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove(
-                    'selected'));
+                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove('selected'));
                     this.closest('label').classList.add('selected');
                 });
             });
@@ -2485,8 +1416,7 @@
                     setTimeout(() => closePayConfirm(), 1200);
 
                     if (patient.phone) {
-                        const msg =
-                            `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you for choosing Rajan Path Lab.`;
+                        const msg = `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you for choosing Rajan Path Lab.`;
                         sendWhatsApp(patient.phone, msg);
                     }
                 } catch (err) { showToast('Error: ' + err.message, 'error'); }
@@ -2526,8 +1456,7 @@
                     showToast(`✅ ${patient.name} marked as paid (₹${amount})`, 'success');
 
                     if (patient.phone) {
-                        const msg =
-                            `✅ Payment Confirmed (Quick)\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: Cash\nThank you for choosing Rajan Path Lab.`;
+                        const msg = `✅ Payment Confirmed (Quick)\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: Cash\nThank you for choosing Rajan Path Lab.`;
                         sendWhatsApp(patient.phone, msg);
                     }
                 } catch (err) { showToast('Error: ' + err.message, 'error'); }
@@ -2548,8 +1477,7 @@
                 document.body.style.overflow = 'hidden';
                 refreshAllData().then(() => {
                     $('portalStatus').className = 'portal-status';
-                    $('portalStatus').textContent =
-                    '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                    $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                     $('portalReportList').style.display = 'none';
                     $('portalPatientId').value = '';
                 });
@@ -2559,14 +1487,11 @@
                 portalModal.classList.remove('active');
                 document.body.style.overflow = '';
                 $('portalStatus').className = 'portal-status';
-                $('portalStatus').textContent =
-                '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
             }
-            $('openPatientPortalBtn').addEventListener('click', e => { e.preventDefault();
-                openPortal(); });
-            $('openPatientPortalBtn2').addEventListener('click', e => { e.preventDefault();
-                openPortal(); });
+            $('openPatientPortalBtn').addEventListener('click', e => { e.preventDefault(); openPortal(); });
+            $('openPatientPortalBtn2').addEventListener('click', e => { e.preventDefault(); openPortal(); });
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', e => { if (e.target === portalModal) closePortal(); });
 
@@ -2583,10 +1508,8 @@
                 await refreshAllData();
                 const normalizedSearch = normalizePhone(searchValue);
                 let patient = patients.find(p => p.patient_id === searchValue);
-                if (!patient) patient = patients.find(p => normalizePhone(p.phone || '') === normalizedSearch || p.phone ===
-                    searchValue);
-                if (!patient && normalizedSearch.length >= 4) patient = patients.find(p => normalizePhone(p.phone || '')
-                    .includes(normalizedSearch) || (p.phone || '').includes(searchValue));
+                if (!patient) patient = patients.find(p => normalizePhone(p.phone || '') === normalizedSearch || p.phone === searchValue);
+                if (!patient && normalizedSearch.length >= 4) patient = patients.find(p => normalizePhone(p.phone || '').includes(normalizedSearch) || (p.phone || '').includes(searchValue));
                 if (!patient) {
                     statusDiv.className = 'portal-status error';
                     statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;
@@ -2604,15 +1527,12 @@
                 const isPaid = dueAmount === 0;
                 const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
                 statusDiv.className = 'portal-status ' + (isPaid ? 'success' : 'error');
-                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
-                    ' (via ' + foundBy + '). Status: ' + (isPaid ? '✅ Paid' : '⚠️ ₹' + dueAmount + ' Due') +
-                    (isPaid ? ' — Reports are <b>unlocked</b>.' : ' — <b>LOCKED</b> until payment is confirmed.');
+                statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name + ' (via ' + foundBy + '). Status: ' + (isPaid ? '✅ Paid' : '⚠️ ₹' + dueAmount + ' Due') + (isPaid ? ' — Reports are <b>unlocked</b>.' : ' — <b>LOCKED</b> until payment is confirmed.');
 
                 let html = '<h3 style="margin-bottom:1rem;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
                     const canDownload = isPaid;
-                    const dueBadge = !isPaid ? '<span class="portal-due-badge">₹' + dueAmount + ' DUE — LOCKED</span>' :
-                        '';
+                    const dueBadge = !isPaid ? '<span class="portal-due-badge">₹' + dueAmount + ' DUE — LOCKED</span>' : '';
                     html += `
                             <div class="portal-report-item">
                                 <div class="portal-report-info">
@@ -2637,14 +1557,12 @@
                         const freshDue = freshPatient ? Number(freshPatient.due_amount) : dueAmount;
                         if (freshDue !== 0) {
                             statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML = '❌ Payment pending (₹' + freshDue +
-                                '). Please clear dues.';
+                            statusDiv.innerHTML = '❌ Payment pending (₹' + freshDue + '). Please clear dues.';
                             return;
                         }
                         const reportId = parseInt(this.dataset.reportId);
                         const fileName = this.dataset.fileName;
-                        try { await downloadPDF(reportId, fileName);
-                            showToast('Download started', 'success'); } catch (e) {
+                        try { await downloadPDF(reportId, fileName); showToast('Download started', 'success'); } catch (e) {
                             statusDiv.className = 'portal-status error';
                             statusDiv.innerHTML = '❌ Error: ' + e.message;
                         }
@@ -2667,16 +1585,11 @@
                 const username = $('loginUsername').value.trim();
                 const password = $('loginPassword').value.trim();
                 const result = $('loginResult');
-                if (!username || !password) { result.style.color = 'red';
-                    result.textContent = 'Please enter credentials'; return; }
+                if (!username || !password) { result.style.color = 'red'; result.textContent = 'Please enter credentials'; return; }
                 if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
-                    result.style.color = 'green';
-                    result.textContent = '✅ Login successful!';
-                    loginModal.classList.remove('show');
-                    showAdmin();
+                    result.style.color = 'green'; result.textContent = '✅ Login successful!'; loginModal.classList.remove('show'); showAdmin();
                 } else {
-                    result.style.color = 'red';
-                    result.textContent = '❌ Invalid username or password';
+                    result.style.color = 'red'; result.textContent = '❌ Invalid username or password';
                 }
             });
 
@@ -2691,11 +1604,8 @@
                 setTimeout(() => generateAllQRCodes(), 300);
             }
 
-            function hideAdmin() { adminWrapper.classList.remove('active');
-                document.body.style.overflow = ''; }
-
-            function logout() { hideAdmin();
-                showToast('Logged out', 'warning'); }
+            function hideAdmin() { adminWrapper.classList.remove('active'); document.body.style.overflow = ''; }
+            function logout() { hideAdmin(); showToast('Logged out', 'warning'); }
             $('logoutBtn').addEventListener('click', logout);
             $('logoutBtn2')?.addEventListener('click', logout);
 
@@ -2708,15 +1618,9 @@
             });
 
             const adminSections = {
-                dashboard: $('sec-dashboard'),
-                patients: $('sec-patients'),
-                reports: $('sec-reports'),
-                whatsapp: $('sec-whatsapp'),
-                payments: $('sec-payments'),
-                settings: $('sec-settings'),
-                analytics: $('sec-analytics'),
-                backup: $('sec-backup'),
-                security: $('sec-security')
+                dashboard: $('sec-dashboard'), patients: $('sec-patients'), reports: $('sec-reports'),
+                whatsapp: $('sec-whatsapp'), payments: $('sec-payments'), settings: $('sec-settings'),
+                analytics: $('sec-analytics'), backup: $('sec-backup'), security: $('sec-security')
             };
             const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');
 
@@ -2735,8 +1639,7 @@
                 if (id === 'patients') setTimeout(() => generateAllQRCodes(), 200);
             }
             sidebarLinks.forEach(a => a.addEventListener('click', function(e) {
-                e.preventDefault();
-                showAdminSection(this.dataset.section);
+                e.preventDefault(); showAdminSection(this.dataset.section);
             }));
 
             function generateAllQRCodes() {
@@ -2757,15 +1660,7 @@
             }
 
             function refreshAllSections() {
-                refreshDashboard();
-                refreshPatients();
-                refreshReports();
-                refreshWhatsAppPatients();
-                refreshPayments();
-                refreshSettings();
-                refreshAnalytics();
-                refreshBackup();
-                refreshSecurity();
+                refreshDashboard(); refreshPatients(); refreshReports(); refreshWhatsAppPatients(); refreshPayments(); refreshSettings(); refreshAnalytics(); refreshBackup(); refreshSecurity();
             }
 
             // ─── DASHBOARD ───
@@ -2784,16 +1679,12 @@
                 $('dRevenue').textContent = '₹' + revenue;
                 const tbody = $('dRecentPatients');
                 if (patients.length) {
-                    tbody.innerHTML = patients.slice(0, 5).map(p =>
-                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
-                    ).join('');
+                    tbody.innerHTML = patients.slice(0, 5).map(p => `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`).join('');
                 } else tbody.innerHTML = '<tr><td colspan="4">No patients yet</td></tr>';
                 updateCharts();
             }
 
-            let chartWeeklyInstance = null,
-                chartPieInstance = null;
-
+            let chartWeeklyInstance = null, chartPieInstance = null;
             function updateCharts() {
                 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
                 const weeklyData = days.map(() => 0);
@@ -2806,20 +1697,15 @@
                 });
                 const testMap = {};
                 patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                const labels = Object.keys(testMap),
-                    data = Object.values(testMap);
+                const labels = Object.keys(testMap), data = Object.values(testMap);
 
                 const ctx1 = $('chartWeekly')?.getContext('2d');
                 if (ctx1) {
                     if (chartWeeklyInstance) chartWeeklyInstance.destroy();
                     chartWeeklyInstance = new Chart(ctx1, {
                         type: 'bar',
-                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData,
-                                backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
-                            borderWidth: 2 }] },
-                        options: { responsive: true, maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
-                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }] },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
                     });
                 }
                 const ctx2 = $('chartPie')?.getContext('2d');
@@ -2828,13 +1714,8 @@
                     const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a', '#ff6600'];
                     chartPieInstance = new Chart(ctx2, {
                         type: 'doughnut',
-                        data: { labels: labels.length ? labels : ['No Data'],
-                            datasets: [{ data: labels.length ? data : [1],
-                                backgroundColor: labels.length ? colors.slice(0, labels.length) : ['#ccc'],
-                                borderWidth: 2, borderColor: '#fff' }] },
-                        options: { responsive: true, maintainAspectRatio: false,
-                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,
-                                        font: { size: 11 } } } } }
+                        data: { labels: labels.length ? labels : ['No Data'], datasets: [{ data: labels.length ? data : [1], backgroundColor: labels.length ? colors.slice(0, labels.length) : ['#ccc'], borderWidth: 2, borderColor: '#fff' }] },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } } }
                     });
                 }
             }
@@ -2894,8 +1775,7 @@
                 if (!id) {
                     const nextId = patients.length + 1;
                     const today = new Date();
-                    const ds = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate())
-                        .padStart(2, '0');
+                    const ds = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
                     id = 'RPL-' + ds + '-' + String(nextId).padStart(4, '0');
                 }
 
@@ -2932,11 +1812,7 @@
             });
 
             $('clearPatientBtn').addEventListener('click', () => {
-                $('patId').value = '';
-                $('patName').value = '';
-                $('patPhone').value = '';
-                $('patTest').value = '';
-                $('patDue').value = '';
+                $('patId').value = ''; $('patName').value = ''; $('patPhone').value = ''; $('patTest').value = ''; $('patDue').value = '';
             });
             $('refreshPatients').addEventListener('click', refreshPatients);
 
@@ -2986,9 +1862,7 @@
                     const btn = e.target.closest('.btn-download-report');
                     const id = parseInt(btn.dataset.id);
                     const fileName = btn.dataset.fileName;
-                    try { await downloadPDF(id, fileName);
-                        showToast('Download started', 'success'); } catch (err) { showToast('Error: ' + err.message,
-                            'error'); }
+                    try { await downloadPDF(id, fileName); showToast('Download started', 'success'); } catch (err) { showToast('Error: ' + err.message, 'error'); }
                 }
             });
 
@@ -3000,18 +1874,13 @@
                 const msgDiv = $('uploadMessage');
                 msgDiv.textContent = '';
                 msgDiv.style.color = 'red';
-                if (!pid) { msgDiv.textContent = '❌ Patient ID required.';
-                    showToast('Patient ID required', 'error'); return; }
-                if (!test) { msgDiv.textContent = '❌ Test Name required.';
-                    showToast('Test Name required', 'error'); return; }
-                if (!file) { msgDiv.textContent = '❌ Select a PDF.';
-                    showToast('Select a PDF', 'error'); return; }
+                if (!pid) { msgDiv.textContent = '❌ Patient ID required.'; showToast('Patient ID required', 'error'); return; }
+                if (!test) { msgDiv.textContent = '❌ Test Name required.'; showToast('Test Name required', 'error'); return; }
+                if (!file) { msgDiv.textContent = '❌ Select a PDF.'; showToast('Select a PDF', 'error'); return; }
                 const patient = patients.find(p => p.patient_id === pid);
-                if (!patient) { msgDiv.textContent = '❌ Patient not found!';
-                    showToast('Patient not found', 'error'); return; }
+                if (!patient) { msgDiv.textContent = '❌ Patient not found!'; showToast('Patient not found', 'error'); return; }
                 const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
-                if (existing && replace === 'no') { msgDiv.textContent = '❌ Report exists. Use Replace.';
-                    showToast('Report exists. Use Replace.', 'warning'); return; }
+                if (existing && replace === 'no') { msgDiv.textContent = '❌ Report exists. Use Replace.'; showToast('Report exists. Use Replace.', 'warning'); return; }
                 setLoading(this, true);
                 try {
                     if (existing && replace === 'yes') {
@@ -3040,8 +1909,7 @@
                     $('reportTestName').value = '';
                     $('reportFile').value = '';
                     setTimeout(() => { msgDiv.textContent = ''; }, 5000);
-                } catch (err) { msgDiv.textContent = '❌ Upload failed: ' + err.message;
-                    showToast('Upload failed: ' + err.message, 'error'); }
+                } catch (err) { msgDiv.textContent = '❌ Upload failed: ' + err.message; showToast('Upload failed: ' + err.message, 'error'); }
                 setLoading(this, false);
             });
 
@@ -3082,15 +1950,13 @@
                 if (e.target.closest('.wa-send')) {
                     const btn = e.target.closest('.wa-send');
                     if (!btn.dataset.phone) { showToast('No phone number', 'warning'); return; }
-                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g,
-                        btn.dataset.test);
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn.dataset.test);
                     sendWhatsApp(btn.dataset.phone, msg);
                 }
             });
             $('sendWAPatient').addEventListener('click', () => {
                 const phone = prompt('Enter patient phone:');
-                if (phone) sendWhatsApp(phone, $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient')
-                    .replace(/{test}/g, 'Report'));
+                if (phone) sendWhatsApp(phone, $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report'));
             });
             $('sendWADoctor').addEventListener('click', () => {
                 const phone = prompt('Enter doctor phone:');
@@ -3141,8 +2007,7 @@
                                 <td>${h.confirmed_at || h.timestamp || '—'}</td>
                             </tr>`).join('');
                 } else {
-                    historyBody.innerHTML =
-                        '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
+                    historyBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
                 }
             }
             $('refreshPayments').addEventListener('click', refreshPayments);
@@ -3182,8 +2047,7 @@
                 $('invDate').textContent = new Date().toLocaleDateString();
                 $('invTestDesc').textContent = patient.test || 'Test';
                 $('invAmount').textContent = '₹' + amount;
-                document.querySelector('#invoicePrintArea table tbody tr:nth-child(2) td:nth-child(2)').textContent = '₹' +
-                gst;
+                document.querySelector('#invoicePrintArea table tbody tr:nth-child(2) td:nth-child(2)').textContent = '₹' + gst;
                 $('invTotal').textContent = '₹' + total;
 
                 // Lab details from settings
@@ -3239,26 +2103,21 @@
                 const revenue = patients.reduce((s, p) => s + p.due_amount, 0);
                 const testMap = {};
                 patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                let topTest = '-',
-                    topCount = 0;
-                Object.keys(testMap).forEach(k => { if (testMap[k] > topCount) { topCount = testMap[k];
-                        topTest = k; } });
+                let topTest = '-', topCount = 0;
+                Object.keys(testMap).forEach(k => { if (testMap[k] > topCount) { topCount = testMap[k]; topTest = k; } });
                 $('aToday').textContent = todayCount;
                 $('aMonth').textContent = patients.length;
                 $('aTopTest').textContent = topTest;
                 $('aRevenue').textContent = '₹' + revenue;
                 const tbody = $('analyticsTable');
                 const arr = Object.keys(testMap).map(k => ({ test: k, count: testMap[k] }));
-                if (arr.length) tbody.innerHTML = arr.map(t =>
-                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * (settings.default_price || 450)}</td><td>-</td></tr>`
-                    ).join('');
+                if (arr.length) tbody.innerHTML = arr.map(t => `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * (settings.default_price || 450)}</td><td>-</td></tr>`).join('');
                 else tbody.innerHTML = '<tr><td colspan="4">No data</td></tr>';
             }
 
             // ─── BACKUP ───
             function refreshBackup() {
-                $('backupListBody').innerHTML =
-                    '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="showToast(\'Already in cloud\',\'success\')"><i class="fas fa-check"></i></button></td></tr>';
+                $('backupListBody').innerHTML = '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="showToast(\'Already in cloud\',\'success\')"><i class="fas fa-check"></i></button></td></tr>';
             }
             $('backupDBBtn').addEventListener('click', () => showToast('Data already in Firebase cloud.', 'success'));
             $('backupPDFBtn').addEventListener('click', () => showToast('PDFs are in Supabase Storage.', 'success'));
@@ -3268,9 +2127,7 @@
             function refreshSecurity() {
                 const tbody = $('activityLogBody');
                 if (activityLogs.length) {
-                    tbody.innerHTML = activityLogs.map(l =>
-                        `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
-                    ).join('');
+                    tbody.innerHTML = activityLogs.map(l => `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`).join('');
                 } else tbody.innerHTML = '<tr><td colspan="4">No logs</td></tr>';
             }
             $('viewLogBtn').addEventListener('click', refreshSecurity);
