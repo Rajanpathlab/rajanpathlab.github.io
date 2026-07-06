@@ -295,28 +295,26 @@
             }
         }
 
-        /* ─── GLOBAL RESET & BASE ─── */
+        /* ─── ADMIN PANEL PROFESSIONAL UPGRADES ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
-            --bg-light: #f8fafc;
+            --bg-light: #f4f7f9;
             --urgent-red: #d9383a;
-            --text-dark: #0a2540;
+            --text-dark: #2d3748;
             --sidebar-width: 240px;
             --header-height: 64px;
         }
         * {
             box-sizing: border-box;
-            margin: 0;
         }
         body {
-            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             margin: 0;
             padding: 0;
             background: var(--bg-light);
             color: var(--text-dark);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
         }
         b,
         strong {
@@ -334,7 +332,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             flex-wrap: wrap;
             gap: 10px 20px;
         }
@@ -430,141 +428,59 @@
             background: #1a8d4a;
         }
 
-        /* ─── HERO - PREMIUM LAB THEME ─── */
         .hero {
-            position: relative;
-            background: linear-gradient(145deg, #f0f8ff 0%, #e6f2f5 40%, #cfe2e8 100%);
-            padding: 80px 20px 90px;
+            background: #0d3359;
+            color: white;
             text-align: center;
-            overflow: hidden;
-            isolation: isolate;
-            border-bottom: 1px solid rgba(0, 128, 128, 0.1);
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 128, 128, 0.06) 0%, transparent 60%),
-                radial-gradient(circle at 80% 50%, rgba(10, 37, 64, 0.04) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
-        /* Abstract shapes for premium feel */
-        .hero-shape {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(0, 128, 128, 0.03);
-            pointer-events: none;
-            z-index: 0;
-        }
-        .hero-shape-1 {
-            width: 400px;
-            height: 400px;
-            top: -180px;
-            right: -100px;
-            background: radial-gradient(circle, rgba(0, 128, 128, 0.06), transparent);
-        }
-        .hero-shape-2 {
-            width: 300px;
-            height: 300px;
-            bottom: -120px;
-            left: -80px;
-            background: radial-gradient(circle, rgba(10, 37, 64, 0.05), transparent);
-        }
-        .hero-shape-3 {
-            width: 200px;
-            height: 200px;
-            top: 40%;
-            left: 10%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.04), transparent);
-        }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            margin: 0 auto;
+            padding: 60px 20px;
         }
         .hero h2 {
-            color: #0a2540;
-            font-size: 3rem;
+            color: white;
+            font-size: 2.5rem;
             font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-        }
-        .hero .hero-tagline {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #1e3a5f;
-            opacity: 0.85;
-            margin-bottom: 18px;
-            letter-spacing: 0.5px;
-        }
-        .hero .hero-tagline i {
-            color: #d4af37;
-            margin-right: 8px;
-        }
-        .hero .hero-desc {
-            font-size: 1.1rem;
-            color: #2d4a6b;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            opacity: 0.8;
-            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 25px;
+            line-height: 1.3;
         }
         .btn-container {
             display: flex;
             justify-content: center;
-            gap: 16px;
+            gap: 15px;
             flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
+            margin-top: 20px;
         }
         .btn-book {
-            background: linear-gradient(135deg, #d9383a, #b82d2f);
-            padding: 14px 36px;
+            background: var(--urgent-red);
+            padding: 12px 28px;
             color: white;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1rem;
+            border-radius: 4px;
+            font-weight: bold;
             text-decoration: none;
             display: inline-block;
-            transition: 0.25s;
-            box-shadow: 0 8px 24px rgba(217, 56, 58, 0.25);
-            border: none;
-            cursor: pointer;
+            transition: 0.2s;
         }
         .btn-book:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(217, 56, 58, 0.35);
-            background: linear-gradient(135deg, #c03234, #a02527);
+            background: #b82d2f;
         }
         .btn-portal {
-            background: linear-gradient(135deg, #25D366, #1a8d4a);
-            padding: 14px 36px;
+            background: #25D366;
+            padding: 12px 28px;
             color: white;
             border: none;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1rem;
+            border-radius: 4px;
+            font-weight: bold;
             cursor: pointer;
-            transition: 0.25s;
-            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25);
+            transition: 0.2s;
         }
         .btn-portal:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(37, 211, 102, 0.35);
-            background: linear-gradient(135deg, #1fbf5e, #137a3f);
+            background: #1a8d4a;
         }
 
-        /* ─── STRIP ─── */
         .strip {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
+            background: #fff;
             border-bottom: 1px solid #e2e8f0;
-            padding: 14px 20px;
+            padding: 15px 20px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
         .strip-content {
             display: flex;
@@ -577,45 +493,26 @@
             display: flex;
             align-items: center;
             color: var(--primary-blue);
-            font-size: 0.95rem;
         }
         .strip i {
             color: var(--accent-teal);
             margin-right: 10px;
         }
 
-        /* ─── SECTIONS (Premium Glass) ─── */
         section {
-            padding: 60px 20px;
+            padding: 45px 20px;
             max-width: 1100px;
             margin: 0 auto;
             text-align: center;
         }
         .section-wrapper-alt {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(4px);
-            border-top: 1px solid rgba(0, 128, 128, 0.06);
-            border-bottom: 1px solid rgba(0, 128, 128, 0.06);
+            background: var(--bg-light);
         }
         h2 {
             color: var(--primary-blue);
-            margin-bottom: 28px;
-            font-size: 2.2rem;
+            margin-bottom: 25px;
+            font-size: 26px;
             font-weight: 700;
-            position: relative;
-            display: inline-block;
-            letter-spacing: -0.01em;
-        }
-        h2::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: -10px;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-teal), #20b2aa);
-            border-radius: 4px;
         }
         .about-container {
             display: flex;
@@ -623,16 +520,10 @@
             gap: 40px;
             text-align: left;
             flex-wrap: wrap;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(4px);
-            padding: 30px 35px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
         }
         .about-text {
             flex: 1;
-            min-width: 280px;
+            min-width: 300px;
         }
         .about-features {
             display: grid;
@@ -645,47 +536,29 @@
             align-items: center;
             gap: 10px;
             font-weight: 600;
-            background: rgba(0, 128, 128, 0.04);
-            padding: 8px 14px;
-            border-radius: 40px;
-            transition: 0.2s;
         }
         .feature-item i {
             color: var(--accent-teal);
-            font-size: 1.1rem;
-        }
-        .feature-item:hover {
-            background: rgba(0, 128, 128, 0.08);
         }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            gap: 15px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(4px);
-            padding: 22px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
-            transition: 0.3s ease;
+            background: white;
+            padding: 20px 15px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
             text-align: center;
         }
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 40px rgba(0, 128, 128, 0.06);
-            border-color: rgba(0, 128, 128, 0.15);
-            background: rgba(255, 255, 255, 0.95);
-        }
         .card i {
-            font-size: 32px;
-            margin-bottom: 12px;
-            color: var(--accent-teal);
+            font-size: 30px;
+            margin-bottom: 10px;
         }
         .card h3 {
-            margin: 5px 0 6px;
-            font-size: 1.15rem;
+            margin: 5px 0;
+            font-size: 1.1rem;
             color: var(--primary-blue);
         }
         .partner-grid {
@@ -695,24 +568,15 @@
             flex-wrap: wrap;
         }
         .partner-item {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(4px);
-            padding: 18px 12px;
-            border-radius: 16px;
-            width: 150px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            text-align: center;
-            transition: 0.25s;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-        }
-        .partner-item:hover {
-            transform: scale(1.03);
-            border-color: var(--accent-teal);
             background: white;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            padding: 15px;
+            border-radius: 6px;
+            width: 150px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
         }
         .partner-item i {
-            font-size: 34px;
+            font-size: 32px;
             margin-bottom: 8px;
         }
         .partner-item p {
@@ -723,20 +587,18 @@
         }
         .map-container {
             margin-top: 20px;
-            border-radius: 16px;
+            border-radius: 8px;
             overflow: hidden;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            border: 1px solid rgba(0, 128, 128, 0.1);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            border: 1px solid #cbd5e1;
         }
         footer {
             background: var(--primary-blue);
             color: #e2e8f0;
             padding: 40px 20px;
             text-align: center;
-            margin-top: 20px;
         }
         .footer-links {
             margin: 20px 0;
@@ -757,24 +619,15 @@
             right: 20px;
             background: #25D366;
             color: white;
-            padding: 12px 24px;
-            border-radius: 60px;
+            padding: 12px 20px;
+            border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
             z-index: 1000;
-            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
-            transition: 0.25s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* ─── ADMIN PANEL (unchanged styles) ─── */
-        /* (All admin panel styles remain exactly as before, we keep them intact) */
+        /* ─── ADMIN PANEL ─── */
         #adminPanelWrapper {
             display: none;
             position: fixed;
@@ -812,9 +665,6 @@
             color: white;
             margin: 0;
             font-size: 20px;
-        }
-        .admin-header h2::after {
-            display: none;
         }
         .admin-user {
             display: flex;
@@ -918,6 +768,7 @@
             }
         }
 
+        /* Cards & Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -1181,6 +1032,7 @@
             margin-left: 6px;
         }
 
+        /* Login Modal */
         .login-modal {
             display: none;
             position: fixed;
@@ -1228,6 +1080,7 @@
             margin-top: 6px;
         }
 
+        /* UPI Modal */
         .upi-modal {
             display: none;
             position: fixed;
@@ -1260,6 +1113,7 @@
             margin-top: 12px;
         }
 
+        /* Patient Portal Modal */
         .patient-portal-modal {
             display: none;
             position: fixed;
@@ -1450,6 +1304,7 @@
             justify-content: space-between;
         }
 
+        /* Payment Confirmation Modal */
         .pay-confirm-modal {
             display: none;
             position: fixed;
@@ -1560,6 +1415,7 @@
             border-radius: 20px;
         }
 
+        /* Invoice Modal */
         .invoice-modal {
             display: none;
             position: fixed;
@@ -1632,6 +1488,7 @@
             justify-content: flex-end;
         }
 
+        /* Settings Section */
         .settings-group {
             background: white;
             padding: 20px;
@@ -1657,6 +1514,7 @@
             min-height: 60px;
         }
 
+        /* Dark Mode overrides */
         body.admin-dark #adminPanelContainer {
             background: #0f172a;
         }
@@ -1805,18 +1663,6 @@
                 padding: 4px 12px;
                 margin: 2px 0;
             }
-            .hero h2 {
-                font-size: 2.2rem;
-            }
-            .hero .hero-tagline {
-                font-size: 1rem;
-            }
-            .hero .hero-desc {
-                font-size: 0.95rem;
-            }
-            .hero-shape {
-                display: none;
-            }
             .admin-body {
                 flex-direction: column;
             }
@@ -1840,6 +1686,9 @@
             .admin-sidebar .nav-label {
                 display: none;
             }
+            .hero h2 {
+                font-size: 1.8rem;
+            }
             .about-features {
                 grid-template-columns: 1fr;
             }
@@ -1849,9 +1698,6 @@
             .pay-method-group label {
                 font-size: 12px;
                 padding: 4px 12px;
-            }
-            .about-container {
-                padding: 20px;
             }
         }
 
@@ -1869,12 +1715,12 @@
                 letter-spacing: 0.8px;
             }
             .hero h2 {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
             }
             .btn-book,
             .btn-portal {
-                padding: 12px 24px;
-                font-size: 0.9rem;
+                padding: 10px 18px;
+                font-size: 14px;
             }
         }
     </style>
@@ -1910,6 +1756,7 @@
 
     <!-- ═══════════ MAIN PAGE ═══════════ -->
     <header>
+        <!-- ─── LARGE LOGO ─── -->
         <a href="#" class="header-logo">
             <div class="logo-icon">R</div>
             <div class="logo-text-group">
@@ -1928,19 +1775,11 @@
         </nav>
     </header>
 
-    <!-- ─── HERO – Premium Lab Theme ─── -->
     <div class="hero">
-        <div class="hero-shape hero-shape-1"></div>
-        <div class="hero-shape hero-shape-2"></div>
-        <div class="hero-shape hero-shape-3"></div>
-        <div class="hero-content">
-            <h2>Reliable Diagnostics with Advanced Technology</h2>
-            <div class="hero-tagline"><i class="fas fa-microscope"></i> Precision. Accuracy. Trust. — Since 2020</div>
-            <div class="hero-desc">State‑of‑the‑art pathology services delivered with care and precision. Your health is our mission.</div>
-            <div class="btn-container">
-                <a class="btn-book" href="book.html">Book Test</a>
-                <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>
-            </div>
+        <h2>Reliable Diagnostics with Advanced Technology</h2>
+        <div class="btn-container">
+            <a class="btn-book" href="book.html">Book Test</a>
+            <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>
         </div>
     </div>
 
@@ -2031,7 +1870,7 @@
         <p style="font-size:12px;opacity:0.7;margin-top:10px;">© 2026 Rajan Path Lab. All Rights Reserved.</p>
     </footer>
 
-    <a href="https://wa.me/918709946177" class="whatsapp-float"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+    <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
 
     <!-- ═══════════ LOGIN MODAL ═══════════ -->
     <div class="login-modal" id="loginModal">
