@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Rajan Path Lab | Premium Diagnostics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer>
+    </script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js">
     </script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js">
@@ -15,6 +17,203 @@
     </script>
 
     <style>
+        /* ─── प्री-लोडर (PROFESSIONAL LOADING SCREEN) ─── */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #0a2540;
+            background-image: radial-gradient(circle at 30% 40%, rgba(0, 128, 128, 0.18) 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, rgba(212, 175, 55, 0.08) 0%, transparent 55%);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            visibility: visible;
+        }
+        #preloader.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .preloader-logo {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .preloader-logo span {
+            color: #008080;
+        }
+        .preloader-tagline {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .preloader-dna-container {
+            position: relative;
+            width: 90px;
+            height: 130px;
+            margin-bottom: 1.5rem;
+        }
+        /* DNA हेलिक्स एनिमेशन */
+        .dna-strand {
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #008080 0%, #20b2aa 50%, #008080 100%);
+            left: 50%;
+            transform-origin: center center;
+            animation: dnaRotate1 2.2s ease-in-out infinite;
+        }
+        .dna-strand:nth-child(2) {
+            animation-name: dnaRotate2;
+            background: linear-gradient(180deg, #d4af37 0%, #f0d060 50%, #d4af37 100%);
+        }
+        .dna-rung {
+            position: absolute;
+            width: 36px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.55);
+            border-radius: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: rungPulse 1.6s ease-in-out infinite;
+        }
+        .dna-rung:nth-child(3) {
+            top: 18%;
+            animation-delay: 0.15s;
+        }
+        .dna-rung:nth-child(4) {
+            top: 36%;
+            animation-delay: 0.3s;
+        }
+        .dna-rung:nth-child(5) {
+            top: 54%;
+            animation-delay: 0.45s;
+        }
+        .dna-rung:nth-child(6) {
+            top: 72%;
+            animation-delay: 0.6s;
+        }
+        .dna-rung:nth-child(7) {
+            top: 88%;
+            animation-delay: 0.75s;
+        }
+        @keyframes dnaRotate1 {
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            25% {
+                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
+            }
+            50% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            75% {
+                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
+            }
+        }
+        @keyframes dnaRotate2 {
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            25% {
+                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
+            }
+            50% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            75% {
+                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
+            }
+        }
+        @keyframes rungPulse {
+            0%,
+            100% {
+                opacity: 0.45;
+                width: 36px;
+            }
+            50% {
+                opacity: 1;
+                width: 48px;
+            }
+        }
+        .preloader-dot-container {
+            display: flex;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+        .preloader-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #008080;
+            animation: dotBounce 1.5s ease-in-out infinite;
+        }
+        .preloader-dot:nth-child(2) {
+            animation-delay: 0.2s;
+            background: #20b2aa;
+        }
+        .preloader-dot:nth-child(3) {
+            animation-delay: 0.4s;
+            background: #d4af37;
+        }
+        .preloader-dot:nth-child(4) {
+            animation-delay: 0.6s;
+            background: #f0d060;
+        }
+        @keyframes dotBounce {
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-16px);
+                opacity: 1;
+            }
+        }
+        .preloader-pulse-ring {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 128, 128, 0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseRing 2s ease-out infinite;
+        }
+        .preloader-pulse-ring:nth-child(2) {
+            animation-delay: 0.7s;
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        @keyframes pulseRing {
+            0% {
+                width: 30px;
+                height: 30px;
+                opacity: 0.9;
+            }
+            100% {
+                width: 120px;
+                height: 120px;
+                opacity: 0;
+            }
+        }
+
         /* ─── आपके पुराने सारे CSS (कोई बदलाव नहीं) ─── */
         :root {
             --primary-blue: #0a2540;
@@ -354,6 +553,13 @@
             }
             section {
                 padding: 30px 15px;
+            }
+            .preloader-logo {
+                font-size: 2rem;
+            }
+            .preloader-dna-container {
+                width: 70px;
+                height: 100px;
             }
         }
 
@@ -1349,6 +1555,30 @@
 </head>
 <body>
 
+    <!-- ═══════════ प्रोफेशनल प्री-लोडर ═══════════ -->
+    <div id="preloader">
+        <div class="preloader-dna-container">
+            <div class="preloader-pulse-ring"></div>
+            <div class="preloader-pulse-ring"></div>
+            <div class="dna-strand"></div>
+            <div class="dna-strand"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
+            <div class="dna-rung"></div>
+        </div>
+        <div class="preloader-logo">RAJAN <span>PATH LAB</span></div>
+        <div class="preloader-tagline">✦ Precision Diagnostics ✦</div>
+        <div class="preloader-dot-container">
+            <div class="preloader-dot"></div>
+            <div class="preloader-dot"></div>
+            <div class="preloader-dot"></div>
+            <div class="preloader-dot"></div>
+        </div>
+    </div>
+
     <!-- ═══════════ मुख्य पेज ═══════════ -->
     <header>
         <h1>RAJAN <span>PATH LAB</span></h1>
@@ -1560,72 +1790,7 @@
                             <label>Test
                                 <input type="text" id="patTest" list="testList" placeholder="Type or select test" autocomplete="off" />
                                 <datalist id="testList">
-                                    <option value="LIVER FUNCTION TEST">
-                                    <option value="KIDNEY FUNCTION TEST (Fasting)">
-                                    <option value="LIPID PROFILE (Fasting)">
-                                    <option value="THYROID PROFILE">
-                                    <option value="BETA HCG">
-                                    <option value="HBA1C (3 Month Sugar)">
-                                    <option value="C-REACTIVE PROTEIN (CRP)">
-                                    <option value="ANTISTREPTOLYSIN O (ASO)">
-                                    <option value="R A FACTOR">
-                                    <option value="HCG PREGNANCY TEST">
-                                    <option value="URINE ROUTINE">
-                                    <option value="URINE CULTURE">
-                                    <option value="SEMEN ANALYSIS">
-                                    <option value="MANTOUX TEST">
-                                    <option value="HBSAG">
-                                    <option value="VDRL">
-                                    <option value="HIV">
-                                    <option value="HCV">
-                                    <option value="BLOOD UREA">
-                                    <option value="SERUM CREATININE">
-                                    <option value="URIC ACID (Fasting)">
-                                    <option value="BLOOD SUGAR">
-                                    <option value="COMPLETE BLOOD COUNT (CBC)">
-                                    <option value="PLATELETS TEST">
-                                    <option value="DENGUE NS1 IGG IGM">
-                                    <option value="TYPHIDOT IGG IGM">
-                                    <option value="WIDAL">
-                                    <option value="OPTIMAL">
-                                    <option value="TC DC">
-                                    <option value="BT CT">
-                                    <option value="ESR">
-                                    <option value="SMEAR OF MP">
-                                    <option value="HB">
-                                    <option value="BLOOD GROUP">
-                                    <option value="TOTAL PARASITE">
-                                    <option value="SMEAR OF MP (Repeat)">
-                                    <option value="BILIRUBIN TEST">
-                                    <option value="MP WIDAL HB">
-                                    <option value="OPTIMAL WIDAL HB">
-                                    <option value="CBC MP WIDAL">
-                                    <option value="CBC WIDAL">
-                                    <option value="HB WIDAL">
-                                    <option value="MP WIDAL">
-                                    <option value="OPTIMAL WIDAL">
-                                    <option value="SODIUM">
-                                    <option value="POTASSIUM">
-                                    <option value="CBC + WIDAL + OPTIMAL">
-                                    <option value="URINE CULTURE (Advanced)">
-                                    <option value="PLATELET COUNT">
-                                    <option value="KIDNEY COMPLETE (KFT + Electrolytes)">
-                                    <option value="PREGNANCY COMBO (HCG + CBC + Urine)">
-                                    <option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)">
-                                    <option value="HS-CRP (High Sensitivity CRP)">
-                                    <option value="VITAMIN B12">
-                                    <option value="VITAMIN D3 (25-Hydroxy)">
-                                    <option value="TSH (Thyroid Stimulating Hormone)">
-                                    <option value="T3 (Triiodothyronine)">
-                                    <option value="T4 (Thyroxine)">
-                                    <option value="FREE T3">
-                                    <option value="FREE T4">
-                                    <option value="PROLACTIN">
-                                    <option value="LH (Luteinizing Hormone)">
-                                    <option value="FSH (Follicle Stimulating Hormone)">
-                                    <option value="TESTOSTERONE (Total)">
-                                    <option value="IRON STUDIES (Iron/TIBC/Ferritin)">
-                                    <option value="CBC WIDAL BSR">
+                                    <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST (Fasting)"><option value="LIPID PROFILE (Fasting)"><option value="THYROID PROFILE"><option value="BETA HCG"><option value="HBA1C (3 Month Sugar)"><option value="C-REACTIVE PROTEIN (CRP)"><option value="ANTISTREPTOLYSIN O (ASO)"><option value="R A FACTOR"><option value="HCG PREGNANCY TEST"><option value="URINE ROUTINE"><option value="URINE CULTURE"><option value="SEMEN ANALYSIS"><option value="MANTOUX TEST"><option value="HBSAG"><option value="VDRL"><option value="HIV"><option value="HCV"><option value="BLOOD UREA"><option value="SERUM CREATININE"><option value="URIC ACID (Fasting)"><option value="BLOOD SUGAR"><option value="COMPLETE BLOOD COUNT (CBC)"><option value="PLATELETS TEST"><option value="DENGUE NS1 IGG IGM"><option value="TYPHIDOT IGG IGM"><option value="WIDAL"><option value="OPTIMAL"><option value="TC DC"><option value="BT CT"><option value="ESR"><option value="SMEAR OF MP"><option value="HB"><option value="BLOOD GROUP"><option value="TOTAL PARASITE"><option value="SMEAR OF MP (Repeat)"><option value="BILIRUBIN TEST"><option value="MP WIDAL HB"><option value="OPTIMAL WIDAL HB"><option value="CBC MP WIDAL"><option value="CBC WIDAL"><option value="HB WIDAL"><option value="MP WIDAL"><option value="OPTIMAL WIDAL"><option value="SODIUM"><option value="POTASSIUM"><option value="CBC + WIDAL + OPTIMAL"><option value="URINE CULTURE (Advanced)"><option value="PLATELET COUNT"><option value="KIDNEY COMPLETE (KFT + Electrolytes)"><option value="PREGNANCY COMBO (HCG + CBC + Urine)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)"><option value="HS-CRP (High Sensitivity CRP)"><option value="VITAMIN B12"><option value="VITAMIN D3 (25-Hydroxy)"><option value="TSH (Thyroid Stimulating Hormone)"><option value="T3 (Triiodothyronine)"><option value="T4 (Thyroxine)"><option value="FREE T3"><option value="FREE T4"><option value="PROLACTIN"><option value="LH (Luteinizing Hormone)"><option value="FSH (Follicle Stimulating Hormone)"><option value="TESTOSTERONE (Total)"><option value="IRON STUDIES (Iron/TIBC/Ferritin)"><option value="CBC WIDAL BSR">
                                 </datalist>
                             </label>
                             <label>Status <select id="patStatus"><option>pending</option><option>process</option><option>done</option></select></label>
@@ -1652,72 +1817,7 @@
                             <label>Test Name
                                 <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" />
                                 <datalist id="testList2">
-                                    <option value="LIVER FUNCTION TEST">
-                                    <option value="KIDNEY FUNCTION TEST (Fasting)">
-                                    <option value="LIPID PROFILE (Fasting)">
-                                    <option value="THYROID PROFILE">
-                                    <option value="BETA HCG">
-                                    <option value="HBA1C (3 Month Sugar)">
-                                    <option value="C-REACTIVE PROTEIN (CRP)">
-                                    <option value="ANTISTREPTOLYSIN O (ASO)">
-                                    <option value="R A FACTOR">
-                                    <option value="HCG PREGNANCY TEST">
-                                    <option value="URINE ROUTINE">
-                                    <option value="URINE CULTURE">
-                                    <option value="SEMEN ANALYSIS">
-                                    <option value="MANTOUX TEST">
-                                    <option value="HBSAG">
-                                    <option value="VDRL">
-                                    <option value="HIV">
-                                    <option value="HCV">
-                                    <option value="BLOOD UREA">
-                                    <option value="SERUM CREATININE">
-                                    <option value="URIC ACID (Fasting)">
-                                    <option value="BLOOD SUGAR">
-                                    <option value="COMPLETE BLOOD COUNT (CBC)">
-                                    <option value="PLATELETS TEST">
-                                    <option value="DENGUE NS1 IGG IGM">
-                                    <option value="TYPHIDOT IGG IGM">
-                                    <option value="WIDAL">
-                                    <option value="OPTIMAL">
-                                    <option value="TC DC">
-                                    <option value="BT CT">
-                                    <option value="ESR">
-                                    <option value="SMEAR OF MP">
-                                    <option value="HB">
-                                    <option value="BLOOD GROUP">
-                                    <option value="TOTAL PARASITE">
-                                    <option value="SMEAR OF MP (Repeat)">
-                                    <option value="BILIRUBIN TEST">
-                                    <option value="MP WIDAL HB">
-                                    <option value="OPTIMAL WIDAL HB">
-                                    <option value="CBC MP WIDAL">
-                                    <option value="CBC WIDAL">
-                                    <option value="HB WIDAL">
-                                    <option value="MP WIDAL">
-                                    <option value="OPTIMAL WIDAL">
-                                    <option value="SODIUM">
-                                    <option value="POTASSIUM">
-                                    <option value="CBC + WIDAL + OPTIMAL">
-                                    <option value="URINE CULTURE (Advanced)">
-                                    <option value="PLATELET COUNT">
-                                    <option value="KIDNEY COMPLETE (KFT + Electrolytes)">
-                                    <option value="PREGNANCY COMBO (HCG + CBC + Urine)">
-                                    <option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)">
-                                    <option value="HS-CRP (High Sensitivity CRP)">
-                                    <option value="VITAMIN B12">
-                                    <option value="VITAMIN D3 (25-Hydroxy)">
-                                    <option value="TSH (Thyroid Stimulating Hormone)">
-                                    <option value="T3 (Triiodothyronine)">
-                                    <option value="T4 (Thyroxine)">
-                                    <option value="FREE T3">
-                                    <option value="FREE T4">
-                                    <option value="PROLACTIN">
-                                    <option value="LH (Luteinizing Hormone)">
-                                    <option value="FSH (Follicle Stimulating Hormone)">
-                                    <option value="TESTOSTERONE (Total)">
-                                    <option value="IRON STUDIES (Iron/TIBC/Ferritin)">
-                                    <option value="CBC WIDAL BSR">
+                                    <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST (Fasting)"><option value="LIPID PROFILE (Fasting)"><option value="THYROID PROFILE"><option value="BETA HCG"><option value="HBA1C (3 Month Sugar)"><option value="C-REACTIVE PROTEIN (CRP)"><option value="ANTISTREPTOLYSIN O (ASO)"><option value="R A FACTOR"><option value="HCG PREGNANCY TEST"><option value="URINE ROUTINE"><option value="URINE CULTURE"><option value="SEMEN ANALYSIS"><option value="MANTOUX TEST"><option value="HBSAG"><option value="VDRL"><option value="HIV"><option value="HCV"><option value="BLOOD UREA"><option value="SERUM CREATININE"><option value="URIC ACID (Fasting)"><option value="BLOOD SUGAR"><option value="COMPLETE BLOOD COUNT (CBC)"><option value="PLATELETS TEST"><option value="DENGUE NS1 IGG IGM"><option value="TYPHIDOT IGG IGM"><option value="WIDAL"><option value="OPTIMAL"><option value="TC DC"><option value="BT CT"><option value="ESR"><option value="SMEAR OF MP"><option value="HB"><option value="BLOOD GROUP"><option value="TOTAL PARASITE"><option value="SMEAR OF MP (Repeat)"><option value="BILIRUBIN TEST"><option value="MP WIDAL HB"><option value="OPTIMAL WIDAL HB"><option value="CBC MP WIDAL"><option value="CBC WIDAL"><option value="HB WIDAL"><option value="MP WIDAL"><option value="OPTIMAL WIDAL"><option value="SODIUM"><option value="POTASSIUM"><option value="CBC + WIDAL + OPTIMAL"><option value="URINE CULTURE (Advanced)"><option value="PLATELET COUNT"><option value="KIDNEY COMPLETE (KFT + Electrolytes)"><option value="PREGNANCY COMBO (HCG + CBC + Urine)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)"><option value="HS-CRP (High Sensitivity CRP)"><option value="VITAMIN B12"><option value="VITAMIN D3 (25-Hydroxy)"><option value="TSH (Thyroid Stimulating Hormone)"><option value="T3 (Triiodothyronine)"><option value="T4 (Thyroxine)"><option value="FREE T3"><option value="FREE T4"><option value="PROLACTIN"><option value="LH (Luteinizing Hormone)"><option value="FSH (Follicle Stimulating Hormone)"><option value="TESTOSTERONE (Total)"><option value="IRON STUDIES (Iron/TIBC/Ferritin)"><option value="CBC WIDAL BSR">
                                 </datalist>
                             </label>
                             <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>
@@ -1774,7 +1874,6 @@
                         <div class="table-wrap">
                             <table><thead><tr><th>Patient</th><th>Test</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="paymentsTableBody"><tr><td colspan="5" style="text-align:center;padding:20px;">No patients</td></tr></tbody></table>
                         </div>
-                        <!-- Payment History -->
                         <h4 style="margin:24px 0 8px;color:var(--primary-blue);"><i class="fas fa-history"></i> Payment History</h4>
                         <div class="payment-history-wrap">
                             <table><thead><tr><th>#</th><th>Patient</th><th>ID</th><th>Amount</th><th>Method</th><th>Confirmed By</th><th>Date</th></tr></thead><tbody id="paymentHistoryBody"><tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr></tbody></table>
@@ -1894,6 +1993,21 @@
         (function() {
             'use strict';
 
+            // ─── प्री-लोडर: पेज लोड होने पर 2.2 सेकंड बाद हटाएं ───
+            window.addEventListener('load', function() {
+                const preloader = document.getElementById('preloader');
+                // Minimum 2.2 seconds show time for professional feel
+                setTimeout(function() {
+                    preloader.classList.add('hide');
+                    // Remove from DOM after fade
+                    setTimeout(function() {
+                        if (preloader && preloader.parentNode) {
+                            preloader.parentNode.removeChild(preloader);
+                        }
+                    }, 600);
+                }, 2200);
+            });
+
             // 🔥 Firebase Config
             const firebaseConfig = {
                 apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
@@ -1916,38 +2030,30 @@
             const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
             const STORAGE_BUCKET = 'reports';
 
-            // ─── NEW: Force-download PDF using fetch + blob ───
+            // ─── Force-download PDF using fetch + blob ───
             async function downloadPDF(reportId, fileName) {
                 try {
                     const filePath = `${reportId}_${fileName}`;
                     const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
                     const url = data.publicUrl;
-
-                    // Fetch the PDF as a blob
                     const response = await fetch(url);
                     if (!response.ok) throw new Error('Network response was not ok');
                     const blob = await response.blob();
-
-                    // Create a download link
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
                     link.download = fileName || 'report.pdf';
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-
-                    // Clean up the object URL
                     setTimeout(() => URL.revokeObjectURL(link.href), 5000);
                 } catch (error) {
                     console.warn('Download fallback to window.open due to CORS/network error:', error.message);
-                    // Fallback: open in new tab (user can then save manually)
                     const filePath = `${reportId}_${fileName}`;
                     const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
                     window.open(data.publicUrl, '_blank');
                 }
             }
 
-            // ─── Upload PDF (unchanged) ───
             async function uploadPDF(file, reportId) {
                 const filePath = `${reportId}_${file.name}`;
                 const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, file);
@@ -1962,7 +2068,6 @@
                 if (error) console.warn('Delete error:', error.message);
             }
 
-            // ─── लॉगिन ───
             const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
             function normalizePhone(phone) {
@@ -1974,7 +2079,6 @@
                 return cleaned;
             }
 
-            // ─── Firebase डेटा ───
             async function loadPatients() {
                 const snap = await rtdb.ref('/patients').once('value');
                 return snap.val() || [];
@@ -2002,7 +2106,6 @@
             let payments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0, history: [] };
             let activityLogs = [];
 
-            // payment history helper
             async function addPaymentHistory(patientId, patientName, amount, method, adminUser) {
                 const entry = {
                     id: Date.now(),
@@ -2041,7 +2144,6 @@
             const portalModal = $('patientPortalModal');
             const payConfirmModal = $('payConfirmModal');
 
-            // ─── Payment Confirm Modal ───
             let pendingPayPatientId = null;
             let pendingPayAmount = 0;
 
@@ -2076,7 +2178,8 @@
 
             document.querySelectorAll('#payMethodGroup input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
-                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove('selected'));
+                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove(
+                        'selected'));
                     this.closest('label').classList.add('selected');
                 });
             });
@@ -2096,7 +2199,6 @@
                 await addPaymentHistory(patient.patient_id, patient.name, amount, method, adminUser);
 
                 const duePatients = patients.filter(p => p.due_amount > 0);
-                const paidPatients = patients.filter(p => p.due_amount === 0);
                 payments.unpaid_count = duePatients.length;
                 payments.total_due = duePatients.reduce((s, p) => s + p.due_amount, 0);
                 await savePayments(payments);
@@ -2116,9 +2218,7 @@
 
                 $('payConfirmStatus').style.color = 'green';
                 $('payConfirmStatus').textContent = '✅ Payment confirmed! Report unlocked.';
-                setTimeout(() => {
-                    closePayConfirm();
-                }, 1200);
+                setTimeout(() => { closePayConfirm(); }, 1200);
 
                 if (patient.phone) {
                     const msg =
@@ -2136,14 +2236,13 @@
                 window.open('https://wa.me/' + clean + '?text=' + encodeURIComponent(message), '_blank');
             }
 
-            // ─── पोर्टल ───
             function openPortal() {
                 portalModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 refreshAllData().then(() => {
                     $('portalStatus').className = 'portal-status';
                     $('portalStatus').textContent =
-                    '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                        '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                     $('portalReportList').style.display = 'none';
                     $('portalPatientId').value = '';
                 });
@@ -2153,8 +2252,7 @@
                 portalModal.classList.remove('active');
                 document.body.style.overflow = '';
                 $('portalStatus').className = 'portal-status';
-                $('portalStatus').textContent =
-                '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
                 $('portalPatientId').value = '';
             }
@@ -2235,8 +2333,7 @@
                         const freshDue = freshPatient ? Number(freshPatient.due_amount) : dueAmount;
                         if (freshDue !== 0) {
                             statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML =
-                                '❌ Payment pending (₹' + freshDue +
+                            statusDiv.innerHTML = '❌ Payment pending (₹' + freshDue +
                                 '). Please clear dues to download reports.';
                             return;
                         }
@@ -2254,7 +2351,6 @@
             $('portalPatientId').addEventListener('keypress', e => { if (e.key === 'Enter') $('portalFetchBtn')
                 .click(); });
 
-            // ─── लॉगिन ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
             $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));
             window.addEventListener('click', e => {
@@ -2306,7 +2402,6 @@
                 this.innerHTML = adminDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             });
 
-            // ─── सेक्शन नेविगेशन ───
             const adminSections = {
                 dashboard: $('sec-dashboard'),
                 patients: $('sec-patients'),
@@ -2365,7 +2460,6 @@
                 refreshSecurity();
             }
 
-            // ─── डैशबोर्ड ───
             function refreshDashboard() {
                 const total = patients.length;
                 const totalRep = reports.length;
@@ -2440,7 +2534,6 @@
                 }
             }
 
-            // ─── पेशेंट्स (Phone optional) ───
             function refreshPatients() {
                 const tbody = $('patientTableBody');
                 if (patients.length) {
@@ -2467,7 +2560,6 @@
                 }
             });
 
-            // ─── ADD PATIENT — Phone is NOW OPTIONAL ───
             $('addPatientBtn').addEventListener('click', async function() {
                 const patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
@@ -2476,7 +2568,6 @@
                 const status = $('patStatus').value;
                 const due = parseFloat($('patDue').value) || 0;
 
-                // ✅ Only name is required now
                 if (!name) { alert('❌ Name is required. Phone is optional.'); return; }
 
                 let id = patientId;
@@ -2489,7 +2580,6 @@
                 }
 
                 const normPhone = normalizePhone(phone);
-                // Check duplicate: if phone is provided, check by phone; always check by ID
                 const duplicate = patients.find(p => p.patient_id === id);
                 if (duplicate) { alert('❌ Patient ID already exists!'); return; }
                 if (normPhone) {
@@ -2549,7 +2639,6 @@
                 });
             });
 
-            // ─── रिपोर्ट्स ───
             function refreshReports() {
                 const tbody = $('reportsTableBody');
                 if (reports.length) {
@@ -2564,7 +2653,6 @@
                 } else tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
             }
 
-            // ─── DOWNLOAD handler (uses new downloadPDF) ───
             document.addEventListener('click', async function(e) {
                 if (e.target.closest('.btn-download-report')) {
                     const btn = e.target.closest('.btn-download-report');
@@ -2641,7 +2729,6 @@
             });
             $('refreshReports').addEventListener('click', refreshReports);
 
-            // ─── व्हाट्सएप ───
             function refreshWhatsAppPatients() {
                 const tbody = $('whatsappPatientList');
                 if (patients.length) {
@@ -2681,7 +2768,6 @@
                 if (phone) sendWhatsApp(phone, 'Reminder: Payment due at Rajan Path Lab.');
             });
 
-            // ─── पेमेंट्स ───
             function refreshPayments() {
                 const due = patients.filter(p => p.due_amount > 0);
                 const paid = patients.filter(p => p.due_amount === 0);
@@ -2698,10 +2784,7 @@
                                 <td>${p.name}</td><td>${p.test}</td><td>₹${p.due_amount}</td>
                                 <td><span class="badge-status ${p.due_amount>0?'unpaid':'paid'}">${p.due_amount>0?'Unpaid':'Paid'}</span></td>
                                 <td>
-                                    ${p.due_amount>0 ? 
-                                        `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Confirm Pay</button>` : 
-                                        `<span class="badge-status paid"><i class="fas fa-check"></i> Cleared</span>`
-                                    }
+                                    ${p.due_amount>0 ? `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Confirm Pay</button>` : `<span class="badge-status paid"><i class="fas fa-check"></i> Cleared</span>`}
                                 </td>
                             </tr>`).join('');
                 } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
@@ -2726,7 +2809,6 @@
             }
             $('refreshPayments').addEventListener('click', refreshPayments);
 
-            // ─── UPI ───
             $('upiPayBtn').addEventListener('click', () => {
                 upiModal.classList.add('show');
                 const container = $('upiQR');
@@ -2744,7 +2826,6 @@
             });
             $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));
 
-            // ─── एनालिटिक्स ───
             function refreshAnalytics() {
                 const today = new Date().toDateString();
                 let todayCount = 0;
@@ -2768,7 +2849,6 @@
                 else tbody.innerHTML = '<tr><td colspan="4">No data</td></tr>';
             }
 
-            // ─── बैकअप ───
             function refreshBackup() {
                 $('backupListBody').innerHTML =
                     '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="alert(\'Already in cloud\')"><i class="fas fa-check"></i></button></td></tr>';
@@ -2777,7 +2857,6 @@
             $('backupPDFBtn').addEventListener('click', () => alert('PDFs are in Supabase Storage.'));
             $('restoreBtn').addEventListener('click', () => alert('Restore not needed.'));
 
-            // ─── सिक्योरिटी ───
             function refreshSecurity() {
                 const tbody = $('activityLogBody');
                 if (activityLogs.length) {
@@ -2795,9 +2874,9 @@
                 alert('✅ Password changed! (dummy)');
             });
 
-            console.log('✅ Rajan Path Lab · Phone optional + Force-download PDF');
+            console.log('✅ Rajan Path Lab · Professional Preloader + Force-download PDF');
             console.log('🔑 Login: Rajan5530 / Rkchandra5530');
-            console.log('📁 PDFs: fetch+blob → forces download to Downloads folder');
+            console.log('🌀 DNA helix loading animation for premium diagnostic feel');
 
         })();
     </script>
