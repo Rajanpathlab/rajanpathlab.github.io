@@ -72,13 +72,17 @@
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', Roboto, system-ui, sans-serif; margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.5; }
 
+        /* ─── LOGO STYLES ─── */
+        .logo-svg { height: 45px; width: auto; }
+        .logo-svg-small { height: 35px; width: auto; }
+        .logo-svg-invoice { height: 50px; width: auto; }
+
         /* Header (Main Site) */
         header { background: var(--primary-blue); color: white; padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         header .logo { display: flex; align-items: center; gap: 12px; }
-        header .logo img { height: 40px; border-radius: 50%; background: white; padding: 4px; }
-        header h1 { margin: 0; font-size: 22px; font-weight: 700; }
-        header h1 span { color: var(--accent-teal); }
-        header .tagline { font-size: 11px; color: #94a3b8; letter-spacing: 0.5px; }
+        header .logo-text h1 { margin: 0; font-size: 22px; font-weight: 700; }
+        header .logo-text h1 span { color: var(--accent-teal); }
+        header .logo-text .tagline { font-size: 11px; color: #94a3b8; letter-spacing: 0.5px; }
         nav a { color: #e2e8f0; margin-left: 20px; text-decoration: none; font-weight: 600; font-size: 15px; transition: 0.2s; }
         nav a:hover { color: var(--accent-teal); }
         .admin-login-btn, .patient-portal-btn { background: var(--accent-teal); color: white; border: none; padding: 6px 16px; border-radius: 4px; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; margin-left: 15px; }
@@ -126,7 +130,6 @@
         #adminPanelContainer { max-width: 1400px; margin: 0 auto; background: #f0f2f5; border-radius: 16px; box-shadow: 0 25px 70px rgba(0,0,0,0.5); overflow: hidden; min-height: 90vh; display: flex; flex-direction: column; }
         .admin-header { background: var(--primary-blue); color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; flex-shrink: 0; }
         .admin-header .logo-small { display: flex; align-items: center; gap: 10px; }
-        .admin-header .logo-small img { height: 35px; border-radius: 50%; background: white; padding: 2px; }
         .admin-header h2 { color: white; margin: 0; font-size: 20px; }
         .admin-user { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .admin-user span { color: #e2e8f0; }
@@ -241,6 +244,8 @@
             .hero h2 { font-size: 1.8rem; }
             .about-features { grid-template-columns: 1fr; }
             .stats-grid { grid-template-columns: 1fr 1fr; }
+            .logo-svg { height: 35px; }
+            .logo-svg-small { height: 28px; }
         }
 
         /* Extra for calendar and scanner */
@@ -273,11 +278,27 @@
 <!-- ═══════ TOAST CONTAINER ═══════ -->
 <div id="toastContainer"></div>
 
-<!-- ═══════ MAIN SITE HEADER ═══════ -->
+<!-- ═══════ MAIN SITE HEADER (WITH LOGO) ═══════ -->
 <header>
     <div class="logo">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23008080'/%3E%3Ctext x='50' y='55' font-size='16' fill='white' text-anchor='middle' font-family='Arial' font-weight='bold'%3ERPL%3C/text%3E%3C/svg%3E" alt="Logo">
-        <div>
+        <!-- Professional SVG Logo -->
+        <svg class="logo-svg" viewBox="0 0 120 45" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#008080"/>
+                    <stop offset="100%" stop-color="#20b2aa"/>
+                </linearGradient>
+            </defs>
+            <!-- DNA helix symbol -->
+            <circle cx="22" cy="22.5" r="18" fill="url(#logoGrad)" opacity="0.9"/>
+            <path d="M22 4.5 C28 10, 28 35, 22 40.5 C16 35, 16 10, 22 4.5" stroke="white" stroke-width="2.5" fill="none"/>
+            <path d="M22 12 C27 16, 27 29, 22 33 C17 29, 17 16, 22 12" stroke="#d4af37" stroke-width="1.8" fill="none"/>
+            <!-- Text -->
+            <text x="45" y="18" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="13" fill="#0a2540">RAJAN</text>
+            <text x="45" y="34" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="14" fill="#008080">PATH LAB</text>
+            <text x="45" y="43" font-family="'Segoe UI', Arial, sans-serif" font-weight="400" font-size="7" fill="#64748b">SOLUTION OF YOUR HEALTHY LIFE</text>
+        </svg>
+        <div class="logo-text">
             <h1>RAJAN <span>PATH LAB</span></h1>
             <div class="tagline">SOLUTION OF YOUR HEALTHY LIFE</div>
         </div>
@@ -308,7 +329,7 @@
     </div>
 </div>
 
-<!-- ═══════ ABOUT & SECTIONS (same as before, truncated for brevity) ═══════ -->
+<!-- ═══════ ABOUT & SECTIONS (truncated for brevity) ═══════ -->
 <section id="about" style="background:white;">
     <div class="about-container">
         <div class="about-text">
@@ -350,7 +371,7 @@
 
 <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
 
-<!-- ═══════ MODALS (Login, Payment, Invoice, Portal, UPI) - kept as before ═══════ -->
+<!-- ═══════ MODALS (Login, Payment, Invoice, Portal, UPI) ═══════ -->
 <!-- Login Modal -->
 <div class="login-modal" id="loginModal">
     <div class="login-modal-content">
@@ -393,13 +414,22 @@
     </div>
 </div>
 
-<!-- Invoice Modal -->
+<!-- Invoice Modal (with Logo) -->
 <div class="invoice-modal" id="invoiceModal">
     <div class="invoice-modal-content">
         <div id="invoicePrintArea" class="invoice-print-area">
             <div class="invoice-header">
                 <div style="display:flex;align-items:center;gap:12px;">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23008080'/%3E%3Ctext x='50' y='55' font-size='16' fill='white' text-anchor='middle' font-family='Arial' font-weight='bold'%3ERPL%3C/text%3E%3C/svg%3E" style="height:50px;border-radius:50%;background:white;padding:4px;">
+                    <!-- Invoice Logo SVG -->
+                    <svg class="logo-svg-invoice" viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="invGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#008080"/><stop offset="100%" stop-color="#20b2aa"/></linearGradient></defs>
+                        <circle cx="25" cy="25" r="20" fill="url(#invGrad)" opacity="0.9"/>
+                        <path d="M25 5 C32 12, 32 38, 25 45 C18 38, 18 12, 25 5" stroke="white" stroke-width="2.5" fill="none"/>
+                        <path d="M25 13 C30 18, 30 32, 25 37 C20 32, 20 18, 25 13" stroke="#d4af37" stroke-width="1.8" fill="none"/>
+                        <text x="52" y="20" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="15" fill="#0a2540">RAJAN</text>
+                        <text x="52" y="38" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="16" fill="#008080">PATH LAB</text>
+                        <text x="52" y="47" font-family="'Segoe UI', Arial, sans-serif" font-weight="400" font-size="8" fill="#64748b">SOLUTION OF YOUR HEALTHY LIFE</text>
+                    </svg>
                     <div>
                         <h2 style="margin:0;">RAJAN PATH LAB</h2>
                         <div style="font-size:11px;color:#64748b;">SOLUTION OF YOUR HEALTHY LIFE</div>
@@ -470,7 +500,15 @@
     <div id="adminPanelContainer">
         <div class="admin-header">
             <div class="logo-small">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23008080'/%3E%3Ctext x='50' y='55' font-size='16' fill='white' text-anchor='middle' font-family='Arial' font-weight='bold'%3ERPL%3C/text%3E%3C/svg%3E" alt="Logo">
+                <!-- Admin Logo SVG (small) -->
+                <svg class="logo-svg-small" viewBox="0 0 80 30" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="adminGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#008080"/><stop offset="100%" stop-color="#20b2aa"/></linearGradient></defs>
+                    <circle cx="15" cy="15" r="12" fill="url(#adminGrad)" opacity="0.9"/>
+                    <path d="M15 3 C19 8, 19 22, 15 27 C11 22, 11 8, 15 3" stroke="white" stroke-width="2" fill="none"/>
+                    <path d="M15 8 C18 11, 18 19, 15 22 C12 19, 12 11, 15 8" stroke="#d4af37" stroke-width="1.5" fill="none"/>
+                    <text x="32" y="12" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="9" fill="#0a2540">RAJAN</text>
+                    <text x="32" y="23" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="10" fill="#008080">PATH LAB</text>
+                </svg>
                 <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin</h2>
             </div>
             <div class="admin-user">
