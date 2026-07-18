@@ -2001,7 +2001,8 @@
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
-                            <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" /></label>
+                            <!-- Updated: Added list="patientIdList" to allow dropdown search -->
+                            <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" list="patientIdList" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210 (optional)" /></label>
                             <label>Test
@@ -2030,7 +2031,8 @@
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                         <div class="form-grid">
-                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-062026-1186" /></label>
+                            <!-- Updated: Added list="patientIdList" to allow dropdown search for existing patient IDs -->
+                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-062026-1186" list="patientIdList" /></label>
                             <label>Test Name
                                 <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" />
                                 <datalist id="testList2">
@@ -2216,6 +2218,9 @@
         </div>
     </div>
 
+    <!-- ═══════════ DATA LIST FOR PATIENT IDS (Auto-populated dropdown) ═══════════ -->
+    <datalist id="patientIdList"></datalist>
+
     <!-- ═══════════ JAVASCRIPT ═══════════ -->
     <script>
         (function() {
@@ -2399,6 +2404,7 @@
                 if (!payments.total_due) payments.total_due = 0;
                 if (!payments.paid_count) payments.paid_count = 0;
                 if (!payments.unpaid_count) payments.unpaid_count = 0;
+                updatePatientIdDatalist(); // Update the dropdown list
             }
 
             const $ = id => document.getElementById(id);
@@ -2689,6 +2695,11 @@
                 refreshAllSections();
                 showAdminSection('dashboard');
                 setTimeout(() => generateAllQRCodes(), 300);
+                // Set the patient ID inputs with the current month/year prefix
+                setTimeout(() => {
+                    if ($('patId')) $('patId').value = getPatientIdPrefix();
+                    if ($('reportPatientId')) $('reportPatientId').value = getPatientIdPrefix();
+                }, 100);
             }
 
             function hideAdmin() { adminWrapper.classList.remove('active');
@@ -2861,6 +2872,7 @@
                             </tr>`).join('');
                     setTimeout(() => generateAllQRCodes(), 100);
                 } else tbody.innerHTML = '<tr><td colspan="8">No patients</td></tr>';
+                updatePatientIdDatalist();
             }
 
             document.addEventListener('click', function(e) {
@@ -2880,8 +2892,24 @@
                 }
             });
 
+            // ─── HELPER: Auto Patient ID Prefix ───
+            function getPatientIdPrefix() {
+                const today = new Date();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const year = today.getFullYear();
+                return 'RPL-' + month + year + '-';
+            }
+
+            // ─── HELPER: Update Patient ID Dropdown ───
+            function updatePatientIdDatalist() {
+                const datalist = document.getElementById('patientIdList');
+                if (!datalist) return;
+                const uniqueIds = [...new Set(patients.map(p => p.patient_id).filter(id => id))];
+                datalist.innerHTML = uniqueIds.map(id => `<option value="${id}">`).join('');
+            }
+
             $('addPatientBtn').addEventListener('click', async function() {
-                const patientId = $('patId').value.trim();
+                let patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
                 const phone = $('patPhone').value.trim();
                 const test = $('patTest').value.trim();
@@ -2891,13 +2919,22 @@
                 if (!name) { showToast('❌ Name is required.', 'error'); return; }
 
                 let id = patientId;
-                if (!id) {
-                    const nextId = patients.length + 1;
-                    const today = new Date();
-                    const ds = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate())
-                        .padStart(2, '0');
-                    id = 'RPL-' + ds + '-' + String(nextId).padStart(4, '0');
+                const prefix = getPatientIdPrefix();
+
+                // If user didn't type the suffix (value is exactly the prefix) or it's empty
+                if (!id || id === prefix) {
+                    let maxSeq = 0;
+                    patients.forEach(p => {
+                        if (p.patient_id && p.patient_id.startsWith(prefix)) {
+                            let seqStr = p.patient_id.substring(prefix.length);
+                            let seq = parseInt(seqStr, 10);
+                            if (!isNaN(seq) && seq > maxSeq) maxSeq = seq;
+                        }
+                    });
+                    const nextId = maxSeq + 1;
+                    id = prefix + String(nextId).padStart(4, '0');
                 }
+                // else, user typed a specific custom ID (including full prefix+suffix), use it.
 
                 const normPhone = normalizePhone(phone);
                 const duplicate = patients.find(p => p.patient_id === id);
@@ -2922,7 +2959,7 @@
                     await refreshAllData();
                     refreshAllSections();
                     showToast('✅ Patient ' + id + ' added successfully!', 'success');
-                    $('patId').value = '';
+                    $('patId').value = getPatientIdPrefix();
                     $('patName').value = '';
                     $('patPhone').value = '';
                     $('patTest').value = '';
@@ -2931,8 +2968,9 @@
                 setLoading(this, false);
             });
 
+            // Modified Clear Button to apply the prefix
             $('clearPatientBtn').addEventListener('click', () => {
-                $('patId').value = '';
+                $('patId').value = getPatientIdPrefix();
                 $('patName').value = '';
                 $('patPhone').value = '';
                 $('patTest').value = '';
@@ -2979,6 +3017,7 @@
                                 </td>
                             </tr>`).join('');
                 } else tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
+                updatePatientIdDatalist();
             }
 
             document.addEventListener('click', async function(e) {
@@ -3036,7 +3075,7 @@
                     msgDiv.style.color = 'green';
                     msgDiv.textContent = '✅ Report uploaded for ' + patient.name;
                     showToast('✅ Report uploaded for ' + patient.name, 'success');
-                    $('reportPatientId').value = '';
+                    $('reportPatientId').value = getPatientIdPrefix();
                     $('reportTestName').value = '';
                     $('reportFile').value = '';
                     setTimeout(() => { msgDiv.textContent = ''; }, 5000);
