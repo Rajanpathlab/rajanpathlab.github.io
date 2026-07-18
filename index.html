@@ -1304,27 +1304,61 @@
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', e => { if (e.target === portalModal) closePortal(); });
 
+            // ─── ⭐ UPDATED PORTAL SEARCH LOGIC ⭐ ───
             $('portalFetchBtn').addEventListener('click', async function() {
                 const searchValue = $('portalPatientId').value.trim();
                 const statusDiv = $('portalStatus');
                 const listDiv = $('portalReportList');
+                
                 if (!searchValue) {
                     statusDiv.className = 'portal-status error';
                     statusDiv.innerHTML = '⚠️ Please enter your Patient ID or Mobile Number.';
                     listDiv.style.display = 'none';
                     return;
                 }
+                
                 await refreshAllData();
                 const normalizedSearch = normalizePhone(searchValue);
-                let patient = patients.find(p => p.patient_id === searchValue);
-                if (!patient) patient = patients.find(p => normalizePhone(p.phone || '') === normalizedSearch || p.phone === searchValue);
-                if (!patient && normalizedSearch.length >= 4) patient = patients.find(p => normalizePhone(p.phone || '').includes(normalizedSearch) || (p.phone || '').includes(searchValue));
+                let patient = null;
+                const prefix = getPatientIdPrefix();
+
+                // 1. Try if input is the FULL ID (Starts with RPL-)
+                if (searchValue.startsWith('RPL-')) {
+                    patient = patients.find(p => p.patient_id === searchValue);
+                }
+
+                // 2. Try if input is LAST 4 or 5 DIGITS (e.g., 1256 or 12567)
+                // System will auto-add the current Prefix (RPL-072026-) to match existing IDs
+                if (!patient && /^\d{4,5}$/.test(searchValue)) {
+                    const generatedId = prefix + searchValue;
+                    patient = patients.find(p => p.patient_id === generatedId);
+                    // Fallback: If month changed, search for any ID ending with these numbers
+                    if (!patient) {
+                       patient = patients.find(p => p.patient_id.endsWith(searchValue));
+                    }
+                }
+
+                // 3. Try if input is MOBILE NUMBER (10 digits)
+                if (!patient && normalizedSearch.length === 10) {
+                    patient = patients.find(p => normalizePhone(p.phone || '') === normalizedSearch || p.phone === searchValue);
+                }
+
+                // 4. Fallback search for partial matches (Phone / 4 digit ID from middle)
+                if (!patient && normalizedSearch.length >= 4) {
+                    patient = patients.find(p => 
+                        normalizePhone(p.phone || '').includes(normalizedSearch) || 
+                        (p.phone || '').includes(searchValue) ||
+                        p.patient_id.includes(searchValue)
+                    );
+                }
+
                 if (!patient) {
                     statusDiv.className = 'portal-status error';
                     statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;
                     listDiv.style.display = 'none';
                     return;
                 }
+
                 const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
                 if (patientReports.length === 0) {
                     statusDiv.className = 'portal-status';
@@ -1334,7 +1368,7 @@
                 }
                 const dueAmount = Number(patient.due_amount);
                 const isPaid = dueAmount === 0;
-                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
+                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile/Partial ID';
                 statusDiv.className = 'portal-status ' + (isPaid ? 'success' : 'error');
                 statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
                     ' (via ' + foundBy + '). Status: ' + (isPaid ? '✅ Paid' : '⚠️ ₹' + dueAmount + ' Due') +
@@ -1380,6 +1414,7 @@
                     });
                 });
             });
+            
             $('portalPatientId').addEventListener('keypress', e => { if (e.key === 'Enter') $('portalFetchBtn').click(); });
 
             // ─── LOGIN ───
@@ -1631,15 +1666,12 @@
             function getTestFullName(input) {
                 input = input.trim();
                 if (!input) return '';
-                // Check if input matches a code exactly
                 if (TEST_CODES[input]) return TEST_CODES[input];
                 
-                // Check if input matches a name exactly (case insensitive)
                 const upperInput = input.toUpperCase();
                 for (let [code, name] of Object.entries(TEST_CODES)) {
                     if (name.toUpperCase() === upperInput) return name;
                 }
-                // If no match found, return the input as is (custom test)
                 return input;
             }
 
@@ -1653,7 +1685,6 @@
 
                 if (!name) { showToast('❌ Name is required.', 'error'); return; }
 
-                // Process Test Input (Code or Name)
                 const test = getTestFullName(testInput);
 
                 let id = patientId;
@@ -1772,7 +1803,6 @@
                 msgDiv.textContent = '';
                 msgDiv.style.color = 'red';
                 
-                // Process Test Input (Code or Name)
                 const test = getTestFullName(testInput);
                 
                 if (!pid) { msgDiv.textContent = '❌ Patient ID required.'; showToast('Patient ID required', 'error'); return; }
@@ -2034,7 +2064,7 @@
                 showToast('✅ Password changed! (dummy)', 'success');
             });
 
-            console.log('✅ Rajan Path Lab · Updated with Auto Patient ID + Premium Test Code System');
+            console.log('✅ Rajan Path Lab · Final Code with Auto Patient ID, Test Codes, and Smart Portal Search');
             console.log('🔑 Login: Rajan5530 / Rkchandra5530');
 
         })();
