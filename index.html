@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Rajan Path Lab | Premium Diagnostics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer>
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
     <style>
         /* ─── PRELOADER ─── */
         #preloader {
@@ -37,7 +42,9 @@
             color: #fff;
             text-align: center;
         }
-        .preloader-logo span { color: #008080; }
+        .preloader-logo span {
+            color: #008080;
+        }
         .preloader-tagline {
             color: #94a3b8;
             font-size: 0.85rem;
@@ -75,26 +82,66 @@
             transform: translateX(-50%);
             animation: rungPulse 1.6s ease-in-out infinite;
         }
-        .dna-rung:nth-child(3) { top: 18%; animation-delay: 0.15s; }
-        .dna-rung:nth-child(4) { top: 36%; animation-delay: 0.3s; }
-        .dna-rung:nth-child(5) { top: 54%; animation-delay: 0.45s; }
-        .dna-rung:nth-child(6) { top: 72%; animation-delay: 0.6s; }
-        .dna-rung:nth-child(7) { top: 88%; animation-delay: 0.75s; }
+        .dna-rung:nth-child(3) {
+            top: 18%;
+            animation-delay: 0.15s;
+        }
+        .dna-rung:nth-child(4) {
+            top: 36%;
+            animation-delay: 0.3s;
+        }
+        .dna-rung:nth-child(5) {
+            top: 54%;
+            animation-delay: 0.45s;
+        }
+        .dna-rung:nth-child(6) {
+            top: 72%;
+            animation-delay: 0.6s;
+        }
+        .dna-rung:nth-child(7) {
+            top: 88%;
+            animation-delay: 0.75s;
+        }
         @keyframes dnaRotate1 {
-            0%, 100% { transform: translateX(-50%) rotate(0deg) scaleY(1); }
-            25% { transform: translateX(-50%) rotate(8deg) scaleY(1.04); }
-            50% { transform: translateX(-50%) rotate(0deg) scaleY(1); }
-            75% { transform: translateX(-50%) rotate(-8deg) scaleY(0.96); }
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            25% {
+                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
+            }
+            50% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            75% {
+                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
+            }
         }
         @keyframes dnaRotate2 {
-            0%, 100% { transform: translateX(-50%) rotate(0deg) scaleY(1); }
-            25% { transform: translateX(-50%) rotate(-8deg) scaleY(0.96); }
-            50% { transform: translateX(-50%) rotate(0deg) scaleY(1); }
-            75% { transform: translateX(-50%) rotate(8deg) scaleY(1.04); }
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            25% {
+                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
+            }
+            50% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            75% {
+                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
+            }
         }
         @keyframes rungPulse {
-            0%, 100% { opacity: 0.45; width: 36px; }
-            50% { opacity: 1; width: 48px; }
+            0%,
+            100% {
+                opacity: 0.45;
+                width: 36px;
+            }
+            50% {
+                opacity: 1;
+                width: 48px;
+            }
         }
         .preloader-dot-container {
             display: flex;
@@ -102,29 +149,61 @@
             margin-top: 0.5rem;
         }
         .preloader-dot {
-            width: 10px; height: 10px; border-radius: 50%; background: #008080;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #008080;
             animation: dotBounce 1.5s ease-in-out infinite;
         }
-        .preloader-dot:nth-child(2) { animation-delay: 0.2s; background: #20b2aa; }
-        .preloader-dot:nth-child(3) { animation-delay: 0.4s; background: #d4af37; }
-        .preloader-dot:nth-child(4) { animation-delay: 0.6s; background: #f0d060; }
+        .preloader-dot:nth-child(2) {
+            animation-delay: 0.2s;
+            background: #20b2aa;
+        }
+        .preloader-dot:nth-child(3) {
+            animation-delay: 0.4s;
+            background: #d4af37;
+        }
+        .preloader-dot:nth-child(4) {
+            animation-delay: 0.6s;
+            background: #f0d060;
+        }
         @keyframes dotBounce {
-            0%, 100% { transform: translateY(0); opacity: 0.5; }
-            50% { transform: translateY(-16px); opacity: 1; }
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-16px);
+                opacity: 1;
+            }
         }
         .preloader-pulse-ring {
             position: absolute;
-            width: 70px; height: 70px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             border: 2px solid rgba(0, 128, 128, 0.5);
-            top: 50%; left: 50%;
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
             animation: pulseRing 2s ease-out infinite;
         }
-        .preloader-pulse-ring:nth-child(2) { animation-delay: 0.7s; border-color: rgba(212, 175, 55, 0.4); }
+        .preloader-pulse-ring:nth-child(2) {
+            animation-delay: 0.7s;
+            border-color: rgba(212, 175, 55, 0.4);
+        }
         @keyframes pulseRing {
-            0% { width: 30px; height: 30px; opacity: 0.9; }
-            100% { width: 120px; height: 120px; opacity: 0; }
+            0% {
+                width: 30px;
+                height: 30px;
+                opacity: 0.9;
+            }
+            100% {
+                width: 120px;
+                height: 120px;
+                opacity: 0;
+            }
         }
 
         /* ─── TOAST NOTIFICATIONS ─── */
@@ -141,342 +220,1508 @@
             pointer-events: none;
         }
         .toast {
-            background: #1e293b; color: #f1f5f9;
-            padding: 14px 20px; border-radius: 10px;
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 14px 20px;
+            border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            display: flex; align-items: center; gap: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             pointer-events: auto;
             transform: translateX(120%);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             border-left: 5px solid #008080;
         }
-        .toast.show { transform: translateX(0); }
-        .toast.success { border-left-color: #22c55e; }
-        .toast.error { border-left-color: #ef4444; }
-        .toast.warning { border-left-color: #f59e0b; }
-        .toast i { font-size: 1.4rem; }
-        .toast .toast-close { margin-left: auto; cursor: pointer; opacity: 0.6; transition: 0.2s; font-size: 1.2rem; }
-        .toast .toast-close:hover { opacity: 1; }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast.success {
+            border-left-color: #22c55e;
+        }
+        .toast.error {
+            border-left-color: #ef4444;
+        }
+        .toast.warning {
+            border-left-color: #f59e0b;
+        }
+        .toast i {
+            font-size: 1.4rem;
+        }
+        .toast .toast-close {
+            margin-left: auto;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.2s;
+            font-size: 1.2rem;
+        }
+        .toast .toast-close:hover {
+            opacity: 1;
+        }
 
         /* ─── PRINT INVOICE STYLES ─── */
         @media print {
-            body * { visibility: hidden; }
-            #invoicePrintArea, #invoicePrintArea * { visibility: visible; }
-            #invoicePrintArea {
-                position: absolute; left: 0; top: 0; width: 100%; padding: 40px;
-                background: white; color: black;
+            body * {
+                visibility: hidden;
             }
-            #invoicePrintArea .no-print { display: none; }
-            .admin-header, .admin-sidebar, .admin-content>*:not(#invoicePrintArea) { display: none !important; }
-            #adminPanelContainer { max-width: 100% !important; border-radius: 0 !important; }
-            #adminPanelWrapper { background: white !important; padding: 0 !important; }
+            #invoicePrintArea,
+            #invoicePrintArea * {
+                visibility: visible;
+            }
+            #invoicePrintArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 40px;
+                background: white;
+                color: black;
+            }
+            #invoicePrintArea .no-print {
+                display: none;
+            }
+            .admin-header,
+            .admin-sidebar,
+            .admin-content>*:not(#invoicePrintArea) {
+                display: none !important;
+            }
+            #adminPanelContainer {
+                max-width: 100% !important;
+                border-radius: 0 !important;
+            }
+            #adminPanelWrapper {
+                background: white !important;
+                padding: 0 !important;
+            }
         }
 
         /* ─── ADMIN PANEL PROFESSIONAL UPGRADES ─── */
         :root {
-            --primary-blue: #0a2540; --accent-teal: #008080; --bg-light: #f4f7f9;
-            --urgent-red: #d9383a; --text-dark: #2d3748; --sidebar-width: 240px; --header-height: 64px;
+            --primary-blue: #0a2540;
+            --accent-teal: #008080;
+            --bg-light: #f4f7f9;
+            --urgent-red: #d9383a;
+            --text-dark: #2d3748;
+            --sidebar-width: 240px;
+            --header-height: 64px;
         }
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-            margin: 0; padding: 0; background: var(--bg-light); color: var(--text-dark); line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
         }
-        b, strong { font-weight: 700; }
+        b,
+        strong {
+            font-weight: 700;
+        }
 
         /* ─── HEADER WITH LARGE LOGO ─── */
         header {
-            background: var(--primary-blue); color: white; padding: 14px 5%;
-            display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); flex-wrap: wrap; gap: 10px 20px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 14px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 10px 20px;
         }
         .header-logo {
-            display: flex; align-items: center; gap: 14px; text-decoration: none; color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: #fff;
         }
         .header-logo .logo-icon {
-            width: 52px; height: 52px; background: linear-gradient(135deg, #008080, #20b2aa);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 26px; font-weight: 800; color: #fff; flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #008080, #20b2aa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(0, 128, 128, 0.35);
         }
-        .header-logo .logo-text-group { display: flex; flex-direction: column; line-height: 1.1; }
+        .header-logo .logo-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
         .header-logo .logo-main {
-            font-size: 2rem; font-weight: 800; letter-spacing: 0.5px; color: #fff;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #fff;
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
-        .header-logo .logo-main span { color: #d4af37; }
+        .header-logo .logo-main span {
+            color: #d4af37;
+        }
         .header-logo .logo-tagline {
-            font-size: 0.75rem; font-weight: 400; letter-spacing: 1.8px; text-transform: uppercase;
-            color: #94b8c9; margin-top: 1px; opacity: 0.9;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: #94b8c9;
+            margin-top: 1px;
+            opacity: 0.9;
         }
-        .header-logo .logo-tagline i { margin-right: 4px; color: #d4af37; font-size: 0.6rem; }
-
-        header nav { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; }
-        header nav a { color: #e2e8f0; text-decoration: none; font-weight: 600; font-size: 15px; transition: 0.2s; padding: 4px 0; }
-        header nav a:hover { color: var(--accent-teal); }
-        .admin-login-btn, .patient-portal-btn {
-            background: var(--accent-teal); color: white; border: none; padding: 6px 16px;
-            border-radius: 4px; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; white-space: nowrap;
+        .header-logo .logo-tagline i {
+            margin-right: 4px;
+            color: #d4af37;
+            font-size: 0.6rem;
         }
-        .admin-login-btn:hover, .patient-portal-btn:hover { background: #006666; }
-        .patient-portal-btn { background: #25D366; }
-        .patient-portal-btn:hover { background: #1a8d4a; }
 
-        .hero { background: #0d3359; color: white; text-align: center; padding: 60px 20px; }
-        .hero h2 { color: white; font-size: 2.5rem; font-weight: 700; max-width: 800px; margin: 0 auto 25px; line-height: 1.3; }
-        .btn-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
-        .btn-book { background: var(--urgent-red); padding: 12px 28px; color: white; border-radius: 4px; font-weight: bold; text-decoration: none; display: inline-block; transition: 0.2s; }
-        .btn-book:hover { background: #b82d2f; }
-        .btn-portal { background: #25D366; padding: 12px 28px; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .btn-portal:hover { background: #1a8d4a; }
+        header nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+        }
+        header nav a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.2s;
+            padding: 4px 0;
+        }
+        header nav a:hover {
+            color: var(--accent-teal);
+        }
+        .admin-login-btn,
+        .patient-portal-btn {
+            background: var(--accent-teal);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .admin-login-btn:hover,
+        .patient-portal-btn:hover {
+            background: #006666;
+        }
+        .patient-portal-btn {
+            background: #25D366;
+        }
+        .patient-portal-btn:hover {
+            background: #1a8d4a;
+        }
 
-        .strip { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 15px 20px; text-align: center; }
-        .strip-content { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-        .strip-item { font-weight: 600; display: flex; align-items: center; color: var(--primary-blue); }
-        .strip i { color: var(--accent-teal); margin-right: 10px; }
+        .hero {
+            background: #0d3359;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .hero h2 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            max-width: 800px;
+            margin: 0 auto 25px;
+            line-height: 1.3;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .btn-book {
+            background: var(--urgent-red);
+            padding: 12px 28px;
+            color: white;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+        }
+        .btn-book:hover {
+            background: #b82d2f;
+        }
+        .btn-portal {
+            background: #25D366;
+            padding: 12px 28px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-portal:hover {
+            background: #1a8d4a;
+        }
 
-        section { padding: 45px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
-        .section-wrapper-alt { background: var(--bg-light); }
-        h2 { color: var(--primary-blue); margin-bottom: 25px; font-size: 26px; font-weight: 700; }
-        .about-container { display: flex; align-items: center; gap: 40px; text-align: left; flex-wrap: wrap; }
-        .about-text { flex: 1; min-width: 300px; }
-        .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .feature-item { display: flex; align-items: center; gap: 10px; font-weight: 600; }
-        .feature-item i { color: var(--accent-teal); }
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .card { background: white; padding: 20px 15px; border-radius: 6px; border: 1px solid #cbd5e1; text-align: center; }
-        .card i { font-size: 30px; margin-bottom: 10px; }
-        .card h3 { margin: 5px 0; font-size: 1.1rem; color: var(--primary-blue); }
-        .partner-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .partner-item { background: white; padding: 15px; border-radius: 6px; width: 150px; border: 1px solid #cbd5e1; text-align: center; }
-        .partner-item i { font-size: 32px; margin-bottom: 8px; }
-        .partner-item p { font-weight: 700; margin: 0; font-size: 14px; color: var(--primary-blue); }
-        .map-container { margin-top: 20px; border-radius: 8px; overflow: hidden; max-width: 800px; margin-left: auto; margin-right: auto; border: 1px solid #cbd5e1; }
-        footer { background: var(--primary-blue); color: #e2e8f0; padding: 40px 20px; text-align: center; }
-        .footer-links { margin: 20px 0; }
-        .footer-links a { color: white; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 600; }
-        .footer-links a:hover { color: var(--accent-teal); }
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; z-index: 1000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); }
+        .strip {
+            background: #fff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        .strip-content {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .strip-item {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            color: var(--primary-blue);
+        }
+        .strip i {
+            color: var(--accent-teal);
+            margin-right: 10px;
+        }
+
+        section {
+            padding: 45px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .section-wrapper-alt {
+            background: var(--bg-light);
+        }
+        h2 {
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            text-align: left;
+            flex-wrap: wrap;
+        }
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+        .feature-item i {
+            color: var(--accent-teal);
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .card {
+            background: white;
+            padding: 20px 15px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+        }
+        .card i {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .card h3 {
+            margin: 5px 0;
+            font-size: 1.1rem;
+            color: var(--primary-blue);
+        }
+        .partner-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .partner-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            width: 150px;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+        }
+        .partner-item i {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .partner-item p {
+            font-weight: 700;
+            margin: 0;
+            font-size: 14px;
+            color: var(--primary-blue);
+        }
+        .map-container {
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #cbd5e1;
+        }
+        footer {
+            background: var(--primary-blue);
+            color: #e2e8f0;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .footer-links {
+            margin: 20px 0;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .footer-links a:hover {
+            color: var(--accent-teal);
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
 
         /* ─── ADMIN PANEL ─── */
-        #adminPanelWrapper { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 9999; overflow-y: auto; padding: 20px; }
-        #adminPanelWrapper.active { display: block; }
-        #adminPanelContainer { max-width: 1400px; margin: 0 auto; background: #f0f2f5; border-radius: 16px; box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5); overflow: hidden; min-height: 90vh; display: flex; flex-direction: column; }
-        .admin-header { background: var(--primary-blue); color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; flex-shrink: 0; }
-        .admin-header h2 { color: white; margin: 0; font-size: 20px; }
-        .admin-user { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .admin-user span { color: #e2e8f0; }
-        .logout-btn, .dark-toggle { background: var(--urgent-red); border: none; padding: 6px 16px; border-radius: 6px; color: white; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .logout-btn:hover { background: #b82d2f; }
-        .dark-toggle { background: #4a5568; }
-        .dark-toggle:hover { background: #2d3748; }
+        #adminPanelWrapper {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        #adminPanelWrapper.active {
+            display: block;
+        }
+        #adminPanelContainer {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #f0f2f5;
+            border-radius: 16px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .admin-header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+        .admin-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 20px;
+        }
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .admin-user span {
+            color: #e2e8f0;
+        }
+        .logout-btn,
+        .dark-toggle {
+            background: var(--urgent-red);
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .logout-btn:hover {
+            background: #b82d2f;
+        }
+        .dark-toggle {
+            background: #4a5568;
+        }
+        .dark-toggle:hover {
+            background: #2d3748;
+        }
 
-        .admin-body { display: flex; flex: 1; overflow: hidden; }
-        .admin-sidebar { width: var(--sidebar-width); background: var(--primary-blue); color: #e2e8f0; padding: 16px 0; flex-shrink: 0; overflow-y: auto; }
-        .admin-sidebar .nav-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #94a3b8; padding: 10px 16px 4px; font-weight: 600; }
-        .admin-sidebar a { display: flex; align-items: center; gap: 10px; padding: 9px 16px; color: #cbd5e1; text-decoration: none; font-weight: 500; font-size: 14px; cursor: pointer; transition: 0.2s; border-left: 3px solid transparent; }
-        .admin-sidebar a:hover { background: rgba(0, 128, 128, 0.15); color: #fff; }
-        .admin-sidebar a.active { background: rgba(0, 128, 128, 0.2); border-left-color: var(--accent-teal); color: #fff; }
-        .admin-sidebar a i { width: 20px; text-align: center; }
+        .admin-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        .admin-sidebar {
+            width: var(--sidebar-width);
+            background: var(--primary-blue);
+            color: #e2e8f0;
+            padding: 16px 0;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+        .admin-sidebar .nav-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #94a3b8;
+            padding: 10px 16px 4px;
+            font-weight: 600;
+        }
+        .admin-sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 16px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .admin-sidebar a:hover {
+            background: rgba(0, 128, 128, 0.15);
+            color: #fff;
+        }
+        .admin-sidebar a.active {
+            background: rgba(0, 128, 128, 0.2);
+            border-left-color: var(--accent-teal);
+            color: #fff;
+        }
+        .admin-sidebar a i {
+            width: 20px;
+            text-align: center;
+        }
 
-        .admin-content { flex: 1; padding: 24px; overflow-y: auto; background: #f0f2f5; }
-        .admin-section { display: none; animation: fadeUp 0.3s ease; }
-        .admin-section.active { display: block; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .admin-content {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            background: #f0f2f5;
+        }
+        .admin-section {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* Cards & Stats */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
-        .stat-card { background: white; padding: 16px 14px; border-radius: 10px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03); transition: 0.2s; }
-        .stat-card:hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06); transform: translateY(-2px); }
-        .stat-card .icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-        .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
-        .stat-card .icon.green { background: #d1fae5; color: #059669; }
-        .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
-        .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }
-        .stat-card .icon.orange { background: #fef3c7; color: #d97706; }
-        .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
-        .stat-card .info h4 { font-size: 22px; font-weight: 700; margin: 0; }
-        .stat-card .info p { font-size: 12px; margin: 2px 0 0; color: #64748b; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            padding: 16px 14px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+            transition: 0.2s;
+        }
+        .stat-card:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+        }
+        .stat-card .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .stat-card .icon.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .stat-card .icon.green {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .stat-card .icon.red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .stat-card .icon.purple {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .stat-card .icon.orange {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .stat-card .icon.teal {
+            background: #ccfbf1;
+            color: #0d9488;
+        }
+        .stat-card .info h4 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .stat-card .info p {
+            font-size: 12px;
+            margin: 2px 0 0;
+            color: #64748b;
+        }
 
-        .table-wrap { background: white; border: 1px solid #e2e8f0; border-radius: 10px; overflow: auto; margin-top: 10px; }
-        .table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        .table-wrap th { background: #f8fafc; font-weight: 600; text-align: left; padding: 10px 14px; border-bottom: 2px solid #e2e8f0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
-        .table-wrap td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; }
+        .table-wrap {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: auto;
+            margin-top: 10px;
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .table-wrap th {
+            background: #f8fafc;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .table-wrap td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e2e8f0;
+        }
 
-        .badge-status { display: inline-block; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-        .badge-status.paid { background: #d1fae5; color: #065f46; }
-        .badge-status.unpaid { background: #fee2e2; color: #991b1b; }
-        .badge-status.pending { background: #fef3c7; color: #92400e; }
-        .badge-status.process { background: #dbeafe; color: #1e40af; }
-        .badge-status.done { background: #e0e7ff; color: #3730a3; }
+        .badge-status {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-status.paid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge-status.unpaid {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .badge-status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-status.process {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-status.done {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
 
-        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; border: none; cursor: pointer; transition: 0.2s; background: #f1f5f9; color: #1e293b; border: 1px solid #e2e8f0; }
-        .btn-primary { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
-        .btn-primary:hover { background: #006666; }
-        .btn-red { background: var(--urgent-red); color: #fff; border-color: var(--urgent-red); }
-        .btn-red:hover { background: #b82d2f; }
-        .btn-outline { background: transparent; border: 1px solid #e2e8f0; }
-        .btn-sm { padding: 3px 10px; font-size: 12px; }
-        .btn-gold { background: #d4af37; color: #fff; border-color: #d4af37; }
-        .btn-gold:hover { background: #b8960e; }
-        .btn-success { background: #22c55e; color: #fff; border-color: #22c55e; }
-        .btn-success:hover { background: #16a34a; }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-primary {
+            background: var(--accent-teal);
+            color: #fff;
+            border-color: var(--accent-teal);
+        }
+        .btn-primary:hover {
+            background: #006666;
+        }
+        .btn-red {
+            background: var(--urgent-red);
+            color: #fff;
+            border-color: var(--urgent-red);
+        }
+        .btn-red:hover {
+            background: #b82d2f;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-sm {
+            padding: 3px 10px;
+            font-size: 12px;
+        }
+        .btn-gold {
+            background: #d4af37;
+            color: #fff;
+            border-color: #d4af37;
+        }
+        .btn-gold:hover {
+            background: #b8960e;
+        }
+        .btn-success {
+            background: #22c55e;
+            color: #fff;
+            border-color: #22c55e;
+        }
+        .btn-success:hover {
+            background: #16a34a;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
 
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: white; padding: 16px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
-        .form-grid label { font-weight: 600; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
-        .form-grid label input, .form-grid label select { padding: 7px 10px; border-radius: 6px; border: 1px solid #e2e8f0; background: #f8fafc; font-size: 14px; }
-        .form-grid label input:focus, .form-grid label select:focus { outline: 2px solid var(--accent-teal); }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            background: white;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 16px;
+        }
+        .form-grid label {
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .form-grid label input,
+        .form-grid label select {
+            padding: 7px 10px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 14px;
+        }
+        .form-grid label input:focus,
+        .form-grid label select:focus {
+            outline: 2px solid var(--accent-teal);
+        }
 
-        .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
-        .toolbar .search-box { display: flex; align-items: center; background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0 12px; flex: 1; min-width: 150px; }
-        .toolbar .search-box input { border: none; background: transparent; padding: 7px 6px; font-size: 14px; width: 100%; outline: none; }
-        .template-box { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
-        .template-box .msg-preview { background: #f8fafc; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #25D366; font-size: 14px; white-space: pre-wrap; }
-        .premium-badge { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #78350f; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 20px; text-transform: uppercase; margin-left: 6px; }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .toolbar .search-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 0 12px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .toolbar .search-box input {
+            border: none;
+            background: transparent;
+            padding: 7px 6px;
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+        }
+        .template-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+        }
+        .template-box .msg-preview {
+            background: #f8fafc;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 4px solid #25D366;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+        .premium-badge {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #78350f;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            margin-left: 6px;
+        }
 
         /* Login Modal */
-        .login-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 10001; align-items: center; justify-content: center; }
-        .login-modal.show { display: flex; }
-        .login-modal-content { background: white; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
-        .login-modal-content h3 { margin-top: 0; }
-        .login-modal-content label { display: block; font-weight: 600; margin: 10px 0 4px; }
-        .login-modal-content input { width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 4px; margin-bottom: 8px; }
-        .login-modal-content .btn-close { background: #6c757d; border: none; padding: 8px; width: 100%; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; margin-top: 6px; }
+        .login-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-modal.show {
+            display: flex;
+        }
+        .login-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .login-modal-content h3 {
+            margin-top: 0;
+        }
+        .login-modal-content label {
+            display: block;
+            font-weight: 600;
+            margin: 10px 0 4px;
+        }
+        .login-modal-content input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .login-modal-content .btn-close {
+            background: #6c757d;
+            border: none;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+        }
 
         /* UPI Modal */
-        .upi-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 10002; align-items: center; justify-content: center; }
-        .upi-modal.show { display: flex; }
-        .upi-modal-content { background: white; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%; text-align: center; }
-        .upi-modal-content .btn-close { background: #6c757d; border: none; padding: 8px; width: 100%; border-radius: 4px; color: white; font-weight: 600; cursor: pointer; margin-top: 12px; }
+        .upi-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10002;
+            align-items: center;
+            justify-content: center;
+        }
+        .upi-modal.show {
+            display: flex;
+        }
+        .upi-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .upi-modal-content .btn-close {
+            background: #6c757d;
+            border: none;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+        }
 
         /* Patient Portal Modal */
-        .patient-portal-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 10050; overflow-y: auto; padding: 20px; align-items: center; justify-content: center; }
-        .patient-portal-modal.active { display: flex; }
-        .patient-portal-content { max-width: 860px; width: 100%; background: #fff; border-radius: 2rem; box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35); overflow: hidden; max-height: 95vh; overflow-y: auto; }
-        .portal-header { background: #1a212c; padding: 1.8rem 2rem 1.4rem; }
-        .portal-header h1 { font-size: 1.9rem; font-weight: 700; color: #fef7e8; display: flex; align-items: center; gap: 12px; }
-        .portal-header .portal-badge { background: rgba(212, 175, 55, 0.2); padding: 6px 16px; border-radius: 60px; font-size: 0.7rem; font-weight: 600; color: #e6c168; border: 0.5px solid rgba(212, 175, 55, 0.5); }
-        .portal-header .portal-sub { color: #8f9bb3; font-size: 0.8rem; margin-top: 12px; border-left: 2px solid #e6c168; padding-left: 14px; }
-        .portal-body { padding: 2rem; }
-        .portal-input-group { margin-bottom: 1.5rem; }
-        .portal-input-label { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: #2c3f4c; margin-bottom: 10px; }
-        .portal-input { width: 100%; padding: 1rem 1.3rem; font-size: 1rem; border: 1.5px solid #e2e8f0; border-radius: 1.25rem; outline: none; font-weight: 500; }
-        .portal-input:focus { border-color: #d4af37; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2); }
-        .portal-btn { width: 100%; background: linear-gradient(98deg, #075E54, #128C7E); border: none; padding: 1rem; font-size: 1rem; font-weight: 700; color: white; border-radius: 2rem; cursor: pointer; transition: 0.25s; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5); }
-        .portal-btn:hover { transform: translateY(-2px); }
-        .portal-status { margin-top: 1.2rem; padding: 0.9rem 1.2rem; background: #f8fafd; border-radius: 1rem; font-size: 0.85rem; color: #2c3e50; border-left: 3px solid #c9a03d; }
-        .portal-status.success { background: #e6f4ea; border-left-color: #2b7a3e; color: #135c2c; }
-        .portal-status.error { background: #fef5f0; border-left-color: #d4873a; color: #8b5a2b; }
-        .portal-report-list { margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem; }
-        .portal-report-item { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 0.8rem 1.2rem; border-radius: 1rem; margin-bottom: 0.8rem; border: 1px solid #edf2f7; }
-        .portal-report-info .test-name { font-weight: 600; color: #1a212c; }
-        .portal-report-info .upload-date { font-size: 0.8rem; color: #7890a3; }
-        .portal-download-btn { background: #d4af37; border: none; padding: 0.4rem 1rem; border-radius: 2rem; font-weight: 600; color: white; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
-        .portal-download-btn:hover { background: #b8960e; }
-        .portal-download-btn:disabled { background: #b0b8c5; cursor: not-allowed; opacity: 0.6; }
-        .portal-due-badge { background: #fee2e2; color: #991b1b; padding: 0.2rem 0.8rem; border-radius: 2rem; font-size: 0.7rem; font-weight: 700; }
-        .portal-close-btn { background: #6c757d; border: none; padding: 8px 16px; border-radius: 2rem; font-weight: 600; color: white; cursor: pointer; font-size: 0.8rem; margin-top: 1rem; }
-        .portal-footer { padding: 1rem 2rem; font-size: 0.7rem; color: #91a3bb; border-top: 1px solid #edf2f9; display: flex; justify-content: space-between; }
+        .patient-portal-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 10050;
+            overflow-y: auto;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+        .patient-portal-modal.active {
+            display: flex;
+        }
+        .patient-portal-content {
+            max-width: 860px;
+            width: 100%;
+            background: #fff;
+            border-radius: 2rem;
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+        .portal-header {
+            background: #1a212c;
+            padding: 1.8rem 2rem 1.4rem;
+        }
+        .portal-header h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #fef7e8;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .portal-header .portal-badge {
+            background: rgba(212, 175, 55, 0.2);
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #e6c168;
+            border: 0.5px solid rgba(212, 175, 55, 0.5);
+        }
+        .portal-header .portal-sub {
+            color: #8f9bb3;
+            font-size: 0.8rem;
+            margin-top: 12px;
+            border-left: 2px solid #e6c168;
+            padding-left: 14px;
+        }
+        .portal-body {
+            padding: 2rem;
+        }
+        .portal-input-group {
+            margin-bottom: 1.5rem;
+        }
+        .portal-input-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #2c3f4c;
+            margin-bottom: 10px;
+        }
+        .portal-input {
+            width: 100%;
+            padding: 1rem 1.3rem;
+            font-size: 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 1.25rem;
+            outline: none;
+            font-weight: 500;
+        }
+        .portal-input:focus {
+            border-color: #d4af37;
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
+        }
+        .portal-btn {
+            width: 100%;
+            background: linear-gradient(98deg, #075E54, #128C7E);
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5);
+        }
+        .portal-btn:hover {
+            transform: translateY(-2px);
+        }
+        .portal-status {
+            margin-top: 1.2rem;
+            padding: 0.9rem 1.2rem;
+            background: #f8fafd;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            border-left: 3px solid #c9a03d;
+        }
+        .portal-status.success {
+            background: #e6f4ea;
+            border-left-color: #2b7a3e;
+            color: #135c2c;
+        }
+        .portal-status.error {
+            background: #fef5f0;
+            border-left-color: #d4873a;
+            color: #8b5a2b;
+        }
+        .portal-report-list {
+            margin-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+        }
+        .portal-report-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 0.8rem 1.2rem;
+            border-radius: 1rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #edf2f7;
+        }
+        .portal-report-info .test-name {
+            font-weight: 600;
+            color: #1a212c;
+        }
+        .portal-report-info .upload-date {
+            font-size: 0.8rem;
+            color: #7890a3;
+        }
+        .portal-download-btn {
+            background: #d4af37;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+        .portal-download-btn:hover {
+            background: #b8960e;
+        }
+        .portal-download-btn:disabled {
+            background: #b0b8c5;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .portal-due-badge {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        .portal-close-btn {
+            background: #6c757d;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+        .portal-footer {
+            padding: 1rem 2rem;
+            font-size: 0.7rem;
+            color: #91a3bb;
+            border-top: 1px solid #edf2f9;
+            display: flex;
+            justify-content: space-between;
+        }
 
         /* Payment Confirmation Modal */
-        .pay-confirm-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 10060; align-items: center; justify-content: center; padding: 20px; }
-        .pay-confirm-modal.show { display: flex; }
-        .pay-confirm-content { background: white; max-width: 480px; width: 100%; border-radius: 16px; padding: 28px 30px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); }
-        .pay-confirm-content h3 { color: var(--primary-blue); font-size: 1.3rem; margin-top: 0; display: flex; align-items: center; gap: 10px; }
-        .pay-confirm-content .pay-detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
-        .pay-confirm-content .pay-detail-row .label { color: #64748b; font-weight: 500; }
-        .pay-confirm-content .pay-detail-row .value { font-weight: 700; }
-        .pay-confirm-content .pay-amount-large { font-size: 2rem; font-weight: 800; color: var(--primary-blue); text-align: center; padding: 12px 0; background: #f8fafc; border-radius: 8px; margin: 10px 0 14px; }
-        .pay-method-group { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 14px; }
-        .pay-method-group label { display: flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
-        .pay-method-group label:hover { background: #e2e8f0; }
-        .pay-method-group input[type="radio"] { accent-color: var(--accent-teal); }
-        .pay-method-group label.selected { border-color: var(--accent-teal); background: #e6f7f7; }
-        .pay-btns { display: flex; gap: 12px; margin-top: 18px; }
-        .pay-btns .btn { flex: 1; justify-content: center; padding: 10px; font-size: 15px; }
-        .pay-btns .btn-cancel { background: #e2e8f0; color: #1e293b; }
-        .pay-btns .btn-cancel:hover { background: #cbd5e1; }
+        .pay-confirm-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 10060;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .pay-confirm-modal.show {
+            display: flex;
+        }
+        .pay-confirm-content {
+            background: white;
+            max-width: 480px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 28px 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+        .pay-confirm-content h3 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pay-confirm-content .pay-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+        .pay-confirm-content .pay-detail-row .label {
+            color: #64748b;
+            font-weight: 500;
+        }
+        .pay-confirm-content .pay-detail-row .value {
+            font-weight: 700;
+        }
+        .pay-confirm-content .pay-amount-large {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-align: center;
+            padding: 12px 0;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin: 10px 0 14px;
+        }
+        .pay-method-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 10px 0 14px;
+        }
+        .pay-method-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+        .pay-method-group label:hover {
+            background: #e2e8f0;
+        }
+        .pay-method-group input[type="radio"] {
+            accent-color: var(--accent-teal);
+        }
+        .pay-method-group label.selected {
+            border-color: var(--accent-teal);
+            background: #e6f7f7;
+        }
+        .pay-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .pay-btns .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 10px;
+            font-size: 15px;
+        }
+        .pay-btns .btn-cancel {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        .pay-btns .btn-cancel:hover {
+            background: #cbd5e1;
+        }
 
-        .badge-pay-confirmed { background: #d1fae5; color: #065f46; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 20px; }
+        .badge-pay-confirmed {
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
 
         /* Invoice Modal */
-        .invoice-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 10070; align-items: center; justify-content: center; padding: 20px; }
-        .invoice-modal.show { display: flex; }
-        .invoice-modal-content { background: white; max-width: 700px; width: 100%; border-radius: 16px; padding: 30px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); max-height: 90vh; overflow-y: auto; }
-        .invoice-modal-content h3 { margin-top: 0; }
-        .invoice-print-area { padding: 10px; }
-        .invoice-print-area .invoice-header { display: flex; justify-content: space-between; border-bottom: 2px solid #0a2540; padding-bottom: 12px; margin-bottom: 16px; }
-        .invoice-print-area .invoice-header h2 { margin: 0; color: #0a2540; }
-        .invoice-print-area .invoice-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-        .invoice-print-area table { width: 100%; border-collapse: collapse; margin: 12px 0; }
-        .invoice-print-area table th { background: #f1f5f9; text-align: left; padding: 8px; border: 1px solid #e2e8f0; }
-        .invoice-print-area table td { padding: 8px; border: 1px solid #e2e8f0; }
-        .invoice-print-area .total-row { font-weight: 700; font-size: 1.1rem; }
-        .invoice-print-area .no-print { margin-top: 20px; display: flex; gap: 12px; justify-content: flex-end; }
+        .invoice-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 10070;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .invoice-modal.show {
+            display: flex;
+        }
+        .invoice-modal-content {
+            background: white;
+            max-width: 700px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .invoice-modal-content h3 {
+            margin-top: 0;
+        }
+        .invoice-print-area {
+            padding: 10px;
+        }
+        .invoice-print-area .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #0a2540;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .invoice-print-area .invoice-header h2 {
+            margin: 0;
+            color: #0a2540;
+        }
+        .invoice-print-area .invoice-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .invoice-print-area table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+        .invoice-print-area table th {
+            background: #f1f5f9;
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .invoice-print-area table td {
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .invoice-print-area .total-row {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .invoice-print-area .no-print {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
 
         /* Settings Section */
-        .settings-group { background: white; padding: 20px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
-        .settings-group label { font-weight: 600; display: block; margin: 12px 0 4px; }
-        .settings-group input, .settings-group textarea { width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; }
-        .settings-group textarea { resize: vertical; min-height: 60px; }
+        .settings-group {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 16px;
+        }
+        .settings-group label {
+            font-weight: 600;
+            display: block;
+            margin: 12px 0 4px;
+        }
+        .settings-group input,
+        .settings-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .settings-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
 
         /* Dark Mode overrides */
-        body.admin-dark #adminPanelContainer { background: #0f172a; }
-        body.admin-dark .admin-content { background: #0f172a; }
-        body.admin-dark .stat-card, body.admin-dark .table-wrap, body.admin-dark .form-grid, body.admin-dark .template-box, body.admin-dark .settings-group { background: #1e293b; border-color: #334155; color: #f1f5f9; }
-        body.admin-dark .stat-card .info p { color: #94a3b8; }
-        body.admin-dark .table-wrap th { background: #0f172a; color: #94a3b8; }
-        body.admin-dark .table-wrap td { border-color: #334155; }
-        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select { background: #0f172a; border-color: #334155; color: #f1f5f9; }
-        body.admin-dark .badge-status.paid { background: #064e3b; color: #6ee7b7; }
-        body.admin-dark .badge-status.unpaid { background: #7f1d1d; color: #fca5a5; }
-        body.admin-dark .badge-status.pending { background: #78350f; color: #fcd34d; }
-        body.admin-dark .badge-status.process { background: #1e3a5f; color: #93c5fd; }
-        body.admin-dark .badge-status.done { background: #312e81; color: #a5b4fc; }
-        body.admin-dark .stat-card .icon.blue { background: #1e3a5f; color: #60a5fa; }
-        body.admin-dark .stat-card .icon.green { background: #064e3b; color: #34d399; }
-        body.admin-dark .stat-card .icon.red { background: #7f1d1d; color: #f87171; }
-        body.admin-dark .stat-card .icon.purple { background: #4c1d95; color: #a78bfa; }
-        body.admin-dark .stat-card .icon.orange { background: #78350f; color: #fbbf24; }
-        body.admin-dark .stat-card .icon.teal { background: #134e4a; color: #2dd4bf; }
-        body.admin-dark .pay-confirm-content { background: #1e293b; color: #f1f5f9; }
-        body.admin-dark .pay-confirm-content .pay-detail-row { border-color: #334155; }
-        body.admin-dark .pay-confirm-content .pay-detail-row .label { color: #94a3b8; }
-        body.admin-dark .pay-confirm-content .pay-amount-large { background: #0f172a; color: #f1f5f9; }
-        body.admin-dark .pay-confirm-content .pay-method-group label { background: #0f172a; color: #e2e8f0; }
-        body.admin-dark .pay-confirm-content .pay-method-group label.selected { border-color: var(--accent-teal); background: #134e4a; }
-        body.admin-dark .pay-confirm-content .pay-btns .btn-cancel { background: #334155; color: #e2e8f0; }
-        body.admin-dark .invoice-modal-content { background: #1e293b; color: #f1f5f9; }
-        body.admin-dark .invoice-print-area .invoice-header h2 { color: #f1f5f9; }
-        body.admin-dark .invoice-print-area table th { background: #0f172a; border-color: #334155; }
-        body.admin-dark .invoice-print-area table td { border-color: #334155; }
+        body.admin-dark #adminPanelContainer {
+            background: #0f172a;
+        }
+        body.admin-dark .admin-content {
+            background: #0f172a;
+        }
+        body.admin-dark .stat-card,
+        body.admin-dark .table-wrap,
+        body.admin-dark .form-grid,
+        body.admin-dark .template-box,
+        body.admin-dark .settings-group {
+            background: #1e293b;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+        body.admin-dark .stat-card .info p {
+            color: #94a3b8;
+        }
+        body.admin-dark .table-wrap th {
+            background: #0f172a;
+            color: #94a3b8;
+        }
+        body.admin-dark .table-wrap td {
+            border-color: #334155;
+        }
+        body.admin-dark .form-grid label input,
+        body.admin-dark .form-grid label select {
+            background: #0f172a;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+        body.admin-dark .badge-status.paid {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+        body.admin-dark .badge-status.unpaid {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        body.admin-dark .badge-status.pending {
+            background: #78350f;
+            color: #fcd34d;
+        }
+        body.admin-dark .badge-status.process {
+            background: #1e3a5f;
+            color: #93c5fd;
+        }
+        body.admin-dark .badge-status.done {
+            background: #312e81;
+            color: #a5b4fc;
+        }
+        body.admin-dark .stat-card .icon.blue {
+            background: #1e3a5f;
+            color: #60a5fa;
+        }
+        body.admin-dark .stat-card .icon.green {
+            background: #064e3b;
+            color: #34d399;
+        }
+        body.admin-dark .stat-card .icon.red {
+            background: #7f1d1d;
+            color: #f87171;
+        }
+        body.admin-dark .stat-card .icon.purple {
+            background: #4c1d95;
+            color: #a78bfa;
+        }
+        body.admin-dark .stat-card .icon.orange {
+            background: #78350f;
+            color: #fbbf24;
+        }
+        body.admin-dark .stat-card .icon.teal {
+            background: #134e4a;
+            color: #2dd4bf;
+        }
+        body.admin-dark .pay-confirm-content {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+        body.admin-dark .pay-confirm-content .pay-detail-row {
+            border-color: #334155;
+        }
+        body.admin-dark .pay-confirm-content .pay-detail-row .label {
+            color: #94a3b8;
+        }
+        body.admin-dark .pay-confirm-content .pay-amount-large {
+            background: #0f172a;
+            color: #f1f5f9;
+        }
+        body.admin-dark .pay-confirm-content .pay-method-group label {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        body.admin-dark .pay-confirm-content .pay-method-group label.selected {
+            border-color: var(--accent-teal);
+            background: #134e4a;
+        }
+        body.admin-dark .pay-confirm-content .pay-btns .btn-cancel {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        body.admin-dark .invoice-modal-content {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+        body.admin-dark .invoice-print-area .invoice-header h2 {
+            color: #f1f5f9;
+        }
+        body.admin-dark .invoice-print-area table th {
+            background: #0f172a;
+            border-color: #334155;
+        }
+        body.admin-dark .invoice-print-area table td {
+            border-color: #334155;
+        }
 
         @media (max-width: 768px) {
-            header { flex-direction: column; text-align: center; padding: 12px 16px; }
-            .header-logo .logo-main { font-size: 1.5rem; }
-            .header-logo .logo-tagline { font-size: 0.6rem; letter-spacing: 1.2px; }
-            .header-logo .logo-icon { width: 44px; height: 44px; font-size: 20px; }
-            header nav { justify-content: center; margin-top: 6px; }
-            header nav a { font-size: 13px; margin: 0 4px; }
-            .admin-login-btn, .patient-portal-btn { font-size: 12px; padding: 4px 12px; margin: 2px 0; }
-            .admin-body { flex-direction: column; }
-            .admin-sidebar { width: 100%; display: flex; flex-wrap: nowrap; overflow-x: auto; padding: 8px 0; }
-            .admin-sidebar a { white-space: nowrap; padding: 8px 14px; border-left: none; border-bottom: 3px solid transparent; }
-            .admin-sidebar a.active { border-bottom-color: var(--accent-teal); border-left: none; }
-            .admin-sidebar .nav-label { display: none; }
-            .hero h2 { font-size: 1.8rem; }
-            .about-features { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .pay-method-group label { font-size: 12px; padding: 4px 12px; }
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 12px 16px;
+            }
+            .header-logo .logo-main {
+                font-size: 1.5rem;
+            }
+            .header-logo .logo-tagline {
+                font-size: 0.6rem;
+                letter-spacing: 1.2px;
+            }
+            .header-logo .logo-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+            }
+            header nav {
+                justify-content: center;
+                margin-top: 6px;
+            }
+            header nav a {
+                font-size: 13px;
+                margin: 0 4px;
+            }
+            .admin-login-btn,
+            .patient-portal-btn {
+                font-size: 12px;
+                padding: 4px 12px;
+                margin: 2px 0;
+            }
+            .admin-body {
+                flex-direction: column;
+            }
+            .admin-sidebar {
+                width: 100%;
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding: 8px 0;
+            }
+            .admin-sidebar a {
+                white-space: nowrap;
+                padding: 8px 14px;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            .admin-sidebar a.active {
+                border-bottom-color: var(--accent-teal);
+                border-left: none;
+            }
+            .admin-sidebar .nav-label {
+                display: none;
+            }
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .pay-method-group label {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
         }
+
         @media (max-width: 480px) {
-            .header-logo .logo-main { font-size: 1.2rem; }
-            .header-logo .logo-icon { width: 36px; height: 36px; font-size: 16px; }
-            .header-logo .logo-tagline { font-size: 0.5rem; letter-spacing: 0.8px; }
-            .hero h2 { font-size: 1.4rem; }
-            .btn-book, .btn-portal { padding: 10px 18px; font-size: 14px; }
+            .header-logo .logo-main {
+                font-size: 1.2rem;
+            }
+            .header-logo .logo-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+            .header-logo .logo-tagline {
+                font-size: 0.5rem;
+                letter-spacing: 0.8px;
+            }
+            .hero h2 {
+                font-size: 1.4rem;
+            }
+            .btn-book,
+            .btn-portal {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -511,6 +1756,7 @@
 
     <!-- ═══════════ MAIN PAGE ═══════════ -->
     <header>
+        <!-- ─── LARGE LOGO ─── -->
         <a href="#" class="header-logo">
             <div class="logo-icon">R</div>
             <div class="logo-text-group">
@@ -518,6 +1764,7 @@
                 <div class="logo-tagline"><i class="fas fa-heartbeat"></i> SOLUTION OF YOUR HEALTHY LIFE</div>
             </div>
         </a>
+
         <nav>
             <a href="index.html">Home</a>
             <a href="tests.html">Tests</a>
@@ -754,13 +2001,14 @@
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
+                            <!-- Updated: Added list="patientIdList" to allow dropdown search -->
                             <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" list="patientIdList" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210 (optional)" /></label>
                             <label>Test
-                                <input type="text" id="patTest" list="testList" placeholder="Type Name (e.g. CBC WIDAL) or Code (e.g. TC001)" autocomplete="off" />
+                                <input type="text" id="patTest" list="testList" placeholder="Type or select test" autocomplete="off" />
                                 <datalist id="testList">
-                                    <option value="CBC WIDAL (TC001)"><option value="CBC MP WIDAL (TC002)"><option value="CBC WIDAL BSR (TC003)"><option value="COMPLETE BLOOD COUNT (CBC) (TC004)"><option value="CBC + WIDAL + OPTIMAL (TC005)"><option value="LIVER FUNCTION TEST (TC006)"><option value="KIDNEY FUNCTION TEST (Fasting) (TC007)"><option value="LIPID PROFILE (Fasting) (TC008)"><option value="THYROID PROFILE (TC009)"><option value="BETA HCG (TC010)"><option value="HBA1C (3 Month Sugar) (TC011)"><option value="C-REACTIVE PROTEIN (CRP) (TC012)"><option value="ANTISTREPTOLYSIN O (ASO) (TC013)"><option value="R A FACTOR (TC014)"><option value="HCG PREGNANCY TEST (TC015)"><option value="URINE ROUTINE (TC016)"><option value="URINE CULTURE (TC017)"><option value="URINE CULTURE (Advanced) (TC018)"><option value="SEMEN ANALYSIS (TC019)"><option value="MANTOUX TEST (TC020)"><option value="HBSAG (TC021)"><option value="VDRL (TC022)"><option value="HIV (TC023)"><option value="HCV (TC024)"><option value="BLOOD UREA (TC025)"><option value="SERUM CREATININE (TC026)"><option value="URIC ACID (Fasting) (TC027)"><option value="BLOOD SUGAR (TC028)"><option value="PLATELETS TEST (TC029)"><option value="PLATELET COUNT (TC030)"><option value="DENGUE NS1 IGG IGM (TC031)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC) (TC032)"><option value="TYPHIDOT IGG IGM (TC033)"><option value="WIDAL (TC034)"><option value="OPTIMAL (TC035)"><option value="OPTIMAL WIDAL (TC036)"><option value="OPTIMAL WIDAL HB (TC037)"><option value="MP WIDAL (TC038)"><option value="MP WIDAL HB (TC039)"><option value="HB WIDAL (TC040)"><option value="HB (TC041)"><option value="BLOOD GROUP (TC042)"><option value="SMEAR OF MP (TC043)"><option value="SMEAR OF MP (Repeat) (TC044)"><option value="TOTAL PARASITE (TC045)"><option value="TC DC (TC046)"><option value="BT CT (TC047)"><option value="ESR (TC048)"><option value="BILIRUBIN TEST (TC049)"><option value="SODIUM (TC050)"><option value="POTASSIUM (TC051)"><option value="KIDNEY COMPLETE (KFT + Electrolytes) (TC052)"><option value="PREGNANCY COMBO (HCG + CBC + Urine) (TC053)"><option value="HS-CRP (High Sensitivity CRP) (TC054)"><option value="VITAMIN B12 (TC055)"><option value="VITAMIN D3 (25-Hydroxy) (TC056)"><option value="TSH (Thyroid Stimulating Hormone) (TC057)"><option value="T3 (Triiodothyronine) (TC058)"><option value="T4 (Thyroxine) (TC059)"><option value="FREE T3 (TC060)"><option value="FREE T4 (TC061)"><option value="PROLACTIN (TC062)"><option value="LH (Luteinizing Hormone) (TC063)"><option value="FSH (Follicle Stimulating Hormone) (TC064)"><option value="TESTOSTERONE (Total) (TC065)"><option value="IRON STUDIES (Iron/TIBC/Ferritin) (TC066)">
+                                    <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST (Fasting)"><option value="LIPID PROFILE (Fasting)"><option value="THYROID PROFILE"><option value="BETA HCG"><option value="HBA1C (3 Month Sugar)"><option value="C-REACTIVE PROTEIN (CRP)"><option value="ANTISTREPTOLYSIN O (ASO)"><option value="R A FACTOR"><option value="HCG PREGNANCY TEST"><option value="URINE ROUTINE"><option value="URINE CULTURE"><option value="SEMEN ANALYSIS"><option value="MANTOUX TEST"><option value="HBSAG"><option value="VDRL"><option value="HIV"><option value="HCV"><option value="BLOOD UREA"><option value="SERUM CREATININE"><option value="URIC ACID (Fasting)"><option value="BLOOD SUGAR"><option value="COMPLETE BLOOD COUNT (CBC)"><option value="PLATELETS TEST"><option value="DENGUE NS1 IGG IGM"><option value="TYPHIDOT IGG IGM"><option value="WIDAL"><option value="OPTIMAL"><option value="TC DC"><option value="BT CT"><option value="ESR"><option value="SMEAR OF MP"><option value="HB"><option value="BLOOD GROUP"><option value="TOTAL PARASITE"><option value="SMEAR OF MP (Repeat)"><option value="BILIRUBIN TEST"><option value="MP WIDAL HB"><option value="OPTIMAL WIDAL HB"><option value="CBC MP WIDAL"><option value="CBC WIDAL"><option value="HB WIDAL"><option value="MP WIDAL"><option value="OPTIMAL WIDAL"><option value="SODIUM"><option value="POTASSIUM"><option value="CBC + WIDAL + OPTIMAL"><option value="URINE CULTURE (Advanced)"><option value="PLATELET COUNT"><option value="KIDNEY COMPLETE (KFT + Electrolytes)"><option value="PREGNANCY COMBO (HCG + CBC + Urine)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)"><option value="HS-CRP (High Sensitivity CRP)"><option value="VITAMIN B12"><option value="VITAMIN D3 (25-Hydroxy)"><option value="TSH (Thyroid Stimulating Hormone)"><option value="T3 (Triiodothyronine)"><option value="T4 (Thyroxine)"><option value="FREE T3"><option value="FREE T4"><option value="PROLACTIN"><option value="LH (Luteinizing Hormone)"><option value="FSH (Follicle Stimulating Hormone)"><option value="TESTOSTERONE (Total)"><option value="IRON STUDIES (Iron/TIBC/Ferritin)"><option value="CBC WIDAL BSR">
                                 </datalist>
                             </label>
                             <label>Status <select id="patStatus"><option>pending</option><option>process</option><option>done</option></select></label>
@@ -783,11 +2031,12 @@
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                         <div class="form-grid">
+                            <!-- Updated: Added list="patientIdList" to allow dropdown search for existing patient IDs -->
                             <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-062026-1186" list="patientIdList" /></label>
                             <label>Test Name
-                                <input type="text" id="reportTestName" list="testList2" placeholder="Type Name (e.g. CBC WIDAL) or Code (e.g. TC001)" autocomplete="off" />
+                                <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" />
                                 <datalist id="testList2">
-                                    <option value="CBC WIDAL (TC001)"><option value="CBC MP WIDAL (TC002)"><option value="CBC WIDAL BSR (TC003)"><option value="COMPLETE BLOOD COUNT (CBC) (TC004)"><option value="CBC + WIDAL + OPTIMAL (TC005)"><option value="LIVER FUNCTION TEST (TC006)"><option value="KIDNEY FUNCTION TEST (Fasting) (TC007)"><option value="LIPID PROFILE (Fasting) (TC008)"><option value="THYROID PROFILE (TC009)"><option value="BETA HCG (TC010)"><option value="HBA1C (3 Month Sugar) (TC011)"><option value="C-REACTIVE PROTEIN (CRP) (TC012)"><option value="ANTISTREPTOLYSIN O (ASO) (TC013)"><option value="R A FACTOR (TC014)"><option value="HCG PREGNANCY TEST (TC015)"><option value="URINE ROUTINE (TC016)"><option value="URINE CULTURE (TC017)"><option value="URINE CULTURE (Advanced) (TC018)"><option value="SEMEN ANALYSIS (TC019)"><option value="MANTOUX TEST (TC020)"><option value="HBSAG (TC021)"><option value="VDRL (TC022)"><option value="HIV (TC023)"><option value="HCV (TC024)"><option value="BLOOD UREA (TC025)"><option value="SERUM CREATININE (TC026)"><option value="URIC ACID (Fasting) (TC027)"><option value="BLOOD SUGAR (TC028)"><option value="PLATELETS TEST (TC029)"><option value="PLATELET COUNT (TC030)"><option value="DENGUE NS1 IGG IGM (TC031)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC) (TC032)"><option value="TYPHIDOT IGG IGM (TC033)"><option value="WIDAL (TC034)"><option value="OPTIMAL (TC035)"><option value="OPTIMAL WIDAL (TC036)"><option value="OPTIMAL WIDAL HB (TC037)"><option value="MP WIDAL (TC038)"><option value="MP WIDAL HB (TC039)"><option value="HB WIDAL (TC040)"><option value="HB (TC041)"><option value="BLOOD GROUP (TC042)"><option value="SMEAR OF MP (TC043)"><option value="SMEAR OF MP (Repeat) (TC044)"><option value="TOTAL PARASITE (TC045)"><option value="TC DC (TC046)"><option value="BT CT (TC047)"><option value="ESR (TC048)"><option value="BILIRUBIN TEST (TC049)"><option value="SODIUM (TC050)"><option value="POTASSIUM (TC051)"><option value="KIDNEY COMPLETE (KFT + Electrolytes) (TC052)"><option value="PREGNANCY COMBO (HCG + CBC + Urine) (TC053)"><option value="HS-CRP (High Sensitivity CRP) (TC054)"><option value="VITAMIN B12 (TC055)"><option value="VITAMIN D3 (25-Hydroxy) (TC056)"><option value="TSH (Thyroid Stimulating Hormone) (TC057)"><option value="T3 (Triiodothyronine) (TC058)"><option value="T4 (Thyroxine) (TC059)"><option value="FREE T3 (TC060)"><option value="FREE T4 (TC061)"><option value="PROLACTIN (TC062)"><option value="LH (Luteinizing Hormone) (TC063)"><option value="FSH (Follicle Stimulating Hormone) (TC064)"><option value="TESTOSTERONE (Total) (TC065)"><option value="IRON STUDIES (Iron/TIBC/Ferritin) (TC066)">
+                                    <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST (Fasting)"><option value="LIPID PROFILE (Fasting)"><option value="THYROID PROFILE"><option value="BETA HCG"><option value="HBA1C (3 Month Sugar)"><option value="C-REACTIVE PROTEIN (CRP)"><option value="ANTISTREPTOLYSIN O (ASO)"><option value="R A FACTOR"><option value="HCG PREGNANCY TEST"><option value="URINE ROUTINE"><option value="URINE CULTURE"><option value="SEMEN ANALYSIS"><option value="MANTOUX TEST"><option value="HBSAG"><option value="VDRL"><option value="HIV"><option value="HCV"><option value="BLOOD UREA"><option value="SERUM CREATININE"><option value="URIC ACID (Fasting)"><option value="BLOOD SUGAR"><option value="COMPLETE BLOOD COUNT (CBC)"><option value="PLATELETS TEST"><option value="DENGUE NS1 IGG IGM"><option value="TYPHIDOT IGG IGM"><option value="WIDAL"><option value="OPTIMAL"><option value="TC DC"><option value="BT CT"><option value="ESR"><option value="SMEAR OF MP"><option value="HB"><option value="BLOOD GROUP"><option value="TOTAL PARASITE"><option value="SMEAR OF MP (Repeat)"><option value="BILIRUBIN TEST"><option value="MP WIDAL HB"><option value="OPTIMAL WIDAL HB"><option value="CBC MP WIDAL"><option value="CBC WIDAL"><option value="HB WIDAL"><option value="MP WIDAL"><option value="OPTIMAL WIDAL"><option value="SODIUM"><option value="POTASSIUM"><option value="CBC + WIDAL + OPTIMAL"><option value="URINE CULTURE (Advanced)"><option value="PLATELET COUNT"><option value="KIDNEY COMPLETE (KFT + Electrolytes)"><option value="PREGNANCY COMBO (HCG + CBC + Urine)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)"><option value="HS-CRP (High Sensitivity CRP)"><option value="VITAMIN B12"><option value="VITAMIN D3 (25-Hydroxy)"><option value="TSH (Thyroid Stimulating Hormone)"><option value="T3 (Triiodothyronine)"><option value="T4 (Thyroxine)"><option value="FREE T3"><option value="FREE T4"><option value="PROLACTIN"><option value="LH (Luteinizing Hormone)"><option value="FSH (Follicle Stimulating Hormone)"><option value="TESTOSTERONE (Total)"><option value="IRON STUDIES (Iron/TIBC/Ferritin)"><option value="CBC WIDAL BSR">
                                 </datalist>
                             </label>
                             <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>
@@ -983,7 +2232,8 @@
                 setTimeout(function() {
                     preloader.classList.add('hide');
                     setTimeout(function() {
-                        if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
+                        if (preloader && preloader.parentNode) preloader.parentNode.removeChild(
+                        preloader);
                     }, 600);
                 }, 2200);
             });
@@ -995,7 +2245,8 @@
                 toast.className = `toast ${type}`;
                 const iconMap = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-triangle' };
                 const icon = iconMap[type] || 'fa-info-circle';
-                toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span><span class="toast-close">&times;</span>`;
+                toast.innerHTML =
+                    `<i class="fas ${icon}"></i><span>${message}</span><span class="toast-close">&times;</span>`;
                 container.appendChild(toast);
                 requestAnimationFrame(() => { toast.classList.add('show'); });
                 const close = () => {
@@ -1036,7 +2287,8 @@
 
             // ─── SUPABASE ───
             const supabaseUrl = 'https://fflqftbnttpgwdktagmj.supabase.co';
-            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
+            const supabaseKey =
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
             const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
             const STORAGE_BUCKET = 'reports';
 
@@ -1090,24 +2342,34 @@
 
             // ─── DATA LOADERS ───
             async function loadPatients() { const snap = await rtdb.ref('/patients').once('value'); return snap.val() || []; }
+
             async function savePatients(arr) { await rtdb.ref('/patients').set(arr); }
+
             async function loadReports() { const snap = await rtdb.ref('/reports').once('value'); return snap.val() || []; }
+
             async function saveReports(arr) { await rtdb.ref('/reports').set(arr); }
+
             async function loadPayments() {
                 const snap = await rtdb.ref('/payments').once('value');
                 const val = snap.val();
                 return val || { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0, history: [] };
             }
+
             async function savePayments(obj) { await rtdb.ref('/payments').set(obj); }
+
             async function loadLogs() { const snap = await rtdb.ref('/logs').once('value'); return snap.val() || []; }
+
             async function saveLogs(arr) { await rtdb.ref('/logs').set(arr); }
+
             async function loadSettings() {
                 const snap = await rtdb.ref('/settings').once('value');
                 return snap.val() || {};
             }
+
             async function saveSettings(obj) { await rtdb.ref('/settings').set(obj); }
 
-            let patients = [], reports = [];
+            let patients = [],
+                reports = [];
             let payments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0, history: [] };
             let activityLogs = [];
             let settings = {};
@@ -1174,13 +2436,17 @@
                 payConfirmModal.classList.add('show');
             }
 
-            function closePayConfirm() { payConfirmModal.classList.remove('show'); pendingPayPatientId = null; pendingPayAmount = 0; }
+            function closePayConfirm() { payConfirmModal.classList.remove('show');
+                pendingPayPatientId = null;
+                pendingPayAmount = 0; }
+
             $('payConfirmCancel').addEventListener('click', closePayConfirm);
             payConfirmModal.addEventListener('click', e => { if (e.target === payConfirmModal) closePayConfirm(); });
 
             document.querySelectorAll('#payMethodGroup input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
-                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove('selected'));
+                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove(
+                    'selected'));
                     this.closest('label').classList.add('selected');
                 });
             });
@@ -1225,14 +2491,15 @@
                     setTimeout(() => closePayConfirm(), 1200);
 
                     if (patient.phone) {
-                        const msg = `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you for choosing Rajan Path Lab.`;
+                        const msg =
+                            `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you for choosing Rajan Path Lab.`;
                         sendWhatsApp(patient.phone, msg);
                     }
                 } catch (err) { showToast('Error: ' + err.message, 'error'); }
                 setLoading(this, false);
             });
 
-            // ─── One‑Click Mark as Paid ───
+            // ─── NEW: One‑Click Mark as Paid ───
             async function markAsPaid(patientId) {
                 const patient = patients.find(p => p.patient_id === patientId);
                 if (!patient) { showToast('Patient not found', 'error'); return; }
@@ -1265,7 +2532,8 @@
                     showToast(`✅ ${patient.name} marked as paid (₹${amount})`, 'success');
 
                     if (patient.phone) {
-                        const msg = `✅ Payment Confirmed (Quick)\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: Cash\nThank you for choosing Rajan Path Lab.`;
+                        const msg =
+                            `✅ Payment Confirmed (Quick)\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: Cash\nThank you for choosing Rajan Path Lab.`;
                         sendWhatsApp(patient.phone, msg);
                     }
                 } catch (err) { showToast('Error: ' + err.message, 'error'); }
@@ -1286,7 +2554,8 @@
                 document.body.style.overflow = 'hidden';
                 refreshAllData().then(() => {
                     $('portalStatus').className = 'portal-status';
-                    $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                    $('portalStatus').textContent =
+                    '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                     $('portalReportList').style.display = 'none';
                     $('portalPatientId').value = '';
                 });
@@ -1296,69 +2565,40 @@
                 portalModal.classList.remove('active');
                 document.body.style.overflow = '';
                 $('portalStatus').className = 'portal-status';
-                $('portalStatus').textContent = '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                $('portalStatus').textContent =
+                '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
             }
-            $('openPatientPortalBtn').addEventListener('click', e => { e.preventDefault(); openPortal(); });
-            $('openPatientPortalBtn2').addEventListener('click', e => { e.preventDefault(); openPortal(); });
+            $('openPatientPortalBtn').addEventListener('click', e => { e.preventDefault();
+                openPortal(); });
+            $('openPatientPortalBtn2').addEventListener('click', e => { e.preventDefault();
+                openPortal(); });
             $('closePortalBtn').addEventListener('click', closePortal);
             portalModal.addEventListener('click', e => { if (e.target === portalModal) closePortal(); });
 
-            // ─── ⭐ UPDATED PORTAL SEARCH LOGIC ⭐ ───
             $('portalFetchBtn').addEventListener('click', async function() {
                 const searchValue = $('portalPatientId').value.trim();
                 const statusDiv = $('portalStatus');
                 const listDiv = $('portalReportList');
-                
                 if (!searchValue) {
                     statusDiv.className = 'portal-status error';
                     statusDiv.innerHTML = '⚠️ Please enter your Patient ID or Mobile Number.';
                     listDiv.style.display = 'none';
                     return;
                 }
-                
                 await refreshAllData();
                 const normalizedSearch = normalizePhone(searchValue);
-                let patient = null;
-                const prefix = getPatientIdPrefix();
-
-                // 1. Try if input is the FULL ID (Starts with RPL-)
-                if (searchValue.startsWith('RPL-')) {
-                    patient = patients.find(p => p.patient_id === searchValue);
-                }
-
-                // 2. Try if input is LAST 4 or 5 DIGITS (e.g., 1256 or 12567)
-                // System will auto-add the current Prefix (RPL-072026-) to match existing IDs
-                if (!patient && /^\d{4,5}$/.test(searchValue)) {
-                    const generatedId = prefix + searchValue;
-                    patient = patients.find(p => p.patient_id === generatedId);
-                    // Fallback: If month changed, search for any ID ending with these numbers
-                    if (!patient) {
-                       patient = patients.find(p => p.patient_id.endsWith(searchValue));
-                    }
-                }
-
-                // 3. Try if input is MOBILE NUMBER (10 digits)
-                if (!patient && normalizedSearch.length === 10) {
-                    patient = patients.find(p => normalizePhone(p.phone || '') === normalizedSearch || p.phone === searchValue);
-                }
-
-                // 4. Fallback search for partial matches (Phone / 4 digit ID from middle)
-                if (!patient && normalizedSearch.length >= 4) {
-                    patient = patients.find(p => 
-                        normalizePhone(p.phone || '').includes(normalizedSearch) || 
-                        (p.phone || '').includes(searchValue) ||
-                        p.patient_id.includes(searchValue)
-                    );
-                }
-
+                let patient = patients.find(p => p.patient_id === searchValue);
+                if (!patient) patient = patients.find(p => normalizePhone(p.phone || '') === normalizedSearch || p.phone ===
+                    searchValue);
+                if (!patient && normalizedSearch.length >= 4) patient = patients.find(p => normalizePhone(p.phone || '')
+                    .includes(normalizedSearch) || (p.phone || '').includes(searchValue));
                 if (!patient) {
                     statusDiv.className = 'portal-status error';
                     statusDiv.innerHTML = '❌ No patient found with ID or Mobile: ' + searchValue;
                     listDiv.style.display = 'none';
                     return;
                 }
-
                 const patientReports = reports.filter(r => r.patient_id === patient.patient_id);
                 if (patientReports.length === 0) {
                     statusDiv.className = 'portal-status';
@@ -1368,7 +2608,7 @@
                 }
                 const dueAmount = Number(patient.due_amount);
                 const isPaid = dueAmount === 0;
-                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile/Partial ID';
+                const foundBy = searchValue === patient.patient_id ? 'Patient ID' : 'Mobile Number';
                 statusDiv.className = 'portal-status ' + (isPaid ? 'success' : 'error');
                 statusDiv.innerHTML = '✅ Found ' + patientReports.length + ' report(s) for ' + patient.name +
                     ' (via ' + foundBy + '). Status: ' + (isPaid ? '✅ Paid' : '⚠️ ₹' + dueAmount + ' Due') +
@@ -1377,7 +2617,8 @@
                 let html = '<h3 style="margin-bottom:1rem;">📋 Your Reports</h3>';
                 for (const report of patientReports) {
                     const canDownload = isPaid;
-                    const dueBadge = !isPaid ? '<span class="portal-due-badge">₹' + dueAmount + ' DUE — LOCKED</span>' : '';
+                    const dueBadge = !isPaid ? '<span class="portal-due-badge">₹' + dueAmount + ' DUE — LOCKED</span>' :
+                        '';
                     html += `
                             <div class="portal-report-item">
                                 <div class="portal-report-info">
@@ -1402,19 +2643,20 @@
                         const freshDue = freshPatient ? Number(freshPatient.due_amount) : dueAmount;
                         if (freshDue !== 0) {
                             statusDiv.className = 'portal-status error';
-                            statusDiv.innerHTML = '❌ Payment pending (₹' + freshDue + '). Please clear dues.';
+                            statusDiv.innerHTML = '❌ Payment pending (₹' + freshDue +
+                                '). Please clear dues.';
                             return;
                         }
                         const reportId = parseInt(this.dataset.reportId);
                         const fileName = this.dataset.fileName;
-                        try { await downloadPDF(reportId, fileName); showToast('Download started', 'success'); } catch (e) {
+                        try { await downloadPDF(reportId, fileName);
+                            showToast('Download started', 'success'); } catch (e) {
                             statusDiv.className = 'portal-status error';
                             statusDiv.innerHTML = '❌ Error: ' + e.message;
                         }
                     });
                 });
             });
-            
             $('portalPatientId').addEventListener('keypress', e => { if (e.key === 'Enter') $('portalFetchBtn').click(); });
 
             // ─── LOGIN ───
@@ -1431,7 +2673,8 @@
                 const username = $('loginUsername').value.trim();
                 const password = $('loginPassword').value.trim();
                 const result = $('loginResult');
-                if (!username || !password) { result.style.color = 'red'; result.textContent = 'Please enter credentials'; return; }
+                if (!username || !password) { result.style.color = 'red';
+                    result.textContent = 'Please enter credentials'; return; }
                 if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
                     result.style.color = 'green';
                     result.textContent = '✅ Login successful!';
@@ -1452,14 +2695,18 @@
                 refreshAllSections();
                 showAdminSection('dashboard');
                 setTimeout(() => generateAllQRCodes(), 300);
+                // Set the patient ID inputs with the current month/year prefix
                 setTimeout(() => {
                     if ($('patId')) $('patId').value = getPatientIdPrefix();
                     if ($('reportPatientId')) $('reportPatientId').value = getPatientIdPrefix();
                 }, 100);
             }
 
-            function hideAdmin() { adminWrapper.classList.remove('active'); document.body.style.overflow = ''; }
-            function logout() { hideAdmin(); showToast('Logged out', 'warning'); }
+            function hideAdmin() { adminWrapper.classList.remove('active');
+                document.body.style.overflow = ''; }
+
+            function logout() { hideAdmin();
+                showToast('Logged out', 'warning'); }
             $('logoutBtn').addEventListener('click', logout);
             $('logoutBtn2')?.addEventListener('click', logout);
 
@@ -1472,9 +2719,15 @@
             });
 
             const adminSections = {
-                dashboard: $('sec-dashboard'), patients: $('sec-patients'), reports: $('sec-reports'),
-                whatsapp: $('sec-whatsapp'), payments: $('sec-payments'), settings: $('sec-settings'),
-                analytics: $('sec-analytics'), backup: $('sec-backup'), security: $('sec-security')
+                dashboard: $('sec-dashboard'),
+                patients: $('sec-patients'),
+                reports: $('sec-reports'),
+                whatsapp: $('sec-whatsapp'),
+                payments: $('sec-payments'),
+                settings: $('sec-settings'),
+                analytics: $('sec-analytics'),
+                backup: $('sec-backup'),
+                security: $('sec-security')
             };
             const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');
 
@@ -1504,8 +2757,10 @@
                         el.innerHTML = '';
                         new QRCode(el, {
                             text: 'Patient:' + id,
-                            width: 50, height: 50,
-                            colorDark: '#000', colorLight: '#fff',
+                            width: 50,
+                            height: 50,
+                            colorDark: '#000',
+                            colorLight: '#fff',
                             correctLevel: QRCode.CorrectLevel.H
                         });
                     }
@@ -1513,9 +2768,15 @@
             }
 
             function refreshAllSections() {
-                refreshDashboard(); refreshPatients(); refreshReports();
-                refreshWhatsAppPatients(); refreshPayments(); refreshSettings();
-                refreshAnalytics(); refreshBackup(); refreshSecurity();
+                refreshDashboard();
+                refreshPatients();
+                refreshReports();
+                refreshWhatsAppPatients();
+                refreshPayments();
+                refreshSettings();
+                refreshAnalytics();
+                refreshBackup();
+                refreshSecurity();
             }
 
             // ─── DASHBOARD ───
@@ -1541,7 +2802,9 @@
                 updateCharts();
             }
 
-            let chartWeeklyInstance = null, chartPieInstance = null;
+            let chartWeeklyInstance = null,
+                chartPieInstance = null;
+
             function updateCharts() {
                 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
                 const weeklyData = days.map(() => 0);
@@ -1554,15 +2817,20 @@
                 });
                 const testMap = {};
                 patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                const labels = Object.keys(testMap), data = Object.values(testMap);
+                const labels = Object.keys(testMap),
+                    data = Object.values(testMap);
 
                 const ctx1 = $('chartWeekly')?.getContext('2d');
                 if (ctx1) {
                     if (chartWeeklyInstance) chartWeeklyInstance.destroy();
                     chartWeeklyInstance = new Chart(ctx1, {
                         type: 'bar',
-                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData, backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080', borderWidth: 2 }] },
-                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData,
+                                backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
+                            borderWidth: 2 }] },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
                     });
                 }
                 const ctx2 = $('chartPie')?.getContext('2d');
@@ -1571,8 +2839,13 @@
                     const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a', '#ff6600'];
                     chartPieInstance = new Chart(ctx2, {
                         type: 'doughnut',
-                        data: { labels: labels.length ? labels : ['No Data'], datasets: [{ data: labels.length ? data : [1], backgroundColor: labels.length ? colors.slice(0, labels.length) : ['#ccc'], borderWidth: 2, borderColor: '#fff' }] },
-                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } } }
+                        data: { labels: labels.length ? labels : ['No Data'],
+                            datasets: [{ data: labels.length ? data : [1],
+                                backgroundColor: labels.length ? colors.slice(0, labels.length) : ['#ccc'],
+                                borderWidth: 2, borderColor: '#fff' }] },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,
+                                        font: { size: 11 } } } } }
                     });
                 }
             }
@@ -1635,60 +2908,20 @@
                 datalist.innerHTML = uniqueIds.map(id => `<option value="${id}">`).join('');
             }
 
-            // ─── HELPER: Master Test Code Map ───
-            const TEST_CODES = {
-                'TC001': 'CBC WIDAL', 'TC002': 'CBC MP WIDAL', 'TC003': 'CBC WIDAL BSR',
-                'TC004': 'COMPLETE BLOOD COUNT (CBC)', 'TC005': 'CBC + WIDAL + OPTIMAL',
-                'TC006': 'LIVER FUNCTION TEST', 'TC007': 'KIDNEY FUNCTION TEST (Fasting)',
-                'TC008': 'LIPID PROFILE (Fasting)', 'TC009': 'THYROID PROFILE', 'TC010': 'BETA HCG',
-                'TC011': 'HBA1C (3 Month Sugar)', 'TC012': 'C-REACTIVE PROTEIN (CRP)',
-                'TC013': 'ANTISTREPTOLYSIN O (ASO)', 'TC014': 'R A FACTOR', 'TC015': 'HCG PREGNANCY TEST',
-                'TC016': 'URINE ROUTINE', 'TC017': 'URINE CULTURE', 'TC018': 'URINE CULTURE (Advanced)',
-                'TC019': 'SEMEN ANALYSIS', 'TC020': 'MANTOUX TEST', 'TC021': 'HBSAG', 'TC022': 'VDRL',
-                'TC023': 'HIV', 'TC024': 'HCV', 'TC025': 'BLOOD UREA', 'TC026': 'SERUM CREATININE',
-                'TC027': 'URIC ACID (Fasting)', 'TC028': 'BLOOD SUGAR', 'TC029': 'PLATELETS TEST',
-                'TC030': 'PLATELET COUNT', 'TC031': 'DENGUE NS1 IGG IGM',
-                'TC032': 'DENGUE COMPLETE (NS1 + IgG/IgM + CBC)', 'TC033': 'TYPHIDOT IGG IGM',
-                'TC034': 'WIDAL', 'TC035': 'OPTIMAL', 'TC036': 'OPTIMAL WIDAL', 'TC037': 'OPTIMAL WIDAL HB',
-                'TC038': 'MP WIDAL', 'TC039': 'MP WIDAL HB', 'TC040': 'HB WIDAL', 'TC041': 'HB',
-                'TC042': 'BLOOD GROUP', 'TC043': 'SMEAR OF MP', 'TC044': 'SMEAR OF MP (Repeat)',
-                'TC045': 'TOTAL PARASITE', 'TC046': 'TC DC', 'TC047': 'BT CT', 'TC048': 'ESR',
-                'TC049': 'BILIRUBIN TEST', 'TC050': 'SODIUM', 'TC051': 'POTASSIUM',
-                'TC052': 'KIDNEY COMPLETE (KFT + Electrolytes)', 'TC053': 'PREGNANCY COMBO (HCG + CBC + Urine)',
-                'TC054': 'HS-CRP (High Sensitivity CRP)', 'TC055': 'VITAMIN B12',
-                'TC056': 'VITAMIN D3 (25-Hydroxy)', 'TC057': 'TSH (Thyroid Stimulating Hormone)',
-                'TC058': 'T3 (Triiodothyronine)', 'TC059': 'T4 (Thyroxine)', 'TC060': 'FREE T3',
-                'TC061': 'FREE T4', 'TC062': 'PROLACTIN', 'TC063': 'LH (Luteinizing Hormone)',
-                'TC064': 'FSH (Follicle Stimulating Hormone)', 'TC065': 'TESTOSTERONE (Total)',
-                'TC066': 'IRON STUDIES (Iron/TIBC/Ferritin)'
-            };
-
-            function getTestFullName(input) {
-                input = input.trim();
-                if (!input) return '';
-                if (TEST_CODES[input]) return TEST_CODES[input];
-                
-                const upperInput = input.toUpperCase();
-                for (let [code, name] of Object.entries(TEST_CODES)) {
-                    if (name.toUpperCase() === upperInput) return name;
-                }
-                return input;
-            }
-
             $('addPatientBtn').addEventListener('click', async function() {
                 let patientId = $('patId').value.trim();
                 const name = $('patName').value.trim();
                 const phone = $('patPhone').value.trim();
-                let testInput = $('patTest').value.trim();
+                const test = $('patTest').value.trim();
                 const status = $('patStatus').value;
                 const due = parseFloat($('patDue').value) || 0;
 
                 if (!name) { showToast('❌ Name is required.', 'error'); return; }
 
-                const test = getTestFullName(testInput);
-
                 let id = patientId;
                 const prefix = getPatientIdPrefix();
+
+                // If user didn't type the suffix (value is exactly the prefix) or it's empty
                 if (!id || id === prefix) {
                     let maxSeq = 0;
                     patients.forEach(p => {
@@ -1701,6 +2934,7 @@
                     const nextId = maxSeq + 1;
                     id = prefix + String(nextId).padStart(4, '0');
                 }
+                // else, user typed a specific custom ID (including full prefix+suffix), use it.
 
                 const normPhone = normalizePhone(phone);
                 const duplicate = patients.find(p => p.patient_id === id);
@@ -1734,6 +2968,7 @@
                 setLoading(this, false);
             });
 
+            // Modified Clear Button to apply the prefix
             $('clearPatientBtn').addEventListener('click', () => {
                 $('patId').value = getPatientIdPrefix();
                 $('patName').value = '';
@@ -1790,28 +3025,32 @@
                     const btn = e.target.closest('.btn-download-report');
                     const id = parseInt(btn.dataset.id);
                     const fileName = btn.dataset.fileName;
-                    try { await downloadPDF(id, fileName); showToast('Download started', 'success'); } catch (err) { showToast('Error: ' + err.message, 'error'); }
+                    try { await downloadPDF(id, fileName);
+                        showToast('Download started', 'success'); } catch (err) { showToast('Error: ' + err.message,
+                            'error'); }
                 }
             });
 
             $('uploadReportBtn').addEventListener('click', async function() {
                 const pid = $('reportPatientId').value.trim();
-                let testInput = $('reportTestName').value.trim();
+                const test = $('reportTestName').value.trim();
                 const file = $('reportFile').files[0];
                 const replace = $('reportReplace').value;
                 const msgDiv = $('uploadMessage');
                 msgDiv.textContent = '';
                 msgDiv.style.color = 'red';
-                
-                const test = getTestFullName(testInput);
-                
-                if (!pid) { msgDiv.textContent = '❌ Patient ID required.'; showToast('Patient ID required', 'error'); return; }
-                if (!test) { msgDiv.textContent = '❌ Test Name required.'; showToast('Test Name required', 'error'); return; }
-                if (!file) { msgDiv.textContent = '❌ Select a PDF.'; showToast('Select a PDF', 'error'); return; }
+                if (!pid) { msgDiv.textContent = '❌ Patient ID required.';
+                    showToast('Patient ID required', 'error'); return; }
+                if (!test) { msgDiv.textContent = '❌ Test Name required.';
+                    showToast('Test Name required', 'error'); return; }
+                if (!file) { msgDiv.textContent = '❌ Select a PDF.';
+                    showToast('Select a PDF', 'error'); return; }
                 const patient = patients.find(p => p.patient_id === pid);
-                if (!patient) { msgDiv.textContent = '❌ Patient not found!'; showToast('Patient not found', 'error'); return; }
+                if (!patient) { msgDiv.textContent = '❌ Patient not found!';
+                    showToast('Patient not found', 'error'); return; }
                 const existing = reports.find(r => r.patient_id === pid && r.test_name === test);
-                if (existing && replace === 'no') { msgDiv.textContent = '❌ Report exists. Use Replace.'; showToast('Report exists. Use Replace.', 'warning'); return; }
+                if (existing && replace === 'no') { msgDiv.textContent = '❌ Report exists. Use Replace.';
+                    showToast('Report exists. Use Replace.', 'warning'); return; }
                 setLoading(this, true);
                 try {
                     if (existing && replace === 'yes') {
@@ -1840,7 +3079,8 @@
                     $('reportTestName').value = '';
                     $('reportFile').value = '';
                     setTimeout(() => { msgDiv.textContent = ''; }, 5000);
-                } catch (err) { msgDiv.textContent = '❌ Upload failed: ' + err.message; showToast('Upload failed: ' + err.message, 'error'); }
+                } catch (err) { msgDiv.textContent = '❌ Upload failed: ' + err.message;
+                    showToast('Upload failed: ' + err.message, 'error'); }
                 setLoading(this, false);
             });
 
@@ -1881,13 +3121,15 @@
                 if (e.target.closest('.wa-send')) {
                     const btn = e.target.closest('.wa-send');
                     if (!btn.dataset.phone) { showToast('No phone number', 'warning'); return; }
-                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g, btn.dataset.test);
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g,
+                        btn.dataset.test);
                     sendWhatsApp(btn.dataset.phone, msg);
                 }
             });
             $('sendWAPatient').addEventListener('click', () => {
                 const phone = prompt('Enter patient phone:');
-                if (phone) sendWhatsApp(phone, $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient').replace(/{test}/g, 'Report'));
+                if (phone) sendWhatsApp(phone, $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient')
+                    .replace(/{test}/g, 'Report'));
             });
             $('sendWADoctor').addEventListener('click', () => {
                 const phone = prompt('Enter doctor phone:');
@@ -1938,7 +3180,8 @@
                                 <td>${h.confirmed_at || h.timestamp || '—'}</td>
                             </tr>`).join('');
                 } else {
-                    historyBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
+                    historyBody.innerHTML =
+                        '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
                 }
             }
             $('refreshPayments').addEventListener('click', refreshPayments);
@@ -1954,8 +3197,10 @@
                 if (typeof QRCode !== 'undefined') {
                     new QRCode(container, {
                         text: 'upi://pay?pa=rajanpathlab@upi&pn=Rajan%20Path%20Lab&am=1.00&cu=INR',
-                        width: 160, height: 160,
-                        colorDark: '#000', colorLight: '#fff',
+                        width: 160,
+                        height: 160,
+                        colorDark: '#000',
+                        colorLight: '#fff',
                         correctLevel: QRCode.CorrectLevel.H
                     });
                 } else container.innerHTML = '<p>QR library not loaded</p>';
@@ -1967,7 +3212,7 @@
                 const patient = patients.find(p => p.patient_id === patientId);
                 if (!patient) { showToast('Patient not found', 'error'); return; }
                 const amount = patient.due_amount || 0;
-                const gst = 0;
+                const gst = 0; // can be dynamic
                 const total = amount + gst;
 
                 $('invPatientName').textContent = patient.name;
@@ -1976,9 +3221,11 @@
                 $('invDate').textContent = new Date().toLocaleDateString();
                 $('invTestDesc').textContent = patient.test || 'Test';
                 $('invAmount').textContent = '₹' + amount;
-                document.querySelector('#invoicePrintArea table tbody tr:nth-child(2) td:nth-child(2)').textContent = '₹' + gst;
+                document.querySelector('#invoicePrintArea table tbody tr:nth-child(2) td:nth-child(2)').textContent = '₹' +
+                gst;
                 $('invTotal').textContent = '₹' + total;
 
+                // Lab details from settings
                 $('invLabAddress').textContent = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
                 $('invLabPhone').textContent = settings.phone || '8709946177 / 9931002450';
                 $('invLabGST').textContent = 'GST: ' + (settings.gst || 'NA');
@@ -2003,7 +3250,9 @@
                 $('setDefaultPrice').value = settings.default_price || 450;
             }
 
-            function refreshSettings() { applySettingsToUI(); }
+            function refreshSettings() {
+                applySettingsToUI();
+            }
 
             $('saveSettingsBtn').addEventListener('click', async function() {
                 const lab_name = $('setLabName').value.trim();
@@ -2011,6 +3260,7 @@
                 const phone = $('setPhone').value.trim();
                 const gst = $('setGST').value.trim();
                 const default_price = parseFloat($('setDefaultPrice').value) || 450;
+
                 setLoading(this, true);
                 try {
                     settings = { lab_name, address, phone, gst, default_price };
@@ -2028,21 +3278,26 @@
                 const revenue = patients.reduce((s, p) => s + p.due_amount, 0);
                 const testMap = {};
                 patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                let topTest = '-', topCount = 0;
-                Object.keys(testMap).forEach(k => { if (testMap[k] > topCount) { topCount = testMap[k]; topTest = k; } });
+                let topTest = '-',
+                    topCount = 0;
+                Object.keys(testMap).forEach(k => { if (testMap[k] > topCount) { topCount = testMap[k];
+                        topTest = k; } });
                 $('aToday').textContent = todayCount;
                 $('aMonth').textContent = patients.length;
                 $('aTopTest').textContent = topTest;
                 $('aRevenue').textContent = '₹' + revenue;
                 const tbody = $('analyticsTable');
                 const arr = Object.keys(testMap).map(k => ({ test: k, count: testMap[k] }));
-                if (arr.length) tbody.innerHTML = arr.map(t => `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * (settings.default_price || 450)}</td><td>-</td></tr>`).join('');
+                if (arr.length) tbody.innerHTML = arr.map(t =>
+                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * (settings.default_price || 450)}</td><td>-</td></tr>`
+                    ).join('');
                 else tbody.innerHTML = '<tr><td colspan="4">No data</td></tr>';
             }
 
             // ─── BACKUP ───
             function refreshBackup() {
-                $('backupListBody').innerHTML = '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="showToast(\'Already in cloud\',\'success\')"><i class="fas fa-check"></i></button></td></tr>';
+                $('backupListBody').innerHTML =
+                    '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="showToast(\'Already in cloud\',\'success\')"><i class="fas fa-check"></i></button></td></tr>';
             }
             $('backupDBBtn').addEventListener('click', () => showToast('Data already in Firebase cloud.', 'success'));
             $('backupPDFBtn').addEventListener('click', () => showToast('PDFs are in Supabase Storage.', 'success'));
@@ -2052,7 +3307,9 @@
             function refreshSecurity() {
                 const tbody = $('activityLogBody');
                 if (activityLogs.length) {
-                    tbody.innerHTML = activityLogs.map(l => `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`).join('');
+                    tbody.innerHTML = activityLogs.map(l =>
+                        `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
+                    ).join('');
                 } else tbody.innerHTML = '<tr><td colspan="4">No logs</td></tr>';
             }
             $('viewLogBtn').addEventListener('click', refreshSecurity);
@@ -2064,7 +3321,7 @@
                 showToast('✅ Password changed! (dummy)', 'success');
             });
 
-            console.log('✅ Rajan Path Lab · Final Code with Auto Patient ID, Test Codes, and Smart Portal Search');
+            console.log('✅ Rajan Path Lab · Professional Admin Panel with Billing, Toast, Loading, Quick Mark Paid');
             console.log('🔑 Login: Rajan5530 / Rkchandra5530');
 
         })();
