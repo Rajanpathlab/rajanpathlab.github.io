@@ -2856,13 +2856,21 @@
                 }
             }
 
-            // ─── PATIENTS ───
+            // ─── PATIENTS (Main Table with Due & Action) ───
             function refreshPatients() {
                 const tbody = $('patientTableBody');
                 if (patients.length) {
                     tbody.innerHTML = patients.map(p => {
                         const due = p.due_amount || 0;
                         const paid = due === 0;
+                        // Due column: green checkmark if paid, else amount
+                        const dueDisplay = paid ?
+                            '<i class="fas fa-check-circle" style="color:#22c55e;"></i>' :
+                            '₹' + due;
+                        // Action column: 'Paid' badge if paid, else 'Paid' button
+                        const actionHtml = paid ?
+                            '<span class="badge-status paid"><i class="fas fa-check"></i> Paid</span>' :
+                            `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Paid</button>`;
                         return `
                             <tr>
                                 <td><b>${p.patient_id}</b></td>
@@ -2870,14 +2878,9 @@
                                 <td>${p.phone || '—'}</td>
                                 <td>${p.test}</td>
                                 <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                <td>${paid ? '✓' : '₹' + due}</td>
+                                <td>${dueDisplay}</td>
                                 <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
-                                <td>
-                                    ${paid
-                                        ? '<span class="badge-status paid"><i class="fas fa-check"></i> Paid</span>'
-                                        : `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Paid</button>`
-                                    }
-                                </td>
+                                <td>${actionHtml}</td>
                             </tr>`;
                     }).join('');
                     setTimeout(() => generateAllQRCodes(), 100);
@@ -2885,16 +2888,12 @@
                 updatePatientIdDatalist();
             }
 
-            // Event delegation for action buttons
+            // Event delegation for action buttons (Pay confirm)
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-pay-confirm')) {
                     const id = e.target.closest('.btn-pay-confirm').dataset.id;
                     openPayConfirm(id);
                 }
-                // We also have "Mark Paid" hidden, but we use openPayConfirm for full flow.
-                // For one-click paid via the "Paid" button we use openPayConfirm which shows modal.
-                // If user wants quick mark, they can still use the modal.
-                // We removed the separate Mark Paid button in the table.
             });
 
             // ─── HELPER: Auto Patient ID Prefix ───
@@ -2979,12 +2978,6 @@
             });
             $('refreshPatients').addEventListener('click', refreshPatients);
 
-            // Delete patient (still available)
-            document.addEventListener('click', async function(e) {
-                // We don't have delete button in the table now, but if we add later, keep logic.
-                // Not needed for now.
-            });
-
             $('patientSearch').addEventListener('input', function() {
                 const q = this.value.toLowerCase();
                 document.querySelectorAll('#patientTableBody tr').forEach(row => {
@@ -2992,7 +2985,7 @@
                 });
             });
 
-            // ─── REPORTS ─── (unchanged)
+            // ─── REPORTS ───
             function refreshReports() {
                 const tbody = $('reportsTableBody');
                 if (reports.length) {
@@ -3089,7 +3082,7 @@
             });
             $('refreshReports').addEventListener('click', refreshReports);
 
-            // ─── WHATSAPP ─── (unchanged)
+            // ─── WHATSAPP ───
             function refreshWhatsAppPatients() {
                 const tbody = $('whatsappPatientList');
                 if (patients.length) {
@@ -3125,7 +3118,7 @@
                 if (phone) sendWhatsApp(phone, 'Urine Culture under process. Results in 48 hrs.');
             });
 
-            // ─── PAYMENTS ─── (unchanged)
+            // ─── PAYMENTS ───
             function refreshPayments() {
                 const due = patients.filter(p => p.due_amount > 0);
                 const paid = patients.filter(p => p.due_amount === 0);
@@ -3192,7 +3185,7 @@
             });
             $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));
 
-            // ─── INVOICE ─── (unchanged)
+            // ─── INVOICE ───
             function generateInvoice(patientId) {
                 const patient = patients.find(p => p.patient_id === patientId);
                 if (!patient) { showToast('Patient not found', 'error'); return; }
@@ -3224,7 +3217,7 @@
                 window.print();
             });
 
-            // ─── SETTINGS ─── (unchanged)
+            // ─── SETTINGS ───
             function applySettingsToUI() {
                 $('setLabName').value = settings.lab_name || 'Rajan Path Lab';
                 $('setAddress').value = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
@@ -3253,7 +3246,7 @@
                 setLoading(this, false);
             });
 
-            // ─── ANALYTICS ─── (unchanged)
+            // ─── ANALYTICS ───
             function refreshAnalytics() {
                 const today = new Date().toDateString();
                 let todayCount = 0;
@@ -3277,7 +3270,7 @@
                 else tbody.innerHTML = '<tr><td colspan="4">No data</td></tr>';
             }
 
-            // ─── BACKUP ─── (unchanged)
+            // ─── BACKUP ───
             function refreshBackup() {
                 $('backupListBody').innerHTML =
                     '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="showToast(\'Already in cloud\',\'success\')"><i class="fas fa-check"></i></button></td></tr>';
@@ -3286,7 +3279,7 @@
             $('backupPDFBtn').addEventListener('click', () => showToast('PDFs are in Supabase Storage.', 'success'));
             $('restoreBtn').addEventListener('click', () => showToast('Restore not needed.', 'warning'));
 
-            // ─── SECURITY ─── (unchanged)
+            // ─── SECURITY ───
             function refreshSecurity() {
                 const tbody = $('activityLogBody');
                 if (activityLogs.length) {
