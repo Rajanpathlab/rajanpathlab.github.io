@@ -427,21 +427,6 @@
         .patient-portal-btn:hover {
             background: #1a8d4a;
         }
-        .ai-doctor-btn {
-            background: #7c3aed;
-            color: white;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
-        }
-        .ai-doctor-btn:hover {
-            background: #5b21b6;
-        }
 
         .hero {
             background: #0d3359;
@@ -640,152 +625,6 @@
             font-weight: bold;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* ─── AI DOCTOR CHAT MODAL ─── */
-        .ai-chat-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 10080;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .ai-chat-modal.show {
-            display: flex;
-        }
-        .ai-chat-content {
-            background: white;
-            max-width: 550px;
-            width: 100%;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .ai-chat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 12px;
-            margin-bottom: 16px;
-        }
-        .ai-chat-header h3 {
-            margin: 0;
-            color: #0a2540;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.2rem;
-        }
-        .ai-chat-header h3 i {
-            color: #7c3aed;
-        }
-        .ai-chat-header .ai-badge {
-            background: #7c3aed;
-            color: white;
-            font-size: 0.6rem;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-left: 6px;
-        }
-        .ai-chat-close {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #94a3b8;
-        }
-        .ai-chat-close:hover {
-            color: #0a2540;
-        }
-        .ai-chat-body {
-            flex: 1;
-            overflow-y: auto;
-            max-height: 420px;
-            margin-bottom: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding-right: 4px;
-        }
-        .ai-chat-msg {
-            padding: 10px 16px;
-            border-radius: 12px;
-            max-width: 88%;
-            font-size: 14px;
-            line-height: 1.6;
-            word-wrap: break-word;
-        }
-        .ai-chat-msg.user {
-            background: #dbeafe;
-            color: #1e40af;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        .ai-chat-msg.bot {
-            background: #f1f5f9;
-            color: #0f172a;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-            border-left: 4px solid #7c3aed;
-        }
-        .ai-chat-msg.bot .thinking {
-            color: #7c3aed;
-            font-weight: 500;
-        }
-        .ai-chat-msg.bot .disclaimer {
-            font-size: 11px;
-            color: #94a3b8;
-            margin-top: 8px;
-            border-top: 1px dashed #e2e8f0;
-            padding-top: 6px;
-        }
-        .ai-chat-input-area {
-            display: flex;
-            gap: 10px;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 14px;
-        }
-        .ai-chat-input-area input {
-            flex: 1;
-            padding: 10px 14px;
-            border: 1px solid #e2e8f0;
-            border-radius: 30px;
-            font-size: 14px;
-            outline: none;
-        }
-        .ai-chat-input-area input:focus {
-            border-color: #7c3aed;
-        }
-        .ai-chat-input-area button {
-            background: #7c3aed;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 10px 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .ai-chat-input-area button:hover {
-            background: #5b21b6;
-        }
-        .ai-chat-input-area button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .ai-chat-footer-note {
-            font-size: 10px;
-            color: #94a3b8;
-            margin-top: 8px;
-            text-align: center;
         }
 
         /* ─── ADMIN PANEL ─── */
@@ -1274,7 +1113,7 @@
             margin-top: 12px;
         }
 
-        /* Patient Portal */
+        /* Patient Portal Modal */
         .patient-portal-modal {
             display: none;
             position: fixed;
@@ -1465,7 +1304,7 @@
             justify-content: space-between;
         }
 
-        /* Payment Confirm */
+        /* Payment Confirmation Modal */
         .pay-confirm-modal {
             display: none;
             position: fixed;
@@ -1566,6 +1405,7 @@
         .pay-btns .btn-cancel:hover {
             background: #cbd5e1;
         }
+
         .badge-pay-confirmed {
             background: #d1fae5;
             color: #065f46;
@@ -1575,7 +1415,7 @@
             border-radius: 20px;
         }
 
-        /* Invoice */
+        /* Invoice Modal */
         .invoice-modal {
             display: none;
             position: fixed;
@@ -1648,7 +1488,7 @@
             justify-content: flex-end;
         }
 
-        /* Settings */
+        /* Settings Section */
         .settings-group {
             background: white;
             padding: 20px;
@@ -1674,7 +1514,7 @@
             min-height: 60px;
         }
 
-        /* Dark Mode */
+        /* Dark Mode overrides */
         body.admin-dark #adminPanelContainer {
             background: #0f172a;
         }
@@ -1818,8 +1658,7 @@
                 margin: 0 4px;
             }
             .admin-login-btn,
-            .patient-portal-btn,
-            .ai-doctor-btn {
+            .patient-portal-btn {
                 font-size: 12px;
                 padding: 4px 12px;
                 margin: 2px 0;
@@ -1912,11 +1751,12 @@
         </div>
     </div>
 
-    <!-- ═══════════ TOAST ═══════════ -->
+    <!-- ═══════════ TOAST CONTAINER ═══════════ -->
     <div id="toastContainer"></div>
 
-    <!-- ═══════════ PUBLIC WEBSITE ═══════════ -->
+    <!-- ═══════════ MAIN PAGE ═══════════ -->
     <header>
+        <!-- ─── LARGE LOGO ─── -->
         <a href="#" class="header-logo">
             <div class="logo-icon">R</div>
             <div class="logo-text-group">
@@ -1924,13 +1764,13 @@
                 <div class="logo-tagline"><i class="fas fa-heartbeat"></i> SOLUTION OF YOUR HEALTHY LIFE</div>
             </div>
         </a>
+
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Tests</a>
-            <a href="#">Book Test</a>
-            <a href="#">About</a>
+            <a href="index.html">Home</a>
+            <a href="tests.html">Tests</a>
+            <a href="book.html">Book Test</a>
+            <a href="contact.html">About</a>
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
-            <button class="ai-doctor-btn" id="openAIDoctorBtn"><i class="fas fa-robot"></i> AI Doctor <span style="font-size:10px;background:#5b21b6;padding:2px 6px;border-radius:12px;margin-left:4px;">Gemini</span></button>
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
         </nav>
     </header>
@@ -1938,7 +1778,7 @@
     <div class="hero">
         <h2>Reliable Diagnostics with Advanced Technology</h2>
         <div class="btn-container">
-            <a class="btn-book" href="#">Book Test</a>
+            <a class="btn-book" href="book.html">Book Test</a>
             <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>
         </div>
     </div>
@@ -2109,55 +1949,6 @@
         </div>
     </div>
 
-    <!-- ═══════════ UPI MODAL ═══════════ -->
-    <div class="upi-modal" id="upiModal">
-        <div class="upi-modal-content">
-            <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>
-            <div id="upiQR" style="display:flex;justify-content:center;margin:16px 0;"></div>
-            <p style="color:var(--text-dark);">UPI: rajanpathlab@upi</p>
-            <button class="btn-close" id="closeUpiModal">Close</button>
-        </div>
-    </div>
-
-    <!-- ═══════════ PATIENT PORTAL MODAL ═══════════ -->
-    <div class="patient-portal-modal" id="patientPortalModal">
-        <div class="patient-portal-content">
-            <div class="portal-header">
-                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>
-                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
-            </div>
-            <div class="portal-body">
-                <div class="portal-input-group">
-                    <div class="portal-input-label"><span>🔍</span> PATIENT ID OR MOBILE</div>
-                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number" autocomplete="off">
-                </div>
-                <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
-                <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
-                <div id="portalReportList" class="portal-report-list" style="display:none;"></div>
-                <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
-            </div>
-            <div class="portal-footer"><span>✦ SECURE DOWNLOAD SYSTEM ✦</span><span>RAJAN PATH LAB</span></div>
-        </div>
-    </div>
-
-    <!-- ═══════════ AI DOCTOR CHAT MODAL ═══════════ -->
-    <div class="ai-chat-modal" id="aiChatModal">
-        <div class="ai-chat-content">
-            <div class="ai-chat-header">
-                <h3><i class="fas fa-robot"></i> AI Doctor <span class="ai-badge">Gemini 2.0</span></h3>
-                <button class="ai-chat-close" id="closeAIChat">×</button>
-            </div>
-            <div class="ai-chat-body" id="aiChatBody">
-                <div class="ai-chat-msg bot">👋 Hello! I'm your AI Health Assistant powered by Google Gemini.<br>Describe your symptoms (in Hindi or English) and I'll give you a detailed, intelligent response.</div>
-            </div>
-            <div class="ai-chat-input-area">
-                <input type="text" id="aiChatInput" placeholder="Type your symptoms..." />
-                <button id="aiChatSendBtn"><i class="fas fa-paper-plane"></i></button>
-            </div>
-            <div class="ai-chat-footer-note">⚠️ This is for informational purposes only. Please consult a qualified doctor.</div>
-        </div>
-    </div>
-
     <!-- ═══════════ ADMIN PANEL ═══════════ -->
     <div id="adminPanelWrapper">
         <div id="adminPanelContainer">
@@ -2165,7 +1956,6 @@
                 <h2><i class="fas fa-microscope"></i> RAJAN <span style="color:var(--accent-teal);">PATH LAB</span> · Admin</h2>
                 <div class="admin-user">
                     <span id="adminUsername">Admin</span>
-                    <span id="adminRoleBadge" style="background:#d4af37;color:#0a2540;padding:2px 12px;border-radius:20px;font-size:12px;font-weight:600;"></span>
                     <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     <button class="dark-toggle" id="adminDarkToggle"><i class="fas fa-moon"></i></button>
                 </div>
@@ -2211,6 +2001,7 @@
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
+                            <!-- Updated: Added list="patientIdList" to allow dropdown search -->
                             <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" list="patientIdList" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210 (optional)" /></label>
@@ -2232,10 +2023,7 @@
                             <button class="btn btn-outline btn-sm" id="refreshPatients"><i class="fas fa-sync"></i></button>
                         </div>
                         <div class="table-wrap">
-                            <table>
-                                <thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead>
-                                <tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody>
-                            </table>
+                            <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Test</th><th>Status</th><th>Due</th><th>QR</th><th>Action</th></tr></thead><tbody id="patientTableBody"><tr><td colspan="8" style="text-align:center;padding:20px;">Loading...</td></tr></tbody></table>
                         </div>
                     </div>
 
@@ -2243,6 +2031,7 @@
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                         <div class="form-grid">
+                            <!-- Updated: Added list="patientIdList" to allow dropdown search for existing patient IDs -->
                             <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-062026-1186" list="patientIdList" /></label>
                             <label>Test Name
                                 <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" />
@@ -2324,9 +2113,6 @@
                             <input type="text" id="setGST" placeholder="GSTIN" />
                             <label>Default Test Price</label>
                             <input type="number" id="setDefaultPrice" value="450" />
-                            <!-- Gemini API Key Field -->
-                            <label style="margin-top:10px;">Gemini API Key (for AI Doctor)</label>
-                            <input type="text" id="setGeminiKey" placeholder="Paste your Google Gemini API Key" />
                             <button class="btn btn-primary" id="saveSettingsBtn" style="margin-top:16px;"><i class="fas fa-save"></i> Save Settings</button>
                         </div>
                     </div>
@@ -2401,7 +2187,38 @@
         </div>
     </div>
 
-    <!-- ═══════════ DATA LIST FOR PATIENT IDS ═══════════ -->
+    <!-- ═══════════ UPI MODAL ═══════════ -->
+    <div class="upi-modal" id="upiModal">
+        <div class="upi-modal-content">
+            <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>
+            <div id="upiQR" style="display:flex;justify-content:center;margin:16px 0;"></div>
+            <p style="color:var(--text-dark);">UPI: rajanpathlab@upi</p>
+            <button class="btn-close" id="closeUpiModal">Close</button>
+        </div>
+    </div>
+
+    <!-- ═══════════ PATIENT PORTAL MODAL ═══════════ -->
+    <div class="patient-portal-modal" id="patientPortalModal">
+        <div class="patient-portal-content">
+            <div class="portal-header">
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>
+                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
+            </div>
+            <div class="portal-body">
+                <div class="portal-input-group">
+                    <div class="portal-input-label"><span>🔍</span> PATIENT ID OR MOBILE</div>
+                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number" autocomplete="off">
+                </div>
+                <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
+                <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
+                <div id="portalReportList" class="portal-report-list" style="display:none;"></div>
+                <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
+            </div>
+            <div class="portal-footer"><span>✦ SECURE DOWNLOAD SYSTEM ✦</span><span>RAJAN PATH LAB</span></div>
+        </div>
+    </div>
+
+    <!-- ═══════════ DATA LIST FOR PATIENT IDS (Auto-populated dropdown) ═══════════ -->
     <datalist id="patientIdList"></datalist>
 
     <!-- ═══════════ JAVASCRIPT ═══════════ -->
@@ -2415,19 +2232,21 @@
                 setTimeout(function() {
                     preloader.classList.add('hide');
                     setTimeout(function() {
-                        if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
+                        if (preloader && preloader.parentNode) preloader.parentNode.removeChild(
+                        preloader);
                     }, 600);
                 }, 2200);
             });
 
-            // ─── TOAST ───
+            // ─── TOAST SYSTEM ───
             function showToast(message, type = 'success', duration = 3500) {
                 const container = document.getElementById('toastContainer');
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
                 const iconMap = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-triangle' };
                 const icon = iconMap[type] || 'fa-info-circle';
-                toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span><span class="toast-close">&times;</span>`;
+                toast.innerHTML =
+                    `<i class="fas ${icon}"></i><span>${message}</span><span class="toast-close">&times;</span>`;
                 container.appendChild(toast);
                 requestAnimationFrame(() => { toast.classList.add('show'); });
                 const close = () => {
@@ -2438,7 +2257,7 @@
                 setTimeout(close, duration);
             }
 
-            // ─── LOADING ───
+            // ─── LOADING STATE HELPERS ───
             function setLoading(btn, loading = true) {
                 if (!btn) return;
                 if (loading) {
@@ -2510,14 +2329,7 @@
                 if (error) console.warn('Delete error:', error.message);
             }
 
-            // ─── USER ROLES ───
-            const VALID_USERS = {
-                'Rajan5530': { password: 'Rkchandra5530', role: 'owner' },
-                'Sonu123': { password: 'sonu@123', role: 'assistant' }
-            };
-
-            let currentUser = null;
-            let currentUserRole = null;
+            const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
 
             function normalizePhone(phone) {
                 if (!phone) return '';
@@ -2592,11 +2404,7 @@
                 if (!payments.total_due) payments.total_due = 0;
                 if (!payments.paid_count) payments.paid_count = 0;
                 if (!payments.unpaid_count) payments.unpaid_count = 0;
-                updatePatientIdDatalist();
-                // Load Gemini key into settings field
-                if (settings.gemini_key) {
-                    document.getElementById('setGeminiKey').value = settings.gemini_key;
-                }
+                updatePatientIdDatalist(); // Update the dropdown list
             }
 
             const $ = id => document.getElementById(id);
@@ -2606,15 +2414,16 @@
             const portalModal = $('patientPortalModal');
             const payConfirmModal = $('payConfirmModal');
             const invoiceModal = $('invoiceModal');
-            const aiChatModal = $('aiChatModal');
 
             let pendingPayPatientId = null;
+            let pendingPayAmount = 0;
 
             function openPayConfirm(patientId) {
                 const patient = patients.find(p => p.patient_id === patientId);
                 if (!patient) { showToast('Patient not found', 'error'); return; }
-                if (patient.due_amount <= 0) { showToast('No due amount.', 'warning'); return; }
+                if (patient.due_amount <= 0) { showToast('No due amount for this patient.', 'warning'); return; }
                 pendingPayPatientId = patientId;
+                pendingPayAmount = patient.due_amount;
                 $('payConfirmPatient').textContent = patient.name;
                 $('payConfirmId').textContent = patient.patient_id;
                 $('payConfirmTest').textContent = patient.test || 'Not Specified';
@@ -2628,14 +2437,16 @@
             }
 
             function closePayConfirm() { payConfirmModal.classList.remove('show');
-                pendingPayPatientId = null; }
+                pendingPayPatientId = null;
+                pendingPayAmount = 0; }
 
             $('payConfirmCancel').addEventListener('click', closePayConfirm);
             payConfirmModal.addEventListener('click', e => { if (e.target === payConfirmModal) closePayConfirm(); });
 
             document.querySelectorAll('#payMethodGroup input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
-                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove('selected'));
+                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove(
+                    'selected'));
                     this.closest('label').classList.add('selected');
                 });
             });
@@ -2675,7 +2486,7 @@
                     refreshAllSections();
 
                     $('payConfirmStatus').style.color = 'green';
-                    $('payConfirmStatus').textContent = '✅ Payment confirmed!';
+                    $('payConfirmStatus').textContent = '✅ Payment confirmed! Report unlocked.';
                     showToast(`Payment of ₹${amount} confirmed for ${patient.name}`, 'success');
                     setTimeout(() => closePayConfirm(), 1200);
 
@@ -2688,6 +2499,7 @@
                 setLoading(this, false);
             });
 
+            // ─── NEW: One‑Click Mark as Paid ───
             async function markAsPaid(patientId) {
                 const patient = patients.find(p => p.patient_id === patientId);
                 if (!patient) { showToast('Patient not found', 'error'); return; }
@@ -2743,7 +2555,7 @@
                 refreshAllData().then(() => {
                     $('portalStatus').className = 'portal-status';
                     $('portalStatus').textContent =
-                        '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                    '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                     $('portalReportList').style.display = 'none';
                     $('portalPatientId').value = '';
                 });
@@ -2754,7 +2566,7 @@
                 document.body.style.overflow = '';
                 $('portalStatus').className = 'portal-status';
                 $('portalStatus').textContent =
-                    '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
                 $('portalReportList').style.display = 'none';
             }
             $('openPatientPortalBtn').addEventListener('click', e => { e.preventDefault();
@@ -2847,122 +2659,6 @@
             });
             $('portalPatientId').addEventListener('keypress', e => { if (e.key === 'Enter') $('portalFetchBtn').click(); });
 
-            // ─── AI DOCTOR WITH GEMINI ───
-            function openAIChat() {
-                aiChatModal.classList.add('show');
-                $('aiChatInput').value = '';
-                $('aiChatBody').innerHTML =
-                    `<div class="ai-chat-msg bot">👋 Hello! I'm your AI Health Assistant powered by Google Gemini.<br>Describe your symptoms (in Hindi or English) and I'll give you a detailed, intelligent response.</div>`;
-            }
-
-            function closeAIChat() { aiChatModal.classList.remove('show'); }
-
-            $('openAIDoctorBtn').addEventListener('click', openAIChat);
-            $('closeAIChat').addEventListener('click', closeAIChat);
-            aiChatModal.addEventListener('click', e => { if (e.target === aiChatModal) closeAIChat(); });
-
-            async function callGeminiAPI(prompt) {
-                const apiKey = settings.gemini_key || document.getElementById('setGeminiKey').value.trim();
-                if (!apiKey) {
-                    return "⚠️ Gemini API Key not set. Please go to Admin → Settings and add your Gemini API Key from https://aistudio.google.com/apikey";
-                }
-                try {
-                    const url =
-                        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    const requestBody = {
-                        contents: [{
-                            parts: [{
-                                text: `You are an AI Health Assistant for a pathology lab. The user describes their symptoms. Provide a helpful, informative response suggesting relevant lab tests and general advice. Always include a medical disclaimer. Keep it concise but thorough. User: ${prompt}`
-                            }]
-                        }]
-                    };
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(requestBody)
-                    });
-                    if (!response.ok) {
-                        const err = await response.text();
-                        console.error('Gemini API error:', err);
-                        return "❌ Sorry, I'm having trouble connecting. Please check your API key or try again later.";
-                    }
-                    const data = await response.json();
-                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response from AI.";
-                    return text;
-                } catch (error) {
-                    console.error('Gemini fetch error:', error);
-                    return "❌ Network error. Please check your internet connection.";
-                }
-            }
-
-            // Fallback rule-based (if API fails or no key)
-            function getFallbackResponse(symptom) {
-                const s = symptom.toLowerCase();
-                let suggestions = [];
-                if (s.includes('fever') || s.includes('बुखार')) suggestions.push('CBC', 'Widal', 'Dengue NS1', 'MP');
-                if (s.includes('cough') || s.includes('खांसी') || s.includes('cold') || s.includes('जुकाम')) suggestions.push(
-                    'CBC', 'ESR', 'CRP');
-                if (s.includes('headache') || s.includes('सिर दर्द')) suggestions.push('CBC', 'Widal', 'Dengue NS1');
-                if (s.includes('stomach') || s.includes('पेट')) suggestions.push('Urine Routine', 'Amylase', 'Lipase');
-                if (s.includes('jaundice') || s.includes('पीलिया')) suggestions.push('LFT', 'Bilirubin', 'Hepatitis Panel');
-                if (s.includes('diabetes') || s.includes('शुगर') || s.includes('sugar')) suggestions.push('FBS', 'HbA1c');
-                if (s.includes('thyroid') || s.includes('थायराइड')) suggestions.push('T3', 'T4', 'TSH');
-                if (s.includes('joint') || s.includes('जोड़')) suggestions.push('RA Factor', 'CRP', 'Uric Acid');
-                if (s.includes('pregnancy') || s.includes('गर्भावस्था') || s.includes('nausea') || s.includes('मतली'))
-                    suggestions.push('Beta HCG');
-                if (s.includes('weakness') || s.includes('कमजोरी') || s.includes('tired') || s.includes('थकान'))
-                    suggestions.push('Vitamin B12', 'Vitamin D', 'CBC');
-                if (suggestions.length === 0) {
-                    return "I couldn't match your symptoms precisely. Please consult a doctor. Meanwhile, a general health checkup (CBC, LFT, KFT) is often recommended.";
-                }
-                if (suggestions.length > 5) suggestions = suggestions.slice(0, 5);
-                return "Based on your symptoms, I suggest the following tests: <br><span class='test-suggest'>" + suggestions
-                    .join('</span> <span class="test-suggest">') + '</span><br><br>⚠️ Please consult a qualified doctor for confirmation.';
-            }
-
-            $('aiChatSendBtn').addEventListener('click', async function() {
-                const input = $('aiChatInput');
-                const msg = input.value.trim();
-                if (!msg) return;
-                const body = $('aiChatBody');
-                body.innerHTML += `<div class="ai-chat-msg user">${msg}</div>`;
-                input.value = '';
-                body.scrollTop = body.scrollHeight;
-
-                // Show thinking
-                const thinkingDiv = document.createElement('div');
-                thinkingDiv.className = 'ai-chat-msg bot';
-                thinkingDiv.innerHTML = '<span class="thinking">🧠 Thinking...</span>';
-                body.appendChild(thinkingDiv);
-                body.scrollTop = body.scrollHeight;
-
-                // Check if Gemini key exists
-                const apiKey = settings.gemini_key || document.getElementById('setGeminiKey').value.trim();
-                let reply;
-                if (apiKey) {
-                    try {
-                        reply = await callGeminiAPI(msg);
-                    } catch (e) {
-                        reply = getFallbackResponse(msg);
-                        reply += '<br><br><span style="font-size:11px;color:#ef4444;">⚠️ Gemini API error, using fallback.</span>';
-                    }
-                } else {
-                    reply = getFallbackResponse(msg);
-                    reply +=
-                        '<br><br><span style="font-size:11px;color:#f59e0b;">💡 For better responses, set Gemini API Key in Settings.</span>';
-                }
-
-                // Remove thinking and add reply
-                body.removeChild(thinkingDiv);
-                const replyDiv = document.createElement('div');
-                replyDiv.className = 'ai-chat-msg bot';
-                replyDiv.innerHTML = reply + '<div class="disclaimer">⚠️ This is for informational purposes only. Please consult a doctor.</div>';
-                body.appendChild(replyDiv);
-                body.scrollTop = body.scrollHeight;
-            });
-
-            $('aiChatInput').addEventListener('keypress', e => { if (e.key === 'Enter') $('aiChatSendBtn').click(); });
-
             // ─── LOGIN ───
             $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
             $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));
@@ -2971,7 +2667,6 @@
                 if (e.target === upiModal) upiModal.classList.remove('show');
                 if (e.target === payConfirmModal) closePayConfirm();
                 if (e.target === invoiceModal) closeInvoice();
-                if (e.target === aiChatModal) closeAIChat();
             });
             $('loginForm').addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -2980,13 +2675,10 @@
                 const result = $('loginResult');
                 if (!username || !password) { result.style.color = 'red';
                     result.textContent = 'Please enter credentials'; return; }
-                const user = VALID_USERS[username];
-                if (user && user.password === password) {
+                if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
                     result.style.color = 'green';
                     result.textContent = '✅ Login successful!';
                     loginModal.classList.remove('show');
-                    currentUser = username;
-                    currentUserRole = user.role;
                     showAdmin();
                 } else {
                     result.style.color = 'red';
@@ -2997,28 +2689,13 @@
             async function showAdmin() {
                 adminWrapper.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                const displayName = currentUser === 'Rajan5530' ? 'Rajan Chandra' : 'Sonu Kr Gupta';
-                $('adminUsername').textContent = displayName;
-                const roleText = currentUserRole === 'owner' ? '👑 Owner' : '🧪 Lab Assistant';
-                $('adminRoleBadge').textContent = roleText;
-
-                const sidebar = document.getElementById('adminSidebar');
-                const restrictedSections = ['payments', 'settings', 'backup', 'security'];
-                const allLinks = sidebar.querySelectorAll('a[data-section]');
-                allLinks.forEach(link => {
-                    const sec = link.dataset.section;
-                    if (currentUserRole === 'assistant' && restrictedSections.includes(sec)) {
-                        link.style.display = 'none';
-                    } else {
-                        link.style.display = 'flex';
-                    }
-                });
-
+                $('adminUsername').textContent = 'Rajan5530';
                 await refreshAllData();
                 applySettingsToUI();
                 refreshAllSections();
                 showAdminSection('dashboard');
                 setTimeout(() => generateAllQRCodes(), 300);
+                // Set the patient ID inputs with the current month/year prefix
                 setTimeout(() => {
                     if ($('patId')) $('patId').value = getPatientIdPrefix();
                     if ($('reportPatientId')) $('reportPatientId').value = getPatientIdPrefix();
@@ -3029,9 +2706,7 @@
                 document.body.style.overflow = ''; }
 
             function logout() { hideAdmin();
-                showToast('Logged out', 'warning');
-                currentUser = null;
-                currentUserRole = null; }
+                showToast('Logged out', 'warning'); }
             $('logoutBtn').addEventListener('click', logout);
             $('logoutBtn2')?.addEventListener('click', logout);
 
@@ -3179,29 +2854,22 @@
             function refreshPatients() {
                 const tbody = $('patientTableBody');
                 if (patients.length) {
-                    tbody.innerHTML = patients.map(p => {
-                        const due = p.due_amount || 0;
-                        const paid = due === 0;
-                        const dueDisplay = paid ? '<i class="fas fa-check-circle" style="color:#22c55e;"></i>' :
-                            '₹' + due;
-                        const actionHtml = paid ?
-                            '<span class="badge-status paid"><i class="fas fa-check"></i> Paid</span>' :
-                            `<button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Paid</button>`;
-                        const deleteBtn = (currentUserRole === 'owner') ?
-                            `<button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>` :
-                            '';
-                        return `
+                    tbody.innerHTML = patients.map(p => `
                             <tr>
-                                <td><b>${p.patient_id}</b></td>
-                                <td>${p.name}</td>
+                                <td><b>${p.patient_id}</b></td><td>${p.name}</td>
                                 <td>${p.phone || '—'}</td>
-                                <td>${p.test}</td>
-                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                <td>${dueDisplay}</td>
+                                <td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td>
+                                <td>₹${p.due_amount}</td>
                                 <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
-                                <td>${actionHtml} ${deleteBtn}</td>
-                            </tr>`;
-                    }).join('');
+                                <td>
+                                    ${p.due_amount > 0 ? `
+                                        <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
+                                        <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
+                                    ` : `<span class="badge-status paid">Paid</span>`}
+                                    <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${p.due_amount>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
+                                    <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>`).join('');
                     setTimeout(() => generateAllQRCodes(), 100);
                 } else tbody.innerHTML = '<tr><td colspan="8">No patients</td></tr>';
                 updatePatientIdDatalist();
@@ -3212,28 +2880,19 @@
                     const id = e.target.closest('.btn-pay-confirm').dataset.id;
                     openPayConfirm(id);
                 }
-                if (e.target.closest('.btn-del-patient')) {
-                    const id = e.target.closest('.btn-del-patient').dataset.id;
-                    if (currentUserRole !== 'owner') { showToast('Access Denied: Only Owner can delete.', 'error'); return; }
-                    if (!confirm('Delete patient #' + id + '?')) return;
-                    (async function() {
-                        setLoading(e.target.closest('.btn-del-patient'), true);
-                        try {
-                            const toDel = reports.filter(r => r.patient_id === id);
-                            for (let r of toDel) await deletePDF(r.id, r.file_name);
-                            reports = reports.filter(r => r.patient_id !== id);
-                            patients = patients.filter(p => p.patient_id !== id);
-                            await saveReports(reports);
-                            await savePatients(patients);
-                            await refreshAllData();
-                            refreshAllSections();
-                            showToast('Deleted patient and associated reports', 'success');
-                        } catch (err) { showToast('Error: ' + err.message, 'error'); }
-                        setLoading(e.target.closest('.btn-del-patient'), false);
-                    })();
+                if (e.target.closest('.btn-mark-paid')) {
+                    const id = e.target.closest('.btn-mark-paid').dataset.id;
+                    if (confirm('Mark this patient as paid? This will set due to 0 and log as Cash (Quick).')) {
+                        markAsPaid(id);
+                    }
+                }
+                if (e.target.closest('.btn-invoice')) {
+                    const id = e.target.closest('.btn-invoice').dataset.id;
+                    generateInvoice(id);
                 }
             });
 
+            // ─── HELPER: Auto Patient ID Prefix ───
             function getPatientIdPrefix() {
                 const today = new Date();
                 const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -3241,6 +2900,7 @@
                 return 'RPL-' + month + year + '-';
             }
 
+            // ─── HELPER: Update Patient ID Dropdown ───
             function updatePatientIdDatalist() {
                 const datalist = document.getElementById('patientIdList');
                 if (!datalist) return;
@@ -3260,6 +2920,8 @@
 
                 let id = patientId;
                 const prefix = getPatientIdPrefix();
+
+                // If user didn't type the suffix (value is exactly the prefix) or it's empty
                 if (!id || id === prefix) {
                     let maxSeq = 0;
                     patients.forEach(p => {
@@ -3272,6 +2934,7 @@
                     const nextId = maxSeq + 1;
                     id = prefix + String(nextId).padStart(4, '0');
                 }
+                // else, user typed a specific custom ID (including full prefix+suffix), use it.
 
                 const normPhone = normalizePhone(phone);
                 const duplicate = patients.find(p => p.patient_id === id);
@@ -3305,6 +2968,7 @@
                 setLoading(this, false);
             });
 
+            // Modified Clear Button to apply the prefix
             $('clearPatientBtn').addEventListener('click', () => {
                 $('patId').value = getPatientIdPrefix();
                 $('patName').value = '';
@@ -3314,6 +2978,25 @@
             });
             $('refreshPatients').addEventListener('click', refreshPatients);
 
+            document.addEventListener('click', async function(e) {
+                if (e.target.closest('.btn-del-patient')) {
+                    const id = e.target.closest('.btn-del-patient').dataset.id;
+                    if (!confirm('Delete patient #' + id + '?')) return;
+                    setLoading(e.target.closest('.btn-del-patient'), true);
+                    try {
+                        const toDel = reports.filter(r => r.patient_id === id);
+                        for (let r of toDel) await deletePDF(r.id, r.file_name);
+                        reports = reports.filter(r => r.patient_id !== id);
+                        patients = patients.filter(p => p.patient_id !== id);
+                        await saveReports(reports);
+                        await savePatients(patients);
+                        await refreshAllData();
+                        refreshAllSections();
+                        showToast('Deleted patient and associated reports', 'success');
+                    } catch (err) { showToast('Error: ' + err.message, 'error'); }
+                    setLoading(e.target.closest('.btn-del-patient'), false);
+                }
+            });
             $('patientSearch').addEventListener('input', function() {
                 const q = this.value.toLowerCase();
                 document.querySelectorAll('#patientTableBody tr').forEach(row => {
@@ -3330,7 +3013,7 @@
                                 <td>${r.name} (${r.patient_id})</td><td>${r.test_name}</td><td>${r.uploaded_at}</td>
                                 <td>
                                     <button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-download"></i></button>
-                                    ${currentUserRole === 'owner' ? `<button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-trash"></i></button>` : ''}
+                                    <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>`).join('');
                 } else tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
@@ -3345,23 +3028,6 @@
                     try { await downloadPDF(id, fileName);
                         showToast('Download started', 'success'); } catch (err) { showToast('Error: ' + err.message,
                             'error'); }
-                }
-                if (e.target.closest('.btn-del-report')) {
-                    if (currentUserRole !== 'owner') { showToast('Access Denied: Only Owner can delete.', 'error'); return; }
-                    const btn = e.target.closest('.btn-del-report');
-                    const id = parseInt(btn.dataset.id);
-                    const fileName = btn.dataset.fileName;
-                    if (!confirm('Delete report?')) return;
-                    setLoading(btn, true);
-                    try {
-                        await deletePDF(id, fileName);
-                        reports = reports.filter(r => r.id !== id);
-                        await saveReports(reports);
-                        await refreshAllData();
-                        refreshAllSections();
-                        showToast('Report deleted', 'success');
-                    } catch (err) { showToast('Error: ' + err.message, 'error'); }
-                    setLoading(btn, false);
                 }
             });
 
@@ -3416,6 +3082,25 @@
                 } catch (err) { msgDiv.textContent = '❌ Upload failed: ' + err.message;
                     showToast('Upload failed: ' + err.message, 'error'); }
                 setLoading(this, false);
+            });
+
+            document.addEventListener('click', async function(e) {
+                if (e.target.closest('.btn-del-report')) {
+                    const btn = e.target.closest('.btn-del-report');
+                    const id = parseInt(btn.dataset.id);
+                    const fileName = btn.dataset.fileName;
+                    if (!confirm('Delete report?')) return;
+                    setLoading(btn, true);
+                    try {
+                        await deletePDF(id, fileName);
+                        reports = reports.filter(r => r.id !== id);
+                        await saveReports(reports);
+                        await refreshAllData();
+                        refreshAllSections();
+                        showToast('Report deleted', 'success');
+                    } catch (err) { showToast('Error: ' + err.message, 'error'); }
+                    setLoading(btn, false);
+                }
             });
             $('refreshReports').addEventListener('click', refreshReports);
 
@@ -3522,24 +3207,12 @@
             });
             $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));
 
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.btn-mark-paid')) {
-                    if (currentUserRole !== 'owner') { showToast('Access Denied: Only Owner can mark paid.', 'error'); return; }
-                    const id = e.target.closest('.btn-mark-paid').dataset.id;
-                    markAsPaid(id);
-                }
-                if (e.target.closest('.btn-invoice')) {
-                    const id = e.target.closest('.btn-invoice').dataset.id;
-                    generateInvoice(id);
-                }
-            });
-
             // ─── INVOICE ───
             function generateInvoice(patientId) {
                 const patient = patients.find(p => p.patient_id === patientId);
                 if (!patient) { showToast('Patient not found', 'error'); return; }
                 const amount = patient.due_amount || 0;
-                const gst = 0;
+                const gst = 0; // can be dynamic
                 const total = amount + gst;
 
                 $('invPatientName').textContent = patient.name;
@@ -3549,9 +3222,10 @@
                 $('invTestDesc').textContent = patient.test || 'Test';
                 $('invAmount').textContent = '₹' + amount;
                 document.querySelector('#invoicePrintArea table tbody tr:nth-child(2) td:nth-child(2)').textContent = '₹' +
-                    gst;
+                gst;
                 $('invTotal').textContent = '₹' + total;
 
+                // Lab details from settings
                 $('invLabAddress').textContent = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
                 $('invLabPhone').textContent = settings.phone || '8709946177 / 9931002450';
                 $('invLabGST').textContent = 'GST: ' + (settings.gst || 'NA');
@@ -3562,6 +3236,7 @@
             function closeInvoice() { invoiceModal.classList.remove('show'); }
             $('closeInvoiceBtn').addEventListener('click', closeInvoice);
             invoiceModal.addEventListener('click', e => { if (e.target === invoiceModal) closeInvoice(); });
+
             $('printInvoiceBtn').addEventListener('click', function() {
                 window.print();
             });
@@ -3573,9 +3248,6 @@
                 $('setPhone').value = settings.phone || '8709946177 / 9931002450';
                 $('setGST').value = settings.gst || '';
                 $('setDefaultPrice').value = settings.default_price || 450;
-                if (settings.gemini_key) {
-                    $('setGeminiKey').value = settings.gemini_key;
-                }
             }
 
             function refreshSettings() {
@@ -3583,17 +3255,15 @@
             }
 
             $('saveSettingsBtn').addEventListener('click', async function() {
-                if (currentUserRole !== 'owner') { showToast('Access Denied: Only Owner can save settings.', 'error'); return; }
                 const lab_name = $('setLabName').value.trim();
                 const address = $('setAddress').value.trim();
                 const phone = $('setPhone').value.trim();
                 const gst = $('setGST').value.trim();
                 const default_price = parseFloat($('setDefaultPrice').value) || 450;
-                const gemini_key = $('setGeminiKey').value.trim();
 
                 setLoading(this, true);
                 try {
-                    settings = { lab_name, address, phone, gst, default_price, gemini_key };
+                    settings = { lab_name, address, phone, gst, default_price };
                     await saveSettings(settings);
                     showToast('Settings saved successfully!', 'success');
                 } catch (err) { showToast('Error: ' + err.message, 'error'); }
@@ -3644,7 +3314,6 @@
             }
             $('viewLogBtn').addEventListener('click', refreshSecurity);
             $('changePwdBtn').addEventListener('click', () => {
-                if (currentUserRole !== 'owner') { showToast('Access Denied: Only Owner can change password.', 'error'); return; }
                 const old = prompt('Enter old password:');
                 if (!old) return;
                 const newPwd = prompt('Enter new password (min 6 chars):');
@@ -3652,9 +3321,8 @@
                 showToast('✅ Password changed! (dummy)', 'success');
             });
 
-            console.log('✅ Rajan Path Lab · Complete System with Gemini AI, Roles, Payments, Reports');
-            console.log('🔑 Login: Rajan5530 (owner) / Sonu123 (assistant)');
-            console.log('📌 Set Gemini API Key in Settings for ChatGPT-like responses.');
+            console.log('✅ Rajan Path Lab · Professional Admin Panel with Billing, Toast, Loading, Quick Mark Paid');
+            console.log('🔑 Login: Rajan5530 / Rkchandra5530');
 
         })();
     </script>
