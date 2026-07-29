@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Rajan Path Lab | Premium Diagnostics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer>
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
     <style>
         /* ─── PRELOADER ─── */
         #preloader {
@@ -75,27 +82,66 @@
             transform: translateX(-50%);
             animation: rungPulse 1.6s ease-in-out infinite;
         }
-        .dna-rung:nth-child(3) { top: 18%; animation-delay: 0.15s; }
-        .dna-rung:nth-child(4) { top: 36%; animation-delay: 0.3s; }
-        .dna-rung:nth-child(5) { top: 54%; animation-delay: 0.45s; }
-        .dna-rung:nth-child(6) { top: 72%; animation-delay: 0.6s; }
-        .dna-rung:nth-child(7) { top: 88%; animation-delay: 0.75s; }
-        
+        .dna-rung:nth-child(3) {
+            top: 18%;
+            animation-delay: 0.15s;
+        }
+        .dna-rung:nth-child(4) {
+            top: 36%;
+            animation-delay: 0.3s;
+        }
+        .dna-rung:nth-child(5) {
+            top: 54%;
+            animation-delay: 0.45s;
+        }
+        .dna-rung:nth-child(6) {
+            top: 72%;
+            animation-delay: 0.6s;
+        }
+        .dna-rung:nth-child(7) {
+            top: 88%;
+            animation-delay: 0.75s;
+        }
         @keyframes dnaRotate1 {
-            0%,100% { transform: translateX(-50%) rotate(0deg) scaleY(1); }
-            25% { transform: translateX(-50%) rotate(8deg) scaleY(1.04); }
-            50% { transform: translateX(-50%) rotate(0deg) scaleY(1); }
-            75% { transform: translateX(-50%) rotate(-8deg) scaleY(0.96); }
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            25% {
+                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
+            }
+            50% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            75% {
+                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
+            }
         }
         @keyframes dnaRotate2 {
-            0%,100% { transform: translateX(-50%) rotate(0deg) scaleY(1); }
-            25% { transform: translateX(-50%) rotate(-8deg) scaleY(0.96); }
-            50% { transform: translateX(-50%) rotate(0deg) scaleY(1); }
-            75% { transform: translateX(-50%) rotate(8deg) scaleY(1.04); }
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            25% {
+                transform: translateX(-50%) rotate(-8deg) scaleY(0.96);
+            }
+            50% {
+                transform: translateX(-50%) rotate(0deg) scaleY(1);
+            }
+            75% {
+                transform: translateX(-50%) rotate(8deg) scaleY(1.04);
+            }
         }
         @keyframes rungPulse {
-            0%,100% { opacity: 0.45; width: 36px; }
-            50% { opacity: 1; width: 48px; }
+            0%,
+            100% {
+                opacity: 0.45;
+                width: 36px;
+            }
+            50% {
+                opacity: 1;
+                width: 48px;
+            }
         }
         .preloader-dot-container {
             display: flex;
@@ -109,13 +155,28 @@
             background: #008080;
             animation: dotBounce 1.5s ease-in-out infinite;
         }
-        .preloader-dot:nth-child(2) { animation-delay: 0.2s; background: #20b2aa; }
-        .preloader-dot:nth-child(3) { animation-delay: 0.4s; background: #d4af37; }
-        .preloader-dot:nth-child(4) { animation-delay: 0.6s; background: #f0d060; }
-        
+        .preloader-dot:nth-child(2) {
+            animation-delay: 0.2s;
+            background: #20b2aa;
+        }
+        .preloader-dot:nth-child(3) {
+            animation-delay: 0.4s;
+            background: #d4af37;
+        }
+        .preloader-dot:nth-child(4) {
+            animation-delay: 0.6s;
+            background: #f0d060;
+        }
         @keyframes dotBounce {
-            0%,100% { transform: translateY(0); opacity: 0.5; }
-            50% { transform: translateY(-16px); opacity: 1; }
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-16px);
+                opacity: 1;
+            }
         }
         .preloader-pulse-ring {
             position: absolute;
@@ -133,8 +194,16 @@
             border-color: rgba(212, 175, 55, 0.4);
         }
         @keyframes pulseRing {
-            0% { width: 30px; height: 30px; opacity: 0.9; }
-            100% { width: 120px; height: 120px; opacity: 0; }
+            0% {
+                width: 30px;
+                height: 30px;
+                opacity: 0.9;
+            }
+            100% {
+                width: 120px;
+                height: 120px;
+                opacity: 0;
+            }
         }
 
         /* ─── TOAST NOTIFICATIONS ─── */
@@ -155,7 +224,7 @@
             color: #f1f5f9;
             padding: 14px 20px;
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -164,18 +233,41 @@
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             border-left: 5px solid #008080;
         }
-        .toast.show { transform: translateX(0); }
-        .toast.success { border-left-color: #22c55e; }
-        .toast.error { border-left-color: #ef4444; }
-        .toast.warning { border-left-color: #f59e0b; }
-        .toast i { font-size: 1.4rem; }
-        .toast .toast-close { margin-left: auto; cursor: pointer; opacity: 0.6; transition: 0.2s; font-size: 1.2rem; }
-        .toast .toast-close:hover { opacity: 1; }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast.success {
+            border-left-color: #22c55e;
+        }
+        .toast.error {
+            border-left-color: #ef4444;
+        }
+        .toast.warning {
+            border-left-color: #f59e0b;
+        }
+        .toast i {
+            font-size: 1.4rem;
+        }
+        .toast .toast-close {
+            margin-left: auto;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.2s;
+            font-size: 1.2rem;
+        }
+        .toast .toast-close:hover {
+            opacity: 1;
+        }
 
-        /* ─── PRINT INVOICE ─── */
+        /* ─── PRINT INVOICE STYLES ─── */
         @media print {
-            body * { visibility: hidden; }
-            #invoicePrintArea, #invoicePrintArea * { visibility: visible; }
+            body * {
+                visibility: hidden;
+            }
+            #invoicePrintArea,
+            #invoicePrintArea * {
+                visibility: visible;
+            }
             #invoicePrintArea {
                 position: absolute;
                 left: 0;
@@ -185,11 +277,25 @@
                 background: white;
                 color: black;
             }
-            #invoicePrintArea .no-print { display: none; }
-            .admin-header, .admin-sidebar, .admin-content>*:not(#invoicePrintArea) { display: none !important; }
+            #invoicePrintArea .no-print {
+                display: none;
+            }
+            .admin-header,
+            .admin-sidebar,
+            .admin-content>*:not(#invoicePrintArea) {
+                display: none !important;
+            }
+            #adminPanelContainer {
+                max-width: 100% !important;
+                border-radius: 0 !important;
+            }
+            #adminPanelWrapper {
+                background: white !important;
+                padding: 0 !important;
+            }
         }
 
-        /* ─── ROOT VARIABLES ─── */
+        /* ─── ADMIN PANEL PROFESSIONAL UPGRADES ─── */
         :root {
             --primary-blue: #0a2540;
             --accent-teal: #008080;
@@ -199,7 +305,9 @@
             --sidebar-width: 240px;
             --header-height: 64px;
         }
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             margin: 0;
@@ -208,9 +316,12 @@
             color: var(--text-dark);
             line-height: 1.5;
         }
-        b, strong { font-weight: 700; }
+        b,
+        strong {
+            font-weight: 700;
+        }
 
-        /* ─── HEADER ─── */
+        /* ─── HEADER WITH LARGE LOGO ─── */
         header {
             background: var(--primary-blue);
             color: white;
@@ -221,7 +332,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             flex-wrap: wrap;
             gap: 10px 20px;
         }
@@ -244,7 +355,7 @@
             font-weight: 800;
             color: #fff;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0,128,128,0.35);
+            box-shadow: 0 4px 12px rgba(0, 128, 128, 0.35);
         }
         .header-logo .logo-text-group {
             display: flex;
@@ -256,9 +367,11 @@
             font-weight: 800;
             letter-spacing: 0.5px;
             color: #fff;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
-        .header-logo .logo-main span { color: #d4af37; }
+        .header-logo .logo-main span {
+            color: #d4af37;
+        }
         .header-logo .logo-tagline {
             font-size: 0.75rem;
             font-weight: 400;
@@ -268,7 +381,11 @@
             margin-top: 1px;
             opacity: 0.9;
         }
-        .header-logo .logo-tagline i { margin-right: 4px; color: #d4af37; font-size: 0.6rem; }
+        .header-logo .logo-tagline i {
+            margin-right: 4px;
+            color: #d4af37;
+            font-size: 0.6rem;
+        }
 
         header nav {
             display: flex;
@@ -284,8 +401,11 @@
             transition: 0.2s;
             padding: 4px 0;
         }
-        header nav a:hover { color: var(--accent-teal); }
-        .admin-login-btn, .patient-portal-btn {
+        header nav a:hover {
+            color: var(--accent-teal);
+        }
+        .admin-login-btn,
+        .patient-portal-btn {
             background: var(--accent-teal);
             color: white;
             border: none;
@@ -297,9 +417,16 @@
             transition: 0.2s;
             white-space: nowrap;
         }
-        .admin-login-btn:hover, .patient-portal-btn:hover { background: #006666; }
-        .patient-portal-btn { background: #25D366; }
-        .patient-portal-btn:hover { background: #1a8d4a; }
+        .admin-login-btn:hover,
+        .patient-portal-btn:hover {
+            background: #006666;
+        }
+        .patient-portal-btn {
+            background: #25D366;
+        }
+        .patient-portal-btn:hover {
+            background: #1a8d4a;
+        }
 
         .hero {
             background: #0d3359;
@@ -332,7 +459,9 @@
             display: inline-block;
             transition: 0.2s;
         }
-        .btn-book:hover { background: #b82d2f; }
+        .btn-book:hover {
+            background: #b82d2f;
+        }
         .btn-portal {
             background: #25D366;
             padding: 12px 28px;
@@ -343,7 +472,9 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .btn-portal:hover { background: #1a8d4a; }
+        .btn-portal:hover {
+            background: #1a8d4a;
+        }
 
         .strip {
             background: #fff;
@@ -363,7 +494,10 @@
             align-items: center;
             color: var(--primary-blue);
         }
-        .strip i { color: var(--accent-teal); margin-right: 10px; }
+        .strip i {
+            color: var(--accent-teal);
+            margin-right: 10px;
+        }
 
         section {
             padding: 45px 20px;
@@ -371,7 +505,9 @@
             margin: 0 auto;
             text-align: center;
         }
-        .section-wrapper-alt { background: var(--bg-light); }
+        .section-wrapper-alt {
+            background: var(--bg-light);
+        }
         h2 {
             color: var(--primary-blue);
             margin-bottom: 25px;
@@ -385,7 +521,10 @@
             text-align: left;
             flex-wrap: wrap;
         }
-        .about-text { flex: 1; min-width: 300px; }
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
         .about-features {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -398,7 +537,9 @@
             gap: 10px;
             font-weight: 600;
         }
-        .feature-item i { color: var(--accent-teal); }
+        .feature-item i {
+            color: var(--accent-teal);
+        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -411,8 +552,15 @@
             border: 1px solid #cbd5e1;
             text-align: center;
         }
-        .card i { font-size: 30px; margin-bottom: 10px; }
-        .card h3 { margin: 5px 0; font-size: 1.1rem; color: var(--primary-blue); }
+        .card i {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .card h3 {
+            margin: 5px 0;
+            font-size: 1.1rem;
+            color: var(--primary-blue);
+        }
         .partner-grid {
             display: flex;
             justify-content: center;
@@ -427,8 +575,16 @@
             border: 1px solid #cbd5e1;
             text-align: center;
         }
-        .partner-item i { font-size: 32px; margin-bottom: 8px; }
-        .partner-item p { font-weight: 700; margin: 0; font-size: 14px; color: var(--primary-blue); }
+        .partner-item i {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .partner-item p {
+            font-weight: 700;
+            margin: 0;
+            font-size: 14px;
+            color: var(--primary-blue);
+        }
         .map-container {
             margin-top: 20px;
             border-radius: 8px;
@@ -444,7 +600,9 @@
             padding: 40px 20px;
             text-align: center;
         }
-        .footer-links { margin: 20px 0; }
+        .footer-links {
+            margin: 20px 0;
+        }
         .footer-links a {
             color: white;
             text-decoration: none;
@@ -452,7 +610,9 @@
             font-size: 14px;
             font-weight: 600;
         }
-        .footer-links a:hover { color: var(--accent-teal); }
+        .footer-links a:hover {
+            color: var(--accent-teal);
+        }
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -464,7 +624,7 @@
             text-decoration: none;
             font-weight: bold;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         /* ─── ADMIN PANEL ─── */
@@ -472,18 +632,20 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 9999;
             overflow-y: auto;
             padding: 20px;
         }
-        #adminPanelWrapper.active { display: block; }
+        #adminPanelWrapper.active {
+            display: block;
+        }
         #adminPanelContainer {
             max-width: 1400px;
             margin: 0 auto;
             background: #f0f2f5;
             border-radius: 16px;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
             overflow: hidden;
             min-height: 90vh;
             display: flex;
@@ -499,15 +661,22 @@
             flex-wrap: wrap;
             flex-shrink: 0;
         }
-        .admin-header h2 { color: white; margin: 0; font-size: 20px; }
+        .admin-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 20px;
+        }
         .admin-user {
             display: flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
         }
-        .admin-user span { color: #e2e8f0; }
-        .logout-btn, .dark-toggle {
+        .admin-user span {
+            color: #e2e8f0;
+        }
+        .logout-btn,
+        .dark-toggle {
             background: var(--urgent-red);
             border: none;
             padding: 6px 16px;
@@ -517,9 +686,15 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .logout-btn:hover { background: #b82d2f; }
-        .dark-toggle { background: #4a5568; }
-        .dark-toggle:hover { background: #2d3748; }
+        .logout-btn:hover {
+            background: #b82d2f;
+        }
+        .dark-toggle {
+            background: #4a5568;
+        }
+        .dark-toggle:hover {
+            background: #2d3748;
+        }
 
         .admin-body {
             display: flex;
@@ -556,15 +731,18 @@
             border-left: 3px solid transparent;
         }
         .admin-sidebar a:hover {
-            background: rgba(0,128,128,0.15);
+            background: rgba(0, 128, 128, 0.15);
             color: #fff;
         }
         .admin-sidebar a.active {
-            background: rgba(0,128,128,0.2);
+            background: rgba(0, 128, 128, 0.2);
             border-left-color: var(--accent-teal);
             color: #fff;
         }
-        .admin-sidebar a i { width: 20px; text-align: center; }
+        .admin-sidebar a i {
+            width: 20px;
+            text-align: center;
+        }
 
         .admin-content {
             flex: 1;
@@ -576,12 +754,21 @@
             display: none;
             animation: fadeUp 0.3s ease;
         }
-        .admin-section.active { display: block; }
+        .admin-section.active {
+            display: block;
+        }
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
+        /* Cards & Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -596,11 +783,11 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
             transition: 0.2s;
         }
         .stat-card:hover {
-            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
             transform: translateY(-2px);
         }
         .stat-card .icon {
@@ -613,14 +800,40 @@
             font-size: 20px;
             flex-shrink: 0;
         }
-        .stat-card .icon.blue { background: #dbeafe; color: #2563eb; }
-        .stat-card .icon.green { background: #d1fae5; color: #059669; }
-        .stat-card .icon.red { background: #fee2e2; color: #dc2626; }
-        .stat-card .icon.purple { background: #ede9fe; color: #7c3aed; }
-        .stat-card .icon.orange { background: #fef3c7; color: #d97706; }
-        .stat-card .icon.teal { background: #ccfbf1; color: #0d9488; }
-        .stat-card .info h4 { font-size: 22px; font-weight: 700; margin: 0; }
-        .stat-card .info p { font-size: 12px; margin: 2px 0 0; color: #64748b; }
+        .stat-card .icon.blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .stat-card .icon.green {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .stat-card .icon.red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .stat-card .icon.purple {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .stat-card .icon.orange {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .stat-card .icon.teal {
+            background: #ccfbf1;
+            color: #0d9488;
+        }
+        .stat-card .info h4 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .stat-card .info p {
+            font-size: 12px;
+            margin: 2px 0 0;
+            color: #64748b;
+        }
 
         .table-wrap {
             background: white;
@@ -656,11 +869,26 @@
             font-size: 12px;
             font-weight: 600;
         }
-        .badge-status.paid { background: #d1fae5; color: #065f46; }
-        .badge-status.unpaid { background: #fee2e2; color: #991b1b; }
-        .badge-status.pending { background: #fef3c7; color: #92400e; }
-        .badge-status.process { background: #dbeafe; color: #1e40af; }
-        .badge-status.done { background: #e0e7ff; color: #3730a3; }
+        .badge-status.paid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge-status.unpaid {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .badge-status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-status.process {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-status.done {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
 
         .btn {
             display: inline-flex;
@@ -677,17 +905,51 @@
             color: #1e293b;
             border: 1px solid #e2e8f0;
         }
-        .btn-primary { background: var(--accent-teal); color: #fff; border-color: var(--accent-teal); }
-        .btn-primary:hover { background: #006666; }
-        .btn-red { background: var(--urgent-red); color: #fff; border-color: var(--urgent-red); }
-        .btn-red:hover { background: #b82d2f; }
-        .btn-outline { background: transparent; border: 1px solid #e2e8f0; }
-        .btn-sm { padding: 3px 10px; font-size: 12px; }
-        .btn-gold { background: #d4af37; color: #fff; border-color: #d4af37; }
-        .btn-gold:hover { background: #b8960e; }
-        .btn-success { background: #22c55e; color: #fff; border-color: #22c55e; }
-        .btn-success:hover { background: #16a34a; }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+        .btn-primary {
+            background: var(--accent-teal);
+            color: #fff;
+            border-color: var(--accent-teal);
+        }
+        .btn-primary:hover {
+            background: #006666;
+        }
+        .btn-red {
+            background: var(--urgent-red);
+            color: #fff;
+            border-color: var(--urgent-red);
+        }
+        .btn-red:hover {
+            background: #b82d2f;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+        }
+        .btn-sm {
+            padding: 3px 10px;
+            font-size: 12px;
+        }
+        .btn-gold {
+            background: #d4af37;
+            color: #fff;
+            border-color: #d4af37;
+        }
+        .btn-gold:hover {
+            background: #b8960e;
+        }
+        .btn-success {
+            background: #22c55e;
+            color: #fff;
+            border-color: #22c55e;
+        }
+        .btn-success:hover {
+            background: #16a34a;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
 
         .form-grid {
             display: grid;
@@ -706,14 +968,16 @@
             flex-direction: column;
             gap: 4px;
         }
-        .form-grid label input, .form-grid label select {
+        .form-grid label input,
+        .form-grid label select {
             padding: 7px 10px;
             border-radius: 6px;
             border: 1px solid #e2e8f0;
             background: #f8fafc;
             font-size: 14px;
         }
-        .form-grid label input:focus, .form-grid label select:focus {
+        .form-grid label input:focus,
+        .form-grid label select:focus {
             outline: 2px solid var(--accent-teal);
         }
 
@@ -768,26 +1032,30 @@
             margin-left: 6px;
         }
 
-        /* ─── LOGIN MODAL ─── */
+        /* Login Modal */
         .login-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 10001;
             align-items: center;
             justify-content: center;
         }
-        .login-modal.show { display: flex; }
+        .login-modal.show {
+            display: flex;
+        }
         .login-modal-content {
             background: white;
             padding: 30px;
             border-radius: 12px;
             max-width: 400px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-        .login-modal-content h3 { margin-top: 0; }
+        .login-modal-content h3 {
+            margin-top: 0;
+        }
         .login-modal-content label {
             display: block;
             font-weight: 600;
@@ -812,17 +1080,19 @@
             margin-top: 6px;
         }
 
-        /* ─── UPI MODAL ─── */
+        /* UPI Modal */
         .upi-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 10002;
             align-items: center;
             justify-content: center;
         }
-        .upi-modal.show { display: flex; }
+        .upi-modal.show {
+            display: flex;
+        }
         .upi-modal-content {
             background: white;
             padding: 30px;
@@ -843,25 +1113,27 @@
             margin-top: 12px;
         }
 
-        /* ─── PATIENT PORTAL ─── */
+        /* Patient Portal Modal */
         .patient-portal-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 10050;
             overflow-y: auto;
             padding: 20px;
             align-items: center;
             justify-content: center;
         }
-        .patient-portal-modal.active { display: flex; }
+        .patient-portal-modal.active {
+            display: flex;
+        }
         .patient-portal-content {
             max-width: 860px;
             width: 100%;
             background: #fff;
             border-radius: 2rem;
-            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.35);
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.35);
             overflow: hidden;
             max-height: 95vh;
             overflow-y: auto;
@@ -879,13 +1151,13 @@
             gap: 12px;
         }
         .portal-header .portal-badge {
-            background: rgba(212,175,55,0.2);
+            background: rgba(212, 175, 55, 0.2);
             padding: 6px 16px;
             border-radius: 60px;
             font-size: 0.7rem;
             font-weight: 600;
             color: #e6c168;
-            border: 0.5px solid rgba(212,175,55,0.5);
+            border: 0.5px solid rgba(212, 175, 55, 0.5);
         }
         .portal-header .portal-sub {
             color: #8f9bb3;
@@ -894,8 +1166,12 @@
             border-left: 2px solid #e6c168;
             padding-left: 14px;
         }
-        .portal-body { padding: 2rem; }
-        .portal-input-group { margin-bottom: 1.5rem; }
+        .portal-body {
+            padding: 2rem;
+        }
+        .portal-input-group {
+            margin-bottom: 1.5rem;
+        }
         .portal-input-label {
             display: flex;
             align-items: center;
@@ -917,7 +1193,7 @@
         }
         .portal-input:focus {
             border-color: #d4af37;
-            box-shadow: 0 4px 14px rgba(212,175,55,0.2);
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.2);
         }
         .portal-btn {
             width: 100%;
@@ -934,9 +1210,11 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: 0 8px 20px -8px rgba(7,94,84,0.5);
+            box-shadow: 0 8px 20px -8px rgba(7, 94, 84, 0.5);
         }
-        .portal-btn:hover { transform: translateY(-2px); }
+        .portal-btn:hover {
+            transform: translateY(-2px);
+        }
         .portal-status {
             margin-top: 1.2rem;
             padding: 0.9rem 1.2rem;
@@ -946,8 +1224,16 @@
             color: #2c3e50;
             border-left: 3px solid #c9a03d;
         }
-        .portal-status.success { background: #e6f4ea; border-left-color: #2b7a3e; color: #135c2c; }
-        .portal-status.error { background: #fef5f0; border-left-color: #d4873a; color: #8b5a2b; }
+        .portal-status.success {
+            background: #e6f4ea;
+            border-left-color: #2b7a3e;
+            color: #135c2c;
+        }
+        .portal-status.error {
+            background: #fef5f0;
+            border-left-color: #d4873a;
+            color: #8b5a2b;
+        }
         .portal-report-list {
             margin-top: 1.5rem;
             border-top: 1px solid #e2e8f0;
@@ -963,8 +1249,14 @@
             margin-bottom: 0.8rem;
             border: 1px solid #edf2f7;
         }
-        .portal-report-info .test-name { font-weight: 600; color: #1a212c; }
-        .portal-report-info .upload-date { font-size: 0.8rem; color: #7890a3; }
+        .portal-report-info .test-name {
+            font-weight: 600;
+            color: #1a212c;
+        }
+        .portal-report-info .upload-date {
+            font-size: 0.8rem;
+            color: #7890a3;
+        }
         .portal-download-btn {
             background: #d4af37;
             border: none;
@@ -976,8 +1268,14 @@
             font-size: 0.8rem;
             transition: 0.2s;
         }
-        .portal-download-btn:hover { background: #b8960e; }
-        .portal-download-btn:disabled { background: #b0b8c5; cursor: not-allowed; opacity: 0.6; }
+        .portal-download-btn:hover {
+            background: #b8960e;
+        }
+        .portal-download-btn:disabled {
+            background: #b0b8c5;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
         .portal-due-badge {
             background: #fee2e2;
             color: #991b1b;
@@ -1006,25 +1304,27 @@
             justify-content: space-between;
         }
 
-        /* ─── PAYMENT CONFIRM MODAL ─── */
+        /* Payment Confirmation Modal */
         .pay-confirm-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 10060;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
-        .pay-confirm-modal.show { display: flex; }
+        .pay-confirm-modal.show {
+            display: flex;
+        }
         .pay-confirm-content {
             background: white;
             max-width: 480px;
             width: 100%;
             border-radius: 16px;
             padding: 28px 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
         }
         .pay-confirm-content h3 {
             color: var(--primary-blue);
@@ -1041,8 +1341,13 @@
             border-bottom: 1px solid #f1f5f9;
             font-size: 14px;
         }
-        .pay-confirm-content .pay-detail-row .label { color: #64748b; font-weight: 500; }
-        .pay-confirm-content .pay-detail-row .value { font-weight: 700; }
+        .pay-confirm-content .pay-detail-row .label {
+            color: #64748b;
+            font-weight: 500;
+        }
+        .pay-confirm-content .pay-detail-row .value {
+            font-weight: 700;
+        }
         .pay-confirm-content .pay-amount-large {
             font-size: 2rem;
             font-weight: 800;
@@ -1072,8 +1377,12 @@
             border: 2px solid transparent;
             transition: 0.2s;
         }
-        .pay-method-group label:hover { background: #e2e8f0; }
-        .pay-method-group input[type="radio"] { accent-color: var(--accent-teal); }
+        .pay-method-group label:hover {
+            background: #e2e8f0;
+        }
+        .pay-method-group input[type="radio"] {
+            accent-color: var(--accent-teal);
+        }
         .pay-method-group label.selected {
             border-color: var(--accent-teal);
             background: #e6f7f7;
@@ -1083,9 +1392,19 @@
             gap: 12px;
             margin-top: 18px;
         }
-        .pay-btns .btn { flex: 1; justify-content: center; padding: 10px; font-size: 15px; }
-        .pay-btns .btn-cancel { background: #e2e8f0; color: #1e293b; }
-        .pay-btns .btn-cancel:hover { background: #cbd5e1; }
+        .pay-btns .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 10px;
+            font-size: 15px;
+        }
+        .pay-btns .btn-cancel {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        .pay-btns .btn-cancel:hover {
+            background: #cbd5e1;
+        }
 
         .badge-pay-confirmed {
             background: #d1fae5;
@@ -1096,30 +1415,36 @@
             border-radius: 20px;
         }
 
-        /* ─── INVOICE MODAL ─── */
+        /* Invoice Modal */
         .invoice-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 10070;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
-        .invoice-modal.show { display: flex; }
+        .invoice-modal.show {
+            display: flex;
+        }
         .invoice-modal-content {
             background: white;
             max-width: 700px;
             width: 100%;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
             max-height: 90vh;
             overflow-y: auto;
         }
-        .invoice-modal-content h3 { margin-top: 0; }
-        .invoice-print-area { padding: 10px; }
+        .invoice-modal-content h3 {
+            margin-top: 0;
+        }
+        .invoice-print-area {
+            padding: 10px;
+        }
         .invoice-print-area .invoice-header {
             display: flex;
             justify-content: space-between;
@@ -1127,7 +1452,10 @@
             padding-bottom: 12px;
             margin-bottom: 16px;
         }
-        .invoice-print-area .invoice-header h2 { margin: 0; color: #0a2540; }
+        .invoice-print-area .invoice-header h2 {
+            margin: 0;
+            color: #0a2540;
+        }
         .invoice-print-area .invoice-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1149,7 +1477,10 @@
             padding: 8px;
             border: 1px solid #e2e8f0;
         }
-        .invoice-print-area .total-row { font-weight: 700; font-size: 1.1rem; }
+        .invoice-print-area .total-row {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
         .invoice-print-area .no-print {
             margin-top: 20px;
             display: flex;
@@ -1157,7 +1488,7 @@
             justify-content: flex-end;
         }
 
-        /* ─── SETTINGS ─── */
+        /* Settings Section */
         .settings-group {
             background: white;
             padding: 20px;
@@ -1170,73 +1501,171 @@
             display: block;
             margin: 12px 0 4px;
         }
-        .settings-group input, .settings-group textarea {
+        .settings-group input,
+        .settings-group textarea {
             width: 100%;
             padding: 8px 12px;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
             font-size: 14px;
         }
-        .settings-group textarea { resize: vertical; min-height: 60px; }
+        .settings-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
 
-        /* ─── DARK MODE ─── */
-        body.admin-dark #adminPanelContainer { background: #0f172a; }
-        body.admin-dark .admin-content { background: #0f172a; }
-        body.admin-dark .stat-card, body.admin-dark .table-wrap,
-        body.admin-dark .form-grid, body.admin-dark .template-box,
+        /* Dark Mode overrides */
+        body.admin-dark #adminPanelContainer {
+            background: #0f172a;
+        }
+        body.admin-dark .admin-content {
+            background: #0f172a;
+        }
+        body.admin-dark .stat-card,
+        body.admin-dark .table-wrap,
+        body.admin-dark .form-grid,
+        body.admin-dark .template-box,
         body.admin-dark .settings-group {
             background: #1e293b;
             border-color: #334155;
             color: #f1f5f9;
         }
-        body.admin-dark .stat-card .info p { color: #94a3b8; }
+        body.admin-dark .stat-card .info p {
+            color: #94a3b8;
+        }
         body.admin-dark .table-wrap th {
             background: #0f172a;
             color: #94a3b8;
         }
-        body.admin-dark .table-wrap td { border-color: #334155; }
-        body.admin-dark .form-grid label input, body.admin-dark .form-grid label select {
+        body.admin-dark .table-wrap td {
+            border-color: #334155;
+        }
+        body.admin-dark .form-grid label input,
+        body.admin-dark .form-grid label select {
             background: #0f172a;
             border-color: #334155;
             color: #f1f5f9;
         }
-        body.admin-dark .badge-status.paid { background: #064e3b; color: #6ee7b7; }
-        body.admin-dark .badge-status.unpaid { background: #7f1d1d; color: #fca5a5; }
-        body.admin-dark .badge-status.pending { background: #78350f; color: #fcd34d; }
-        body.admin-dark .badge-status.process { background: #1e3a5f; color: #93c5fd; }
-        body.admin-dark .badge-status.done { background: #312e81; color: #a5b4fc; }
-        body.admin-dark .stat-card .icon.blue { background: #1e3a5f; color: #60a5fa; }
-        body.admin-dark .stat-card .icon.green { background: #064e3b; color: #34d399; }
-        body.admin-dark .stat-card .icon.red { background: #7f1d1d; color: #f87171; }
-        body.admin-dark .stat-card .icon.purple { background: #4c1d95; color: #a78bfa; }
-        body.admin-dark .stat-card .icon.orange { background: #78350f; color: #fbbf24; }
-        body.admin-dark .stat-card .icon.teal { background: #134e4a; color: #2dd4bf; }
-        body.admin-dark .pay-confirm-content { background: #1e293b; color: #f1f5f9; }
-        body.admin-dark .pay-confirm-content .pay-detail-row { border-color: #334155; }
-        body.admin-dark .pay-confirm-content .pay-detail-row .label { color: #94a3b8; }
-        body.admin-dark .pay-confirm-content .pay-amount-large { background: #0f172a; color: #f1f5f9; }
-        body.admin-dark .pay-confirm-content .pay-method-group label { background: #0f172a; color: #e2e8f0; }
-        body.admin-dark .pay-confirm-content .pay-method-group label.selected { border-color: var(--accent-teal); background: #134e4a; }
-        body.admin-dark .pay-confirm-content .pay-btns .btn-cancel { background: #334155; color: #e2e8f0; }
-        body.admin-dark .invoice-modal-content { background: #1e293b; color: #f1f5f9; }
-        body.admin-dark .invoice-print-area .invoice-header h2 { color: #f1f5f9; }
-        body.admin-dark .invoice-print-area table th { background: #0f172a; border-color: #334155; }
-        body.admin-dark .invoice-print-area table td { border-color: #334155; }
+        body.admin-dark .badge-status.paid {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+        body.admin-dark .badge-status.unpaid {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        body.admin-dark .badge-status.pending {
+            background: #78350f;
+            color: #fcd34d;
+        }
+        body.admin-dark .badge-status.process {
+            background: #1e3a5f;
+            color: #93c5fd;
+        }
+        body.admin-dark .badge-status.done {
+            background: #312e81;
+            color: #a5b4fc;
+        }
+        body.admin-dark .stat-card .icon.blue {
+            background: #1e3a5f;
+            color: #60a5fa;
+        }
+        body.admin-dark .stat-card .icon.green {
+            background: #064e3b;
+            color: #34d399;
+        }
+        body.admin-dark .stat-card .icon.red {
+            background: #7f1d1d;
+            color: #f87171;
+        }
+        body.admin-dark .stat-card .icon.purple {
+            background: #4c1d95;
+            color: #a78bfa;
+        }
+        body.admin-dark .stat-card .icon.orange {
+            background: #78350f;
+            color: #fbbf24;
+        }
+        body.admin-dark .stat-card .icon.teal {
+            background: #134e4a;
+            color: #2dd4bf;
+        }
+        body.admin-dark .pay-confirm-content {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+        body.admin-dark .pay-confirm-content .pay-detail-row {
+            border-color: #334155;
+        }
+        body.admin-dark .pay-confirm-content .pay-detail-row .label {
+            color: #94a3b8;
+        }
+        body.admin-dark .pay-confirm-content .pay-amount-large {
+            background: #0f172a;
+            color: #f1f5f9;
+        }
+        body.admin-dark .pay-confirm-content .pay-method-group label {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        body.admin-dark .pay-confirm-content .pay-method-group label.selected {
+            border-color: var(--accent-teal);
+            background: #134e4a;
+        }
+        body.admin-dark .pay-confirm-content .pay-btns .btn-cancel {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        body.admin-dark .invoice-modal-content {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+        body.admin-dark .invoice-print-area .invoice-header h2 {
+            color: #f1f5f9;
+        }
+        body.admin-dark .invoice-print-area table th {
+            background: #0f172a;
+            border-color: #334155;
+        }
+        body.admin-dark .invoice-print-area table td {
+            border-color: #334155;
+        }
 
-        /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
                 text-align: center;
                 padding: 12px 16px;
             }
-            .header-logo .logo-main { font-size: 1.5rem; }
-            .header-logo .logo-tagline { font-size: 0.6rem; letter-spacing: 1.2px; }
-            .header-logo .logo-icon { width: 44px; height: 44px; font-size: 20px; }
-            header nav { justify-content: center; margin-top: 6px; }
-            header nav a { font-size: 13px; margin: 0 4px; }
-            .admin-login-btn, .patient-portal-btn { font-size: 12px; padding: 4px 12px; margin: 2px 0; }
-            .admin-body { flex-direction: column; }
+            .header-logo .logo-main {
+                font-size: 1.5rem;
+            }
+            .header-logo .logo-tagline {
+                font-size: 0.6rem;
+                letter-spacing: 1.2px;
+            }
+            .header-logo .logo-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+            }
+            header nav {
+                justify-content: center;
+                margin-top: 6px;
+            }
+            header nav a {
+                font-size: 13px;
+                margin: 0 4px;
+            }
+            .admin-login-btn,
+            .patient-portal-btn {
+                font-size: 12px;
+                padding: 4px 12px;
+                margin: 2px 0;
+            }
+            .admin-body {
+                flex-direction: column;
+            }
             .admin-sidebar {
                 width: 100%;
                 display: flex;
@@ -1250,25 +1679,55 @@
                 border-left: none;
                 border-bottom: 3px solid transparent;
             }
-            .admin-sidebar a.active { border-bottom-color: var(--accent-teal); border-left: none; }
-            .admin-sidebar .nav-label { display: none; }
-            .hero h2 { font-size: 1.8rem; }
-            .about-features { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .pay-method-group label { font-size: 12px; padding: 4px 12px; }
+            .admin-sidebar a.active {
+                border-bottom-color: var(--accent-teal);
+                border-left: none;
+            }
+            .admin-sidebar .nav-label {
+                display: none;
+            }
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .pay-method-group label {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
         }
+
         @media (max-width: 480px) {
-            .header-logo .logo-main { font-size: 1.2rem; }
-            .header-logo .logo-icon { width: 36px; height: 36px; font-size: 16px; }
-            .header-logo .logo-tagline { font-size: 0.5rem; letter-spacing: 0.8px; }
-            .hero h2 { font-size: 1.4rem; }
-            .btn-book, .btn-portal { padding: 10px 18px; font-size: 14px; }
+            .header-logo .logo-main {
+                font-size: 1.2rem;
+            }
+            .header-logo .logo-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+            .header-logo .logo-tagline {
+                font-size: 0.5rem;
+                letter-spacing: 0.8px;
+            }
+            .hero h2 {
+                font-size: 1.4rem;
+            }
+            .btn-book,
+            .btn-portal {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ─── PRELOADER ─── -->
+    <!-- ═══════════ PRELOADER ═══════════ -->
     <div id="preloader">
         <div class="preloader-dna-container">
             <div class="preloader-pulse-ring"></div>
@@ -1292,11 +1751,12 @@
         </div>
     </div>
 
-    <!-- ─── TOAST CONTAINER ─── -->
+    <!-- ═══════════ TOAST CONTAINER ═══════════ -->
     <div id="toastContainer"></div>
 
-    <!-- ─── HEADER ─── -->
+    <!-- ═══════════ MAIN PAGE ═══════════ -->
     <header>
+        <!-- ─── LARGE LOGO ─── -->
         <a href="#" class="header-logo">
             <div class="logo-icon">R</div>
             <div class="logo-text-group">
@@ -1304,11 +1764,12 @@
                 <div class="logo-tagline"><i class="fas fa-heartbeat"></i> SOLUTION OF YOUR HEALTHY LIFE</div>
             </div>
         </a>
+
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Tests</a>
-            <a href="#">Book Test</a>
-            <a href="#">About</a>
+            <a href="index.html">Home</a>
+            <a href="tests.html">Tests</a>
+            <a href="book.html">Book Test</a>
+            <a href="contact.html">About</a>
             <button class="patient-portal-btn" id="openPatientPortalBtn"><i class="fas fa-file-pdf"></i> My Reports</button>
             <button class="admin-login-btn" id="openLoginBtn"><i class="fas fa-lock"></i> Admin</button>
         </nav>
@@ -1317,7 +1778,7 @@
     <div class="hero">
         <h2>Reliable Diagnostics with Advanced Technology</h2>
         <div class="btn-container">
-            <a class="btn-book" href="#">Book Test</a>
+            <a class="btn-book" href="book.html">Book Test</a>
             <button class="btn-portal" id="openPatientPortalBtn2"><i class="fas fa-file-pdf"></i> My Reports</button>
         </div>
     </div>
@@ -1411,15 +1872,15 @@
 
     <a href="https://wa.me/918709946177" class="whatsapp-float">Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
 
-    <!-- ─── LOGIN MODAL ─── -->
+    <!-- ═══════════ LOGIN MODAL ═══════════ -->
     <div class="login-modal" id="loginModal">
         <div class="login-modal-content">
             <h3><i class="fas fa-lock"></i> Admin Login</h3>
             <form id="loginForm">
                 <label>Username</label>
-                <input type="text" id="loginUsername" placeholder="Enter username" value="Rajan5530" />
+                <input type="text" id="loginUsername" placeholder="Enter username" />
                 <label>Password</label>
-                <input type="password" id="loginPassword" placeholder="Enter password" value="Rkchandra5530" />
+                <input type="password" id="loginPassword" placeholder="Enter password" />
                 <button type="submit" class="btn-book" style="width:100%;background:var(--accent-teal);border:none;padding:10px;"><i class="fas fa-sign-in-alt"></i> Login</button>
                 <button type="button" class="btn-close" id="closeLoginModal">Cancel</button>
             </form>
@@ -1427,7 +1888,7 @@
         </div>
     </div>
 
-    <!-- ─── PAYMENT CONFIRM MODAL ─── -->
+    <!-- ═══════════ PAYMENT CONFIRM MODAL ═══════════ -->
     <div class="pay-confirm-modal" id="payConfirmModal">
         <div class="pay-confirm-content">
             <h3><i class="fas fa-check-circle"></i> Confirm Payment</h3>
@@ -1453,7 +1914,7 @@
         </div>
     </div>
 
-    <!-- ─── INVOICE MODAL ─── -->
+    <!-- ═══════════ INVOICE MODAL ═══════════ -->
     <div class="invoice-modal" id="invoiceModal">
         <div class="invoice-modal-content">
             <div id="invoicePrintArea" class="invoice-print-area">
@@ -1488,46 +1949,7 @@
         </div>
     </div>
 
-    <!-- ─── UPI MODAL ─── -->
-    <div class="upi-modal" id="upiModal">
-        <div class="upi-modal-content">
-            <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>
-            <div id="upiQR" style="display:flex;justify-content:center;margin:16px 0;"></div>
-            <p style="color:var(--text-dark);">UPI: rajanpathlab@upi</p>
-            <button class="btn-close" id="closeUpiModal">Close</button>
-        </div>
-    </div>
-
-    <!-- ─── PATIENT PORTAL MODAL ─── -->
-    <div class="patient-portal-modal" id="patientPortalModal">
-        <div class="patient-portal-content">
-            <div class="portal-header">
-                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>
-                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
-            </div>
-            <div class="portal-body">
-                <div class="portal-input-group">
-                    <div class="portal-input-label"><span>🔍</span> PATIENT ID OR MOBILE</div>
-                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number" autocomplete="off">
-                </div>
-                <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
-                <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
-                <div id="portalReportList" class="portal-report-list" style="display:none;"></div>
-                <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
-            </div>
-            <div class="portal-footer"><span>✦ SECURE DOWNLOAD SYSTEM ✦</span><span>RAJAN PATH LAB</span></div>
-        </div>
-    </div>
-
-    <!-- ─── DATALIST ─── -->
-    <datalist id="patientIdList"></datalist>
-    <datalist id="testList">
-        <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST (Fasting)"><option value="LIPID PROFILE (Fasting)"><option value="THYROID PROFILE"><option value="BETA HCG"><option value="HBA1C (3 Month Sugar)"><option value="C-REACTIVE PROTEIN (CRP)"><option value="ANTISTREPTOLYSIN O (ASO)"><option value="R A FACTOR"><option value="HCG PREGNANCY TEST"><option value="URINE ROUTINE"><option value="URINE CULTURE"><option value="SEMEN ANALYSIS"><option value="MANTOUX TEST"><option value="HBSAG"><option value="VDRL"><option value="HIV"><option value="HCV"><option value="BLOOD UREA"><option value="SERUM CREATININE"><option value="URIC ACID (Fasting)"><option value="BLOOD SUGAR"><option value="COMPLETE BLOOD COUNT (CBC)"><option value="PLATELETS TEST"><option value="DENGUE NS1 IGG IGM"><option value="TYPHIDOT IGG IGM"><option value="WIDAL"><option value="OPTIMAL"><option value="TC DC"><option value="BT CT"><option value="ESR"><option value="SMEAR OF MP"><option value="HB"><option value="BLOOD GROUP"><option value="TOTAL PARASITE"><option value="SMEAR OF MP (Repeat)"><option value="BILIRUBIN TEST"><option value="MP WIDAL HB"><option value="OPTIMAL WIDAL HB"><option value="CBC MP WIDAL"><option value="CBC WIDAL"><option value="HB WIDAL"><option value="MP WIDAL"><option value="OPTIMAL WIDAL"><option value="SODIUM"><option value="POTASSIUM"><option value="CBC + WIDAL + OPTIMAL"><option value="URINE CULTURE (Advanced)"><option value="PLATELET COUNT"><option value="KIDNEY COMPLETE (KFT + Electrolytes)"><option value="PREGNANCY COMBO (HCG + CBC + Urine)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)"><option value="HS-CRP (High Sensitivity CRP)"><option value="VITAMIN B12"><option value="VITAMIN D3 (25-Hydroxy)"><option value="TSH (Thyroid Stimulating Hormone)"><option value="T3 (Triiodothyronine)"><option value="T4 (Thyroxine)"><option value="FREE T3"><option value="FREE T4"><option value="PROLACTIN"><option value="LH (Luteinizing Hormone)"><option value="FSH (Follicle Stimulating Hormone)"><option value="TESTOSTERONE (Total)"><option value="IRON STUDIES (Iron/TIBC/Ferritin)"><option value="CBC WIDAL BSR">
-    </datalist>
-
-    <!-- ════════════════════════════════════════════════════════════════ -->
-    <!-- ═══════════════ ADMIN PANEL ═══════════════ -->
-    <!-- ════════════════════════════════════════════════════════════════ -->
+    <!-- ═══════════ ADMIN PANEL ═══════════ -->
     <div id="adminPanelWrapper">
         <div id="adminPanelContainer">
             <div class="admin-header">
@@ -1555,7 +1977,7 @@
                 </div>
                 <div class="admin-content">
 
-                    <!-- ─── DASHBOARD ─── -->
+                    <!-- DASHBOARD -->
                     <div class="admin-section active" id="sec-dashboard">
                         <h2 style="text-align:left;"><i class="fas fa-chart-pie"></i> Dashboard</h2>
                         <div class="stats-grid" id="dashboardStats">
@@ -1575,14 +1997,20 @@
                         </div>
                     </div>
 
-                    <!-- ─── PATIENTS ─── -->
+                    <!-- PATIENTS -->
                     <div class="admin-section" id="sec-patients">
                         <h2 style="text-align:left;"><i class="fas fa-users"></i> Patient Management <span class="premium-badge">QR</span></h2>
                         <div class="form-grid">
+                            <!-- Updated: Added list="patientIdList" to allow dropdown search -->
                             <label>Patient ID <input type="text" id="patId" placeholder="Auto-generate or enter custom" list="patientIdList" /></label>
                             <label>Name <input type="text" id="patName" placeholder="Full name" /></label>
                             <label>Phone <input type="text" id="patPhone" placeholder="9876543210 (optional)" /></label>
-                            <label>Test <input type="text" id="patTest" list="testList" placeholder="Type or select test" autocomplete="off" /></label>
+                            <label>Test
+                                <input type="text" id="patTest" list="testList" placeholder="Type or select test" autocomplete="off" />
+                                <datalist id="testList">
+                                    <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST (Fasting)"><option value="LIPID PROFILE (Fasting)"><option value="THYROID PROFILE"><option value="BETA HCG"><option value="HBA1C (3 Month Sugar)"><option value="C-REACTIVE PROTEIN (CRP)"><option value="ANTISTREPTOLYSIN O (ASO)"><option value="R A FACTOR"><option value="HCG PREGNANCY TEST"><option value="URINE ROUTINE"><option value="URINE CULTURE"><option value="SEMEN ANALYSIS"><option value="MANTOUX TEST"><option value="HBSAG"><option value="VDRL"><option value="HIV"><option value="HCV"><option value="BLOOD UREA"><option value="SERUM CREATININE"><option value="URIC ACID (Fasting)"><option value="BLOOD SUGAR"><option value="COMPLETE BLOOD COUNT (CBC)"><option value="PLATELETS TEST"><option value="DENGUE NS1 IGG IGM"><option value="TYPHIDOT IGG IGM"><option value="WIDAL"><option value="OPTIMAL"><option value="TC DC"><option value="BT CT"><option value="ESR"><option value="SMEAR OF MP"><option value="HB"><option value="BLOOD GROUP"><option value="TOTAL PARASITE"><option value="SMEAR OF MP (Repeat)"><option value="BILIRUBIN TEST"><option value="MP WIDAL HB"><option value="OPTIMAL WIDAL HB"><option value="CBC MP WIDAL"><option value="CBC WIDAL"><option value="HB WIDAL"><option value="MP WIDAL"><option value="OPTIMAL WIDAL"><option value="SODIUM"><option value="POTASSIUM"><option value="CBC + WIDAL + OPTIMAL"><option value="URINE CULTURE (Advanced)"><option value="PLATELET COUNT"><option value="KIDNEY COMPLETE (KFT + Electrolytes)"><option value="PREGNANCY COMBO (HCG + CBC + Urine)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)"><option value="HS-CRP (High Sensitivity CRP)"><option value="VITAMIN B12"><option value="VITAMIN D3 (25-Hydroxy)"><option value="TSH (Thyroid Stimulating Hormone)"><option value="T3 (Triiodothyronine)"><option value="T4 (Thyroxine)"><option value="FREE T3"><option value="FREE T4"><option value="PROLACTIN"><option value="LH (Luteinizing Hormone)"><option value="FSH (Follicle Stimulating Hormone)"><option value="TESTOSTERONE (Total)"><option value="IRON STUDIES (Iron/TIBC/Ferritin)"><option value="CBC WIDAL BSR">
+                                </datalist>
+                            </label>
                             <label>Status <select id="patStatus"><option>pending</option><option>process</option><option>done</option></select></label>
                             <label>Due <input type="number" id="patDue" placeholder="0" /></label>
                             <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
@@ -1599,12 +2027,18 @@
                         </div>
                     </div>
 
-                    <!-- ─── REPORTS ─── -->
+                    <!-- REPORTS -->
                     <div class="admin-section" id="sec-reports">
                         <h2 style="text-align:left;"><i class="fas fa-file-pdf"></i> Report Management</h2>
                         <div class="form-grid">
-                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-072026-0001" list="patientIdList" /></label>
-                            <label>Test Name <input type="text" id="reportTestName" list="testList" placeholder="Type or select test" autocomplete="off" /></label>
+                            <!-- Updated: Added list="patientIdList" to allow dropdown search for existing patient IDs -->
+                            <label>Patient ID <input type="text" id="reportPatientId" placeholder="RPL-062026-1186" list="patientIdList" /></label>
+                            <label>Test Name
+                                <input type="text" id="reportTestName" list="testList2" placeholder="Type or select test" autocomplete="off" />
+                                <datalist id="testList2">
+                                    <option value="LIVER FUNCTION TEST"><option value="KIDNEY FUNCTION TEST (Fasting)"><option value="LIPID PROFILE (Fasting)"><option value="THYROID PROFILE"><option value="BETA HCG"><option value="HBA1C (3 Month Sugar)"><option value="C-REACTIVE PROTEIN (CRP)"><option value="ANTISTREPTOLYSIN O (ASO)"><option value="R A FACTOR"><option value="HCG PREGNANCY TEST"><option value="URINE ROUTINE"><option value="URINE CULTURE"><option value="SEMEN ANALYSIS"><option value="MANTOUX TEST"><option value="HBSAG"><option value="VDRL"><option value="HIV"><option value="HCV"><option value="BLOOD UREA"><option value="SERUM CREATININE"><option value="URIC ACID (Fasting)"><option value="BLOOD SUGAR"><option value="COMPLETE BLOOD COUNT (CBC)"><option value="PLATELETS TEST"><option value="DENGUE NS1 IGG IGM"><option value="TYPHIDOT IGG IGM"><option value="WIDAL"><option value="OPTIMAL"><option value="TC DC"><option value="BT CT"><option value="ESR"><option value="SMEAR OF MP"><option value="HB"><option value="BLOOD GROUP"><option value="TOTAL PARASITE"><option value="SMEAR OF MP (Repeat)"><option value="BILIRUBIN TEST"><option value="MP WIDAL HB"><option value="OPTIMAL WIDAL HB"><option value="CBC MP WIDAL"><option value="CBC WIDAL"><option value="HB WIDAL"><option value="MP WIDAL"><option value="OPTIMAL WIDAL"><option value="SODIUM"><option value="POTASSIUM"><option value="CBC + WIDAL + OPTIMAL"><option value="URINE CULTURE (Advanced)"><option value="PLATELET COUNT"><option value="KIDNEY COMPLETE (KFT + Electrolytes)"><option value="PREGNANCY COMBO (HCG + CBC + Urine)"><option value="DENGUE COMPLETE (NS1 + IgG/IgM + CBC)"><option value="HS-CRP (High Sensitivity CRP)"><option value="VITAMIN B12"><option value="VITAMIN D3 (25-Hydroxy)"><option value="TSH (Thyroid Stimulating Hormone)"><option value="T3 (Triiodothyronine)"><option value="T4 (Thyroxine)"><option value="FREE T3"><option value="FREE T4"><option value="PROLACTIN"><option value="LH (Luteinizing Hormone)"><option value="FSH (Follicle Stimulating Hormone)"><option value="TESTOSTERONE (Total)"><option value="IRON STUDIES (Iron/TIBC/Ferritin)"><option value="CBC WIDAL BSR">
+                                </datalist>
+                            </label>
                             <label>PDF <input type="file" accept=".pdf" id="reportFile" /></label>
                             <label>Replace <select id="reportReplace"><option value="no">No</option><option value="yes">Yes</option></select></label>
                             <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
@@ -1618,7 +2052,7 @@
                         </div>
                     </div>
 
-                    <!-- ─── WHATSAPP ─── -->
+                    <!-- WHATSAPP -->
                     <div class="admin-section" id="sec-whatsapp">
                         <h2 style="text-align:left;"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp System</h2>
                         <div class="template-box">
@@ -1642,7 +2076,7 @@
                         </div>
                     </div>
 
-                    <!-- ─── PAYMENTS ─── -->
+                    <!-- PAYMENTS -->
                     <div class="admin-section" id="sec-payments">
                         <h2 style="text-align:left;"><i class="fas fa-rupee-sign"></i> Payment / Dues <span class="premium-badge">UPI+QR</span></h2>
                         <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));" id="paymentStats">
@@ -1665,7 +2099,7 @@
                         </div>
                     </div>
 
-                    <!-- ─── SETTINGS ─── -->
+                    <!-- SETTINGS -->
                     <div class="admin-section" id="sec-settings">
                         <h2 style="text-align:left;"><i class="fas fa-cog"></i> Lab Settings</h2>
                         <div class="settings-group">
@@ -1683,7 +2117,7 @@
                         </div>
                     </div>
 
-                    <!-- ─── ANALYTICS ─── -->
+                    <!-- ANALYTICS -->
                     <div class="admin-section" id="sec-analytics">
                         <h2 style="text-align:left;"><i class="fas fa-chart-bar"></i> Reports & Analytics</h2>
                         <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
@@ -1697,7 +2131,7 @@
                         </div>
                     </div>
 
-                    <!-- ─── BACKUP ─── -->
+                    <!-- BACKUP -->
                     <div class="admin-section" id="sec-backup">
                         <h2 style="text-align:left;"><i class="fas fa-database"></i> Backup & Restore</h2>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px;">
@@ -1723,7 +2157,7 @@
                         </div>
                     </div>
 
-                    <!-- ─── SECURITY ─── -->
+                    <!-- SECURITY -->
                     <div class="admin-section" id="sec-security">
                         <h2 style="text-align:left;"><i class="fas fa-shield-alt"></i> Security</h2>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px;">
@@ -1753,29 +2187,58 @@
         </div>
     </div>
 
-    <!-- ════════════════════════════════════════════════════════════════ -->
-    <!-- ═══════════════ JAVASCRIPT - COMPLETE ═══════════════ -->
-    <!-- ════════════════════════════════════════════════════════════════ -->
+    <!-- ═══════════ UPI MODAL ═══════════ -->
+    <div class="upi-modal" id="upiModal">
+        <div class="upi-modal-content">
+            <h3><i class="fas fa-qrcode"></i> Scan to Pay (UPI)</h3>
+            <div id="upiQR" style="display:flex;justify-content:center;margin:16px 0;"></div>
+            <p style="color:var(--text-dark);">UPI: rajanpathlab@upi</p>
+            <button class="btn-close" id="closeUpiModal">Close</button>
+        </div>
+    </div>
+
+    <!-- ═══════════ PATIENT PORTAL MODAL ═══════════ -->
+    <div class="patient-portal-modal" id="patientPortalModal">
+        <div class="patient-portal-content">
+            <div class="portal-header">
+                <h1>📄 PATIENT REPORT PORTAL <span class="portal-badge">DOWNLOAD</span></h1>
+                <div class="portal-sub">◆ Enter Patient ID OR Mobile Number to view & download reports ◆</div>
+            </div>
+            <div class="portal-body">
+                <div class="portal-input-group">
+                    <div class="portal-input-label"><span>🔍</span> PATIENT ID OR MOBILE</div>
+                    <input type="text" id="portalPatientId" class="portal-input" placeholder="Enter Patient ID or Mobile Number" autocomplete="off">
+                </div>
+                <button id="portalFetchBtn" class="portal-btn"><span>🔍</span> VIEW MY REPORTS →</button>
+                <div id="portalStatus" class="portal-status">◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"</div>
+                <div id="portalReportList" class="portal-report-list" style="display:none;"></div>
+                <button class="portal-close-btn" id="closePortalBtn">✕ Close Portal</button>
+            </div>
+            <div class="portal-footer"><span>✦ SECURE DOWNLOAD SYSTEM ✦</span><span>RAJAN PATH LAB</span></div>
+        </div>
+    </div>
+
+    <!-- ═══════════ DATA LIST FOR PATIENT IDS (Auto-populated dropdown) ═══════════ -->
+    <datalist id="patientIdList"></datalist>
+
+    <!-- ═══════════ JAVASCRIPT ═══════════ -->
     <script>
         (function() {
             'use strict';
 
-            // ─── SUPABASE CLIENT ───
-            const supabase = window.supabase.createClient(
-                'https://fafybuowcqgfgksmfwli.supabase.co',
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1ywyD5Fakevk'
-            );
+            // ─── PRELOADER ───
+            window.addEventListener('load', function() {
+                const preloader = document.getElementById('preloader');
+                setTimeout(function() {
+                    preloader.classList.add('hide');
+                    setTimeout(function() {
+                        if (preloader && preloader.parentNode) preloader.parentNode.removeChild(
+                        preloader);
+                    }, 600);
+                }, 2200);
+            });
 
-            // ─── DATA STORE ───
-            let patients = [];
-            let reports = [];
-            let payments = { history: [], total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0 };
-            let activityLogs = [];
-            let settings = {};
-
-            const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
-
-            // ─── TOAST ───
+            // ─── TOAST SYSTEM ───
             function showToast(message, type = 'success', duration = 3500) {
                 const container = document.getElementById('toastContainer');
                 const toast = document.createElement('div');
@@ -1794,6 +2257,7 @@
                 setTimeout(close, duration);
             }
 
+            // ─── LOADING STATE HELPERS ───
             function setLoading(btn, loading = true) {
                 if (!btn) return;
                 if (loading) {
@@ -1807,179 +2271,31 @@
                 }
             }
 
-            // ─── SUPABASE CRUD ───
+            // ─── FIREBASE ───
+            const firebaseConfig = {
+                apiKey: "AIzaSyAvb5R3lKVZS14tWNHjZSG5PzeK0ie0nKs",
+                authDomain: "rajanpathlab5530.firebaseapp.com",
+                databaseURL: "https://rajanpathlab5530-default-rtdb.firebaseio.com",
+                projectId: "rajanpathlab5530",
+                storageBucket: "rajanpathlab5530.firebasestorage.app",
+                messagingSenderId: "883585447034",
+                appId: "1:883585447034:web:225d807b2cc83095f9b7c3",
+                measurementId: "G-7WMF1M8CG9"
+            };
+            firebase.initializeApp(firebaseConfig);
+            const rtdb = firebase.database();
 
-            // Patients
-            async function loadPatients() {
-                const { data, error } = await supabase
-                    .from('patients')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-                if (error) { console.error('Load Patients Error:', error); return []; }
-                return data || [];
-            }
-
-            async function savePatients(arr) {
-                const { error: delError } = await supabase
-                    .from('patients')
-                    .delete()
-                    .neq('patient_id', 'dummy');
-                if (delError) console.error('Delete Patients Error:', delError);
-
-                const { error } = await supabase
-                    .from('patients')
-                    .upsert(arr);
-                if (error) console.error('Save Patients Error:', error);
-                return !error;
-            }
-
-            // Reports
-            async function loadReports() {
-                const { data, error } = await supabase
-                    .from('reports')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-                if (error) { console.error('Load Reports Error:', error); return []; }
-                return data || [];
-            }
-
-            async function saveReports(arr) {
-                const { error: delError } = await supabase
-                    .from('reports')
-                    .delete()
-                    .neq('id', 0);
-                if (delError) console.error('Delete Reports Error:', delError);
-
-                const { error } = await supabase
-                    .from('reports')
-                    .upsert(arr);
-                if (error) console.error('Save Reports Error:', error);
-                return !error;
-            }
-
-            // Payments
-            async function loadPayments() {
-                const { data, error } = await supabase
-                    .from('payments')
-                    .select('*')
-                    .order('confirmed_at', { ascending: false });
-                if (error) { console.error('Load Payments Error:', error); return { history: [], total_paid: 0,
-                        total_due: 0, paid_count: 0, unpaid_count: 0 }; }
-                const history = data || [];
-                const total_paid = history.reduce((s, h) => s + (h.amount || 0), 0);
-                return { history, total_paid, total_due: 0, paid_count: history.length, unpaid_count: 0 };
-            }
-
-            async function savePayments(obj) {
-                const { error } = await supabase
-                    .from('payments')
-                    .upsert(obj.history || []);
-                if (error) console.error('Save Payments Error:', error);
-                return !error;
-            }
-
-            // Settings
-            async function loadSettings() {
-                const { data, error } = await supabase
-                    .from('settings')
-                    .select('*')
-                    .limit(1)
-                    .single();
-                if (error) { console.error('Load Settings Error:', error); return {}; }
-                return data || {};
-            }
-
-            async function saveSettings(obj) {
-                const { error } = await supabase
-                    .from('settings')
-                    .upsert({ id: 1, ...obj });
-                if (error) console.error('Save Settings Error:', error);
-                return !error;
-            }
-
-            // Logs
-            async function loadLogs() {
-                const { data, error } = await supabase
-                    .from('logs')
-                    .select('*')
-                    .order('timestamp', { ascending: false })
-                    .limit(100);
-                if (error) { console.error('Load Logs Error:', error); return []; }
-                return data || [];
-            }
-
-            async function saveLogs(arr) {
-                const { error } = await supabase
-                    .from('logs')
-                    .upsert(arr);
-                if (error) console.error('Save Logs Error:', error);
-                return !error;
-            }
-
-            // ─── HELPER FUNCTIONS ───
-            function getPatientIdPrefix() {
-                const today = new Date();
-                const month = String(today.getMonth() + 1).padStart(2, '0');
-                const year = today.getFullYear();
-                return 'RPL-' + month + year + '-';
-            }
-
-            function normalizePhone(phone) {
-                if (!phone) return '';
-                let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
-                if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
-                if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
-                if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
-                return cleaned;
-            }
-
-            function sendWhatsApp(phone, message) {
-                if (!phone) { showToast('No phone number for WhatsApp.', 'warning'); return; }
-                let clean = phone.replace(/\s/g, '').replace(/-/g, '');
-                if (clean.startsWith('0')) clean = clean.substring(1);
-                if (/^\d{10}$/.test(clean)) clean = '+91' + clean;
-                if (!clean.startsWith('+')) clean = '+' + clean;
-                window.open('https://wa.me/' + clean + '?text=' + encodeURIComponent(message), '_blank');
-            }
-
-            function updatePatientIdDatalist() {
-                const datalist = document.getElementById('patientIdList');
-                if (!datalist) return;
-                const uniqueIds = [...new Set(patients.map(p => p.patient_id).filter(id => id))];
-                datalist.innerHTML = uniqueIds.map(id => `<option value="${id}">`).join('');
-            }
-
-            // ─── REFRESH ALL ───
-            async function refreshAllData() {
-                patients = await loadPatients();
-                reports = await loadReports();
-                payments = await loadPayments();
-                activityLogs = await loadLogs();
-                settings = await loadSettings();
-                if (!payments.history) payments.history = [];
-                if (!payments.total_paid) payments.total_paid = 0;
-                if (!payments.total_due) payments.total_due = 0;
-                if (!payments.paid_count) payments.paid_count = 0;
-                if (!payments.unpaid_count) payments.unpaid_count = 0;
-                updatePatientIdDatalist();
-            }
-
-            // ─── UPLOAD PDF ───
-            async function uploadPDF(file, reportId) {
-                const filePath = `${reportId}_${file.name}`;
-                const { error } = await supabase.storage.from('reports').upload(filePath, file, {
-                    cacheControl: '3600',
-                    upsert: true
-                });
-                if (error) throw new Error(error.message);
-                const { data } = supabase.storage.from('reports').getPublicUrl(filePath);
-                return data.publicUrl;
-            }
+            // ─── SUPABASE ───
+            const supabaseUrl = 'https://fflqftbnttpgwdktagmj.supabase.co';
+            const supabaseKey =
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmbHFmdGJudHRwZ3dka3RhZ21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxNTM4ODcsImV4cCI6MjA5ODcyOTg4N30.HHnL28lFNHXC9GcPpOudOXe7Q7dFe-n1YwyD5Fakevk';
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            const STORAGE_BUCKET = 'reports';
 
             async function downloadPDF(reportId, fileName) {
                 try {
                     const filePath = `${reportId}_${fileName}`;
-                    const { data } = supabase.storage.from('reports').getPublicUrl(filePath);
+                    const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
                     const url = data.publicUrl;
                     const response = await fetch(url);
                     if (!response.ok) throw new Error('Network response not ok');
@@ -1994,18 +2310,70 @@
                 } catch (error) {
                     console.warn('Download fallback:', error.message);
                     const filePath = `${reportId}_${fileName}`;
-                    const { data } = supabase.storage.from('reports').getPublicUrl(filePath);
+                    const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
                     window.open(data.publicUrl, '_blank');
                 }
             }
 
+            async function uploadPDF(file, reportId) {
+                const filePath = `${reportId}_${file.name}`;
+                const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, file);
+                if (error) throw new Error(error.message);
+                const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
+                return data.publicUrl;
+            }
+
             async function deletePDF(reportId, fileName) {
                 const filePath = `${reportId}_${fileName}`;
-                const { error } = await supabase.storage.from('reports').remove([filePath]);
+                const { error } = await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
                 if (error) console.warn('Delete error:', error.message);
             }
 
-            // ─── ADD PAYMENT HISTORY ───
+            const VALID_USERS = { 'Rajan5530': 'Rkchandra5530' };
+
+            function normalizePhone(phone) {
+                if (!phone) return '';
+                let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
+                if (cleaned.startsWith('+91')) cleaned = cleaned.substring(3);
+                if (cleaned.startsWith('91') && cleaned.length > 10) cleaned = cleaned.substring(2);
+                if (cleaned.startsWith('0')) cleaned = cleaned.substring(1);
+                return cleaned;
+            }
+
+            // ─── DATA LOADERS ───
+            async function loadPatients() { const snap = await rtdb.ref('/patients').once('value'); return snap.val() || []; }
+
+            async function savePatients(arr) { await rtdb.ref('/patients').set(arr); }
+
+            async function loadReports() { const snap = await rtdb.ref('/reports').once('value'); return snap.val() || []; }
+
+            async function saveReports(arr) { await rtdb.ref('/reports').set(arr); }
+
+            async function loadPayments() {
+                const snap = await rtdb.ref('/payments').once('value');
+                const val = snap.val();
+                return val || { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0, history: [] };
+            }
+
+            async function savePayments(obj) { await rtdb.ref('/payments').set(obj); }
+
+            async function loadLogs() { const snap = await rtdb.ref('/logs').once('value'); return snap.val() || []; }
+
+            async function saveLogs(arr) { await rtdb.ref('/logs').set(arr); }
+
+            async function loadSettings() {
+                const snap = await rtdb.ref('/settings').once('value');
+                return snap.val() || {};
+            }
+
+            async function saveSettings(obj) { await rtdb.ref('/settings').set(obj); }
+
+            let patients = [],
+                reports = [];
+            let payments = { total_paid: 0, total_due: 0, paid_count: 0, unpaid_count: 0, history: [] };
+            let activityLogs = [];
+            let settings = {};
+
             async function addPaymentHistory(patientId, patientName, amount, method, adminUser) {
                 const entry = {
                     id: Date.now(),
@@ -2025,13 +2393,119 @@
                 await savePayments(payments);
             }
 
-            // ─── MARK AS PAID ───
+            async function refreshAllData() {
+                patients = await loadPatients();
+                reports = await loadReports();
+                payments = await loadPayments();
+                activityLogs = await loadLogs();
+                settings = await loadSettings();
+                if (!payments.history) payments.history = [];
+                if (!payments.total_paid) payments.total_paid = 0;
+                if (!payments.total_due) payments.total_due = 0;
+                if (!payments.paid_count) payments.paid_count = 0;
+                if (!payments.unpaid_count) payments.unpaid_count = 0;
+                updatePatientIdDatalist(); // Update the dropdown list
+            }
+
+            const $ = id => document.getElementById(id);
+            const loginModal = $('loginModal');
+            const adminWrapper = $('adminPanelWrapper');
+            const upiModal = $('upiModal');
+            const portalModal = $('patientPortalModal');
+            const payConfirmModal = $('payConfirmModal');
+            const invoiceModal = $('invoiceModal');
+
+            let pendingPayPatientId = null;
+            let pendingPayAmount = 0;
+
+            function openPayConfirm(patientId) {
+                const patient = patients.find(p => p.patient_id === patientId);
+                if (!patient) { showToast('Patient not found', 'error'); return; }
+                if (patient.due_amount <= 0) { showToast('No due amount for this patient.', 'warning'); return; }
+                pendingPayPatientId = patientId;
+                pendingPayAmount = patient.due_amount;
+                $('payConfirmPatient').textContent = patient.name;
+                $('payConfirmId').textContent = patient.patient_id;
+                $('payConfirmTest').textContent = patient.test || 'Not Specified';
+                $('payConfirmAmount').textContent = '₹' + patient.due_amount;
+                $('payConfirmAmountDisplay').textContent = '₹' + patient.due_amount;
+                document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove('selected'));
+                document.querySelector('#payMethodGroup input[value="Cash"]').checked = true;
+                document.querySelector('#payMethodGroup label:has(input[value="Cash"])')?.classList.add('selected');
+                $('payConfirmStatus').textContent = '';
+                payConfirmModal.classList.add('show');
+            }
+
+            function closePayConfirm() { payConfirmModal.classList.remove('show');
+                pendingPayPatientId = null;
+                pendingPayAmount = 0; }
+
+            $('payConfirmCancel').addEventListener('click', closePayConfirm);
+            payConfirmModal.addEventListener('click', e => { if (e.target === payConfirmModal) closePayConfirm(); });
+
+            document.querySelectorAll('#payMethodGroup input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove(
+                    'selected'));
+                    this.closest('label').classList.add('selected');
+                });
+            });
+
+            $('payConfirmConfirm').addEventListener('click', async function() {
+                const patientId = pendingPayPatientId;
+                if (!patientId) { showToast('No patient selected', 'error'); return; }
+                const patient = patients.find(p => p.patient_id === patientId);
+                if (!patient) { showToast('Patient not found', 'error'); return; }
+                const amount = patient.due_amount;
+                if (amount <= 0) { showToast('No due amount.', 'warning'); return; }
+                const method = document.querySelector('#payMethodGroup input[type="radio"]:checked')?.value || 'Cash';
+                const adminUser = $('adminUsername').textContent || 'Admin';
+
+                setLoading(this, true);
+                try {
+                    patient.due_amount = 0;
+                    await savePatients(patients);
+                    await addPaymentHistory(patient.patient_id, patient.name, amount, method, adminUser);
+
+                    const duePatients = patients.filter(p => p.due_amount > 0);
+                    payments.unpaid_count = duePatients.length;
+                    payments.total_due = duePatients.reduce((s, p) => s + p.due_amount, 0);
+                    await savePayments(payments);
+
+                    const log = {
+                        created_at: new Date().toLocaleString(),
+                        admin_user: adminUser,
+                        action: `Payment confirmed for ${patient.name} (${patient.patient_id}) ₹${amount} via ${method}`,
+                        ip: 'local'
+                    };
+                    activityLogs.unshift(log);
+                    if (activityLogs.length > 100) activityLogs = activityLogs.slice(0, 100);
+                    await saveLogs(activityLogs);
+
+                    await refreshAllData();
+                    refreshAllSections();
+
+                    $('payConfirmStatus').style.color = 'green';
+                    $('payConfirmStatus').textContent = '✅ Payment confirmed! Report unlocked.';
+                    showToast(`Payment of ₹${amount} confirmed for ${patient.name}`, 'success');
+                    setTimeout(() => closePayConfirm(), 1200);
+
+                    if (patient.phone) {
+                        const msg =
+                            `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you for choosing Rajan Path Lab.`;
+                        sendWhatsApp(patient.phone, msg);
+                    }
+                } catch (err) { showToast('Error: ' + err.message, 'error'); }
+                setLoading(this, false);
+            });
+
+            // ─── NEW: One‑Click Mark as Paid ───
             async function markAsPaid(patientId) {
                 const patient = patients.find(p => p.patient_id === patientId);
                 if (!patient) { showToast('Patient not found', 'error'); return; }
                 if (patient.due_amount <= 0) { showToast('Already paid', 'warning'); return; }
                 const amount = patient.due_amount;
-                const adminUser = document.getElementById('adminUsername').textContent || 'Admin';
+                const adminUser = $('adminUsername').textContent || 'Admin';
 
                 try {
                     patient.due_amount = 0;
@@ -2065,461 +2539,47 @@
                 } catch (err) { showToast('Error: ' + err.message, 'error'); }
             }
 
-            // ─── REFRESH ALL SECTIONS ───
-            function refreshAllSections() {
-                refreshDashboard();
-                refreshPatients();
-                refreshReports();
-                refreshWhatsAppPatients();
-                refreshPayments();
-                refreshSettings();
-                refreshAnalytics();
-                refreshBackup();
-                refreshSecurity();
-            }
-
-            // ─── DASHBOARD ───
-            function refreshDashboard() {
-                const total = patients.length;
-                const totalRep = reports.length;
-                const pending = patients.filter(p => p.status === 'pending').length;
-                const culture = patients.filter(p => p.test && p.test.includes('Urine')).length;
-                const due = patients.filter(p => p.due_amount > 0).length;
-                const revenue = patients.reduce((s, p) => s + (p.due_amount || 0), 0);
-                document.getElementById('dToday').textContent = total;
-                document.getElementById('dTotalReports').textContent = totalRep;
-                document.getElementById('dPending').textContent = pending;
-                document.getElementById('dCulture').textContent = culture;
-                document.getElementById('dDue').textContent = due;
-                document.getElementById('dRevenue').textContent = '₹' + revenue;
-                const tbody = document.getElementById('dRecentPatients');
-                if (patients.length) {
-                    tbody.innerHTML = patients.slice(0, 5).map(p =>
-                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
-                    ).join('');
-                } else tbody.innerHTML = '<tr><td colspan="4">No patients yet</td></tr>';
-                updateCharts();
-            }
-
-            let chartWeeklyInstance = null,
-                chartPieInstance = null;
-
-            function updateCharts() {
-                const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-                const weeklyData = days.map(() => 0);
-                patients.forEach(p => {
-                    if (p.created_at) {
-                        const d = new Date(p.created_at);
-                        const idx = d.getDay() === 0 ? 6 : d.getDay() - 1;
-                        if (idx >= 0 && idx < 7) weeklyData[idx]++;
-                    }
-                });
-                const testMap = {};
-                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                const labels = Object.keys(testMap),
-                    data = Object.values(testMap);
-
-                const ctx1 = document.getElementById('chartWeekly')?.getContext('2d');
-                if (ctx1) {
-                    if (chartWeeklyInstance) chartWeeklyInstance.destroy();
-                    chartWeeklyInstance = new Chart(ctx1, {
-                        type: 'bar',
-                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData,
-                                backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
-                            borderWidth: 2 }] },
-                        options: { responsive: true, maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
-                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
-                    });
-                }
-                const ctx2 = document.getElementById('chartPie')?.getContext('2d');
-                if (ctx2) {
-                    if (chartPieInstance) chartPieInstance.destroy();
-                    const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a', '#ff6600'];
-                    chartPieInstance = new Chart(ctx2, {
-                        type: 'doughnut',
-                        data: { labels: labels.length ? labels : ['No Data'],
-                            datasets: [{ data: labels.length ? data : [1],
-                                backgroundColor: labels.length ? colors.slice(0, labels.length) : ['#ccc'],
-                                borderWidth: 2, borderColor: '#fff' }] },
-                        options: { responsive: true, maintainAspectRatio: false,
-                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,
-                                        font: { size: 11 } } } } }
-                    });
-                }
-            }
-
-            // ─── PATIENTS ───
-            function refreshPatients() {
-                const tbody = document.getElementById('patientTableBody');
-                if (patients.length) {
-                    tbody.innerHTML = patients.map(p => `
-                            <tr>
-                                <td><b>${p.patient_id}</b></td><td>${p.name}</td>
-                                <td>${p.phone || '—'}</td>
-                                <td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                <td>₹${p.due_amount}</td>
-                                <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
-                                <td>
-                                    ${p.due_amount > 0 ? `
-                                        <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
-                                        <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
-                                    ` : `<span class="badge-status paid">Paid</span>`}
-                                    <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${p.due_amount>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
-                                    <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>`).join('');
-                    setTimeout(() => generateAllQRCodes(), 100);
-                } else tbody.innerHTML = '<tr><td colspan="8">No patients</td></tr>';
-                updatePatientIdDatalist();
-            }
-
-            function generateAllQRCodes() {
-                document.querySelectorAll('[id^="qr-"]').forEach(el => {
-                    const id = el.id.replace('qr-', '');
-                    if (el && typeof QRCode !== 'undefined') {
-                        el.innerHTML = '';
-                        new QRCode(el, {
-                            text: 'Patient:' + id,
-                            width: 50,
-                            height: 50,
-                            colorDark: '#000',
-                            colorLight: '#fff',
-                            correctLevel: QRCode.CorrectLevel.H
-                        });
-                    }
-                });
-            }
-
-            // ─── REPORTS ───
-            function refreshReports() {
-                const tbody = document.getElementById('reportsTableBody');
-                if (reports.length) {
-                    tbody.innerHTML = reports.map(r => `
-                            <tr>
-                                <td>${r.name} (${r.patient_id})</td><td>${r.test_name}</td><td>${r.uploaded_at}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-download"></i></button>
-                                    <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>`).join('');
-                } else tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
-                updatePatientIdDatalist();
-            }
-
-            // ─── WHATSAPP ───
-            function refreshWhatsAppPatients() {
-                const tbody = document.getElementById('whatsappPatientList');
-                if (patients.length) {
-                    tbody.innerHTML = patients.slice(0, 10).map(p => `
-                            <tr>
-                                <td>${p.name}</td><td>${p.phone || '—'}</td><td>${p.test}</td>
-                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
-                                <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}" ${p.phone ? '' : 'disabled'}><i class="fab fa-whatsapp"></i> Send</button></td>
-                            </tr>`).join('');
-                } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
-            }
-
-            // ─── PAYMENTS ───
-            function refreshPayments() {
-                const due = patients.filter(p => p.due_amount > 0);
-                const paid = patients.filter(p => p.due_amount === 0);
-                const totalDue = due.reduce((s, p) => s + p.due_amount, 0);
-                document.getElementById('pPaid').textContent = paid.length;
-                document.getElementById('pUnpaid').textContent = due.length;
-                document.getElementById('pTotalDue').textContent = '₹' + totalDue;
-                document.getElementById('pHistoryCount').textContent = (payments.history || []).length;
-
-                const tbody = document.getElementById('paymentsTableBody');
-                if (patients.length) {
-                    tbody.innerHTML = patients.map(p => `
-                            <tr>
-                                <td>${p.name}</td><td>${p.test}</td><td>₹${p.due_amount}</td>
-                                <td><span class="badge-status ${p.due_amount>0?'unpaid':'paid'}">${p.due_amount>0?'Unpaid':'Paid'}</span></td>
-                                <td>
-                                    ${p.due_amount>0 ? `
-                                        <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
-                                        <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
-                                    ` : `<span class="badge-status paid"><i class="fas fa-check"></i> Cleared</span>`}
-                                    <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${p.due_amount>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
-                                </td>
-                            </tr>`).join('');
-                } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
-
-                const historyBody = document.getElementById('paymentHistoryBody');
-                const history = payments.history || [];
-                if (history.length) {
-                    historyBody.innerHTML = history.slice(0, 50).map((h, idx) => `
-                            <tr>
-                                <td>${idx+1}</td>
-                                <td>${h.patient_name || '—'}</td>
-                                <td>${h.patient_id || '—'}</td>
-                                <td><strong>₹${h.amount}</strong></td>
-                                <td><span class="badge-pay-confirmed">${h.method || 'Cash'}</span></td>
-                                <td>${h.confirmed_by || 'Admin'}</td>
-                                <td>${h.confirmed_at || h.timestamp || '—'}</td>
-                            </tr>`).join('');
-                } else {
-                    historyBody.innerHTML =
-                        '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
-                }
-            }
-
-            // ─── SETTINGS ───
-            function applySettingsToUI() {
-                document.getElementById('setLabName').value = settings.lab_name || 'Rajan Path Lab';
-                document.getElementById('setAddress').value = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
-                document.getElementById('setPhone').value = settings.phone || '8709946177 / 9931002450';
-                document.getElementById('setGST').value = settings.gst || '';
-                document.getElementById('setDefaultPrice').value = settings.default_price || 450;
-            }
-
-            function refreshSettings() { applySettingsToUI(); }
-
-            // ─── ANALYTICS ───
-            function refreshAnalytics() {
-                const today = new Date().toDateString();
-                let todayCount = 0;
-                patients.forEach(p => { if (p.created_at && new Date(p.created_at).toDateString() === today) todayCount++; });
-                const revenue = patients.reduce((s, p) => s + (p.due_amount || 0), 0);
-                const testMap = {};
-                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
-                let topTest = '-',
-                    topCount = 0;
-                Object.keys(testMap).forEach(k => { if (testMap[k] > topCount) { topCount = testMap[k];
-                        topTest = k; } });
-                document.getElementById('aToday').textContent = todayCount;
-                document.getElementById('aMonth').textContent = patients.length;
-                document.getElementById('aTopTest').textContent = topTest;
-                document.getElementById('aRevenue').textContent = '₹' + revenue;
-                const tbody = document.getElementById('analyticsTable');
-                const arr = Object.keys(testMap).map(k => ({ test: k, count: testMap[k] }));
-                if (arr.length) tbody.innerHTML = arr.map(t =>
-                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * (settings.default_price || 450)}</td><td>-</td></tr>`
-                    ).join('');
-                else tbody.innerHTML = '<tr><td colspan="4">No data</td></tr>';
-            }
-
-            // ─── BACKUP ───
-            function refreshBackup() {
-                document.getElementById('backupListBody').innerHTML =
-                    '<tr><td>Supabase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="showToast(\'Already in cloud\',\'success\')"><i class="fas fa-check"></i></button></td></tr>';
-            }
-
-            // ─── SECURITY ───
-            function refreshSecurity() {
-                const tbody = document.getElementById('activityLogBody');
-                if (activityLogs.length) {
-                    tbody.innerHTML = activityLogs.map(l =>
-                        `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
-                    ).join('');
-                } else tbody.innerHTML = '<tr><td colspan="4">No logs</td></tr>';
-            }
-
-            // ─── INVOICE ───
-            function generateInvoice(patientId) {
-                const patient = patients.find(p => p.patient_id === patientId);
-                if (!patient) { showToast('Patient not found', 'error'); return; }
-                const amount = patient.due_amount || 0;
-                const total = amount;
-
-                document.getElementById('invPatientName').textContent = patient.name;
-                document.getElementById('invPatientId').textContent = patient.patient_id;
-                document.getElementById('invTestName').textContent = patient.test || 'Not Specified';
-                document.getElementById('invDate').textContent = new Date().toLocaleDateString();
-                document.getElementById('invTestDesc').textContent = patient.test || 'Test';
-                document.getElementById('invAmount').textContent = '₹' + amount;
-                document.querySelector('#invoicePrintArea table tbody tr:nth-child(2) td:nth-child(2)').textContent = '₹0';
-                document.getElementById('invTotal').textContent = '₹' + total;
-
-                document.getElementById('invLabAddress').textContent = settings.address ||
-                'Manahar Bhushra, Pandwa Patan Road';
-                document.getElementById('invLabPhone').textContent = settings.phone || '8709946177 / 9931002450';
-                document.getElementById('invLabGST').textContent = 'GST: ' + (settings.gst || 'NA');
-
-                document.getElementById('invoiceModal').classList.add('show');
-            }
-
-            function closeInvoice() { document.getElementById('invoiceModal').classList.remove('show'); }
-
-            // ─── PAYMENT CONFIRM ───
-            let pendingPayPatientId = null;
-            let pendingPayAmount = 0;
-
-            function openPayConfirm(patientId) {
-                const patient = patients.find(p => p.patient_id === patientId);
-                if (!patient) { showToast('Patient not found', 'error'); return; }
-                if (patient.due_amount <= 0) { showToast('No due amount for this patient.', 'warning'); return; }
-                pendingPayPatientId = patientId;
-                pendingPayAmount = patient.due_amount;
-                document.getElementById('payConfirmPatient').textContent = patient.name;
-                document.getElementById('payConfirmId').textContent = patient.patient_id;
-                document.getElementById('payConfirmTest').textContent = patient.test || 'Not Specified';
-                document.getElementById('payConfirmAmount').textContent = '₹' + patient.due_amount;
-                document.getElementById('payConfirmAmountDisplay').textContent = '₹' + patient.due_amount;
-                document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove('selected'));
-                document.querySelector('#payMethodGroup input[value="Cash"]').checked = true;
-                document.querySelector('#payMethodGroup label:has(input[value="Cash"])')?.classList.add('selected');
-                document.getElementById('payConfirmStatus').textContent = '';
-                document.getElementById('payConfirmModal').classList.add('show');
-            }
-
-            function closePayConfirm() {
-                document.getElementById('payConfirmModal').classList.remove('show');
-                pendingPayPatientId = null;
-                pendingPayAmount = 0;
+            function sendWhatsApp(phone, message) {
+                if (!phone) { showToast('No phone number for WhatsApp.', 'warning'); return; }
+                let clean = phone.replace(/\s/g, '').replace(/-/g, '');
+                if (clean.startsWith('0')) clean = clean.substring(1);
+                if (/^\d{10}$/.test(clean)) clean = '+91' + clean;
+                if (!clean.startsWith('+')) clean = '+' + clean;
+                window.open('https://wa.me/' + clean + '?text=' + encodeURIComponent(message), '_blank');
             }
 
             // ─── PATIENT PORTAL ───
             function openPortal() {
-                document.getElementById('patientPortalModal').classList.add('active');
+                portalModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 refreshAllData().then(() => {
-                    document.getElementById('portalStatus').className = 'portal-status';
-                    document.getElementById('portalStatus').textContent =
-                        '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
-                    document.getElementById('portalReportList').style.display = 'none';
-                    document.getElementById('portalPatientId').value = '';
+                    $('portalStatus').className = 'portal-status';
+                    $('portalStatus').textContent =
+                    '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                    $('portalReportList').style.display = 'none';
+                    $('portalPatientId').value = '';
                 });
             }
 
             function closePortal() {
-                document.getElementById('patientPortalModal').classList.remove('active');
+                portalModal.classList.remove('active');
                 document.body.style.overflow = '';
+                $('portalStatus').className = 'portal-status';
+                $('portalStatus').textContent =
+                '◆ Enter your Patient ID or Mobile Number and click "VIEW MY REPORTS"';
+                $('portalReportList').style.display = 'none';
             }
-
-            // ─── ADMIN ───
-            function showAdmin() {
-                document.getElementById('adminPanelWrapper').classList.add('active');
-                document.body.style.overflow = 'hidden';
-                document.getElementById('adminUsername').textContent = 'Rajan5530';
-                refreshAllData().then(() => {
-                    applySettingsToUI();
-                    refreshAllSections();
-                    showAdminSection('dashboard');
-                    setTimeout(() => generateAllQRCodes(), 300);
-                    setTimeout(() => {
-                        if (document.getElementById('patId')) document.getElementById('patId').value =
-                        getPatientIdPrefix();
-                        if (document.getElementById('reportPatientId')) document.getElementById(
-                            'reportPatientId').value = getPatientIdPrefix();
-                    }, 100);
-                });
-            }
-
-            function hideAdmin() {
-                document.getElementById('adminPanelWrapper').classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            function logout() { hideAdmin();
-                showToast('Logged out', 'warning'); }
-
-            const adminSections = {
-                dashboard: document.getElementById('sec-dashboard'),
-                patients: document.getElementById('sec-patients'),
-                reports: document.getElementById('sec-reports'),
-                whatsapp: document.getElementById('sec-whatsapp'),
-                payments: document.getElementById('sec-payments'),
-                settings: document.getElementById('sec-settings'),
-                analytics: document.getElementById('sec-analytics'),
-                backup: document.getElementById('sec-backup'),
-                security: document.getElementById('sec-security')
-            };
-            const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');
-
-            function showAdminSection(id) {
-                Object.keys(adminSections).forEach(k => adminSections[k].classList.toggle('active', k === id));
-                sidebarLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));
-                if (id === 'dashboard') refreshDashboard();
-                if (id === 'patients') refreshPatients();
-                if (id === 'reports') refreshReports();
-                if (id === 'whatsapp') refreshWhatsAppPatients();
-                if (id === 'payments') refreshPayments();
-                if (id === 'settings') refreshSettings();
-                if (id === 'analytics') refreshAnalytics();
-                if (id === 'backup') refreshBackup();
-                if (id === 'security') refreshSecurity();
-                if (id === 'patients') setTimeout(() => generateAllQRCodes(), 200);
-            }
-
-            // ─── EVENT LISTENERS ───
-
-            // PRELOADER
-            window.addEventListener('load', function() {
-                const preloader = document.getElementById('preloader');
-                setTimeout(function() {
-                    preloader.classList.add('hide');
-                    setTimeout(function() {
-                        if (preloader && preloader.parentNode) preloader.parentNode.removeChild(
-                        preloader);
-                    }, 600);
-                }, 2200);
-            });
-
-            // LOGIN
-            document.getElementById('openLoginBtn').addEventListener('click', () => document.getElementById('loginModal')
-                .classList.add('show'));
-            document.getElementById('closeLoginModal').addEventListener('click', () => document.getElementById('loginModal')
-                .classList.remove('show'));
-            window.addEventListener('click', e => {
-                if (e.target === document.getElementById('loginModal')) document.getElementById('loginModal')
-                    .classList.remove('show');
-                if (e.target === document.getElementById('upiModal')) document.getElementById('upiModal')
-                    .classList.remove('show');
-                if (e.target === document.getElementById('payConfirmModal')) closePayConfirm();
-                if (e.target === document.getElementById('invoiceModal')) closeInvoice();
-                if (e.target === document.getElementById('patientPortalModal')) closePortal();
-            });
-
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const username = document.getElementById('loginUsername').value.trim();
-                const password = document.getElementById('loginPassword').value.trim();
-                const result = document.getElementById('loginResult');
-                if (!username || !password) { result.style.color = 'red';
-                    result.textContent = 'Please enter credentials'; return; }
-                if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
-                    result.style.color = 'green';
-                    result.textContent = '✅ Login successful!';
-                    document.getElementById('loginModal').classList.remove('show');
-                    showAdmin();
-                } else {
-                    result.style.color = 'red';
-                    result.textContent = '❌ Invalid username or password';
-                }
-            });
-
-            // LOGOUT
-            document.getElementById('logoutBtn').addEventListener('click', logout);
-            document.getElementById('logoutBtn2')?.addEventListener('click', logout);
-
-            // DARK TOGGLE
-            let adminDark = false;
-            document.getElementById('adminDarkToggle').addEventListener('click', function() {
-                adminDark = !adminDark;
-                document.body.classList.toggle('admin-dark', adminDark);
-                this.innerHTML = adminDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-                showToast(adminDark ? 'Dark mode enabled' : 'Light mode enabled', 'success');
-            });
-
-            // SIDEBAR NAV
-            sidebarLinks.forEach(a => a.addEventListener('click', function(e) {
-                e.preventDefault();
-                showAdminSection(this.dataset.section);
-            }));
-
-            // PATIENT PORTAL
-            document.getElementById('openPatientPortalBtn').addEventListener('click', e => { e.preventDefault();
+            $('openPatientPortalBtn').addEventListener('click', e => { e.preventDefault();
                 openPortal(); });
-            document.getElementById('openPatientPortalBtn2').addEventListener('click', e => { e.preventDefault();
+            $('openPatientPortalBtn2').addEventListener('click', e => { e.preventDefault();
                 openPortal(); });
-            document.getElementById('closePortalBtn').addEventListener('click', closePortal);
+            $('closePortalBtn').addEventListener('click', closePortal);
+            portalModal.addEventListener('click', e => { if (e.target === portalModal) closePortal(); });
 
-            document.getElementById('portalFetchBtn').addEventListener('click', async function() {
-                const searchValue = document.getElementById('portalPatientId').value.trim();
-                const statusDiv = document.getElementById('portalStatus');
-                const listDiv = document.getElementById('portalReportList');
+            $('portalFetchBtn').addEventListener('click', async function() {
+                const searchValue = $('portalPatientId').value.trim();
+                const statusDiv = $('portalStatus');
+                const listDiv = $('portalReportList');
                 if (!searchValue) {
                     statusDiv.className = 'portal-status error';
                     statusDiv.innerHTML = '⚠️ Please enter your Patient ID or Mobile Number.';
@@ -2597,25 +2657,271 @@
                     });
                 });
             });
+            $('portalPatientId').addEventListener('keypress', e => { if (e.key === 'Enter') $('portalFetchBtn').click(); });
 
-            document.getElementById('portalPatientId').addEventListener('keypress', e => {
-                if (e.key === 'Enter') document.getElementById('portalFetchBtn').click();
+            // ─── LOGIN ───
+            $('openLoginBtn').addEventListener('click', () => loginModal.classList.add('show'));
+            $('closeLoginModal').addEventListener('click', () => loginModal.classList.remove('show'));
+            window.addEventListener('click', e => {
+                if (e.target === loginModal) loginModal.classList.remove('show');
+                if (e.target === upiModal) upiModal.classList.remove('show');
+                if (e.target === payConfirmModal) closePayConfirm();
+                if (e.target === invoiceModal) closeInvoice();
+            });
+            $('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = $('loginUsername').value.trim();
+                const password = $('loginPassword').value.trim();
+                const result = $('loginResult');
+                if (!username || !password) { result.style.color = 'red';
+                    result.textContent = 'Please enter credentials'; return; }
+                if (VALID_USERS.hasOwnProperty(username) && VALID_USERS[username] === password) {
+                    result.style.color = 'green';
+                    result.textContent = '✅ Login successful!';
+                    loginModal.classList.remove('show');
+                    showAdmin();
+                } else {
+                    result.style.color = 'red';
+                    result.textContent = '❌ Invalid username or password';
+                }
             });
 
-            // ─── ADD PATIENT ───
-            document.getElementById('addPatientBtn').addEventListener('click', async function() {
-                let patientId = document.getElementById('patId').value.trim();
-                const name = document.getElementById('patName').value.trim();
-                const phone = document.getElementById('patPhone').value.trim();
-                const test = document.getElementById('patTest').value.trim();
-                const status = document.getElementById('patStatus').value;
-                const due = parseFloat(document.getElementById('patDue').value) || 0;
+            async function showAdmin() {
+                adminWrapper.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                $('adminUsername').textContent = 'Rajan5530';
+                await refreshAllData();
+                applySettingsToUI();
+                refreshAllSections();
+                showAdminSection('dashboard');
+                setTimeout(() => generateAllQRCodes(), 300);
+                // Set the patient ID inputs with the current month/year prefix
+                setTimeout(() => {
+                    if ($('patId')) $('patId').value = getPatientIdPrefix();
+                    if ($('reportPatientId')) $('reportPatientId').value = getPatientIdPrefix();
+                }, 100);
+            }
+
+            function hideAdmin() { adminWrapper.classList.remove('active');
+                document.body.style.overflow = ''; }
+
+            function logout() { hideAdmin();
+                showToast('Logged out', 'warning'); }
+            $('logoutBtn').addEventListener('click', logout);
+            $('logoutBtn2')?.addEventListener('click', logout);
+
+            let adminDark = false;
+            $('adminDarkToggle').addEventListener('click', function() {
+                adminDark = !adminDark;
+                document.body.classList.toggle('admin-dark', adminDark);
+                this.innerHTML = adminDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                showToast(adminDark ? 'Dark mode enabled' : 'Light mode enabled', 'success');
+            });
+
+            const adminSections = {
+                dashboard: $('sec-dashboard'),
+                patients: $('sec-patients'),
+                reports: $('sec-reports'),
+                whatsapp: $('sec-whatsapp'),
+                payments: $('sec-payments'),
+                settings: $('sec-settings'),
+                analytics: $('sec-analytics'),
+                backup: $('sec-backup'),
+                security: $('sec-security')
+            };
+            const sidebarLinks = document.querySelectorAll('#adminSidebar a[data-section]');
+
+            function showAdminSection(id) {
+                Object.keys(adminSections).forEach(k => adminSections[k].classList.toggle('active', k === id));
+                sidebarLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));
+                if (id === 'dashboard') refreshDashboard();
+                if (id === 'patients') refreshPatients();
+                if (id === 'reports') refreshReports();
+                if (id === 'whatsapp') refreshWhatsAppPatients();
+                if (id === 'payments') refreshPayments();
+                if (id === 'settings') refreshSettings();
+                if (id === 'analytics') refreshAnalytics();
+                if (id === 'backup') refreshBackup();
+                if (id === 'security') refreshSecurity();
+                if (id === 'patients') setTimeout(() => generateAllQRCodes(), 200);
+            }
+            sidebarLinks.forEach(a => a.addEventListener('click', function(e) {
+                e.preventDefault();
+                showAdminSection(this.dataset.section);
+            }));
+
+            function generateAllQRCodes() {
+                document.querySelectorAll('[id^="qr-"]').forEach(el => {
+                    const id = el.id.replace('qr-', '');
+                    if (el && typeof QRCode !== 'undefined') {
+                        el.innerHTML = '';
+                        new QRCode(el, {
+                            text: 'Patient:' + id,
+                            width: 50,
+                            height: 50,
+                            colorDark: '#000',
+                            colorLight: '#fff',
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+                    }
+                });
+            }
+
+            function refreshAllSections() {
+                refreshDashboard();
+                refreshPatients();
+                refreshReports();
+                refreshWhatsAppPatients();
+                refreshPayments();
+                refreshSettings();
+                refreshAnalytics();
+                refreshBackup();
+                refreshSecurity();
+            }
+
+            // ─── DASHBOARD ───
+            function refreshDashboard() {
+                const total = patients.length;
+                const totalRep = reports.length;
+                const pending = patients.filter(p => p.status === 'pending').length;
+                const culture = patients.filter(p => p.test && p.test.includes('Urine')).length;
+                const due = patients.filter(p => p.due_amount > 0).length;
+                const revenue = patients.reduce((s, p) => s + p.due_amount, 0);
+                $('dToday').textContent = total;
+                $('dTotalReports').textContent = totalRep;
+                $('dPending').textContent = pending;
+                $('dCulture').textContent = culture;
+                $('dDue').textContent = due;
+                $('dRevenue').textContent = '₹' + revenue;
+                const tbody = $('dRecentPatients');
+                if (patients.length) {
+                    tbody.innerHTML = patients.slice(0, 5).map(p =>
+                        `<tr><td><b>${p.name}</b></td><td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td><td>₹${p.due_amount}</td></tr>`
+                    ).join('');
+                } else tbody.innerHTML = '<tr><td colspan="4">No patients yet</td></tr>';
+                updateCharts();
+            }
+
+            let chartWeeklyInstance = null,
+                chartPieInstance = null;
+
+            function updateCharts() {
+                const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                const weeklyData = days.map(() => 0);
+                patients.forEach(p => {
+                    if (p.created_at) {
+                        const d = new Date(p.created_at);
+                        const idx = d.getDay() === 0 ? 6 : d.getDay() - 1;
+                        if (idx >= 0 && idx < 7) weeklyData[idx]++;
+                    }
+                });
+                const testMap = {};
+                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
+                const labels = Object.keys(testMap),
+                    data = Object.values(testMap);
+
+                const ctx1 = $('chartWeekly')?.getContext('2d');
+                if (ctx1) {
+                    if (chartWeeklyInstance) chartWeeklyInstance.destroy();
+                    chartWeeklyInstance = new Chart(ctx1, {
+                        type: 'bar',
+                        data: { labels: days, datasets: [{ label: 'Patients', data: weeklyData,
+                                backgroundColor: 'rgba(0,128,128,0.6)', borderColor: '#008080',
+                            borderWidth: 2 }] },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+                    });
+                }
+                const ctx2 = $('chartPie')?.getContext('2d');
+                if (ctx2) {
+                    if (chartPieInstance) chartPieInstance.destroy();
+                    const colors = ['#008080', '#20b2aa', '#0a2540', '#d9383a', '#f59e0b', '#7c3aed', '#ec407a', '#ff6600'];
+                    chartPieInstance = new Chart(ctx2, {
+                        type: 'doughnut',
+                        data: { labels: labels.length ? labels : ['No Data'],
+                            datasets: [{ data: labels.length ? data : [1],
+                                backgroundColor: labels.length ? colors.slice(0, labels.length) : ['#ccc'],
+                                borderWidth: 2, borderColor: '#fff' }] },
+                        options: { responsive: true, maintainAspectRatio: false,
+                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12,
+                                        font: { size: 11 } } } } }
+                    });
+                }
+            }
+
+            // ─── PATIENTS ───
+            function refreshPatients() {
+                const tbody = $('patientTableBody');
+                if (patients.length) {
+                    tbody.innerHTML = patients.map(p => `
+                            <tr>
+                                <td><b>${p.patient_id}</b></td><td>${p.name}</td>
+                                <td>${p.phone || '—'}</td>
+                                <td>${p.test}</td><td><span class="badge-status ${p.status}">${p.status}</span></td>
+                                <td>₹${p.due_amount}</td>
+                                <td><div id="qr-${p.patient_id}" style="width:50px;height:50px;"></div></td>
+                                <td>
+                                    ${p.due_amount > 0 ? `
+                                        <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
+                                        <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
+                                    ` : `<span class="badge-status paid">Paid</span>`}
+                                    <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${p.due_amount>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
+                                    <button class="btn btn-sm btn-red btn-del-patient" data-id="${p.patient_id}"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>`).join('');
+                    setTimeout(() => generateAllQRCodes(), 100);
+                } else tbody.innerHTML = '<tr><td colspan="8">No patients</td></tr>';
+                updatePatientIdDatalist();
+            }
+
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-pay-confirm')) {
+                    const id = e.target.closest('.btn-pay-confirm').dataset.id;
+                    openPayConfirm(id);
+                }
+                if (e.target.closest('.btn-mark-paid')) {
+                    const id = e.target.closest('.btn-mark-paid').dataset.id;
+                    if (confirm('Mark this patient as paid? This will set due to 0 and log as Cash (Quick).')) {
+                        markAsPaid(id);
+                    }
+                }
+                if (e.target.closest('.btn-invoice')) {
+                    const id = e.target.closest('.btn-invoice').dataset.id;
+                    generateInvoice(id);
+                }
+            });
+
+            // ─── HELPER: Auto Patient ID Prefix ───
+            function getPatientIdPrefix() {
+                const today = new Date();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const year = today.getFullYear();
+                return 'RPL-' + month + year + '-';
+            }
+
+            // ─── HELPER: Update Patient ID Dropdown ───
+            function updatePatientIdDatalist() {
+                const datalist = document.getElementById('patientIdList');
+                if (!datalist) return;
+                const uniqueIds = [...new Set(patients.map(p => p.patient_id).filter(id => id))];
+                datalist.innerHTML = uniqueIds.map(id => `<option value="${id}">`).join('');
+            }
+
+            $('addPatientBtn').addEventListener('click', async function() {
+                let patientId = $('patId').value.trim();
+                const name = $('patName').value.trim();
+                const phone = $('patPhone').value.trim();
+                const test = $('patTest').value.trim();
+                const status = $('patStatus').value;
+                const due = parseFloat($('patDue').value) || 0;
 
                 if (!name) { showToast('❌ Name is required.', 'error'); return; }
 
                 let id = patientId;
                 const prefix = getPatientIdPrefix();
 
+                // If user didn't type the suffix (value is exactly the prefix) or it's empty
                 if (!id || id === prefix) {
                     let maxSeq = 0;
                     patients.forEach(p => {
@@ -2628,6 +2934,7 @@
                     const nextId = maxSeq + 1;
                     id = prefix + String(nextId).padStart(4, '0');
                 }
+                // else, user typed a specific custom ID (including full prefix+suffix), use it.
 
                 const normPhone = normalizePhone(phone);
                 const duplicate = patients.find(p => p.patient_id === id);
@@ -2652,40 +2959,84 @@
                     await refreshAllData();
                     refreshAllSections();
                     showToast('✅ Patient ' + id + ' added successfully!', 'success');
-                    document.getElementById('patId').value = getPatientIdPrefix();
-                    document.getElementById('patName').value = '';
-                    document.getElementById('patPhone').value = '';
-                    document.getElementById('patTest').value = '';
-                    document.getElementById('patDue').value = '';
+                    $('patId').value = getPatientIdPrefix();
+                    $('patName').value = '';
+                    $('patPhone').value = '';
+                    $('patTest').value = '';
+                    $('patDue').value = '';
                 } catch (err) { showToast('Error: ' + err.message, 'error'); }
                 setLoading(this, false);
             });
 
-            document.getElementById('clearPatientBtn').addEventListener('click', () => {
-                document.getElementById('patId').value = getPatientIdPrefix();
-                document.getElementById('patName').value = '';
-                document.getElementById('patPhone').value = '';
-                document.getElementById('patTest').value = '';
-                document.getElementById('patDue').value = '';
+            // Modified Clear Button to apply the prefix
+            $('clearPatientBtn').addEventListener('click', () => {
+                $('patId').value = getPatientIdPrefix();
+                $('patName').value = '';
+                $('patPhone').value = '';
+                $('patTest').value = '';
+                $('patDue').value = '';
             });
+            $('refreshPatients').addEventListener('click', refreshPatients);
 
-            document.getElementById('refreshPatients').addEventListener('click', refreshPatients);
-
-            // ─── SEARCH ───
-            document.getElementById('patientSearch').addEventListener('input', function() {
+            document.addEventListener('click', async function(e) {
+                if (e.target.closest('.btn-del-patient')) {
+                    const id = e.target.closest('.btn-del-patient').dataset.id;
+                    if (!confirm('Delete patient #' + id + '?')) return;
+                    setLoading(e.target.closest('.btn-del-patient'), true);
+                    try {
+                        const toDel = reports.filter(r => r.patient_id === id);
+                        for (let r of toDel) await deletePDF(r.id, r.file_name);
+                        reports = reports.filter(r => r.patient_id !== id);
+                        patients = patients.filter(p => p.patient_id !== id);
+                        await saveReports(reports);
+                        await savePatients(patients);
+                        await refreshAllData();
+                        refreshAllSections();
+                        showToast('Deleted patient and associated reports', 'success');
+                    } catch (err) { showToast('Error: ' + err.message, 'error'); }
+                    setLoading(e.target.closest('.btn-del-patient'), false);
+                }
+            });
+            $('patientSearch').addEventListener('input', function() {
                 const q = this.value.toLowerCase();
                 document.querySelectorAll('#patientTableBody tr').forEach(row => {
                     row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
                 });
             });
 
-            // ─── UPLOAD REPORT ───
-            document.getElementById('uploadReportBtn').addEventListener('click', async function() {
-                const pid = document.getElementById('reportPatientId').value.trim();
-                const test = document.getElementById('reportTestName').value.trim();
-                const file = document.getElementById('reportFile').files[0];
-                const replace = document.getElementById('reportReplace').value;
-                const msgDiv = document.getElementById('uploadMessage');
+            // ─── REPORTS ───
+            function refreshReports() {
+                const tbody = $('reportsTableBody');
+                if (reports.length) {
+                    tbody.innerHTML = reports.map(r => `
+                            <tr>
+                                <td>${r.name} (${r.patient_id})</td><td>${r.test_name}</td><td>${r.uploaded_at}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary btn-download-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-download"></i></button>
+                                    <button class="btn btn-sm btn-red btn-del-report" data-id="${r.id}" data-file-name="${r.file_name}"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>`).join('');
+                } else tbody.innerHTML = '<tr><td colspan="4">No reports</td></tr>';
+                updatePatientIdDatalist();
+            }
+
+            document.addEventListener('click', async function(e) {
+                if (e.target.closest('.btn-download-report')) {
+                    const btn = e.target.closest('.btn-download-report');
+                    const id = parseInt(btn.dataset.id);
+                    const fileName = btn.dataset.fileName;
+                    try { await downloadPDF(id, fileName);
+                        showToast('Download started', 'success'); } catch (err) { showToast('Error: ' + err.message,
+                            'error'); }
+                }
+            });
+
+            $('uploadReportBtn').addEventListener('click', async function() {
+                const pid = $('reportPatientId').value.trim();
+                const test = $('reportTestName').value.trim();
+                const file = $('reportFile').files[0];
+                const replace = $('reportReplace').value;
+                const msgDiv = $('uploadMessage');
                 msgDiv.textContent = '';
                 msgDiv.style.color = 'red';
                 if (!pid) { msgDiv.textContent = '❌ Patient ID required.';
@@ -2724,111 +3075,124 @@
                     msgDiv.style.color = 'green';
                     msgDiv.textContent = '✅ Report uploaded for ' + patient.name;
                     showToast('✅ Report uploaded for ' + patient.name, 'success');
-                    document.getElementById('reportPatientId').value = getPatientIdPrefix();
-                    document.getElementById('reportTestName').value = '';
-                    document.getElementById('reportFile').value = '';
+                    $('reportPatientId').value = getPatientIdPrefix();
+                    $('reportTestName').value = '';
+                    $('reportFile').value = '';
                     setTimeout(() => { msgDiv.textContent = ''; }, 5000);
                 } catch (err) { msgDiv.textContent = '❌ Upload failed: ' + err.message;
                     showToast('Upload failed: ' + err.message, 'error'); }
                 setLoading(this, false);
             });
 
-            document.getElementById('refreshReports').addEventListener('click', refreshReports);
-
-            // ─── PAYMENT CONFIRM BUTTONS ───
-            document.getElementById('payConfirmCancel').addEventListener('click', closePayConfirm);
-
-            document.getElementById('payConfirmConfirm').addEventListener('click', async function() {
-                const patientId = pendingPayPatientId;
-                if (!patientId) { showToast('No patient selected', 'error'); return; }
-                const patient = patients.find(p => p.patient_id === patientId);
-                if (!patient) { showToast('Patient not found', 'error'); return; }
-                const amount = patient.due_amount;
-                if (amount <= 0) { showToast('No due amount.', 'warning'); return; }
-                const method = document.querySelector('#payMethodGroup input[type="radio"]:checked')?.value || 'Cash';
-                const adminUser = document.getElementById('adminUsername').textContent || 'Admin';
-
-                setLoading(this, true);
-                try {
-                    patient.due_amount = 0;
-                    await savePatients(patients);
-                    await addPaymentHistory(patient.patient_id, patient.name, amount, method, adminUser);
-
-                    const duePatients = patients.filter(p => p.due_amount > 0);
-                    payments.unpaid_count = duePatients.length;
-                    payments.total_due = duePatients.reduce((s, p) => s + p.due_amount, 0);
-                    await savePayments(payments);
-
-                    const log = {
-                        created_at: new Date().toLocaleString(),
-                        admin_user: adminUser,
-                        action: `Payment confirmed for ${patient.name} (${patient.patient_id}) ₹${amount} via ${method}`,
-                        ip: 'local'
-                    };
-                    activityLogs.unshift(log);
-                    if (activityLogs.length > 100) activityLogs = activityLogs.slice(0, 100);
-                    await saveLogs(activityLogs);
-
-                    await refreshAllData();
-                    refreshAllSections();
-
-                    document.getElementById('payConfirmStatus').style.color = 'green';
-                    document.getElementById('payConfirmStatus').textContent = '✅ Payment confirmed! Report unlocked.';
-                    showToast(`Payment of ₹${amount} confirmed for ${patient.name}`, 'success');
-                    setTimeout(() => closePayConfirm(), 1200);
-
-                    if (patient.phone) {
-                        const msg =
-                            `✅ Payment Confirmed!\nPatient: ${patient.name}\nAmount: ₹${amount}\nMethod: ${method}\nThank you for choosing Rajan Path Lab.`;
-                        sendWhatsApp(patient.phone, msg);
-                    }
-                } catch (err) { showToast('Error: ' + err.message, 'error'); }
-                setLoading(this, false);
+            document.addEventListener('click', async function(e) {
+                if (e.target.closest('.btn-del-report')) {
+                    const btn = e.target.closest('.btn-del-report');
+                    const id = parseInt(btn.dataset.id);
+                    const fileName = btn.dataset.fileName;
+                    if (!confirm('Delete report?')) return;
+                    setLoading(btn, true);
+                    try {
+                        await deletePDF(id, fileName);
+                        reports = reports.filter(r => r.id !== id);
+                        await saveReports(reports);
+                        await refreshAllData();
+                        refreshAllSections();
+                        showToast('Report deleted', 'success');
+                    } catch (err) { showToast('Error: ' + err.message, 'error'); }
+                    setLoading(btn, false);
+                }
             });
-
-            document.querySelectorAll('#payMethodGroup input[type="radio"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    document.querySelectorAll('#payMethodGroup label').forEach(l => l.classList.remove(
-                    'selected'));
-                    this.closest('label').classList.add('selected');
-                });
-            });
-
-            // ─── INVOICE ───
-            document.getElementById('closeInvoiceBtn').addEventListener('click', closeInvoice);
-            document.getElementById('printInvoiceBtn').addEventListener('click', function() { window.print(); });
+            $('refreshReports').addEventListener('click', refreshReports);
 
             // ─── WHATSAPP ───
+            function refreshWhatsAppPatients() {
+                const tbody = $('whatsappPatientList');
+                if (patients.length) {
+                    tbody.innerHTML = patients.slice(0, 10).map(p => `
+                            <tr>
+                                <td>${p.name}</td><td>${p.phone || '—'}</td><td>${p.test}</td>
+                                <td><span class="badge-status ${p.status}">${p.status}</span></td>
+                                <td><button class="btn btn-sm btn-primary wa-send" style="background:#25D366;border-color:#25D366;" data-phone="${p.phone}" data-name="${p.name}" data-test="${p.test}" ${p.phone ? '' : 'disabled'}><i class="fab fa-whatsapp"></i> Send</button></td>
+                            </tr>`).join('');
+                } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
+            }
+
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.wa-send')) {
                     const btn = e.target.closest('.wa-send');
                     if (!btn.dataset.phone) { showToast('No phone number', 'warning'); return; }
-                    const msg = document.getElementById('whatsappPreview').innerText.replace(/{patient}/g, btn
-                        .dataset.name).replace(/{test}/g, btn.dataset.test);
+                    const msg = $('whatsappPreview').innerText.replace(/{patient}/g, btn.dataset.name).replace(/{test}/g,
+                        btn.dataset.test);
                     sendWhatsApp(btn.dataset.phone, msg);
                 }
             });
-
-            document.getElementById('sendWAPatient').addEventListener('click', () => {
+            $('sendWAPatient').addEventListener('click', () => {
                 const phone = prompt('Enter patient phone:');
-                if (phone) sendWhatsApp(phone, document.getElementById('whatsappPreview').innerText.replace(
-                    /{patient}/g, 'Patient').replace(/{test}/g, 'Report'));
+                if (phone) sendWhatsApp(phone, $('whatsappPreview').innerText.replace(/{patient}/g, 'Patient')
+                    .replace(/{test}/g, 'Report'));
             });
-
-            document.getElementById('sendWADoctor').addEventListener('click', () => {
+            $('sendWADoctor').addEventListener('click', () => {
                 const phone = prompt('Enter doctor phone:');
                 if (phone) sendWhatsApp(phone, 'Doctor: Report ready.');
             });
-
-            document.getElementById('sendUrineUpdate').addEventListener('click', () => {
+            $('sendUrineUpdate').addEventListener('click', () => {
                 const phone = prompt('Enter patient phone:');
                 if (phone) sendWhatsApp(phone, 'Urine Culture under process. Results in 48 hrs.');
             });
 
-            // ─── UPI ───
-            document.getElementById('upiPayBtn').addEventListener('click', () => {
-                document.getElementById('upiModal').classList.add('show');
-                const container = document.getElementById('upiQR');
+            // ─── PAYMENTS ───
+            function refreshPayments() {
+                const due = patients.filter(p => p.due_amount > 0);
+                const paid = patients.filter(p => p.due_amount === 0);
+                const totalDue = due.reduce((s, p) => s + p.due_amount, 0);
+                $('pPaid').textContent = paid.length;
+                $('pUnpaid').textContent = due.length;
+                $('pTotalDue').textContent = '₹' + totalDue;
+                $('pHistoryCount').textContent = (payments.history || []).length;
+
+                const tbody = $('paymentsTableBody');
+                if (patients.length) {
+                    tbody.innerHTML = patients.map(p => `
+                            <tr>
+                                <td>${p.name}</td><td>${p.test}</td><td>₹${p.due_amount}</td>
+                                <td><span class="badge-status ${p.due_amount>0?'unpaid':'paid'}">${p.due_amount>0?'Unpaid':'Paid'}</span></td>
+                                <td>
+                                    ${p.due_amount>0 ? `
+                                        <button class="btn btn-sm btn-gold btn-pay-confirm" data-id="${p.patient_id}"><i class="fas fa-check-circle"></i> Pay</button>
+                                        <button class="btn btn-sm btn-success btn-mark-paid" data-id="${p.patient_id}"><i class="fas fa-check"></i> Mark Paid</button>
+                                    ` : `<span class="badge-status paid"><i class="fas fa-check"></i> Cleared</span>`}
+                                    <button class="btn btn-sm btn-primary btn-invoice" data-id="${p.patient_id}" ${p.due_amount>0?'':'disabled'}><i class="fas fa-file-invoice"></i></button>
+                                </td>
+                            </tr>`).join('');
+                } else tbody.innerHTML = '<tr><td colspan="5">No patients</td></tr>';
+
+                const historyBody = $('paymentHistoryBody');
+                const history = payments.history || [];
+                if (history.length) {
+                    historyBody.innerHTML = history.slice(0, 50).map((h, idx) => `
+                            <tr>
+                                <td>${idx+1}</td>
+                                <td>${h.patient_name || '—'}</td>
+                                <td>${h.patient_id || '—'}</td>
+                                <td><strong>₹${h.amount}</strong></td>
+                                <td><span class="badge-pay-confirmed">${h.method || 'Cash'}</span></td>
+                                <td>${h.confirmed_by || 'Admin'}</td>
+                                <td>${h.confirmed_at || h.timestamp || '—'}</td>
+                            </tr>`).join('');
+                } else {
+                    historyBody.innerHTML =
+                        '<tr><td colspan="7" style="text-align:center;padding:20px;">No payments recorded yet</td></tr>';
+                }
+            }
+            $('refreshPayments').addEventListener('click', refreshPayments);
+            $('dueReminderBtn').addEventListener('click', () => {
+                const phone = prompt('Enter patient phone:');
+                if (phone) sendWhatsApp(phone, 'Reminder: Payment due at Rajan Path Lab.');
+            });
+
+            $('upiPayBtn').addEventListener('click', () => {
+                upiModal.classList.add('show');
+                const container = $('upiQR');
                 container.innerHTML = '';
                 if (typeof QRCode !== 'undefined') {
                     new QRCode(container, {
@@ -2841,17 +3205,61 @@
                     });
                 } else container.innerHTML = '<p>QR library not loaded</p>';
             });
+            $('closeUpiModal').addEventListener('click', () => upiModal.classList.remove('show'));
 
-            document.getElementById('closeUpiModal').addEventListener('click', () => document.getElementById('upiModal')
-                .classList.remove('show'));
+            // ─── INVOICE ───
+            function generateInvoice(patientId) {
+                const patient = patients.find(p => p.patient_id === patientId);
+                if (!patient) { showToast('Patient not found', 'error'); return; }
+                const amount = patient.due_amount || 0;
+                const gst = 0; // can be dynamic
+                const total = amount + gst;
 
-            // ─── SAVE SETTINGS ───
-            document.getElementById('saveSettingsBtn').addEventListener('click', async function() {
-                const lab_name = document.getElementById('setLabName').value.trim();
-                const address = document.getElementById('setAddress').value.trim();
-                const phone = document.getElementById('setPhone').value.trim();
-                const gst = document.getElementById('setGST').value.trim();
-                const default_price = parseFloat(document.getElementById('setDefaultPrice').value) || 450;
+                $('invPatientName').textContent = patient.name;
+                $('invPatientId').textContent = patient.patient_id;
+                $('invTestName').textContent = patient.test || 'Not Specified';
+                $('invDate').textContent = new Date().toLocaleDateString();
+                $('invTestDesc').textContent = patient.test || 'Test';
+                $('invAmount').textContent = '₹' + amount;
+                document.querySelector('#invoicePrintArea table tbody tr:nth-child(2) td:nth-child(2)').textContent = '₹' +
+                gst;
+                $('invTotal').textContent = '₹' + total;
+
+                // Lab details from settings
+                $('invLabAddress').textContent = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
+                $('invLabPhone').textContent = settings.phone || '8709946177 / 9931002450';
+                $('invLabGST').textContent = 'GST: ' + (settings.gst || 'NA');
+
+                invoiceModal.classList.add('show');
+            }
+
+            function closeInvoice() { invoiceModal.classList.remove('show'); }
+            $('closeInvoiceBtn').addEventListener('click', closeInvoice);
+            invoiceModal.addEventListener('click', e => { if (e.target === invoiceModal) closeInvoice(); });
+
+            $('printInvoiceBtn').addEventListener('click', function() {
+                window.print();
+            });
+
+            // ─── SETTINGS ───
+            function applySettingsToUI() {
+                $('setLabName').value = settings.lab_name || 'Rajan Path Lab';
+                $('setAddress').value = settings.address || 'Manahar Bhushra, Pandwa Patan Road';
+                $('setPhone').value = settings.phone || '8709946177 / 9931002450';
+                $('setGST').value = settings.gst || '';
+                $('setDefaultPrice').value = settings.default_price || 450;
+            }
+
+            function refreshSettings() {
+                applySettingsToUI();
+            }
+
+            $('saveSettingsBtn').addEventListener('click', async function() {
+                const lab_name = $('setLabName').value.trim();
+                const address = $('setAddress').value.trim();
+                const phone = $('setPhone').value.trim();
+                const gst = $('setGST').value.trim();
+                const default_price = parseFloat($('setDefaultPrice').value) || 450;
 
                 setLoading(this, true);
                 try {
@@ -2862,26 +3270,50 @@
                 setLoading(this, false);
             });
 
-            // ─── DUE REMINDER ───
-            document.getElementById('dueReminderBtn').addEventListener('click', () => {
-                const phone = prompt('Enter patient phone:');
-                if (phone) sendWhatsApp(phone, 'Reminder: Payment due at Rajan Path Lab.');
-            });
-
-            // ─── REFRESH PAYMENTS ───
-            document.getElementById('refreshPayments').addEventListener('click', refreshPayments);
+            // ─── ANALYTICS ───
+            function refreshAnalytics() {
+                const today = new Date().toDateString();
+                let todayCount = 0;
+                patients.forEach(p => { if (p.created_at && new Date(p.created_at).toDateString() === today) todayCount++; });
+                const revenue = patients.reduce((s, p) => s + p.due_amount, 0);
+                const testMap = {};
+                patients.forEach(p => { if (p.test) testMap[p.test] = (testMap[p.test] || 0) + 1; });
+                let topTest = '-',
+                    topCount = 0;
+                Object.keys(testMap).forEach(k => { if (testMap[k] > topCount) { topCount = testMap[k];
+                        topTest = k; } });
+                $('aToday').textContent = todayCount;
+                $('aMonth').textContent = patients.length;
+                $('aTopTest').textContent = topTest;
+                $('aRevenue').textContent = '₹' + revenue;
+                const tbody = $('analyticsTable');
+                const arr = Object.keys(testMap).map(k => ({ test: k, count: testMap[k] }));
+                if (arr.length) tbody.innerHTML = arr.map(t =>
+                        `<tr><td>${t.test}</td><td>${t.count}</td><td>₹${t.count * (settings.default_price || 450)}</td><td>-</td></tr>`
+                    ).join('');
+                else tbody.innerHTML = '<tr><td colspan="4">No data</td></tr>';
+            }
 
             // ─── BACKUP ───
-            document.getElementById('backupDBBtn').addEventListener('click', () => showToast(
-            'Data already in Supabase cloud.', 'success'));
-            document.getElementById('backupPDFBtn').addEventListener('click', () => showToast(
-                'PDFs are in Supabase Storage.', 'success'));
-            document.getElementById('restoreBtn').addEventListener('click', () => showToast('Restore not needed.',
-                'warning'));
+            function refreshBackup() {
+                $('backupListBody').innerHTML =
+                    '<tr><td>Firebase Cloud</td><td>Auto</td><td>Managed</td><td><button class="btn btn-sm btn-primary" onclick="showToast(\'Already in cloud\',\'success\')"><i class="fas fa-check"></i></button></td></tr>';
+            }
+            $('backupDBBtn').addEventListener('click', () => showToast('Data already in Firebase cloud.', 'success'));
+            $('backupPDFBtn').addEventListener('click', () => showToast('PDFs are in Supabase Storage.', 'success'));
+            $('restoreBtn').addEventListener('click', () => showToast('Restore not needed.', 'warning'));
 
             // ─── SECURITY ───
-            document.getElementById('viewLogBtn').addEventListener('click', refreshSecurity);
-            document.getElementById('changePwdBtn').addEventListener('click', () => {
+            function refreshSecurity() {
+                const tbody = $('activityLogBody');
+                if (activityLogs.length) {
+                    tbody.innerHTML = activityLogs.map(l =>
+                        `<tr><td>${l.created_at}</td><td>${l.admin_user}</td><td>${l.action}</td><td>${l.ip}</td></tr>`
+                    ).join('');
+                } else tbody.innerHTML = '<tr><td colspan="4">No logs</td></tr>';
+            }
+            $('viewLogBtn').addEventListener('click', refreshSecurity);
+            $('changePwdBtn').addEventListener('click', () => {
                 const old = prompt('Enter old password:');
                 if (!old) return;
                 const newPwd = prompt('Enter new password (min 6 chars):');
@@ -2889,77 +3321,10 @@
                 showToast('✅ Password changed! (dummy)', 'success');
             });
 
-            // ─── GLOBAL EVENT LISTENERS ───
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.btn-pay-confirm')) {
-                    const id = e.target.closest('.btn-pay-confirm').dataset.id;
-                    openPayConfirm(id);
-                }
-                if (e.target.closest('.btn-mark-paid')) {
-                    const id = e.target.closest('.btn-mark-paid').dataset.id;
-                    if (confirm('Mark this patient as paid? This will set due to 0 and log as Cash (Quick).')) {
-                        markAsPaid(id);
-                    }
-                }
-                if (e.target.closest('.btn-invoice')) {
-                    const id = e.target.closest('.btn-invoice').dataset.id;
-                    generateInvoice(id);
-                }
-                if (e.target.closest('.btn-del-patient')) {
-                    const id = e.target.closest('.btn-del-patient').dataset.id;
-                    if (!confirm('Delete patient #' + id + '?')) return;
-                    setLoading(e.target.closest('.btn-del-patient'), true);
-                    (async () => {
-                        try {
-                            const toDel = reports.filter(r => r.patient_id === id);
-                            for (let r of toDel) await deletePDF(r.id, r.file_name);
-                            reports = reports.filter(r => r.patient_id !== id);
-                            patients = patients.filter(p => p.patient_id !== id);
-                            await saveReports(reports);
-                            await savePatients(patients);
-                            await refreshAllData();
-                            refreshAllSections();
-                            showToast('Deleted patient and associated reports', 'success');
-                        } catch (err) { showToast('Error: ' + err.message, 'error'); }
-                        setLoading(e.target.closest('.btn-del-patient'), false);
-                    })();
-                }
-                if (e.target.closest('.btn-download-report')) {
-                    const btn = e.target.closest('.btn-download-report');
-                    const id = parseInt(btn.dataset.id);
-                    const fileName = btn.dataset.fileName;
-                    (async () => {
-                        try { await downloadPDF(id, fileName);
-                            showToast('Download started', 'success'); } catch (err) { showToast(
-                                'Error: ' + err.message, 'error'); }
-                    })();
-                }
-                if (e.target.closest('.btn-del-report')) {
-                    const btn = e.target.closest('.btn-del-report');
-                    const id = parseInt(btn.dataset.id);
-                    const fileName = btn.dataset.fileName;
-                    if (!confirm('Delete report?')) return;
-                    setLoading(btn, true);
-                    (async () => {
-                        try {
-                            await deletePDF(id, fileName);
-                            reports = reports.filter(r => r.id !== id);
-                            await saveReports(reports);
-                            await refreshAllData();
-                            refreshAllSections();
-                            showToast('Report deleted', 'success');
-                        } catch (err) { showToast('Error: ' + err.message, 'error'); }
-                        setLoading(btn, false);
-                    })();
-                }
-            });
-
-            console.log('✅ RAJAN PATH LAB - PURE SUPABASE VERSION');
+            console.log('✅ Rajan Path Lab · Professional Admin Panel with Billing, Toast, Loading, Quick Mark Paid');
             console.log('🔑 Login: Rajan5530 / Rkchandra5530');
-            console.log('📦 Supabase URL: https://fafybuowcqgfgksmfwli.supabase.co');
 
         })();
     </script>
-
 </body>
 </html>
